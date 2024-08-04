@@ -22,7 +22,7 @@ Please update as you add and intergrate diffrent apis
 | Calendar         | Nager.Date                       | 2         | :x:        | TBD      |
 | Calendar         | UK Bank Holidays                 | 2         | :x:        | TBD      |
 | Content          | 4chan                            | 2         | :x:        | TBD      |
-| Content          | Anime News Network               | 0         | :x:        | TBD      |
+| Content          | Anime News Network               | 2         | :x:        | TBD      |
 | Content          | Ceska Televize                   | 0         | :x:        | TBD      |
 | Content          | Chronicling America              | 0         | :x:        | TBD      |
 | Content          | Crossref                         | 0         | :x:        | TBD      |

@@ -1,0 +1,483 @@
+Encyclopedia API
+ANN now provides a direct feed to the Encyclopedia data in XML format. There are two parts to the API.
+1. Reports
+On the reports page you'll find a list of various dynamically-generated reports. Click on any of these and you'll see a "display as xml" link to get the results in XML format.
+
+The number of rows in any report (either HTML or XML format) can be controlled with the url parameters nskip and nlist. For example you can get the first 50 rows with nskip=0&nlist=50, the next 50 rows with nskip=50&nlist=50, or all rows at once with nlist=all. Some reports accept additional parameters, like this one where type=anime limits the results to anime titles only, and name=Z limits the results to titles starting with the letter Z. See individual reports for details.
+
+If you are building an application which requires a database of anime titles, a typical usage scenario would be to make an initial import with reports.xml?id=155&type=anime&nlist=all and then do a daily import of newly added titles with reports.xml?id=155&type=anime&nlist=50
+
+2. Anime/Manga Details
+If you need more information than the basic details provided in the reports, use this API to fetch detailled information for each title. The basic syntax is https://cdn.animenewsnetwork.com/encyclopedia/api.xml?anime=id. Instead of anime you should use manga if you are fetching a manga's details, or title if it could be either. For example:
+api.xml?anime=4658 or api.xml?title=4658 to get details of Jinki:Extend (TV)
+api.xml?manga=4199 or api.xml?title=4199 to get details of Jinki:Extend (manga)
+Details for a single title can contain a lot of data so please try to spare our poor servers by fetching (and then caching) details from this API only as needed. In a typical usage scenario, you could present to your users a list of all anime titles imported using the reports above. When a user needs additional info about a certain title your backend would fetch the details for that single title and cache them for a week (older titles especially tend not to change so much).
+
+2a. Batching
+You can request details for several titles at once by specifying the anime/manga/title parameter more than once, or by using a slash-separated list of ids instead of a single id. You can also get results by name by specifying ~name instead of an id. Please note this does not match alternative titles, only the primary name (the one in the page title). For example these are all equivalent ways to get details for the 3 titles in the Jinki franchise at once:
+api.xml?anime=4658&manga=4199&manga=11608
+api.xml?anime=4658&manga=4199/11608
+api.xml?title=4658/4199/11608
+api.xml?title=~jinki
+Please note that you can only batch up to 50 titles at once.
+Terms of Service
+We provide this API free of charge but you must
+list Anime News Network as the source of the data
+include a link to the relevant Encyclopedia entry (like "full details at Anime News Network") on any page that displays anime/manga/person details
+Usage Limits
+The API is rate-limited to 1 request per second per IP address; requests over this threshold will be delayed. If you would rather make 5 requests close together every 5 seconds, use nodelay.api.xml instead; but requests over the 1/s threshold will get a 503 error.
+
+Encyclopedia - Reports
+Anime series length
+anime/manga with more than 1 picture
+anime/manga with more than 1 plot summary
+API: Anime/Manga List
+Companies that need a precision
+FAQ
+Kanji staff tasks - current translations
+Kanji staff tasks - possible translations
+Kanji staff tasks - translation table
+People by Kanji Name
+Possibly inverted family names
+Ratings (anime)
+Ratings (manga)
+Recently added anime
+Recently added companies
+Recently added manga
+Recently added people
+[LANG] titles for anime that don't have a [LANG] company
+
+Encyclopedia - Reports - API: Anime/Manga List
+display as xml
+
+
+
+Possible URL parameters:
+type = ("anime" or "manga" if you want to limit the list to one of those)
+name = (restrict list to anime/manga with a main title that starts with this value)
+search = (restrict list to anime/manga with a main or alternative title that contains this value)
+Show:   Next All     Less More     100 rows (out of 30376)
+
+
+id	gid	type	name	precision	vintage	searched title
+33127	1471204927	manga	Ikenie Kazoku	manga		
+33126	4212253054	manga	Senpai wa Joshi Kōsei ♂	manga	2018-05-31 to 2019-11-30	
+33125	2898782958	manga	Tokyo Shinjū	manga	2008-08 to 2013-03-03	
+33124	1865412088	manga	Isekai NTR	manga	2020-01-28 to 2021-12-28	
+33123	2044604390	manga	Kimi no Gin no Ashi	manga	2020-04-30	
+33122	2642533527	manga	Love & Bites: Kataru Cisco Sakuhinshū	manga	2009-04-24 to 2011-04-28	
+33121	2256158706	manga	Midnight Bellboy	manga	2022-11-22	
+33120	1874658669	manga	Tsubasa naki Karera	manga	2020-02-29 to 2021-06-30	
+33119	2914037883	manga	Ayamachi Shinshi no Tashinami	manga	2011-06-24 to 2014-10-27	
+33118	1662101300	manga	Around	manga	2013-04-26 to 2014-06-27	
+33117	780619739	manga	Coming Home	manga	2022-03-31 to 2023-04-28	
+33116	2546732906	manga	Fushigina Tomodachi	manga	2012-02-24 to 2012-12-28	
+33115	3434288817	manga	Furachina Keiji-san	manga	2014-08-29 to 2015-06-27	
+33114	3110847868	manga	Magnet Brothers	manga	2018-06-20 to 2019-04-20	
+33113	2288540283	manga	Moratte Kudasai	manga	2016-12-28 to 2017-10-28	
+33112	2281695817	manga	Yasashii Anata...	manga	2015-08-27 to 2016-04-28	
+33111	222751102	manga	Romantic	manga	2018-12-20 to 2019-08-20	
+33109	3045742800	manga	Kagaku-bu no Megane	manga	2014-10-27 to 2016-06-25	
+33108	1982499730	manga	Kakukaku: 1200-nen Mae no Haru	manga	2022-03-31	
+33107	2431048171	manga	Ningen Kansatsu Dōkō-kai	manga	2017-12-28 to 2019-08-30	
+33104	1942478653	manga	Katamichi Eiga Ippon-bun	manga	2015-06-27 to 2016-12-28	
+33103	2883887773	manga	Momoiro Süleyman	manga	2023-08-16	
+33102	3143947502	manga	Koi no Hanashi	manga	2017-02-24 to 2024-01-01	
+33101	2357253522	manga	Tsugomori no Tōrimichi	manga	2016-10-28 to 2018-02-28	
+33100	2208978995	manga	Kōhai-kun to Amatoro Kijōi Lesson	manga	2023-03-03 to 2023-07-21	
+33099	1231964149	manga	Damena Sūgaku	manga	2021-11-09	
+33098	1256256268	TV	Fate/Grand Order: Fujimaru Ritsuka wa Wakaranai	TV 2	2024-08-03	
+33097	76703703	TV	Aharen-san wa Hakarenai	TV 2		
+33096	2040274774	TV	Wrong Way to Use Healing Magic	TV 2		
+33095	1438009676	manga	Shōjo M	manga	2023-10-17	
+33094	1583673832	manga	Pepperoni Vampire	manga	2023-05-12	
+33093	1912390195	OAV	Ienai Koto	OAV	2015-03-06	
+33092	1864575168	OAV	Express Train to Ecstasy	OAV	2016-08-05	
+33091	731183427	OAV	Raunchy Road to Redemption	OAV	2015-01-02	
+33090	3049306491	manga	Ikenai Koto: Kinjirareta Shoujo no Kairaku	manga		
+33089	1038477588	OAV	Sexy Daze, Naughty Knights	OAV	2014-12-05	
+33088	3184616959	manga	Mienai Kodomo-tachi	manga	2016-09-03	
+33087	3748102737	manga	Kōri no Hime wa Chiisana Hidamari de Tokasaretai	manga	2023-12-01	
+33086	3265100619	manga	Dash Kappei	manga	1979-11 to 1982-11	
+33085	2200186210	manga	Hanmen Kyōshi	manga	2024-04-26	
+33084	1704950904	manga	Yakuza ni Ofuro de Hataraka Saretemasu	manga	2023-10-26	
+33083	1523589013	manga	Zako Skill" to Tsuihō Sareta Kami Tsukai	manga	2024-03-28	
+33082	2073562614	manga	Duel Masters LOST ~Gekka no Shinigami~	manga	2024-08-08	
+33081	2703573944	manga	Yōkihi, Kirara	manga	2023-08-04	
+33080	1541863369	TV	Silent Witch	TV		
+33079	2239946150	manga	Renjaku-san to Asobo	manga	2023-10-26	
+33078	1928518129	manga	Tobari to Hari	manga	2023-06-01 to 2024-04-01	
+33077	3161492199	TV	Rascal Does Not Dream of Santa Claus	TV	2025	
+33076	1766761852	manga	Omoitatta ga Otsumami	manga	2020-10-02 to 2021-05-01	
+33075	1635232350	manga	Crew de Gozaimasu!	manga	2015-06-16 to 2016-10-15	
+33074	3244773123	manga	Ojō-sama, Oshokuji no Jikan Desu	manga	2023-10-01	
+33073	693209564	manga	Ohayō, Oyasumi, Mata Ashita	manga	2023-06-19	
+33072	3821731198	manga	Ore-tachi Business Tsugai Yattemasu!	manga	2020-12-01 to 2024-04-05	
+33071	916679588	manga	Oniyaku	manga	2013-05-13	
+33070	1614462402	manga	Shinken ni Shisu	manga	2022-12-13 to 2024-03-13	
+33069	2296908745	TV	Please Put Them On, Takamine-san!	TV		
+33068	952691940	movie	Thunderbolt Fantasy: Tōriken Yūki Saishūshō	movie	2025	
+33067	475663780	TV	Thunderbolt Fantasy: Tōriken Yūki 4	TV	2024-10-05	
+33066	2017325863	manga	Wakaba-chan wa Wakarasetai	manga	2023-02-25 to 2024-02-24	
+33065	2839628967	manga	home	manga by Nakamura	2020-12-28 to 2022-06-30	
+33064	2647343925	manga	amato amaro	manga	2005-12-15 to 2007-04-25	
+33063	2117668517	manga	Gad Sfortunato	manga	2007-07-27 to 2009-01-23	
+33062	1382904432	manga	Wacker's Delight	manga	2019-11-30 to 2021-03-30	
+33061	1708382217	manga	unlock	manga	2023-08-04	
+33060	2158560210	manga	Kimi ni Shizumu	manga	2004-07-25 to 2005-04-25	
+33059	2962183333	manga	Tsubaki Dayori	manga	2009-08-28 to 2010-08-27	
+33058	2538862100	manga	Tsubaki Biyori	manga	2008-01-25 to 2009-04-24	
+33057	1555794055	TV	From Old Country Bumpkin to Master Swordsman	TV	2025-04	
+33056	2006480677	TV	Petals of Reincarnation	TV		
+33055	499017683	manga	Petals of Reincarnation	manga	2014-05-30 to 2014-07-30	
+33054	2110104877	special	Undead Unluck	special	2025	
+33053	2694977973	manga	Weekend of Dreams	manga	2005-03 to 2008-03	
+33052	2583027527	manga	room share	manga	2011-02-25 to 2012-04-27	
+33051	1472001796	manga	Kuma to Intelli	manga	2004-05-06 to 2005-04-25	
+33050	2157082799	manga	Al to Nēri to Sono Shūhen	manga	2008-01-25 to 2010-06-25	
+33049	2369977381	manga	Naka-san no Nagare	manga	2007-07-27 to 2011-02-25	
+33048	2644775823	manga	Marigold	manga by Ishino	2012-10-26 to 2015-12-26	
+33047	2568747049	manga	Tonari ni	manga	2018-08-20 to 2019-02-20	
+33046	1013782574	manga	Country Diary	manga	2016-04-28 to 2019-08-30	
+33045	1263238311	manga	Himote no Gimon ni Kotaeru Hon	manga	2023-07-25 to 2024-02-24	
+33044	1552326710	manga	Marriage Game	manga	2017-12-28 to 2023-01-31	
+33043	3152566861	manga	Hoshi no Yakata	manga	1998-11-30 to 2002-11-25	
+33042	2255106723	manga	Noroi de Neko ni Sareta Akujo, Ō Taishi ni Hirowareru	manga	2024-03-12	
+33041	3772441658	manga	Isekai no Ochibi-chan wa Kyō mo Nanika o Tsukuridasu	manga	2024-02-03	
+33040	2021536673	manga	Chiguhagu Happiness	manga	2023-04-30 to 2024-03-31	
+33039	3094872363	manga	Hito de Nashi no Uta	manga	2024-03-10	
+33038	1806725113	manga	Sankakukei no Kowashi Kata	manga	2023-07-07	
+33037	1109836791	manga	Antagonist	manga	2018-06-25 to 2021-02-25	
+33036	2315113728	manga	Saigo no Restaurant	manga	2011-02-21 to 2024-02-21	
+33035	2815584389	manga	Sesesese! Mezase Hatsu H! Dōtei Joshi no Tokimeki Dai Sakusen	manga	2023-10-12	
+33034	884775787	manga	Demilka-sama wa Goritsuyo Akuyaku Reijō	manga	2023-12-15	
+33033	2713681254	movie	COLORFUL STAGE! The Movie: A Miku Who Can't Sing	movie	2025-01-17	
+33032	2198576822	TV	Negative Positive Angler	TV	2024-10	
+33031	1184425318	TV	Yūsha Party o Tsuihō Sareta Shiro Madōshi	TV		
+33030	2946214420	TV	Zutaboro Reijō wa Ane no Moto Konyakusha ni Dekiai Sareru	TV	2025	
+33029	3450626659	manga	Byōtō Fūfu	manga	2022-09-09 to 2024-03-22	
+33028	1087918900	manga	Super Renai Time!	manga	2023-02-07	
+33027	2094118005	manga	Hoshikage Sakuhinshū: Daikiraina Kimi ni	manga	2024-06-05	
+33026	2236572095	manga	Charai Otoko ni Dekiai Sarete Komattemasu	manga	2014-08-09	
+33024	2140243119	manga	Sai Oshi wa Nobunaga-sama!!	manga	2022-04-20
+
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<ann>
+<anime id="4658" gid="1097470093" type="TV" name="Jinki:Extend" precision="TV" generated-on="2024-08-04T18:11:49Z">
+<related-prev rel="adapted from" id="4199"/>
+<info gid="1693214504" type="Picture" src="https://cdn.animenewsnetwork.com/thumbnails/fit200x200/encyc/A4658-7.jpg" width="178" height="200">
+<img src="https://cdn.animenewsnetwork.com/thumbnails/fit200x200/encyc/A4658-7.jpg" width="178" height="200"/>
+</info>
+<info gid="2849059477" type="Main title" lang="JA">Jinki:Extend</info>
+<info gid="2660569749" type="Alternative title" lang="RU">Боевые роботы Дзинки</info>
+<info gid="1675008096" type="Alternative title" lang="JA">ジンキ・エクステンド</info>
+<info gid="2445949786" type="Genres">drama</info>
+<info gid="1267102403" type="Genres">science fiction</info>
+<info gid="253304187" type="Themes">Giant Robots</info>
+<info gid="1769392376" type="Themes">mecha</info>
+<info gid="936033876" type="Themes">military</info>
+<info gid="2421355715" type="Themes">real robot</info>
+<info gid="2605299806" type="Objectionable content">TA</info>
+<info gid="3324519232" type="Plot Summary">Aoba is a young girl who loves to build models of robots. She lived alone with her grandmother until her grandmother passes away. Shortly after she is kidnapped and brought to a secret base where she discovers a huge robot. The piloted robots fight against Ancient-Jinki in The Grand Savanna, but the true meaning behind the fights is hidden. Aoba works hard at the base so one day she can pilot one of the robots and discover these secrets.</info>
+<info gid="2642397968" type="Number of episodes">12</info>
+<info gid="3079748225" type="Vintage">2005-01-05 to 2005-03-23</info>
+<info gid="2071198001" type="Opening Theme">"FLY AWAY" by unicorn table</info>
+<info gid="3833528025" type="Ending Theme">"未来とゆう名の答え (<i>Mirai to yuu na no kotae</i>)" by angela</info>
+<info gid="3603908636" type="Official website" lang="EN" href="https://web.archive.org/web/20060822152703/http://www25.advfilms.com/titles/extend/index_content.html">ADV - Jinki : Extend Offical Site (English)</info>
+<info gid="2164362191" type="Official website" lang="EN" href="https://www.funimation.com/shows/jinki-extend/">FUNimation's Official Jinki:Extend Website</info>
+<info gid="2344820708" type="Official website" lang="JA" href="http://www.tv-asahi.co.jp/jinki/">TV Asahi's Official "Jinki: Extend" Website</info>
+<info gid="1291886456" type="Official website" lang="JA" href="http://www.jinki.info">ジンキ・エクステンド</info>
+<ratings nb_votes="433" weighted_score="6.0272" bayesian_score="6.06951"/>
+<episode num="1">
+<title gid="3095466740" lang="EN">The Battlefield the Girl Saw</title>
+</episode>
+<episode num="2">
+<title gid="1019682570" lang="EN">The Trail of Tears</title>
+</episode>
+<episode num="3">
+<title gid="2879327918" lang="EN">Quality and Quantity</title>
+</episode>
+<episode num="4">
+<title gid="1042118304" lang="EN">Encounter</title>
+</episode>
+<episode num="5">
+<title gid="1323093475" lang="EN">Foes and Friends</title>
+</episode>
+<episode num="6">
+<title gid="3023688674" lang="EN">The Black Operator</title>
+</episode>
+<episode num="7">
+<title gid="2322922310" lang="EN">Fulfilled Ambition</title>
+</episode>
+<episode num="8">
+<title gid="1400916808" lang="EN">The Silver-winged Visitor</title>
+</episode>
+<episode num="9">
+<title gid="2204235069" lang="EN">The Game's Winner</title>
+</episode>
+<episode num="10">
+<title gid="2038411104" lang="EN">Red and Black</title>
+</episode>
+<episode num="11">
+<title gid="250690944" lang="EN">Family</title>
+</episode>
+<episode num="12">
+<title gid="1897449103" lang="EN">Blue and Red</title>
+</episode>
+<episode num="13">
+<title gid="1997989660" lang="EN">And Then</title>
+</episode>
+<review href="https://www.animenewsnetwork.com/review/jinki-extend/dvd-3">Jinki:Extend DVD 3</review>
+<review href="https://www.animenewsnetwork.com/review/jinki-extend/dvd-2">Jinki:Extend DVD 2</review>
+<review href="https://www.animenewsnetwork.com/review/jinki-extend-1">Jinki:Extend 1</review>
+<release date="2009-09-08" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=14829">Jinki:Extend - The Complete Series (DVD)</release>
+<release date="2010-10-05" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=17679">Jinki:Extend - The Complete Series [S.A.V.E. Edition] (DVD)</release>
+<release date="2006-09-05" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=7626">Jinki:Extend (DVD 1)</release>
+<release date="2006-11-07" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=7552">Jinki:Extend (DVD 2)</release>
+<release date="2007-01-02" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=7874">Jinki:Extend (DVD 3)</release>
+<release date="2008-01-01" href="https://www.animenewsnetwork.com/encyclopedia/releases.php?id=10390">Jinki:Extend - Complete Collection [Thinpak] (DVD 1-3)</release>
+<news datetime="2007-08-10T15:58:20Z" href="https://www.animenewsnetwork.com/news/2007-08-10/unicorn-table-to-perform-at-new-york-anime-festival">Unicorn Table to Perform at New York Anime Festival</news>
+<news datetime="2007-09-13T13:15:35Z" href="https://www.animenewsnetwork.com/news/2007-09-13/uk's-propeller-tv-expands-anime-network-to-daily-block">UK's Propeller TV Expands Anime Network to Daily Block</news>
+<news datetime="2007-09-18T13:43:40Z" href="https://www.animenewsnetwork.com/news/2007-09-18/virginia's-akiba-fest-ball-hosts-salia-psychic-lover">Virginia's Akiba Fest Ball Hosts Salia, Psychic Lover</news>
+<news datetime="2008-01-22T18:55:16Z" href="https://www.animenewsnetwork.com/news/2008-01-22/adv-films-uk-switches-from-us-run-office-to-uk-partner">ADV Films UK Switches from US-Run Office to UK Partner</news>
+<news datetime="2008-01-30T19:45:30Z" href="https://www.animenewsnetwork.com/news/2008-01-30/adv-films-removes-titles-from-website-update">ADV Films Removes Titles from Website - Update</news>
+<news datetime="2008-02-20T01:34:59Z" href="https://www.animenewsnetwork.com/news/2008-02-19/unicorn-table-to-play-at-western-new-york-tora-con">Unicorn Table to Play at Western New York's Tora-Con</news>
+<news datetime="2008-06-11T17:57:28Z" href="https://www.animenewsnetwork.com/news/2008-06-11/shonen-gangan-details-gainax-shikabane-hime-aka-anime"><cite>Shonen Gangan</cite> Details Gainax's <cite>Shikabane Hime: Aka</cite> Anime</news>
+<news datetime="2008-07-04T13:01:00Z" href="https://www.animenewsnetwork.com/news/2008-07-04/funimation-picks-up-over-30-former-ad-vision-titles">Funimation Picks Up Over 30 Former AD Vision Titles</news>
+<news datetime="2010-02-09T20:38:08Z" href="https://www.animenewsnetwork.com/news/2010-02-09/dubbed-strike-witches-wallflower-halo-clip-posted">Dubbed <cite>Strike Witches, Wallflower, Halo</cite> Clip Posted</news>
+<news datetime="2010-02-18T03:16:26Z" href="https://www.animenewsnetwork.com/news/2010-02-17/crunchyroll-funimation-stream-shinkai-works-moeyo-ken">Crunchyroll, Funimation Stream Shinkai Works, <cite>Moeyo Ken</cite></news>
+<news datetime="2010-03-04T12:00:00Z" href="https://www.animenewsnetwork.com/news/2010-03-04/shattered-angels-gunslinger-girl-ova-more-streamed"><cite>Shattered Angels, Gunslinger Girl</cite> OVA, More Streamed</news>
+<news datetime="2010-10-05T14:07:52Z" href="https://www.animenewsnetwork.com/news/2010-10-05/north-american-anime-manga-releases-october-3-9">North American Anime, Manga Releases, October 3-9</news>
+<news datetime="2011-02-23T22:38:44Z" href="https://www.animenewsnetwork.com/news/2011-02-23/unicorn-table-singers-to-perform-at-ayacon-warwick">Unicorn Table singers to perform at Ayacon, Warwick</news>
+<news datetime="2011-06-18T03:57:00Z" href="https://www.animenewsnetwork.com/news/2011-06-17/north-american-stream-list/june-10-17">North American Stream List: June 10-17</news>
+<news datetime="2012-01-30T22:00:00Z" href="https://www.animenewsnetwork.com/news/2012-01-30/adv-court-documents-reveal-amounts-paid-for-29-anime-titles">ADV Court Documents Reveal Amounts Paid for 29 Anime Titles</news>
+<staff gid="1560974500">
+<task>Director</task>
+<person id="3610">Masahiko Murata</person>
+</staff>
+<staff gid="2111742793">
+<task>Script</task>
+<person id="668">Hiroyuki Kawasaki</person>
+</staff>
+<staff gid="2939729004">
+<task>Script</task>
+<person id="3086">Naruhisa Arakawa</person>
+</staff>
+<staff gid="2553309728">
+<task>Script</task>
+<person id="68814">Hitomi Amamiya</person>
+</staff>
+<staff gid="1759898295">
+<task>Storyboard</task>
+<person id="4422">Kinji Yoshimoto</person>
+</staff>
+<staff gid="1801311718">
+<task>Storyboard</task>
+<person id="8476">Satoshi Saga</person>
+</staff>
+<staff gid="2219649140">
+<task>Episode Director</task>
+<person id="8476">Satoshi Saga</person>
+</staff>
+<staff gid="714854657">
+<task>Music</task>
+<person id="140">Kenji Kawai</person>
+</staff>
+<staff gid="1082163268">
+<task>Original Manga</task>
+<person id="27743">Sirou Tunasima</person>
+</staff>
+<staff gid="2230005074">
+<task>Character Design</task>
+<person id="15209">Naoto Hosoda</person>
+</staff>
+<staff gid="1938405310">
+<task>Art Director</task>
+<person id="7353">Naoko Kosakabe</person>
+</staff>
+<staff gid="1701314492">
+<task>Animation Director</task>
+<person id="4240">Masami Ōbari</person>
+</staff>
+<staff gid="1515756879">
+<task>Animation Director</task>
+<person id="15209">Naoto Hosoda</person>
+</staff>
+<staff gid="3250390369">
+<task>Animation Director</task>
+<person id="66640">Hiroki Mutaguchi</person>
+</staff>
+<staff gid="3076790874">
+<task>Mechanical design</task>
+<person id="17992">Katsuyuki Tamura</person>
+</staff>
+<staff gid="2676225977">
+<task>Sound Director</task>
+<person id="424">Kazuhiro Wakabayashi</person>
+</staff>
+<staff gid="1843996024">
+<task>Director of Photography</task>
+<person id="7454">Yasuhisa Kondo</person>
+</staff>
+<staff gid="3311864319">
+<task>Producer</task>
+<person id="46074">Hedwig Schleck</person>
+</staff>
+<staff gid="841413005">
+<task>Producer</task>
+<person id="48371">Makoto Takigasaki</person>
+</staff>
+<staff gid="2405542094">
+<task>Producer</task>
+<person id="55498">Shigeru Tateishi</person>
+</staff>
+<cast gid="2661476283" lang="EN">
+<role>Mel J</role>
+<person id="1062">Christine Auten</person>
+</cast>
+<cast gid="2408482882" lang="EN">
+<role>Ryohei Ogawara</role>
+<person id="1064">Jason Douglas</person>
+</cast>
+<cast gid="3934354050" lang="EN">
+<role>Shizuka Tsuzaki</role>
+<person id="2074">Monica Rial</person>
+</cast>
+<cast gid="2680047095" lang="EN">
+<role>Hiroshi Kawamoto</role>
+<person id="2517">Chris Patton</person>
+</cast>
+<cast gid="2380683277" lang="EN">
+<role>Genta Ogawara</role>
+<person id="2525">John Swasey</person>
+</cast>
+<cast gid="1654830201" lang="EN">
+<role>Elnie Tachibana</role>
+<person id="3516">Cynthia Martinez</person>
+</cast>
+<cast gid="3853972106" lang="EN">
+<role>Shiva</role>
+<person id="3660">Kira Vincent-Davis</person>
+</cast>
+<cast gid="1910080947" lang="EN">
+<role>Minami Kosaka</role>
+<person id="4919">Shelley Calene-Black</person>
+</cast>
+<cast gid="3531999063" lang="EN">
+<role>Akao Hiiragi</role>
+<person id="7798">Jessica Boone</person>
+</cast>
+<cast gid="2391728390" lang="EN">
+<role>Rui Kosaka</role>
+<person id="12493">Luci Christian</person>
+</cast>
+<cast gid="1409390351" lang="EN">
+<role>Satsuki Kawamoto</role>
+<person id="13929">Allison Sumrall</person>
+</cast>
+<cast gid="3131068072" lang="EN">
+<role>Hideo Koyatani</role>
+<person id="14187">Nomed Kaerf</person>
+</cast>
+<cast gid="2876815189" lang="EN">
+<role>Yasuyuki Nishihara</role>
+<person id="37623">Blake Shepard</person>
+</cast>
+<cast gid="1384221282" lang="EN">
+<role>Aoba Tsuzaki</role>
+<person id="44595">Brittney Karbowski</person>
+</cast>
+<cast gid="1792866004" lang="JA">
+<role>Shizuka Tsuzaki</role>
+<person id="278">Satsuki Yukino</person>
+</cast>
+<cast gid="2156350370" lang="JA">
+<role>Genta Ogawara</role>
+<person id="458">Rokurō Naya</person>
+</cast>
+<cast gid="3448852547" lang="JA">
+<role>Rui Kōsaka</role>
+<person id="524">Yukari Tamura</person>
+</cast>
+<cast gid="1756973665" lang="JA">
+<role>Elnie Tachibana</role>
+<person id="526">Tomoko Kawakami</person>
+</cast>
+<cast gid="1626578526" lang="JA">
+<role>Aoba Tsuzaki</role>
+<person id="912">Fumiko Orikasa</person>
+</cast>
+<cast gid="1410696507" lang="JA">
+<role>Minami Kōsaka</role>
+<person id="1588">Yoshino Takamori</person>
+</cast>
+<cast gid="2464647858" lang="JA">
+<role>Hiroshi Kawamoto</role>
+<person id="2177">Daisuke Hirakawa</person>
+</cast>
+<cast gid="3084421961" lang="JA">
+<role>Ryouhei Ogawara</role>
+<person id="7629">Takuma Takewaka</person>
+</cast>
+<cast gid="3270154068" lang="JA">
+<role>Mel J Vanette</role>
+<person id="9961">Junko Minagawa</person>
+</cast>
+<cast gid="3151376498" lang="JA">
+<role>Satsuki Kawamoto</role>
+<person id="13321">Ai Nonaka</person>
+</cast>
+<cast gid="2690394696" lang="JA">
+<role>Akao Hiiragi</role>
+<person id="37191">Yuuna Inamura</person>
+</cast>
+<cast gid="1216199898" lang="TL">
+<role>Genta Ogawara</role>
+<person id="38935">Louie Paraboles</person>
+</cast>
+<cast gid="3162120279" lang="TL">
+<role>Ryouhei Ogawara</role>
+<person id="38935">Louie Paraboles</person>
+</cast>
+<cast gid="1449215999" lang="TL">
+<role>Aoba Tsuzaki</role>
+<person id="39024">Grace Cornel</person>
+</cast>
+<cast gid="2741462152" lang="TL">
+<role>Minami Kosaka</role>
+<person id="39024">Grace Cornel</person>
+</cast>
+<cast gid="867204356" lang="TL">
+<role>Akao Hiiragi</role>
+<person id="39656">Sherwin Revestir</person>
+</cast>
+<cast gid="533292258" lang="TL">
+<role>Shizuka Tsuzaki</role>
+<person id="39656">Sherwin Revestir</person>
+</cast>
+<cast gid="2304322786" lang="TL">
+<role>Rui Kosaka</role>
+<person id="42183">Justeen Niebres</person>
+</cast>
+<cast gid="1655325149" lang="TL">
+<role>Shiva</role>
+<person id="42183">Justeen Niebres</person>
+</cast>
+<credit gid="2489952245">
+<task>Animation Production</task>
+<company id="8883">feel.</company>
+</credit>
+<credit gid="2919332591">
+<task>Production</task>
+<company id="160">TV Asahi</company>
+</credit>
+<credit gid="1743771520">
+<task>Production</task>
+<company id="1850">GANSIS</company>
+</credit>
+<credit gid="2207693755">
+<task>Production</task>
+<company id="8883">feel.</company>
+</credit>
+</anime>
+</ann>
