@@ -1,0 +1,857 @@
+Introduction
+The Final Space API is based on the television show Final Space by Olan Rogers from TBS. From talking cats to evil aliens, the animated show tells the intergalactic adventures of Gary Goodspeed and his alien friend Mooncake as they unravel the mystery of "Final Space". The show can be viewed, amongst other places, on TBS, AdultSwim, and Netflix.
+
+All data of this API, such as character info, is obtained from the Final Space wiki. More data such as season and episode information is planned for future release. This data can be used for your own projects such as fan pages or any way you see fit.
+
+All this information is available through a RESTful API implemented in NodeJS. This API returns data in a friendly json format.
+
+The Final Space API is maintained as an open source project on GitHub. More information about contributing can be found in the readme.
+
+REST
+Base url: https://finalspaceapi.com/api/v0/
+
+The base url contains information about all available API's resources. All requests are GET requests and go over https. All responses will return data in json.
+
+Sample Request
+
+https://finalspaceapi.com/api/v0/
+
+Sample Response
+
+[
+  {
+    "type": "GET",
+    "name": "Endpoints Data",
+    "path": "/",
+    "fullUrl": "https://finalspaceapi.com/api/v0/"
+  },
+  {
+    "type": "GET",
+    "name": "All Characters",
+    "path": "/character",
+    "queryParams": [
+      {
+        "optional": true,
+        "name": "Sort By",
+        "values": ["asc", "desc"]
+      }
+    ],
+    "fullUrl": "https://finalspaceapi.com/api/v0/character"
+  },
+  {
+    "type": "GET",
+    "name": "Single Character",
+    "path": "/character/<id>",
+    "fullUrl": "https://finalspaceapi.com/api/v0/character/<id>"
+  },
+  {
+    "type": "GET",
+    "name": "All Episodes",
+    "path": "/episode",
+    "queryParams": [
+      {
+        "optional": true,
+        "name": "Sort By",
+        "values": ["asc", "desc"]
+      }
+    ],
+    "fullUrl": "https://finalspaceapi.com/api/v0/episode"
+  },
+  {
+    "type": "GET",
+    "name": "Single Episode",
+    "path": "/episode/<id>",
+    "fullUrl": "https://finalspaceapi.com/api/v0/episode/<id>"
+  },
+  {
+    "type": "GET",
+    "name": "All Locations",
+    "path": "/location",
+    "queryParams": [
+      {
+        "optional": true,
+        "name": "Sort By",
+        "values": ["asc", "desc"]
+      }
+    ],
+    "fullUrl": "https://finalspaceapi.com/api/v0/location"
+  },
+  {
+    "type": "GET",
+    "name": "Single Location",
+    "path": "/location/<id>",
+    "fullUrl": "https://finalspaceapi.com/api/v0/location/<id>"
+  },
+  {
+    "type": "GET",
+    "name": "All Quotes",
+    "path": "/quote",
+    "queryParams": [
+      {
+        "optional": true,
+        "name": "Sort By",
+        "values": ["asc", "desc"]
+      }
+    ]
+  }
+]
+
+Endpoints
+There are four available resources:
+
+Character: used to get all the characters.
+
+https://finalspaceapi.com/api/v0/character
+
+
+Episode: used to get all the episodes.
+
+https://finalspaceapi.com/api/v0/episode
+
+
+Location: used to get all the locations.
+
+https://finalspaceapi.com/api/v0/location
+
+
+Quote: used to get quotes from Final Space.
+
+https://finalspaceapi.com/api/v0/quote
+
+Character
+This is the documentation for the /character endpoint. There are currently 47 characters sorted by id.
+
+Character schema
+Key	Type	Description
+id	int	The id of the character (starting from 1).
+name	string	The name of the character.
+status	string	The status of the character.
+species	string	The species of the character.
+gender	string	The gender of the character.
+hair	string	The hair color of the character.
+origin	object	Name of the character's origin location.
+abilities	array	Different abilities of character.
+alias	array	Different names of character.
+img_url	string (url)	Link to the character's image. (300x300)
+Get all characters
+You can access the list of characters by using the /character endpoint.
+
+https://finalspaceapi.com/api/v0/character/
+
+[ {
+  "id": 1,
+  "name": "Gary Goodspeed",
+  "status": "Alive",
+  "species": "Human",
+  "gender": "Male",
+  "hair": "Blonde",
+  "alias": [
+    "The Gary (by Lord Commander and Invictus)",
+    "Thunder Bandit(code name)",
+    "Star Dragon(new code name)",
+    "Primate(By Clarence)",
+    "The Captain (self-proclaimed)",
+    "Mommy (by the Dewinter children)",
+    "Jerry by (Quinn)",
+    "Gerald (by Quinn and the S.A.M.E.S)",
+    "Humanoid trash (by Avocato)",
+    "Generic Blonde Guy (by Ash)",
+    "No-Good Thief (by Avocato/Invictus)",
+    "Little Bastard (by Sheryl)",
+    "Larry Tumbleweed (by Tribore)",
+    "Harry Hoodseed (by Tribore)",
+    "Leslie (by Tribore)",
+    "Barry (by Tribore)",
+    "The Fool Who Died A Thousand Deaths (by Invictus)"
+  ],
+  "origin": "Earth",
+  "abilities": [
+    "Piloting",
+    "Marksmanship",
+    "Hand-to-hand combat",
+    "Weapons: Blasters",
+    "Weapons: Black hole gun (briefly)",
+    "Weapons: Robot arm",
+    "Weapons: Laser gun",
+    "Weapons: Laser sword"
+  ],
+  "img_url": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.png"
+}
+  ...
+]
+
+Get a single character
+You can get a single character by adding the id as a parameter: /character/5
+
+https://finalspaceapi.com/api/v0/character/5
+
+{
+  "id": 5,
+  "name": "Avocato",
+  "status": "Alive",
+  "species": "Ventrexian",
+  "gender": "Male",
+  "hair": "Dark Teal / White ",
+  "alias": [
+    "General Avocato",
+    "Mr. Whiskers (by Gary)",
+    "Cat Guy (by Gary)",
+    "Dad (by Little Cato)",
+    "My Boyfriend (by Gary)",
+    "Furry Fantasy Dad Guy (by Biskit)",
+    "Daddy-O (by Little Cato)",
+    "Pops (by Little Cato)",
+    "Ventrexian Filth (by Ash)"
+  ],
+  "origin": "Ventrexia",
+  "abilities": ["Marksmanship", "Surgery", "Combat prowess"],
+  "img_url": "https://finalspaceapi.com/api/character/avatar/avocato.jpg"
+}
+
+Sort the response
+You can now sort the response based on id by passing the /?sort=asc or /?sort=desc query in the URL.
+
+https://finalspaceapi.com/api/v0/character/?sort=desc
+
+[
+  {
+    "id": 47,
+    "name": "Zargon Tukalishi",
+    "status": "Deceased",
+    "species": "Unknown",
+    "gender": "Male",
+    "hair": "None",
+    "alias": [],
+    "origin": "Yarno",
+    "abilities": [],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/zargon_tukalishi.jpg"
+  },
+ ...
+]
+
+Limit the response
+You can now limit the response by passing the /?limit={number} query in the URL.
+
+https://finalspaceapi.com/api/v0/character/?limit=3
+
+[
+  {
+    "id": 1,
+    "name": "Gary Goodspeed",
+    "status": "Alive",
+    "species": "Human",
+    "gender": "Male",
+    "hair": "Blonde",
+    "alias": [
+      "The Gary (by Lord Commander and Invictus)",
+      "Thunder Bandit(code name)",
+      "Star Dragon(new code name)",
+      "Primate(By Clarence)",
+      "The Captain (self-proclaimed)",
+      "Mommy (by the Dewinter children)",
+      "Jerry by (Quinn)",
+      "Gerald (by Quinn and the S.A.M.E.S)",
+      "Humanoid trash (by Avocato)",
+      "Generic Blonde Guy (by Ash)",
+      "No-Good Thief (by Avocato/Invictus)",
+      "Little Bastard (by Sheryl)",
+      "Larry Tumbleweed (by Tribore)",
+      "Harry Hoodseed (by Tribore)",
+      "Leslie (by Tribore)",
+      "Barry (by Tribore)",
+      "The Fool Who Died A Thousand Deaths (by Invictus)"
+    ],
+    "origin": "Earth",
+    "abilities": [
+      "Piloting",
+      "Marksmanship",
+      "Hand-to-hand combat",
+      "Weapons: Blasters",
+      "Weapons: Black hole gun (briefly)",
+      "Weapons: Robot arm",
+      "Weapons: Laser gun",
+      "Weapons: Laser sword"
+    ],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.png"
+  },
+  {
+    "id": 2,
+    "name": "Mooncake",
+    "status": "Unknown",
+    "species": "Mooncake's Species",
+    "gender": "None (referred to as male)",
+    "hair": "None",
+    "alias": [
+      "Specimen E - 351",
+      "Little Buddy",
+      "Planet Destroyer",
+      "Dude cake",
+      "Little Guy",
+      "The Key (by Lord Commander, Invictus, and Ash)",
+      "The Missing Piece (by the Arachnitects)",
+      "Homeslice (by Bolo)",
+      "Booger Ball (by Kevin Van Newton)"
+    ],
+    "origin": "Outer space",
+    "abilities": ["Hovering", "Firing Laser Beams", "Planetary Destruction"],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/mooncake.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Quinn Ergon",
+    "status": "Alive",
+    "species": "Human",
+    "gender": "Female",
+    "hair": "Dark Brown",
+    "alias": [
+      "Nightfall(codename)",
+      "Muy Bueno Super Spicy Lady (by Gary)",
+      "Magnificent Goddess (by Biskit)"
+    ],
+    "origin": "Earth",
+    "abilities": [
+      "Astrophysicist",
+      "Engineer",
+      "Piloting",
+      "Hand - to - hand Combat"
+    ],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/quinn_ergon.jpg"
+  }
+]
+
+Use limit with sort
+You can limit and sort the response simultaneously by passing both limit={number} and sort=desc query parameters in the URL and seperating them with & operator.
+
+https://finalspaceapi.com/api/v0/character/?limit=3&sort=desc
+
+[
+  {
+    "id": 47,
+    "name": "Zargon Tukalishi",
+    "status": "Deceased",
+    "species": "Unknown",
+    "gender": "Male",
+    "hair": "None",
+    "alias": [],
+    "origin": "Yarno",
+    "abilities": [],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/zargon_tukalishi.jpg"
+  },
+  {
+    "id": 46,
+    "name": "Werthrent",
+    "status": "Deceased",
+    "species": "Fire Snake",
+    "gender": "Male",
+    "hair": "None",
+    "alias": ["Serpent God", "Snake God"],
+    "origin": "Serepentis",
+    "abilities": ["Telepathy", "Mind-breaking"],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/werthrent.jpg"
+  },
+  {
+    "id": 45,
+    "name": "Viro",
+    "status": "Deceased",
+    "species": "Cyborg",
+    "gender": "Male",
+    "hair": "None",
+    "alias": [],
+    "origin": "Unknown",
+    "abilities": [],
+    "img_url": "https://finalspaceapi.com/api/character/avatar/viro.jpg"
+  }
+]
+
+Episode
+Currently there are 36 episodes spanning over three seasons released in 2018, 2019 and 2021.
+
+Season 1 premiered on TBS and consists of 10 episodes which are named as Chapter 1, Chapter 2, Chapter 3, etc.
+
+Season 2 premiered in 2019 on Adult Swim and consists of 13 episodes.
+
+Season 3 premiered on March 20, 2021 and consists of 13 episodes.
+
+Episode schema
+Key	Type	Description
+id	int	The id of the episode (starting from 1).
+name	string	The name of the episode.
+air_date	string	The air date of the episode.
+director	string	The director of the episode.
+writer	string	The writer of the episode.
+characters	array	Different characters of the episode.
+img_url	string (url)	Link to the episode's image. (640x480)
+Get all episodes
+You can access the list of episodes by using the /episode endpoint.
+
+https://finalspaceapi.com/api/v0/episode/
+
+[
+  {
+    "id": 1,
+    "name": "Chapter 1",
+    "air_date": "02/15/2018",
+    "director": "Mike Roberts",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/2",
+      "https://finalspaceapi.com/api/v0/character/3",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/11"
+    ],
+    "img_url": "http://finalspaceapi.com/episode/image/chapter1.jpg"
+  },
+ ...
+]
+
+Get a single episode
+You can get a single episode by adding the id as a parameter: /episode/15
+
+https://finalspaceapi.com/api/v0/episode/15
+
+{
+  "id": 15,
+  "name": "The Notorious Mrs. Goodspeed",
+  "air_date": "06/22/2019",
+  "director": "Yoriaki Mochizuki",
+  "writer": "Olan Rogers",
+  "characters": [
+    "https://finalspaceapi.com/api/v0/character/1",
+    "https://finalspaceapi.com/api/v0/character/4",
+    "https://finalspaceapi.com/api/v0/character/6",
+    "https://finalspaceapi.com/api/v0/character/7",
+    "https://finalspaceapi.com/api/v0/character/8",
+    "https://finalspaceapi.com/api/v0/character/9",
+    "https://finalspaceapi.com/api/v0/character/10",
+    "https://finalspaceapi.com/api/v0/character/11",
+    "https://finalspaceapi.com/api/v0/character/12",
+    "https://finalspaceapi.com/api/v0/character/13",
+    "https://finalspaceapi.com/api/v0/character/16"
+  ],
+  "img_url": "http://finalspaceapi.com/episode/image/the_notorious_mrs_goodspeed.jpg"
+}
+
+Sort the response
+You can now sort the response based on id by passing the /?sort=asc or /?sort=desc query in the URL.
+
+https://finalspaceapi.com/api/v0/episode/?sort=desc
+
+[
+  {
+    "id": 23,
+    "name": "The Sixth Key",
+    "air_date": "08/23/2019",
+    "director": "Yoriaki Mochizuki",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/7",
+      "https://finalspaceapi.com/api/v0/character/8",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/12",
+      "https://finalspaceapi.com/api/v0/character/13",
+      "https://finalspaceapi.com/api/v0/character/16"
+    ],
+    "img_url": "http://finalspaceapi.com/episode/image/the_sixth_key.jpg"
+  },
+  ...
+]
+
+Limit the response
+You can now limit the response by passing the /?limit={number} query in the URL.
+
+https://finalspaceapi.com/api/v0/episode/?limit=3
+
+[
+  {
+    "id": 1,
+    "name": "Chapter 1",
+    "air_date": "02/15/2018",
+    "director": "Mike Roberts",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/2",
+      "https://finalspaceapi.com/api/v0/character/3",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/11"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/chapter1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Chapter 2",
+    "air_date": "02/15/2018",
+    "director": "Mike Roberts",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/2",
+      "https://finalspaceapi.com/api/v0/character/3",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/10",
+      "https://finalspaceapi.com/api/v0/character/12",
+      "https://finalspaceapi.com/api/v0/character/14"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/chapter2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Chapter 3",
+    "air_date": "02/26/2018",
+    "director": "Mike Roberts",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/3",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/11",
+      "https://finalspaceapi.com/api/v0/character/14"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/chapter3.jpg"
+  }
+]
+
+Use limit with sort
+You can limit and sort the response simultaneously by passing both limit={number} and sort=desc query parameters in the URL and seperating them with & operator.
+
+https://finalspaceapi.com/api/v0/episode/?limit=3&sort=desc
+
+[
+  {
+    "id": 23,
+    "name": "The Sixth Key",
+    "air_date": "08/23/2019",
+    "director": "Yoriaki Mochizuki",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/7",
+      "https://finalspaceapi.com/api/v0/character/8",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/12",
+      "https://finalspaceapi.com/api/v0/character/13",
+      "https://finalspaceapi.com/api/v0/character/16"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/the_sixth_key.jpg"
+  },
+  {
+    "id": 22,
+    "name": "The Descent Into Darkness",
+    "air_date": "08/16/2019",
+    "director": "Yoriaki Mochizuki",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/7",
+      "https://finalspaceapi.com/api/v0/character/8",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/12",
+      "https://finalspaceapi.com/api/v0/character/13",
+      "https://finalspaceapi.com/api/v0/character/16",
+      "https://finalspaceapi.com/api/v0/character/17"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/the_descent_into_darkness.jpg"
+  },
+  {
+    "id": 21,
+    "name": "The Set Up",
+    "air_date": "08/09/2019",
+    "director": "Anne Walker Farrell",
+    "writer": "Olan Rogers",
+    "characters": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/4",
+      "https://finalspaceapi.com/api/v0/character/6",
+      "https://finalspaceapi.com/api/v0/character/7",
+      "https://finalspaceapi.com/api/v0/character/8",
+      "https://finalspaceapi.com/api/v0/character/9",
+      "https://finalspaceapi.com/api/v0/character/10",
+      "https://finalspaceapi.com/api/v0/character/12",
+      "https://finalspaceapi.com/api/v0/character/13",
+      "https://finalspaceapi.com/api/v0/character/16"
+    ],
+    "img_url": "http://finalspaceapi.com/api/episode/image/the_set_up.jpg"
+  }
+]
+
+Location
+This is the documentation for the /location endpoint. There are currently 12 locations sorted by id.
+
+Location schema
+Key	Type	Description
+id	int	The id of the location (starting from 1).
+name	string	The name of the location.
+type	string	The type of the location.
+inhabitants	array	Inhabitants of the location.
+notable_residents	array	Notable residents(if any).
+img_url	string (url)	Image of the location. (400x300)
+Get all locations
+You can access the list of locations by using the /location endpoint.
+
+https://finalspaceapi.com/api/v0/location/
+
+[
+  {
+    "id": 1,
+    "name": "Earth",
+    "type": "Planet",
+    "inhabitants": ["Humans", "Animals", "Robots", "Aliens"],
+    "notable_residents": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/3"
+    ],
+    "img_url": "https://finalspaceapi.com/api/location/image/earth.jpg"
+  },
+ ...
+]
+
+Get a single location
+You can get a single location by adding the id as a parameter: /location/3
+
+https://finalspaceapi.com/api/v0/location/3
+
+{
+  "id": 3,
+  "name": "Tera Con Prime",
+  "type": "Destroyed planet",
+  "inhabitants": ["Lord Commander's army", "Infinity Guard soldiers"],
+  "notable_residents": [
+    "https://finalspaceapi.com/api/v0/character/10",
+    "https://finalspaceapi.com/api/v0/character/11",
+    "https://finalspaceapi.com/api/v0/character/20",
+    "https://finalspaceapi.com/api/v0/character/27"
+  ],
+  "img_url": "https://finalspaceapi.com/api/location/image/tera_con_prime.jpg"
+}
+
+Sort the response
+You can now sort the response based on id by passing the /?sort=asc or /?sort=desc query in the URL.
+
+https://finalspaceapi.com/api/v0/location/?sort=desc
+
+[
+  {
+        "id": 12,
+        "name": "Invictus' Prison",
+        "type": "Prison dimension",
+        "inhabitants": [
+            "Invictus",
+            "Ash Graven",
+            "Zombie Garys",
+            "Lord Commander"
+        ],
+        "notable_residents": [
+            "https://finalspaceapi.com/api/v0/character/17"
+        ],
+        "img_url": "https://finalspaceapi.com/api/image/invictus_prison.jpg"
+    }
+  ...
+]
+
+Limit the response
+You can now limit the response by passing the /?limit={number} query in the URL.
+
+https://finalspaceapi.com/api/v0/location/?limit=3
+
+[
+  {
+    "id": 1,
+    "name": "Earth",
+    "type": "Planet",
+    "inhabitants": ["Humans", "Animals", "Robots", "Aliens"],
+    "notable_residents": [
+      "https://finalspaceapi.com/api/v0/character/1",
+      "https://finalspaceapi.com/api/v0/character/3"
+    ],
+    "img_url": "https://finalspaceapi.com/api/location/image/earth.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Final Space",
+    "type": "Dimension",
+    "inhabitants": ["Titans", "Invictus", "Quinn"],
+    "notable_residents": [
+      "https://finalspaceapi.com/api/v0/character/2",
+      "https://finalspaceapi.com/api/v0/character/3",
+      "https://finalspaceapi.com/api/v0/character/15",
+      "https://finalspaceapi.com/api/v0/character/18"
+    ],
+    "img_url": "https://finalspaceapi.com/api/location/image/final_space.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tera Con Prime",
+    "type": "Destroyed planet",
+    "inhabitants": ["Lord Commander's army", "Infinity Guard soldiers"],
+    "notable_residents": [
+      "https://finalspaceapi.com/api/v0/character/10",
+      "https://finalspaceapi.com/api/v0/character/11",
+      "https://finalspaceapi.com/api/v0/character/20",
+      "https://finalspaceapi.com/api/v0/character/27"
+    ],
+    "img_url": "https://finalspaceapi.com/api/location/image/tera_con_prime.jpg"
+  }
+]
+
+Use limit with sort
+You can limit and sort the response simultaneously by passing both limit={number} and sort=desc query parameters in the URL and seperating them with & operator.
+
+https://finalspaceapi.com/api/v0/location/?limit=3&sort=desc
+
+[
+  {
+    "id": 12,
+    "name": "Invictus' Prison",
+    "type": "Prison dimension",
+    "inhabitants": ["Invictus", "Ash Graven", "Zombie Garys", "Lord Commander"],
+    "notable_residents": ["https://finalspaceapi.com/api/v0/character/17"],
+    "img_url": "https://finalspaceapi.com/api/image/invictus_prison.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Ventrexia",
+    "type": "Planet",
+    "inhabitants": ["Ventrexian"],
+    "notable_residents": [
+      "https://finalspaceapi.com/api/v0/character/5",
+      "https://finalspaceapi.com/api/v0/character/4"
+    ],
+    "img_url": "https://finalspaceapi.com/api/image/ventrexia.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Serepentis",
+    "type": "Planet",
+    "inhabitants": ["Serepentians"],
+    "notable_residents": ["https://finalspaceapi.com/api/v0/character/7"],
+    "img_url": "https://finalspaceapi.com/api/image/serepentis.jpg"
+  }
+]
+
+Quote
+This is the documentation for the /quote endpoint. There are currently 51 quotes sorted by id.
+
+Location schema
+Key	Type	Description
+id	int	The id of the quote (starting from 1).
+quote	string	Quote from Final Space.
+by	string	Character who said the Quote.
+character	string (url)	URL to Character endpoint.
+image	string (url)	Image of the Charater.
+Get all quotes
+You can access the all the quotes by using the /quote endpoint.
+
+https://finalspaceapi.com/api/v0/quote/
+
+[
+  {
+    "id": 1,
+    "quote": "How about fricken’ no?!",
+    "by": "Gary Goodspeed",
+    "character": "https://finalspaceapi.com/api/v0/character/1",
+    "image": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.jpg"
+  },
+  {
+    "id": 2,
+    "quote": "You see, I like that. I like a girl with a lot of phones.",
+    "by": "Gary Goodspeed",
+    "character": "https://finalspaceapi.com/api/v0/character/1",
+    "image": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.jpg"
+  },
+
+ ...
+]
+
+Sort the response
+You can now sort the response based on id by passing the /?sort=asc or /?sort=desc query in the URL.
+
+https://finalspaceapi.com/api/v0/quote/?sort=desc
+
+[
+  {
+    "id": 51,
+    "quote": "Oh...okay... yeah... I think you are under arrest.",
+    "by": "Chuck",
+    "character": "https://finalspaceapi.com/api/v0/character/23",
+    "image": "https://finalspaceapi.com/api/character/avatar/chuck.jpg"
+  }
+  ...
+]
+
+Limit the response
+You can limit the response by passing the /?limit={number} query in the URL.
+
+https://finalspaceapi.com/api/v0/quote/?limit=3
+
+[
+  {
+    "id": 1,
+    "quote": "How about fricken’ no?!",
+    "by": "Gary Goodspeed",
+    "character": "https://finalspaceapi.com/api/v0/character/1",
+    "image": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.jpg"
+  },
+  {
+    "id": 2,
+    "quote": "You see, I like that. I like a girl with a lot of phones.",
+    "by": "Gary Goodspeed",
+    "character": "https://finalspaceapi.com/api/v0/character/1",
+    "image": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.jpg"
+  },
+  {
+    "id": 3,
+    "quote": "Let's get wild. How about you buy me a drink?",
+    "by": "Gary Goodspeed",
+    "character": "https://finalspaceapi.com/api/v0/character/1",
+    "image": "https://finalspaceapi.com/api/character/avatar/gary_goodspeed.jpg"
+  }
+]
+
+Use limit with sort
+You can limit and sort the response simultaneously by passing both limit={number} and sort=desc query parameters in the URL and seperating them with & operator.
+
+https://finalspaceapi.com/api/v0/quote/?limit=3&sort=desc
+
+[
+  {
+    "id": 51,
+    "quote": "Oh...okay... yeah... I think you are under arrest.",
+    "by": "Chuck",
+    "character": "https://finalspaceapi.com/api/v0/character/23",
+    "image": "https://finalspaceapi.com/api/character/avatar/chuck.jpg"
+  },
+  {
+    "id": 50,
+    "quote": "Yes, that's Chuck, now please surrender and this all goes away.",
+    "by": "Chuck",
+    "character": "https://finalspaceapi.com/api/v0/character/23",
+    "image": "https://finalspaceapi.com/api/character/avatar/chuck.jpg"
+  },
+  {
+    "id": 49,
+    "quote": "Ergon, we have orders to arrest your for, uh..., grand theft.",
+    "by": "Chuck",
+    "character": "https://finalspaceapi.com/api/v0/character/23",
+    "image": "https://finalspaceapi.com/api/character/avatar/chuck.jpg"
+  }
+]

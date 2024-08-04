@@ -1,0 +1,84 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "Final Space API",
+                "api_name": "Single Character",
+                "api_description": "Get details of a single character by ID.",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "INTEGER",
+                        "description": "ID of the character",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "id": "int",
+                        "name": "string",
+                        "status": "string",
+                        "species": "string",
+                        "gender": "string",
+                        "hair": "string",
+                        "origin": "string",
+                        "abilities": ["array of strings"],
+                        "alias": ["array of strings"],
+                        "img_url": "string (url)"
+                    }
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "Final Space API",
+                "api_name": "All Episodes",
+                "api_description": "Get all episodes from Final Space.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "ENUM",
+                        "description": "Sort the episodes by ID",
+                        "default": "asc",
+                        "values": ["asc", "desc"]
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of episodes returned",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "id": "int",
+                            "name": "string",
+                            "air_date": "string",
+                            "director": "string",
+                            "writer": "string",
+                            "characters": ["array of strings"],
+                            "img_url": "string (url)"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Show me the details of the character Gary Goodspeed and list all episodes.",
+        "relevant_APIs": [
+            [
+                "Final Space API",
+                "Single Character"
+            ],
+            [
+                "Final Space API",
+                "All Episodes"
+            ]
+        ],
+        "query_id": 2
+    }
+]
