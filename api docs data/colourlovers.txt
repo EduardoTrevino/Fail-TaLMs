@@ -1,0 +1,482 @@
+Colors
+Request URLs: [For Multiple Colors]
+
+http://www.colourlovers.com/api/colors
+http://www.colourlovers.com/api/colors/new
+http://www.colourlovers.com/api/colors/top
+http://www.colourlovers.com/api/colors/random [No parameters allowed]
+
+Parameters [Case-sensitve]: lover, hueRange, briRange, keywords, keywordExact, orderCol, sortBy, numResults, resultOffset, format, jsonCallback
+
+Example Parameters:
+lover	=	COLOURlover
+hueRange	=	12,68   [values must be 0>value<359, and the left value must be less than the right value]
+briRange	=	2,88   [values must be 0>value<99, and the left value must be less than the right value]
+keywords	=	search+term
+keywordExact	=	0 or 1   [Perform an exact search for the keywords passed. Default 0]
+orderCol	=	X   [Where X can be: dateCreated, score, name, numVotes, or numViews]
+sortBy	=	X   [Where X can be: ASC or DESC. Default ASC]
+numResults	=	20   [Number of results to return, maximum of 100. Default 20]
+resultOffset	=	5   [Result offset, for paging. Default 0]
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Requests with orderCol defined will override any /new or /top switch
+
+Request URL: [For One Color]
+
+http://www.colourlovers.com/api/color/6B4106 - Where 6B4106 is any 6-char hex value
+Parameters [Case-sensitve]: format, jsonCallback
+
+Example Parameters:
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Example Result:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<colors>
+   <color>
+      <id>903893</id>
+      <title><![CDATA[wet dirt]]></title>
+      <userName><![CDATA[jessicabrown]]></userName>
+      <numViews>0</numViews>
+      <numVotes>0</numVotes>
+      <numComments>0</numComments>
+      <numHearts>0</numHearts>
+      <rank>903853</rank>
+      <dateCreated>2008-03-17 11:22:21</dateCreated>
+      <hex>6B4106</hex>
+      <rgb>
+         <red>107</red>
+         <green>65</green>
+         <blue>6</blue>
+      </rgb>
+      <hsv>
+         <hue>35</hue>
+         <saturation>94</saturation>
+         <value>42</value>
+      </hsv>
+      <description><![CDATA[]]></description>
+      <url><![CDATA[http://www.colourlovers.com/color/6B4106/wet_dirt]]></url>
+      <imageUrl><![CDATA[http://www.colourlovers.com/img/6B4106/100/100/wet_dirt.png]]></imageUrl>
+      <badgeUrl><![CDATA[http://www.colourlovers.com/images/badges/c/903/903893_wet_dirt.png]]></badgeUrl>
+      <apiUrl>http://www.colourlovers.com/api/color/6B4106</apiUrl>
+   </color>
+</colors>
+
+JSON formatted results contain the above data in JSON format [how's that for redundancy?]
+
+Breakdown of API xml:
+
+id	Unique id for this Color
+title	Title / Name of the Color CDATA
+userName	Username of the Color's creator CDATA
+numViews	Number of views this Color has received
+numVotes	Number of votes this Color has received
+numComments	Number of comments this Color has received
+numHearts	Number of hearts this Color has
+rank	This Color's rank on COLOURlovers.com
+dateCreated	Date this Color was created
+hex	This Color's hex value
+rgb	RGB breakdown of this Color
+     red	Red value
+     green	Green value
+     blue	Blue value
+hsv	HSV breakdown of this color
+     hue	Hue value
+     saturation	Saturation value
+     value	Value / Balance value
+description	This Color's description CDATA
+url	This Color's COLOURlovers.com URL CDATA
+imageUrl	Link to a png version of this Color CDATA
+badgeUrl	Link to a COLOURlovers.com badge for this Color CDATA
+apiUrl	This Color's COLOURlovers.com API URL CDATA
+
+
+Palettes
+Request URLs: [For Multiple Palettes]
+
+http://www.colourlovers.com/api/palettes
+http://www.colourlovers.com/api/palettes/new
+http://www.colourlovers.com/api/palettes/top
+http://www.colourlovers.com/api/palettes/random [No parameters allowed]
+
+Parameters [Case-sensitve]: lover, hueOption, hex, hex_logic, keywords, keywordExact, orderCol, sortBy, numResults, resultOffset, format, jsonCallback, showPaletteWidths
+
+Example Parameters:
+lover	=	COLOURlover
+hueOption	=	yellow,orange,red  or  green,violet  or  blue
+[Possible Values can be a combination of: red, orange, yellow, green, aqua, blue, violet, and / or fuchsia]
+hex	=	00FF33  or  00FF33,CC00FF,DD0033,003333,0033FF
+[Possible Values: any valid 6-char hex value or list of up to five (5) hex values, separated by commas]
+hex_logic	=	AND  or  OR
+Sets the comparison logic for the hex list. Passing AND will find palettes with all provided hex values, passing OR will find palettes with any of the provided hex values.
+[Possible Values: AND or OR. Default AND]
+keywords	=	search+term
+keywordExact	=	0 or 1   [Perform an exact search for the keywords passed. Default 0]
+orderCol	=	X   [Where X can be: dateCreated, score, name, numVotes, or numViews]
+sortBy	=	X   [Where X can be: ASC or DESC. Default ASC]
+numResults	=	20   [Number of results to return, maximum of 100. Default 20]
+resultOffset	=	5   [Result offset, for paging. Default 0]
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+showPaletteWidths	=	0 or 1   [Shows palette's color's widths. Default 0]
+
+Requests with orderCol defined will override any /new or /top switch
+
+Request URL: [For One Palette]
+
+http://www.colourlovers.com/api/palette/113451 - Where 113451 is an integer and a valid paletteID
+Parameters [Case-sensitve]: format, jsonCallback, showPaletteWidths
+
+Example Parameters:
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+showPaletteWidths	=	0 or 1   [Shows palette's color's widths. Default 0]
+
+Example Result:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<palettes>
+  <palette>
+    <id>12345</id>
+    <title><![CDATA[be my boy]]></title>
+    <userName><![CDATA[sinta schneider]]></userName>
+    <numViews>1052</numViews>
+    <numVotes>37</numVotes>
+    <numComments>13</numComments>
+    <numHearts>4.5</numHearts>
+    <rank>1</rank>
+    <dateCreated>2008-03-01 16:19:21</dateCreated>
+    <colors>
+      <hex>423238</hex>
+      <hex>F5DE8C</hex>
+      <hex>C8D197</hex>
+      <hex>B3702D</hex>
+      <hex>EB2138</hex>
+    </colors>
+    <!-- Optional color widths [Only returned with the ?showPaletteWidths=1] -->
+    <colorWidths>0.2,0.2,0.2,0.2,0.2</colorWidths>
+    <description><![CDATA[]]></description>
+    <url><![CDATA[http://www.colourlovers.com/palette/293826/be_my_boy]]></url>
+    <imageUrl><![CDATA[http://www.colourlovers.com/paletteImg/423238/F5DE8C/C8D197/B3702D/EB2138/be_my_boy.png]]></imageUrl>
+    <badgeUrl><![CDATA[http://www.colourlovers.com/images/badges/p/293/293826_be_my_boy.png]]></badgeUrl>
+    <apiUrl>http://www.colourlovers.com/api/palette/293826</apiUrl>
+  </palette>
+</palettes>
+
+JSON formatted results contain the above data in JSON format [how's that for redundancy?]
+
+Breakdown of API xml:
+
+id	Unique id for this Palette
+title	Title / Name of the Palette CDATA
+userName	Username of the Palette's creator CDATA
+numViews	Number of views this Palette has received
+numVotes	Number of votes this Palette has received
+numComments	Number of comments this Palette has received
+numHearts	Number of hearts this Palette has
+rank	This Palette's rank on COLOURlovers.com
+dateCreated	Date this Palette was created
+colors	List of Colors within this Palette
+     hex	Hex value
+     hex	Hex value
+     [hex]	Hex value [may not be present]
+     [hex]	Hex value [may not be present]
+     [hex]	Hex value [may not be present]
+Optional color widths [Only returned with the ?showPaletteWidths=1 switch]
+colorWidths	This Palette's Color's widths. Ranges from 0.0 to 1.0
+description	This Palette's description CDATA
+url	This Palette's COLOURlovers.com URL CDATA
+imageUrl	Link to a png version of this Palette CDATA
+badgeUrl	Link to a COLOURlovers.com badge for this Palette CDATA
+apiUrl	This Palette's COLOURlovers.com API URL CDATA
+
+
+Patterns
+Request URLs: [For Multiple Patterns]
+
+http://www.colourlovers.com/api/patterns
+http://www.colourlovers.com/api/patterns/new
+http://www.colourlovers.com/api/patterns/top
+http://www.colourlovers.com/api/patterns/random [No parameters allowed]
+
+Parameters [Case-sensitve]: lover, hueOption, hex, hex_logic, keywords, keywordExact, orderCol, sortBy, numResults, resultOffset, format, jsonCallback
+
+Example Parameters:
+lover	=	COLOURlover
+hueOption	=	yellow,orange,red  or  green,violet  or  blue
+[Possible Values can be a combination of: red, orange, yellow, green, aqua, blue, violet, and / or fuchsia]
+hex	=	00FF33  or  00FF33,CC00FF,DD0033,003333,0033FF
+[Possible Values: any valid 6-char hex value or list of up to five (5) hex values, separated by commas]
+hex_logic	=	AND  or  OR
+Sets the comparison logic for the hex list. Passing AND will find patterns with all provided hex values, passing OR will find patterns with any of the provided hex values.
+[Possible Values: AND or OR. Default AND]
+keywords	=	search+term
+keywordExact	=	0 or 1   [Perform an exact search for the keywords passed. Default 0]
+orderCol	=	X   [Where X can be: dateCreated, score, name, numVotes, or numViews]
+sortBy	=	X   [Where X can be: ASC or DESC. Default ASC]
+numResults	=	20   [Number of results to return, maximum of 100. Default 20]
+resultOffset	=	5   [Result offset, for paging. Default 0]
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Requests with orderCol defined will override any /new or /top switch
+
+Request URL: [For One Pattern]
+
+http://www.colourlovers.com/api/pattern/1451 - Where 1451 is an integer and a valid patternID
+
+Parameters [Case-sensitve]: format, jsonCallback
+
+Example Parameters:
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Example Result:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<patterns>
+  <pattern>
+    <id>12345</id>
+    <title><![CDATA[Tenderness.]]></title>
+    <userName><![CDATA[not.an.am.person]]></userName>
+    <numViews>617</numViews>
+    <numVotes>32</numVotes>
+    <numComments>14</numComments>
+    <numHearts>4.5</numHearts>
+    <rank>1</rank>
+    <dateCreated>2008-03-01 06:43:38</dateCreated>
+    <colors>
+      <hex>C6C5AC</hex>
+      <hex>CDB89F</hex>
+      <hex>D4AA93</hex>
+      <hex>B8E0C5</hex>
+      <hex>BFD3B8</hex>
+    </colors>
+    <description><![CDATA[]]></description>
+    <url><![CDATA[http://www.colourlovers.com/pattern/49471/Tenderness.]]></url>
+    <imageUrl><![CDATA[http://colourlovers.com.s3.amazonaws.com/images/patterns/49/49471.png]]></imageUrl>
+    <badgeUrl><![CDATA[http://www.colourlovers.com/images/badges/n/49/49471_Tenderness..png]]></badgeUrl>
+    <apiUrl>http://www.colourlovers.com/api/pattern/49471</apiUrl>
+  </pattern>
+</patterns>
+
+JSON formatted results contain the above data in JSON format [how's that for redundancy?]
+
+Breakdown of API xml:
+
+id	Unique id for this Pattern
+title	Title / Name of the Pattern CDATA
+userName	Username of the Pattern's creator CDATA
+numViews	Number of views this Pattern has received
+numVotes	Number of votes this Pattern has received
+numComments	Number of comments this Pattern has received
+numHearts	Number of Hearts this Pattern has
+rank	This Pattern's rank on COLOURlovers.com
+dateCreated	Date this Pattern was created
+colors	List of colors within this Pattern
+     hex	Hex value
+     hex	Hex value
+     [hex]	Hex value [may not be present]
+     [hex]	Hex value [may not be present]
+     [hex]	Hex value [may not be present]
+description	This Pattern's description CDATA
+url	This Pattern's COLOURlovers.com URL CDATA
+imageUrl	Link to a png version of this Pattern CDATA
+badgeUrl	Link to a COLOURlovers.com badge for this Pattern CDATA
+apiUrl	This Pattern's COLOURlovers.com API URL CDATA
+
+
+Lovers
+Request URLs: [For Multiple Lovers]
+
+http://www.colourlovers.com/api/lovers
+http://www.colourlovers.com/api/lovers/new
+http://www.colourlovers.com/api/lovers/top
+
+Parameters [Case-sensitve]: orderCol, sortBy, numResults, resultOffset, format, jsonCallback
+
+Example Parameters:
+orderCol	=	X   [Where X can be: dateCreated, score, name, numVotes, or numViews]
+sortBy	=	X   [Where X can be: ASC or DESC. Default ASC]
+numResults	=	20   [Number of results to return, maximum of 100. Default 20]
+resultOffset	=	5   [Result offset, for paging. Default 0]
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Requests with orderCol defined will override any /new or /top switch
+
+Request URL: [For One Lover]
+
+http://www.colourlovers.com/api/lover/COLOURlover - Where COLOURlover is a valid COLOURlovers.com Username
+
+Parameters [Case-sensitve]: comments, format, jsonCallback
+
+Example Parameters:
+comments	=	0 or 1   [If 1, will show last 10 comments for given Lover]
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Example Result:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lovers>
+  <lover>
+    <id>12345</id>
+    <userName><![CDATA[electrikmonk]]></userName>
+    <dateRegistered>2005-08-07 6:45:47</dateRegistered>
+    <dateLastActive>2008-03-16 21:02:01</dateLastActive>
+    <rating>554159</rating>
+    <location><![CDATA[#FF0000stick, LA, US]]></location>
+    <numColors>3,498</numColors>
+    <numPalettes>2,775</numPalettes>
+    <numPatterns>36</numPatterns>
+    <numCommentsMade>7,201</numCommentsMade>
+    <numLovers>710</numLovers>
+    <numCommentsOnProfile>672</numCommentsOnProfile>
+    <!-- Optional comments [Only returned when viewing one Lover with the ?comments=1] -->
+    <comments>
+      <comment>
+        <commentDate>2008-03-10 05:10:58</commentDate>
+        <commentUserName><![CDATA[mashedpotato]]></commentUserName>
+        <commentComments><![CDATA[you are so awesome. :x ]]></commentComments>
+      </comment>
+    </comments>
+    <url><![CDATA[http://www.colourlovers.com/lover/electrikmonk]]></url>
+    <apiUrl><![CDATA[http://www.colourlovers.com/api/lover/electrikmonk]]></apiUrl>
+  </lover>
+</lovers>
+
+JSON formatted results contain the above data in JSON format [how's that for redundancy?]
+
+Breakdown of API xml:
+
+id	Unique id for this Lover
+userName	This Lover's Username CDATA
+dateRegistered	Date this Lover registered with COLOURlovers.com
+dateLastActive	Date this Lover was last active on COLOURlovers.com
+rating	This Lover's rating
+location	This Lover's location
+numColors	Number of Colors this Lover has made
+numPalettes	Number of Palettes this Lover has made
+numPatterns	Number of Patterns this Lover has made
+numCommentsMade	Number of comments this Lover has made
+numLovers	Number of Lovers [friends] this Lover has
+numCommentsOnProfile	Number of comments this Lover has on their profile
+Optional comments [Only returned when viewing one Lover with the ?comments=1 switch]
+comments	Last 10 comments made on this Lover's profile
+     comment	Individual comment
+          commentDate	Date the comment was made Format YYYY-MM-DD HH:MM:SS - times are CST/CDT
+          commentUserName	Commenter's COLOURlovers.com Username CDATA
+          commentComments	And finally, the comments! CDATA
+url	This Lover's COLOURlovers.com URL CDATA
+apiUrl	This Lover's COLOURlovers.com API URL CDATA
+
+
+Stats
+Request URLs:
+
+http://www.colourlovers.com/api/stats/colors
+http://www.colourlovers.com/api/stats/palettes
+http://www.colourlovers.com/api/stats/patterns
+http://www.colourlovers.com/api/stats/lovers
+
+Parameters [Case-sensitve]: format, jsonCallback
+
+Example Parameters:
+format	=	json or xml   [Result format. Default is xml]
+jsonCallback	=	yourCallbackFunction   [Adds a callback to JSON format. Assumes format=json]
+
+Example Result:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stats>
+  <total>1500563</total>
+</stats>
+
+JSON formatted results contain the above data in JSON format [how's that for redundancy?]
+
+Breakdown of API xml:
+
+total	Total number of colors, palettes, patterns or lovers in the COLOURlovers system.
+
+
+Example API code [PHP]
+<?php
+  $curl = curl_init();
+  curl_setopt($curl,CURLOPT_URL,"http://www.colourlovers.com/api/colors/new");
+  curl_setopt($curl,CURLOPT_HEADER,false);
+  curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+  $xml = curl_exec($curl);
+  curl_close($curl);
+
+  header("Content-Type: text/xml; charset=utf-8");
+  echo $xml;
+?>
+
+
+Example API code [CFML] Example Provided by Rob Shaw at www.projectpods.com
+<cfset variables.baseurl = "http://www.colourlovers.com/api/">
+<cffunction name="getTopPatterns" access="public" returntype="array">
+  <cfargument name="numberResults" type="numeric" default="20">
+
+  <cfscript>
+    var aPattern = arrayNew(1);
+    var x = 0;
+    var j = 0;
+    var result = "";
+    var xmlResult = "";
+  </cfscript>
+
+  <cfhttp url="#variables.baseurl#/patterns/top" result="result">
+    <cfhttpparam type="formfield" name="numResults" value="#arguments.numberResults#" />
+  </cfhttp>
+  <cfscript>
+    xmlResult = xmlparse(result.fileContent);
+  </cfscript>
+  <cfloop index="x" from="1" to="#arrayLen(xmlresult.patterns.pattern)#">
+    <cfscript>
+      aPattern[x] = structNew();
+      aPattern[x].id = xmlresult.patterns.pattern[x].id.xmltext;
+      aPattern[x].title = xmlresult.patterns.pattern[x].title.xmltext;
+      aPattern[x].description = xmlresult.patterns.pattern[x].description.xmltext;
+      aPattern[x].patternUrl = xmlresult.patterns.pattern[x].imageUrl.xmltext;
+      aPattern[x].colors = arrayNew(1);
+      aPattern[x].hexCount = arrayLen(xmlresult.patterns.pattern[x].colors.hex);
+
+      for (j=1;j lte aPattern[x].hexCount;j=j+1) {
+        aPattern[x].colors[j] = xmlresult.patterns.pattern[x].colors.hex[j].xmlText;
+      }
+    </cfscript>
+  </cfloop>
+
+  <cfreturn aPattern>
+</cffunction>
+
+
+Example API code [Perl] Example Provided by Alan Haggai Alavi at alanhaggai.org
+Project website: search.cpan.org/~haggai/Net-COLOURlovers-0.01
+  use Net::COLOURlovers;
+  my $cl = Net::COLOURlovers->new;
+  my $pattern = $cl->pattern_random;
+  my @colors = $cl->colors_top( { 'numResults' => 5 } );
+
+
+Example API code [.NET] Example Provided by Scott Holodak
+Source: github.com/scottt732/ColourLoversDotNet
+Binaries: nuget.org/packages/ColourLovers
+  var svc = new ColourLoversRepository();
+
+
+Example API code [Python] Example Provided by Sebastian Vetter
+Source: github.com/elbaschid/python-colourlovers
+Documentation: python-colourlovers.readthedocs.org/en/latest/
+  >>> from colourlovers import ColourLovers
+  >>> cl = ColourLovers()
+  >>> cl.color('#37cbff')
+  [<Colour id='4767129' title='i feel pretty' rgb=(55, 203, 255)>]
+  >>> cl.palettes('new', keywords='funky', numResults=3)
+  [<Palette id='1940972' title='"Funky President"'>,
+   <Palette id='1936394' title='Barbie Doll Blonde'>,
+   <Palette id='1936247' title='Lily's Rainbow'>]
+
+
+Example API code [INSERT LANGUAGE HERE]
+If you would like to contribute source code in your language of choice on how to call COLOURlovers' API, please send us your code along with your consent to use it! Be sure to let us know who to thank, too!
