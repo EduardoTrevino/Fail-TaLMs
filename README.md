@@ -27,7 +27,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Chronicling America              | 2         | :x:        | TBD      |
 | Content          | Crossref                         | 2         | :x:        | TBD      |
 | Content          | Final Space                      | 2         | :x:        | TBD      |
-| Content          | HackerNews                       | 0         | :x:        | TBD      |
+| Content          | HackerNews                       | 2         | :x:        | TBD      |
 | Content          | Ice and Fire                     | 0         | :x:        | TBD      |
 | Content          | Jikan                            | 0         | :x:        | TBD      |
 | Content          | Listly                           | 0         | :x:        | TBD      |

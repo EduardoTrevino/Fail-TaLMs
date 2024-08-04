@@ -1,0 +1,124 @@
+{
+  "tool_name": "Hacker News API",
+  "tool_description": "Public Hacker News data available in near real-time.",
+  "title": "Hacker News API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 150,
+    "avgSuccessRate": 99,
+    "popularityScore": 9.5
+  },
+  "home_url": "https://github.com/HackerNews/API",
+  "host": "hacker-news.firebaseio.com",
+  "api_list": [
+    {
+      "name": "Get Story by ID",
+      "url": "https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty",
+      "description": "Fetch a Hacker News story by its ID.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "The ID of the story.",
+          "default": 8863
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty\"\nresponse = requests.get(url)\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "by": {
+            "type": "string"
+          },
+          "descendants": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "kids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "score": {
+            "type": "integer"
+          },
+          "time": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Get Comment by ID",
+      "url": "https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty",
+      "description": "Fetch a Hacker News comment by its ID.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "The ID of the comment.",
+          "default": 2921983
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty\"\nresponse = requests.get(url)\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "by": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "kids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "parent": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "time": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}
