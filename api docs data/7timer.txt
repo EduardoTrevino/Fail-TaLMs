@@ -1,0 +1,490 @@
+1. Introduction
+2. Getting Forecast
+2.1 Web Interface
+2.2 Application Programming Interface (API)
+2.2.1 Graphical API
+2.2.2 Machine-readable API
+2.2.3 Variables
+2.3 Products and Icon Set Definition
+2.3.1 CIVIL
+2.3.2 CIVIL Light
+2.3.3 Two-Week-Overview
+2.3.4 ASTRO
+2.3.5 METEO
+3. Weather Chart
+4. Frequently Asked Questions
+5. Acknowledgement and Disclaimer
+Last Update: November 1, 2012
+
+1. Introduction
+7Timer! is a series of web-based meteorological forecast products, mainly derived from the NOAA/NCEP-based numeric weather model, the Global Forecast System (GFS). 7Timer! was firstly established in July 2005 as an exploration product under supported of the National Astronomical Observatories of China and had been largely renovated in 2008 and 2011. Currently it is supported by the Shanghai Astronomical Observatory of Chinese Academy of Sciences.
+
+
+The 2nd version of 7Timer! - APanel, the predecessor of ASTRO
+7Timer! produces high-resolution forecast for the entire globe that covering about 1.5 million geographic points, and would be updated four times a day. It also produces specialized products for users with different concentrations such as astronomy or meteorology.
+
+2. Getting Forecast
+The forecast can be accessed by visiting the web interface at www.7timer.info, or by calling the application programming interface (API).
+
+2.1 Web Interface
+The web interface at www.7timer.info is written with support from the 3rd version of Google Maps API that works in Internet Explorer 7.0+, Firefox 3.0+, Safari 4+, Google Chrome and Android browsers. To get the forecast for a site, left-click the site on the map, and move the cursor over the marker, the information box consisting links to forecast pages will then be displayed.
+
+For users unable to load Google Maps API, an alternative method to directly access the forecast page is provided. Users may then using the site search engine to find locations. This method works well in most platforms supporting JavaScript, including Internet Explorer 6.0.
+
+Please notice that some products require a longer loading time (such as CIVIL and METEO), so please wait patiently.
+
+You may also use the search form on top of the map to find a site. Such queries will be forwarded to and processed by Google.
+
+Default geolocation method is GeoIP, meaning by default your current location will be derived by the IP address of your device. You may wish to try W3C geolocation method for higher usability and accuracy; however, W3C geolocation only works in Firefox 3.5+, Google Chrome, Opera 10.6+, Internet Explorer 9.0+, and Safari 5+. On mobile devices, W3C geolocation works on iPhone, Google Android, Maemo and Opera Mobile 10.1+. Geolocation by Google Gears is not supported at this time.
+
+2.2 Application Programming Interface (API)
+The application programming interface (API) of 7Timer! is highly flexible and is very easy to use. They can be used directly without registering an API key. Currently, we offer two types of APIs for users with different purposes: graphical and machine-readable APIs.
+
+2.2.1 Graphical API
+The graphical API will display the forecast diagram as seen at the 7Timer! website. The URL to the graphical API of the site you specified is like:
+
+http://www.7timer.info/bin/astro.php?lon=113.17&lat=23.09&ac=0&lang=en&unit=metric&output=internal&tzshift=0
+
+The graphical API, when called, will produce a PNG-type image, so you may use <img> tag to include the forecast diagrams in your website.
+
+2.2.2 Machine-readable API
+The machine-readable API will return a set of data that can be used directly by application. By far, APIs in two standards are available: Extensible Markup Language (XML) or JavaScript Object Notation (JSON). The URLs to these two standards are similar as:
+
+http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=xml
+
+There are four parameters that need to be set to successfully call the API: lon and lat for geographic coordinate of the location, product for the product you wish to use (any of "astro", "civil", "civillight", "meteo" or "two"), and output for the standard you wish to use (either "xml" or "json").
+
+Summary of meteorological elements provided by the corresponding API of each product is given below.
+
+CIVIL	CIVIL Light	TWO	ASTRO	METEO
+Cloud Cover	Y	Y		Y	Y
+Cloud Profile					Y
+Lifted Index	Y		Y	Y	Y
+2m Temperature	Y	Y		Y	Y
+Max 2m Temp		Y	Y		
+Min 2m Temp		Y	Y		
+2m Relative Humidity	Hi Res		Low Res	Low Res	Low Res
+R.H. Profile					Y
+10m Wind	Low Res	Low Res	Low Res	Low Res	Hi Res
+Wind Profile					Hi Res
+Precipitation Type	Y	Y	Y	Y	Y
+Precipitation Amount	Y				Y
+Astro Seeing				Y	
+Atmos Transparency				Y	
+MSL Pressure					Y
+Snow Depth					Y
+Weather Type	Y		Y		
+2.2.3 Variables
+A couple of variables can be set by the API user. The usages of these variables are explained below.
+
+lon, lat – Geographic coordinates of the specified site, must be given as pure float numbers, such as +23.090 or -23.090. At this stage, the precision of any incoming coordinate float number is expected to be 0.001. Incoming float with higher precision will be rounded.
+ac – Altitude Correction, only applicable in ASTRO forecast. Should be 0 (default), 2 or 7.
+lang – Language. Not applicable in METEO product.
+unit – Metric or British.
+output – should be internal (for graphical output), xml or json.
+tzshift – Adjustment of timezone, should be 0, 1 or -1.
+
+2.3 Products and Icon Set Definition
+7Timer! offers four types of products for users with different concentrations such as civil users, astronomers and meteorologists.
+
+2.3.1 CIVIL
+CIVIL is intended for civil users. It will display the forecasted weather condition for the next 8 days with a set of easy-to-read weather icons. Explanations of each icon, as well as the definition of values returned by machine-readable API, are given below.
+
+Icon Definition
+
+Icon	Meaning	Technical Definition
+	Clear	Total cloud cover less than 20%
+	Partly Cloudy	Total cloud cover between 20%-60%
+	Cloudy	Total cloud cover between 60%-80%
+	Very Cloudy	Total cloud cover over over 80%
+	Foggy	Relative humidity over 90% with total cloud cover less than 60%
+	Light rain or showers	Precipitation rate less than 4mm/hr with cloud cover more than 80%
+	Occasional showers	Precipitation rate less than 4mm/hr with cloud cover between 60%-80%
+	Isolated showers	Precipitation rate less than 4mm/hr less than 60%
+	Light or occasional snow	Precipitation rate less than 4mm/hr
+	Rain	Precipitation rate over 4mm/hr
+	Snow	Precipitation rate over 4mm/hr
+	Mixed	Precipitation type to be ice pellets or freezing rain
+	Thunderstorm possible	Lifted Index less than -5 with precipitation rate below 4mm/hr
+	Thunderstorm	Lifted Index less than -5 with precipitation rate over 4mm/hr
+	Windy	Sustained wind speed over 10.8m/s (force 6 or above)
+Icons are designed by Weather Sniffer and Iconbest.
+Definition of API Output Value
+
+Variable	Value	Meaning
+Cloud Cover	1	0%-6%
+2	6%-19%
+3	19%-31%
+4	31%-44%
+5	44%-56%
+6	56%-69%
+7	69%-81%
+8	81%-94%
+9	94%-100%
+Lifted Index	-10	Below -7
+-6	-7 to -5
+-4	-5 to -3
+-1	-3 to 0
+2	0 to 4
+6	4 to 8
+10	8 to 11
+15	Over 11
+2m Temperature	-76 to 60	-76C to +60C
+2m Relative Humidity	0 to 100	0% to 100%
+10m Wind Direction	N, NE, E, SE, S, SW, W, NW
+10m Wind Speed	1	Below 0.3m/s (calm)
+2	0.3-3.4m/s (light)
+3	3.4-8.0m/s (moderate)
+4	8.0-10.8m/s (fresh)
+5	10.8-17.2m/s (strong)
+6	17.2-24.5m/s (gale)
+7	24.5-32.6m/s (storm)
+8	Over 32.6m/s (hurricane)
+Precipitation Type	snow, rain, frzr (freezing rain), icep (ice pellets), none
+Precipitation Amount	0	None
+1	0-0.25mm/hr
+2	0.25-1mm/hr
+3	1-4mm/hr
+4	4-10mm/hr
+5	10-16mm/hr
+6	16-30mm/hr
+7	30-50mm/hr
+8	50-75mm/hr
+9	Over 75mm/hr
+Weather Type (identical to the icon definition table)	clearday, clearnight	Total cloud cover less than 20%
+pcloudyday, pcloudynight	Total cloud cover between 20%-60%
+mcloudyday, mcloudynight	Total cloud cover between 60%-80%
+cloudyday, cloudynight	Total cloud cover over over 80%
+humidday, humidnight	Relative humidity over 90% with total cloud cover less than 60%
+lightrainday, lightrainnight	Precipitation rate less than 4mm/hr with total cloud cover more than 80%
+oshowerday, oshowernight	Precipitation rate less than 4mm/hr with total cloud cover between 60%-80%
+ishowerday, ishowernight	Precipitation rate less than 4mm/hr with total cloud cover less than 60%
+lightsnowday, lightsnownight	Precipitation rate less than 4mm/hr
+rainday, rainnight	Precipitation rate over 4mm/hr
+snowday, snownight	Precipitation rate over 4mm/hr
+rainsnowday, rainsnownight	Precipitation type to be ice pellets or freezing rain
+tsday, tsnight	Lifted Index less than -5 with precipitation rate below 4mm/hr
+tsrainday, tsrainnight	Lifted Index less than -5 with precipitation rate over 4mm/hr
+Undefined	-9999	Undefined
+2.3.2 CIVIL Light
+CIVIL Light is a simplfied version of CIVIL which only provide 7-day forecast on a day-to-day basis. The definition of icons and API output values are mostly identical to CIVIL.
+
+2.3.3 Two-Week-Overview
+Two-Week-Overview (TWO) is intended for civil users. It will display the forecasted weather condition for the next 9-16 days with a set of easy-to-read weather icons. Explanation of each icon, as well as the definition of values returned by machine-readable API, are given below.
+
+Icon Definition
+
+Icon	Meaning	Technical Definition
+	Clear	Total cloud cover less than 20%
+	Partly Cloudy	Total cloud cover between 20%-80%
+	Cloudy	Total cloud cover over over 80%
+	Rain	Rain
+	Snow	Snow
+	Thunderstorm	Lifted Index less than -5
+	Thunderstorm with rain	Lifted Index less than -5 with rain
+Icons are designed by Weather Sniffer and Iconbest.
+Definition of API Output Value
+
+Variable	Value	Meaning
+Cloud Cover	1	0%-6%
+2	6%-19%
+3	19%-31%
+4	31%-44%
+5	44%-56%
+6	56%-69%
+7	69%-81%
+8	81%-94%
+9	94%-100%
+Lifted Index	-10	Below -7
+-6	-7 to -5
+-4	-5 to -3
+-1	-3 to 0
+2	0 to 4
+6	4 to 8
+10	8 to 11
+15	Over 11
+Max/Min 2m Temperature	-76 to 60	-76C to +60C
+2m Relative Humidity	-4	0%-5%
+-3	5%-10%
+-2	10%-15%
+-1	15%-20%
+0	20%-25%
+1	25%-30%
+2	30%-35%
+3	35%-40%
+4	40%-45%
+5	45%-50%
+6	50%-55%
+7	55%-60%
+8	60%-65%
+9	65%-70%
+10	70%-75%
+11	75%-80%
+12	80%-85%
+13	85%-90%
+14	90%-95%
+15	95%-99%
+16	100%
+10m Wind Direction	N, NE, E, SE, S, SW, W, NW
+10m Wind Speed	1	Below 0.3m/s (calm)
+2	0.3-3.4m/s (light)
+3	3.4-8.0m/s (moderate)
+4	8.0-10.8m/s (fresh)
+5	10.8-17.2m/s (strong)
+6	17.2-24.5m/s (gale)
+7	24.5-32.6m/s (storm)
+8	Over 32.6m/s (hurricane)
+Precipitation Type	snow, rain, frzr (freezing rain), icep (ice pellets), none
+Weather Type (identical to the icon definition table)	clear	Total cloud cover less than 20%
+mcloudy	Total cloud cover between 20%-80%
+cloudy	Total cloud cover over over 80%
+rain	Rain with total cloud cover over 80%
+snow	Snow with total cloud cover over 80%
+ts	Lifted Index less than -5
+tsrain	Lifted Index less than -5 with rain
+Undefined	-9999	Undefined
+Please be aware that the forecast is highly uncertain given to the large leading time of TWO.
+
+2.3.4 ASTRO
+As the oldest product that 7Timer! has ever provided, ASTRO product is mainly intended for astronomical purpose. The forecast range is 3-day and has included several elements that concerns astronomers most – such as cloud cover, astronomical seeing and atmospheric transparency. For details of the forecast method, see Publ. Astron. Soc. Pac., 123, 113, and references therein.
+
+Explanation of each icon is given below.
+
+Icon Definition
+
+Icon	Technical Definition
+	Octet-gram of cloud cover, blue is for clear while white is for cloud. e.g. the "cake" on the left is 0% cloud while the one on the right is 100% cloud.
+	Astronomical seeing. From left to right: <0.5", 0.5"-0.75", 0.75"-1", 1"-1.25", 1.25"-1.5", 1.5"-2", 2"-2.5", >2.5". In short, the smaller/bluer, the better the seeing condition is.
+	Atmospheric transparency. From left to right: <0.3, 0.3-0.4, 0.4-0.5, 0.5-0.6, 0.6-0.7, 0.7-0.85, 0.85-1, >1 (unit: mag per air mass). In short, the fewer bars/bluer, the better the transparency is.
+	Chances of rain/snow.
+	Atmospheric instability. From left to right: lifted index between 0 to -3, -3 to -5, and below -5.
+	Humid weather warning. From left to right: relative humidity between 80%-90%, 90%-95%, and over 95%.
+	Windy weather warning. From left to right: sustained wind speed between 8.0-10.8m/s (fresh), 10.8-17.2m/s (strong), and over 17.2m/s (gale or above).
+Definition of API Output Value
+
+Variable	Value	Meaning
+Cloud Cover	1	0%-6%
+2	6%-19%
+3	19%-31%
+4	31%-44%
+5	44%-56%
+6	56%-69%
+7	69%-81%
+8	81%-94%
+9	94%-100%
+Lifted Index	-10	Below -7
+-6	-7 to -5
+-4	-5 to -3
+-1	-3 to 0
+2	0 to 4
+6	4 to 8
+10	8 to 11
+15	Over 11
+2m Temperature	-76 to 60	-76C to +60C
+2m Relative Humidity	-4	0%-5%
+-3	5%-10%
+-2	10%-15%
+-1	15%-20%
+0	20%-25%
+1	25%-30%
+2	30%-35%
+3	35%-40%
+4	40%-45%
+5	45%-50%
+6	50%-55%
+7	55%-60%
+8	60%-65%
+9	65%-70%
+10	70%-75%
+11	75%-80%
+12	80%-85%
+13	85%-90%
+14	90%-95%
+15	95%-99%
+16	100%
+10m Wind Speed	1	Below 0.3m/s (calm)
+2	0.3-3.4m/s (light)
+3	3.4-8.0m/s (moderate)
+4	8.0-10.8m/s (fresh)
+5	10.8-17.2m/s (strong)
+6	17.2-24.5m/s (gale)
+7	24.5-32.6m/s (storm)
+8	Over 32.6m/s (hurricane)
+Precipitation Type	snow, rain, none
+Undefined	-9999	Undefined
+The "Altitude Correction" function in older version is now restored. You may consider to set this function if your location is significantly higher than its adjacent areas (for example, when the location is on a mountain top). A good trick to check the necessarity of this function is to compare the forecasted and the actual temperature. When there is a large difference (say, over 5-10 degrees), you may consider to active this function. The Altitude Correction can be set to 2km or 7km.
+
+2.3.5 METEO
+METEO product is mainly intended for meteorological purpose and has included a number of meteorological elements, such as the relative humidity and wind profile from 950hPa to 200hPa. The forecasts for wind and cloud cover are plotted following the universal meteorological guidelines (users might read Wikipedia article at http://en.wikipedia.org/wiki/Station_model for a quick look of such guidelines). The forecast range is 8-day (192-hour).
+
+Definition of API Output Value
+
+Variable	Value	Meaning
+Cloud Cover (total, high, mid, low)	1	0%-6%
+2	6%-19%
+3	19%-31%
+4	31%-44%
+5	44%-56%
+6	56%-69%
+7	69%-81%
+8	81%-94%
+9	94%-100%
+Lifted Index	-10	Below -7
+-6	-7 to -5
+-4	-5 to -3
+-1	-3 to 0
+2	0 to 4
+6	4 to 8
+10	8 to 11
+15	Over 11
+2m Temperature	-76 to 60	-76C to +60C
+Seeing	1	<0.5"
+2	0.5"-0.75"
+3	0.75"-1"
+4	1"-1.25"
+5	1.25"-1.5"
+6	1.5"-2"
+7	2"-2.5"
+8	>2.5"
+Transparency	1	<0.3
+2	0.3-0.4
+3	0.4-0.5
+4	0.5-0.6
+5	0.6-0.7
+6	0.7-0.85
+7	0.85-1
+8	>1
+Relative Humidity (2m and profile)	-4	0%-5%
+-3	5%-10%
+-2	10%-15%
+-1	15%-20%
+0	20%-25%
+1	25%-30%
+2	30%-35%
+3	35%-40%
+4	40%-45%
+5	45%-50%
+6	50%-55%
+7	55%-60%
+8	60%-65%
+9	65%-70%
+10	70%-75%
+11	75%-80%
+12	80%-85%
+13	85%-90%
+14	90%-95%
+15	95%-99%
+16	100%
+Wind Speed (10m and profile)	1	Below 0.3m/s (calm)
+2	0.3-3.4m/s (light)
+3	3.4-8.0m/s (moderate)
+4	8.0-10.8m/s (fresh)
+5	10.8-17.2m/s (strong)
+6	17.2-24.5m/s (gale)
+7	24.5-32.6m/s (storm)
+8	32.6-36.7m/s (hurricane)
+9	36.7-41.4m/s (hurricane+)
+10	41.4-46.2m/s (hurricane+)
+11	46.2-50.9m/s (hurricane+)
+12	50.9-55.9m/s (hurricane+)
+13	Over 55.9m/s (hurricane+)
+Wind direction	0-360	0-360 degree (with 0 to be north) spacing in 5-degree.
+MSL Pressure	924-1060	924hPa to 1060hPa.
+Precipitation Type	snow, rain, frzr (freezing rain), icep (ice pellets), none
+Precipitation Amount	0	None
+1	0-0.25mm/hr
+2	0.25-1mm/hr
+3	1-4mm/hr
+4	4-10mm/hr
+5	10-16mm/hr
+6	16-30mm/hr
+7	30-50mm/hr
+8	50-75mm/hr
+9	75+mm/hr
+Snow Depth	0	None
+1	0-1cm
+2	1-5cm
+3	5-10cm
+4	10-25cm
+5	25-50cm
+6	50-100cm
+7	100-150cm
+8	150-250cm
+9	250+cm
+Undefined	-9999	Undefined
+3. Weather Chart
+The weather charts are plotted from the NOAA/NCEP forecast binaries and are mainly intended for astronomical or meteorological purpose. Most elements are plotted as-is, while independent legends are needed for wind (streamline) and precipitation charts. These legends are given below.
+
+Legend of Wind Speed
+
+Calm
+
+Light
+
+Moderate
+
+Fresh
+
+Strong
+
+Gale
+
+Storm
+
+Hurricane
+
+Legend of Precipitation Type
+
+Snow
+
+Rain
+
+Freezing rain
+
+Ice pellets
+
+Legend of Precipitation Amount
+
+0mm
+
+<0.25mm/hr
+
+0.25-1mm/hr
+
+1-4mm/hr
+
+4-10mm/hr
+
+10-16mm/hr
+
+16-30mm/hr
+
+30-50mm/hr
+
+50-75mm/hr
+
+>75mm/hr
+
+No significant rainfall
+
+Light rain
+
+Moderate rain
+
+Heavy rain
+
+Very heavy rain
+
+Extreme rain or Rainstorm
+
+4. Frequently Asked Questions
+Q: The title of forecast page is "forecast for unknown site" even the site I click is in a big city. Why is this?
+A: The geolocation conversion at the forecast page is handled by Google Geocoding API which sets a daily query limit of 2,500 currently, so "unknown site" will be shown if the limit is exceed that day. I may consider writing a build-in geolocation database in future to work around this problem.
+
+Q: Some question marks are shown in ASTRO forecast when Alt Corr is active.
+A: This is normal – you will see question marks on precipitation and instability data in ASTRO product when Alt Corr is enabled. This is because the GFS data only provides the precipitation and lifted index data at ground level. To avoid confusion, data for these two elements will not be plotted when the forecast site is not at surface (i.e. Alt Corr is enabled.)
+
+5. Acknowledgement and Disclaimer
+7Timer! was supported by Dr. Cui Chenzhou on behalf of the National Astronomical Observatories of China in 2005-2010, and is then supported from Dr. Lin Qing and Mr. Tang Haiming of the Chinese Network for Astronomy Popularization, Shanghai Astronomical Observatory, Chinese Academy of Sciences. Big thanks also go to Attilla Danko who inspired me to establish 7Timer!; to Li Zuqiang and Dr. Johnson Lau who had been extensively involved in the development of data reduction scripts; to Shi Liaoshan who help testing every new releases; to littlePig and Max who had given help on starting code works of Google Maps API; as well as to numerous people who have contributed helpful suggestions and encouragements.
+
+The weather data distributed in this site are entirely free – you can use or redistribute them as long as you are not using them for commercial purpose. Program developers are asked to notify me when using the data so I can track the server workload. Just be aware that weather forecasting is as challenging as in the stock market – so using these data is at your own risk.
