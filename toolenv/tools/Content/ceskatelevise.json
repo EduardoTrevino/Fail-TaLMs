@@ -1,0 +1,132 @@
+{
+  "tool_name": "CeskaTelevize",
+  "tool_description": "API to fetch Czech Television program data.",
+  "title": "CeskaTelevize API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.5
+  },
+  "home_url": "https://www.ceskatelevize.cz",
+  "host": "www.ceskatelevize.cz",
+  "api_list": [
+    {
+      "name": "Schedule",
+      "url": "https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php",
+      "description": "Fetches the TV schedule for a given date and channel",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "user",
+          "type": "STRING",
+          "description": "User login",
+          "default": "test"
+        },
+        {
+          "name": "date",
+          "type": "STRING",
+          "description": "Date in dd.mm.yyyy format",
+          "default": "04.08.2024"
+        },
+        {
+          "name": "channel",
+          "type": "STRING",
+          "description": "Channel identifier",
+          "default": "ct1"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "regiony",
+          "type": "BOOLEAN",
+          "description": "Include regional broadcasts",
+          "default": "false"
+        },
+        {
+          "name": "json",
+          "type": "BOOLEAN",
+          "description": "Get response in JSON format",
+          "default": "false"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php\"\nparams = {'user': user, 'date': date, 'channel': channel, 'regiony': int(regiony), 'json': int(json_format)}\n\nresponse = requests.get(url, params=params)\ntry:\n    if json_format:\n        print(response.json())\n    else:\n        print(response.text)\nexcept Exception as e:\n    print({'error': str(e)})",
+      "statuscode": 200,
+      "body": "",
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "program": {
+            "type": "object",
+            "properties": {
+              "datum_vysilani": { "type": "string" },
+              "kanal": { "type": "string" },
+              "generovano": { "type": "string" },
+              "porad": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "link": { "type": "string" },
+                    "ivysilani": { "type": "string" },
+                    "vps": { "type": "string" },
+                    "datum": { "type": "string" },
+                    "cas": { "type": "string" },
+                    "nazvy": {
+                      "type": "object",
+                      "properties": {
+                        "nadtitul": { "type": "string" },
+                        "nazev": { "type": "string" },
+                        "original": { "type": "string" },
+                        "nazev_casti": { "type": "string" }
+                      }
+                    },
+                    "dil": { "type": "string" },
+                    "zanr": { "type": "string" },
+                    "stopaz": { "type": "string" },
+                    "noticka": { "type": "string" },
+                    "regionalni": { "type": "string" },
+                    "alternativa": { "type": "string" },
+                    "ikony": {
+                      "type": "object",
+                      "properties": {
+                        "zvuk": { "type": "string" },
+                        "ad": { "type": "integer" },
+                        "skryte_titulky": { "type": "integer" },
+                        "neslysici": { "type": "integer" },
+                        "live": { "type": "integer" },
+                        "premiera": { "type": "integer" },
+                        "cb": { "type": "integer" },
+                        "hvezdicka": { "type": "integer" },
+                        "labeling": { "type": "string" },
+                        "puvodni_zneni": { "type": "integer" },
+                        "pomer": { "type": "string" }
+                      }
+                    },
+                    "obrazky": {
+                      "type": "object",
+                      "properties": {
+                        "tv_program": { "type": "string" },
+                        "nahled": { "type": "string" }
+                      }
+                    },
+                    "dostupnost": {
+                      "type": "object",
+                      "properties": {
+                        "stav": { "type": "string" },
+                        "od": { "type": "string" },
+                        "do": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
