@@ -1,0 +1,1028 @@
+
+
+
+
+
+
+
+
+Latest Updates | The Metropolitan Museum of Art Collection API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View on GitHub
+The Metropolitan Museum of Art Collection API
+
+
+
+
+
+
+Latest Updates
+November 17, 2020
+The following search filters have been added to the search endpoint:
+
+title: search against the title field.
+tags: search for objects using the subject keyword tags field.
+
+November 4, 2020
+The following metadata are now available in the API:
+
+measurements: measurements of a given work, broken down into elements, where available.
+
+
+For more information about the Metropolitan Museum of Art Collection API, please visit our Open Access Github page https://github.com/metmuseum/openaccess.
+The use of the Metropolitan Museum of Art Collection API is subject to these terms and conditions.
+Issues regarding this API can be emailed to openaccess@metmuseum.org.
+
+The Metropolitan Museum of Art Collection API
+The Metropolitan Museum of Art presents over 5,000 years of art from around the world for everyone to experience and enjoy. The Museum lives in two iconic sites in New York City—The Met Fifth Avenue and The Met Cloisters. Millions of people also take part in The Met experience online.
+Since it was founded in 1870, The Met has always aspired to be more than a treasury of rare and beautiful objects. Every day, art comes alive in the Museum’s galleries and through its exhibitions and events, revealing both new ideas and unexpected connections across time and across cultures.
+The Metropolitan Museum of Art provides select datasets of information on more than 470,000 artworks in its Collection for unrestricted commercial and noncommercial use. To the extent possible under law, The Metropolitan Museum of Art has waived all copyright and related or neighboring rights to this dataset using the Creative Commons Zero license. This work is published from the United States of America. These select datasets are now available for use in any media without permission or fee; they also include identifying data for artworks under copyright. The datasets support the search, use, and interaction with the Museum’s collection.
+The Met’s Open Access datasets are available through our API. The API (RESTful web service in JSON format) gives access to all of The Met’s Open Access data and to corresponding high resolution images (JPEG format) that are in the public domain.
+Access to the API
+At this time, we do not require API users to register or obtain an API key to use the service. Please limit request rate to 80 requests per second.
+Endpoints
+There are API endpoints available for the following elements:
+
+Objects: A listing of all valid Object IDs available for access.
+Object: A record for an object, containing all open access data about that object, including its image (if the image is available under Open Access)
+Departments: A listing of all valid departments, with their department ID and the department display name
+Search: A listing of all Object IDs for objects that contain the search query within the object’s data
+
+Objects
+GET /public/collection/v1/objects returns a listing of all valid Object IDs available to use
+
+
+
+Parameter
+Format
+Notes
+
+
+
+
+metadataDate
+datetime e.g. YYYY-MM-DD
+Returns any objects with updated data after this date
+
+
+departmentIds
+integers that correspond to department IDs e.g. 1 or 3|9|12, delimited with the | character
+Returns any objects in a specific department
+
+
+
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects
+
+Response
+
+
+
+Field
+Type
+Default
+Notes
+
+
+
+
+total
+int
+
+The total number of publicly-available objects
+
+
+objectIDs
+int array
+[]
+An array containing the object ID of publicly-available object
+
+
+
+Example
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects
+
+{
+	"total": 471581,
+	"objectIDs": [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		// more results ...
+	]
+}
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1
+
+{
+	"total": 1000, // less than the full amount of publicly-available object IDs
+	"objectIDs": [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		// more results ...
+	]
+}
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=3|9|12
+
+{
+	"total": 1000, // less than the full amount of publicly-available object IDs
+	"objectIDs": [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		// more results ...
+	]
+}
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects?metadataDate=2018-10-22
+
+{
+	"total": 1000, // less than the full amount of publicly-available object IDs
+	"objectIDs": [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		// more results ...
+	]
+}
+https://collectionapi.metmuseum.org/public/collection/v1/objects?metadataDate=2018-10-22&departmentIds=3|9|12
+
+{
+	"total": 1000, // less than the full amount of publicly-available object IDs
+	"objectIDs": [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		// more results ...
+	]
+}
+Object
+GET /public/collection/v1/objects/[objectID] returns a record for an object, containing all open access data about that object, including its image (if the image is available under Open Access)
+
+
+
+Parameter
+Format
+Notes
+
+
+
+
+objectID
+0-9
+The unique Object ID for an object
+
+
+
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/objects/[objectID]
+
+Response
+
+
+
+Field
+Type
+Notes
+Example(s)
+
+
+
+
+objectID
+int
+Identifying number for each artwork (unique, can be used as key field)
+437133
+
+
+isHighlight
+boolean
+When "true" indicates a popular and important artwork in the collection
+Vincent van Gogh's "Wheat Field with Cypresses"
+
+
+accessionNumber
+string
+Identifying number for each artwork (not always unique)
+"67.241"
+
+
+accessionYear
+string
+Year the artwork was acquired.
+"1921"
+
+
+isPublicDomain
+boolean
+When "true" indicates an artwork in the Public Domain
+Vincent van Gogh's "Wheat Field with Cypresses"
+
+
+primaryImage
+string
+URL to the primary image of an object in JPEG format
+"https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg"
+
+
+primaryImageSmall
+string
+URL to the lower-res primary image of an object in JPEG format
+"https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
+
+
+additionalImages
+array
+An array containing URLs to the additional images of an object in JPEG format
+["https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-004.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-003.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-002.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg"]
+      
+
+
+constituents
+array
+An array containing the constituents associated with an object, with the constituent's role, name, ULAN URL, Wikidata URL, and gender, when available (currently contains female designations only).
+[{"constituentID": 161708,"role": "Artist","name": "Louise Bourgeois","constituentULAN_URL": "http://vocab.getty.edu/page/ulan/500057350","constituentWikidata_URL": "https://www.wikidata.org/wiki/Q159409","gender": "Female"}]
+
+
+department
+string
+Indicates The Met's curatorial department responsible for the artwork
+"Egyptian Art"
+
+
+objectName
+string
+Describes the physical type of the object
+"Dress", "Painting", "Photograph", or "Vase"
+
+
+title
+string
+Title, identifying phrase, or name given to a work of art
+"Wheat Field with Cypresses"
+
+
+culture
+string
+Information about the culture, or people from which an object was created
+"Afghan", "British", "North African"
+
+
+period
+string
+Time or time period when an object was created
+"Ming dynasty (1368-1644)", "Middle Bronze Age"
+
+
+dynasty
+string
+Dynasty (a succession of rulers of the same line or family) under which an object was created
+"Kingdom of Benin", "Dynasty 12"
+
+
+reign
+string
+Reign of a monarch or ruler under which an object was created
+"Amenhotep III", "Darius I", "Louis XVI"
+
+
+portfolio
+string
+A set of works created as a group or published as a series.
+"Birds of America", "The Hudson River Portfolio", "Speculum Romanae Magnificentiae"
+
+
+artistRole
+string
+Role of the artist related to the type of artwork or object that was created
+"Artist for Painting", "Designer for Dress"
+
+
+artistPrefix
+string
+Describes the extent of creation or describes an attribution qualifier to the information given in the artistRole field
+"In the Style of", "Possibly by", "Written in French by"
+
+
+artistDisplayName
+string
+Artist name in the correct order for display
+"Vincent van Gogh"
+
+
+artistDisplayBio
+string
+Nationality and life dates of an artist, also includes birth and death city when known.
+"Dutch, Zundert 1853–1890 Auvers-sur-Oise"
+
+
+artistSuffix
+string
+Used to record complex information that qualifies the role of a constituent, e.g. extent of participation by the Constituent (verso only, and followers)
+"verso only"
+
+
+artistAlphaSort
+string
+Used to sort artist names alphabetically. Last Name, First Name, Middle Name, Suffix, and Honorific fields, in that order.
+"Gogh, Vincent van"
+
+
+artistNationality
+string
+National, geopolitical, cultural, or ethnic origins or affiliation of the creator or institution that made the artwork
+"Spanish"; "Dutch"; "French, born Romania"
+
+
+artistBeginDate
+string
+Year the artist was born
+"1840"
+
+
+artistEndDate
+string
+Year the artist died
+"1926"
+
+
+artistGender
+string
+Gender of the artist (currently contains female designations only)
+"female"
+
+
+artistWikidata_URL
+string
+Wikidata URL for the artist
+"https://www.wikidata.org/wiki/Q694774"
+
+
+artistULAN_URL
+string
+ULAN URL for the artist
+"https://vocab.getty.edu/page/ulan/500003169"
+
+
+objectDate
+string
+Year, a span of years, or a phrase that describes the specific or approximate date when an artwork was designed or created
+"1865–67", "19th century", "ca. 1796"
+
+
+objectBeginDate
+int
+Machine readable date indicating the year the artwork was started to be created
+1867, 1100, -900
+
+
+objectEndDate
+int
+Machine readable date indicating the year the artwork was completed (may be the same year or different year than the objectBeginDate)
+1888, 1100, -850
+
+
+medium
+string
+Refers to the materials that were used to create the artwork
+"Oil on canvas", "Watercolor", "Gold"
+
+
+dimensions
+string
+Size of the artwork or object
+"16 x 20 in. (40.6 x 50.8 cm)"
+
+
+dimensionsParsed
+float
+Size of the artwork or object in centimeters, parsed
+[{"element":"Sheet","dimensionType":"Height","dimension":51},{"element":"Plate","dimensionType":"Height","dimension":47.5},{"element":"Sheet","dimensionType":"Width","dimension":72.8},{"element":"Plate","dimensionType":"Width","dimension":62.5}]
+
+
+measurements
+array
+Array of elements, each with a name, description, and set of measurements.  Spatial measurements are in centimeters; weights are in kg. 
+
+        [
+            {
+            "elementName": "Overall",
+            "elementDescription": "Temple proper",
+            "elementMeasurements": {
+                "Height": 640.0813,
+                "Length": 1249.6825,
+                "Width": 640.0813
+            }
+          }
+        ]
+     
+
+
+creditLine
+string
+Text acknowledging the source or origin of the artwork and the year the object was acquired by the museum.
+"Robert Lehman Collection, 1975"
+
+
+geographyType
+string
+Qualifying information that describes the relationship of the place catalogued in the geography fields to the object that is being catalogued
+"Made in", "From", "Attributed to"
+
+
+city
+string
+City where the artwork was created
+"New York", "Paris", "Tokyo"
+
+
+state
+string
+State or province where the artwork was created, may sometimes overlap with County
+"Alamance", "Derbyshire", "Brooklyn"
+
+
+county
+string
+County where the artwork was created, may sometimes overlap with State
+"Orange County", "Staffordshire", "Brooklyn"
+
+
+country
+string
+Country where the artwork was created or found
+"China", "France", "India"
+
+
+region
+string
+Geographic location more specific than country, but more specific than subregion, where the artwork was created or found (frequently null)
+"Bohemia", "Midwest", "Southern"
+
+
+subregion
+string
+Geographic location more specific than Region, but less specific than Locale, where the artwork was created or found (frequently null)
+"Malqata", "Deir el-Bahri", "Valley of the Kings"
+
+
+locale
+string
+Geographic location more specific than subregion, but more specific than locus, where the artwork was found (frequently null)
+"Tomb of Perneb", "Temple of Hatshepsut", "Palace of Ramesses II"
+
+
+locus
+string
+Geographic location that is less specific than locale, but more specific than excavation, where the artwork was found (frequently null)
+"1st chamber W. wall"; "Burial C 2, In coffin"; "Pit 477"
+
+
+excavation
+string
+The name of an excavation. The excavation field usually includes dates of excavation.
+"MMA excavations, 1923–24"; "Khashaba excavations, 1910–11"; "Carnarvon excavations, 1912"
+
+
+river
+string
+River is a natural watercourse, usually freshwater, flowing toward an ocean, a lake, a sea or another river related to the origins of an artwork (frequently null)
+"Mississippi River", "Nile River", "River Thames"
+
+
+classification
+string
+General term describing the artwork type.
+"Basketry", "Ceramics", "Paintings"
+
+
+rightsAndReproduction
+string
+Credit line for artworks still under copyright.
+"© 2018 Estate of Pablo Picasso / Artists Rights Society (ARS), New York"
+
+
+linkResource
+string
+URL to object's page on metmuseum.org
+"https://www.metmuseum.org/art/collection/search/547802"
+
+
+metadataDate
+datetime
+Date metadata was last updated
+2018-10-17T10:24:43.197Z
+
+
+repository
+string
+
+"Metropolitan Museum of Art, New York, NY"
+
+
+objectURL
+string
+URL to object's page on metmuseum.org
+"https://www.metmuseum.org/art/collection/search/547802"
+
+
+tags
+array
+An array of subject keyword tags associated with the object and their respective AAT URL
+[{"term": "Abstraction","AAT_URL": "http://vocab.getty.edu/page/aat/300056508","Wikidata_URL": "https://www.wikidata.org/wiki/Q162150"}]
+
+
+objectWikidata_URL
+string
+Wikidata URL for the object
+"https://www.wikidata.org/wiki/Q432253"
+
+
+isTimelineWork
+boolean
+Whether the object is on the Timeline of Art History website
+true
+
+
+GalleryNumber
+string
+Gallery number, where available
+"131"
+
+
+
+Example
+{
+    "objectID": 45734,
+    "isHighlight": false,
+    "accessionNumber": "36.100.45",
+    "accessionYear": "1936",
+    "isPublicDomain": true,
+    "primaryImage": "https://images.metmuseum.org/CRDImages/as/original/DP251139.jpg",
+    "primaryImageSmall": "https://images.metmuseum.org/CRDImages/as/web-large/DP251139.jpg",
+    "additionalImages": [
+        "https://images.metmuseum.org/CRDImages/as/original/DP251138.jpg",
+        "https://images.metmuseum.org/CRDImages/as/original/DP251120.jpg"
+    ],
+    "constituents": [
+        {
+            "constituentID": 11986,
+            "role": "Artist",
+            "name": "Kiyohara Yukinobu",
+            "constituentULAN_URL": "http://vocab.getty.edu/page/ulan/500034433",
+            "constituentWikidata_URL": "https://www.wikidata.org/wiki/Q11560527",
+            "gender": "Female"
+        }
+    ],
+    "department": "Asian Art",
+    "objectName": "Hanging scroll",
+    "title": "Quail and Millet",
+    "culture": "Japan",
+    "period": "Edo period (1615–1868)",
+    "dynasty": "",
+    "reign": "",
+    "portfolio": "",
+    "artistRole": "Artist",
+    "artistPrefix": "",
+    "artistDisplayName": "Kiyohara Yukinobu",
+    "artistDisplayBio": "Japanese, 1643–1682",
+    "artistSuffix": "",
+    "artistAlphaSort": "Kiyohara Yukinobu",
+    "artistNationality": "Japanese",
+    "artistBeginDate": "1643",
+    "artistEndDate": "1682",
+    "artistGender": "Female",
+    "artistWikidata_URL": "https://www.wikidata.org/wiki/Q11560527",
+    "artistULAN_URL": "http://vocab.getty.edu/page/ulan/500034433",
+    "objectDate": "late 17th century",
+    "objectBeginDate": 1667,
+    "objectEndDate": 1682,
+    "medium": "Hanging scroll; ink and color on silk",
+    "dimensions": "46 5/8 x 18 3/4 in. (118.4 x 47.6 cm)",
+    "measurements": [
+        {
+            "elementName": "Overall",
+            "elementDescription": null,
+            "elementMeasurements": {
+                "Height": 118.4,
+                "Width": 47.6
+            }
+        }
+    ],
+    "creditLine": "The Howard Mansfield Collection, Purchase, Rogers Fund, 1936",
+    "geographyType": "",
+    "city": "",
+    "state": "",
+    "county": "",
+    "country": "",
+    "region": "",
+    "subregion": "",
+    "locale": "",
+    "locus": "",
+    "excavation": "",
+    "river": "",
+    "classification": "Paintings",
+    "rightsAndReproduction": "",
+    "linkResource": "",
+    "metadataDate": "2020-09-14T12:26:37.48Z",
+    "repository": "Metropolitan Museum of Art, New York, NY",
+    "objectURL": "https://www.metmuseum.org/art/collection/search/45734",
+    "tags": [
+        {
+            "term": "Birds",
+            "AAT_URL": "http://vocab.getty.edu/page/aat/300266506",
+            "Wikidata_URL": "https://www.wikidata.org/wiki/Q5113"
+        }
+    ],
+    "objectWikidata_URL": "https://www.wikidata.org/wiki/Q29910832",
+    "isTimelineWork": false,
+    "GalleryNumber": ""
+}
+Departments
+GET /public/collection/v1/departments returns a listing of all departments
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/departments
+
+Response
+
+
+
+Field
+Type
+Default
+Notes
+
+
+
+
+departments
+array
+[]
+An array containing the JSON objects that contain each department's departmentId and display name. The departmentId is to be used as a query parameter on the `/objects` endpoint
+
+
+departmentId
+int
+-
+Department ID as an integer. The departmentId is to be used as a query parameter on the `/objects` endpoint
+
+
+displayName
+string
+-
+Display name for a department
+
+
+
+Example
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/departments
+
+{
+  "departments": [
+    {
+      "departmentId": 1,
+      "displayName": "American Decorative Arts"
+    },
+    {
+      "departmentId": 3,
+      "displayName": "Ancient Near Eastern Art"
+    },
+    {
+      "departmentId": 4,
+      "displayName": "Arms and Armor"
+    },
+    {
+      "departmentId": 5,
+      "displayName": "Arts of Africa, Oceania, and the Americas"
+    },
+    {
+      "departmentId": 6,
+      "displayName": "Asian Art"
+    },
+    {
+      "departmentId": 7,
+      "displayName": "The Cloisters"
+    },
+    {
+      "departmentId": 8,
+      "displayName": "The Costume Institute"
+    },
+    {
+      "departmentId": 9,
+      "displayName": "Drawings and Prints"
+    },
+    {
+      "departmentId": 10,
+      "displayName": "Egyptian Art"
+    },
+    {
+      "departmentId": 11,
+      "displayName": "European Paintings"
+    },
+    {
+      "departmentId": 12,
+      "displayName": "European Sculpture and Decorative Arts"
+    },
+    {
+      "departmentId": 13,
+      "displayName": "Greek and Roman Art"
+    },
+    {
+      "departmentId": 14,
+      "displayName": "Islamic Art"
+    },
+    {
+      "departmentId": 15,
+      "displayName": "The Robert Lehman Collection"
+    },
+    {
+      "departmentId": 16,
+      "displayName": "The Libraries"
+    },
+    {
+      "departmentId": 17,
+      "displayName": "Medieval Art"
+    },
+    {
+      "departmentId": 18,
+      "displayName": "Musical Instruments"
+    },
+    {
+      "departmentId": 19,
+      "displayName": "Photographs"
+    },
+    {
+      "departmentId": 21,
+      "displayName": "Modern Art"
+    }
+  ]
+}
+Search
+GET /public/collection/v1/search returns a listing of all Object IDs for objects that contain the search query within the object’s data
+
+
+
+Parameter
+Format
+Notes
+
+
+
+
+q
+Search term e.g. sunflowers
+Returns a listing of all Object IDs for objects that contain the search query within the object’s data
+
+
+isHighlight
+Boolean, true or false. Case sensitive.
+Returns objects that match the query and are designated as highlights. Highlights are selected works of art from The Met Museum’s permanent collection representing different cultures and time periods.
+
+
+title
+Boolean, true or false. Case sensitive.
+Returns objects that match the query, specifically searching against the title field for objects.
+
+
+tags
+Boolean, true or false. Case sensitive.
+Returns objects that match the query, specifically searching against the subject keyword tags field for objects.
+
+
+departmentId
+Integer
+Returns objects that are a part of a specific department. For a list of departments and department IDs, refer to our /department endpoint: https://collectionapi.metmuseum.org/public/collection/v1/departments
+
+
+isOnView
+Boolean, true or false. Case Sensitive.
+Returns objects that match the query and are on view in the museum.
+
+
+artistOrCulture
+Boolean, true or false. Case Sensitive.
+Returns objects that match the query, specifically searching against the artist name or culture field for objects.
+
+
+medium
+String, with multiple values separated by the | operator. Case Sensitive.
+Returns objects that match the query and are of the specified medium or object type. Examples include: "Ceramics", "Furniture", "Paintings", "Sculpture", "Textiles", etc.
+
+
+hasImages
+Boolean, true or false. Case sensitive.
+Returns objects that match the query and have images.
+
+
+geoLocation
+String, with multiple values separated by the | operator. Case Sensitive.
+Returns objects that match the query and the specified geographic location. Examples include: "Europe", "France", "Paris", "China", "New York", etc.
+
+
+dateBegin and dateEnd
+Integer. You must use both dateBegin and dateEnd
+Returns objects that match the query and fall between the dateBegin and dateEnd parameters. Examples include: dateBegin=1700&dateEnd=1800 for objects from 1700 A.D. to 1800 A.D., dateBegin=-100&dateEnd=100 for objects between 100 B.C. to 100 A.D.
+
+
+
+Request
+https://collectionapi.metmuseum.org/public/collection/v1/search
+
+Response
+
+
+
+Field
+Type
+Default
+Notes
+
+
+
+
+total
+int
+
+The total number of publicly-available objects
+
+
+objectIDs
+int array
+[]
+An array containing the object ID of publicly-available object
+
+
+
+Example
+Query Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?q=sunflowers
+
+{
+	"total": 27,
+	"objectIDs": [
+		1,
+		2,
+		3,
+		// more results ...
+	]
+}
+Is Highlight Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&q=sunflowers
+
+{
+	"total": 3,
+	"objectIDs": [
+		437329,
+		436121,
+		436535
+	]
+}
+Department ID Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=6&q=cat
+
+{
+	"total": 361,
+	"objectIDs": [
+		437329,
+		436121,
+		436535,
+		// more results ...
+	]
+}
+For a list of department IDs, refer to our /departments endpoint:
+https://collectionapi.metmuseum.org/public/collection/v1/departments
+Is On View Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?isOnView=true&q=sunflower
+
+{
+	"total": 19,
+	"objectIDs": [
+		436524,
+		11922,
+		2032,
+		// more results ...
+	]
+}
+Artist or Culture Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=french
+
+{
+	"total": 14643,
+	"objectIDs": [
+		459199,
+		189708,
+		189709,
+		// more results ...
+	]
+}
+Medium Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?medium=Quilts|Silk|Bedcovers&q=quilt
+
+{
+	"total": 15,
+	"objectIDs": [
+		229155,
+		227076,
+		229930,
+		// more results ...
+	]
+}
+Has Images Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=Auguste Renoir
+
+{
+	"total": 66,
+	"objectIDs": [
+		436965,
+		191807,
+		722444,
+		// more results ...
+	]
+}
+Geolocation Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?geoLocation=France&q=flowers
+
+{
+	"total": 3846,
+	"objectIDs": [
+		206979,
+		436175,
+		436121,
+		// more results ...
+	]
+}
+Date Range Request
+https://collectionapi.metmuseum.org/public/collection/v1/search?dateBegin=1700&dateEnd=1800&q=African
+
+{
+	"total": 56,
+	"objectIDs": [
+		320993,
+		188180,
+		394199,
+		// more results ...
+	]
+}
+
+
+
+
+
+Published with GitHub Pages
+
+
+
+

@@ -1,0 +1,1221 @@
+
+
+
+
+
+
+
+Vehicle API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						United States Department of Transportation
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Report a Problem
+
+
+
+
+
+
+
+
+
+
+
+Toggle navigation
+
+
+
+
+
+
+
+Homepage
+
+
+
+
+
+
+Ratings
+Recalls
+Risky Driving
+Road Safety
+Equipment
+Technology & Innovation
+
+
+
+
+More Info
+
+
+Research
+
+
+Data
+
+
+Laws & Regulations
+
+
+
+Briefing Room
+
+
+Parents & Caregivers
+
+
+Importing a Vehicle
+
+
+Vehicle Manufacturers
+
+
+State Governments
+
+
+Enforcement & Justice
+
+
+Careers at NHTSA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						Vehicle API
+						Powered by 
+
+
+
+
+
+
+
+
+
+
+                Version: 3.46 Last Code Change 4/13/2024
+
+                
+ 
+                    Release Notes
+                
+
+ 
+					Subscribe/Unsubscribe
+				
+
+ 
+					F.A.Q.
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		The NHTSA Product Information Catalog Vehicle Listing (vPIC) Application Programming Interface (API) provides different ways to gather information on Vehicles and their specifications. The vPIC Dataset is populated using the information submitted by the Motor Vehicle manufacturers through the 565 submittals. All the information on how a VIN is assigned by the manufacturer is captured in this catalog and used to decode a VIN and extract vehicle information.
+	
+Users/Applications attempting to use vPIC APIs will be controlled by an automated traffic rate control mechanism to ensure optimal performance of the NHTSA websites and minimize adverse impact to our users.
+
+Click here to see examples in Multiple Languages.
+	
+
+Standalone database
+A standalone vPIC Database is now available for developers to implement VIN decode on their end instead of calling or APIs. 
+			Please click the Download button below to download the vPIC database as a backup file created using MS SQL Server 2019. 
+
+
+
+				Download
+			
+			("vPICList_lite_2024_07.bak.zip" updated on 07/13/2024, file size: 166 MB)
+		
+
+
+
+			Once downloaded, you can decode a VIN by calling the “spVINDecode” stored procedure as below
+			EXEC [dbo].[spVinDecode] @v = N'3535353', @year = 2020
+@v parameter is required – Please pass the VIN that needs to be decoded
+			@year parameter is optional – Please pass the Vehicle's Model Year (if available), if not supplied procedure will try to deduct that information from the VIN
+		
+
+
+
+API Methods
+
+
+Output Format
+
+
+
+Decode VIN
+
+
+/vehicles/DecodeVin/5UXWX7C5*BA?format=xml&modelyear=2011
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+					The Decode VIN API will decode the VIN and the decoded output will be made available in the format of Key-value pairs.
+					The IDs (VariableID and ValueID) represent the unique ID associated with the Variable/Value.
+					In case of text variables, the ValueID is not applicable.
+					Model Year in the request allows for the decoding to specifically be done in the current, or older (pre-1980),
+					model year ranges. It is recommended to always send in the model year.
+					This API also supports partial VIN decoding (VINs that are less than 17 characters).
+					In this case, the VIN will be decoded partially with the available characters. In case of partial VINs,
+					a "*" could be used to indicate the unavailable characters. The 9th digit is not necessary.
+				
+
+
+
+
+Decode VIN (flat format)
+
+
+/vehicles/DecodeVinValues/5UXWX7C5*BA?format=xml&modelyear=2011
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+					The Decode VIN Flat Format API will decode the VIN and the decoded output will be made available in a flat file format.
+					Model Year in the request allows for the decoding to specifically be done in the current, or older (pre-1980),
+					model year ranges. It is recommended to always send in the model year.
+					This API also supports partial VIN decoding (VINs that are less than 17 characters).
+					In this case, the VIN will be decoded partially with the available characters. In case of partial VINs,
+					a "*" could be used to indicate the unavailable characters.
+				
+
+
+
+
+Decode VIN Extended
+
+
+/vehicles/DecodeVinExtended/5UXWX7C5*BA?format=json&modelyear=2011
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This is exactly like the Decode VIN method but provides additional information on variables
+						related to other NHTSA programs like NCSA etc.
+					
+
+
+
+
+Decode VIN Extended (flat format)
+
+
+/vehicles/DecodeVinValuesExtended/5UXWX7C5*BA?format=json&modelyear=2011
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This is exactly like the Decode VIN  (flat format) method but provides additional information on variables
+						related to other NHTSA programs like NCSA etc.
+					
+
+
+
+
+Decode WMI
+
+
+/vehicles/DecodeWMI/1FD?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This provides information on the World Manufacturer Identifier for a specific WMI code.
+						WMIs may be put in as either 3 characters representing VIN position 1-3 or 6 characters representing VIN positions 1-3 & 12-14.
+						Example "JTD", "1T9131".
+					
+
+
+
+
+Get WMIs for Manufacturer
+
+
+/vehicles/GetWMIsForManufacturer/hon?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetWMIsForManufacturer/987?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetWMIsForManufacturer/hon?vehicleType=car&format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetWMIsForManufacturer/987?vehicleType=2&format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						Provides information on the all World Manufacturer Identifier (WMI) for a specified Manufacturer. Only WMI registered in vPICList are displayed.
+						If first parameter is a number - method will do exact match on Manufacturer's Id.
+						If first parameter is a string - it will look for manufacturers whose name is LIKE the provided name (it accepts a partial manufacturer name as an input). Multiple results are returned in case of multiple matches.
+						If VehicleType is a number - method will do exact match on VehicleType's Id.
+						If VehicleType is a string - it will look for VehicleType whose name is LIKE the provided name (it accepts a partial VehicleType name as an input). Multiple results are returned in case of multiple matches.
+						Both parameters are optional but at least one must be provided.
+					
+
+
+
+
+Get All Makes
+
+
+/vehicles/GetAllMakes?format=csv
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This provides a list of all the Makes available in vPIC Dataset.
+					
+
+
+
+
+Get Parts
+
+
+/vehicles/GetParts?type=565&fromDate=1/1/2015&toDate=5/5/2015&format=xml&page=1
+
+
+XML
+CSV
+JSON
+
+
+/vehicles/GetParts?type=565&fromDate=1/1/2015&toDate=5/5/2015&format=xml&page=1&manufacturer=hon
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+This provides a list of ORGs with letter date in the given range of the dates and with specified Type of ORG. Up to 1000 results will be returned at a time.
+
+							Input:
+							
+type
+number, 565 (Vehicle Identification Number Guidance, based on 49 CFR Part 565) or 566 (Manufacturer Identification – Reporting Requirements based on 49 CFR Part 566)
+fromDate
+(optional) ORG's Letter Date should be on or after this date
+toDate
+(optional) ORG's Letter Date should be on or before this date
+manufacturer
+
+									(optional) if supplied value is a number - method will do exact match on Manufacturer's Id.
+									if supplied value is a string - it will look for manufacturers whose name is LIKE the provided name (it accepts a partial manufacturer name as an input). Multiple results are returned in case of multiple matches.
+									Manufacturer name can be a partial name, or a full name for more specificity (e.g., "988", "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+								
+format
+(optional) string, can be 'xml' (default), 'csv' or 'json'
+page
+(optional) number, 1 (default) first 1000 records, 2 - next 1000 records, ...
+
+
+
+
+
+
+
+Get All Manufacturers
+
+
+/vehicles/GetAllManufacturers?format=xml&page=2
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetAllManufacturers?ManufacturerType=Intermediate&page=2
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+Returns a list of all the Manufacturers available in vPIC Dataset. It can be filtered by Manufacturer Type (optional) by using a full name or any part of it.
+Results are provided in pages of 100 items, use parameter "page" to specify 1-st (default), 2nd, 3rd, ...Nth ... page.
+
+							Manufacturer Type
+							
+2
+Completed Vehicle Manufacturer
+3
+Incomplete Vehicle Manufacturer
+4
+Intermediate Vehicle Manufacturer
+5
+Final-Stage Vehicle Manufacturer
+6
+Vehicle Alterer
+7
+Fabricating Manufacturer of Motor Vehicle Equipment
+8
+Importer of Motor Vehicle Equipment
+9
+Importer of Motor Vehicles Originally Manufactured to Conform to FMVSS
+10
+Replica Vehicle Manufacturer
+
+
+
+
+
+
+
+Get Manufacturer Details
+
+
+/vehicles/GetManufacturerDetails/honda?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetManufacturerDetails/str?page=2
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetManufacturerDetails/989
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This provides the details for a specific manufacturer(s).
+						If supplied parameter is a number - method will do exact match on Manufacturer's Id and return exactly one record.
+If supplied parameter is a string - it will look for manufacturers whose name is LIKE the provided name (it accepts a partial manufacturer name as an input). Multiple results are returned in case of multiple matches.
+							In this case, results are provided in pages of 100 items, use parameter "page" to specify 1-st (default), 2nd, 3rd, ...Nth ... page.
+						
+
+
+
+
+
+Get Makes for Manufacturer by Manufacturer Name
+
+
+/vehicles/GetMakeForManufacturer/honda?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetMakeForManufacturer/988?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns all the Makes in the vPIC dataset for a specified manufacturer that is requested.
+						If supplied parameter is a number - method will do exact match on Manufacturer's Id.
+						If supplied parameter is a string - it will look for manufacturers whose name is LIKE the provided name (it accepts a partial manufacturer name as an input). Multiple results are returned in case of multiple matches.
+						Manufacturer name can be a partial name, or a full name for more specificity (e.g., "988", "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+					
+
+
+
+
+Get Makes for Manufacturer by Manufacturer Name and Year
+
+
+/vehicles/GetMakesForManufacturerAndYear/mer?year=2013&format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetMakesForManufacturerAndYear/988?year=2013&format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns all the Makes in the vPIC dataset for a specified manufacturer and
+						whose Year From and Year To range cover the specified year
+						If supplied parameter is a number - method will do exact match on Manufacturer's Id.
+						If supplied parameter is a string - it will look for manufacturers whose name is LIKE the provided name (it accepts a partial manufacturer name as an input). Multiple results are returned in case of multiple matches.
+						Manufacturer can be idenfitied by Id, a partial name, or a full name (e.g., "988", "HONDA", "HONDA OF CANADA MFG., INC.", etc.)
+					
+
+
+
+
+Get Makes for Vehicle Type by Vehicle Type Name
+
+
+/vehicles/GetMakesForVehicleType/car?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns all the Makes in the vPIC dataset for a specified vehicle type whose name is LIKE the vehicle type name in vPIC Dataset.
+						Vehicle Type name can be a partial name, or a full name for more specificity (e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+					
+
+
+
+
+Get Vehicle Types for Make by Name
+
+
+/vehicles/GetVehicleTypesForMake/mercedes?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns all the Vehicle Types in the vPIC dataset for a specified Make whose name is LIKE the make name in vPIC Dataset.
+						Make name can be a partial name, or a full name for more specificity (e.g., "Merc", "Mercedes Benz", etc.)
+					
+
+
+
+
+Get Vehicle Types for Make by Id
+
+
+/vehicles/GetVehicleTypesForMakeId/450?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns all the Vehicle Types in the vPIC dataset for a specified Make whose ID equals the make ID in vPIC Dataset.
+					
+
+
+
+
+Get Equipment Plant Codes
+
+
+/vehicles/GetEquipmentPlantCodes/2015?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+Returns assigned Equipment Plant Codes. Can be filtered by Year, Equipment Type and Report Type.
+
+							Year
+							
+2016
+Only years 2016 and above are supported
+
+
+
+							Equipment Type
+							
+1
+Tires
+3
+Brake Hoses
+13
+Glazing
+16
+Retread
+
+
+
+							Report Type
+							
+New
+The Equipment Plant Code was assigned during the selected year
+Updated
+The Equipment Plant data was modified during the selected year
+Closed
+The Equipment Plant is no longer Active
+All
+All Equipment Plant Codes regardless of year, including their status (active or closed)
+
+
+
+
+
+
+
+Get Models for Make
+
+
+/vehicles/GetModelsForMake/honda?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns the Models in the vPIC dataset for a specified Make whose name is LIKE the Make in vPIC Dataset.
+						
+							Input:
+							
+MakeName
+
+									string, 'honda' in the example(s) above (/vehicles/GetModelsForMake/honda?format=json)
+									- can be a partial or a full name for more specificity (e.g., "Harley", "Harley Davidson", etc.)
+									- * (star, or multiplication sign) can be used instead to return Models for ALL Makes - WARNING: this can be slow!
+								
+format
+(optional) string, can be 'xml' (default), 'csv' or 'json'
+
+
+
+
+
+
+
+Get Models for MakeId
+
+
+/vehicles/GetModelsForMakeId/440?format=json
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns the Models in the vPIC dataset for a specified Make whose Id is EQUAL the MakeId in vPIC Dataset.
+						
+							Input:
+							
+MakeId
+
+									int, '440' in the example(s) above (/vehicles/GetModelsForMakeId/440?format=json)
+									- has to be EQUAL the MakeId in vPIC Dataset
+									- 0 (zero) can be used instead to return Models for ALL Makes - WARNING: this can be slow!
+								
+format
+(optional) string, can be 'xml' (default), 'csv' or 'json'
+
+
+
+
+
+
+
+Get Models for Make and a combination of Year and Vehicle Type
+
+
+/vehicles/GetModelsForMakeYear/make/honda/modelyear/2015?format=csv
+/vehicles/GetModelsForMakeYear/make/honda/vehicletype/truck?format=csv
+/vehicles/GetModelsForMakeYear/make/honda/modelyear/2015/vehicletype/truck?format=csv
+
+
+XML
+CSV
+JSON
+
+
+
+XML
+CSV
+JSON
+
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns the Models in the vPIC dataset for a specified year and Make whose name is LIKE the Make in vPIC Dataset.
+						Make can be a partial, or a full for more specificity (e.g., "Harley", "Harley Davidson", etc.)
+						ModelYear is integer (greater than 1995)
+						Vehicle Type name can be a partial name, or a full name for more specificity (e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+					
+
+
+
+
+Get Models for Make Id and a combination of Year and Vehicle Type
+
+
+/vehicles/GetModelsForMakeIdYear/makeId/474/modelyear/2015?format=csv
+/vehicles/GetModelsForMakeIdYear/makeId/474/vehicletype/truck?format=csv
+/vehicles/GetModelsForMakeIdYear/makeId/474/modelyear/2015/vehicletype/truck?format=csv
+
+
+XML
+CSV
+JSON
+
+
+
+XML
+CSV
+JSON
+
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This returns the Models in the vPIC dataset for a specified year and Make whose Id is EQUAL the MakeId in vPIC Dataset.
+						MakeId is integer
+						ModelYear is integer (greater than 1995)
+						Vehicle Type name can be a partial name, or a full name for more specificity (e.g., "Vehicle", "Moto", "Low Speed Vehicle", etc.)
+					
+
+
+
+
+Get Vehicle Variables List
+
+
+/vehicles/GetVehicleVariableList?format=xml
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This provides a list of all the Vehicle related variables that are in vPIC dataset.
+						Information on the name, description and the type of the variable is provided.
+					
+
+
+
+
+Get Vehicle Variable Values List
+
+
+/vehicles/GetVehicleVariableValuesList/battery type
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetVehicleVariableValuesList/2
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetVehicleVariableValuesList/Error Code
+
+
+XML
+CSV
+JSON
+
+
+
+
+/vehicles/GetVehicleVariableValuesList/143
+
+
+XML
+CSV
+JSON
+
+
+
+
+More Information
+Less Information
+
+						This provides a list of all the accepted values for a given variable that are stored in vPIC dataset.
+						Search parameter can either be a Variable Name ("battery type" in first example, please use full name, not just part of it), or Variable ID ("2" in second example).
+						This applies to only "Look up" type of variables.
+					
+
+
+
+
+Decode VIN (flat format) in a Batch (max 50 VINs per batch)
+
+
+
+/vehicles/DecodeVINValuesBatch/
+5UXWX7C5*BA,2011; 5YJSA3DS*EF 
+
+
+ XML
+ CSV
+ JSON
+
+
+
+
+
+
+
+
+More Information
+Less Information
+
+
+							This decodes a batch of VINs that are submitted in a standardized format in a string to return multiple decodes in a flat format.
+							The input string should be in the following format
+							 vin , modelYear ; vin , modelYear ; vin , modelYear ...
+							"modelYear" is optional, the output for each VIN decode is in the same format as produced by the "Decode VIN (flat format)" method.
+						
+
+
+
+
+
+Get Canadian vehicle specifications
+
+
+
+/vehicles/GetCanadianVehicleSpecifications/?year=2011&make=Acura&format=csv
+
+
+
+XML
+CSV
+JSON
+
+
+
+More Information
+Less Information
+
+
+						The Canadian Vehicle Specifications (CVS) consists of a database of original vehicle dimensions, used primarily in collision investigation and reconstruction, combined with a search engine. The database is compiled annually by the Collision Investigation and Research Division of Transport Canada.
+						Visit official Canadian Vehicle Specifications page for more details.
+					
+
+						Input:
+						
+year
+Number, >= 1971
+Make
+Vehicle's make, like "Honda", "Toyota" ...
+Model
+(optional) Vehicle's model, like "Pilot", "Focus" ... can include some other elements like Body Type, Engine Model/size ... 
+Units
+
+								(optional) "Metric" (default), or
+								"US" for United States customary units
+							
+
+
+Output:
+
+
+
+Dimension
+Description
+Unit
+
+
+
+MAKE
+Vehicle Make
+
+
+
+MODEL
+Vehicle Model
+
+
+
+MYR
+Signifies last two digits of the year in which the data was compiled for that specific model
+
+
+
+A
+Longitudinal distance between the center of the front bumper and the center of the base of the windshield
+cm / inch
+
+B
+
+								Passenger Car: Longitudinal distance between the center of the rear bumper and the center of the base of the backlight
+								Station Wagon and Vans: Longitudinal distance between the backlight top moulding and the front door latch pillar
+								Pick-ups: Longitudinal distance between the rearmost projection and the front door latch pillar
+							
+cm / inch
+
+C
+The maximum vertical height of the side glass
+cm / inch
+
+D
+Vertical distance between the base of the side glass and the lower edge of the rocker panel
+cm / inch
+
+E
+Distance between side rails or maximum width of top
+cm / inch
+
+F
+Front overhang
+cm / inch
+
+G
+Rear overhang
+cm / inch
+
+OL
+Overall length
+cm / inch
+
+OW
+Overall width
+cm / inch
+
+OH
+Overall height
+cm / inch
+
+WB
+Wheelbase
+cm / inch
+
+TWF
+Front track width
+cm / inch
+
+TWR
+Rear track width
+cm / inch
+
+CW
+Curb weight
+kg / lb
+
+WD
+Weight distribution (Front/Rear)
+%
+
+
+
+
+
+
+
+
+
+
+				Contact NHTSA Manufacturer Helpdesk at manufacturerinfo@dot.gov or 1-888-399-3277
+			
+
+
+
+
+
+NHTSA Information
+
+About NHTSA
+Careers & Internships
+Contact Us
+Subscribe for Updates
+Report a Safety Problem
+
+Information For
+
+Briefing Room
+Parents & Caregivers
+Importing a Vehicle
+Vehicle Manufacturers
+State Governments
+Enforcement & Justice
+Careers at NHTSA
+
+NHTSA Sites
+
+safercar.gov
+trafficsafetymarketing.gov
+ems.gov
+911.gov
+
+
+
+Website Information
+
+Web Policies & Notices
+Accessibility
+FOIA
+Privacy Policy
+Information Quality
+No Fear Act Data
+Ethics
+Civil Rights
+Office of Inspector General
+OIG Hotline
+BusinessUSA
+USA.gov
+WhiteHouse.gov
+
+
+
+
+National Highway Traffic Safety Administration
+1200 New Jersey Avenue, SE  Washington, DC 20590
+1-888-327-42361-800- 424-9153 (TTY)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

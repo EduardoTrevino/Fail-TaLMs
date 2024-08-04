@@ -1,0 +1,608 @@
+
+
+
+
+
+
+
+
+
+Overview - Nominatim 4.4.0 Manual
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Skip to content
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Nominatim 4.4.0 Manual
+          
+
+
+
+            
+              Overview
+            
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Initializing search
+          
+
+
+
+
+
+
+
+
+
+
+
+
+    GitHub
+  
+
+
+
+
+
+
+
+
+
+
+      Introduction
+    
+
+
+
+        API Reference
+      
+
+
+
+        Administration Guide
+      
+
+
+
+        Customization Guide
+      
+
+
+
+        Library Guide
+      
+
+
+
+        Developers Guide
+      
+
+
+
+        Appendix
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Nominatim 4.4.0 Manual
+  
+
+
+
+
+
+
+    GitHub
+  
+
+
+
+
+
+        Introduction
+      
+
+
+
+
+          API Reference
+          
+
+
+
+
+          API Reference
+        
+
+
+
+
+          Overview
+          
+
+
+        Overview
+      
+
+
+
+      Table of contents
+    
+
+
+
+    Nominatim API
+  
+
+
+
+
+
+
+        Search
+      
+
+
+
+        Reverse
+      
+
+
+
+        Address Lookup
+      
+
+
+
+        Details
+      
+
+
+
+        Status
+      
+
+
+
+        Place Output Formats
+      
+
+
+
+        FAQ
+      
+
+
+
+
+
+
+
+          Administration Guide
+          
+
+
+
+
+          Administration Guide
+        
+
+
+
+        Basic Installation
+      
+
+
+
+        Import
+      
+
+
+
+        Update
+      
+
+
+
+        Deploy (Python frontend)
+      
+
+
+
+        Deploy (PHP frontend)
+      
+
+
+
+        Nominatim UI
+      
+
+
+
+        Advanced Installations
+      
+
+
+
+        Maintenance
+      
+
+
+
+        Migration from older Versions
+      
+
+
+
+        Troubleshooting
+      
+
+
+
+
+
+
+
+          Customization Guide
+          
+
+
+
+
+          Customization Guide
+        
+
+
+
+        Overview
+      
+
+
+
+        Import Styles
+      
+
+
+
+        Configuration Settings
+      
+
+
+
+        Per-Country Data
+      
+
+
+
+        Place Ranking
+      
+
+
+
+        Importance
+      
+
+
+
+        Tokenizers
+      
+
+
+
+        Special Phrases
+      
+
+
+
+        External data: US housenumbers from TIGER
+      
+
+
+
+        External data: Postcodes
+      
+
+
+
+        Conversion to SQLite
+      
+
+
+
+
+
+
+
+          Library Guide
+          
+
+
+
+
+          Library Guide
+        
+
+
+
+        Getting Started
+      
+
+
+
+        Nominatim API class
+      
+
+
+
+        Configuration
+      
+
+
+
+        Input Parameter Types
+      
+
+
+
+        Result Handling
+      
+
+
+
+        Low-level DB Access
+      
+
+
+
+
+
+
+
+          Developers Guide
+          
+
+
+
+
+          Developers Guide
+        
+
+
+
+        Architecture Overview
+      
+
+
+
+        Database Layout
+      
+
+
+
+        Indexing
+      
+
+
+
+        Tokenizers
+      
+
+
+
+        Custom modules for ICU tokenizer
+      
+
+
+
+        Setup for Development
+      
+
+
+
+        Testing
+      
+
+
+
+        External Data Sources
+      
+
+
+
+
+
+
+
+          Appendix
+          
+
+
+
+
+          Appendix
+        
+
+
+
+        Installation on Ubuntu 20
+      
+
+
+
+        Installation on Ubuntu 22
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Table of contents
+    
+
+
+
+    Nominatim API
+  
+
+
+
+
+
+
+
+
+
+
+
+Overview
+Nominatim API
+
+Attention
+The current version of Nominatim implements two different search frontends:
+the old PHP frontend and the new Python frontend. They have a very similar
+API but differ in some implementation details. These are marked in the
+documentation as [Python-only] or [PHP-only].
+https://nominatim.openstreetmap.org implements the Python frontend.
+So users should refer to the [Python-only] comments.
+
+This section describes the API V1 of the Nominatim web service. The
+service offers the following endpoints:
+
+/search - search OSM objects by name or type
+/reverse - search OSM object by their location
+/lookup - look up address details for OSM objects by their ID
+/status - query the status of the server
+/deletable - list objects that have been deleted in OSM but are held
+                    back in Nominatim in case the deletion was accidental
+/polygons - list of broken polygons detected by Nominatim
+/details - show internal details for an object (for debugging only)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Previous
+              
+              Introduction
+            
+
+
+
+
+
+
+                Next
+              
+              Search
+            
+
+
+
+
+
+
+
+
+
+
+      Copyright © Nominatim developer community
+    
+  
+  
+    Made with
+    
+      Material for MkDocs
+    
+
+
+
+
+
+
+
+
+
+
+

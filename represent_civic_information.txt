@@ -1,0 +1,423 @@
+
+
+
+
+
+API Reference | Represent Elected Officials and Electoral Districts API for Canada
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Toggle navigation
+
+
+
+
+
+
+        Represent Civic Information API
+      
+
+
+
+Home
+Demo
+API
+Downloads
+Contact
+FR
+
+
+
+
+
+
+API Reference
+
+
+
+
+Basics
+
+
+Endpoints
+The base URL of all endpoints is https://represent.opennorth.ca. All endpoints output JSON.
+
+Postal codes
+Boundary sets
+Boundaries
+Representative sets
+Representatives
+Elections
+Candidates
+
+Paginate
+Results are paginated 20 per page by default. Set the number of results per page by adding a limit query parameter. Change pages using the offset query parameter or using the next and previous links under the meta field in the response to navigate to the next and previous pages (if any). Under the meta field, total_count is the number of results.
+Filter results
+Filter results with query parameters. Each endpoint below lists the fields on which you can filter results. To filter for representatives whose first name is “Rodney”, for example, request /representatives/?first_name=Rodney. To filter for MPs whose first name is "Rodney", request /representatives/house-of-commons/?last_name=Rodney.
+Perform substring searches by appending __querytype to the parameter name, where querytype is one of iexact, contains, icontains, startswith, istartswith, endswith, iendswith or isnull. A leading i makes the match case-insensitive. For example, to find representatives whose last name starts with “M” or “m”, request /representatives/?last_name__istartswith=m.
+Download in bulk
+To download all representatives, send a request to https://represent.opennorth.ca/representatives/?limit=1000 and follow the next link under the meta field until you reach the end. We host the shapefiles and postal code concordances on GitHub.
+Rate limits
+Represent is free up to 60 requests per minute (86,400 queries/day). If you need to make more queries, contact us; otherwise, you may get HTTP 503 errors.
+Debugging
+For a browsable, HTML version of the JSON response, add a format=apibrowser query parameter. Add pretty=1 to just indent the raw JSON.
+JSONP
+We support JSONP for client-side cross-domain requests – just add a callback query parameter.
+Libraries
+
+Drupal
+WordPress
+Ruby
+Ruby by Caleb Buxton
+Python by Nicolas Cadou
+Node.js by Shawn Price
+CiviCRM by Alan Dixon
+
+Privacy policy
+
+
+
+
+Postal codes
+
+
+Find representatives and boundaries by postal code.
+To see what boundary sets and representative sets are available, consult the boundary sets and representative sets endpoints. Are we missing information that you need? Contact us so that we can make it a priority.
+
+Using postal codes is error prone, because a postal code can match multiple boundaries and because postal codes change constantly. For 100% accuracy, geocode addresses using the Bing, Google, MapQuest or Yahoo geocoding APIs, and then submit a latitude and longitude to the boundaries or representatives endpoints. Latitudes and longitudes never change and always match a single boundary.
+It's important to be aware of the limitations of postal codes, which are primarily a way for Canada Post to sort mail, not a way to match an electoral district. We've heard from chief electoral officers across Canada that postal codes are not 100% accurate for matching an electoral district, and our own research – using the highest quality postal code data – confirms this.
+
+Request
+URLs must include the postal code in uppercase letters with no spaces.
+Response
+The boundaries_centroid field lists boundaries that contain the postal code’s center point (centroid). A centroid is a point, but a postal code can be a line or polygon, so the list of boundaries in boundaries_centroid will sometimes be inaccurate.
+The boundaries_concordance field lists boundaries linked to the postal code according to official government data. Postal codes can cross boundaries, therefore boundaries_concordance may list many Ontario provincial districts for a postal code like K0A 1K0.
+The representatives_centroid and representatives_concordance fields behave similarly.
+If you are searching for a specific boundary or representative, you must check both the centroid and concordance fields.
+In most cases, the city, province and centroid fields will be non-empty.
+
+Find representatives and boundaries by postal code
+
+/postcodes/L5G4L3/ Click to view JSON
+
+Find representatives and boundaries by postal code, limiting results to a specific boundary set
+
+/postcodes/L5G4L3/?sets=federal-electoral-districts
+To see what boundary sets are available, consult the boundary sets endpoint.
+
+
+
+
+
+
+Boundary sets
+
+
+A boundary set is a group of electoral districts, like BC provincial districts or Toronto wards.
+Do we not have a set of boundaries that you need? Contact us so that we can make it a priority.
+
+Get one page of boundary sets
+
+/boundary-sets/ Click to view JSON
+
+Get one boundary set
+
+/boundary-sets/federal-electoral-districts/
+
+Filter boundary sets by name or domain
+
+/boundary-sets/?domain=Canada
+
+
+
+
+
+
+Boundaries
+
+
+The response's external_id field (not always present) is the boundary's machine identifier. The metadata field contains all attributes from the source shapefile; it is unmodified and may be out-of-date or erroneous.
+
+Get one page of boundaries
+
+/boundaries/ Click to view JSON
+
+Get one page of boundaries from a boundary set
+
+/boundaries/toronto-wards-2018/
+To see what boundary sets are available, consult the boundary sets endpoint.
+
+Get one page of boundaries from multiple boundary sets (comma-separated)
+
+/boundaries/?sets=toronto-wards-2018,ottawa-wards
+To see what boundary sets are available, consult the boundary sets endpoint.
+
+Get one boundary
+
+/boundaries/nova-scotia-electoral-districts-2019/halifax-atlantic/
+
+Filter all boundaries by name or external_id
+
+/boundaries/?name=Niagara Falls
+
+Filter a boundary set's boundaries by name or external_id
+
+/boundaries/census-subdivisions/?name=Niagara Falls
+To see what boundary sets are available, consult the boundary sets endpoint.
+
+
+Geospatial queries
+
+Find all boundaries by latitude and longitude
+
+/boundaries/?contains=45.524,-73.596
+
+Find a boundary set's boundaries by latitude and longitude
+
+/boundaries/montreal-boroughs/?contains=45.524,-73.596
+To see what boundary sets are available, consult the boundary sets endpoint.
+
+Find boundaries that touch
+
+/boundaries/?touches=alberta-electoral-districts-2017/highwood
+
+Find boundaries that intersect (“covers or overlaps” in PostGIS lingo)
+
+/boundaries/?intersects=alberta-electoral-districts-2017/highwood
+
+
+Drawing boundaries
+We recommend the simple_shape endpoint, which simplifies the shape to a tolerance of 0.002, looks fine and loads fast. The default geospatial output format is GeoJSON. Add a format=kml or format=wkt query parameter to get KML or Well-Known Text.
+
+Get all simple shapes from a boundary set
+
+/boundaries/toronto-wards-2018/simple_shape
+
+Get all original shapes from a boundary set
+
+/boundaries/toronto-wards-2018/shape
+
+Get all centroids from a boundary set
+
+/boundaries/toronto-wards-2018/centroid
+
+Get one boundary's simple shape
+
+/boundaries/nova-scotia-electoral-districts-2019/halifax-atlantic/simple_shape
+
+Get one boundary's original shape
+
+/boundaries/nova-scotia-electoral-districts-2019/halifax-atlantic/shape
+
+Get one boundary's centroid
+
+/boundaries/nova-scotia-electoral-districts-2019/halifax-atlantic/centroid
+
+
+
+
+
+
+Representative sets
+
+
+A representative set is a group of elected officials, like the House of Commons or Toronto City Council.
+Do we not have a set of representatives that you need? Contact us so that we can make it a priority.
+
+Get one page of representative sets
+
+/representative-sets/ Click to view JSON
+
+Get one representative set
+
+/representative-sets/ontario-legislature/
+
+
+
+
+
+
+Representatives
+
+
+
+Get one page of representatives
+
+/representatives/ Click to view JSON
+
+Get one page of representatives from a representative set
+
+/representatives/house-of-commons/
+To see what representative sets are available, consult the representative sets endpoint.
+
+Find all representatives by latitude and longitude
+
+/representatives/?point=45.524,-73.596
+
+Find a representative set's representatives by latitude and longitude
+
+/representatives/house-of-commons/?point=45.524,-73.596
+To see what representative sets are available, consult the representative sets endpoint.
+
+Get the representatives for one boundary
+
+/boundaries/toronto-wards-2018/etobicoke-north-1/representatives/
+
+Get the representatives for multiple boundaries (comma-separated)
+
+/representatives/?districts=calgary-wards/ward-1,calgary-wards/ward-2,calgary-wards/ward-3
+
+Filter all representatives by name, first_name, last_name, gender, district_name, elected_office or party_name
+
+/representatives/?last_name=Trudeau
+
+Filter a representative set's representatives by name, first_name, last_name, gender, district_name, elected_office or party_name
+
+/representatives/house-of-commons/?last_name=Trudeau
+To see what representative sets are available, consult the representative sets endpoint.
+
+
+Only the bold fields are present in all responses:
+
+
+
+Field
+Example
+Notes
+
+
+
+
+name
+Stephen Harper
+
+
+
+district_name
+Calgary Southwest
+
+
+
+elected_office
+MP, MLA, Mayor, Councillor, Alderman
+
+
+
+source_url
+The URL at which the data is scraped
+May be the same as url below
+
+
+first_name
+Stephen
+
+
+
+last_name
+Harper
+
+
+
+party_name
+Conservative
+
+
+
+email
+example@example.com
+
+
+
+url
+https://legislature.ca/stephen-harper
+The representative’s page on the official legislature site
+
+
+photo_url
+https://legislature.ca/stephen-harper.jpg
+
+
+
+personal_url
+https://stephenharper.blogspot.com/
+A site run by the representative that’s not on the official legislature site
+
+
+district_id
+24013
+If there’s an identifier besides the district name
+
+
+gender
+M, F
+
+
+
+offices
+[ {"postal": "10 North Pole, H0H 0H0", "tel": "555-555-5555",
+          "type": "constituency"}, {"tel": "444-444-4444", "type": "legislature"}
+          ]
+A list of objects with contact information for the representative’s offices. The keys are: postal (mailing address), tel
+          (telephone), fax (facsimile), type (what kind of office this is, e.g. constituency or
+          legislature).
+
+
+extra
+{ "hair_colour": "brown" }
+Any extra data
+
+
+
+
+
+
+
+Elections
+
+
+This endpoint behaves like the /representative-sets/ endpoint. See its documentation for more examples.
+If you would like to add an election to Represent, contact us.
+
+Get one page of elections
+
+/elections/ Click to view JSON
+
+
+
+
+
+
+Electoral candidates
+
+
+This endpoint behaves like the /representatives/ endpoint. See its documentation for more examples.
+Candidate lists may be incomplete or incorrect, as this information changes frequently.
+If you would like to add candidates to Represent, contact us.
+
+Get one page of candidates
+
+/candidates/ Click to view JSON
+
+
+
+
+
+A project of Open North, a nonprofit that builds digital tools for government transparency and civic participation.
+
+
+
+
+
+
+

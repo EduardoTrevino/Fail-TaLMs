@@ -1,0 +1,315 @@
+
+
+
+
+
+
+
+UUID Generator API | UUIDTools.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ UUIDTools.com
+
+
+
+
+
+
+
+
+UUID Versions
+
+
+List All Generators
+
+Version-1
+Version-2
+Version-3
+Version-4
+Version-5
+Timestamp-First
+Minecraft UUIDs
+
+
+
+Bulk Generator
+
+
+Decode UUIDs
+
+
+API Docs 
+
+
+What's a UUID? 
+
+
+Versions Explained 
+
+
+
+
+
+
+
+
+
+  Home 
+API Documentation
+
+
+ API Documentation Free UUID Generator API
+
+
+
+
+Welcome to our super simple UUID API.
+This API allows you to create UUIDs and GUIDs quickly on-the-fly for testing purposes.
+No authentication is required.
+
+
+We support generating all major UUID versions including version-1, version-3, version-4, version-5 and "timestamp-first" UUIDs.
+Read more about different UUID versions.
+No authentication is required. This is the same API that powers our UUID generator.
+
+
+Endpoints that accept a count argument allow you to create up to 100 UUIDs at once.
+All endpoints are limited to 60 requests per minute per IP address.
+
+
+
+Version-1 UUID API
+
+Version-1 UUIDs are based on time, the computer generating the UUID (in this case, it's our server), and pseudo-randomness.
+
+
+https://www.uuidtools.com/api/generate/v1
+
+
+https://www.uuidtools.com/api/generate/v1/count/10
+
+
+
+Version-2 UUID API
+
+We do not provide a version-2 UUID generator. Learn more about the different UUID versions.
+
+
+
+Version-3 UUID API
+
+Version-3 UUIDs are deterministic and are based on an MD5 hash of the namespace place name you supply.
+If you provide the same input you will get the same output every time.
+This API does not allow you to generate multiple UUIDs at once because they would all be the same.
+
+Namespace must be "ns:url", "ns:dns", "ns:OID", "ns:X500" or a properly formatted UUID. Name is a string of any length.
+
+https://www.uuidtools.com/api/generate/v3/namespace/ns:url/name/https://www.google.com/
+
+
+https://www.uuidtools.com/api/generate/v3/namespace/b01eb720-171a-11ea-b949-73c91bba743d/name/anything-goes-here
+
+
+You can also base64 encode your "name" parameter.
+This avoids some problems related to URL encoding certain characters.
+(Thank you to those who reported this issue on Github)
+
+
+https://www.uuidtools.com/api/generate/v3/namespace/ns:url/name/base64:aHR0cHM6Ly9pZC5icmFzaWwuaW8vY29tcGFueS92MS8wNzcyNTIxNS8=
+
+
+
+Version-4 UUID API
+
+Version-4 UUIDs are similar to version-1. Both are randomly generated. Version-1 is based, in part, on the time while version-4 is not.
+
+
+https://www.uuidtools.com/api/generate/v4
+
+
+https://www.uuidtools.com/api/generate/v4/count/10
+
+
+
+Version-5 UUID API
+
+Version-5 UUIDs are similar to version-3. Both versions are deterministic based on a namespace and name.
+The main differences is SHA-1 algorithm is used instead of MD5.
+
+Namespace must be "ns:url", "ns:dns", "ns:OID", "ns:X500" or a properly formatted UUID. Name is a string of any length.
+
+https://www.uuidtools.com/api/generate/v5/namespace/ns:url/name/https://www.uuidtools.com/generate
+
+
+https://www.uuidtools.com/api/generate/v5/namespace/b01eb720-171a-11ea-b949-73c91bba743d/name/anything-goes-here
+
+
+You can also base64 encode your "name" parameter.
+This avoids some problems related to URL encoding certain characters.
+(Thank you to those who reported this issue on Github)
+
+
+https://www.uuidtools.com/api/generate/v5/namespace/ns:url/name/base64:aHR0cHM6Ly9pZC5icmFzaWwuaW8vY29tcGFueS92MS8wNzcyNTIxNS8=
+
+
+
+Timestamp-first UUID API
+
+Timestamp-first (also, called "timestamp-first" or "ordered UUIDs") are similar to version-1 and version-4 UUIDs.
+These UUIDs have the current timestamp embedded in them to insure uniqueness.
+What is special about Timestamp-first UUIDs is that timestamp is at the beginning of the UUID so when stored in a database they will appear in the order they were created.
+This can be useful for many purposes and also is more efficient for storing in indexed database columns.
+
+
+https://www.uuidtools.com/api/generate/timestamp-first
+
+
+https://www.uuidtools.com/api/generate/timestamp-first/count/10
+
+
+
+Decode UUID API
+
+This fun API endpoint will tell you what version a specific UUID is.
+
+
+https://www.uuidtools.com/api/decode/b01eb720-171a-11ea-b949-73c91bba743d
+
+Response
+
+
+
+
+{
+    encode: {
+        STR: "b01eb720-171a-11ea-b949-73c91bba743d",
+        SIV: "234103610387309579079392911688732406845"
+    },
+    decode: {
+        variant: "DCE 1.1, ISO/IEC 11578:1996",
+        version: "1 (time and node based)",
+        content: {
+            time: "2019-12-05 04:49:57.961296.0 UTC",
+            clock: "14665 (usually random)",
+            node: "73:c9:1b:ba:74:3d (local multicast)"
+        }
+    }
+}
+
+
+
+
+
+CORS Support
+
+The API now supports CORS (Cross-origin resource sharing).
+This means you can use this API on your own website.
+
+
+If you use our API on your website please link back to our site.
+
+
+Here is an example of how to use this API with jQuery.
+
+
+
+
+
+<html>
+    <body>
+        ...
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $.ajax({
+            url: "https://www.uuidtools.com/api/generate/v1",
+            success: function(data) {
+                // UUID Received!
+                console.log(data[0])
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Something when wrong.
+                // You may have exceeded the rate limit (60 requests per minute).
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    </script>
+</html>
+
+
+
+
+
+
+
+
+Table of Contents
+
+Introduction
+Version-1 UUID API
+Version-2 UUID API
+Version-3 UUID API
+Version-4 UUID API
+Version-5 UUID API
+Timestamp-first UUID API
+Decode UUID API
+CORS Support
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Back to top
+
+
+Free Online UUID/GUID Generator Tool.
+
+
+UUID Generator •
+Bulk UUID Generator •
+UUID Decoder •
+API Docs •
+Terms of service •
+Sitemap •
+Contact us
+
+
+ UUIDTools.com © 2024. All rights reserved.
+ View on Github
+
+
+
+
+
+
+

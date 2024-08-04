@@ -1,0 +1,51 @@
+
+
+
+
+
+Documentation | QuickChart
+
+
+
+
+
+
+
+
+
+
+
+Skip to main contentQuickChartDocsExample ChartsChart MakerSupportSearchQuickChartIntroductionUsageAPI parametersPOST endpointShort URLs and TemplatesClient librariesNo-code chartsError handlingChart TypesChart MakerReferenceGuidesQR codesIntegrationsOther APIsFAQOn this pageIntroduction
+
+
+QuickChart is a web service that generates chart images on-the-fly. These images are suitable for embedding in email, SMS, chatbots, and other formats. Charts are rendered by Chart.js, a popular open-source charting library.
+Getting started​
+QuickChart works by taking Chart.js configurations and rendering them as images. You may send your chart configuration in JSON or Javascript format using a simple URL or through POST request.
+For example, take this simple Chart.js configuration:
+{  type: 'bar',                                // Show a bar chart  data: {    labels: [2012, 2013, 2014, 2015, 2016],   // Set X-axis labels    datasets: [{      label: 'Users',                         // Create the 'Users' dataset      data: [120, 60, 50, 180, 120]           // Add data to the chart    }]  }}
+We'll pack the Chart.js object into the /chart URL endpoint:
+https://quickchart.io/chart?c={type:'bar',data:{labels:[2012,2013,2014,2015, 2016],datasets:[{label:'Users',data:[120,60,50,180,120]}]}}
+The URL generates this chart image, a rendering of the Chart.js config above:
+Loading...
+Try making adjustments to the example above!
+
+Edit the chart and replacing bar with line or pie to get a different type of chart.
+Change the legend labels.
+Add another dataset to get a grouped bar chart.
+
+Because QuickChart is built on open-source chart libraries, our charts are flexible and highly customizable. Keep on reading to learn more or view more chart examples.
+Using the API​
+The https://quickchart.io/chart endpoint supports both GET and POST methods. These parameters provide control over dimensions, resolution, background, and Chart.js version of your chart:
+ParameterTypeDescriptionchartstringChart.js configuration object to render. This is the definition of the chart in Javascript or JSON format.widthintegerWidth of image in pixels. Defaults to 500heightintegerHeight of image in pixels. Defaults to 300devicePixelRatiointegerDevice pixel ratio of output. Set to 1 for normal resolution, 2 for retina. Defaults to 2backgroundColorstringRGB, HEX, HSL, or color name. Defaults to transparentversionstringChart.js version. Default to 2. Setting to 4 enables latest stable Chart.js v4 support.formatstringpng, webp, svg, or pdf. Defaults to pngencodingstringurl or base64. Defaults to url
+infoLearn more about API parameters and the POST
+endpoint.
+Customization​
+Because QuickChart is built on the open-source Chart.js library, charts are flexible and highly customizable. To learn more, view our examples gallery or see the reference section to learn how to use Chart.js.
+Loading...
+QR codes​
+To learn more about generating QR codes, follow this link.
+Need help?​
+If you have questions, please don't hesitate to ask in our community or send us a message.Edit this pageNextAPI parametersGetting startedUsing the APICustomizationQR codesNeed help?DocsGet startedChart galleryChart makerIntegrationsQR codesLibrariesJavascriptPythonRubyPHPC#JavaGochartjs-to-imageNeed help?QuickChart CommunityContact SupportOpen sourceManaged solutionsCopyright © 2024 QuickChart
+
+
+

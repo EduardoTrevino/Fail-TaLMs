@@ -1,0 +1,602 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+serialif color API
+
+
+
+Serialif Color API 1.0.0
+
+
+Request
+Colors
+Data
+Response
+Serialif
+
+Stop color change
+
+
+
+What's this?
+        This is an REST API to get a requested color, its complementary and its grayscale in different formats
+        and the black or white text corresponding to each color according to its brightness.
+    
+
+
+Color formats
+Keyword
+HEX
+RGB / RGBA
+HSL / HSLA
+
+
+
+Request
+        You can use Keyword, HEX(3,4,6 or 8 characters), RGB or RGBA and HSL or HSLA formats to send your color.
+        
+
+
+
+
+
+Type
+Example value
+Note
+Possible requests
+
+
+
+
+Keyword
+aquamarine
+
+https://color.serialif.com/aquamarine
+
+
+https://color.serialif.com/keyword=aquamarine
+
+
+HEX
+#55667788
+without #
+https://color.serialif.com/55667788
+
+
+https://color.serialif.com/hex=55667788
+
+
+RGB
+rgb(85, 102,
+119)
+without rgb, ( ), or spaces
+https://color.serialif.com/85,102,119
+
+
+https://color.serialif.com/rgb=85,102,119
+
+
+RGBA
+rgba(85, 102,
+119, 0.53)
+without rgba, ( ), or spaces
+https://color.serialif.com/85,102,119,0.53
+
+
+https://color.serialif.com/rgb=85,102,119,0.53
+
+
+https://color.serialif.com/rgba=85,102,119,0.53
+
+
+HSL
+hsl(85, 102,
+119)
+without hsl, ( ), or spaces
+https://color.serialif.com/hsl=85,102,119
+
+
+HSLA
+hsla(85, 102,
+119, 0.53)
+without hsla, ( ), or spaces
+https://color.serialif.com/hsl=85,102,119,0.53
+
+
+https://color.serialif.com/hsla=85,102,119,0.53
+
+
+
+
+
+
+
+Returned colors
+
+
+Base (requested)
+
+
+
+Base (requested) without alpha
+Contrasted text
+
+
+Complementary
+
+
+
+Complementary without alpha
+Contrasted text
+
+
+Grayscale
+
+
+
+Grayscale without alpha
+Contrasted text
+
+
+
+
+
+Returned colors in JSON
+
+
+                
+                    {
+                        "base": {...},
+                        "base_without_alpha": {...},
+                        "base_without_alpha_contrasted_text": {...},
+                        "complementary": {...},
+                        "complementary_without_alpha": {...},
+                        "complementary_without_alpha_contrasted_text": {...},
+                        "grayscale": {...},
+                        "grayscale_without_alpha": {...},
+                        "grayscale_without_alpha_contrasted_text": {...}
+                    }
+                
+            
+
+
+
+
+Data for each color in JSON
+
+
+                
+                    {
+                        "keyword": "aquamarine",
+                        "hex": {
+                            "value": "#7fffd4",
+                            "composition": {
+                            "red": "7f",
+                            "green": "ff",
+                            "blue": "d4"
+                            }
+                        },
+                        "rgb": {
+                            "value": "rgb(127, 255, 212)",
+                            "composition": {
+                            "red": 127,
+                            "green": 255,
+                            "blue": 212
+                            }
+                        },
+                        "hsl": {
+                            "value": "hsl(160, 100%, 75%)",
+                            "composition": {
+                            "hue": 160,
+                            "saturation": 100,
+                            "lightness": 75
+                            }
+                        },
+                        "hsl_raw": {
+                            "value": "hsl(159.84375, 100%, 74.90196%)",
+                            "composition": {
+                            "hue": 159.84375,
+                            "saturation": 100,
+                            "lightness": 74.90196
+                            }
+                        }
+                    }
+                
+            
+
+
+
+
+Example error API response
+
+
+                
+                {
+                    "status": "error",
+                    "error": {
+                        "type": "wrong color format",
+                        "value": "yellou",
+                        "message": "not a valid KEYWORD color"
+                    }
+                }
+                
+            
+
+
+
+
+Example success API response
+
+
+                
+                {
+    "status": "success",
+    "base": {
+        "keyword": "",
+        "hex": {
+            "value": "#d16db06d",
+            "composition": {
+                "red": "d1",
+                "green": "6d",
+                "blue": "b0",
+                "alpha": "6d"
+            }
+        },
+        "rgba": {
+            "value": "rgba(209, 109, 176, 0.43)",
+            "composition": {
+                "red": 209,
+                "green": 109,
+                "blue": 176,
+                "alpha": 0.42745
+            }
+        },
+        "hsla": {
+            "value": "hsla(320, 52%, 62%, 0.43)",
+            "composition": {
+                "hue": 320,
+                "saturation": 52,
+                "lightness": 62,
+                "alpha": 0.42745
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(319.8, 52.08333%, 62.35294%, 0.43)",
+            "composition": {
+                "hue": 319.8,
+                "saturation": 52.08333,
+                "lightness": 62.35294,
+                "alpha": 0.42745
+            }
+        }
+    },
+    "base_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#d16db0",
+            "composition": {
+                "red": "d1",
+                "green": "6d",
+                "blue": "b0"
+            }
+        },
+        "rgb": {
+            "value": "rgb(209, 109, 176)",
+            "composition": {
+                "red": 209,
+                "green": 109,
+                "blue": 176
+            }
+        },
+        "hsl": {
+            "value": "hsl(320, 52%, 62%)",
+            "composition": {
+                "hue": 320,
+                "saturation": 52,
+                "lightness": 62
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(319.8, 52.08333%, 62.35294%)",
+            "composition": {
+                "hue": 319.8,
+                "saturation": 52.08333,
+                "lightness": 62.35294
+            }
+        }
+    },
+    "base_without_alpha_contrasted_text": {
+        "keyword": "white",
+        "hex": {
+            "value": "#ffffff",
+            "composition": {
+                "red": "ff",
+                "green": "ff",
+                "blue": "ff"
+            }
+        },
+        "rgb": {
+            "value": "rgb(255, 255, 255)",
+            "composition": {
+                "red": 255,
+                "green": 255,
+                "blue": 255
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        }
+    },
+    "complementary": {
+        "keyword": "",
+        "hex": {
+            "value": "#2e924f6d",
+            "composition": {
+                "red": "2e",
+                "green": "92",
+                "blue": "4f",
+                "alpha": "6d"
+            }
+        },
+        "rgba": {
+            "value": "rgba(46, 146, 79, 0.43)",
+            "composition": {
+                "red": 46,
+                "green": 146,
+                "blue": 79,
+                "alpha": 0.42745
+            }
+        },
+        "hsla": {
+            "value": "hsla(140, 52%, 38%, 0.43)",
+            "composition": {
+                "hue": 140,
+                "saturation": 52,
+                "lightness": 38,
+                "alpha": 0.42745
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(139.8, 52.08333%, 37.64706%, 0.43)",
+            "composition": {
+                "hue": 139.8,
+                "saturation": 52.08333,
+                "lightness": 37.64706,
+                "alpha": 0.42745
+            }
+        }
+    },
+    "complementary_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#2e924f",
+            "composition": {
+                "red": "2e",
+                "green": "92",
+                "blue": "4f"
+            }
+        },
+        "rgb": {
+            "value": "rgb(46, 146, 79)",
+            "composition": {
+                "red": 46,
+                "green": 146,
+                "blue": 79
+            }
+        },
+        "hsl": {
+            "value": "hsl(140, 52%, 38%)",
+            "composition": {
+                "hue": 140,
+                "saturation": 52,
+                "lightness": 38
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(139.8, 52.08333%, 37.64706%)",
+            "composition": {
+                "hue": 139.8,
+                "saturation": 52.08333,
+                "lightness": 37.64706
+            }
+        }
+    },
+    "complementary_without_alpha_contrasted_text": {
+        "keyword": "black",
+        "hex": {
+            "value": "#000000",
+            "composition": {
+                "red": "00",
+                "green": "00",
+                "blue": "00"
+            }
+        },
+        "rgb": {
+            "value": "rgb(0, 0, 0)",
+            "composition": {
+                "red": 0,
+                "green": 0,
+                "blue": 0
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        }
+    },
+    "grayscale": {
+        "keyword": "",
+        "hex": {
+            "value": "#9f9f9f6d",
+            "composition": {
+                "red": "9f",
+                "green": "9f",
+                "blue": "9f",
+                "alpha": "6d"
+            }
+        },
+        "rgba": {
+            "value": "rgba(159, 159, 159, 0.43)",
+            "composition": {
+                "red": 159,
+                "green": 159,
+                "blue": 159,
+                "alpha": 0.42745
+            }
+        },
+        "hsla": {
+            "value": "hsla(320, 0%, 62%, 0.43)",
+            "composition": {
+                "hue": 320,
+                "saturation": 0,
+                "lightness": 62,
+                "alpha": 0.42745
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(319.8, 0%, 62.35294%, 0.43)",
+            "composition": {
+                "hue": 319.8,
+                "saturation": 0,
+                "lightness": 62.35294,
+                "alpha": 0.42745
+            }
+        }
+    },
+    "grayscale_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#9f9f9f",
+            "composition": {
+                "red": "9f",
+                "green": "9f",
+                "blue": "9f"
+            }
+        },
+        "rgb": {
+            "value": "rgb(159, 159, 159)",
+            "composition": {
+                "red": 159,
+                "green": 159,
+                "blue": 159
+            }
+        },
+        "hsl": {
+            "value": "hsl(320, 0%, 62%)",
+            "composition": {
+                "hue": 320,
+                "saturation": 0,
+                "lightness": 62
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(319.8, 0%, 62.35294%)",
+            "composition": {
+                "hue": 319.8,
+                "saturation": 0,
+                "lightness": 62.35294
+            }
+        }
+    },
+    "grayscale_without_alpha_contrasted_text": {
+        "keyword": "white",
+        "hex": {
+            "value": "#ffffff",
+            "composition": {
+                "red": "ff",
+                "green": "ff",
+                "blue": "ff"
+            }
+        },
+        "rgb": {
+            "value": "rgb(255, 255, 255)",
+            "composition": {
+                "red": 255,
+                "green": 255,
+                "blue": 255
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        }
+    }
+}                
+            
+
+
+
+
+
+
+
+Made with ❤️❤️ by
+        Serialif | 2021
+    
+
+
+
+
+
+
+
+
+
+
+

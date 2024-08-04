@@ -1,0 +1,826 @@
+
+
+
+
+
+
+
+URLhaus API | Documentation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Documentation
+
+
+
+
+
+
+
+
+URLhaus API Documentation
+Beside the APIs documented on URLhaus that serves various feeds and lists, abuse.ch also offers a dedicated API that allows to gather information on a specific URL, file hash or tag from URLhaus through an automated way. It is also possible to retrieve a payload (malware sample) URLhaus has collected from malware URLs it tracks. The API is documented below.
+
+
+Python3 sample scripts
+Query recent URLs (recent additions)
+Query recent payloads (recent additions)
+Query URL information
+Query host information
+Query payload information
+Query tag information
+Query signature information
+Download malware sample
+Download hourly malware batches
+Download daily malware batches
+
+
+Python3 sample scripts
+
+A few python3 sample scripts on how to interact with the URLhaus bulk API can be found here:
+
+Sample scripts for querying URLhaus for a URL or file hash
+Sample script for submit a URL to URLhaus
+
+
+
+Query recent URLs
+
+Query
+To retrieve a list of recent URLs (recent additions made to URLhaus), you must send a HTTP GET request to URLhaus as documented below. Please note that the API will return a list of recent additions made in the past 3 days, but will return maximal 1000 entries.
+
+
+https://urlhaus-api.abuse.ch/v1/urls/recent/URL where you need to send your HTTP GET request to
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- https://urlhaus-api.abuse.ch/v1/urls/recent/
+        
+Note: there is an additional (optional) parameter limit that you can use to limit the amount of results to a custom value (max 1000). The following wget will return the 3 most recent results:
+
+          wget -O- https://urlhaus-api.abuse.ch/v1/urls/recent/limit/3/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+no_resultsThe query yield no results
+http_get_expectedThe HTTP request was not HTTP GET
+urlhaus_referenceLink to URLhaus entry
+urlMalware URL associated with this tag
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+hostThe extracted host of the malware URL (IP address or domain name/FQDN)
+date_addedHuman readable timestamp in UTC when the malware URL has been added to URLhaus
+threatThe threat corresponding to this malware URL. Possible values:
+malware_downloadMalware distribution site
+blacklistsBlacklist status of the queried URL. The following blacklists are checked:
+surblSURBL blacklist status. Possible values are:
+listedThe queried malware URL is listed on SURBL
+not listedThe queried malware URL is not listed on SURBL
+spamhaus_dblSpamhaus DBL blacklist status. Possible values are:
+spammer_domainThe queried malware URL is a known spammer domain
+phishing_domainThe queried malware URL is a known phishing domain
+botnet_cc_domainThe queried malware URL is a known botnet C&C domain
+abused_legit_spamThe queried malware URL is a known compromised website used for spammer hosting
+abused_legit_malwareThe queried malware URL is a known compromised website used for malware distribution
+abused_legit_phishingThe queried malware URL is a known compromised website used for phishing hosting
+abused_legit_botnetccThe queried malware URL is a known compromised website used for botnet C&C hosting
+abused_redirectorThe queried malware URL is a known abused redirector or URL shortener
+not listedThe queried malware URL is not listed on Spamhaus DBL
+reporterThe Twitter handle of the repoter that has reported this malware URL (or anonymous)
+lartedIndicates whether the malware URL has been reported to the hosting provider (true or false)
+tagsA list of tags associated with the queried malware URL
+
+
+A possible response from this API look like this:
+
+{
+    "query_status": "ok",
+    "urls": [
+        {
+            "id": "223622",
+            "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/223622\/",
+            "url": "http:\/\/45.61.49.78\/razor\/r4z0r.mips",
+            "url_status": "offline",
+            "host": "45.61.49.78",
+            "date_added": "2019-08-10 09:02:05 UTC",
+            "threat": "malware_download",
+            "blacklists": {
+                "spamhaus_dbl": "not listed",
+                "surbl": "not listed"
+            },
+            "reporter": "zbetcheckin",
+            "larted": "true",
+            "tags": [
+                "elf"
+            ]
+        },
+        {
+            "id": "223621",
+            "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/223621\/",
+            "url": "http:\/\/45.61.49.78\/razor\/r4z0r.sh4",
+            "url_status": "offline",
+            "host": "45.61.49.78",
+            "date_added": "2019-08-10 09:02:03 UTC",
+            "threat": "malware_download",
+            "blacklists": {
+                "spamhaus_dbl": "not listed",
+                "surbl": "not listed"
+            },
+            "reporter": "zbetcheckin",
+            "larted": "true",
+            "tags": [
+                "elf",
+                "mirai"
+            ]
+        }
+    ]
+}
+        
+
+
+Query recent payloads
+
+Query
+To retrieve a list of recent payloads (recent payloads seen by URLhaus), you must send a HTTP GET request to URLhaus as documented below. Please note that the API will return a list of recent payloads from the past 3 days, but will return maximal 1000 entries.
+
+
+https://urlhaus-api.abuse.ch/v1/payloads/recent/URL where you need to send your HTTP GET request to
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- https://urlhaus-api.abuse.ch/v1/payloads/recent/
+        
+Note: there is an additional (optional) parameter limit that you can use to limit the amount of results to a custom value (max 1000). The following wget will return the 3 most recent results:
+
+          wget -O- https://urlhaus-api.abuse.ch/v1/payloads/recent/limit/3/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_get_expectedThe HTTP request was not HTTP GET
+no_resultsThe query yield no results
+md5_hashThe file's MD5 hash
+sha256_hashThe file's SHA256 hash
+file_typeFile type guessed by URLhaus (e.g. exe, doc, etc)
+file_sizeFile size in bytes
+signatureMalware familiy (if availabe, otherwise: null)
+firstseenHuman readable timestamp in UTC when URLhaus has first seen this file (payload)
+urlhaus_downloadLocation (URL) where you can download a copy of this file
+virustotalResults from Virustotal (if availabe, otherwise: null)
+resultAV detection ration (e.g. 14 / 59)
+percentAV detection in percent (e.g. 24.14)
+linkLink to the Virustotal report
+imphashThe file's import hash, if available
+ssdeepThe file's ssdeep hash, if available
+tlshThe file's tlsh hash, if available
+
+
+A possible response from this API look like this:
+
+{
+    "query_status": "ok",
+    "payloads": [
+        {
+            "md5_hash": "99ad3000abb169e60844a0689dbe9f8c",
+            "sha256_hash": "0c415dd718e3b3728707d579cf8214f54c2942e964975a5f925e0b82fea644b4",
+            "file_type": "exe",
+            "file_size": "656896",
+            "signature": null,
+            "firstseen": "2019-08-10 11:09:23",
+            "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/0c415dd718e3b3728707d579cf8214f54c2942e964975a5f925e0b82fea644b4\/",
+            "virustotal": null,
+            "imphash": "3b91ed9563d0f99f26b86bd20539306b",
+            "ssdeep": "3072:HwVYswg6L\/wnhOTKuX\/2hz9SbwtbS6UOhRP0Ml\/5hIowZtQnKZUJkegNS+Gjs:cWInU\/8PbRXl\/TIoc2h+Gj",
+            "tlsh": "7934BF47B4F1C871E4B30D311831D9A05A2F7D715F659E6B2778222A8E342D09E35FAB"
+        },
+        {
+            "md5_hash": "379e008c8e6aa462cbc9f93c7519d36a",
+            "sha256_hash": "b181e6e08cfdebbd9cfcb0e3ccd3976ed51c7edefc69ec826e73d3324d646b2e",
+            "file_type": "exe",
+            "file_size": "416456",
+            "signature": null,
+            "firstseen": "2019-08-10 11:08:49",
+            "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/b181e6e08cfdebbd9cfcb0e3ccd3976ed51c7edefc69ec826e73d3324d646b2e\/",
+            "virustotal": null,
+            "imphash": "3b91ed9563d0f99f26b86bd20539306b",
+            "ssdeep": "3072:HwVYswg6L\/wnhOTKuX\/2hz9SbwtbS6UOhRP0Ml\/5hIowZtQnKZUJkegNS+Gjs:cWInU\/8PbRXl\/TIoc2h+Gj",
+            "tlsh": "7934BF47B4F1C871E4B30D311831D9A05A2F7D715F659E6B2778222A8E342D09E35FAB"
+        }
+    ]
+}
+        
+
+
+Query URL information
+
+Query
+To retrieve information about an URL, you must send a HTTP POST request to URLhaus as documented below.
+
+
+https://urlhaus-api.abuse.ch/v1/url/URL where you need to send your HTTP POST request to
+urlThe URL you want to query URLhaus for
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="url=http://sskymedia.com/VMYB-ht_JAQo-gi/INV/99401FORPO/20673114777/US/Outstanding-Invoices/" https://urlhaus-api.abuse.ch/v1/url/
+        
+Note that if you have the ID of an URL tracked by URLhaus, you can query the API by using that ID instead of the URL:
+
+
+https://urlhaus-api.abuse.ch/v1/urlid/URL where you need to send your HTTP POST request to
+idThe ID of the URL you want to query URLhaus for
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="urlid=233833" https://urlhaus-api.abuse.ch/v1/urlid/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_post_expectedThe HTTP request was not HTTP POST
+no_resultsThe query yield no results
+invalid_urlThe URL provided is not a valid URL
+idUnique idendifier of the URLhaus database entry
+urlhaus_referenceLink to URLhaus entry
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+hostThe extracted host of the malware URL (IP address or domain name/FQDN)
+date_addedHuman readable timestamp in UTC when the malware URL has been added to URLhaus
+last_onlineWhen URL is offline: Last timestamp when the URL has been serving malware. Otherwise null
+threatThe threat corresponding to this malware URL. Possible values:
+malware_downloadMalware distribution site
+blacklistsBlacklist status of the queried URL. The following blacklists are checked:
+surblSURBL blacklist status. Possible values are:
+listedThe queried malware URL is listed on SURBL
+not listedThe queried malware URL is not listed on SURBL
+spamhaus_dblSpamhaus DBL blacklist status. Possible values are:
+spammer_domainThe queried malware URL is a known spammer domain
+phishing_domainThe queried malware URL is a known phishing domain
+botnet_cc_domainThe queried malware URL is a known botnet C&C domain
+abused_legit_spamThe queried malware URL is a known compromised website used for spammer hosting
+abused_legit_malwareThe queried malware URL is a known compromised website used for malware distribution
+abused_legit_phishingThe queried malware URL is a known compromised website used for phishing hosting
+abused_legit_botnetccThe queried malware URL is a known compromised website used for botnet C&C hosting
+abused_redirectorThe queried malware URL is a known abused redirector or URL shortener
+not listedThe queried malware URL is not listed on Spamhaus DBL
+reporterThe Twitter handle of the repoter that has reported this malware URL (or anonymous)
+lartedIndicates whether the malware URL has been reported to the hosting provider (true or false)
+takedown_time_secondsEither null or the take down time in seconds (= how long did it took for the hosting provide to take down the malware site)
+tagsA list of tags associated with the queried malware URL
+payloadsA list of payloads dropped by this malware URL (max 100)
+firstseenDate (YYY-MM-DD) when the payload has been seen for the first time
+filenameFilename (if provided by the remote server, otherwise: null)
+file_typeContent type guessed by URLhaus (e.g. exe, doc, etc)
+response_sizeSize in bytes of the HTTP response body (payload)
+response_md5MD5 hash of the HTTP response body (payload)
+response_sha256SHA256 hash of the HTTP response body (payload)
+urlhaus_downloadLocation (URL) where you can download a copy of this file
+signatureMalware familiy (if availabe, otherwise: null)
+virustotalResults from Virustotal (if availabe, otherwise: null)
+resultAV detection ration (e.g. 14 / 59)
+percentAV detection in percent (e.g. 24.14)
+linkLink to the Virustotal report
+imphashThe file's import hash, if available
+ssdeepThe file's ssdeep hash, if available
+tlshThe file's tlsh hash, if available
+
+
+A possible response from this API look like this:
+
+{
+    "query_status": "ok",
+    "id": "105821",
+    "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/105821\/",
+    "url": "http:\/\/sskymedia.com\/VMYB-ht_JAQo-gi\/INV\/99401FORPO\/20673114777\/US\/Outstanding-Invoices\/",
+    "url_status": "online",
+    "host": "sskymedia.com",
+    "date_added": "2019-01-19 01:33:26 UTC",
+    "last_online": null,
+    "threat": "malware_download",
+    "blacklists": {
+        "spamhaus_dbl": "abused_legit_malware",
+        "surbl": "listed"
+    },
+    "reporter": "Cryptolaemus1",
+    "larted": "true",
+    "takedown_time_seconds": null,
+    "tags": [
+        "emotet",
+        "epoch2",
+        "heodo"
+    ],
+    "payloads": [
+      {
+          "firstseen": "2019-01-19",
+          "filename": "5616769081079106.doc",
+          "file_type": "doc",
+          "response_size": "179664",
+          "response_md5": "fedfa8ad9ee7846b88c5da79b32f6551",
+          "response_sha256": "dc9f3b226bccb2f1fd4810cde541e5a10d59a1fe683f4a9462293b6ade8d8403",
+          "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/dc9f3b226bccb2f1fd4810cde541e5a10d59a1fe683f4a9462293b6ade8d8403\/",
+          "signature": null,
+          "virustotal": {
+              "result": "16 \/ 58",
+              "percent": "27.59",
+              "link": "https:\/\/www.virustotal.com\/file\/dc9f3b226bccb2f1fd4810cde541e5a10d59a1fe683f4a9462293b6ade8d8403\/analysis\/1547871259\/"
+          },
+          "imphash": "4e4a95a7659118e966a42f4a73311fda",
+          "ssdeep": "3072:+hcypCDJeA\/9LH1sQx+YiSP2eiLe8\/Gq2CeFUzJCfaDehYbAg9u\/AJOOxxSEeXq1:LFZj1f+YiSP2Re8J2AehiQxOHSERtIgN",
+          "tlsh": "1D340235A5E22807ED4F8479F75F8068BD4A8C96DE9DF244993C6A1A2077020C6F7F93"
+      },
+      {
+          "firstseen": "2019-01-19",
+          "filename": "ATT932454259403171471.doc",
+          "file_type": "doc",
+          "response_size": "174928",
+          "response_md5": "12c8aec5766ac3e6f26f2505e2f4a8f2",
+          "response_sha256": "01fa56184fcaa42b6ee1882787a34098c79898c182814774fd81dc18a6af0b00",
+          "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/01fa56184fcaa42b6ee1882787a34098c79898c182814774fd81dc18a6af0b00\/",
+          "signature": "Heodo",
+          "virustotal": null,
+          "imphash": "4e4a95a7659118e966a42f4a73311fda",
+          "ssdeep": "3072:+hcypCDJeA\/9LH1sQx+YiSP2eiLe8\/Gq2CeFUzJCfaDehYbAg9u\/AJOOxxSEeXq1:LFZj1f+YiSP2Re8J2AehiQxOHSERtIgN",
+          "tlsh": "1D340235A5E22807ED4F8479F75F8068BD4A8C96DE9DF244993C6A1A2077020C6F7F93"
+      }
+    ]
+}
+        
+
+
+Query host information
+
+Query
+To retrieve information about a host, you must send a HTTP POST request to URLhaus as documented below.
+
+
+https://urlhaus-api.abuse.ch/v1/host/URL where you need to send your HTTP POST request to
+hostThe host (IPv4 address, hostname or domain name) you want to query (case insensitive)
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="host=vektorex.com" https://urlhaus-api.abuse.ch/v1/host/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_post_expectedThe HTTP request was not HTTP POST
+no_resultsThe query yield no results
+invalid_hostInvalid host provided
+urlhaus_referenceLink to URLhaus entry
+firstseenHuman readable timestamp in UTC when the host was seen for the first time
+url_countNumber of URLs observed on this host
+blacklistsBlacklist status of the queried hostname (not available if host is an IPv4 address). The following blacklists are checked:
+surblSURBL blacklist status. Possible values are:
+listedThe queried malware URL is listed on SURBL
+not listedThe queried malware URL is not listed on SURBL
+spamhaus_dblSpamhaus DBL blacklist status. Possible values are:
+spammer_domainThe queried malware URL is a known spammer domain
+phishing_domainThe queried malware URL is a known phishing domain
+botnet_cc_domainThe queried malware URL is a known botnet C&C domain
+abused_legit_spamThe queried malware URL is a known compromised website used for spammer hosting
+abused_legit_malwareThe queried malware URL is a known compromised website used for malware distribution
+abused_legit_phishingThe queried malware URL is a known compromised website used for phishing hosting
+abused_legit_botnetccThe queried malware URL is a known compromised website used for botnet C&C hosting
+abused_redirectorThe queried malware URL is a known abused redirector or URL shortener
+not listedThe queried malware URL is not listed on Spamhaus DBL
+urlsA list of urls observed on this host (max 100)
+idUnique idendifier of the URLhaus database entry
+urlhaus_referenceLink to URLhaus entry
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+date_addedHuman readable timestamp in UTC when the malware URL has been added to URLhaus
+threatThe threat corresponding to this malware URL. Possible values:
+malware_downloadMalware distribution site
+reporterThe Twitter handle of the repoter that has reported this malware URL (or anonymous)
+lartedIndicates whether the malware URL has been reported to the hosting provider (true or false)
+takedown_time_secondsEither null or the take down time in seconds (= how long did it took for the hosting provide to take down the malware site)
+tagsA list of tags associated with the queried malware URL
+
+
+A possible response from this API look like this:
+
+{
+    "query_staus": "ok",
+    "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/host\/vektorex.com\/",
+    "host": "vektorex.com",
+    "firstseen": "2019-01-15 07:09:01 UTC",
+    "url_count": "120",
+    "blacklists": {
+        "spamhaus_dbl": "abused_legit_malware",
+        "surbl": "not listed"
+    },
+    "urls": [
+        {
+            "id": "121319",
+            "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/121319\/",
+            "url": "http:\/\/vektorex.com\/source\/Z\/5016223.exe",
+            "url_status": "online",
+            "date_added": "2019-02-11 07:45:05 UTC",
+            "threat": "malware_download",
+            "reporter": "abuse_ch",
+            "larted": "false",
+            "takedown_time_seconds": null,
+            "tags": [
+                "AZORult",
+                "exe"
+            ]
+        },
+        {
+            "id": "121316",
+            "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/121316\/",
+            "url": "http:\/\/vektorex.com\/source\/Z\/Order%20839.png",
+            "url_status": "online",
+            "date_added": "2019-02-11 06:47:03 UTC",
+            "threat": "malware_download",
+            "reporter": "abuse_ch",
+            "larted": "false",
+            "takedown_time_seconds": null,
+            "tags": [
+                "exe",
+                "Loki"
+            ]
+        }
+}
+        
+
+
+Query payload information
+
+Query
+To retrieve information about a payload (malware sample) that URLhaus has retrieved, you must send a HTTP POST request to URLhaus as documented below.
+
+
+https://urlhaus-api.abuse.ch/v1/payload/URL where you need to send your HTTP POST request to
+md5_hashThe MD5 hash of the payload (malware sample) you want to query URLhaus for
+or
+sha256_hashThe SHA256 hash of the payload (malware sample) you want to query URLhaus for
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="md5_hash=12c8aec5766ac3e6f26f2505e2f4a8f2" https://urlhaus-api.abuse.ch/v1/payload/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_post_expectedThe HTTP request was not HTTP POST
+no_resultsThe query yield no results
+invalid_md5The MD5 hash provided is not a valid MD5 hash
+invalid_sha256The SHA256 hash provided is not a valid SHA256 hash
+md5_hashThe file's MD5 hash
+sha256_hashThe file's SHA256 hash
+file_typeFile type guessed by URLhaus (e.g. exe, doc, etc)
+file_sizeFile size in bytes
+signatureMalware familiy (if availabe, otherwise: null)
+firstseenHuman readable timestamp in UTC when URLhaus has first seen this file (payload)
+lastseenHuman readable timestamp in UTC when URLhaus has last seen this file (payload), otherwise: null
+url_countNumber of URLs observed serving this payload
+urlhaus_downloadLocation (URL) where you can download a copy of this file
+virustotalResults from Virustotal (if availabe, otherwise: null)
+resultAV detection ration (e.g. 14 / 59)
+percentAV detection in percent (e.g. 24.14)
+linkLink to the Virustotal report
+imphashThe file's import hash, if available
+ssdeepThe file's ssdeep hash, if available
+tlshThe file's tlsh hash, if available
+urlsA list of malware URLs associated with this payload (max 100)
+urlMalware URL associated with this payload
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+urlhaus_referenceLink to URLhaus entry
+filenameFilename (if provided by the remote server, otherwise: null)
+firstseenDate (YYY-MM-DD) when then payload has been seen on this particular malware URL for the first time
+lastseenDate (YYY-MM-DD) when then payload has been seen on this particular malware URL for the last time
+
+
+A possible response from this API look like this:
+
+{
+    "query_status": "ok",
+    "md5_hash": "1585ad28f7d1e0ca696e6c6c2f1d008a",
+    "sha256_hash": "35e304d10d53834e3e41035d12122773c9a4d183a24e03f980ad3e6b2ecde7fa",
+    "file_type": "exe",
+    "file_size": "241664",
+    "signature": "Heodo",
+    "firstseen": "2019-01-19 13:59:06",
+    "lastseen": "2019-01-19 14:48:08",
+    "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/35e304d10d53834e3e41035d12122773c9a4d183a24e03f980ad3e6b2ecde7fa\/",
+    "virustotal": {
+        "result": "17 \/ 69",
+        "percent": "24.64",
+        "link": "https:\/\/www.virustotal.com\/file\/35e304d10d53834e3e41035d12122773c9a4d183a24e03f980ad3e6b2ecde7fa\/analysis\/1547905746\/"
+    },
+    "imphash": "3b91ed9563d0f99f26b86bd20539306b",
+    "ssdeep": "3072:HwVYswg6L\/wnhOTKuX\/2hz9SbwtbS6UOhRP0Ml\/5hIowZtQnKZUJkegNS+Gjs:cWInU\/8PbRXl\/TIoc2h+Gj",
+    "tlsh": "7934BF47B4F1C871E4B30D311831D9A05A2F7D715F659E6B2778222A8E342D09E35FAB",
+    "urls": [
+      {
+          "url_id": "105243",
+          "url": "http:\/\/www.mother-earth.net\/bn\/wp-content\/KwmW-WSOO_jYDW-B2t\/PaymentStatus\/EN_en\/277-20-468894-239-277-20-468894-861\/",
+          "url_status": "offline",
+          "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/105243\/",
+          "filename": "PAY2632216543098764.doc",
+          "firstseen": "2019-01-19",
+          "lastseen": null
+      },
+      {
+          "url_id": "105214",
+          "url": "http:\/\/demo.trydaps.com\/gzVv-22Omv_aIQZybVK-aJ\/En\/Question\/",
+          "url_status": "offline",
+          "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/105214\/",
+          "filename": "5518475554292.doc",
+          "firstseen": "2019-01-19",
+          "lastseen": null
+      },
+    ]
+}
+        
+
+
+Query tag information
+
+Query
+To retrieve information about a tag, you must send a HTTP POST request to URLhaus as documented below.
+
+
+https://urlhaus-api.abuse.ch/v1/tag/URL where you need to send your HTTP POST request to
+tagThe tag you want to query (case insensitive)
+
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="tag=Retefe" https://urlhaus-api.abuse.ch/v1/tag/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_post_expectedThe HTTP request was not HTTP POST
+no_resultsThe query yield no results
+firstseenHuman readable timestamp in UTC when the tag was first seen
+lastseenHuman readable timestamp in UTC when the tag was last seen, otherwise: null
+url_countNumber of URLs observed to be associated with this tag
+urlsA list of malware URLs associated with this tag (max 1000)
+url_idUnique idendifier of the URLhaus database entry
+urlMalware URL associated with this tag
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+dateaddedHuman readable timestamp in UTC when the URL has been added to URLhaus
+reporterThe Twitter handle of the repoter that has reported this malware URL (or anonymous)
+threatThe threat corresponding to this malware URL. Possible values:
+malware_downloadMalware distribution site
+urlhaus_referenceLink to URLhaus entry
+
+
+A possible response from this API look like this:
+
+{
+  "query_status": "ok",
+  "firstseen": "2018-03-06 15:27:00",
+  "lastseen": "2018-12-21 06:00:11",
+  "url_count": "265",
+  "urls": [
+      {
+          "url_id": "98627",
+          "url": "https:\/\/tagmanager.vn\/\/wp-content\/themes\/pridmag\/sup.exe",
+          "url_status": "offline",
+          "dateadded": "2018-12-21 06:00:11",
+          "reporter": "abuse_ch",
+          "threat": "malware_download",
+          "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/98627\/"
+      },
+      {
+          "url_id": "98349",
+          "url": "http:\/\/tagmanager.vn\/wp-content\/themes\/pridmag\/sup.exe",
+          "url_status": "offline",
+          "dateadded": "2018-12-20 15:47:14",
+          "reporter": "switchcert",
+          "threat": "malware_download",
+          "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/98349\/"
+      }
+  ]
+}
+        
+
+
+Query signature information
+
+Query
+URLhaus tries to identify the malware family of a payload (malware sample) served by malware URLs. Unlink tags, the signature is something that the reporter of the malware URL can not influence. To retrieve information about a signature, you must send a HTTP POST request to URLhaus as documented below.
+
+https://urlhaus-api.abuse.ch/v1/signature/URL where you need to send your HTTP POST request to
+signatureThe signature you want to query (case insensitive)
+
+You can produce such a request with the following wget command:
+
+
+          wget -O- --post-data="signature=Gozi" https://urlhaus-api.abuse.ch/v1/signature/
+        
+Response
+The expected response is documented below.
+
+
+query_statusThe status of the query. Possibile values are:
+okAll good!
+http_post_expectedThe HTTP request was not HTTP POST
+no_resultsThe query yield no results
+firstseenHuman readable timestamp in UTC when the signature was first seen
+lastseenHuman readable timestamp in UTC when the signature was last seen, otherwise: null
+url_countNumber of URLs observed to be associated with this signature
+payload_countNumber of payloads (malware samples) observed to be associated with this signature
+urlsA list of malware URLs associated with this signature (max 1000)
+url_idUnique idendifier of the URLhaus database entry
+urlMalware URL associated with this tag
+url_statusThe current status of the URL. Possible values are:
+onlineThe malware URL is active (online) and currently serving a payload
+offlineThe malware URL is inadctive (offline) and serving o no payload
+unknownThe currently malware URL status could not be determined
+firstseenDate (YYY-MM-DD) when then payload has been seen on this particular malware URL for the first time
+lastseenDate (YYY-MM-DD) when then payload has been seen on this particular malware URL for the last time
+filenameFilename (if provided by the remote server, otherwise: null)
+file_typeFile type guessed by URLhaus (e.g. exe, doc, etc)
+file_sizeFile size in bytes
+md5_hashThe file's MD5 hash
+sha256_hashThe file's SHA256 hash
+virustotalResults from Virustotal (if availabe, otherwise: null)
+resultAV detection ration (e.g. 14 / 59)
+percentAV detection in percent (e.g. 24.14)
+linkLink to the Virustotal report
+imphashThe file's import hash, if available
+ssdeepThe file's ssdeep hash, if available
+tlshThe file's tlsh hash, if available
+urlhaus_referenceLink to URLhaus entry
+urlhaus_downloadLocation (URL) where you can download a copy of this file
+
+
+A possible response from this API look like this:
+
+{
+  "query_status": "ok",
+  "firstseen": "2018-03-27 13:48:55",
+  "lastseen": "2019-01-24 13:08:08",
+  "url_count": "2125",
+  "payload_count": "12787",
+  "urls": [
+      {
+        "url_id": "100211",
+        "url": "http:\/\/185.189.149.164\/adobe_update.exe",
+        "url_status": "offline",
+        "firstseen": "2019-01-02 12:42:23",
+        "lastseen": "2019-01-02 13:13:25",
+        "filename": "na",
+        "file_type": "exe",
+        "file_size": "125952",
+        "md5_hash": "a820381c8acf07cfcb4d9b13498db71d",
+        "sha256_hash": "254ca6a7a7ef7f17d9884c4a86f88b5d5fd8fe5341c0996eaaf1d4bcb3b2337b",
+        "virustotal": null,
+        "imphash": "3b91ed9563d0f99f26b86bd20539306b",
+        "ssdeep": "3072:HwVYswg6L\/wnhOTKuX\/2hz9SbwtbS6UOhRP0Ml\/5hIowZtQnKZUJkegNS+Gjs:cWInU\/8PbRXl\/TIoc2h+Gj",
+        "tlsh": "7934BF47B4F1C871E4B30D311831D9A05A2F7D715F659E6B2778222A8E342D09E35FAB",
+        "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/100211\/",
+        "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/254ca6a7a7ef7f17d9884c4a86f88b5d5fd8fe5341c0996eaaf1d4bcb3b2337b\/"
+      },
+      {
+        "url_id": "101092",
+        "url": "http:\/\/66.55.64.137\/e07f11vm2ghf.exe",
+        "url_status": "online",
+        "firstseen": "2019-01-02 12:11:02",
+        "lastseen": "2019-01-10 16:49:17",
+        "filename": "na",
+        "file_type": "exe",
+        "file_size": "137216",
+        "md5_hash": "24ba99e7fffa82660f61fcdfc941caa4",
+        "sha256_hash": "462f6a7560ef2a1a815febebf60b1fcb472a8227d6db05ac09e5266b774c3722",
+        "virustotal": {
+            "result": "47 \/ 72",
+            "percent": "65.28",
+            "link": "https:\/\/www.virustotal.com\/file\/462f6a7560ef2a1a815febebf60b1fcb472a8227d6db05ac09e5266b774c3722\/analysis\/1546191578\/"
+        },
+        "imphash": "3b91ed9563d0f99f26b86bd20539306b",
+        "ssdeep": "3072:HwVYswg6L\/wnhOTKuX\/2hz9SbwtbS6UOhRP0Ml\/5hIowZtQnKZUJkegNS+Gjs:cWInU\/8PbRXl\/TIoc2h+Gj",
+        "tlsh": "7934BF47B4F1C871E4B30D311831D9A05A2F7D715F659E6B2778222A8E342D09E35FAB",
+        "urlhaus_reference": "https:\/\/urlhaus.abuse.ch\/url\/101092\/",
+        "urlhaus_download": "https:\/\/urlhaus-api.abuse.ch\/v1\/download\/462f6a7560ef2a1a815febebf60b1fcb472a8227d6db05ac09e5266b774c3722\/"
+      }
+  ]
+}
+        
+
+
+Download malware sample
+
+Query
+You can get a copy of a certain payload (malware sample) that URLhaus has retrieved from a malware URL as documented below.
+
+
+https://urlhaus-api.abuse.ch/v1/download/<sha256>URL where you need to send your HTTP GET request to
+
+
+<sha256> is a place holder for the payload's SHA256 hash you would like to download.
+You can produce such a request with the following wget command:
+
+
+          wget --content-disposition https://urlhaus-api.abuse.ch/v1/download/254ca6a7a7ef7f17d9884c4a86f88b5d5fd8fe5341c0996eaaf1d4bcb3b2337b/
+        
+Response
+If the payload (malware sample) is known to URLhaus, you should retrieve a ZIP file that contains a copy of the payload. If the queried sha256 is not known to URLhaus, the expected response is not_found. Should and error occure, you may see copy_error.
+
+Caution!
+The ZIP archive is not password protected at the moment and may generate alerts from your antivirus software!
+
+
+
+Download hourly malware batches
+
+URLhaus creates hourly batches of payloads (malware samples) fetched from malware sites tracked by URLhaus. The hourly batches are generated every hour. Please consider that it takes a few minutes to generate the batch. The hourly batches are available here:
+
+URLhaus hourly malware batches (ZIP password: infected)
+
+
+
+Download daily malware batches
+
+URLhaus creates daily batches of payloads (malware samples) fetched from malware sites tracked by URLhaus. The daily batches are generated once a day at midnight (00:00 UTC). Please consider that it takes a few minutes to generate the batch. The daily batches are available here:
+
+URLhaus daily malware batches (ZIP password: infected)
+
+
+
+Terms of Services (ToS)
+
+By using the website of URLhaus, or any of the services / datasets referenced above, you agree that:
+
+All datasets offered by URLhaus can be used for both, commercial and non-commercial purpose without any limitations (CC0)
+Any data offered by URLhaus is served as it is on best effort
+URLhaus can not be held liable for any false positive or damage caused by the use of the website or the datasets offered above
+Any submission to URLhaus will be treated and shared under TLP:WHITE and under Creative Commons No Rights Reserved (CC0)
+
+
+
+
+© abuse.ch 2024
+
+
+
+
+
+
