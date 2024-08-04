@@ -1,4 +1,5 @@
-The following is a progress table for our benchmark. Please update as you add and intergrate diffrent apis
+# Progress Table vanilla benchmark
+Please update as you add and intergrate diffrent apis
 
 | Category         | API Name                          | # Queries | Integrated | Date  |
 |------------------|-----------------------------------|-----------|------------|-------|
