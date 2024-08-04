@@ -1,0 +1,1114 @@
+
+
+
+
+
+
+Faker Api - Generate Fake data by API requests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Docs
+
+
+Test
+
+
+Changelogs
+
+
+Fake data Download
+
+
+
+
+
+
+                            IT
+                        
+
+☕ Buy me a coffee!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        What's Faker API?
+                    
+
+
+
+
+
+                Faker API it's a collection of completely free APIs that helps web developers and web designers generate fake data in a fast and easy way. No registration is required. No tokens, no authentication.
+            
+
+                Every resource allows to choose the API language by the "_locale" parameter and also allows to select the number of rows requested by the "_quantity" parameter. Max 1000 rows.
+            
+
+                Check the Docs to read more about every resource. In addition, it's available the Postman collection to use these APIs directly in the well-known client.
+            
+
+                At the end of this page you will find the Test section, where you can test our APIs throug the specific form.
+            
+
+
+
+                            Current version: 1.2.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Docs
+        
+
+
+
+
+
+                No registration is required. No tokens, no keys or other types of authentication. Faker API it's a free service for every developer who want to use it.
+            
+
+Postman:
+            Download here the Postman collection (v 2.1)
+
+
+ Download Postman Collection
+
+
+
+
+
+
+Base URL #
+
+
+https://fakerapi.it/api/v1/{resource}
+
+
+
+
+
+
+Basic Usage #
+
+
+                Some resources allow to filter data by GET parameters.
+                The names of these parameters are always preceded by an underscore character "_", for example:
+                https://fakerapi.it/api/v1/images?_width=380
+
+
+                Data are always wrapped inside a "data" object and are always returned with the total number of rows ("total") and with the Http response "code".
+            
+
+                Every resource accepts 3 common GET parameters:
+            
+
+_locale
+_quantity
+_seed
+
+
+            _locale #
+
+
+                Default: en_US
+            
+
+                This parameter means the language of the API response we want to get and accept the locale format "en_EN". For example:
+            
+https://fakerapi.it/api/v1/persons?_locale=fr_FR
+
+                This example returns people with french names.
+            
+
+            _quantity #
+
+
+                Default: 10
+            
+
+                Min: 1 - Max: 1000
+            
+
+                This parameter means the number of rows we want to obtain and accept only integers. If you request more than 1000 rows (maximum) the system will return 1000 rows anyway. Example:
+            
+https://fakerapi.it/api/v1/companies?_quantity=5
+
+                This example returns 5 companies.
+            
+
+            _seed #
+
+
+                Default: null
+            
+
+                This parameter accept an integer and allows to get always the same results. So, executing the same request with _seed parameter set to the same value (ex. 12345) the results will never change. Example:
+            
+https://fakerapi.it/api/v1/companies?_seed=12456
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Resources #
+
+
+
+
+
+
+
+
+
+                        Addresses
+                    
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/addresses?_quantity=1
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Books
+                    
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/books?_quantity=1
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Companies
+                    
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/companies?_quantity=1
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Credit Cards
+                    
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/credit_cards?_quantity=1
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Images
+                    
+
+
+
+
+                            Additional optional parameters:
+                        
+
+
+
+
+Parameter
+Description
+Example
+
+
+
+
+_type
+
+                                            any, animals, architecture, nature, people, tech, kittens, pokemon
+                                        
+
+_type=architecture
+
+
+
+_width
+
+                                            pixels (default: 640)
+                                        
+
+_width=500
+
+
+
+_height
+
+                                            pixels (default: 480)
+                                        
+
+_height=230
+
+
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/images?_quantity=1&_type=kittens&_height=300
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Persons
+                    
+
+
+
+
+                            Additional optional parameters:
+                        
+
+
+
+
+Parameter
+Description
+Example
+
+
+
+
+_gender
+
+                                            male, female
+                                        
+
+_gender=female
+
+
+
+_birthday_start
+
+                                            date in format Y-m-d (default: -90 years)
+                                        
+
+_birthday_start=1994-02-09
+
+
+
+_birthday_end
+
+                                            date in format Y-m-d (default: now)
+                                        
+
+_birthday_end=2018-10-09
+
+
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/persons?_quantity=1&_gender=male&_birthday_start=2005-01-01
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Places
+                    
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/places?_quantity=1
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Products
+                    
+
+
+
+
+                            Additional optional parameters:
+                        
+
+
+
+
+Parameter
+Description
+Example
+
+
+
+
+_price_min
+
+                                            number in format 10.35 (default: 0.01)
+                                        
+
+_price_min=20.50
+
+
+
+_price_max
+
+                                            number in format 10.35 (default: none)
+                                        
+
+_price_max=10320.99
+
+
+
+_taxes
+
+                                            percentage (default: 22)
+                                        
+
+_taxes=10
+
+
+
+_categories_type
+
+                                            integer, string, uuid (default: integer)
+                                        
+
+_categories_type=uuid
+
+
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/products?_quantity=1&_taxes=12&_categories_type=uuid
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Texts
+                    
+
+
+
+
+                            Additional optional parameters:
+                        
+
+
+
+
+Parameter
+Description
+Example
+
+
+
+
+_characters
+
+                                            integer (default: 200)
+                                        
+
+_characters=350
+
+
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/texts?_quantity=1&_characters=500
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Users
+                    
+
+
+
+
+                            Additional optional parameters:
+                        
+
+
+
+
+Parameter
+Description
+Example
+
+
+
+
+_gender
+
+                                            male, female
+                                        
+
+_gender=female
+
+
+
+
+
+
+                            Request:
+                        
+https://fakerapi.it/api/v1/users?_quantity=1&_gender=male
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+                        Custom
+                    
+
+
+
+
+                    This resource is the only one which does'nt follow the same rules of the others.
+                    The 3 common parameters (_quantity, _locale, _seed) have the same usage of the other resources, but this request it's managed in a different way.
+                
+
+                    Request to this resource accepts custom parameters following this pattern:
+                
+myCustomName1=customType1&myCustomName2=customType2
+
+                    where myCustomName1 and myCustomName2 are my custom parameters names, and customType1 and customType2 are my custom parameters types. See below the allowed types.
+                
+
+                    This allows to generate a custom ad hoc resource, using type parameters listed below:
+                
+
+
+
+
+Parameter
+Example
+
+
+
+
+boolean
+false
+
+
+boolean_digit
+0
+
+
+buildingNumber
+"790"
+
+
+building_number
+"See 'buildingNumber'"
+
+
+card_expiration
+"03\/26"
+
+
+card_number
+"376893489089874"
+
+
+card_type
+"Visa"
+
+
+city
+"McDermottchester"
+
+
+company_name
+"Sanford-Bradtke"
+
+
+counter
+9
+
+
+country
+"Niger"
+
+
+countryCode
+"NU"
+
+
+country_code
+"See 'countryCode'"
+
+
+date
+"1973-08-06"
+
+
+dateTime
+{"date":"1994-08-09 18:34:06.000000","timezone_type":3,"timezone":"UTC"}
+
+
+date_time
+"See 'dateTime'"
+
+
+ean
+"7349051963715"
+
+
+email
+"dstark@hegmann.com"
+
+
+firstName
+"Kenya"
+
+
+first_name
+"See 'firstName'"
+
+
+image
+"http:\/\/placeimg.com\/640\/480\/any"
+
+
+lastName
+"Stokes"
+
+
+last_name
+"See 'lastName'"
+
+
+latitude
+30.204929
+
+
+longText
+"Alice, 'I've often seen a rabbit with either a waistcoat-pocket, or a watch to take the place where it had some kind of authority among them, called out, 'First witness!' The first question of course had to pinch it to annoy, Because he knows it teases.' CHORUS. (In which the cook had disappeared. 'Never mind!' said the Queen, 'and take this child away with me,' thought Alice, 'and those twelve creatures,' (she was rather glad there WAS no one to listen to her. The Cat only grinned when it saw mine coming!' 'How do you know about it, and they can't prove I did: there's no harm in trying.' So she set to work, and very angrily. 'A knot!' said Alice, as she could not help thinking there MUST be more to do with you. Mind now!' The poor little feet, I wonder if I can listen all day about it!' and he called the Queen, pointing to the heads of the baby?' said the Gryphon. 'Turn a somersault in the long hall, and wander about among those beds of bright flowers and the party went back to my."
+
+
+long_text
+"See 'longText'"
+
+
+longitude
+-53.549786
+
+
+name
+"Hazel Cruickshank"
+
+
+null
+null
+
+
+number
+44
+
+
+phone
+"+8686231441604"
+
+
+pokemon
+"Reuniclus"
+
+
+postcode
+"66110"
+
+
+state
+"Wyoming"
+
+
+streetAddress
+"67105 Adaline Coves"
+
+
+streetName
+"Elyssa Lane"
+
+
+street_address
+"See 'streetAddress'"
+
+
+street_name
+"See 'streetName'"
+
+
+text
+"Knave of Hearts, who only bowed and smiled in reply. 'That's right!' shouted the Gryphon, 'that they WOULD put their heads down and looked at Two. Two began in a loud, indignant voice, but she heard."
+
+
+upc
+"195614920770"
+
+
+uuid
+"7807c481-baa4-3bd2-81aa-9cd40c75c15a"
+
+
+vat
+"292447072"
+
+
+website
+"rolfson.com"
+
+
+word
+"vero"
+
+
+
+
+
+                            Custom request:
+                        
+https://fakerapi.it/api/v1/custom?_quantity=1&customfield1=name&customfield2=dateTime&customfield3=phone
+
+                            Response:
+                        
+
+
+
+ Refresh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Test APIs
+        
+
+
+
+
+Resource
+
+Addresses
+Books
+Companies
+Credit Cards
+Images
+Persons
+Places
+Products
+Texts
+Users
+Custom
+
+
+
+Quantity
+
+
+
+URL (additional parameters here)
+
+
+
+
+
+ Send Test Request
+
+
+
+
+Test Response.
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Changelogs
+        
+
+
+
+
+
+
+
+
+                        1.2.0
+                    
+
+
+
+
+                            Date of release: 08 January 2022
+                        
+
+
+                                New field "id" added to some resources (Persons, Users, Addresses, Companies, Products, Books)
+                            
+
+
+
+
+
+
+
+                        1.1.1
+                    
+
+
+
+
+                            Date of release: 30 April 2021
+                        
+
+
+                                Snake_case synonyms for some "custom" resources
+                            
+
+                                General fixes
+                            
+
+
+
+
+
+
+
+                        1.1.0
+                    
+
+
+
+
+                            Date of release: 13 March 2021
+                        
+
+
+                                Upgrading core technologies
+                            
+
+
+
+
+
+
+
+                        1.0.2
+                    
+
+
+
+
+                            Date of release: 23 April 2020
+                        
+
+
+                                Added "pokemon" type to Custom resource
+                            
+
+                                Added Pokémon images to Image resource
+                            
+
+
+
+
+
+
+
+                        1.0.1
+                    
+
+
+
+
+                            Date of release: 14 April 2020
+                        
+
+
+                                Added "counter" type to Custom resource
+                            
+
+
+
+
+
+
+
+                        1.0.0
+                    
+
+
+
+
+                            Date of release: 12 April 2020
+                        
+
+
+                                First release
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Made for developers by Alessandro Pietrantonio - Contact me - Cookie Policy
+
+
+
+
+
+
+
+
+
+
+Sorry, you need Javascript on to email me.
+
+
+

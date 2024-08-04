@@ -1,0 +1,114 @@
+
+
+
+
+Documentation | CityBikes API
+
+
+
+
+
+
+
+
+
+
+
+CityBikes API Documentation
+Welcome to the CityBikes API documentation page. This is a brief explanation on how to use CityBikes data.
+API End points
+http://api.citybik.es/v2/networks
+{
+  "networks": [
+    {
+        "company": "JCDecaux", 
+        "href": "/v2/networks/velib", <--- network API endpoint
+        "location": {
+          "latitude": 48.856612, 
+          "city": "Paris", 
+          "longitude": 2.352233, 
+          "country": "FRA"
+        }, 
+        "name": "Vélib'", 
+        "id": "velib"
+    },
+    {...}
+  ]
+}
+http://api.citybik.es/v2/networks/network_id
+
+{
+  "network": {
+    "name": "Vélib'", 
+    "stations": [
+      {
+          "name": "00903 - QUAI MAURIAC  / PONT DE BERCY",   /   UTC Zulu timestamp of the last time
+          "timestamp": "2014-04-14T12:10:17.622Z",  <-------/ the station was updated on our systems
+          "longitude": 2.374340554605615,                       
+          "free_bikes": 1,   <-------------------------- Available bikes
+          "latitude": 48.83713368945151, 
+          "empty_slots": 19,  <------------------------- Empty spaces
+          "id": "f5a551a87eec15155d6409fe9d0ff8e2" <---- Unique id for this station
+      },
+      {...}
+    ], 
+    "company": "JCDecaux",           |
+    "href": "/v2/networks/velib",       |        Redundant Information
+    "location": {                    |
+      "latitude": 48.856612,         |    Just so you know where you are
+      "city": "Paris",               |---      with less requests
+      "longitude": 2.352233,         | 
+      "country": "FRA"               |    This can be filtered by passing
+    },                               |      ?fields=stations to the URI
+    "id": "velib"                    |
+  }
+}
+
+
+Syntax
+Field filtering
+Fields can be filtered by adding a ?fields=list,of,fields parameter to any request. Field visibility gets only into the first document for now, but we plan on supporting lucene type parameters to allow filterings like location.city,station.*
+For example http://api.citybik.es/v2/networks?fields=id,name,href will render just the name, id and API endpoint of each network
+
+{
+  "networks": [
+    {
+        "href": "/v2/networks/velib", 
+        "id": "velib", 
+        "name": "V\u00e9lib'"
+    }, 
+    {
+        "href": "/v2/networks/valenbisi", 
+        "id": "valenbisi", 
+        "name": "Valenbisi"
+    }, 
+    {
+        "href": "/v2/networks/ecobici", 
+        "id": "ecobici", 
+        "name": "EcoBici"
+    },
+    {...}
+  ]
+}
+
+
+Format
+The system currently supports only JSON.
+More formats may be implemented, and will be requested by setting the appropiate MIME type on the Content-Type field of the header's request.
+Contribute
+This API is a display layer of PyBikes. Feel free to dive into the repository and contribute to our project, be it fixing a bug, or adding support for more cities.
+Terms of Service
+CityBikes is a free service.
+There's just one restriction: if your project is using this API you should indicate it on your app and website, linking the project page. If your project is using PyBikes you should also mention it. There's no need to put a huge 1k px banner on your website, just make a clear and noticeable statement about the source of the information that your project is using. Inform your users about it, let them find this data.
+This restriction is meant to protect the work we do. We want to spread the word on the things we believe, this is not exactly open data as we adquire this information using many tricks. This is how the reality would look like if everything was open, but the world is not open yet. Not linking us means this message getting lost on its way.
+We plan on adding a section about the projects using CityBikes. If you are interested, feel free to send us a line at info@citybik.es.
+Happy Hacking!
+
+
+
+
+
+
+
+
+

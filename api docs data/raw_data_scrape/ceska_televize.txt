@@ -1,0 +1,457 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+  
+Informace — TV program — XML — Česká televize
+
+
+
+
+Hledání  Search     iVysíláníČT24SportDéčkoTV ProgramŽivěSearch CloseHledání  Hledat Search Moje ČT Přihlásit seČTSpravovat účetOblíbené pořadyRozkoukaná videaPřihlásit se na TVOdhlásit seŽivé vysíláníTV programPočasíTeletextE-shopTV poplatkyVše o ČTKontakty
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kde jsem:
+
+
+XML  »							
+
+TV program  »							
+
+Informace  							
+
+
+
+
+
+
+
+
+
+
+
+						XML					
+
+
+
+TV program
+
+
+
+Informace
+
+
+Registrace
+
+
+Aktivace
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+XML
+
+
+
+
+
+
+
+
+Informace — TV program — XML — Česká televize
+
+
+
+
+
+XML export TV programu – všeobecné informace o použití
+XML export pro konkrétní den a program získáte na URL adrese, jejíž tvar podléhá předpisům:
+
+datum zadávejte ve formátu: dd.mm.rrrr
+identifikátory televizních programů, které lze použít:
+	
+ct1 – ČT1
+ct2 – ČT2
+ct24 – ČT24
+ct4 – ČT sport
+ct5 – ČT :D
+ct6 – ČT art
+ct7 – ČT3
+
+
+obecný předpis URL je tedy: https://www.ceskatelevize.cz/services-old/programme/xml/shedule.php?user=[login]&date=[dd.mm.rrrr]&channel=[ct1|ct2|ct24|ct4|ct5|ct6|ct7]
+
+
+Příklad URL pro datum – 04.08.2024 a kanál ČT24:
+https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=04.08.2024&channel=ct24
+
+
+Příklad URL pro datum – 04.08.2024 a kanál ČT1, vč. regionálních vysílání:
+https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=04.08.2024&channel=ct1&regiony=1
+
+
+Příklad URL pro datum – 04.08.2024 a kanál ČT art, ve formátu JSON:
+https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php?user=test&date=04.08.2024&channel=ct6&json=1
+
+Popis XML souboru
+
+<?xml version="1.0" encoding="utf-8" ?> hlavička dokumentu XML 1.0
+
+
+<program>
+	Základní tag XML a tvoří kolekci vnořených tagů <porad> 
+Atributy
+	datum_vysilani: datum vysílání ve formátu rrrr-mm-ddkanal: kanál programu ČT [ct1|ct2|ct24|ct4|ct5|ct6|ct7]generovano: čas vygenerovaného souboru ve formátu rrrr-mm-dd H:i
+Příklad
+	<program datum_vysilani="2008-05-06" kanal="ct1" generovano="2024-08-04 03:54:05">
+
+
+<porad>
+	Tag tvoří skupinu vnořených tagů <linky>, <vps>, <cas>, <nazvy>, <dil>, <stopaz>, <noticka>, <regionalni>, <alternativa> a <ikonky>
+
+
+<linky>
+	Tag tvoří skupinu vnořených tagů <program> a <ivysilani>
+
+
+<program>
+	Odkaz na stránky pořadu
+Příklad
+	<program>https://www.ceskatelevize.cz/porady/10116619036-abeluv-cerny-pes/20651212035/>
+
+
+<ivysilani>
+	Odkaz na iVysílání daného pořadu, může být prázdný, pokud neexistuje iVysílání
+Příklad
+	<ivysilani>https://www.ceskatelevize.cz/ivysilani/10116619036-abeluv-cerny-pes/20651212035/'</ivysilani>
+
+
+<vps>
+	VPS pořadu
+Příklad:
+	<vps>106050915</vps>
+
+
+<datum>
+	Reálné datum vysílání daného pořadu ve formátu yyyy-mm-dd
+	Liší se od data vysílacího dne při vysílaní po půlnoci.
+Příklad:
+	<datum>2021-12-31</datum>
+
+
+<cas>
+	Čas vysílání daného pořadu ve formátu hh:mm
+Příklad:
+	<cas>09:15</cas>
+
+
+<nazvy>
+	Tag tvoří skupinu vnořených tagů <nadtitul>, <nazev>, <original> a <nazev_casti>
+
+
+<nadtitul>
+	Popisuje nadtitul pořadu, může být prázdný, pokud neexistuje nadtitul pořadu
+Příklad
+	<nadtitul>TVŠ</nadtitul>
+
+
+<nazev>
+	Název pořadu
+Příklad
+	<nazev>Odhalené souvislosti</nazev>
+
+
+<original>
+	Popisuje originální název pořadu, může být prázdný, pokud neexistuje tento název pořadu
+Příklad
+	<original></original>
+
+
+<nazev_casti>
+	Název části pořadu, může být prázdný, pokud neexistuje více částí
+Příklad
+	<nazev_casti>Paraziti a boj o potravu</nazev_casti>
+
+
+<dil>
+	Popisuje díl pořadu, formát dil/celkovyPocetDilu, může být prázdný, když toto není seriál
+Příklad
+	<dil></dil>
+
+
+<zanr>
+	Žánr pořadu
+Příklad
+	<zanr>Zábava</zanr>
+
+
+<stopaz>
+	Stopáž v minutách ve formátu mmm:ss
+Příklad
+	<stopaz>014:00</stopaz>
+
+
+<noticka>
+	Celkový popis pořadu, nemusí být vždy
+Příklad
+	<noticka>Témata ze školní biologie ve světle nejnovějších poznatků vědeckých pracovišť. Pořad pro žáky 2. stupně ZŠ</noticka>
+
+
+<regionalni>
+	Pokud se pořad vysílá v regionálním TV okruhu, bude obsahovat kód regionu, jinak N
+Všechna regionální vysílání pouze s přidaným parametrem &regiony=1
+Příklad
+	<regionalni>N</regionalni> – celostátní TV okruh
+Kódy regionů
+	JM – jižní Morava
+	SM – severní Morava
+	JZ – jih a západ
+	SV – sever a východ
+	Y – jiný region
+
+
+<alternativa>
+	Pokud bude pořad pouze alternativou ve vysílání, tag bude obsahovat značku Y, jinak N
+Příklad
+	<alternativa>N</alternativa>
+
+
+<ikony>
+	Tag tvoří skupinu vnořených tagů <zvuk>, <skryte_titulky>, <neslysici>, <live>, <premiera>, <cb>, <hvezdicka>, <puvodni_zneni> a <pomer>
+
+
+<zvuk>
+	Jaký zvuk je k pořadu: M – mono, S – stereo, D – Duální zvuk, E – Dolby, B – Dolby Surround
+Příklad
+	<zvuk>S</zvuk>
+
+
+<ad>
+	Zvukový popis (Audio Description): 1 – ano, 0 – ne
+Příklad
+	<ad>1</ad>
+
+
+<skryte_titulky>
+	Skryté titulky k pořadu: 1 – ano, 0 – ne
+Příklad
+	<skryte_titulky>1</skryte_titulky>
+
+
+<neslysici>
+	K pořadu je vložen i komentátor(ka) uvádějící pořad ve znakové řeči pro neslyšící: 1 – ano, 0 – ne
+Příklad
+	<neslysici>0</neslysici>
+
+
+<live>
+	Pokud se bude pořad vysílat v přímém přenosu: 1 – ano, 0 – ne
+Příklad
+	<live>0</live>
+
+
+<premiera>
+	Pořad je premiérový: 1 – ano, 0 – ne
+Příklad
+	<premiera>0</premiera>
+
+
+<cb>
+	Pořad se vysílá černobíle: 1 – ano, 0 – ne
+Příklad
+	<cb>0</cb>
+
+
+<hvezdicka>
+	Pořad je nevhodný pro mládež (vysílaný až po 22. hodině): 1 – ano, 0 – ne
+Příklad
+	<hvezdicka>0</hvezdicka>
+
+
+<labeling>
+	Vhodnost pro dětskou věkovou skupinu: 4+, 6+, 8+, 10+, 12+ nebo 15+
+Příklad
+	<labeling>15+</labeling>
+
+
+<puvodni_zneni>
+	Původní znění pořadu: 1 – ano, 0 – ne
+Příklad
+	<puvodni_zneni>0</puvodni_zneni>
+
+
+<pomer>
+	Poměr vysílání pořadu 4:3 nebo 16:9
+Příklad
+	<pomer>4:3</pomer>
+
+
+<obrazky>
+	Obrázky k pořadu.
+	Tag tvoří skupinu vnořených tagů <tv_program>, <nahled>.
+
+
+<tv_program>
+	Malý obrázek s rozměrem 50x80 pixelů, ve formátu gif nebo jpg.
+Příklad
+	<tv_program>http://img.ceskatelevize.cz/program/porady/16111/foto/program.jpg</tv_program>
+
+
+<nahled>
+	Náhledový obrázek pořadu, ve formátu jpg.
+	Minimální rozměry: 512x288 pixelů,
+	maximální rozměry: 1280x720 pixelů,
+	poměr stran je vždy 16:9.
+Příklad
+	<nahled>http://img.ceskatelevize.cz/program/porady/16111/foto/uni.jpg</nahled>
+
+
+<dostupnost>
+	Dostupnost videa v iVysílání.
+	Tag tvoří skupinu vnořených tagů <stav>, <od>, <do>.
+	Hodnoty se mohou průběžně měnit.
+
+
+<stav>
+	Lze pořad přehrát?
+	ano – video je dostupné bez omezení,
+	ne – video není dostupné,
+	omezeno – video lze přehrát od a/nebo do určitého data,
+	pouze_zive – video lze přehrát pouze souběžně s TV vysíláním.
+	Pokud je omezení od/do, tak lze pořad přehrát pouze v tomto rozmezí.
+Příklad
+	<stav>ano</stav>
+
+
+<od>
+	Od kdy lze pořad přehrát. Může být prázdný.
+Příklad
+	<od>2020-01-01 00:00:00</od>
+
+
+<do>
+	Do kdy lze pořad přehrát. Může být prázdný.
+Příklad
+	<do>2025-01-01 12:00:00</do>
+
+ 
+Podmínky použití XML exportu TV programu
+
+Služba je poskytována bez jakékoliv garance. Česká televize si vyhrazuje právo přístup ke službě nebo službu jako celek kdykoliv zrušit.
+Uživatel nesmí poskytovaná data bez souhlasu České televize nijak modifikovat. Zejména není dovoleno odstraňovat hypertextové odkazy směřující na web ČT.
+Uživatel je oprávněn načítat soubor s XML daty maximálně 1× za minutu.
+Uživatel může pomocí poskytovaného XML souboru zobrazit a zveřejnit TV program ČT na svém webu, ale není oprávněn předávat data nebo samotný XML soubor třetí osobě ve strojově zpracovatelném formátu.
+Uživatel není oprávněn předat třetí osobě přístup ke XML souboru získaný registrací.
+Poskytovaná data je uživatel oprávněn použít výhradně v souvislosti s prezentací TV programu České televize.
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ Česká televize na sociálních sítích:          Rozcestník stránekŽivé vysíláníVše o ČTTV programStudio BrnoPočasíStudio OstravaHbbTV aplikaceRada ČTMobilní aplikaceReklamaTV poplatkyKariéraE-shopKonkurzyDéčko pro rodičePro médiaTeletextPro autoryČasté dotazyTelexportZveme Vás do kinaProdukční službyKontaktyRozcestník kanálů  Divácké centrum je tu pro vás každý den v době 7:30 — 17:30 hod  261 136 113   info@ceskatelevize.cz
+© Česká televize•English version
+
+Ochrana soukromí.
+Mapa stránek•RSS  Divácké centrum je tu pro vás každý den v době 7:30 — 17:30 hod  261 136 113 info@ceskatelevize.czŽivé vysíláníVše o ČTTV programStudio BrnoPočasíStudio OstravaHbbTV aplikaceRada ČTMobilní aplikaceReklamaTV poplatkyKariéraE-shopKonkurzyDéčko pro rodičePro médiaTeletextPro autoryČasté dotazyTelexportZveme Vás do kinaProdukční službyKontakty  Instagram  Facebook  YouTube  X (Twitter)  Threads
+© Česká televize•English version
+
+Ochrana soukromí.
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
