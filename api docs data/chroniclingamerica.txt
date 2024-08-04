@@ -1,0 +1,229 @@
+Introduction
+Chronicling America provides access to information about historic newspapers and select digitized newspaper pages. To encourage a wide range of potential uses, we designed several different views of the data we provide, all of which are publicly visible. Each uses common Web protocols, and access is not restricted in any way. You do not need to apply for a special key to use them. Together they make up an extensive application programming interface (API) which you can use to explore all of our data in many ways.
+
+Details about these interfaces are below. In case you want to dive right in, though, we use HTML link conventions to advertise the availability of these views. If you are a software developer or researcher or anyone else who might be interested in programmatic access to the data in Chronicling America, we encourage you to look around the site, "view source" often, and follow where the different links take you to get started. When describing Chronicling America as the source of content, please use the URL and a Web site citation, such as "from the Library of Congress, Chronicling America: Historic American Newspapers site".
+
+For more information about the open source Chronicling America software please see the LibraryOfCongress/chronam GitHub site. Also, please consider subscribing to the ChronAm-Users discussion list if you want to discuss how to use or extend the software or data from its APIs.
+
+If you’re interested in other data and machine-usable interfaces available from the Library of Congress, you might find the LC for Robots page helpful at https://labs.loc.gov/lc-for-robots/++
+
+The API
+Jump to:
+Search the newspaper directory and digitized page contents using OpenSearch.
+Auto Suggest API for looking up newspaper titles
+Link using our stable URL pattern for Chronicling America resources.
+JSON views of Chronicling America resources.
+Linked Data views of Chronicling American resources.
+Bulk Data for research and external services.
+CORS and JSONP support for your JavaScript applications.
+Searching the directory and newspaper pages using OpenSearch
+The directory of newspaper titles contains nearly 140,000 records of newspapers and libraries that hold copies of these newspapers. The title records are based on MARC data gathered and enhanced as part of the NDNP program.
+
+Searching the title records is possible using the OpenSearch protocol. This is advertised in a LINK header element of the site's HTML template as "NDNP Title Search", using this OpenSearch Description document.
+
+Title search parameters:
+
+terms: the search query
+format: 'html' (default), 'json', or 'atom' (optional)
+page: for paging results (optional)
+Examples:
+
+Note that all example URLs below use the same protocol and server name, https://chroniclingamerica.loc.gov/. We only show the URL paths and parameters below to save space.
+
+/search/titles/results/?terms=michigan
+search for "michigan", HTML response
+/search/titles/results/?terms=michigan&format=atom
+search for "michigan", Atom response
+/search/titles/results/?terms=michigan&format=json&page=5
+search for "michigan", JSON response, starting at page 5
+There are millions of digitized newspaper pages in Chronicling America. These pages span several decades and many U.S. states and territories. New batches of data come in from partner institutions throughout the year and are added to the site regularly.
+
+Searching newspaper pages is also possible via OpenSearch. This is advertised in a LINK header element of the site's HTML template as "NDNP Page Search", using this OpenSearch Description document.
+
+Page search parameters:
+
+andtext: the search query
+format: 'html' (default), or 'json', or 'atom' (optional)
+page: for paging results (optional)
+Examples:
+
+/search/pages/results/?andtext=thomas
+search for "thomas", HTML response
+/search/pages/results/?andtext=thomas&format=atom
+search for "thomas", Atom response
+/search/pages/results/?andtext=thomas&format=atom&page=11
+search for "thomas", Atom response, starting at page 11
+Top
+
+Using the Directory's AutoSuggest API
+The Chronicling America Directory contains hundreds of thousands of bibliographic records for American newspaper titles. To allow the directory to be integrated into your own applications you can use the OpenSearch AutoSuggest API to dynamically lookup these newspaper titles. For example:
+
+/suggest/titles/?q=Florida
+The response will be application/x-suggestions+json as described by the the OpenSearch Suggestions extension.
+
+Top
+
+Link to Chronicling America Resources
+The Chronicling America Web site uses links that follow a straightforward pattern. You can use this pattern to construct links into specific newspaper titles, to any of its available issues and their editions, and even to specific pages. These links can be readily bookmarked and shared on other sites.
+
+We are committed to supporting this link pattern over time, so even if we change how the site works, we will redirect any requests to the system using this specific pattern into the new site. We established redirect rules for links into the previous version of the site when we released a new version in early 2009, and we intend to sustain those rules.
+
+The link pattern uses LCCNs, dates, issue numbers, edition numbers, and page sequence numbers.
+
+Examples:
+
+/lccn/sn86069873/
+title information for LCCN sn 86069873
+/lccn/sn86069873/issues/
+calendar view of available issues
+/lccn/sn86069873/issues/first_pages/
+browse first pages of available issues
+/lccn/sn86069873/1900-01-05/ed-1/
+first available edition from January 5, 1900
+/lccn/sn86069873/1900-01-05/ed-1/seq-3/
+third available page from first edition, January 5, 1900
+Top
+
+JSON Views
+In addition to the use of JSON in OpenSearch results, there are also JSON views available for various resources in Chronicling America. These JSON views are typically linked from their HTML representation using the <link> element. For example:
+
+/lccn/sn86069873.json
+title information for LCCN sn 86069873
+/lccn/sn86069873/1900-01-05/ed-1.json
+first available edition from January 5, 1900
+/lccn/sn86069873/1900-01-05/ed-1/seq-3.json
+third available page from first edition, January 5, 1900
+/newspapers.json
+a list of all newspaper titles for which there is digital content
+/batches.json
+a list of all batches of content that have been loaded
+/batches/dlc_jamaica_ver01.json
+detailed information about a specific batch
+/awardees.json
+a list of all NDNP Awardees as JSON
+/awardees/dlc.json
+detailed information about a specific awardee
+You will notice that many of these JSON views link to each other. This allows the JSON to stay relatively compact by including only information about a particular entity, while providing a link to fetch more detail about a related entity.
+Top
+
+Linked Data
+Linked Data allows us to connect the information in Chronicling America directly to related data on the Web explicitly. Chronicling America provides several Linked Data views to make it easy to connect with other information resources and to process and analyze newspaper information with conceptual precision.
+
+We use concepts like Title (defined in DCMI Metadata Terms) and Issue (defined in the Bibliographic Ontology) to describe newspaper titles and issues available in the data. Using these concepts, defined in existing ontologies, can help to ensure that what we mean by "title" and "issue" is consistent with the intent of other publishers of linked data. We also define other concepts not already defined in existing ontologies. This vocabulary includes elements suitable for newspaper information and the NDNP program, including these elements:
+
+Awardee
+Batch
+Page
+bag
+number
+section
+sequence
+These elements are used in RDF views of several types of pages, ranging from a list of the newspaper titles available on the site and information about each, to enumerations of all the pages that make up each issue and all of the files available for each page.
+
+Examples:
+
+/lccn/sn85038615.rdf
+information about The Times Dispatch (Richmond, Va.) 1903-1914
+/lccn/sn83045555/1889-11-21/ed-1.rdf
+information about the November 21, 1889 first edition issue of Deseret Evening News (Great Salt Lake City [Utah])
+/lccn/sn83030214/1905-01-15/ed-1/seq-25.rdf
+details about all of the files associated with the 25th image of the January 15, 1905 issue of New-York Tribune (New York [N.Y.]) 1886-1924
+/awardees/mohi.rdf
+information about awardee State Historical Society of Missouri
+/newspapers.rdf
+list of available newspaper titles
+Comparing the RDF versions of the links above with their HTML counterpart links, you might notice that the URI pattern we follow for these views is to remove the final slash, replacing it with ".rdf". We follow this pattern to comply with best practices for publishing linked data, and also to keep the URIs easy to understand and use.
+
+For each of the HTML pages with a linked data counterpart in RDF, we provide links to those alternate views from the HTML page using the LINK header element. This can support automating the process of using the RDF data in tools like bookmarklets, plugins, and scripts, and it also helps us to advertise the availability of the additional views. In many views, such as newspaper page images, we also provide LINK elements pointing to the various available files (image, text, OCR coordinate XML) for each available page or other potentially useful information. We encourage you to explore the entire site and to look for and use these LINK elements if you find them useful when working with NDNP data. Just follow your nose, and view the source.
+
+In addition to the concepts describe above, we use concepts from several other vocabularies in describing NDNP materials and also in linking to related data available on other sites. These additional vocabularies and external sites include:
+
+DBpedia
+Dublin Core and DCMI Terms
+FRBR concepts in RDF
+GeoNames
+LCCN Permalink
+lingvoj.org
+OAI-ORE (more about aggregations below)
+OWL
+RDA
+WorldCat
+We are grateful to all of these providers and we hope we can follow their lead in encouraging additional connections between data and vocabulary providers. Please be aware that how we use these vocabularies will likely change over time, as they continue to develop, and as new vocabularies are introduced.
+
+Top
+
+Bulk Data
+In certain situations the granular access provided by the API may be somewhat constraining. For example, perhaps you are a researcher who would like to try out new indexing techniques on the millions of pages of OCR data in Chronicling America. Or perhaps you are a service provider and anticipate needing to support a high volume of fulltext searches across the corpus, and do not want the Chronicling America API as an external dependency. To support these and other potential use cases we are beginning to provide bulk access to the underlying data sets. The initial bulk data sets include:
+
+Batches: each batch of digitized content that is provided by awardees is made available via the Batches HTML, Atom and JSON views. These views provide links to where the files comprising the batch can be fetched with a web crawling tool like wget.
+OCR Bulk Data: the complete set of OCR XML and text files that make up the newspaper collection are made available as compressed archive files. These files are listed in the OCR report, and are also made available via Atom and JSON feeds that will allow you to build automated workflows for updating your local collection.
+Please note: Some batches contain digitized newspaper pages that lack corresponding OCR text. For this reason, after decompressing the downloadable files, the number of ocr.txt files may not match the page count available within the HTML, Atom and JSON batch views.
+
+Update (July 2019): In early June 2019, an error was identified with the OCR Bulk Data download files available from the OCR report. These errors have been corrected but any files downloaded between February 5th and June 3rd 2019 should be replaced with the current versions. The source OCR data for all newspaper pages currently ingested in Chronicling America are also available at https://chroniclingamerica.loc.gov/data/batches/.
+Contact ndnptech@loc.gov with any questions.
+
+Top
+
+CORS and JSONP Support
+To help you integrate Chronicling America into your JavaScript applications, the OpenSearch and AutoSuggest JSON responses support both Cross-Origin Resource Sharing (CORS) and JSON with Padding (JSONP). CORS and JSONP allow your JavaScript applications to talk to services hosted at chroniclingamerica.loc.gov without the need to proxy the requests yourself.
+
+CORS Example
+
+curl -i 'https://chroniclingamerica.loc.gov/suggest/titles/?q=manh'
+
+HTTP/1.1 200 OK
+Date: Mon, 28 Mar 2011 19:45:34 GMT
+Expires: Tue, 29 Mar 2011 19:45:37 GMT
+ETag: "7d786bec2ca003d86009f8ccdfd72912"
+Cache-Control: max-age=86400
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: X-Requested-With
+Content-Length: 7045
+Last-Modified: Mon, 28 Mar 2011 19:45:37 GMT
+Content-Type: application/x-suggestions+json
+
+[
+  "manh",
+    [
+      "Manhasset life. (Manhasset, N.Y.) 19??-19??",
+      "Manhasset mail. (Manhasset, N.Y.) 1927-1986"
+    ],
+    [
+      "sn97063690",
+      "sn95071148"
+    ],
+    [
+      "https://chroniclingamerica.loc.gov/lccn/sn97063690/",
+      "https://chroniclingamerica.loc.gov/lccn/sn95071148/"
+    ]
+]
+JSONP Example
+
+curl -i 'https://chroniclingamerica.loc.gov/suggest/titles/?q=manh&callback=suggest'
+
+HTTP/1.1 200 OK
+Date: Mon, 28 Mar 2011 19:45:34 GMT
+Expires: Tue, 29 Mar 2011 19:45:37 GMT
+ETag: "7d786bec2ca003d86009f8ccdfd72912"
+Cache-Control: max-age=86400
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: X-Requested-With
+Content-Length: 7045
+Last-Modified: Mon, 28 Mar 2011 19:45:37 GMT
+Content-Type: application/x-suggestions+json
+
+suggest([
+  "manh",
+    [
+      "Manhasset life. (Manhasset, N.Y.) 19??-19??",
+      "Manhasset mail. (Manhasset, N.Y.) 1927-1986"
+    ],
+    [
+      "sn97063690",
+      "sn95071148"
+    ],
+    [
+      "https://chroniclingamerica.loc.gov/lccn/sn97063690/",
+      "https://chroniclingamerica.loc.gov/lccn/sn95071148/"
+    ]
+]);

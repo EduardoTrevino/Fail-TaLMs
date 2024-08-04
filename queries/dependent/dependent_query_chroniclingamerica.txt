@@ -1,0 +1,91 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "Chronicling America",
+                "api_name": "Search Titles",
+                "api_description": "Search the directory of newspaper titles using OpenSearch.",
+                "required_parameters": [
+                    {
+                        "name": "terms",
+                        "type": "STRING",
+                        "description": "The search query",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The format of the response (html, json, atom)",
+                        "default": "json"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INT",
+                        "description": "Page number for paginated results",
+                        "default": 1
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "title": "str",
+                            "lccn": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "Chronicling America",
+                "api_name": "Search Pages",
+                "api_description": "Search digitized newspaper pages using OpenSearch.",
+                "required_parameters": [
+                    {
+                        "name": "andtext",
+                        "type": "STRING",
+                        "description": "The search query",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The format of the response (html, json, atom)",
+                        "default": "json"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INT",
+                        "description": "Page number for paginated results",
+                        "default": 1
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "title": "str",
+                            "url": "str",
+                            "date": "str",
+                            "snippet": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find all newspaper titles and their first pages mentioning 'Thomas' from Michigan.",
+        "relevant APIs": [
+            [
+                "Search Titles"
+            ],
+            [
+                "Search Pages"
+            ]
+        ],
+        "query_id": 2
+    }
+]

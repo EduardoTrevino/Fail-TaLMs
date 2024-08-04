@@ -24,7 +24,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | 4chan                            | 2         | :x:        | TBD      |
 | Content          | Anime News Network               | 2         | :x:        | TBD      |
 | Content          | Ceska Televize                   | 2         | :x:        | TBD      |
-| Content          | Chronicling America              | 0         | :x:        | TBD      |
+| Content          | Chronicling America              | 2         | :x:        | TBD      |
 | Content          | Crossref                         | 0         | :x:        | TBD      |
 | Content          | Final Space                      | 0         | :x:        | TBD      |
 | Content          | HackerNews                       | 0         | :x:        | TBD      |

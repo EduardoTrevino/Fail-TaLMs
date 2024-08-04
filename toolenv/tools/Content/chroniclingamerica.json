@@ -1,0 +1,133 @@
+{
+  "tool_name": "Chronicling America",
+  "tool_description": "API to access information about historic US newspapers and select digitized newspaper pages.",
+  "title": "Chronicling America",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.7,
+    "__typename": "Score"
+  },
+  "home_url": "https://chroniclingamerica.loc.gov/",
+  "host": "chroniclingamerica.loc.gov",
+  "api_list": [
+    {
+      "name": "Search Titles",
+      "url": "https://chroniclingamerica.loc.gov/search/titles/results/",
+      "description": "Search the directory of newspaper titles using OpenSearch.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "terms",
+          "type": "STRING",
+          "description": "The search query",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "ENUM",
+          "description": "The format of the response (html, json, atom)",
+          "default": "html"
+        },
+        {
+          "name": "page",
+          "type": "INT",
+          "description": "Page number for paginated results",
+          "default": 1
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://chroniclingamerica.loc.gov/search/titles/results/\"\nparams = {\"terms\": terms, \"format\": format, \"page\": page}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "Search Pages",
+      "url": "https://chroniclingamerica.loc.gov/search/pages/results/",
+      "description": "Search digitized newspaper pages using OpenSearch.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "andtext",
+          "type": "STRING",
+          "description": "The search query",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "ENUM",
+          "description": "The format of the response (html, json, atom)",
+          "default": "html"
+        },
+        {
+          "name": "page",
+          "type": "INT",
+          "description": "Page number for paginated results",
+          "default": 1
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://chroniclingamerica.loc.gov/search/pages/results/\"\nparams = {\"andtext\": andtext, \"format\": format, \"page\": page}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "Suggest Titles",
+      "url": "https://chroniclingamerica.loc.gov/suggest/titles/",
+      "description": "Auto Suggest API for looking up newspaper titles.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "q",
+          "type": "STRING",
+          "description": "The query for auto-suggestion",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://chroniclingamerica.loc.gov/suggest/titles/\"\nparams = {\"q\": q}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "suggestions": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}
