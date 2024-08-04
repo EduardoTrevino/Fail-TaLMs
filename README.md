@@ -11,7 +11,7 @@ Please update as you add and intergrate diffrent apis
 | Art & Images     | Dogs                             | 2         | :x:        | TBD      |
 | Art & Images     | HTTP Cats                        | 0         | :x:        | TBD      |
 | Art & Images     | Lorem Picsum                     | 0         | :x:        | TBD      |
-| Art & Images     | Metropolitan Museum of Art       | 0         | :x:        | TBD      |
+| Art & Images     | Metropolitan Museum of Art       | 2         | :x:        | TBD      |
 | Art & Images     | PHP-Noise                        | 0         | :x:        | TBD      |
 | Art & Images     | Placebear                        | 0         | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0         | :x:        | TBD      |
