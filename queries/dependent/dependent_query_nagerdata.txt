@@ -1,0 +1,89 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Calendar",
+                "tool_name": "Nager.Date",
+                "api_name": "PublicHolidays",
+                "api_description": "Get the public holidays for a specific year and country.",
+                "required_parameters": [
+                    {
+                        "name": "Year",
+                        "type": "INTEGER",
+                        "description": "The year for which to retrieve public holidays.",
+                        "default": 2024
+                    },
+                    {
+                        "name": "CountryCode",
+                        "type": "STRING",
+                        "description": "The ISO 3166-1 alpha-2 country code.",
+                        "default": "AT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "date": "string",
+                            "localName": "string",
+                            "name": "string",
+                            "countryCode": "string",
+                            "fixed": "boolean",
+                            "global": "boolean",
+                            "counties": "array of strings",
+                            "launchYear": "integer",
+                            "types": [
+                                "array of strings"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Calendar",
+                "tool_name": "Nager.Date",
+                "api_name": "LongWeekend",
+                "api_description": "Get the long weekends for a specific year and country.",
+                "required_parameters": [
+                    {
+                        "name": "Year",
+                        "type": "INTEGER",
+                        "description": "The year for which to retrieve long weekends.",
+                        "default": 2024
+                    },
+                    {
+                        "name": "CountryCode",
+                        "type": "STRING",
+                        "description": "The ISO 3166-1 alpha-2 country code.",
+                        "default": "AT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "startDate": "string",
+                            "endDate": "string",
+                            "dayCount": "integer",
+                            "needBridgeDay": "boolean"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What are the public holidays and long weekends in Austria for the year 2024?",
+        "relevant APIs": [
+            [
+                "Nager.Date",
+                "PublicHolidays"
+            ],
+            [
+                "Nager.Date",
+                "LongWeekend"
+            ]
+        ],
+        "query_id": 2
+    }
+]

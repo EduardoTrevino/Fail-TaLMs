@@ -1,0 +1,643 @@
+Public Holiday Api
+The api provides a simple way to query the holidays of over 100 countries, also it is possible to query long weekends. For IoT devices there is an endpoint to check if today is a holiday. More information on how to use the project or integrate it into your software can be found on the GitHub project page.
+
+Benefits
+✅ Access to 100 countries
+✅ Always up to date information
+✅ No rate limit
+✅ CORS allowed
+✅ Simple implementation
+  
+Request Example
+Get the public holidays from the given year and country
+https://date.nager.at/api/v3/publicholidays/2024/AT
+Request
+GET /api/v3/PublicHolidays/{Year}/{CountryCode}
+Parameter	Required	Example value
+Year	true	2024
+CountryCode	true	AT
+Response
+Model
+
+date	The date of the holiday
+localName	Local name
+name	English name
+countryCode	ISO 3166-1 alpha-2
+fixed	Is this public holiday every year on the same date
+global	Is this public holiday in every county (federal state)
+counties	If it is not global you found here the Federal states (ISO-3166-2)
+launchYear	The launch year of the public holiday
+types	The types of the public holiday, several possible
+Public
+Bank (Bank holiday, banks and offices are closed)
+School (School holiday, schools are closed)
+Authorities (Authorities are closed)
+Optional (Majority of people take a day off)
+Observance (Optional festivity, no paid day off)
+[
+   {
+      "date": "2017-01-01",
+      "localName": "Neujahr",
+      "name": "New Year's Day",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": 1967,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-01-06",
+      "localName": "Heilige Drei Könige",
+      "name": "Epiphany",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-04-17",
+      "localName": "Ostermontag",
+      "name": "Easter Monday",
+      "countryCode": "AT",
+      "fixed": false,
+      "global": true,
+      "counties": null,
+      "launchYear": 1642,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-05-01",
+      "localName": "Staatsfeiertag",
+      "name": "National Holiday",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": 1955,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-05-25",
+      "localName": "Christi Himmelfahrt",
+      "name": "Ascension Day",
+      "countryCode": "AT",
+      "fixed": false,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-06-05",
+      "localName": "Pfingstmontag",
+      "name": "Whit Monday",
+      "countryCode": "AT",
+      "fixed": false,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-06-15",
+      "localName": "Fronleichnam",
+      "name": "Corpus Christi",
+      "countryCode": "AT",
+      "fixed": false,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-08-15",
+      "localName": "Maria Himmelfahrt",
+      "name": "Assumption Day",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-10-26",
+      "localName": "Nationalfeiertag",
+      "name": "National Holiday",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-11-01",
+      "localName": "Allerheiligen",
+      "name": "All Saints' Day",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-12-08",
+      "localName": "Mariä Empfängnis",
+      "name": "Immaculate Conception",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-12-25",
+      "localName": "Weihnachten",
+      "name": "Christmas Day",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   },
+   {
+      "date": "2017-12-26",
+      "localName": "Stefanitag",
+      "name": "St. Stephen's Day",
+      "countryCode": "AT",
+      "fixed": true,
+      "global": true,
+      "counties": null,
+      "launchYear": null,
+      "types": [
+         "Public"
+      ]
+   }
+]
+
+Nager.Date API - V3
+ v3 
+OAS 3.0
+/swagger/v3/swagger.json
+Nager.Date is open source software. If you would like to support the project you can award a GitHub star ⭐ or much better start a sponsorship
+
+Terms of service
+Nager.Date on GitHub - Website
+Country
+
+
+GET
+/api/v3/CountryInfo/{countryCode}
+Get country info for the given country
+
+Parameters
+Try it out
+Name	Description
+countryCode *
+string
+(path)
+countryCode
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+{
+  "commonName": "string",
+  "officialName": "string",
+  "countryCode": "string",
+  "region": "string",
+  "borders": [
+    "string"
+  ]
+}
+No links
+
+GET
+/api/v3/AvailableCountries
+Get all available countries
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "countryCode": "string",
+    "name": "string"
+  }
+]
+No links
+LongWeekend
+
+
+GET
+/api/v3/LongWeekend/{year}/{countryCode}
+Get long weekends for a given country
+
+Parameters
+Try it out
+Name	Description
+year *
+integer($int32)
+(path)
+year
+countryCode *
+string
+(path)
+countryCode
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "startDate": "2024-08-04T15:45:00.822Z",
+    "endDate": "2024-08-04T15:45:00.822Z",
+    "dayCount": 0,
+    "needBridgeDay": true
+  }
+]
+No links
+PublicHoliday
+
+
+GET
+/api/v3/PublicHolidays/{year}/{countryCode}
+Get public holidays
+
+Parameters
+Try it out
+Name	Description
+year *
+integer($int32)
+(path)
+year
+countryCode *
+string
+(path)
+countryCode
+Responses
+Code	Description	Links
+200	
+Public holidays
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "date": "2024-08-04",
+    "localName": "string",
+    "name": "string",
+    "countryCode": "string",
+    "global": true,
+    "counties": [
+      "string"
+    ],
+    "launchYear": 0,
+    "types": [
+      "Public"
+    ]
+  }
+]
+No links
+400	
+Validation failure
+
+No links
+404	
+CountryCode is unknown
+
+No links
+
+GET
+/api/v3/IsTodayPublicHoliday/{countryCode}
+Is today a public holiday
+
+The calculation is made on the basis of UTC time to adjust the time please use the offset.
+
+This is a special endpoint for curl
+
+200 = Today is a public holiday
+
+204 = Today is not a public holiday
+
+STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" https://date.nager.at/Api/v3/IsTodayPublicHoliday/AT)
+
+if [ $STATUSCODE -ne 200 ]; then # error handling; fi
+
+Parameters
+Try it out
+Name	Description
+countryCode *
+string
+(path)
+The Country Code
+
+countryCode
+countyCode
+string
+(query)
+Federal State Code
+
+countyCode
+offset
+integer($int32)
+(query)
+utc timezone offset
+
+Default value : 0
+
+0
+Responses
+Code	Description	Links
+200	
+Today is a public holiday
+
+No links
+204	
+Today is not a public holiday
+
+No links
+400	
+Validation failure
+
+No links
+404	
+CountryCode is unknown
+
+No links
+
+GET
+/api/v3/NextPublicHolidays/{countryCode}
+Returns the upcoming public holidays for the next 365 days for the given country
+
+Parameters
+Try it out
+Name	Description
+countryCode *
+string
+(path)
+countryCode
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "date": "2024-08-04",
+    "localName": "string",
+    "name": "string",
+    "countryCode": "string",
+    "global": true,
+    "counties": [
+      "string"
+    ],
+    "launchYear": 0,
+    "types": [
+      "Public"
+    ]
+  }
+]
+No links
+
+GET
+/api/v3/NextPublicHolidaysWorldwide
+Returns the upcoming public holidays for the next 7 days
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "date": "2024-08-04",
+    "localName": "string",
+    "name": "string",
+    "countryCode": "string",
+    "global": true,
+    "counties": [
+      "string"
+    ],
+    "launchYear": 0,
+    "types": [
+      "Public"
+    ]
+  }
+]
+No links
+Version
+
+
+GET
+/api/v3/Version
+Get the version of the used Nager.Date library
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+{
+  "name": "string",
+  "version": "string"
+}
+No links
+
+Schemas
+CountryInfoDto{
+description:	
+CountryInfo Dto
+
+commonName*	string
+nullable: true
+CommonName
+
+officialName*	string
+nullable: true
+OfficialName
+
+countryCode*	string
+nullable: true
+CountryCode
+
+region*	string
+nullable: true
+Region
+
+borders	[
+nullable: true
+Country Borders
+
+{...}]
+}
+CountryV3Dto{
+description:	
+Country
+
+countryCode*	string
+nullable: true
+name*	string
+nullable: true
+}
+HolidayTypesstring
+Enum:
+Array [ 6 ]
+LongWeekendV3Dto{
+description:	
+Long Weekend
+
+startDate	string($date-time)
+StartDate
+
+endDate	string($date-time)
+EndDate
+
+dayCount	integer($int32)
+DayCount
+
+needBridgeDay	boolean
+NeedBridgeDay
+
+}
+PublicHolidayV3Dto{
+description:	
+Public Holiday
+
+date	string($date)
+The date
+
+localName*	string
+nullable: true
+Local name
+
+name*	string
+nullable: true
+English name
+
+countryCode*	string
+nullable: true
+ISO 3166-1 alpha-2
+
+fixed	boolean
+deprecated: true
+Is this public holiday every year on the same date
+
+global	boolean
+Is this public holiday in every county (federal state)
+
+counties	[
+nullable: true
+ISO-3166-2 - Federal states
+
+string]
+launchYear	integer($int32)
+nullable: true
+The launch year of the public holiday
+
+types*	[
+nullable: true
+A list of types the public holiday it is valid
+
+HolidayTypes[...]]
+}
+VersionInfoDto{
+description:	
+Version Info Dto
+
+name*	string
+nullable: true
+Name
+
+version*	string
+nullable: true
+Version
+
+}
