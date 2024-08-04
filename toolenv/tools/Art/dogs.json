@@ -1,0 +1,333 @@
+{
+  "tool_name": "Dog API",
+  "tool_description": "An API to get information and images of different dog breeds.",
+  "title": "Dog API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 100,
+    "avgSuccessRate": 99,
+    "popularityScore": 9.8,
+    "__typename": "Score"
+  },
+  "home_url": "https://dog.ceo/dog-api/",
+  "host": "dog.ceo",
+  "api_list": [
+    {
+      "name": "List All Breeds",
+      "url": "https://dog.ceo/api/breeds/list/all",
+      "description": "List all breeds",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://dog.ceo/api/breeds/list/all\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "object"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Random Image",
+      "url": "https://dog.ceo/api/breeds/image/random",
+      "description": "Display single random image from all dogs collection",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://dog.ceo/api/breeds/image/random\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Multiple Random Images",
+      "url": "https://dog.ceo/api/breeds/image/random/{count}",
+      "description": "Display multiple random images from all dogs collection",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "description": "Number of images to return",
+          "default": 3
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breeds/image/random/{{count}}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Breed Images",
+      "url": "https://dog.ceo/api/breed/{breed}/images",
+      "description": "Returns an array of all the images from a breed, e.g. hound",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/images\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Random Image From Breed",
+      "url": "https://dog.ceo/api/breed/{breed}/images/random",
+      "description": "Returns a random dog image from a breed, e.g. hound",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/images/random\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Multiple Images From Breed",
+      "url": "https://dog.ceo/api/breed/{breed}/images/random/{count}",
+      "description": "Return multiple random dog images from a breed, e.g. hound",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "description": "Number of images to return",
+          "default": 3
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/images/random/{{count}}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "List All Sub-breeds",
+      "url": "https://dog.ceo/api/breed/{breed}/list",
+      "description": "Returns an array of all the sub-breeds from a breed",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/list\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Sub-breed Images",
+      "url": "https://dog.ceo/api/breed/{breed}/{sub_breed}/images",
+      "description": "Returns an array of all the images from the sub-breed",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        },
+        {
+          "name": "sub_breed",
+          "type": "STRING",
+          "description": "Sub-breed of the dog",
+          "default": "afghan"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/{{sub_breed}}/images\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Random Image From Sub-breed",
+      "url": "https://dog.ceo/api/breed/{breed}/{sub_breed}/images/random",
+      "description": "Returns a random dog image from a sub-breed, e.g. hound-afghan",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        },
+        {
+          "name": "sub_breed",
+          "type": "STRING",
+          "description": "Sub-breed of the dog",
+          "default": "afghan"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/{{sub_breed}}/images/random\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "Multiple Images From Sub-breed",
+      "url": "https://dog.ceo/api/breed/{breed}/{sub_breed}/images/random/{count}",
+      "description": "Return multiple random dog images from a sub-breed, e.g. Afghan Hound",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "breed",
+          "type": "STRING",
+          "description": "Breed of the dog",
+          "default": "hound"
+        },
+        {
+          "name": "sub_breed",
+          "type": "STRING",
+          "description": "Sub-breed of the dog",
+          "default": "afghan"
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "description": "Number of images to return",
+          "default": 3
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://dog.ceo/api/breed/{{breed}}/{{sub_breed}}/images/random/{{count}}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "array"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}
