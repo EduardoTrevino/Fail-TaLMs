@@ -16,7 +16,7 @@ Please update as you add and intergrate diffrent apis
 | Art & Images     | Placebear                        | 0         | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0         | :x:        | TBD      |
 | Art & Images     | RandomFox                        | 0         | :x:        | TBD      |
-| Art & Images     | ReSmush                          | 0         | :x:        | TBD      |
+| Art & Images     | ReSmush                          | 2         | :x:        | TBD      |
 | Art & Images     | RoboHash                         | 0         | :x:        | TBD      |
 | Art & Images     | Vadivelu Status Codes            | 0         | :x:        | TBD      |
 | Calendar         | Nager.Date                       | 0         | :x:        | TBD      |

@@ -1,0 +1,94 @@
+{
+  "tool_name": "resmush.it",
+  "tool_description": "Free Image Compressor API",
+  "title": "resmush.it Image Compressor",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 300,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.0,
+    "__typename": "Score"
+  },
+  "home_url": "https://resmush.it",
+  "host": "api.resmush.it",
+  "api_list": [
+    {
+      "name": "Compress Image",
+      "url": "https://api.resmush.it/ws.php",
+      "description": "Compress an image using resmush.it API",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "img",
+          "type": "STRING",
+          "description": "URL of the image to compress",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "qlty",
+          "type": "INTEGER",
+          "description": "Quality level for JPG compression (0-100)",
+          "default": 92
+        },
+        {
+          "name": "exif",
+          "type": "BOOLEAN",
+          "description": "Retain EXIF data during compression",
+          "default": false
+        }
+      ],
+      "code": "import requests\n\nurl = f\"https://api.resmush.it/ws.php?img={img}&qlty={qlty}&exif={str(exif).lower()}\"\n\nresponse = requests.get(url)\ntry:\n    return response.json()\nexcept:\n    return response.text",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "src": { "type": "string" },
+          "dest": { "type": "string" },
+          "src_size": { "type": "integer" },
+          "dest_size": { "type": "integer" },
+          "percent": { "type": "float" },
+          "expires": { "type": "string" },
+          "error": { "type": "integer" },
+          "error_log": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "Check Error",
+      "url": "https://api.resmush.it/ws.php",
+      "description": "Check the error log of the compressed image using resmush.it API",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "img",
+          "type": "STRING",
+          "description": "URL of the image to check",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://api.resmush.it/ws.php?img={img}\"\n\nresponse = requests.get(url)\ntry:\n    return response.json()\nexcept:\n    return response.text",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "integer" },
+          "error_log": { "type": "string" }
+        }
+      }
+    }
+  ]
+}
