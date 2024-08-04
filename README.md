@@ -8,7 +8,7 @@ Please update as you add and intergrate diffrent apis
 | Art & Images     | Art Institute of Chicago         | 2         | ✅         | 08/01/24 |
 | Art & Images     | COLOURlovers                     | 2         | :x:        | TBD      |
 | Art & Images     | DiceBear                         | 0         | :x:        | TBD      |
-| Art & Images     | Dogs                             | 0         | :x:        | TBD      |
+| Art & Images     | Dogs                             | 2         | :x:        | TBD      |
 | Art & Images     | HTTP Cats                        | 0         | :x:        | TBD      |
 | Art & Images     | Lorem Picsum                     | 0         | :x:        | TBD      |
 | Art & Images     | Metropolitan Museum of Art       | 0         | :x:        | TBD      |
