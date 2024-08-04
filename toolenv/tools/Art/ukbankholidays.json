@@ -1,0 +1,108 @@
+{
+  "tool_name": "UK Bank Holidays",
+  "tool_description": "API to get information about bank holidays in the UK.",
+  "title": "UK Bank Holidays",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 200,
+    "avgSuccessRate": 95,
+    "popularityScore": 8.5
+  },
+  "home_url": "https://www.gov.uk/bank-holidays",
+  "host": "www.gov.uk",
+  "api_list": [
+    {
+      "name": "Bank Holidays",
+      "url": "https://www.gov.uk/bank-holidays.json",
+      "description": "Get all bank holidays in the UK",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = 'https://www.gov.uk/bank-holidays.json'\nresponse = requests.get(url)\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "divisions": {
+            "type": "object",
+            "properties": {
+              "division_name": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "years": {
+                    "type": "object",
+                    "properties": {
+                      "year": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "title": { "type": "string" },
+                            "date": { "type": "string" },
+                            "notes": { "type": "string" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Past Bank Holidays",
+      "url": "https://www.gov.uk/bank-holidays.json",
+      "description": "Get past bank holidays in the UK",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = 'https://www.gov.uk/bank-holidays.json'\nresponse = requests.get(url)\n# Filter for past holidays\nholidays = response.json()\npast_holidays = {}\nfor region, data in holidays['divisions'].items():\n    past_holidays[region] = {}\n    for year, events in data.items():\n        if int(year) < 2024:  # Assuming 2024 is the current year\n            past_holidays[region][year] = events\nprint(past_holidays)\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "divisions": {
+            "type": "object",
+            "properties": {
+              "division_name": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "years": {
+                    "type": "object",
+                    "properties": {
+                      "year": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "title": { "type": "string" },
+                            "date": { "type": "string" },
+                            "notes": { "type": "string" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

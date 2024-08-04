@@ -1,0 +1,174 @@
+Bank Holidays
+Overview
+The Bank Holidays API provides access to data about when bank holidays are in England and Wales, Scotland and Northern Ireland.
+
+Documentation
+Bank Holidays documentation
+
+Endpoint
+https://www.gov.uk/bank-holidays.json
+
+calendars functionality is now provided by frontend.
+
+Calendars
+Serves calendars in a clear and accessible format, along with JSON and iCal exports of the data.
+
+Screenshots
+Screenshot
+
+Live examples
+Bank Holidays
+Daylight Savings Time
+Nomenclature
+scope: each type of calendar (eg daylight saving, bank holidays) is known as a scope. A scope has its own view templates, JSON data source and primary route.
+Technical documentation
+This is a Ruby on Rails application that serves static pages based on JSON files. It does not use a database.
+
+JSON data files are stored in lib/data/<scope>.json, with a divisions hash for separate data per region (united-kingdom, england-and-wales, scotland or northern-ireland).
+
+Each scope's data file contains a list of divisions, containing a list of years, each with a list of events:
+
+{
+  "title": "UK bank holidays",
+  "description": "UK bank holidays calendar - see UK bank holidays and public holidays for 2012 and 2013",
+  "divisions": {
+    "england-and-wales": {
+      "title": "England and Wales",
+      "2011": [{
+        "title": "New Year's Day",
+        "date": "02/01/2011",
+        "notes": "Substitute day"
+      }]
+    }
+  }
+}
+The division title attribute is optional. If this is not present the slug will be humanized and used instead.
+
+Dependencies
+publishing-api: this app sends data to the content-store.
+Additional information
+Publishing to GOV.UK
+bundle exec rake publishing_api:publish will send the calendars to the publishing-api.
+Search indexing
+Is performed automatically on data sent to publishing api.
+Generate bank holidays JSON
+A rake task has been created to generate the bank holidays JSON for a given year. They need to be then inserted, and modified to take into account any additions/modifications made by proclamation. Run the rake task like this:
+
+bundle exec rake bank_holidays:generate_json[2016]
+Canonical sources
+For summer time, we can use the Summer Time Act 1972.
+
+Bank holidays are determined both by law and by proclamation. We use the following legislation: the Banking and Financial Dealings Act 1971 and the St Andrew's Day Bank Holiday Act.
+
+The proclamations of holidays are published in The Gazette. Holidays are announced there 6 months to one year in advance, usually between the months of May and July for the following year.
+
+UK bank holidays
+England and WalesScotlandNorthern Ireland
+The next bank holiday in England and Wales is
+26 August
+Summer bank holiday
+Upcoming bank holidays in England and Wales
+2024
+Date	Day of the week	Bank holiday
+26 August	Monday	Summer bank holiday
+25 December	Wednesday	Christmas Day
+26 December	Thursday	Boxing Day
+2025
+Date	Day of the week	Bank holiday
+1 January	Wednesday	New Year’s Day
+18 April	Friday	Good Friday
+21 April	Monday	Easter Monday
+5 May	Monday	Early May bank holiday
+26 May	Monday	Spring bank holiday
+25 August	Monday	Summer bank holiday
+25 December	Thursday	Christmas Day
+26 December	Friday	Boxing Day
+2026
+Date	Day of the week	Bank holiday
+1 January	Thursday	New Year’s Day
+3 April	Friday	Good Friday
+6 April	Monday	Easter Monday
+4 May	Monday	Early May bank holiday
+25 May	Monday	Spring bank holiday
+31 August	Monday	Summer bank holiday
+25 December	Friday	Christmas Day
+28 December	Monday	Boxing Day (substitute day)
+If a bank holiday is on a weekend, a ‘substitute’ weekday becomes a bank holiday, normally the following Monday.
+
+Your employer does not have to give you paid leave on bank or public holidays.
+
+Bank holidays might affect how and when your benefits are paid.
+
+This guide is also available in Welsh (Cymraeg).
+Add bank holidays for England and Wales to your calendar (ICS, 14KB)
+Past bank holidays in England and Wales
+2024
+Date	Day of the week	Bank holiday
+27 May	Monday	Spring bank holiday
+6 May	Monday	Early May bank holiday
+1 April	Monday	Easter Monday
+29 March	Friday	Good Friday
+1 January	Monday	New Year’s Day
+2023
+Date	Day of the week	Bank holiday
+26 December	Tuesday	Boxing Day
+25 December	Monday	Christmas Day
+28 August	Monday	Summer bank holiday
+29 May	Monday	Spring bank holiday
+8 May	Monday	Bank holiday for the coronation of King Charles III
+1 May	Monday	Early May bank holiday
+10 April	Monday	Easter Monday
+7 April	Friday	Good Friday
+2 January	Monday	New Year’s Day (substitute day)
+2022
+Date	Day of the week	Bank holiday
+27 December	Tuesday	Christmas Day (substitute day)
+26 December	Monday	Boxing Day
+19 September	Monday	Bank Holiday for the State Funeral of Queen Elizabeth II
+29 August	Monday	Summer bank holiday
+3 June	Friday	Platinum Jubilee bank holiday
+2 June	Thursday	Spring bank holiday
+2 May	Monday	Early May bank holiday
+18 April	Monday	Easter Monday
+15 April	Friday	Good Friday
+3 January	Monday	New Year’s Day (substitute day)
+2021
+Date	Day of the week	Bank holiday
+28 December	Tuesday	Boxing Day (substitute day)
+27 December	Monday	Christmas Day (substitute day)
+30 August	Monday	Summer bank holiday
+31 May	Monday	Spring bank holiday
+3 May	Monday	Early May bank holiday
+5 April	Monday	Easter Monday
+2 April	Friday	Good Friday
+1 January	Friday	New Year’s Day
+2020
+Date	Day of the week	Bank holiday
+28 December	Monday	Boxing Day (substitute day)
+25 December	Friday	Christmas Day
+31 August	Monday	Summer bank holiday
+25 May	Monday	Spring bank holiday
+8 May	Friday	Early May bank holiday (VE day)
+13 April	Monday	Easter Monday
+10 April	Friday	Good Friday
+1 January	Wednesday	New Year’s Day
+2019
+Date	Day of the week	Bank holiday
+26 December	Thursday	Boxing Day
+25 December	Wednesday	Christmas Day
+26 August	Monday	Summer bank holiday
+27 May	Monday	Spring bank holiday
+6 May	Monday	Early May bank holiday
+22 April	Monday	Easter Monday
+19 April	Friday	Good Friday
+1 January	Tuesday	New Year’s Day
+2018
+Date	Day of the week	Bank holiday
+26 December	Wednesday	Boxing Day
+25 December	Tuesday	Christmas Day
+27 August	Monday	Summer bank holiday
+28 May	Monday	Spring bank holiday
+7 May	Monday	Early May bank holiday
+2 April	Monday	Easter Monday
+30 March	Friday	Good Friday
+1 January	Monday	New Year’s Day
