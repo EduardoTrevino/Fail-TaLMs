@@ -1,0 +1,130 @@
+{
+    "tool_name": "uuidandguidgen",
+    "tool_description": "API to generate and decode UUIDs and GUIDs for testing purposes.",
+    "title": "UUID and GUID Generator",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.uuidtools.com/api/",
+    "host": "www.uuidtools.com",
+    "api_list": [
+        {
+            "name": "Generate Version-1 UUIDs",
+            "url": "https://www.uuidtools.com/api/generate/v1/count/{count}",
+            "description": "Generate Version-1 UUIDs",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of UUIDs to generate (up to 100)",
+                    "default": 1
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/generate/v1/count/{count}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "statuscode": 200,
+            "body": "",
+            "headers": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "Generate Version-3 UUIDs",
+            "url": "https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}",
+            "description": "Generate Version-3 UUIDs",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "namespace",
+                    "type": "STRING",
+                    "description": "Namespace for the UUID (e.g., ns:url, ns:dns, ns:OID, ns:X500, or UUID)",
+                    "default": "ns:url"
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name for the UUID generation",
+                    "default": "https://www.google.com"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "statuscode": 200,
+            "body": "",
+            "headers": "",
+            "schema": {
+                "type": "string"
+            }
+        },
+        {
+            "name": "Decode UUID",
+            "url": "https://www.uuidtools.com/api/decode/{uuid}",
+            "description": "Decode a UUID to get its details",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uuid",
+                    "type": "STRING",
+                    "description": "UUID to decode",
+                    "default": "b01eb720-171a-11ea-b949-73c91bba743d"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/decode/{uuid}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "statuscode": 200,
+            "body": "",
+            "headers": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "encode": {
+                        "type": "object",
+                        "properties": {
+                            "STR": {
+                                "type": "string"
+                            },
+                            "SIV": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "decode": {
+                        "type": "object",
+                        "properties": {
+                            "variant": {
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string"
+                            },
+                            "content": {
+                                "type": "object",
+                                "properties": {
+                                    "time": {
+                                        "type": "string"
+                                    },
+                                    "clock": {
+                                        "type": "string"
+                                    },
+                                    "node": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
