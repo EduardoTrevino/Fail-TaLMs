@@ -1,0 +1,154 @@
+{
+  "tool_name": "mcucountdown",
+  "tool_description": "API to get details about upcoming MCU productions.",
+  "title": "MCU Countdown",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 99,
+    "popularityScore": 10,
+    "__typename": "Score"
+  },
+  "home_url": "https://mcucountdown.example.com",
+  "host": "mcucountdown.example.com",
+  "api_list": [
+    {
+      "name": "Next MCU Production",
+      "url": "https://mcucountdown.example.com/api",
+      "description": "Get details of the next MCU production including days until release, overview, poster URL, release date, title, and type.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "date",
+          "type": "STRING",
+          "description": "ISO formatted date to get MCU production details as of this date.",
+          "default": "today's date"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://mcucountdown.example.com/api\"\nquerystring = {\"date\": date}\n\nheaders = {\n    \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n    \"X-RapidAPI-Host\": \"mcucountdown.example.com\"\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "days_until": 100,
+        "overview": "Text Description",
+        "poster_url": "https://image.tmdb.org/t/p/w500/path/to/poster.jpg",
+        "release_date": "2020-05-01",
+        "title": "MCU Film Title",
+        "type": "TV Show | Movie",
+        "following_production": {
+          "days_until": -411,
+          "id": 114472,
+          "overview": "Nick Fury and Talos discover a faction of shapeshifting Skrulls who have been infiltrating Earth for years.",
+          "poster_url": "https://image.tmdb.org/t/p/w500/f5ZMzzCvt2IzVDxr54gHPv9jlC9.jpg",
+          "release_date": "2023-06-21",
+          "title": "Secret Invasion",
+          "type": "TV Show"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "days_until": {
+            "type": "integer"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "poster_url": {
+            "type": "string"
+          },
+          "release_date": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "following_production": {
+            "type": "object",
+            "properties": {
+              "days_until": {
+                "type": "integer"
+              },
+              "id": {
+                "type": "integer"
+              },
+              "overview": {
+                "type": "string"
+              },
+              "poster_url": {
+                "type": "string"
+              },
+              "release_date": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Following MCU Production",
+      "url": "https://mcucountdown.example.com/api",
+      "description": "Get details of the MCU production following the next one including days until release, overview, poster URL, release date, title, and type.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "date",
+          "type": "STRING",
+          "description": "ISO formatted date to get MCU production details as of this date.",
+          "default": "today's date"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://mcucountdown.example.com/api\"\nquerystring = {\"date\": date}\n\nheaders = {\n    \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n    \"X-RapidAPI-Host\": \"mcucountdown.example.com\"\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "days_until": -411,
+        "id": 114472,
+        "overview": "Nick Fury and Talos discover a faction of shapeshifting Skrulls who have been infiltrating Earth for years.",
+        "poster_url": "https://image.tmdb.org/t/p/w500/f5ZMzzCvt2IzVDxr54gHPv9jlC9.jpg",
+        "release_date": "2023-06-21",
+        "title": "Secret Invasion",
+        "type": "TV Show"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "days_until": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "poster_url": {
+            "type": "string"
+          },
+          "release_date": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}
