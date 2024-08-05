@@ -1,0 +1,3415 @@
+Jikan API (4.0.0)
+Download OpenAPI specification:Download
+
+URL: http://discord.jikan.moe
+License: MIT
+Terms of Service
+Jikan is an Unofficial MyAnimeList API. It scrapes the website to satisfy the need for a complete API - which MyAnimeList lacks.
+
+About
+Information
+⚡ Jikan is powered by its awesome backers - 🙏 Become a backer
+
+Rate Limiting
+Duration	Requests
+Daily	Unlimited
+Per Minute	60 requests
+Per Second	3 requests
+Note: It's still possible to get rate limited from MyAnimeList.net instead.
+
+JSON Notes
+Any property (except arrays or objects) whose value does not exist or is undetermined, will be null.
+Any array or object property whose value does not exist or is undetermined, will be empty.
+Any score property whose value does not exist or is undetermined, will be 0.
+All dates and timestamps are returned in ISO8601 format and in UTC timezone
+Caching
+By CACHING, we refer to the data parsed from MyAnimeList which is stored temporarily on our servers to provide better API performance.
+
+All requests are cached for 24 hours.
+
+The following response headers will detail cache information.
+
+Header	Remarks
+Expires	Cache expiry date
+Last-Modified	Cache set date
+X-Request-Fingerprint	Unique request fingerprint (only for cachable requests, not queries)
+Note: X-Request-Fingerprint will only be available on single resource requests and their child endpoints. e.g /anime/1, /anime/1/relations. They won't be available on pages which perform queries, like /anime, or /top/anime, etc.
+
+Allowed HTTP(s) requests
+Jikan REST API does not provide authenticated requests for MyAnimeList. This means you can not use it to update your anime/manga list. Only GET requests are supported which return READ-ONLY data.
+
+HTTP Responses
+All error responses are accompanied by a JSON Error response.
+
+Exception	HTTP Status	Remarks
+N/A	200 - OK	The request was successful
+N/A	304 - Not Modified	You have the latest data (Cache Validation response)
+BadRequestException,ValidationException	400 - Bad Request	You've made an invalid request. Recheck documentation
+BadResponseException	404 - Not Found	The resource was not found or MyAnimeList responded with a 404
+BadRequestException	405 - Method Not Allowed	Requested Method is not supported for resource. Only GET requests are allowed
+RateLimitException	429 - Too Many Request	You are being rate limited by Jikan or MyAnimeList is rate-limiting our servers (specified in the error response)
+UpstreamException,ParserException,etc.	500 - Internal Server Error	Something didn't work. Try again later. If you see an error response with a report_url URL, please click on it to open an auto-generated GitHub issue
+ServiceUnavailableException	503 - Service Unavailable	In most cases this is intentionally done if the service is down for maintenance.
+JSON Error Response
+ {
+     "status": 500,
+     "type": "InternalException",
+     "message": "Exception Message",
+     "error": "Exception Trace",
+     "report_url": "https://github.com..."
+  }
+Property	Remarks
+status	Returned HTTP Status Code
+type	Thrown Exception
+message	Human-readable error message
+error	Error response and trace from the API
+report_url	Clicking this would redirect you to a generated GitHub issue
+Cache Validation
+All requests return a ETag header which is an MD5 hash of the response
+You can use this hash to verify if there's new or updated content by suppliying it as the value for the If-None-Match in your next request header
+You will get a HTTP 304 - Not Modified response if the content has not changed
+If the content has changed, you'll get a HTTP 200 - OK response with the updated JSON response
+Cache Validation
+
+Disclaimer
+Jikan is not affiliated with MyAnimeList.net.
+Jikan is a free, open-source API. Please use it responsibly.
+By using the API, you are agreeing to Jikan's terms of use policy.
+
+v3 Documentation - Wrappers/SDKs - Report an issue - Host your own server
+
+anime
+getAnimeFullById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns complete anime resource data
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"trailer": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"title_synonyms": [],
+"type": "TV",
+"source": "string",
+"episodes": 0,
+"status": "Finished Airing",
+"airing": true,
+"aired": {},
+"duration": "string",
+"rating": "G - All Ages",
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"season": "summer",
+"year": 0,
+"broadcast": {},
+"producers": [],
+"licensors": [],
+"studios": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": [],
+"relations": [],
+"theme": {},
+"external": [],
+"streaming": []
+}
+}
+getAnimeById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"trailer": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"title_synonyms": [],
+"type": "TV",
+"source": "string",
+"episodes": 0,
+"status": "Finished Airing",
+"airing": true,
+"aired": {},
+"duration": "string",
+"rating": "G - All Ages",
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"season": "summer",
+"year": 0,
+"broadcast": {},
+"producers": [],
+"licensors": [],
+"studios": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": []
+}
+}
+getAnimeCharacters
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime characters resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/characters
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeStaff
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime staff resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/staff
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeEpisodes
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns a list of anime episodes
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/episodes
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getAnimeEpisodeById
+path Parameters
+id
+required
+integer
+episode
+required
+integer
+Responses
+200 Returns a single anime episode resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/episodes/{episode}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"title": "string",
+"title_japanese": "string",
+"title_romanji": "string",
+"duration": 0,
+"aired": "string",
+"filler": true,
+"recap": true,
+"synopsis": "string"
+}
+}
+getAnimeNews
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns a list of news articles related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/news
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+},
+"data": [
+{}
+]
+}
+getAnimeForum
+path Parameters
+id
+required
+integer
+query Parameters
+filter	
+string
+Enum: "all" "episode" "other"
+Filter topics
+
+Responses
+200 Returns a list of forum topics related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/forum
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeVideos
+path Parameters
+id
+required
+integer
+Responses
+200 Returns videos related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/videos
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"promo": [],
+"episodes": [],
+"music_videos": []
+}
+}
+getAnimeVideosEpisodes
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns episode videos related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/videos/episodes
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getAnimePictures
+path Parameters
+id
+required
+integer
+Responses
+200 Returns pictures related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/pictures
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeStatistics
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime statistics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/statistics
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"watching": 0,
+"completed": 0,
+"on_hold": 0,
+"dropped": 0,
+"plan_to_watch": 0,
+"total": 0,
+"scores": []
+}
+}
+getAnimeMoreInfo
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime statistics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/moreinfo
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"moreinfo": "string"
+}
+}
+getAnimeRecommendations
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime recommendations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/recommendations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeUserUpdates
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns a list of users who have added/updated/removed the entry on their list
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/userupdates
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getAnimeReviews
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+preliminary	
+boolean
+Any reviews left during an ongoing anime/manga, those reviews are tagged as preliminary. NOTE: Preliminary reviews are not returned by default so if the entry is airing/publishing you need to add this otherwise you will get an empty list. e.g usage: ?preliminary=true
+
+spoilers	
+boolean
+Any reviews that are tagged as a spoiler. Spoiler reviews are not returned by default. e.g usage: ?spoiler=true
+
+Responses
+200 Returns anime reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/reviews
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getAnimeRelations
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime relations
+
+get
+/anime/{id}/relations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeThemes
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime themes
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/themes
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"openings": [],
+"endings": []
+}
+}
+getAnimeExternal
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime external links
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/external
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeStreaming
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime streaming links
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime/{id}/streaming
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getAnimeSearch
+query Parameters
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+page	
+integer
+limit	
+integer
+q	
+string
+type	
+string (anime_search_query_type)
+Enum: "tv" "movie" "ova" "special" "ona" "music" "cm" "pv" "tv_special"
+Available Anime types
+
+score	
+number
+min_score	
+number
+Set a minimum score for results.
+
+max_score	
+number
+Set a maximum score for results
+
+status	
+string (anime_search_query_status)
+Enum: "airing" "complete" "upcoming"
+Available Anime statuses
+
+rating	
+string (anime_search_query_rating)
+Enum: "g" "pg" "pg13" "r17" "r" "rx"
+Available Anime audience ratings
+
+Ratings
+
+G - All Ages
+PG - Children
+PG-13 - Teens 13 or older
+R - 17+ (violence & profanity)
+R+ - Mild Nudity
+Rx - Hentai
+sfw	
+boolean
+Filter out Adult entries
+
+genres	
+string
+Filter by genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+genres_exclude	
+string
+Exclude genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+order_by	
+string (anime_search_query_orderby)
+Enum: "mal_id" "title" "start_date" "end_date" "episodes" "score" "scored_by" "rank" "popularity" "members" "favorites"
+Available Anime order_by properties
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+producers	
+string
+Filter by producer(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+start_date	
+string
+Filter by starting date. Format: YYYY-MM-DD. e.g 2022, 2005-05, 2005-01-01
+
+end_date	
+string
+Filter by ending date. Format: YYYY-MM-DD. e.g 2022, 2005-05, 2005-01-01
+
+Responses
+200 Returns search results for anime
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+characters
+getCharacterFullById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns complete character resource data
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"name": "string",
+"name_kanji": "string",
+"nicknames": [],
+"favorites": 0,
+"about": "string",
+"anime": [],
+"manga": [],
+"voices": []
+}
+}
+getCharacterById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns character resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"name": "string",
+"name_kanji": "string",
+"nicknames": [],
+"favorites": 0,
+"about": "string"
+}
+}
+getCharacterAnime
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime that character is in
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getCharacterManga
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga that character is in
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getCharacterVoiceActors
+path Parameters
+id
+required
+integer
+Responses
+200 Returns the character's voice actors
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}/voices
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getCharacterPictures
+path Parameters
+id
+required
+integer
+Responses
+200 Returns pictures related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters/{id}/pictures
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getCharactersSearch
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+order_by	
+string (characters_search_query_orderby)
+Enum: "mal_id" "name" "favorites"
+Available Character order_by properties
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+Responses
+200 Returns search results for characters
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/characters
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+clubs
+getClubsById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns Club Resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/clubs/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"name": "string",
+"url": "string",
+"images": {},
+"members": 0,
+"category": "actors & artists",
+"created": "string",
+"access": "public"
+}
+}
+getClubMembers
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns Club Members Resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/clubs/{id}/members
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+},
+"data": [
+{}
+]
+}
+getClubStaff
+path Parameters
+id
+required
+integer
+Responses
+200 Returns Club Staff
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/clubs/{id}/staff
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getClubRelations
+path Parameters
+id
+required
+integer
+Responses
+200 Returns Club Relations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/clubs/{id}/relations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"anime": [],
+"manga": [],
+"characters": []
+}
+}
+getClubsSearch
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+type	
+string (club_search_query_type)
+Enum: "public" "private" "secret"
+Club Search Query Type
+
+category	
+string (club_search_query_category)
+Enum: "anime" "manga" "actors_and_artists" "characters" "cities_and_neighborhoods" "companies" "conventions" "games" "japan" "music" "other" "schools"
+Club Search Query Category
+
+order_by	
+string (club_search_query_orderby)
+Enum: "mal_id" "name" "members_count" "created"
+Club Search Query OrderBy
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+Responses
+200 Returns search results for clubs
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/clubs
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+genres
+getAnimeGenres
+query Parameters
+filter	
+string (genre_query_filter)
+Enum: "genres" "explicit_genres" "themes" "demographics"
+Filter genres by type
+
+Responses
+200 Returns entry genres, explicit_genres, themes and demographics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/genres/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaGenres
+query Parameters
+filter	
+string (genre_query_filter)
+Enum: "genres" "explicit_genres" "themes" "demographics"
+Filter genres by type
+
+Responses
+200 Returns entry genres, explicit_genres, themes and demographics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/genres/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+magazines
+getMagazines
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+order_by	
+string (magazines_query_orderby)
+Enum: "mal_id" "name" "count"
+Order by magazine data
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+Responses
+200 Returns magazines collection
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/magazines
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+manga
+getMangaFullById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns complete manga resource data
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"title_synonyms": [],
+"type": "Manga",
+"chapters": 0,
+"volumes": 0,
+"status": "Finished",
+"publishing": true,
+"published": {},
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"authors": [],
+"serializations": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": [],
+"relations": [],
+"external": []
+}
+}
+getMangaById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns pictures related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"type": "Manga",
+"chapters": 0,
+"volumes": 0,
+"status": "Finished",
+"publishing": true,
+"published": {},
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"authors": [],
+"serializations": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": []
+}
+}
+getMangaCharacters
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga characters resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/characters
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaNews
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns a list of manga news topics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/news
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+},
+"data": [
+{}
+]
+}
+getMangaTopics
+path Parameters
+id
+required
+integer
+query Parameters
+filter	
+string
+Enum: "all" "episode" "other"
+Filter topics
+
+Responses
+200 Returns a list of manga forum topics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/forum
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaPictures
+path Parameters
+id
+required
+integer
+Responses
+200 Returns a list of manga pictures
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/pictures
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaStatistics
+path Parameters
+id
+required
+integer
+Responses
+200 Returns anime statistics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/statistics
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"reading": 0,
+"completed": 0,
+"on_hold": 0,
+"dropped": 0,
+"plan_to_read": 0,
+"total": 0,
+"scores": []
+}
+}
+getMangaMoreInfo
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga moreinfo
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/moreinfo
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"moreinfo": "string"
+}
+}
+getMangaRecommendations
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga recommendations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/recommendations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaUserUpdates
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+Responses
+200 Returns manga user updates
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/userupdates
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getMangaReviews
+path Parameters
+id
+required
+integer
+query Parameters
+page	
+integer
+preliminary	
+boolean
+Any reviews left during an ongoing anime/manga, those reviews are tagged as preliminary. NOTE: Preliminary reviews are not returned by default so if the entry is airing/publishing you need to add this otherwise you will get an empty list. e.g usage: ?preliminary=true
+
+spoilers	
+boolean
+Any reviews that are tagged as a spoiler. Spoiler reviews are not returned by default. e.g usage: ?spoiler=true
+
+Responses
+200 Returns manga reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/reviews
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getMangaRelations
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga relations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/relations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaExternal
+path Parameters
+id
+required
+integer
+Responses
+200 Returns manga external links
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga/{id}/external
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getMangaSearch
+query Parameters
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+page	
+integer
+limit	
+integer
+q	
+string
+type	
+string (manga_search_query_type)
+Enum: "manga" "novel" "lightnovel" "oneshot" "doujin" "manhwa" "manhua"
+Available Manga types
+
+score	
+number
+min_score	
+number
+Set a minimum score for results.
+
+max_score	
+number
+Set a maximum score for results
+
+status	
+string (manga_search_query_status)
+Enum: "publishing" "complete" "hiatus" "discontinued" "upcoming"
+Available Manga statuses
+
+sfw	
+boolean
+Filter out Adult entries
+
+genres	
+string
+Filter by genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+genres_exclude	
+string
+Exclude genre(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+order_by	
+string (manga_search_query_orderby)
+Enum: "mal_id" "title" "start_date" "end_date" "chapters" "volumes" "score" "scored_by" "rank" "popularity" "members" "favorites"
+Available Manga order_by properties
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+magazines	
+string
+Filter by magazine(s) IDs. Can pass multiple with a comma as a delimiter. e.g 1,2,3
+
+start_date	
+string
+Filter by starting date. Format: YYYY-MM-DD. e.g 2022, 2005-05, 2005-01-01
+
+end_date	
+string
+Filter by ending date. Format: YYYY-MM-DD. e.g 2022, 2005-05, 2005-01-01
+
+Responses
+200 Returns search results for manga
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+people
+getPersonFullById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns complete character resource data
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"website_url": "string",
+"images": {},
+"name": "string",
+"given_name": "string",
+"family_name": "string",
+"alternate_names": [],
+"birthday": "string",
+"favorites": 0,
+"about": "string",
+"anime": [],
+"manga": [],
+"voices": []
+}
+}
+getPersonById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns pictures related to the entry
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"website_url": "string",
+"images": {},
+"name": "string",
+"given_name": "string",
+"family_name": "string",
+"alternate_names": [],
+"birthday": "string",
+"favorites": 0,
+"about": "string"
+}
+}
+getPersonAnime
+path Parameters
+id
+required
+integer
+Responses
+200 Returns person's anime staff positions
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getPersonVoices
+path Parameters
+id
+required
+integer
+Responses
+200 Returns person's voice acting roles
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}/voices
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getPersonManga
+path Parameters
+id
+required
+integer
+Responses
+200 Returns person's published manga works
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getPersonPictures
+path Parameters
+id
+required
+integer
+Responses
+200 Returns a list of pictures of the person
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people/{id}/pictures
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getPeopleSearch
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+order_by	
+string (people_search_query_orderby)
+Enum: "mal_id" "name" "birthday" "favorites"
+Available People order_by properties
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+Responses
+200 Returns search results for people
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/people
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+producers
+getProducerById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns producer resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/producers/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"titles": [],
+"images": {},
+"favorites": 0,
+"count": 0,
+"established": "string",
+"about": "string"
+}
+}
+getProducerFullById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns producer resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/producers/{id}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"titles": [],
+"images": {},
+"favorites": 0,
+"count": 0,
+"established": "string",
+"about": "string",
+"external": []
+}
+}
+getProducerExternal
+path Parameters
+id
+required
+integer
+Responses
+200 Returns producer's external links
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/producers/{id}/external
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getProducers
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+order_by	
+string (producers_query_orderby)
+Enum: "mal_id" "count" "favorites" "established"
+Producers Search Query Order By
+
+sort	
+string (search_query_sort)
+Enum: "desc" "asc"
+Search query sort direction
+
+letter	
+string
+Return entries starting with the given letter
+
+Responses
+200 Returns producers collection
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/producers
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+random
+getRandomAnime
+Responses
+200 Returns a random anime resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/random/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"trailer": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"title_synonyms": [],
+"type": "TV",
+"source": "string",
+"episodes": 0,
+"status": "Finished Airing",
+"airing": true,
+"aired": {},
+"duration": "string",
+"rating": "G - All Ages",
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"season": "summer",
+"year": 0,
+"broadcast": {},
+"producers": [],
+"licensors": [],
+"studios": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": []
+}
+}
+getRandomManga
+Responses
+200 Returns a random manga resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/random/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"approved": true,
+"titles": [],
+"title": "string",
+"title_english": "string",
+"title_japanese": "string",
+"type": "Manga",
+"chapters": 0,
+"volumes": 0,
+"status": "Finished",
+"publishing": true,
+"published": {},
+"score": 0,
+"scored_by": 0,
+"rank": 0,
+"popularity": 0,
+"members": 0,
+"favorites": 0,
+"synopsis": "string",
+"background": "string",
+"authors": [],
+"serializations": [],
+"genres": [],
+"explicit_genres": [],
+"themes": [],
+"demographics": []
+}
+}
+getRandomCharacters
+Responses
+200 Returns a random character resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/random/characters
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"images": {},
+"name": "string",
+"name_kanji": "string",
+"nicknames": [],
+"favorites": 0,
+"about": "string"
+}
+}
+getRandomPeople
+Responses
+200 Returns a random person resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/random/people
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"url": "string",
+"website_url": "string",
+"images": {},
+"name": "string",
+"given_name": "string",
+"family_name": "string",
+"alternate_names": [],
+"birthday": "string",
+"favorites": 0,
+"about": "string"
+}
+}
+getRandomUsers
+Responses
+200 Returns a random user profile resource
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/random/users
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"username": "string",
+"url": "string",
+"images": {},
+"last_online": "string",
+"gender": "string",
+"birthday": "string",
+"location": "string",
+"joined": "string"
+}
+}
+recommendations
+getRecentAnimeRecommendations
+query Parameters
+page	
+integer
+Responses
+200 Returns recent anime recommendations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/recommendations/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getRecentMangaRecommendations
+query Parameters
+page	
+integer
+Responses
+200 Returns recent manga recommendations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/recommendations/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+reviews
+getRecentAnimeReviews
+query Parameters
+page	
+integer
+preliminary	
+boolean
+Any reviews left during an ongoing anime/manga, those reviews are tagged as preliminary. NOTE: Preliminary reviews are not returned by default so if the entry is airing/publishing you need to add this otherwise you will get an empty list. e.g usage: ?preliminary=true
+
+spoilers	
+boolean
+Any reviews that are tagged as a spoiler. Spoiler reviews are not returned by default. e.g usage: ?spoiler=true
+
+Responses
+200 Returns recent anime reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/reviews/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+null
+getRecentMangaReviews
+query Parameters
+page	
+integer
+preliminary	
+boolean
+Any reviews left during an ongoing anime/manga, those reviews are tagged as preliminary. NOTE: Preliminary reviews are not returned by default so if the entry is airing/publishing you need to add this otherwise you will get an empty list. e.g usage: ?preliminary=true
+
+spoilers	
+boolean
+Any reviews that are tagged as a spoiler. Spoiler reviews are not returned by default. e.g usage: ?spoiler=true
+
+Responses
+200 Returns recent manga reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/reviews/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+null
+schedules
+getSchedules
+query Parameters
+filter	
+string
+Enum: "monday" "tuesday" "wednesday" "thursday" "friday" "saturday" "sunday" "unknown" "other"
+Filter by day
+
+kids	
+string
+Enum: "true" "false"
+When supplied, it will filter entries with the Kids Genre Demographic. When supplied as kids=true, it will return only Kid entries and when supplied as kids=false, it will filter out any Kid entries. Defaults to false.
+
+sfw	
+string
+Enum: "true" "false"
+'Safe For Work'. When supplied, it will filter entries with the Hentai Genre. When supplied as sfw=true, it will return only SFW entries and when supplied as sfw=false, it will filter out any Hentai entries. Defaults to false.
+
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns weekly schedule
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/schedules
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+users
+getUsersSearch
+query Parameters
+page	
+integer
+limit	
+integer
+q	
+string
+gender	
+string (users_search_query_gender)
+Enum: "any" "male" "female" "nonbinary"
+Users Search Query Gender.
+
+location	
+string
+maxAge	
+integer
+minAge	
+integer
+Responses
+200 Returns search results for users
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getUserById
+path Parameters
+id
+required
+integer
+Responses
+200 Returns username by ID search
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/userbyid/{id}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"url": "string",
+"username": "string"
+}
+}
+getUserFullProfile
+path Parameters
+username
+required
+string
+Responses
+200 Returns complete user resource data
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/full
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"username": "string",
+"url": "string",
+"images": {},
+"last_online": "string",
+"gender": "string",
+"birthday": "string",
+"location": "string",
+"joined": "string",
+"statistics": {},
+"external": []
+}
+}
+getUserProfile
+path Parameters
+username
+required
+string
+Responses
+200 Returns user profile
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"mal_id": 0,
+"username": "string",
+"url": "string",
+"images": {},
+"last_online": "string",
+"gender": "string",
+"birthday": "string",
+"location": "string",
+"joined": "string"
+}
+}
+getUserStatistics
+path Parameters
+username
+required
+string
+Responses
+200 Returns user statistics
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/statistics
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"anime": {},
+"manga": {}
+}
+}
+getUserFavorites
+path Parameters
+username
+required
+string
+Responses
+200 Returns user favorites
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/favorites
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"anime": [],
+"manga": [],
+"characters": [],
+"people": []
+}
+}
+getUserUpdates
+path Parameters
+username
+required
+string
+Responses
+200 Returns user updates
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/userupdates
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"anime": [],
+"manga": []
+}
+}
+getUserAbout
+path Parameters
+username
+required
+string
+Responses
+200 Returns user about in raw HTML
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/about
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getUserHistory
+path Parameters
+username
+required
+string
+query Parameters
+type	
+string
+Enum: "anime" "manga"
+Responses
+200 Returns user history (past 30 days)
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/history
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getUserFriends
+path Parameters
+username
+required
+string
+query Parameters
+page	
+integer
+Responses
+200 Returns user friends
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/friends
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getUserAnimelist Deprecated
+User Anime lists have been discontinued since May 1st, 2022. Read more
+
+path Parameters
+username
+required
+string
+query Parameters
+status	
+string (user_anime_list_status_filter)
+Enum: "all" "watching" "completed" "onhold" "dropped" "plantowatch"
+User's anime list status filter options
+
+Responses
+200 Returns user anime list
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/animelist
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+null
+getUserMangaList Deprecated
+User Manga lists have been discontinued since May 1st, 2022. Read more
+
+path Parameters
+username
+required
+string
+query Parameters
+status	
+string (user_manga_list_status_filter)
+Enum: "all" "reading" "completed" "onhold" "dropped" "plantoread"
+User's anime list status filter options
+
+Responses
+200 Returns user manga list
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/mangalist
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+null
+getUserReviews
+path Parameters
+username
+required
+string
+query Parameters
+page	
+integer
+Responses
+200 Returns user reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/reviews
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"data": [],
+"pagination": {}
+}
+}
+getUserRecommendations
+path Parameters
+username
+required
+string
+query Parameters
+page	
+integer
+Responses
+200 Returns Recent Anime Recommendations
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/recommendations
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getUserClubs
+path Parameters
+username
+required
+string
+query Parameters
+page	
+integer
+Responses
+200 Returns user clubs
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/clubs
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getUserExternal
+path Parameters
+username
+required
+string
+Responses
+200 Returns user's external links
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/users/{username}/external
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+seasons
+getSeasonNow
+query Parameters
+filter	
+string
+Enum: "tv" "movie" "ova" "special" "ona" "music"
+Entry types
+
+sfw	
+boolean
+'Safe For Work'. This is a flag. When supplied it will filter out entries according to the SFW Policy. You do not need to pass a value to it. e.g usage: ?sfw
+
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+continuing	
+boolean
+This is a flag. When supplied it will include entries which are continuing from previous seasons. MAL includes these items on the seasons view in the ″TV (continuing)″ section. (Example: https://myanimelist.net/anime/season/2024/winter)
+Example usage: ?continuing
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns current seasonal anime
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/seasons/now
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getSeason
+path Parameters
+year
+required
+integer
+season
+required
+string
+query Parameters
+filter	
+string
+Enum: "tv" "movie" "ova" "special" "ona" "music"
+Entry types
+
+sfw	
+boolean
+'Safe For Work'. This is a flag. When supplied it will filter out entries according to the SFW Policy. You do not need to pass a value to it. e.g usage: ?sfw
+
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+continuing	
+boolean
+This is a flag. When supplied it will include entries which are continuing from previous seasons. MAL includes these items on the seasons view in the ″TV (continuing)″ section. (Example: https://myanimelist.net/anime/season/2024/winter)
+Example usage: ?continuing
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns seasonal anime
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/seasons/{year}/{season}
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getSeasonsList
+Responses
+200 Returns available list of seasons
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/seasons
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+]
+}
+getSeasonUpcoming
+query Parameters
+filter	
+string
+Enum: "tv" "movie" "ova" "special" "ona" "music"
+Entry types
+
+sfw	
+boolean
+'Safe For Work'. This is a flag. When supplied it will filter out entries according to the SFW Policy. You do not need to pass a value to it. e.g usage: ?sfw
+
+unapproved	
+boolean
+This is a flag. When supplied it will include entries which are unapproved. Unapproved entries on MyAnimeList are those that are user submitted and have not yet been approved by MAL to show up on other pages. They will have their own specifc pages and are often removed resulting in a 404 error. You do not need to pass a value to it. e.g usage: ?unapproved
+
+continuing	
+boolean
+This is a flag. When supplied it will include entries which are continuing from previous seasons. MAL includes these items on the seasons view in the ″TV (continuing)″ section. (Example: https://myanimelist.net/anime/season/2024/winter)
+Example usage: ?continuing
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns upcoming season's anime
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/seasons/upcoming
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+top
+getTopAnime
+query Parameters
+type	
+string (anime_search_query_type)
+Enum: "tv" "movie" "ova" "special" "ona" "music" "cm" "pv" "tv_special"
+Available Anime types
+
+filter	
+string (top_anime_filter)
+Enum: "airing" "upcoming" "bypopularity" "favorite"
+Top items filter types
+
+rating	
+string (anime_search_query_rating)
+Enum: "g" "pg" "pg13" "r17" "r" "rx"
+Available Anime audience ratings
+
+Ratings
+
+G - All Ages
+PG - Children
+PG-13 - Teens 13 or older
+R - 17+ (violence & profanity)
+R+ - Mild Nudity
+Rx - Hentai
+sfw	
+boolean
+Filter out Adult entries
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns top anime
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/top/anime
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getTopManga
+query Parameters
+type	
+string (manga_search_query_type)
+Enum: "manga" "novel" "lightnovel" "oneshot" "doujin" "manhwa" "manhua"
+Available Manga types
+
+filter	
+string (top_manga_filter)
+Enum: "publishing" "upcoming" "bypopularity" "favorite"
+Top items filter types
+
+page	
+integer
+limit	
+integer
+Responses
+200 Returns top manga
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/top/manga
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getTopPeople
+query Parameters
+page	
+integer
+limit	
+integer
+Responses
+200 Returns top people
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/top/people
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getTopCharacters
+query Parameters
+page	
+integer
+limit	
+integer
+Responses
+200 Returns top characters
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/top/characters
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true,
+"items": {}
+}
+}
+getTopReviews
+query Parameters
+page	
+integer
+type	
+string (top_reviews_type_enum)
+Enum: "anime" "manga"
+The type of reviews to filter by. Defaults to anime.
+
+preliminary	
+boolean
+Whether the results include preliminary reviews or not. Defaults to true.
+
+spoilers	
+boolean
+Whether the results include reviews with spoilers or not. Defaults to true.
+
+Responses
+200 Returns top reviews
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/top/reviews
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": {
+"data": [],
+"pagination": {}
+}
+}
+watch
+getWatchRecentEpisodes
+Responses
+200 Returns Recently Added Episodes
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/watch/episodes
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getWatchPopularEpisodes
+Responses
+200 Returns Popular Episodes
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/watch/episodes/popular
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"data": [
+{}
+],
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+}
+}
+getWatchRecentPromos
+query Parameters
+page	
+integer
+Responses
+200 Returns Recently Added Promotional Videos
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/watch/promos
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+},
+"title": "string",
+"data": [
+{}
+]
+}
+getWatchPopularPromos
+Responses
+200 Returns Popular Promotional Videos
+400 Error: Bad request. When required parameters were not supplied.
+
+get
+/watch/promos/popular
+
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"pagination": {
+"last_visible_page": 0,
+"has_next_page": true
+},
+"title": "string",
+"data": [
+{}
+]
+}

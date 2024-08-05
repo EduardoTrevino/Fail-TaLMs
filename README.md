@@ -29,7 +29,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Final Space                      | 2         | :x:        | TBD      |
 | Content          | HackerNews                       | 2         | :x:        | TBD      |
 | Content          | Ice and Fire                     | 2         | :x:        | TBD      |
-| Content          | Jikan                            | 0         | :x:        | TBD      |
+| Content          | Jikan                            | 2         | :x:        | TBD      |
 | Content          | Listly                           | 0         | :x:        | TBD      |
 | Content          | MCU-Countdown                    | 0         | :x:        | TBD      |
 | Content          | Mediawiki                        | 0         | :x:        | TBD      |
