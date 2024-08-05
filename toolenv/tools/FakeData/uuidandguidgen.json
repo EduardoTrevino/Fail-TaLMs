@@ -1,21 +1,21 @@
 {
     "tool_name": "uuidandguidgen",
-    "tool_description": "API to generate and decode UUIDs and GUIDs for testing purposes.",
+    "tool_description": "API for generating and decoding UUIDs and GUIDs.",
     "title": "UUID and GUID Generator",
     "pricing": "FREE",
     "score": {
-        "avgServiceLevel": 99,
-        "avgLatency": 100,
-        "avgSuccessRate": 99,
-        "popularityScore": 9.5,
+        "avgServiceLevel": 100,
+        "avgLatency": 50,
+        "avgSuccessRate": 100,
+        "popularityScore": 9.8,
         "__typename": "Score"
     },
-    "home_url": "https://www.uuidtools.com/api/",
+    "home_url": "https://www.uuidtools.com/api/generate/v1",
     "host": "www.uuidtools.com",
     "api_list": [
         {
-            "name": "Generate Version-1 UUIDs",
-            "url": "https://www.uuidtools.com/api/generate/v1/count/{count}",
+            "name": "generate_v1",
+            "url": "https://www.uuidtools.com/api/generate/v1",
             "description": "Generate Version-1 UUIDs",
             "method": "GET",
             "required_parameters": [],
@@ -27,19 +27,21 @@
                     "default": 1
                 }
             ],
-            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/generate/v1/count/{count}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://www.uuidtools.com/api/generate/v1\"\nif count:\n    url += f\"/count/{count}\"\n\nresponse = requests.get(url)\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\nreturn observation",
             "statuscode": 200,
-            "body": "",
-            "headers": "",
+            "body": {},
+            "headers": {},
             "schema": {
-                "type": "array",
-                "items": {
-                    "type": "string"
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array"
+                    }
                 }
             }
         },
         {
-            "name": "Generate Version-3 UUIDs",
+            "name": "generate_v3",
             "url": "https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}",
             "description": "Generate Version-3 UUIDs",
             "method": "GET",
@@ -58,16 +60,21 @@
                 }
             ],
             "optional_parameters": [],
-            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}\"\n\nresponse = requests.get(url)\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\nreturn observation",
             "statuscode": 200,
-            "body": "",
-            "headers": "",
+            "body": {},
+            "headers": {},
             "schema": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array"
+                    }
+                }
             }
         },
         {
-            "name": "Decode UUID",
+            "name": "decode",
             "url": "https://www.uuidtools.com/api/decode/{uuid}",
             "description": "Decode a UUID to get its details",
             "method": "GET",
@@ -80,10 +87,10 @@
                 }
             ],
             "optional_parameters": [],
-            "code": "import requests\n\nurl = 'https://www.uuidtools.com/api/decode/{uuid}'\nheaders = {\n    'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY'\n}\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://www.uuidtools.com/api/decode/{uuid}\"\n\nresponse = requests.get(url)\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\nreturn observation",
             "statuscode": 200,
-            "body": "",
-            "headers": "",
+            "body": {},
+            "headers": {},
             "schema": {
                 "type": "object",
                 "properties": {
@@ -128,3 +135,4 @@
         }
     ]
 }
+

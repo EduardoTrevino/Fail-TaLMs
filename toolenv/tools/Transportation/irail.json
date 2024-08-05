@@ -1,12 +1,12 @@
 {
     "tool_name": "irail",
-    "tool_description": "API to query Belgian railway information including stations, liveboards, connections, and vehicles.",
+    "tool_description": "API for querying trains, stations, liveboards, and connections for Belgian railways.",
     "title": "iRail API",
     "pricing": "FREE",
     "score": {
-        "avgServiceLevel": 85,
-        "avgLatency": 250,
-        "avgSuccessRate": 90,
+        "avgServiceLevel": 90,
+        "avgLatency": 300,
+        "avgSuccessRate": 95,
         "popularityScore": 8.5,
         "__typename": "Score"
     },
@@ -14,7 +14,7 @@
     "host": "api.irail.be",
     "api_list": [
         {
-            "name": "Liveboard",
+            "name": "liveboard",
             "url": "https://api.irail.be/liveboard/",
             "description": "Retrieve real-time information on arriving and departing trains for a specific station.",
             "method": "GET",
@@ -73,70 +73,64 @@
                     "default": "false"
                 }
             ],
-            "code": "import requests\n\nurl = \"https://api.irail.be/liveboard/\"\nquerystring = {\"station\": station, \"id\": id, \"arrdep\": arrdep, \"date\": date, \"time\": time, \"format\": format, \"lang\": lang, \"alerts\": alerts}\n\nheaders = {\n    \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\"\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://api.irail.be/liveboard/\"\nparams = {\"station\": station, \"id\": id, \"arrdep\": arrdep, \"date\": date, \"time\": time, \"format\": format, \"lang\": lang, \"alerts\": str(alerts).lower()}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
             "statuscode": 200,
             "body": {
-                "version": "str",
-                "timestamp": "int",
-                "station": "str",
-                "stationinfo": {
-                    "id": "str",
-                    "@id": "str",
-                    "locationX": "float",
-                    "locationY": "float",
-                    "standardname": "str",
-                    "name": "str"
-                },
-                "departures": {
-                    "number": "int",
-                    "departure": [
-                        {
-                            "id": "int",
-                            "delay": "int",
-                            "station": "str",
-                            "stationinfo": {
-                                "id": "str",
-                                "@id": "str",
-                                "locationX": "float",
-                                "locationY": "float",
-                                "standardname": "str",
-                                "name": "str"
-                            },
-                            "time": "int",
-                            "vehicle": "str",
-                            "vehicleinfo": {
-                                "name": "str",
-                                "shortname": "str",
-                                "@id": "str"
-                            },
-                            "platform": "int",
-                            "platforminfo": {
-                                "name": "str",
-                                "normal": "str"
-                            },
-                            "canceled": "int",
-                            "left": "int",
-                            "departureConnection": "str",
-                            "occupancy": {
-                                "@id": "str",
-                                "name": "str"
-                            }
-                        }
-                    ]
-                }
+                "key1": "value",
+                "key2": "value"
             },
             "headers": {},
             "schema": {
                 "type": "object",
                 "properties": {
-                    "results": {
-                        "type": "array"
+                    "version": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "station": {
+                        "type": "string"
+                    },
+                    "stationinfo": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "@id": {
+                                "type": "string"
+                            },
+                            "locationX": {
+                                "type": "number"
+                            },
+                            "locationY": {
+                                "type": "number"
+                            },
+                            "standardname": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "departures": {
+                        "type": "object",
+                        "properties": {
+                            "number": {
+                                "type": "integer"
+                            },
+                            "departure": {
+                                "type": "array"
+                            }
+                        }
                     }
                 }
             }
         },
         {
-            "name": "Connections",
+            "name": "connections",
             "url": "https://api.irail.be/connections/",
             "description": "Get routes between two stations, including real-time data on delays.",
             "method": "GET",
@@ -208,228 +202,30 @@
                     "choices": ["nl", "fr", "en", "de"]
                 }
             ],
-            "code": "import requests\n\nurl = \"https://api.irail.be/connections/\"\nquerystring = {\"from\": from_station, \"to\": to_station, \"timesel\": timesel, \"typeOfTransport\": typeOfTransport, \"alerts\": alerts, \"results\": results, \"time\": time, \"date\": date, \"format\": format, \"lang\": lang}\n\nheaders = {\n    \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\"\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://api.irail.be/connections/\"\nparams = {\"from\": from_station, \"to\": to_station, \"timesel\": timesel, \"typeOfTransport\": typeOfTransport, \"alerts\": str(alerts).lower(), \"results\": results, \"time\": time, \"date\": date, \"format\": format, \"lang\": lang}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
             "statuscode": 200,
             "body": {
-                "version": "str",
-                "timestamp": "int",
-                "connection": [
-                    {
-                        "id": "int",
-                        "departure": {
-                            "delay": "int",
-                            "station": "str",
-                            "stationinfo": {
-                                "id": "str",
-                                "@id": "str",
-                                "locationX": "float",
-                                "locationY": "float",
-                                "standardname": "str",
-                                "name": "str"
-                            },
-                            "time": "int",
-                            "vehicle": "str",
-                            "vehicleinfo": {
-                                "name": "str",
-                                "shortname": "str",
-                                "@id": "str"
-                            },
-                            "platform": "str",
-                            "platforminfo": {
-                                "name": "str",
-                                "normal": "str"
-                            },
-                            "left": "int",
-                            "canceled": "int",
-                            "direction": {
-                                "name": "str"
-                            },
-                            "stops": {
-                                "number": "int",
-                                "stop": [
-                                    {
-                                        "id": "int",
-                                        "station": "str",
-                                        "stationinfo": {
-                                            "id": "str",
-                                            "@id": "str",
-                                            "locationX": "float",
-                                            "locationY": "float",
-                                            "standardname": "str",
-                                            "name": "str"
-                                        },
-                                        "time": "int",
-                                        "delay": "int",
-                                        "canceled": "int",
-                                        "departureDelay": "int",
-                                        "departureCanceled": "int",
-                                        "scheduledDepartureTime": "int",
-                                        "arrivalDelay": "int",
-                                        "arrivalCanceled": "int",
-                                        "isExtraStop": "int",
-                                        "scheduledArrivalTime": "int",
-                                        "departureConnection": "str"
-                                    }
-                                ]
-                            },
-                            "alerts": {
-                                "number": "int",
-                                "alert": [
-                                    {
-                                        "id": "int",
-                                        "header": "str",
-                                        "lead": "str",
-                                        "link": "str",
-                                        "startTime": "int",
-                                        "endTime": "int"
-                                    }
-                                ]
-                            },
-                            "walking": "int",
-                            "departureConnection": "str"
-                        },
-                        "arrival": {
-                            "delay": "int",
-                            "station": "str",
-                            "stationinfo": {
-                                "id": "str",
-                                "@id": "str",
-                                "locationX": "float",
-                                "locationY": "float",
-                                "standardname": "str",
-                                "name": "str"
-                            },
-                            "time": "int",
-                            "vehicle": "str",
-                            "vehicleinfo": {
-                                "name": "str",
-                                "shortname": "str",
-                                "@id": "str"
-                            },
-                            "platform": "str",
-                            "platforminfo": {
-                                "name": "str",
-                                "normal": "str"
-                            },
-                            "arrived": "int",
-                            "canceled": "int",
-                            "walking": "int",
-                            "direction": {
-                                "name": "str"
-                            }
-                        },
-                        "duration": "int",
-                        "vias": {
-                            "number": "int",
-                            "via": [
-                                {
-                                    "id": "str",
-                                    "arrival": {
-                                        "time": "int",
-                                        "platform": "str",
-                                        "platforminfo": {
-                                            "name": "str",
-                                            "normal": "str"
-                                        },
-                                        "arrived": "int",
-                                        "delay": "int",
-                                        "canceled": "int",
-                                        "vehicle": "str",
-                                        "walking": "int",
-                                        "direction": {
-                                            "name": "str"
-                                        }
-                                    },
-                                    "departure": {
-                                        "time": "int",
-                                        "platform": "str",
-                                        "platforminfo": {
-                                            "name": "str",
-                                            "normal": "str"
-                                        },
-                                        "left": "int",
-                                        "delay": "int",
-                                        "canceled": "int",
-                                        "departureConnection": "str",
-                                        "vehicle": "str",
-                                        "walking": "int",
-                                        "alerts": {
-                                            "number": "int",
-                                            "alert": [
-                                                {
-                                                    "id": "int",
-                                                    "header": "str",
-                                                    "lead": "str",
-                                                    "link": "str",
-                                                    "startTime": "int",
-                                                    "endTime": "int"
-                                                }
-                                            ]
-                                        },
-                                        "direction": {
-                                            "name": "str"
-                                        },
-                                        "stops": {
-                                            "number": "int",
-                                            "stop": [
-                                                {
-                                                    "id": "int",
-                                                    "station": "str",
-                                                    "stationinfo": {
-                                                        "id": "str",
-                                                        "@id": "str",
-                                                        "locationX": "float",
-                                                        "locationY": "float",
-                                                        "standardname": "str",
-                                                        "name": "str"
-                                                    },
-                                                    "time": "int",
-                                                    "delay": "int",
-                                                    "canceled": "int",
-                                                    "departureDelay": "int",
-                                                    "departureCanceled": "int",
-                                                    "scheduledDepartureTime": "int",
-                                                    "arrivalDelay": "int",
-                                                    "arrivalCanceled": "int",
-                                                    "isExtraStop": "int",
-                                                    "scheduledArrivalTime": "int",
-                                                    "departureConnection": "str"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "timeBetween": "int",
-                                    "station": "str",
-                                    "stationinfo": {
-                                        "id": "str",
-                                        "@id": "str",
-                                        "locationX": "float",
-                                        "locationY": "float",
-                                        "standardname": "str",
-                                        "name": "str"
-                                    },
-                                    "vehicle": "str",
-                                    "direction": {
-                                        "name": "str"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ]
+                "key1": "value",
+                "key2": "value"
             },
             "headers": {},
             "schema": {
                 "type": "object",
                 "properties": {
-                    "results": {
+                    "version": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "connection": {
                         "type": "array"
                     }
                 }
             }
         },
         {
-            "name": "Vehicle",
+            "name": "vehicle",
             "url": "https://api.irail.be/vehicle/",
             "description": "Retrieve information about a vehicle, including stops, occupancy, current location and delays.",
             "method": "GET",
@@ -469,63 +265,55 @@
                     "default": "false"
                 }
             ],
-            "code": "import requests\n\nurl = \"https://api.irail.be/vehicle/\"\nquerystring = {\"id\": id, \"date\": date, \"format\": format, \"lang\": lang, \"alerts\": alerts}\n\nheaders = {\n    \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\"\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+            "code": "import requests\n\nurl = \"https://api.irail.be/vehicle/\"\nparams = {\"id\": id, \"date\": date, \"format\": format, \"lang\": lang, \"alerts\": str(alerts).lower()}\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
             "statuscode": 200,
             "body": {
-                "version": "str",
-                "timestamp": "int",
-                "vehicle": "str",
-                "vehicleinfo": {
-                    "name": "str",
-                    "locationX": "float",
-                    "locationY": "float",
-                    "shortname": "str",
-                    "@id": "str"
-                },
-                "stops": {
-                    "number": "int",
-                    "stop": [
-                        {
-                            "id": "int",
-                            "station": "str",
-                            "stationinfo": {
-                                "id": "str",
-                                "@id": "str",
-                                "locationX": "float",
-                                "locationY": "float",
-                                "standardname": "str",
-                                "name": "str"
-                            },
-                            "time": "int",
-                            "delay": "int",
-                            "platform": "str",
-                            "platforminfo": {
-                                "name": "str",
-                                "normal": "str"
-                            },
-                            "canceled": "int",
-                            "departureDelay": "int",
-                            "departureCanceled": "int",
-                            "scheduledDepartureTime": "int",
-                            "arrivalDelay": "int",
-                            "arrivalCanceled": "int",
-                            "isExtraStop": "int",
-                            "scheduledArrivalTime": "int",
-                            "departureConnection": "str",
-                            "occupancy": {
-                                "@id": "str",
-                                "name": "str"
-                            }
-                        }
-                    ]
-                }
+                "key1": "value",
+                "key2": "value"
             },
             "headers": {},
             "schema": {
                 "type": "object",
                 "properties": {
-                    "results": {
-                        "type": "array"
+                    "version": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "vehicle": {
+                        "type": "string"
+                    },
+                    "vehicleinfo": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "locationX": {
+                                "type": "number"
+                            },
+                            "locationY": {
+                                "type": "number"
+                            },
+                            "shortname": {
+                                "type": "string"
+                            },
+                            "@id": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "stops": {
+                        "type": "object",
+                        "properties": {
+                            "number": {
+                                "type": "integer"
+                            },
+                            "stop": {
+                                "type": "array"
+                            }
+                        }
                     }
                 }
             }
