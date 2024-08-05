@@ -1,22 +1,22 @@
 {
   "tool_name": "openlibrary",
-  "tool_description": "Open Library API provides data about books, authors, and related information.",
+  "tool_description": "APIs to get book-related data from Open Library.",
   "title": "Open Library API",
   "pricing": "FREE",
   "score": {
-    "avgServiceLevel": 85,
-    "avgLatency": 700,
-    "avgSuccessRate": 90,
-    "popularityScore": 9.5,
+    "avgServiceLevel": 90,
+    "avgLatency": 200,
+    "avgSuccessRate": 95,
+    "popularityScore": 9.8,
     "__typename": "Score"
   },
   "home_url": "https://openlibrary.org/developers/api",
   "host": "openlibrary.org",
   "api_list": [
     {
-      "name": "Search",
+      "name": "Search Books",
       "url": "https://openlibrary.org/search.json",
-      "description": "Search results for books, authors, and more",
+      "description": "Search results for books, authors, and more.",
       "method": "GET",
       "required_parameters": [
         {
@@ -30,7 +30,7 @@
         {
           "name": "fields",
           "type": "STRING",
-          "description": "The fields to get back from solr. Use '*' to get all fields",
+          "description": "The fields to get back from solr. Use '*' to get all fields.",
           "default": ""
         },
         {
@@ -42,28 +42,41 @@
         {
           "name": "lang",
           "type": "STRING",
-          "description": "The user's language as a two-letter (ISO 639-1) language code",
+          "description": "The user's language as a two-letter (ISO 639-1) language code.",
           "default": ""
         },
         {
           "name": "page",
           "type": "INTEGER",
-          "description": "Pagination page number",
+          "description": "Pagination page number.",
           "default": 1
         },
         {
           "name": "limit",
           "type": "INTEGER",
-          "description": "Number of results per page",
+          "description": "Number of results per page.",
           "default": 10
         }
       ],
-      "code": "import requests\n\nurl = \"https://openlibrary.org/search.json\"\nquerystring = {\"q\": query, \"page\": page, \"limit\": limit}\nif fields:\n    querystring['fields'] = fields\nif sort:\n    querystring['sort'] = sort\nif lang:\n    querystring['lang'] = lang\n\nheaders = {\n    \"X-RapidAPI-Key\": toolbench_rapidapi_key\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "code": "import requests\n\nurl = 'https://openlibrary.org/search.json'\nparams = {'q': query, 'page': page, 'limit': limit}\n\nif fields:\n    params['fields'] = fields\nif sort:\n    params['sort'] = sort\nif lang:\n    params['lang'] = lang\n\nresponse = requests.get(url, params=params)\n\nprint(response.json())\n",
       "statuscode": 200,
       "body": {
-        "start": 0,
-        "num_found": 629,
-        "docs": [{}]
+        "start": "INTEGER",
+        "num_found": "INTEGER",
+        "docs": [
+          {
+            "cover_i": "INTEGER",
+            "has_fulltext": "BOOLEAN",
+            "edition_count": "INTEGER",
+            "title": "STRING",
+            "author_name": ["STRING"],
+            "first_publish_year": "INTEGER",
+            "key": "STRING",
+            "ia": ["STRING"],
+            "author_key": ["STRING"],
+            "public_scan_b": "BOOLEAN"
+          }
+        ]
       },
       "headers": {},
       "schema": {
@@ -76,42 +89,39 @@
             "type": "integer"
           },
           "docs": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
+            "type": "array"
           }
         }
       }
     },
     {
-      "name": "Author",
+      "name": "Get Author Details",
       "url": "https://openlibrary.org/authors/{author_id}.json",
-      "description": "Retrieve an author and their works by author identifier",
+      "description": "Retrieve details of an author by author identifier.",
       "method": "GET",
       "required_parameters": [
         {
           "name": "author_id",
           "type": "STRING",
-          "description": "The author's Open Library identifier",
+          "description": "The author's Open Library identifier.",
           "default": ""
         }
       ],
       "optional_parameters": [],
-      "code": "import requests\n\nurl = f\"https://openlibrary.org/authors/{author_id}.json\"\n\nheaders = {\n    \"X-RapidAPI-Key\": toolbench_rapidapi_key\n}\n\nresponse = requests.get(url, headers=headers)\n\nprint(response.json())\n",
+      "code": "import requests\n\nurl = f'https://openlibrary.org/authors/{author_id}.json'\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
       "statuscode": 200,
       "body": {
-        "key": "OL23919A",
-        "name": "J. K. Rowling",
-        "birth_date": "31 July 1965",
-        "death_date": null,
-        "work_count": 162,
-        "top_work": "Harry Potter and the Philosopher's Stone",
-        "top_subjects": ["Fantasy fiction", "Children's literature"],
+        "key": "STRING",
+        "name": "STRING",
+        "birth_date": "STRING",
+        "death_date": "STRING",
+        "work_count": "INTEGER",
+        "top_work": "STRING",
+        "top_subjects": ["STRING"],
         "works": [
           {
-            "key": "OL12345W",
-            "title": "Harry Potter and the Chamber of Secrets"
+            "key": "STRING",
+            "title": "STRING"
           }
         ]
       },
@@ -129,7 +139,7 @@
             "type": "string"
           },
           "death_date": {
-            "type": ["string", "null"]
+            "type": "string"
           },
           "work_count": {
             "type": "integer"
@@ -138,24 +148,10 @@
             "type": "string"
           },
           "top_subjects": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "array"
           },
           "works": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "key": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                }
-              }
-            }
+            "type": "array"
           }
         }
       }

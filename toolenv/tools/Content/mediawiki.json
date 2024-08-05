@@ -1,17 +1,17 @@
 {
   "tool_name": "mediawiki",
-  "tool_description": "API to access and interact with Wikipedia content and revisions.",
+  "tool_description": "API to access various features and data from MediaWiki, such as Wikipedia content and revisions.",
   "title": "MediaWiki API",
   "pricing": "FREE",
   "score": {
-    "avgServiceLevel": 95,
+    "avgServiceLevel": 90,
     "avgLatency": 200,
-    "avgSuccessRate": 99,
+    "avgSuccessRate": 95,
     "popularityScore": 9.8,
     "__typename": "Score"
   },
   "home_url": "https://www.mediawiki.org/wiki/API:Main_page",
-  "host": "en.wikipedia.org",
+  "host": "en.wikipedia.org/w/api.php",
   "api_list": [
     {
       "name": "Parse",
@@ -40,39 +40,18 @@
           "default": "text"
         }
       ],
-      "code": "import requests\n\nurl = \"https://en.wikipedia.org/w/api.php\"\nquerystring = {\"action\": \"parse\", \"page\": page, \"prop\": prop, \"format\": format}\n\nheaders = {\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"en.wikipedia.org\"}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "code": "import requests\n\nurl = \"https://en.wikipedia.org/w/api.php\"\nquerystring = {'action': 'parse', 'page': page, 'prop': prop, 'format': format}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
       "statuscode": 200,
       "body": {
-        "parse": {
-          "title": "str",
-          "pageid": "int",
-          "text": {
-            "*": "str"
-          }
-        }
+        "key1": "value",
+        "key2": "value"
       },
       "headers": {},
       "schema": {
         "type": "object",
         "properties": {
           "parse": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "pageid": {
-                "type": "integer"
-              },
-              "text": {
-                "type": "object",
-                "properties": {
-                  "*": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+            "type": "object"
           }
         }
       }
@@ -104,98 +83,18 @@
           "default": "revisions|categories"
         }
       ],
-      "code": "import requests\n\nurl = \"https://en.wikipedia.org/w/api.php\"\nquerystring = {\"action\": \"query\", \"titles\": titles, \"prop\": prop, \"format\": format}\n\nheaders = {\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"en.wikipedia.org\"}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "code": "import requests\n\nurl = \"https://en.wikipedia.org/w/api.php\"\nquerystring = {'action': 'query', 'titles': titles, 'prop': prop, 'format': format}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
       "statuscode": 200,
       "body": {
-        "query": {
-          "pages": {
-            "pageid": {
-              "pageid": "int",
-              "title": "str",
-              "revisions": [
-                {
-                  "revid": "int",
-                  "parentid": "int",
-                  "user": "str",
-                  "timestamp": "str",
-                  "comment": "str",
-                  "size": "int"
-                }
-              ],
-              "categories": [
-                {
-                  "ns": "int",
-                  "title": "str"
-                }
-              ]
-            }
-          }
-        }
+        "key1": "value",
+        "key2": "value"
       },
       "headers": {},
       "schema": {
         "type": "object",
         "properties": {
           "query": {
-            "type": "object",
-            "properties": {
-              "pages": {
-                "type": "object",
-                "properties": {
-                  "pageid": {
-                    "type": "object",
-                    "properties": {
-                      "pageid": {
-                        "type": "integer"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "revisions": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "revid": {
-                              "type": "integer"
-                            },
-                            "parentid": {
-                              "type": "integer"
-                            },
-                            "user": {
-                              "type": "string"
-                            },
-                            "timestamp": {
-                              "type": "string"
-                            },
-                            "comment": {
-                              "type": "string"
-                            },
-                            "size": {
-                              "type": "integer"
-                            }
-                          }
-                        }
-                      },
-                      "categories": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "ns": {
-                              "type": "integer"
-                            },
-                            "title": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "type": "object"
           }
         }
       }
