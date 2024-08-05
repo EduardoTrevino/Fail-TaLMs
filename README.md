@@ -32,7 +32,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Jikan                            | 2         | :x:        | TBD      |
 | Content          | Listly                           | 0         | :x:        | TBD      |
 | Content          | MCU-Countdown                    | 2         | :x:        | TBD      |
-| Content          | Mediawiki                        | 0         | :x:        | TBD      |
+| Content          | Mediawiki                        | 2         | :x:        | TBD      |
 | Content          | Open Library                     | 0         | :x:        | TBD      |
 | Content          | Reddit                           | 0         | :x:        | TBD      |
 | Content          | Reddit Stocks                    | 0         | :x:        | TBD      |
