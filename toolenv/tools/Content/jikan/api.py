@@ -1,59 +1,42 @@
 import requests
 import json
-from datetime import date, datetime, timedelta
-import os
-from typing import Optional, Dict, Union, List
+from typing import Optional, Dict, List
 
-def getAnimeById(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+def get_anime_by_id(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
     """
     Retrieve information about a specific anime by its MyAnimeList ID.
     """
     url = f"https://api.jikan.moe/v4/anime/{id}"
     
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key,
-        "X-RapidAPI-Host": "api.jikan.moe"
-    }
-    
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
-        observation = response.json()
+        data = response.json()
     except:
-        observation = response.text
-    return observation
+        data = response.text
+    return data
 
-def getAnimeCharacters(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+def get_anime_characters(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
     """
     Retrieve the characters of a specific anime by its MyAnimeList ID.
     """
     url = f"https://api.jikan.moe/v4/anime/{id}/characters"
     
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key,
-        "X-RapidAPI-Host": "api.jikan.moe"
-    }
-    
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
-        observation = response.json()
+        data = response.json()
     except:
-        observation = response.text
-    return observation
+        data = response.text
+    return data
 
-def getAnimeStaff(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+def get_anime_staff(id: int, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
     """
     Retrieve the staff of a specific anime by its MyAnimeList ID.
     """
     url = f"https://api.jikan.moe/v4/anime/{id}/staff"
     
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key,
-        "X-RapidAPI-Host": "api.jikan.moe"
-    }
-    
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
-        observation = response.json()
+        data = response.json()
     except:
-        observation = response.text
-    return observation
+        data = response.text
+    return data
