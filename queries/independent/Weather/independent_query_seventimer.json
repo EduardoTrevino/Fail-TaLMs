@@ -1,0 +1,106 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "astro",
+                "api_description": "Get the 3-day astronomical weather forecast",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location",
+                        "default": 113.17
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location",
+                        "default": 23.09
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "output",
+                        "type": "ENUM",
+                        "description": "Output format (xml or json)",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "product": "astro",
+                    "init": "str",
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "lifted_index": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "str",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "civil",
+                "api_description": "Get the 8-day civil weather forecast",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location",
+                        "default": 113.17
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location",
+                        "default": 23.09
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "output",
+                        "type": "ENUM",
+                        "description": "Output format (xml or json)",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "product": "civil",
+                    "init": "str",
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "lifted_index": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "str",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "str",
+                            "prec_amount": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I need the 3-day astronomical weather forecast and the 8-day civil weather forecast for the location with longitude 113.17 and latitude 23.09. Please provide detailed information about cloud cover, temperature, wind, and precipitation.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
