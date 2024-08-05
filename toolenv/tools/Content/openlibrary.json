@@ -1,0 +1,164 @@
+{
+  "tool_name": "openlibrary",
+  "tool_description": "Open Library API provides data about books, authors, and related information.",
+  "title": "Open Library API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 700,
+    "avgSuccessRate": 90,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://openlibrary.org/developers/api",
+  "host": "openlibrary.org",
+  "api_list": [
+    {
+      "name": "Search",
+      "url": "https://openlibrary.org/search.json",
+      "description": "Search results for books, authors, and more",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "q",
+          "type": "STRING",
+          "description": "The solr query",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "fields",
+          "type": "STRING",
+          "description": "The fields to get back from solr. Use '*' to get all fields",
+          "default": ""
+        },
+        {
+          "name": "sort",
+          "type": "STRING",
+          "description": "Sort results by various facets such as 'new', 'old', 'random', etc.",
+          "default": ""
+        },
+        {
+          "name": "lang",
+          "type": "STRING",
+          "description": "The user's language as a two-letter (ISO 639-1) language code",
+          "default": ""
+        },
+        {
+          "name": "page",
+          "type": "INTEGER",
+          "description": "Pagination page number",
+          "default": 1
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of results per page",
+          "default": 10
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://openlibrary.org/search.json\"\nquerystring = {\"q\": query, \"page\": page, \"limit\": limit}\nif fields:\n    querystring['fields'] = fields\nif sort:\n    querystring['sort'] = sort\nif lang:\n    querystring['lang'] = lang\n\nheaders = {\n    \"X-RapidAPI-Key\": toolbench_rapidapi_key\n}\n\nresponse = requests.get(url, headers=headers, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "start": 0,
+        "num_found": 629,
+        "docs": [{}]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "integer"
+          },
+          "num_found": {
+            "type": "integer"
+          },
+          "docs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Author",
+      "url": "https://openlibrary.org/authors/{author_id}.json",
+      "description": "Retrieve an author and their works by author identifier",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "author_id",
+          "type": "STRING",
+          "description": "The author's Open Library identifier",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://openlibrary.org/authors/{author_id}.json\"\n\nheaders = {\n    \"X-RapidAPI-Key\": toolbench_rapidapi_key\n}\n\nresponse = requests.get(url, headers=headers)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key": "OL23919A",
+        "name": "J. K. Rowling",
+        "birth_date": "31 July 1965",
+        "death_date": null,
+        "work_count": 162,
+        "top_work": "Harry Potter and the Philosopher's Stone",
+        "top_subjects": ["Fantasy fiction", "Children's literature"],
+        "works": [
+          {
+            "key": "OL12345W",
+            "title": "Harry Potter and the Chamber of Secrets"
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "birth_date": {
+            "type": "string"
+          },
+          "death_date": {
+            "type": ["string", "null"]
+          },
+          "work_count": {
+            "type": "integer"
+          },
+          "top_work": {
+            "type": "string"
+          },
+          "top_subjects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "works": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

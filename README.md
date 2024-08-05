@@ -33,7 +33,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Listly                           | 0         | :x:        | TBD      |
 | Content          | MCU-Countdown                    | 2         | :x:        | TBD      |
 | Content          | Mediawiki                        | 2         | :x:        | TBD      |
-| Content          | Open Library                     | 0         | :x:        | TBD      |
+| Content          | Open Library                     | 2         | :x:        | TBD      |
 | Content          | Reddit                           | 0         | :x:        | TBD      |
 | Content          | Reddit Stocks                    | 0         | :x:        | TBD      |
 | Content          | Rick and Morty                   | 0         | :x:        | TBD      |

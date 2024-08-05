@@ -1,0 +1,74 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "openlibrary",
+        "api_name": "search",
+        "api_description": "Search results for books, authors, and more",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The solr query",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "The fields to get back from solr. Use '*' to get all fields",
+            "default": ""
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sort results by various facets such as 'new', 'old', 'random', etc.",
+            "default": ""
+          },
+          {
+            "name": "lang",
+            "type": "STRING",
+            "description": "The user's language as a two-letter (ISO 639-1) language code",
+            "default": ""
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Pagination page number",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results per page",
+            "default": 10
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "start": "INTEGER",
+          "num_found": "INTEGER",
+          "docs": [
+            {
+              "cover_i": "INTEGER",
+              "has_fulltext": "BOOLEAN",
+              "edition_count": "INTEGER",
+              "title": "STRING",
+              "author_name": ["STRING"],
+              "first_publish_year": "INTEGER",
+              "key": "STRING",
+              "ia": ["STRING"],
+              "author_key": ["STRING"],
+              "public_scan_b": "BOOLEAN"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Find all books related to 'artificial intelligence'.",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]
