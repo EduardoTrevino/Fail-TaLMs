@@ -1,0 +1,447 @@
+An API of Ice And Fire
+All the data from the universe of Ice And Fire you've ever wanted!
+
+Made by Joakim Skoog, it's the world's greatest source for quantified and structured data from the universe of Ice and Fire (and the HBO series Game of Thrones).
+
+Sandbox
+Play around with the API without build an integration yourself
+
+https://anapioficeandfire.com/api/
+characters/583
+Request
+Psst, need a hint? Try /books/1, /characters/583 or /houses/378
+
+{
+	"url": "https://anapioficeandfire.com/api/characters/583",
+	"name": "Jon Snow",
+	"gender": "Male",
+	"culture": "Northmen",
+	"born": "In 283 AC",
+	"died": "",
+	"titles": [
+		"Lord Commander of the Night's Watch"
+	],
+	"aliases": [
+		"Lord Snow",
+		"Ned Stark's Bastard",
+		"The Snow of Winterfell",
+		"The Crow-Come-Over",
+		"The 998th Lord Commander of the Night's Watch",
+		"The Bastard of Winterfell",
+		"The Black Bastard of the Wall",
+		"Lord Crow"
+	],
+	"father": "",
+	"mother": "",
+	"spouse": "",
+	"allegiances": [
+		"https://anapioficeandfire.com/api/houses/362"
+	],
+	"books": [
+		"https://anapioficeandfire.com/api/books/5"
+	],
+	"povBooks": [
+		"https://anapioficeandfire.com/api/books/1",
+		"https://anapioficeandfire.com/api/books/2",
+		"https://anapioficeandfire.com/api/books/3",
+		"https://anapioficeandfire.com/api/books/8"
+	],
+	"tvSeries": [
+		"Season 1",
+		"Season 2",
+		"Season 3",
+		"Season 4",
+		"Season 5",
+		"Season 6"
+	],
+	"playedBy": [
+		"Kit Harington"
+	]
+}
+Open source
+The API is open source! Contribute directly to the API by writing code, documentation or posting bugs!
+
+Documentation
+All data is accessible through our HTTP API with SDKs in a bunch of different languages. Check out the documentation to get started.
+
+Introduction
+Joakim Skoog edited this page on Jan 23 · 1 revision
+This documentation will help you familiarise yourself with the API and how to consume the different resources that are available. The documentation provides all information needed to get started and it also has educational examples for all resources.
+
+If you're interested in using a native implementation, please take a look at the Libraries
+
+Authentication
+Joakim Skoog edited this page on Jan 23 · 1 revision
+An API of Ice And Fire is an open API. This means that no authentication is required to query the API for data. Since no authentication is required, there is only support for GET requests.
+
+Pagination
+Joakim Skoog edited this page on Jan 23 · 1 revision
+An API of Ice And Fire provides a lot of data about the world of Westeros. To prevent our servers from getting cranky, the API will automatically paginate the responses. You will learn how to create requests with pagination parameters and consume the response.
+
+Things worth noting:
+Information about the pagination is included in the Link header
+Page numbering is 1-based
+You can specify how many items you want to receive per page, the maximum is 50
+Request
+You specify which page you want to access with the ?page parameter, if you don't provide the ?page parameter the first page will be returned. You can also specify the size of the page with the ?pageSize parameter, if you don't provide the ?pageSize parameter the default size of 10 will be used.
+
+Let's make a request for the first page of characters with a page size of 10. Since we're only interested in the pagination information we provide the -I parameter to say that we only care about the headers.
+
+$ curl -I "https://www.anapioficeandfire.com/api/characters?page=1&pageSize=10"
+Response
+
+Link: <https://www.anapioficeandfire.com/api/characters?page=2&pageSize=10>; rel="next", <https://www.anapioficeandfire.com/api/characters?page=1&pageSize=10>; rel="first", <https://www.anapioficeandfire.com/api/characters?page=214&pageSize=10>; rel="last"
+Possible link types
+next - Next page of results
+prev - Previous page of results
+first - First page of results
+last - Last page of results
+These links can then be used to navigate to other pages of results.
+
+Root
+Joakim Skoog edited this page on Jan 23 · 1 revision
+The Root resource contains information about all available resources in the API.
+
+Request
+$ curl "https://www.anapioficeandfire.com/api"
+Response
+{
+    "books": "https://www.anapioficeandfire.com/api/books",
+    "characters": "https://www.anapioficeandfire.com/api/characters",
+    "houses": "https://www.anapioficeandfire.com/api/houses"
+}
+
+Books
+Jump to bottom
+Joakim Skoog edited this page on Jan 23 · 1 revision
+Name	Type	Description
+url	string	The hypermedia URL of this resource
+name	string	The name of this book
+isbn	string	The International Standard Book Number (ISBN-13) that uniquely identifies this book.
+authors	array of strings	An array of names of the authors that wrote this book.
+numberOfPages	integer	The number of pages in this book.
+publiser	string	The company that published this book.
+country	string	The country that this book was published in
+mediaType	string	The type of media this book was released in.
+released	date	The date (ISO 8601) when this book was released.
+characters	array of strings	An array of Character resource URLs that has been in this book.
+povCharacters	array of strings	An array of Character resource URLs that has had a POV-chapter in this book.
+List all books
+Request
+$ curl "https://www.anapioficeandfire.com/api/books"
+Response
+[
+    {
+        "authors": [
+            "George R. R. Martin"
+        ],
+        "characters": [
+            "https://www.anapioficeandfire.com/api/characters/2"
+        ],
+        "country": "United States",
+        "isbn": "978-0553103540",
+        "mediaType": "Hardcover",
+        "name": "A Game of Thrones",
+        "numberOfPages": 694,
+        "povCharacters": [
+            "https://www.anapioficeandfire.com/api/characters/148"
+        ],
+        "publisher": "Bantam Books",
+        "released": "1996-08-01T00:00:00",
+        "url": "https://www.anapioficeandfire.com/api/books/1"
+    },
+    {
+        "authors": [
+            "George R. R. Martin"
+        ],
+        "characters": [
+            "https://www.anapioficeandfire.com/api/characters/2"
+        ],
+        "country": "United States",
+        "isbn": "978-0553108033",
+        "mediaType": "Hardcover",
+        "name": "A Clash of Kings",
+        "numberOfPages": 768,
+        "povCharacters": [
+            "https://www.anapioficeandfire.com/api/characters/148"
+        ],
+        "publisher": "Bantam Books",
+        "released": "1999-02-02T00:00:00",
+        "url": "https://www.anapioficeandfire.com/api/books/2"
+    }
+]
+Filtering books
+You can also include filter parameters in your request to the books endpoint by including parameters in the query string.
+
+Parameter	Type	Result
+name	string	Books with the given name are included in the response
+fromReleaseDate	date	Books that were released after, or on, the given date are included in the response
+toReleaseDate	date	Books that were released before, or on, the given date are included in the response
+Get specific book
+Request
+$ curl "https://www.anapioficeandfire.com/api/books/1"
+Response
+{
+    "authors": [
+        "George R. R. Martin"
+    ],
+    "characters": [
+        "https://www.anapioficeandfire.com/api/characters/2"
+    ],
+    "country": "United States",
+    "isbn": "978-0553103540",
+    "mediaType": "Hardcover",
+    "name": "A Game of Thrones",
+    "numberOfPages": 694,
+    "povCharacters": [
+        "https://www.anapioficeandfire.com/api/characters/148"
+    ],
+    "publisher": "Bantam Books",
+    "released": "1996-08-01T00:00:00",
+    "url": "https://www.anapioficeandfire.com/api/books/1"
+}
+
+Characters
+Jump to bottom
+Joakim Skoog edited this page on Jan 23 · 3 revisions
+A Character is an individual within the Ice And Fire universe.
+
+Name	Type	Description
+url	string	The hypermedia URL of this resource
+name	string	The name of this character
+gender	string	The gender of this character.
+culture	string	The culture that this character belongs to.
+born	string	Textual representation of when and where this character was born.
+died	string	Textual representation of when and where this character died.
+titles	array of strings	The titles that this character holds.
+aliases	array of strings	The aliases that this character goes by.
+father	string	The character resource URL of this character's father.
+mother	string	The character resource URL of this character's mother.
+spouse	string	An array of Character resource URLs that has had a POV-chapter in this book.
+allegiances	array of strings	An array of House resource URLs that this character is loyal to.
+books	array of strings	An array of Book resource URLs that this character has been in.
+povBooks	array of strings	An array of Book resource URLs that this character has had a POV-chapter in.
+tvSeries	array of strings	An array of names of the seasons of Game of Thrones that this character has been in.
+playedBy	array of strings	An array of actor names that has played this character in the TV show Game Of Thrones.
+List all characters
+Request
+$ curl "https://www.anapioficeandfire.com/api/characters"
+Response
+[
+    {
+        "aliases": [
+            "The Daughter of the Dusk"
+        ],
+        "allegiances": [],
+        "books": [
+            "https://www.anapioficeandfire.com/api/books/5"
+        ],
+        "born": "",
+        "culture": "Braavosi",
+        "died": "",
+        "father": "",
+        "mother": "",
+        "name": "",
+        "playedBy": [],
+        "povBooks": [],
+        "spouse": "",
+        "titles": [],
+        "tvSeries": [],
+        "url": "https://www.anapioficeandfire.com/api/characters/1"
+    },
+    {
+        "aliases": [
+            "Hodor"
+        ],
+        "allegiances": [
+            "https://www.anapioficeandfire.com/api/houses/362"
+        ],
+        "books": [
+            "https://www.anapioficeandfire.com/api/books/1"
+        ],
+        "born": "",
+        "culture": "",
+        "died": "",
+        "father": "",
+        "mother": "",
+        "name": "",
+        "playedBy": [
+            "Kristian Nairn"
+        ],
+        "povBooks": [],
+        "spouse": "",
+        "titles": [],
+        "tvSeries": [
+            "Season 1",
+            "Season 2",
+            "Season 3",
+            "Season 4"
+        ],
+        "url": "https://www.anapioficeandfire.com/api/characters/2"
+    }
+]
+Filtering characters
+You can also include filter parameters in your request to the characters endpoint by including parameters in the query string.
+
+Parameter	Type	Result
+name	string	Characters with the given name are included in the response.
+gender	string	Characters with the given gender are included in the response.
+culture	string	Characters with the given culture are included in the response.
+born	string	Characters that were born this given year are included in the response.
+died	string	Characters that died this given year are included in the response.
+isAlive	boolean	Characters that are alive or dead (depending on the value) are included in the response.
+Get specific character
+Request
+$ curl "https://www.anapioficeandfire.com/api/characters/823"
+Response
+{
+    "aliases": [
+        "Littlefinger"
+    ],
+    "allegiances": [
+        "https://www.anapioficeandfire.com/api/houses/10",
+        "https://www.anapioficeandfire.com/api/houses/11"
+    ],
+    "books": [
+        "https://www.anapioficeandfire.com/api/books/1"
+    ],
+    "born": "In 268 AC, at the Fingers",
+    "culture": "Valemen",
+    "died": "",
+    "father": "",
+    "mother": "",
+    "name": "Petyr Baelish",
+    "playedBy": [
+        "Aidan Gillen"
+    ],
+    "povBooks": [],
+    "spouse": "https://www.anapioficeandfire.com/api/characters/688",
+    "titles": [
+        "Master of coin (formerly)",
+        "Lord Paramount of the Trident",
+        "Lord of Harrenhal",
+        "Lord Protector of the Vale"
+    ],
+    "tvSeries": [
+        "Season 1",
+        "Season 2",
+        "Season 3",
+        "Season 4",
+        "Season 5"
+    ],
+    "url": "https://www.anapioficeandfire.com/api/characters/823"
+}
+
+Houses
+Jump to bottom
+Joakim Skoog edited this page on Jan 23 · 4 revisions
+A House is a house branch within the Ice And Fire universe.
+
+Name	Type	Description
+url	string	The hypermedia URL of this resource
+name	string	The name of this house
+region	string	The region that this house resides in.
+coatOfArms	string	Text describing the coat of arms of this house.
+words	string	The words of this house.
+titles	array of strings	The titles that this house holds.
+seats	array of strings	The seats that this house holds.
+currentLord	string	The Character resource URL of this house's current lord.
+heir	string	The Character resource URL of this house's heir.
+overlord	string	The House resource URL that this house answers to.
+founded	string	The year that this house was founded.
+founder	string	The Character resource URL that founded this house.
+diedOut	string	The year that this house died out.
+ancestralWeapons	array of strings	An array of names of the noteworthy weapons that this house owns.
+cadetBranches	array of strings	An array of House resource URLs that was founded from this house.
+swornMembers	array of strings	An array of Character resource URLs that are sworn to this house.
+List all houses
+Request
+$ curl "https://www.anapioficeandfire.com/api/houses"
+Response
+[
+    {
+        "ancestralWeapons": [],
+        "cadetBranches": [],
+        "coatOfArms": "A golden wreath, on a blue field with a gold border",
+        "currentLord": "",
+        "diedOut": "",
+        "founded": "",
+        "founder": "",
+        "heir": "",
+        "name": "House Algood",
+        "overlord": "https://www.anapioficeandfire.com/api/houses/229",
+        "region": "The Westerlands",
+        "seats": [],
+        "swornMembers": [],
+        "titles": [],
+        "url": "https://www.anapioficeandfire.com/api/houses/1",
+        "words": ""
+    },
+    {
+        "ancestralWeapons": [],
+        "cadetBranches": [],
+        "coatOfArms": "Gyronny Gules and Sable, a hand couped Or",
+        "currentLord": "https://www.anapioficeandfire.com/api/characters/298",
+        "diedOut": "",
+        "founded": "",
+        "founder": "",
+        "heir": "https://www.anapioficeandfire.com/api/characters/1922",
+        "name": "House Allyrion of Godsgrace",
+        "overlord": "https://www.anapioficeandfire.com/api/houses/285",
+        "region": "Dorne",
+        "seats": [
+            "Godsgrace"
+        ],
+        "swornMembers": [
+            "https://www.anapioficeandfire.com/api/characters/1301"
+        ],
+        "titles": [],
+        "url": "https://www.anapioficeandfire.com/api/houses/2",
+        "words": "No Foe May Pass"
+    }
+]
+Filtering houses
+You can also include filter parameters in your request to the characters endpoint by including parameters in the query string.
+
+Parameter	Type	Result
+name	string	Houses with the given name are included in the response
+region	string	Houses that belong in the given region are included in the response.
+words	string	Houses that has the given words are included in the response.
+hasWords	boolean	Houses that have words (or not) are included in the response.
+hasTitles	boolean	Houses that have titles (or not) are included in the response.
+hasSeats	boolean	Houses that have seats (or not) are included in the response.
+hasDiedOut	boolean	Houses that are extinct are included in the response.
+hasAncestralWeapons	boolean	Houses that have ancestral weapons (or not) are included in the response.
+Get specific house
+Request
+$ curl "https://www.anapioficeandfire.com/api/houses/10"
+Response
+{
+    "ancestralWeapons": [],
+    "cadetBranches": [],
+    "coatOfArms": "A field of silver mockingbirds, on a green field",
+    "currentLord": "https://www.anapioficeandfire.com/api/characters/823",
+    "diedOut": "",
+    "founded": "299 AC",
+    "founder": "https://www.anapioficeandfire.com/api/characters/823",
+    "heir": "",
+    "name": "House Baelish of Harrenhal",
+    "overlord": "https://www.anapioficeandfire.com/api/houses/16",
+    "region": "The Riverlands",
+    "seats": [
+        "Harrenhal"
+    ],
+    "swornMembers": [
+        "https://www.anapioficeandfire.com/api/characters/651",
+        "https://www.anapioficeandfire.com/api/characters/804",
+        "https://www.anapioficeandfire.com/api/characters/823",
+        "https://www.anapioficeandfire.com/api/characters/957",
+        "https://www.anapioficeandfire.com/api/characters/970"
+    ],
+    "titles": [
+        "Lord Paramount of the Trident",
+        "Lord of Harrenhal"
+    ],
+    "url": "https://www.anapioficeandfire.com/api/houses/10",
+    "words": ""
+}

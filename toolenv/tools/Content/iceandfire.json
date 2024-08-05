@@ -1,0 +1,139 @@
+{
+  "tool_name": "IceAndFire",
+  "tool_description": "API to retrieve information from the universe of Ice and Fire.",
+  "title": "IceAndFire API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 500,
+    "avgSuccessRate": 99,
+    "popularityScore": 9.8,
+    "__typename": "Score"
+  },
+  "home_url": "https://anapioficeandfire.com/",
+  "host": "anapioficeandfire.com",
+  "api_list": [
+    {
+      "name": "Get Character",
+      "url": "https://anapioficeandfire.com/api/characters/{id}",
+      "description": "Retrieve information about a specific character from the Ice and Fire universe.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "The unique ID of the character",
+          "default": 583
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://anapioficeandfire.com/api/characters/{id}\"\n\nresponse = requests.get(url)\n\ntry:\n    print(response.json())\nexcept:\n    print(response.text())",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "name": { "type": "string" },
+          "gender": { "type": "string" },
+          "culture": { "type": "string" },
+          "born": { "type": "string" },
+          "died": { "type": "string" },
+          "titles": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "father": { "type": "string" },
+          "mother": { "type": "string" },
+          "spouse": { "type": "string" },
+          "allegiances": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "books": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "povBooks": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "tvSeries": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "playedBy": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    {
+      "name": "Get House",
+      "url": "https://anapioficeandfire.com/api/houses/{id}",
+      "description": "Retrieve information about a specific house from the Ice and Fire universe.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "The unique ID of the house",
+          "default": 10
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://anapioficeandfire.com/api/houses/{id}\"\n\nresponse = requests.get(url)\n\ntry:\n    print(response.json())\nexcept:\n    print(response.text())",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "name": { "type": "string" },
+          "region": { "type": "string" },
+          "coatOfArms": { "type": "string" },
+          "words": { "type": "string" },
+          "titles": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "seats": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "currentLord": { "type": "string" },
+          "heir": { "type": "string" },
+          "overlord": { "type": "string" },
+          "founded": { "type": "string" },
+          "founder": { "type": "string" },
+          "diedOut": { "type": "string" },
+          "ancestralWeapons": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "cadetBranches": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "swornMembers": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  ]
+}
