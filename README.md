@@ -212,16 +212,16 @@ Please update as you add and intergrate diffrent apis
 | Test Data        | Faker                            | 0         | :x:        | TBD      |
 | Test Data        | JSONPlaceholder                  | 0         | :x:        | TBD      |
 | Test Data        | Loripsum                         | 0         | :x:        | TBD      |
-| Test Data        | RandomUser                       | 0         | :x:        | TBD      |
+| Test Data        | RandomUser                       | 2         | ✅        | TBD      |
 | Test Data        | Reqres                           | 0         | :x:        | TBD      |
 | Test Data        | REST                             | 0         | :x:        | TBD      |
 | Test Data        | Softwium                         | 0         | :x:        | TBD      |
-| Test Data        | UUID Generator                   | 0         | :x:        | TBD      |
+| Test Data        | UUID Generator                   | 2         | ✅        | TBD      |
 | Transportation   | Derhuerst                        | 0         | :x:        | TBD      |
-| Transportation   | iRail                            | 0         | :x:        | TBD      |
+| Transportation   | iRail                            | 2         | ✅        | TBD      |
 | Transportation   | MBTA                             | 0         | :x:        | TBD      |
 | Transportation   | Metro Lisboa                     | 0         | :x:        | TBD      |
-| Weather          | 7Timer!                          | 0         | :x:        | TBD      |
+| Weather          | 7Timer!                          | 2         | ✅        | TBD      |
 | Weather          | Aviation Weather Center          | 0         | :x:        | TBD      |
 | Weather          | Open-Meteo                       | 0         | :x:        | TBD      |
 | Weather          | openSenseMap                     | 0         | :x:        | TBD      |
