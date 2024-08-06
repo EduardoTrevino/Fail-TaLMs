@@ -1,0 +1,2462 @@
+Reference
+In this article
+REST API Developer Endpoint Reference
+A Distributed API
+↑ Back to top
+
+The WordPress REST API is organized around REST, and is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors. The API uses built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients, and supports cross-origin resource sharing to allow you to interact securely with the API from a client-side web application.
+
+The REST API uses JSON exclusively as the request and response format, including error responses. While the REST API does not completely conform to the HAL standard, it does implement HAL’s ._links and ._embedded properties for linking API resources, and is fully discoverable via hyperlinks in the responses.
+
+The REST API provides public data accessible to any client anonymously, as well as private data only available after authentication. Once authenticated the REST API supports most content management actions, allowing you to build alternative dashboards for a site, enhance your plugins with more responsive management tools, or build complex single-page applications.
+
+This API reference provides information on the specific endpoints available through the API, their parameters, and their response data format.
+
+REST API Developer Endpoint Reference
+Resource	Base Route
+Posts	/wp/v2/posts
+Post Revisions	/wp/v2/posts/<id>/revisions
+Categories	/wp/v2/categories
+Tags	/wp/v2/tags
+Pages	/wp/v2/pages
+Page Revisions	/wp/v2/pages/<id>/revisions
+Comments	/wp/v2/comments
+Taxonomies	/wp/v2/taxonomies
+Media	/wp/v2/media
+Users	/wp/v2/users
+Post Types	/wp/v2/types
+Post Statuses	/wp/v2/statuses
+Settings	/wp/v2/settings
+Themes	/wp/v2/themes
+Search	/wp/v2/search
+Block Types	/wp/v2/block-types
+Blocks	/wp/v2/blocks
+Block Revisions	/wp/v2/blocks/<id>/autosaves/
+Block Renderer	/wp/v2/block-renderer
+Block Directory Items	/wp/v2/block-directory/search
+Plugins	/wp/v2/plugins
+A Distributed API
+Unlike many other REST APIs, the WordPress REST API is distributed and available individually on each site that supports it. This means there is no singular API root or base to contact; instead, we have a discovery process that allows interacting with sites without prior contact. The API also exposes self-documentation at the index endpoint, or via an OPTIONS request to any endpoint, allowing human- or machine-discovery of endpoint capabilities.
+
+First published
+
+December 6, 2016
+Last updated
+
+January 16, 2024
+Edit article
+
+Posts
+In this article
+Schema
+List Posts
+Definition
+Example Request
+Arguments
+Create a Post
+Arguments
+Definition
+Retrieve a Post
+Definition & Example Request
+Arguments
+Update a Post
+Arguments
+Definition
+Example Request
+Delete a Post
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a post record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+date	The date the post was published, in the site's timezone.
+JSON data type: string or null,
+Format: datetime (details)
+
+Context: view, edit, embed
+
+date_gmt	The date the post was published, as GMT.
+JSON data type: string or null,
+Format: datetime (details)
+
+Context: view, edit
+
+guid	The globally unique identifier for the post.
+JSON data type: object
+
+Read only
+
+Context: view, edit
+
+id	Unique identifier for the post.
+JSON data type: integer
+
+Read only
+
+Context: view, edit, embed
+
+link	URL to the post.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, edit, embed
+
+modified	The date the post was last modified, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Read only
+
+Context: view, edit
+
+modified_gmt	The date the post was last modified, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Read only
+
+Context: view, edit
+
+slug	An alphanumeric identifier for the post unique to its type.
+JSON data type: string
+
+Context: view, edit, embed
+
+status	A named status for the post.
+JSON data type: string
+
+Context: view, edit
+
+One of: publish, future, draft, pending, private
+
+type	Type of post.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+password	A password to protect access to the content and excerpt.
+JSON data type: string
+
+Context: edit
+
+permalink_template	Permalink template for the post.
+JSON data type: string
+
+Read only
+
+Context: edit
+
+generated_slug	Slug automatically generated from the post title.
+JSON data type: string
+
+Read only
+
+Context: edit
+
+title	The title for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+content	The content for the post.
+JSON data type: object
+
+Context: view, edit
+
+author	The ID for the author of the post.
+JSON data type: integer
+
+Context: view, edit, embed
+
+excerpt	The excerpt for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+featured_media	The ID of the featured media for the post.
+JSON data type: integer
+
+Context: view, edit, embed
+
+comment_status	Whether or not comments are open on the post.
+JSON data type: string
+
+Context: view, edit
+
+One of: open, closed
+
+ping_status	Whether or not the post can be pinged.
+JSON data type: string
+
+Context: view, edit
+
+One of: open, closed
+
+format	The format for the post.
+JSON data type: string
+
+Context: view, edit
+
+One of: standard, aside, chat, gallery, link, image, quote, status, video, audio
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+sticky	Whether or not the post should be treated as sticky.
+JSON data type: boolean
+
+Context: view, edit
+
+template	The theme file to use to display the post.
+JSON data type: string
+
+Context: view, edit
+
+categories	The terms assigned to the post in the category taxonomy.
+JSON data type: array
+
+Context: view, edit
+
+tags	The terms assigned to the post in the post_tag taxonomy.
+JSON data type: array
+
+Context: view, edit
+
+List Posts
+Query this endpoint to retrieve a collection of posts. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/posts
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/posts
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+after	Limit response to posts published after a given ISO8601 compliant date.
+modified_after	Limit response to posts modified after a given ISO8601 compliant date.
+author	Limit result set to posts assigned to specific authors.
+author_exclude	Ensure result set excludes posts assigned to specific authors.
+before	Limit response to posts published before a given ISO8601 compliant date.
+modified_before	Limit response to posts modified before a given ISO8601 compliant date.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: desc
+
+One of: asc, desc
+
+orderby	Sort collection by post attribute.
+Default: date
+
+One of: author, date, id, include, modified, parent, relevance, slug, include_slugs, title
+
+search_columns	Array of column names to be searched.
+slug	Limit result set to posts with one or more specific slugs.
+status	Limit result set to posts assigned one or more statuses.
+Default: publish
+
+tax_relation	Limit result set based on relationship between multiple taxonomies.
+One of: AND, OR
+categories	Limit result set to items with specific terms assigned in the categories taxonomy.
+categories_exclude	Limit result set to items except those with specific terms assigned in the categories taxonomy.
+tags	Limit result set to items with specific terms assigned in the tags taxonomy.
+tags_exclude	Limit result set to items except those with specific terms assigned in the tags taxonomy.
+sticky	Limit result set to items that are sticky.
+Create a Post
+Arguments
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+format	The format for the post.
+One of: standard, aside, chat, gallery, link, image, quote, status, video, audio
+meta	Meta fields.
+sticky	Whether or not the post should be treated as sticky.
+template	The theme file to use to display the post.
+categories	The terms assigned to the post in the category taxonomy.
+tags	The terms assigned to the post in the post_tag taxonomy.
+Definition
+POST /wp/v2/posts
+
+Retrieve a Post
+Definition & Example Request
+GET /wp/v2/posts/<id>
+
+Query this endpoint to retrieve a specific post record.
+
+$ curl https://example.com/wp-json/wp/v2/posts/<id>
+
+Arguments
+id	Unique identifier for the post.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+password	The password for the post if it is password protected.
+Update a Post
+Arguments
+id	Unique identifier for the post.
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+format	The format for the post.
+One of: standard, aside, chat, gallery, link, image, quote, status, video, audio
+meta	Meta fields.
+sticky	Whether or not the post should be treated as sticky.
+template	The theme file to use to display the post.
+categories	The terms assigned to the post in the category taxonomy.
+tags	The terms assigned to the post in the post_tag taxonomy.
+Definition
+POST /wp/v2/posts/<id>
+
+Example Request
+$ curl -X POST https://example.com/wp-json/wp/v2/posts/<id> -d '{"title":"My New Title"}'
+
+Delete a Post
+Arguments
+id	Unique identifier for the post.
+force	Whether to bypass Trash and force deletion.
+Definition
+DELETE /wp/v2/posts/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/posts/<id>
+
+Post Revisions
+In this article
+Schema
+List Post Revisions
+Definition
+Example Request
+Arguments
+Retrieve a Post Revision
+Definition & Example Request
+Arguments
+Delete a Post Revision
+Arguments
+Definition
+Example Request
+Retrieve a Post Revision
+Definition & Example Request
+Arguments
+Create a Post Revision
+Arguments
+Definition
+Retrieve a Post Revision
+Definition & Example Request
+Arguments
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a post revision record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+author	The ID for the author of the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+date	The date the revision was published, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit, embed
+
+date_gmt	The date the revision was published, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+guid	The globally unique identifier for the post.
+JSON data type: object
+
+Read only
+
+Context: view, edit
+
+id	Unique identifier for the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+modified	The date the revision was last modified, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+modified_gmt	The date the revision was last modified, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+parent	The ID for the parent of the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+slug	An alphanumeric identifier for the revision unique to its type.
+JSON data type: string
+
+Context: view, edit, embed
+
+title	The title for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+content	The content for the post.
+JSON data type: object
+
+Context: view, edit
+
+excerpt	The excerpt for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+List Post Revisions
+Query this endpoint to retrieve a collection of post revisions. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/posts/<parent>/revisions
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/posts/<parent>/revisions
+
+Arguments
+parent	The ID for the parent of the revision.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+search	Limit results to those matching a string.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: desc
+
+One of: asc, desc
+
+orderby	Sort collection by object attribute.
+Default: date
+
+One of: date, id, include, relevance, slug, include_slugs, title
+
+Retrieve a Post Revision
+Definition & Example Request
+GET /wp/v2/posts/<parent>/revisions/<id>
+
+Query this endpoint to retrieve a specific post revision record.
+
+$ curl https://example.com/wp-json/wp/v2/posts/<parent>/revisions/<id>
+
+Arguments
+parent	The ID for the parent of the revision.
+id	Unique identifier for the revision.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Delete a Post Revision
+Arguments
+parent	The ID for the parent of the revision.
+id	Unique identifier for the revision.
+force	Required to be true, as revisions do not support trashing.
+Definition
+DELETE /wp/v2/posts/<parent>/revisions/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/posts/<parent>/revisions/<id>
+
+Retrieve a Post Revision
+Definition & Example Request
+GET /wp/v2/posts/<id>/autosaves
+
+Query this endpoint to retrieve a specific post revision record.
+
+$ curl https://example.com/wp-json/wp/v2/posts/<id>/autosaves
+
+Arguments
+parent	The ID for the parent of the autosave.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Create a Post Revision
+Arguments
+parent	The ID for the parent of the autosave.
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+format	The format for the post.
+One of: standard, aside, chat, gallery, link, image, quote, status, video, audio
+meta	Meta fields.
+sticky	Whether or not the post should be treated as sticky.
+template	The theme file to use to display the post.
+categories	The terms assigned to the post in the category taxonomy.
+tags	The terms assigned to the post in the post_tag taxonomy.
+Definition
+POST /wp/v2/posts/<id>/autosaves
+
+Retrieve a Post Revision
+Definition & Example Request
+GET /wp/v2/posts/<parent>/autosaves/<id>
+
+Query this endpoint to retrieve a specific post revision record.
+
+$ curl https://example.com/wp-json/wp/v2/posts/<parent>/autosaves/<id>
+
+Arguments
+parent	The ID for the parent of the autosave.
+id	The ID for the autosave.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Categories
+In this article
+Schema
+List Categories
+Definition
+Example Request
+Arguments
+Create a Category
+Arguments
+Definition
+Retrieve a Category
+Definition & Example Request
+Arguments
+Update a Category
+Arguments
+Definition
+Example Request
+Delete a Category
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a category record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+id	Unique identifier for the term.
+JSON data type: integer
+
+Read only
+
+Context: view, embed, edit
+
+count	Number of published posts for the term.
+JSON data type: integer
+
+Read only
+
+Context: view, edit
+
+description	HTML description of the term.
+JSON data type: string
+
+Context: view, edit
+
+link	URL of the term.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, embed, edit
+
+name	HTML title for the term.
+JSON data type: string
+
+Context: view, embed, edit
+
+slug	An alphanumeric identifier for the term unique to its type.
+JSON data type: string
+
+Context: view, embed, edit
+
+taxonomy	Type attribution for the term.
+JSON data type: string
+
+Read only
+
+Context: view, embed, edit
+
+One of: category
+
+parent	The parent term ID.
+JSON data type: integer
+
+Context: view, edit
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+List Categories
+Query this endpoint to retrieve a collection of categories. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/categories
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/categories
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+order	Order sort attribute ascending or descending.
+Default: asc
+
+One of: asc, desc
+
+orderby	Sort collection by term attribute.
+Default: name
+
+One of: id, include, name, slug, include_slugs, term_group, description, count
+
+hide_empty	Whether to hide terms not assigned to any posts.
+parent	Limit result set to terms assigned to a specific parent.
+post	Limit result set to terms assigned to a specific post.
+slug	Limit result set to terms with one or more specific slugs.
+Create a Category
+Arguments
+description	HTML description of the term.
+name	HTML title for the term.
+Required: 1
+
+slug	An alphanumeric identifier for the term unique to its type.
+parent	The parent term ID.
+meta	Meta fields.
+Definition
+POST /wp/v2/categories
+
+Retrieve a Category
+Definition & Example Request
+GET /wp/v2/categories/<id>
+
+Query this endpoint to retrieve a specific category record.
+
+$ curl https://example.com/wp-json/wp/v2/categories/<id>
+
+Arguments
+id	Unique identifier for the term.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Update a Category
+Arguments
+id	Unique identifier for the term.
+description	HTML description of the term.
+name	HTML title for the term.
+slug	An alphanumeric identifier for the term unique to its type.
+parent	The parent term ID.
+meta	Meta fields.
+Definition
+POST /wp/v2/categories/<id>
+
+Example Request
+
+Delete a Category
+Arguments
+id	Unique identifier for the term.
+force	Required to be true, as terms do not support trashing.
+Definition
+DELETE /wp/v2/categories/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/categories/<id>
+
+Tags
+In this article
+Schema
+List Tags
+Definition
+Example Request
+Arguments
+Create a Tag
+Arguments
+Definition
+Retrieve a Tag
+Definition & Example Request
+Arguments
+Update a Tag
+Arguments
+Definition
+Example Request
+Delete a Tag
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a tag record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+id	Unique identifier for the term.
+JSON data type: integer
+
+Read only
+
+Context: view, embed, edit
+
+count	Number of published posts for the term.
+JSON data type: integer
+
+Read only
+
+Context: view, edit
+
+description	HTML description of the term.
+JSON data type: string
+
+Context: view, edit
+
+link	URL of the term.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, embed, edit
+
+name	HTML title for the term.
+JSON data type: string
+
+Context: view, embed, edit
+
+slug	An alphanumeric identifier for the term unique to its type.
+JSON data type: string
+
+Context: view, embed, edit
+
+taxonomy	Type attribution for the term.
+JSON data type: string
+
+Read only
+
+Context: view, embed, edit
+
+One of: post_tag
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+List Tags
+Query this endpoint to retrieve a collection of tags. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/tags
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/tags
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: asc
+
+One of: asc, desc
+
+orderby	Sort collection by term attribute.
+Default: name
+
+One of: id, include, name, slug, include_slugs, term_group, description, count
+
+hide_empty	Whether to hide terms not assigned to any posts.
+post	Limit result set to terms assigned to a specific post.
+slug	Limit result set to terms with one or more specific slugs.
+Create a Tag
+Arguments
+description	HTML description of the term.
+name	HTML title for the term.
+Required: 1
+
+slug	An alphanumeric identifier for the term unique to its type.
+meta	Meta fields.
+Definition
+POST /wp/v2/tags
+
+Retrieve a Tag
+Definition & Example Request
+GET /wp/v2/tags/<id>
+
+Query this endpoint to retrieve a specific tag record.
+
+$ curl https://example.com/wp-json/wp/v2/tags/<id>
+
+Arguments
+id	Unique identifier for the term.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Update a Tag
+Arguments
+id	Unique identifier for the term.
+description	HTML description of the term.
+name	HTML title for the term.
+slug	An alphanumeric identifier for the term unique to its type.
+meta	Meta fields.
+Definition
+POST /wp/v2/tags/<id>
+
+Example Request
+
+Delete a Tag
+Arguments
+id	Unique identifier for the term.
+force	Required to be true, as terms do not support trashing.
+Definition
+DELETE /wp/v2/tags/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/tags/<id>
+
+Pages
+In this article
+Schema
+List Pages
+Definition
+Example Request
+Arguments
+Create a Page
+Arguments
+Definition
+Retrieve a Page
+Definition & Example Request
+Arguments
+Update a Page
+Arguments
+Definition
+Example Request
+Delete a Page
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a page record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+date	The date the post was published, in the site's timezone.
+JSON data type: string or null,
+Format: datetime (details)
+
+Context: view, edit, embed
+
+date_gmt	The date the post was published, as GMT.
+JSON data type: string or null,
+Format: datetime (details)
+
+Context: view, edit
+
+guid	The globally unique identifier for the post.
+JSON data type: object
+
+Read only
+
+Context: view, edit
+
+id	Unique identifier for the post.
+JSON data type: integer
+
+Read only
+
+Context: view, edit, embed
+
+link	URL to the post.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, edit, embed
+
+modified	The date the post was last modified, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Read only
+
+Context: view, edit
+
+modified_gmt	The date the post was last modified, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Read only
+
+Context: view, edit
+
+slug	An alphanumeric identifier for the post unique to its type.
+JSON data type: string
+
+Context: view, edit, embed
+
+status	A named status for the post.
+JSON data type: string
+
+Context: view, edit
+
+One of: publish, future, draft, pending, private
+
+type	Type of post.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+password	A password to protect access to the content and excerpt.
+JSON data type: string
+
+Context: edit
+
+permalink_template	Permalink template for the post.
+JSON data type: string
+
+Read only
+
+Context: edit
+
+generated_slug	Slug automatically generated from the post title.
+JSON data type: string
+
+Read only
+
+Context: edit
+
+parent	The ID for the parent of the post.
+JSON data type: integer
+
+Context: view, edit
+
+title	The title for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+content	The content for the post.
+JSON data type: object
+
+Context: view, edit
+
+author	The ID for the author of the post.
+JSON data type: integer
+
+Context: view, edit, embed
+
+excerpt	The excerpt for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+featured_media	The ID of the featured media for the post.
+JSON data type: integer
+
+Context: view, edit, embed
+
+comment_status	Whether or not comments are open on the post.
+JSON data type: string
+
+Context: view, edit
+
+One of: open, closed
+
+ping_status	Whether or not the post can be pinged.
+JSON data type: string
+
+Context: view, edit
+
+One of: open, closed
+
+menu_order	The order of the post in relation to other posts.
+JSON data type: integer
+
+Context: view, edit
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+template	The theme file to use to display the post.
+JSON data type: string
+
+Context: view, edit
+
+List Pages
+Query this endpoint to retrieve a collection of pages. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/pages
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/pages
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+after	Limit response to posts published after a given ISO8601 compliant date.
+modified_after	Limit response to posts modified after a given ISO8601 compliant date.
+author	Limit result set to posts assigned to specific authors.
+author_exclude	Ensure result set excludes posts assigned to specific authors.
+before	Limit response to posts published before a given ISO8601 compliant date.
+modified_before	Limit response to posts modified before a given ISO8601 compliant date.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+menu_order	Limit result set to posts with a specific menu_order value.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: desc
+
+One of: asc, desc
+
+orderby	Sort collection by post attribute.
+Default: date
+
+One of: author, date, id, include, modified, parent, relevance, slug, include_slugs, title, menu_order
+
+parent	Limit result set to items with particular parent IDs.
+parent_exclude	Limit result set to all items except those of a particular parent ID.
+search_columns	Array of column names to be searched.
+slug	Limit result set to posts with one or more specific slugs.
+status	Limit result set to posts assigned one or more statuses.
+Default: publish
+
+Create a Page
+Arguments
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+parent	The ID for the parent of the post.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+menu_order	The order of the post in relation to other posts.
+meta	Meta fields.
+template	The theme file to use to display the post.
+Definition
+POST /wp/v2/pages
+
+Retrieve a Page
+Definition & Example Request
+GET /wp/v2/pages/<id>
+
+Query this endpoint to retrieve a specific page record.
+
+$ curl https://example.com/wp-json/wp/v2/pages/<id>
+
+Arguments
+id	Unique identifier for the post.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+password	The password for the post if it is password protected.
+Update a Page
+Arguments
+id	Unique identifier for the post.
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+parent	The ID for the parent of the post.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+menu_order	The order of the post in relation to other posts.
+meta	Meta fields.
+template	The theme file to use to display the post.
+Definition
+POST /wp/v2/pages/<id>
+
+Example Request
+
+Delete a Page
+Arguments
+id	Unique identifier for the post.
+force	Whether to bypass Trash and force deletion.
+Definition
+DELETE /wp/v2/pages/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/pages/<id>
+
+Page Revisions
+In this article
+Schema
+List Page Revisions
+Definition
+Example Request
+Arguments
+Retrieve a Page Revision
+Definition & Example Request
+Arguments
+Delete a Page Revision
+Arguments
+Definition
+Example Request
+Retrieve a Page Revision
+Definition & Example Request
+Arguments
+Create a Page Revision
+Arguments
+Definition
+Retrieve a Page Revision
+Definition & Example Request
+Arguments
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a page revision record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+author	The ID for the author of the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+date	The date the revision was published, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit, embed
+
+date_gmt	The date the revision was published, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+guid	The globally unique identifier for the post.
+JSON data type: object
+
+Read only
+
+Context: view, edit
+
+id	Unique identifier for the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+modified	The date the revision was last modified, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+modified_gmt	The date the revision was last modified, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+parent	The ID for the parent of the revision.
+JSON data type: integer
+
+Context: view, edit, embed
+
+slug	An alphanumeric identifier for the revision unique to its type.
+JSON data type: string
+
+Context: view, edit, embed
+
+title	The title for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+content	The content for the post.
+JSON data type: object
+
+Context: view, edit
+
+excerpt	The excerpt for the post.
+JSON data type: object
+
+Context: view, edit, embed
+
+List Page Revisions
+Query this endpoint to retrieve a collection of page revisions. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/pages/<parent>/revisions
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/pages/<parent>/revisions
+
+Arguments
+parent	The ID for the parent of the revision.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+search	Limit results to those matching a string.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: desc
+
+One of: asc, desc
+
+orderby	Sort collection by object attribute.
+Default: date
+
+One of: date, id, include, relevance, slug, include_slugs, title
+
+Retrieve a Page Revision
+Definition & Example Request
+GET /wp/v2/pages/<parent>/revisions/<id>
+
+Query this endpoint to retrieve a specific page revision record.
+
+$ curl https://example.com/wp-json/wp/v2/pages/<parent>/revisions/<id>
+
+Arguments
+parent	The ID for the parent of the revision.
+id	Unique identifier for the revision.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Delete a Page Revision
+Arguments
+parent	The ID for the parent of the revision.
+id	Unique identifier for the revision.
+force	Required to be true, as revisions do not support trashing.
+Definition
+DELETE /wp/v2/pages/<parent>/revisions/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/pages/<parent>/revisions/<id>
+
+Retrieve a Page Revision
+Definition & Example Request
+GET /wp/v2/pages/<id>/autosaves
+
+Query this endpoint to retrieve a specific page revision record.
+
+$ curl https://example.com/wp-json/wp/v2/pages/<id>/autosaves
+
+Arguments
+parent	The ID for the parent of the autosave.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Create a Page Revision
+Arguments
+parent	The ID for the parent of the post.
+date	The date the post was published, in the site's timezone.
+date_gmt	The date the post was published, as GMT.
+slug	An alphanumeric identifier for the post unique to its type.
+status	A named status for the post.
+One of: publish, future, draft, pending, private
+password	A password to protect access to the content and excerpt.
+title	The title for the post.
+content	The content for the post.
+author	The ID for the author of the post.
+excerpt	The excerpt for the post.
+featured_media	The ID of the featured media for the post.
+comment_status	Whether or not comments are open on the post.
+One of: open, closed
+ping_status	Whether or not the post can be pinged.
+One of: open, closed
+menu_order	The order of the post in relation to other posts.
+meta	Meta fields.
+template	The theme file to use to display the post.
+Definition
+POST /wp/v2/pages/<id>/autosaves
+
+Retrieve a Page Revision
+Definition & Example Request
+GET /wp/v2/pages/<parent>/autosaves/<id>
+
+Query this endpoint to retrieve a specific page revision record.
+
+$ curl https://example.com/wp-json/wp/v2/pages/<parent>/autosaves/<id>
+
+Arguments
+parent	The ID for the parent of the autosave.
+id	The ID for the autosave.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Comments
+In this article
+Schema
+List Comments
+Definition
+Example Request
+Arguments
+Create a Comment
+Arguments
+Definition
+Retrieve a Comment
+Definition & Example Request
+Arguments
+Update a Comment
+Arguments
+Definition
+Example Request
+Delete a Comment
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a comment record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+id	Unique identifier for the comment.
+JSON data type: integer
+
+Read only
+
+Context: view, edit, embed
+
+author	The ID of the user object, if author was a user.
+JSON data type: integer
+
+Context: view, edit, embed
+
+author_email	Email address for the comment author.
+JSON data type: string,
+Format: email
+
+Context: edit
+
+author_ip	IP address for the comment author.
+JSON data type: string,
+Format: ip
+
+Context: edit
+
+author_name	Display name for the comment author.
+JSON data type: string
+
+Context: view, edit, embed
+
+author_url	URL for the comment author.
+JSON data type: string,
+Format: uri
+
+Context: view, edit, embed
+
+author_user_agent	User agent for the comment author.
+JSON data type: string
+
+Context: edit
+
+content	The content for the comment.
+JSON data type: object
+
+Context: view, edit, embed
+
+date	The date the comment was published, in the site's timezone.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit, embed
+
+date_gmt	The date the comment was published, as GMT.
+JSON data type: string,
+Format: datetime (details)
+
+Context: view, edit
+
+link	URL to the comment.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, edit, embed
+
+parent	The ID for the parent of the comment.
+JSON data type: integer
+
+Context: view, edit, embed
+
+post	The ID of the associated post object.
+JSON data type: integer
+
+Context: view, edit
+
+status	State of the comment.
+JSON data type: string
+
+Context: view, edit
+
+type	Type of the comment.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+author_avatar_urls	Avatar URLs for the comment author.
+JSON data type: object
+
+Read only
+
+Context: view, edit, embed
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+List Comments
+Query this endpoint to retrieve a collection of comments. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/comments
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/comments
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+after	Limit response to comments published after a given ISO8601 compliant date.
+author	Limit result set to comments assigned to specific user IDs. Requires authorization.
+author_exclude	Ensure result set excludes comments assigned to specific user IDs. Requires authorization.
+author_email	Limit result set to that from a specific author email. Requires authorization.
+before	Limit response to comments published before a given ISO8601 compliant date.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: desc
+
+One of: asc, desc
+
+orderby	Sort collection by comment attribute.
+Default: date_gmt
+
+One of: date, date_gmt, id, include, post, parent, type
+
+parent	Limit result set to comments of specific parent IDs.
+parent_exclude	Ensure result set excludes specific parent IDs.
+post	Limit result set to comments assigned to specific post IDs.
+status	Limit result set to comments assigned a specific status. Requires authorization.
+Default: approve
+
+type	Limit result set to comments assigned a specific type. Requires authorization.
+Default: comment
+
+password	The password for the post if it is password protected.
+Create a Comment
+Arguments
+author	The ID of the user object, if author was a user.
+author_email	Email address for the comment author.
+author_ip	IP address for the comment author.
+author_name	Display name for the comment author.
+author_url	URL for the comment author.
+author_user_agent	User agent for the comment author.
+content	The content for the comment.
+date	The date the comment was published, in the site's timezone.
+date_gmt	The date the comment was published, as GMT.
+parent	The ID for the parent of the comment.
+post	The ID of the associated post object.
+status	State of the comment.
+meta	Meta fields.
+Definition
+POST /wp/v2/comments
+
+Retrieve a Comment
+Definition & Example Request
+GET /wp/v2/comments/<id>
+
+Query this endpoint to retrieve a specific comment record.
+
+$ curl https://example.com/wp-json/wp/v2/comments/<id>
+
+Arguments
+id	Unique identifier for the comment.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+password	The password for the parent post of the comment (if the post is password protected).
+Update a Comment
+Arguments
+id	Unique identifier for the comment.
+author	The ID of the user object, if author was a user.
+author_email	Email address for the comment author.
+author_ip	IP address for the comment author.
+author_name	Display name for the comment author.
+author_url	URL for the comment author.
+author_user_agent	User agent for the comment author.
+content	The content for the comment.
+date	The date the comment was published, in the site's timezone.
+date_gmt	The date the comment was published, as GMT.
+parent	The ID for the parent of the comment.
+post	The ID of the associated post object.
+status	State of the comment.
+meta	Meta fields.
+Definition
+POST /wp/v2/comments/<id>
+
+Example Request
+
+Delete a Comment
+Arguments
+id	Unique identifier for the comment.
+force	Whether to bypass Trash and force deletion.
+password	The password for the parent post of the comment (if the post is password protected).
+Definition
+DELETE /wp/v2/comments/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/comments/<id>
+
+Users
+In this article
+Schema
+List Users
+Definition
+Example Request
+Arguments
+Create a User
+Arguments
+Definition
+Retrieve a User
+Definition & Example Request
+Arguments
+Update a User
+Arguments
+Definition
+Example Request
+Delete a User
+Arguments
+Definition
+Example Request
+Retrieve a User
+Definition & Example Request
+Arguments
+Update a User
+Arguments
+Definition
+Example Request
+Delete a User
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a user record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+id	Unique identifier for the user.
+JSON data type: integer
+
+Read only
+
+Context: embed, view, edit
+
+username	Login name for the user.
+JSON data type: string
+
+Context: edit
+
+name	Display name for the user.
+JSON data type: string
+
+Context: embed, view, edit
+
+first_name	First name for the user.
+JSON data type: string
+
+Context: edit
+
+last_name	Last name for the user.
+JSON data type: string
+
+Context: edit
+
+email	The email address for the user.
+JSON data type: string,
+Format: email
+
+Context: edit
+
+url	URL of the user.
+JSON data type: string,
+Format: uri
+
+Context: embed, view, edit
+
+description	Description of the user.
+JSON data type: string
+
+Context: embed, view, edit
+
+link	Author URL of the user.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: embed, view, edit
+
+locale	Locale for the user.
+JSON data type: string
+
+Context: edit
+
+One of: , en_US
+
+nickname	The nickname for the user.
+JSON data type: string
+
+Context: edit
+
+slug	An alphanumeric identifier for the user.
+JSON data type: string
+
+Context: embed, view, edit
+
+registered_date	Registration date for the user.
+JSON data type: string,
+Format: datetime (details)
+
+Read only
+
+Context: edit
+
+roles	Roles assigned to the user.
+JSON data type: array
+
+Context: edit
+
+password	Password for the user (never included).
+JSON data type: string
+
+Context: 
+
+capabilities	All capabilities assigned to the user.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+extra_capabilities	Any extra capabilities assigned to the user.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+avatar_urls	Avatar URLs for the user.
+JSON data type: object
+
+Read only
+
+Context: embed, view, edit
+
+meta	Meta fields.
+JSON data type: object
+
+Context: view, edit
+
+List Users
+Query this endpoint to retrieve a collection of users. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/users
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/users
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.
+offset	Offset the result set by a specific number of items.
+order	Order sort attribute ascending or descending.
+Default: asc
+
+One of: asc, desc
+
+orderby	Sort collection by user attribute.
+Default: name
+
+One of: id, include, name, registered_date, slug, include_slugs, email, url
+
+slug	Limit result set to users with one or more specific slugs.
+roles	Limit result set to users matching at least one specific role provided. Accepts csv list or single role.
+capabilities	Limit result set to users matching at least one specific capability provided. Accepts csv list or single capability.
+who	Limit result set to users who are considered authors.
+One of: authors
+has_published_posts	Limit result set to users who have published posts.
+Create a User
+Arguments
+username	Login name for the user.
+Required: 1
+
+name	Display name for the user.
+first_name	First name for the user.
+last_name	Last name for the user.
+email	The email address for the user.
+Required: 1
+
+url	URL of the user.
+description	Description of the user.
+locale	Locale for the user.
+One of: , en_US
+nickname	The nickname for the user.
+slug	An alphanumeric identifier for the user.
+roles	Roles assigned to the user.
+password	Password for the user (never included).
+Required: 1
+
+meta	Meta fields.
+Definition
+POST /wp/v2/users
+
+Retrieve a User
+Definition & Example Request
+GET /wp/v2/users/<id>
+
+Query this endpoint to retrieve a specific user record.
+
+$ curl https://example.com/wp-json/wp/v2/users/<id>
+
+Arguments
+id	Unique identifier for the user.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Update a User
+Arguments
+id	Unique identifier for the user.
+username	Login name for the user.
+name	Display name for the user.
+first_name	First name for the user.
+last_name	Last name for the user.
+email	The email address for the user.
+url	URL of the user.
+description	Description of the user.
+locale	Locale for the user.
+One of: , en_US
+nickname	The nickname for the user.
+slug	An alphanumeric identifier for the user.
+roles	Roles assigned to the user.
+password	Password for the user (never included).
+meta	Meta fields.
+Definition
+POST /wp/v2/users/<id>
+
+Example Request
+
+Delete a User
+Arguments
+id	Unique identifier for the user.
+force	Required to be true, as users do not support trashing.
+reassign	Reassign the deleted user's posts and links to this user ID.
+Required: 1
+
+Definition
+DELETE /wp/v2/users/<id>
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/users/<id>
+
+Retrieve a User
+Definition & Example Request
+GET /wp/v2/users/me
+
+Query this endpoint to retrieve a specific user record.
+
+$ curl https://example.com/wp-json/wp/v2/users/me
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Update a User
+Arguments
+username	Login name for the user.
+name	Display name for the user.
+first_name	First name for the user.
+last_name	Last name for the user.
+email	The email address for the user.
+url	URL of the user.
+description	Description of the user.
+locale	Locale for the user.
+One of: , en_US
+nickname	The nickname for the user.
+slug	An alphanumeric identifier for the user.
+roles	Roles assigned to the user.
+password	Password for the user (never included).
+meta	Meta fields.
+Definition
+POST /wp/v2/users/me
+
+Example Request
+
+Delete a User
+Arguments
+force	Required to be true, as users do not support trashing.
+reassign	Reassign the deleted user's posts and links to this user ID.
+Required: 1
+
+Definition
+DELETE /wp/v2/users/me
+
+Example Request
+$ curl -X DELETE https://example.com/wp-json/wp/v2/users/me
+
+Types
+In this article
+Schema
+Retrieve a Type
+Definition & Example Request
+Arguments
+Retrieve a Type
+Definition & Example Request
+Arguments
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a type record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+capabilities	All capabilities used by the post type.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+description	A human-readable description of the post type.
+JSON data type: string
+
+Read only
+
+Context: view, edit
+
+hierarchical	Whether or not the post type should have children.
+JSON data type: boolean
+
+Read only
+
+Context: view, edit
+
+viewable	Whether or not the post type can be viewed.
+JSON data type: boolean
+
+Read only
+
+Context: edit
+
+labels	Human-readable labels for the post type for various contexts.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+name	The title for the post type.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+slug	An alphanumeric identifier for the post type.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+supports	All features, supported by the post type.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+has_archive	If the value is a string, the value will be used as the archive slug. If the value is false the post type has no archive.
+JSON data type: string or boolean
+
+Read only
+
+Context: view, edit
+
+taxonomies	Taxonomies associated with post type.
+JSON data type: array
+
+Read only
+
+Context: view, edit
+
+rest_base	REST base route for the post type.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+rest_namespace	REST route's namespace for the post type.
+JSON data type: string
+
+Read only
+
+Context: view, edit, embed
+
+visibility	The visibility settings for the post type.
+JSON data type: object
+
+Read only
+
+Context: edit
+
+icon	The icon for the post type.
+JSON data type: string or null
+
+Read only
+
+Context: view, edit, embed
+
+Retrieve a Type
+Definition & Example Request
+GET /wp/v2/types
+
+Query this endpoint to retrieve a specific type record.
+
+$ curl https://example.com/wp-json/wp/v2/types
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Retrieve a Type
+Definition & Example Request
+GET /wp/v2/types/<type>
+
+Query this endpoint to retrieve a specific type record.
+
+$ curl https://example.com/wp-json/wp/v2/types/<type>
+
+Arguments
+type	An alphanumeric identifier for the post type.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Statuses
+In this article
+Schema
+Retrieve a Status
+Definition & Example Request
+Arguments
+Retrieve a Status
+Definition & Example Request
+Arguments
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a status record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+name	The title for the status.
+JSON data type: string
+
+Read only
+
+Context: embed, view, edit
+
+private	Whether posts with this status should be private.
+JSON data type: boolean
+
+Read only
+
+Context: edit
+
+protected	Whether posts with this status should be protected.
+JSON data type: boolean
+
+Read only
+
+Context: edit
+
+public	Whether posts of this status should be shown in the front end of the site.
+JSON data type: boolean
+
+Read only
+
+Context: view, edit
+
+queryable	Whether posts with this status should be publicly-queryable.
+JSON data type: boolean
+
+Read only
+
+Context: view, edit
+
+show_in_list	Whether to include posts in the edit listing for their post type.
+JSON data type: boolean
+
+Read only
+
+Context: edit
+
+slug	An alphanumeric identifier for the status.
+JSON data type: string
+
+Read only
+
+Context: embed, view, edit
+
+date_floating	Whether posts of this status may have floating published dates.
+JSON data type: boolean
+
+Read only
+
+Context: view, edit
+
+Retrieve a Status
+Definition & Example Request
+GET /wp/v2/statuses
+
+Query this endpoint to retrieve a specific status record.
+
+$ curl https://example.com/wp-json/wp/v2/statuses
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Retrieve a Status
+Definition & Example Request
+GET /wp/v2/statuses/<status>
+
+Query this endpoint to retrieve a specific status record.
+
+$ curl https://example.com/wp-json/wp/v2/statuses/<status>
+
+Arguments
+status	An alphanumeric identifier for the status.
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed, edit
+
+Site Settings
+In this article
+Schema
+Retrieve a Site Setting
+Definition & Example Request
+Update a Site Setting
+Arguments
+Definition
+Example Request
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a Site Setting record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+title	Site title.
+JSON data type: string
+
+Context: 
+
+description	Site tagline.
+JSON data type: string
+
+Context: 
+
+url	Site URL.
+JSON data type: string,
+Format: uri
+
+Context: 
+
+email	This address is used for admin purposes, like new user notification.
+JSON data type: string,
+Format: email
+
+Context: 
+
+timezone	A city in the same timezone as you.
+JSON data type: string
+
+Context: 
+
+date_format	A date format for all date strings.
+JSON data type: string
+
+Context: 
+
+time_format	A time format for all time strings.
+JSON data type: string
+
+Context: 
+
+start_of_week	A day number of the week that the week should start on.
+JSON data type: integer
+
+Context: 
+
+language	WordPress locale code.
+JSON data type: string
+
+Context: 
+
+use_smilies	Convert emoticons like :-) and :-P to graphics on display.
+JSON data type: boolean
+
+Context: 
+
+default_category	Default post category.
+JSON data type: integer
+
+Context: 
+
+default_post_format	Default post format.
+JSON data type: string
+
+Context: 
+
+posts_per_page	Blog pages show at most.
+JSON data type: integer
+
+Context: 
+
+show_on_front	What to show on the front page
+JSON data type: string
+
+Context: 
+
+page_on_front	The ID of the page that should be displayed on the front page
+JSON data type: integer
+
+Context: 
+
+page_for_posts	The ID of the page that should display the latest posts
+JSON data type: integer
+
+Context: 
+
+default_ping_status	Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.
+JSON data type: string
+
+Context: 
+
+One of: open, closed
+
+default_comment_status	Allow people to submit comments on new posts.
+JSON data type: string
+
+Context: 
+
+One of: open, closed
+
+site_logo	Site logo.
+JSON data type: integer
+
+Context: 
+
+site_icon	Site icon.
+JSON data type: integer
+
+Context: 
+
+Retrieve a Site Setting
+Definition & Example Request
+GET /wp/v2/settings
+
+Query this endpoint to retrieve a specific Site Setting record.
+
+$ curl https://example.com/wp-json/wp/v2/settings
+
+There are no arguments for this endpoint.
+Update a Site Setting
+Arguments
+title	Site title.
+description	Site tagline.
+url	Site URL.
+email	This address is used for admin purposes, like new user notification.
+timezone	A city in the same timezone as you.
+date_format	A date format for all date strings.
+time_format	A time format for all time strings.
+start_of_week	A day number of the week that the week should start on.
+language	WordPress locale code.
+use_smilies	Convert emoticons like :-) and :-P to graphics on display.
+default_category	Default post category.
+default_post_format	Default post format.
+posts_per_page	Blog pages show at most.
+show_on_front	What to show on the front page
+page_on_front	The ID of the page that should be displayed on the front page
+page_for_posts	The ID of the page that should display the latest posts
+default_ping_status	Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.
+One of: open, closed
+default_comment_status	Allow people to submit comments on new posts.
+One of: open, closed
+site_logo	Site logo.
+site_icon	Site icon.
+Definition
+POST /wp/v2/settings
+
+Example Request
+
+Search Results
+In this article
+Schema
+List Search Results
+Definition
+Example Request
+Arguments
+↑ Back to top
+
+Schema
+The schema defines all the fields that exist within a search result record. Any response from these endpoints can be expected to contain the fields below unless the `_filter` query parameter is used or the schema field only appears in a specific context.
+
+id	Unique identifier for the object.
+JSON data type: integer or string
+
+Read only
+
+Context: view, embed
+
+title	The title for the object.
+JSON data type: string
+
+Read only
+
+Context: view, embed
+
+url	URL to the object.
+JSON data type: string,
+Format: uri
+
+Read only
+
+Context: view, embed
+
+type	Object type.
+JSON data type: string
+
+Read only
+
+Context: view, embed
+
+One of: post, term, post-format
+
+subtype	Object subtype.
+JSON data type: string
+
+Read only
+
+Context: view, embed
+
+One of: post, page, category, post_tag
+
+List Search Results
+Query this endpoint to retrieve a collection of search results. The response you receive can be controlled and filtered using the URL query parameters below.
+
+Definition
+GET /wp/v2/search
+
+Example Request
+$ curl https://example.com/wp-json/wp/v2/search
+
+Arguments
+context	Scope under which the request is made; determines fields present in response.
+Default: view
+
+One of: view, embed
+
+page	Current page of the collection.
+Default: 1
+
+per_page	Maximum number of items to be returned in result set.
+Default: 10
+
+search	Limit results to those matching a string.
+type	Limit results to items of an object type.
+Default: post
+
+One of: post, term, post-format
+
+subtype	Limit results to items of one or more object subtypes.
+Default: any
+
+exclude	Ensure result set excludes specific IDs.
+include	Limit result set to specific IDs.

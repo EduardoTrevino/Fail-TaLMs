@@ -1,0 +1,151 @@
+{
+  "tool_name": "wordpress",
+  "tool_description": "API to interact with WordPress sites and manage content.",
+  "title": "WordPress API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 700,
+    "avgSuccessRate": 90,
+    "popularityScore": 9.8,
+    "__typename": "Score"
+  },
+  "home_url": "https://developer.wordpress.org/rest-api/",
+  "host": "example.com",
+  "api_list": [
+    {
+      "name": "list_posts",
+      "url": "https://example.com/wp-json/wp/v2/posts",
+      "description": "Retrieve a collection of posts",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "context",
+          "type": "ENUM",
+          "description": "Scope under which the request is made; determines fields present in response.",
+          "default": "view"
+        },
+        {
+          "name": "page",
+          "type": "INTEGER",
+          "description": "Current page of the collection.",
+          "default": 1
+        },
+        {
+          "name": "per_page",
+          "type": "INTEGER",
+          "description": "Maximum number of items to be returned in result set.",
+          "default": 10
+        },
+        {
+          "name": "search",
+          "type": "STRING",
+          "description": "Limit results to those matching a string.",
+          "default": ""
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://example.com/wp-json/wp/v2/posts\"\nquerystring = {'context': context, 'page': page, 'per_page': per_page, 'search': search}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "retrieve_post",
+      "url": "https://example.com/wp-json/wp/v2/posts/{id}",
+      "description": "Retrieve a specific post record",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "Unique identifier for the post.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://example.com/wp-json/wp/v2/posts/{id}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "author": {
+            "type": "integer"
+          },
+          "date": {
+            "type": "string",
+            "format": "datetime"
+          },
+          "link": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "list_comments",
+      "url": "https://example.com/wp-json/wp/v2/comments",
+      "description": "Retrieve a collection of comments",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "post",
+          "type": "INTEGER",
+          "description": "The ID of the associated post object.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "context",
+          "type": "ENUM",
+          "description": "Scope under which the request is made; determines fields present in response.",
+          "default": "view"
+        },
+        {
+          "name": "page",
+          "type": "INTEGER",
+          "description": "Current page of the collection.",
+          "default": 1
+        },
+        {
+          "name": "per_page",
+          "type": "INTEGER",
+          "description": "Maximum number of items to be returned in result set.",
+          "default": 10
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://example.com/wp-json/wp/v2/comments\"\nquerystring = {'post': post, 'context': context, 'page': page, 'per_page': per_page}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}

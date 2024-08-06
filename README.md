@@ -42,7 +42,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | The Rosary                       | 2         | :x:        | TBD      |
 | Content          | TVMaze                           | 2         | :x:        | TBD      |
 | Content          | Wolne Lektury                    | 0         | :x:        | TBD      |
-| Content          | WordPress                        | 0         | :x:        | TBD      |
+| Content          | WordPress                        | 2         | :x:        | TBD      |
 | Crypto & Finance | Binance                          | 0         | :x:        | TBD      |
 | Crypto & Finance | CoinBase                         | 0         | :x:        | TBD      |
 | Crypto & Finance | CoinCap                          | 0         | :x:        | TBD      |
