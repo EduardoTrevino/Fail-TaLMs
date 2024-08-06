@@ -39,7 +39,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Rick and Morty                   | 2         | :x:        | TBD      |
 | Content          | STAPI                            | 0         | :x:        | TBD      |
 | Content          | SWAPI                            | 2         | :x:        | TBD      |
-| Content          | The Rosary                       | 0         | :x:        | TBD      |
+| Content          | The Rosary                       | 2         | :x:        | TBD      |
 | Content          | TVMaze                           | 0         | :x:        | TBD      |
 | Content          | Wolne Lektury                    | 0         | :x:        | TBD      |
 | Content          | WordPress                        | 0         | :x:        | TBD      |
