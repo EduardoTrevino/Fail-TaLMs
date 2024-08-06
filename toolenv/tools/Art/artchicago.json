@@ -1,36 +1,199 @@
 {
-    "tool_description": "Provides information about Artwork from the museum of Chicago.",
     "tool_name": "artchicago",
-    "title": "artchicago",
+    "tool_description": "API to access a wealth of data about the Art Institute of Chicago's collection, including artworks, artists, exhibitions, and more.",
+    "title": "Art Institute of Chicago API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.artic.edu/docs/",
+    "host": "api.artic.edu",
     "api_list": [
         {
             "name": "artworks",
-            "url": "",
+            "url": "https://api.artic.edu/api/v1/artworks",
             "description": "A list of all artworks sorted by last updated date in descending order.",
             "method": "GET",
-            "required_parameters": [
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of resources to return per page.",
+                    "default": "2"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.artic.edu/api/v1/artworks'\nparams = {'limit': limit, 'page': page}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "pagination": {
+                    "total": "int",
+                    "limit": "int",
+                    "offset": "int",
+                    "total_pages": "int",
+                    "current_page": "int"
+                },
+                "data": [
                     {
-                        "name": "limit",
-                        "type": "INTEGER",
-                        "description": "The number of resources to return per page",
-                        "default": 2
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "page",
-                        "type": "INTEGER",
-                        "description": "The page of resources to retrieve",
-                        "default": 1
-                    },
-                    {
-                        "name": "fields",
-                        "type": "STRING",
-                        "description": "A comma-separated list of fields to return per resource",
-                        "default": ""
+                        "id": "int",
+                        "title": "str",
+                        "artist_display": "str",
+                        "place_of_origin": "str",
+                        "date_display": "str",
+                        "medium_display": "str",
+                        "dimensions": "str",
+                        "thumbnail": {
+                            "alt_text": "str",
+                            "width": "int",
+                            "height": "int",
+                            "iiif_url": "str"
+                        }
                     }
                 ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "pagination": {
+                        "type": "object"
+                    },
+                    "data": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "artworks_search",
+            "url": "https://api.artic.edu/api/v1/artworks/search",
+            "description": "Search artworks data in the aggregator. Artworks in the groups of essentials are boosted so they'll show up higher in results.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "Your search query.",
+                    "default": "monet"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "size",
+                    "type": "INTEGER",
+                    "description": "Number of results to return. Pagination via Elasticsearch conventions.",
+                    "default": "10"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Used in conjunction with query to sort results.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.artic.edu/api/v1/artworks/search'\nparams = {'q': q, 'size': size, 'sort': sort}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "pagination": {
+                    "total": "int",
+                    "limit": "int",
+                    "offset": "int",
+                    "total_pages": "int",
+                    "current_page": "int"
+                },
+                "data": [
+                    {
+                        "id": "int",
+                        "title": "str",
+                        "artist_display": "str",
+                        "place_of_origin": "str",
+                        "date_display": "str",
+                        "medium_display": "str",
+                        "dimensions": "str",
+                        "thumbnail": {
+                            "alt_text": "str",
+                            "width": "int",
+                            "height": "int",
+                            "iiif_url": "str"
+                        }
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "pagination": {
+                        "type": "object"
+                    },
+                    "data": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "agents",
+            "url": "https://api.artic.edu/api/v1/agents",
+            "description": "A list of all agents sorted by last updated date in descending order.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of resources to return per page.",
+                    "default": "2"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.artic.edu/api/v1/agents'\nparams = {'limit': limit, 'page': page}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "pagination": {
+                    "total": "int",
+                    "limit": "int",
+                    "offset": "int",
+                    "total_pages": "int",
+                    "current_page": "int"
+                },
+                "data": [
+                    {
+                        "id": "int",
+                        "title": "str",
+                        "description": "str",
+                        "birth_date": "int",
+                        "death_date": "int"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "pagination": {
+                        "type": "object"
+                    },
+                    "data": {
+                        "type": "array"
+                    }
+                }
+            }
         }
-    ],
-    "standardized_name": "artchicago"
+    ]
 }

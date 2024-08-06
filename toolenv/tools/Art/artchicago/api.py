@@ -1,24 +1,53 @@
 import requests
-import json
-from typing import Optional
+from typing import Optional, List
 
-BASE_URL = "https://api.artic.edu/api/v1"
 
-def artworks(toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff', limit: int = 2, page: int = 1, fields: Optional[str] = None) -> dict:
+def artworks(limit: Optional[int] = 2, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
-    Fetch latest artworks from the Art Institute of Chicago
+    "A list of all artworks sorted by last updated date in descending order."
     """
-    url = f"{BASE_URL}/artworks"
+    url = "https://api.artic.edu/api/v1/artworks"
     params = {
-        "limit": limit,
-        "page": page
+        'limit': limit,
+        'page': page
     }
-    if fields:
-        params["fields"] = fields
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def artworks_search(q: str, size: Optional[int] = 10, sort: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    "Search artworks data in the aggregator. Artworks in the groups of essentials are boosted so they'll show up higher in results."
+    """
+    url = "https://api.artic.edu/api/v1/artworks/search"
+    params = {
+        'q': q,
+        'size': size
+    }
+    if sort:
+        params['sort'] = sort
 
     response = requests.get(url, params=params)
     try:
-        observation = response.json()
-    except:
-        observation = response.text
-    return observation
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def agents(limit: Optional[int] = 2, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    "A list of all agents sorted by last updated date in descending order."
+    """
+    url = "https://api.artic.edu/api/v1/agents"
+    params = {
+        'limit': limit,
+        'page': page
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
