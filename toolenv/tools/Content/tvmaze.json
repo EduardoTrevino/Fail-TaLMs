@@ -1,0 +1,71 @@
+{
+  "tool_name": "tvmaze",
+  "tool_description": "TVmaze provides a free, fast, and clean REST API to add TV information to your website or app.",
+  "title": "TVmaze API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 500,
+    "avgSuccessRate": 90,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.tvmaze.com/api",
+  "host": "api.tvmaze.com",
+  "api_list": [
+    {
+      "name": "showsearch",
+      "url": "https://api.tvmaze.com/search/shows",
+      "description": "Search through all the shows in the database by the show's name. A fuzzy algorithm is used to find shows even if the query contains small typos. Results are returned in order of relevancy and contain each show's full information.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "query",
+          "type": "STRING",
+          "description": "The name of the show to search for.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.tvmaze.com/search/shows\"\nquerystring = {'q': query}\n\nresponse = requests.get(url, params=querystring)\n\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\n\nreturn observation",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "showepisodes",
+      "url": "https://api.tvmaze.com/shows/{id}/episodes",
+      "description": "A complete list of episodes for the given show. Episodes are returned in their airing order, and include full episode information. By default, specials are not included in the list.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INT",
+          "description": "The TVmaze ID of the show.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://api.tvmaze.com/shows/{id}/episodes\"\n\nresponse = requests.get(url)\n\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\n\nreturn observation",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "episodes": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -40,7 +40,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | STAPI                            | 0         | :x:        | TBD      |
 | Content          | SWAPI                            | 2         | :x:        | TBD      |
 | Content          | The Rosary                       | 2         | :x:        | TBD      |
-| Content          | TVMaze                           | 0         | :x:        | TBD      |
+| Content          | TVMaze                           | 2         | :x:        | TBD      |
 | Content          | Wolne Lektury                    | 0         | :x:        | TBD      |
 | Content          | WordPress                        | 0         | :x:        | TBD      |
 | Crypto & Finance | Binance                          | 0         | :x:        | TBD      |

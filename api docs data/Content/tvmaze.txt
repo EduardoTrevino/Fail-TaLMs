@@ -1,0 +1,285 @@
+If you want to add TV information to your website or app then you've come to the right place!
+
+We provide a free, fast and clean REST API that's easy to use, returns JSON and conforms to the HATEOAS and HAL principles. The root url is https://api.tvmaze.com and the available endpoints are documented below. If you have any questions or suggestions regarding the API, please post them on our forums.
+
+In addition to the free public API, there's a user-level API available for all Premium members. The documentation for the user API can be viewed here.
+
+To stay up to date with the latest changes, you can follow the changelog thread here.
+
+Table of Contents
+Search
+Show Search
+Show single search
+Show Lookup
+People search
+Schedule
+Web/Streaming Schedule
+Full Schedule
+Shows
+Show main information
+Show episode list
+Show alternate lists
+Episode by number
+Episodes by date
+Show seasons
+Season episodes
+Show cast
+Show crew
+Show AKA's
+Show images
+Show index
+Episodes
+Episode main information
+Episode guest cast
+Episode guest crew
+People
+Person main information
+Person cast credits
+Person crew credits
+Person guest cast credits
+Person index
+Updates
+Show updates
+Person updates
+Embedding
+Images
+HTTPS
+Caching
+Rate Limiting
+Cors
+Licensing
+Enterprise API
+Endpoints
+Search
+Show search
+Search through all the shows in our database by the show's name. A fuzzy algorithm is used (with a fuzziness value of 2), meaning that shows will be found even if your query contains small typos. Results are returned in order of relevancy (best matches on top) and contain each show's full information.
+
+The most common usecase for this endpoint is when you're building a local mapping of show names to TVmaze ID's and want to make sure that you're mapping to exactly the right show, and not to a different show that happens to have the same name. By presenting each show's basic information in a UI, you can have the end-user pick a specific entry from that list, and have your application store the chosen show's ID or URL. Any subsequent requests for information on that show can then be directly made to that show's URL.
+
+URL: /search/shows?q=:query
+Example: https://api.tvmaze.com/search/shows?q=girls
+Show single search
+In some scenarios you might want to immediately return information based on a user's query, without the intermediary step of presenting them all the possible matches. In that case, you can use the singlesearch endpoint which either returns exactly one result, or no result at all. This endpoint is also forgiving of typos, but less so than the regular search (with a fuzziness of 1 instead of 2), to reduce the chance of a false positive.
+
+As opposed to the regular search endpoint, the singlesearch endpoint allows embedding additional information in the result. See the section embedding for more information.
+
+Beware that if multiple shows exist with an identical name (for example, Top Gear) it's undefined which of them will be returned by this endpoint. If you want to be sure you're matching with the proper show, use the search endpoint instead.
+
+URL: /singlesearch/shows?q=:query
+Example: https://api.tvmaze.com/singlesearch/shows?q=girls
+Example: https://api.tvmaze.com/singlesearch/shows?q=girls&embed=episodes
+Show Lookup
+If you already know a show's thetvdb or IMDB ID, you can use this endpoint to find this exact show on TVmaze. If the given ID can be matched, a HTTP 301 redirect to the show's URL will be returned. Otherwise, a HTTP 404 is sent.
+
+URL: /lookup/shows?tvrage=:id or /lookup/shows?thetvdb=:id
+Example: https://api.tvmaze.com/lookup/shows?thetvdb=81189
+Example: https://api.tvmaze.com/lookup/shows?imdb=tt0944947
+People search
+Search through all the people in our database, using the same mechanism as described for show searches.
+
+URL: /search/people?q=:query
+Example: https://api.tvmaze.com/search/people?q=lauren
+Schedule
+The schedule is a complete list of episodes that air in a given country on a given date. Episodes are returned in the order in which they are aired, and full information about the episode and the corresponding show is included.
+
+This endpoint will only return episodes that are tied to a specific country, either via a Network or via a local Web Channel such as HBO Max or Sky Go. Episodes from global Web Channels like Netflix are not included.
+
+Note that contrary to what you might expect, the ISO country code for the United Kingdom is not UK, but GB.
+
+URL: /schedule?country=:countrycode&date=:date
+(optional) countrycode: an ISO 3166-1 code of the country; defaults to US
+(optional) date: an ISO 8601 formatted date; defaults to the current day
+Example: https://api.tvmaze.com/schedule?country=US&date=2014-12-01
+Example: https://api.tvmaze.com/schedule
+Web/streaming schedule
+The web schedule is a complete list of episodes that air on web/streaming channels on a given date. TVmaze distinguishes between local and global Web Channels: local Web Channels are only available in one specific country, while global Web Channels are available in multiple countries. To query both local and global Web Channels, leave out the country parameter. To query only local Web Channels, set country to an ISO country code. And to query only global Web Channels, set country to an empty string.
+
+URL: /schedule/web?country=:countrycode&date=:date
+(optional) countrycode: an ISO 3166-1 code of the country
+(optional) date: an ISO 8601 formatted date; defaults to the current day
+Example: https://api.tvmaze.com/schedule/web?date=2020-05-29
+Example: https://api.tvmaze.com/schedule/web?date=2020-05-29&country=
+Example: https://api.tvmaze.com/schedule/web?date=2020-05-29&country=US
+Full schedule
+The full schedule is a list of all future episodes known to TVmaze, regardless of their country. Be advised that this endpoint's response is at least several MB large. As opposed to the other endpoints, results are cached for 24 hours.
+
+URL: /schedule/full
+Example: https://api.tvmaze.com/schedule/full
+Shows
+Show main information
+Retrieve all primary information for a given show. This endpoint allows embedding of additional information. See the section embedding for more information.
+
+URL: /shows/:id
+Example: https://api.tvmaze.com/shows/1
+Example: https://api.tvmaze.com/shows/1?embed=cast
+Show episode list
+A complete list of episodes for the given show. Episodes are returned in their airing order, and include full episode information. By default, specials are not included in the list.
+
+URL: /shows/:id/episodes
+(optional) specials: do include both significant and insignificant specials in the list
+Example: https://api.tvmaze.com/shows/1/episodes
+Example: https://api.tvmaze.com/shows/1/episodes?specials=1
+Show alternate lists
+Alternate episode lists for this show, for example DVD ordering. For a description of the different types of alternate lists that you can find, please refer to the alternate episode policy.
+
+URL: /shows/:id/alternatelists
+Example: https://api.tvmaze.com/shows/180/alternatelists
+URL: /alternatelists/:id
+Example: https://api.tvmaze.com/alternatelists/1
+Example: https://api.tvmaze.com/alternatelists/1?embed=alternateepisodes
+URL: /alternatelists/:id/alternateepisodes
+Example: https://api.tvmaze.com/alternatelists/1/alternateepisodes
+Example: https://api.tvmaze.com/alternatelists/1/alternateepisodes?embed=episodes
+Episode by number
+Retrieve one specific episode from this show given its season number and episode number. This either returns the full information for one episode, or a HTTP 404.
+
+URL: /shows/:id/episodebynumber?season=:season&number=:number
+season: a season number
+number: an episode number
+Example: https://api.tvmaze.com/shows/1/episodebynumber?season=1&number=1
+Episodes by date
+Retrieve all episodes from this show that have aired on a specific date. This either returns an array of full episode info, or a HTTP 404. Useful for daily (talk) shows that don't adhere to a common season numbering.
+
+URL: /shows/:id/episodesbydate?date=:date
+date: an ISO 8601 formatted date
+Example: https://api.tvmaze.com/shows/1/episodesbydate?date=2013-07-01
+Show seasons
+A complete list of seasons for the given show. Seasons are returned in ascending order and contain the full information that's known about them.
+
+URL: /shows/:id/seasons
+Example: https://api.tvmaze.com/shows/1/seasons
+Season episodes
+A list of episodes in this season. Specials are always included in this list. This endpoint allows embedding of additional information.
+
+URL: /seasons/:id/episodes
+Example: https://api.tvmaze.com/seasons/1/episodes
+Example: https://api.tvmaze.com/seasons/1/episodes?embed=guestcast
+Show cast
+A list of main cast for a show. Each cast item is a combination of a person and a character. Items are ordered by importance, which is determined by the total number of appearances of the given character in this show.
+
+URL: /shows/:id/cast
+Example: https://api.tvmaze.com/shows/1/cast
+Show crew
+A list of main crew for a show. Each crew item is a combination of a person and their crew type.
+
+URL: /shows/:id/crew
+Example: https://api.tvmaze.com/shows/1/crew
+Show AKA's
+A list of AKA's (aliases) for a show. An AKA with its country set to null indicates an AKA in the show's original country. Otherwise, it's the AKA for that show in the given foreign country.
+
+URL: /shows/:id/akas
+Example: https://api.tvmaze.com/shows/1/akas
+Show images
+A list of all images available for this show. The image type can be "poster", "banner", "background", "typography", or NULL in case of legacy unclassified images. For a definition of these types, please refer to the main image and general image policies.
+
+All image types are available under the "original" resolution; posters and banners are also available as a smaller resized version ("medium").
+
+URL: /shows/:id/images
+Example: https://api.tvmaze.com/shows/1/images
+Show index
+A list of all shows in our database, with all primary information included. You can use this endpoint for example if you want to build a local cache of all shows contained in the TVmaze database. This endpoint is paginated, with a maximum of 250 results per page. The pagination is based on show ID, e.g. page 0 will contain shows with IDs between 0 and 250. This means a single page might contain less than 250 results, in case of deletions, but it also guarantees that deletions won't cause shuffling in the page numbering for other shows.
+
+Because of this, you can implement a daily/weekly sync simply by starting at the page number where you last left off, and be sure you won't skip over any entries. For example, if the last show in your local cache has an ID of 1800, you would start the re-sync at page number floor(1800/250) = 7. After this, simply increment the page number by 1 until you receive a HTTP 404 response code, which indicates that you've reached the end of the list.
+
+As opposed to the other endpoints, results from the show index are cached for up to 24 hours.
+
+URL: /shows?page=:num
+Example: https://api.tvmaze.com/shows
+Example: https://api.tvmaze.com/shows?page=1
+Episodes
+Episode main information
+Retrieve all primary information for a given episode. This endpoint allows embedding of additional information. See the section embedding for more information.
+
+URL: /episodes/:id
+Example: https://api.tvmaze.com/episodes/1
+Example: https://api.tvmaze.com/episodes/1?embed=show
+Episode guest cast
+Retrieve all guest cast starring in an episode.
+
+URL: /episodes/:id/guestcast
+Example: https://api.tvmaze.com/episodes/1/guestcast
+Episode guest crew
+Retrieve all guest crew working on an episode.
+
+URL: /episodes/:id/guestcrew
+Example: https://api.tvmaze.com/episodes/1/guestcrew
+People
+Person main information
+Retrieve all primary information for a given person. This endpoint allows embedding of additional information. See the section embedding for more information.
+
+URL: /people/:id
+Example: https://api.tvmaze.com/people/1
+Example: https://api.tvmaze.com/people/1?embed=castcredits
+Person cast credits
+Retrieve all (show-level) cast credits for a person. A cast credit is a combination of both a show and a character. By default, only a reference to each show and character will be returned. However, this endpoint supports embedding, which means full information for the shows and characters can be included.
+
+URL: /people/:id/castcredits
+Example: https://api.tvmaze.com/people/1/castcredits
+Example: https://api.tvmaze.com/people/1/castcredits?embed=show
+Person crew credits
+Retrieve all (show-level) crew credits for a person. A crew credit is combination of both a show and a crew type. By default, only a reference to each show will be returned. However, this endpoint supports embedding, which means full information for the shows can be included.
+
+URL: /people/:id/crewcredits
+Example: https://api.tvmaze.com/people/100/crewcredits
+Example: https://api.tvmaze.com/people/100/crewcredits?embed=show
+Person guest cast credits
+Retrieve all (episode-level) guest cast credits for a person. A guest cast credit is a combination of both an episode and a character. By default, only a reference to each episode and character will be returned. However, this endpoint supports embedding, which means full information for the episodes and characters can be included.
+
+URL: /people/:id/guestcastcredits
+Example: https://api.tvmaze.com/people/1/guestcastcredits
+Example: https://api.tvmaze.com/people/1/guestcastcredits?embed=episode
+Person index
+Like the show index but for people; please refer to the show index documentation. A maximum of 1000 results per page is returned.
+
+URL: /people?page=:num
+Example: https://api.tvmaze.com/people
+Updates
+Show updates
+A list of all shows in the TVmaze database and the timestamp when they were last updated. Updating a direct or indirect child of a show will also mark the show itself as updated. For example; creating, deleting or updating an episode or an episode's gallery item will mark the episode's show as updated. It's possible to filter the resultset to only include shows that have been updated in the past day (24 hours), week, or month.
+
+URL: /updates/shows
+Example: https://api.tvmaze.com/updates/shows
+Example: https://api.tvmaze.com/updates/shows?since=day
+Example: https://api.tvmaze.com/updates/shows?since=week
+Example: https://api.tvmaze.com/updates/shows?since=month
+Person updates
+Like the show updates endpoint, but for people. A person is considered to be updated when any of their attributes are changed, but also when a cast- or crew-credit that involves them is created or deleted.
+
+URL: /updates/people
+Example: https://api.tvmaze.com/updates/people
+Example: https://api.tvmaze.com/updates/people?since=day
+Example: https://api.tvmaze.com/updates/people?since=week
+Example: https://api.tvmaze.com/updates/people?since=month
+Embedding
+As defined by the HAL convention, our API resources can contain links to related URLs. These URLs can refer to either a collection (like a list of episodes), or to an individual resource (like an episode). References to an individual resource are always advertised in the model's _links, for example as a show's _links.previousepisode or a cast credit's _links.character. References to collections are not actively advertised in the _links output, but are documented here. Both types of links can be embedded in the response by using the embed query parameter.
+
+For example, https://api.tvmaze.com/shows/1?embed=episodes will serve the show's main information and its episode list in one single response. https://api.tvmaze.com/shows/1?embed=nextepisode would embed the details of that show's upcoming episode in the response, but only if one such episode currently exists. Embedding multiple links is possible with the array syntax: https://api.tvmaze.com/shows/1?embed[]=episodes&embed[]=cast
+
+Images
+Most resources available in the API have an image property that refers to that item's primary image. For shows, people and characters this is an image in poster format; for episodes the image is in landscape format. If an image exists, the image property will be a dictionary containing a "medium" and "original" key, referring to the image in fixed resized dimensions or in the original uploaded resolution. If no image exists yet, the image property will be NULL.
+
+You are free to directly link ("hotlink") to our image CDN. However, for performance reasons we recommend to cache the images on your end: on your own server in case of a web application, or on the client in case of a desktop/mobile app. Images can safely be cached indefinitely: on our end the content of a specific image URL will never change; if an item's primary image changes, the item's image URL will change instead.
+
+HTTPS
+All endpoints and links embedded in the API response - to other API endpoints or to our image CDN - are HTTPS by default, but it's possible to access them over unencrypted HTTP as well.
+
+Caching
+All output is cached by our HTTP load balancers for 60 minutes, so when information is updated on the site, please allow up to 1 hour for the changes to propagate to the API.
+
+Rate limiting
+API calls are rate limited to allow at least 20 calls every 10 seconds per IP address. If you exceed this rate, you might receive an HTTP 429 error. We say at least, because rate limiting takes place on the backend but not on the edge cache. So if your client is only requesting common/popular endpoints like shows or episodes (as opposed to more unique endpoints like searches or embedding), you're likely to never hit the limit. For an optimal throughput, simply let your client back off for a few seconds when it receives a 429.
+
+Under special circumstances we may temporarily have to impose a stricter rate limit. So even if your client wouldn't normally exceed our rate limit, it's useful to gracefully handle HTTP 429 responses: simply retry the request after a small pause instead of treating it as a permanent failure.
+
+Additionally, you should ensure that HTTP connections are not unnecessarily left open. Either explicitly close the HTTP connection after every request, re-use connections for subsequent requests, or make use of HTTP2 multiplexing. Leaving more than 1 connection to our servers idle may result in your IP getting blocked.
+
+While not required, we strongly recommend setting your client's HTTP User Agent to something that'll uniquely describe it. This allows us to identify your application in case of problems, or to proactively reach out to you.
+
+CORS
+All endpoints are CORS (Cross-origin resource sharing) enabled, which means our API can be used directly in web applications without having to resort to JSONP or HTTP proxying.
+
+Licensing
+Use of the TVmaze API is licensed by CC BY-SA. This means the data can freely be used for any purpose, as long as TVmaze is properly credited as source and your usage complies with the ShareAlike provision. You can satisfy the attribution requirement by linking back to TVmaze from within your application or website, for example using the URLs available in the API.
+
+Enterprise API
+Does your usecase require data or functionality not available in the public API? Are you looking for a different license, SLA or support level? Contact our sales department to discuss the possibilities.
