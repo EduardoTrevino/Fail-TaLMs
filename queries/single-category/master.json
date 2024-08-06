@@ -1,0 +1,1090 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "FakeData",
+                "tool_name": "uuidandguidgen",
+                "api_name": "generate_v1",
+                "api_description": "Generate Version-1 UUIDs",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "Number of UUIDs to generate (up to 100)",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        "uuid_string"
+                    ]
+                }
+            }
+        ],
+        "query": "Generate 5 version-1 UUIDs for me.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "FakeData",
+                "tool_name": "randomuser",
+                "api_name": "get_user",
+                "api_description": "Generate a random user",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "results",
+                        "type": "INT",
+                        "description": "Number of users to generate",
+                        "default": 1
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter results by gender",
+                        "default": ""
+                    },
+                    {
+                        "name": "nat",
+                        "type": "STRING",
+                        "description": "Filter results by nationality",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "gender": "str",
+                            "name": {
+                                "title": "str",
+                                "first": "str",
+                                "last": "str"
+                            },
+                            "location": {
+                                "street": {
+                                    "number": "int",
+                                    "name": "str"
+                                },
+                                "city": "str",
+                                "state": "str",
+                                "country": "str",
+                                "postcode": "str",
+                                "coordinates": {
+                                    "latitude": "str",
+                                    "longitude": "str"
+                                },
+                                "timezone": {
+                                    "offset": "str",
+                                    "description": "str"
+                                }
+                            },
+                            "email": "str",
+                            "login": {
+                                "uuid": "str",
+                                "username": "str",
+                                "password": "str",
+                                "salt": "str",
+                                "md5": "str",
+                                "sha1": "str",
+                                "sha256": "str"
+                            },
+                            "dob": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "registered": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "phone": "str",
+                            "cell": "str",
+                            "id": {
+                                "name": "str",
+                                "value": "str"
+                            },
+                            "picture": {
+                                "large": "str",
+                                "medium": "str",
+                                "thumbnail": "str"
+                            },
+                            "nat": "str"
+                        }
+                    ],
+                    "info": {
+                        "seed": "str",
+                        "results": "int",
+                        "page": "int",
+                        "version": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "FakeData",
+                "tool_name": "randomuser",
+                "api_name": "get_multiple_users",
+                "api_description": "Generate multiple random users",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "results",
+                        "type": "INT",
+                        "description": "Number of users to generate",
+                        "default": 10
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter results by gender",
+                        "default": ""
+                    },
+                    {
+                        "name": "nat",
+                        "type": "STRING",
+                        "description": "Filter results by nationality",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "gender": "str",
+                            "name": {
+                                "title": "str",
+                                "first": "str",
+                                "last": "str"
+                            },
+                            "location": {
+                                "street": {
+                                    "number": "int",
+                                    "name": "str"
+                                },
+                                "city": "str",
+                                "state": "str",
+                                "country": "str",
+                                "postcode": "str",
+                                "coordinates": {
+                                    "latitude": "str",
+                                    "longitude": "str"
+                                },
+                                "timezone": {
+                                    "offset": "str",
+                                    "description": "str"
+                                }
+                            },
+                            "email": "str",
+                            "login": {
+                                "uuid": "str",
+                                "username": "str",
+                                "password": "str",
+                                "salt": "str",
+                                "md5": "str",
+                                "sha1": "str",
+                                "sha256": "str"
+                            },
+                            "dob": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "registered": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "phone": "str",
+                            "cell": "str",
+                            "id": {
+                                "name": "str",
+                                "value": "str"
+                            },
+                            "picture": {
+                                "large": "str",
+                                "medium": "str",
+                                "thumbnail": "str"
+                            },
+                            "nat": "str"
+                        }
+                    ],
+                    "info": {
+                        "seed": "str",
+                        "results": "int",
+                        "page": "int",
+                        "version": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Generate a random user and also provide a list of 5 other random users from the same nationality as the generated user.",
+        "relevant APIs": [],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Transportation",
+                "tool_name": "irail",
+                "api_name": "connections",
+                "api_description": "Get routes between two stations, including real-time data on delays.",
+                "required_parameters": [
+                    {
+                        "name": "from",
+                        "type": "STRING",
+                        "description": "The name or id of the station of departure.",
+                        "default": "Antwerp-Central"
+                    },
+                    {
+                        "name": "to",
+                        "type": "STRING",
+                        "description": "The name or id of the destination.",
+                        "default": "Brussels"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timesel",
+                        "type": "ENUM",
+                        "description": "Whether the results should show arrivals or departures.",
+                        "default": "departure",
+                        "choices": [
+                            "departure",
+                            "arrival"
+                        ]
+                    },
+                    {
+                        "name": "typeOfTransport",
+                        "type": "ENUM",
+                        "description": "The types of transport to include in the search.",
+                        "default": "automatic",
+                        "choices": [
+                            "automatic",
+                            "trains",
+                            "nointernationaltrains",
+                            "all"
+                        ]
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Whether or not to include alerts about the route.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "results",
+                        "type": "NUMBER",
+                        "description": "The number of results to return.",
+                        "default": 6
+                    },
+                    {
+                        "name": "time",
+                        "type": "STRING",
+                        "description": "The time to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The response format.",
+                        "default": "json",
+                        "choices": [
+                            "xml",
+                            "json",
+                            "jsonp"
+                        ]
+                    },
+                    {
+                        "name": "lang",
+                        "type": "ENUM",
+                        "description": "The language of the response.",
+                        "default": "en",
+                        "choices": [
+                            "nl",
+                            "fr",
+                            "en",
+                            "de"
+                        ]
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "version": "str",
+                    "timestamp": "int",
+                    "connection": [
+                        {
+                            "id": "int",
+                            "departure": {
+                                "delay": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "vehicle": "str",
+                                "vehicleinfo": {
+                                    "name": "str",
+                                    "shortname": "str",
+                                    "@id": "str"
+                                },
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "left": "int",
+                                "canceled": "int",
+                                "direction": {
+                                    "name": "str"
+                                },
+                                "stops": {
+                                    "number": "int",
+                                    "stop": [
+                                        {
+                                            "id": "int",
+                                            "station": "str",
+                                            "stationinfo": {
+                                                "id": "str",
+                                                "@id": "str",
+                                                "locationX": "float",
+                                                "locationY": "float",
+                                                "standardname": "str",
+                                                "name": "str"
+                                            },
+                                            "time": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "departureDelay": "int",
+                                            "departureCanceled": "int",
+                                            "scheduledDepartureTime": "int",
+                                            "arrivalDelay": "int",
+                                            "arrivalCanceled": "int",
+                                            "isExtraStop": "int",
+                                            "scheduledArrivalTime": "int",
+                                            "departureConnection": "str"
+                                        }
+                                    ]
+                                },
+                                "alerts": {
+                                    "number": "int",
+                                    "alert": [
+                                        {
+                                            "id": "int",
+                                            "header": "str",
+                                            "lead": "str",
+                                            "link": "str",
+                                            "startTime": "int",
+                                            "endTime": "int"
+                                        }
+                                    ]
+                                },
+                                "walking": "int",
+                                "departureConnection": "str"
+                            },
+                            "arrival": {
+                                "delay": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "vehicle": "str",
+                                "vehicleinfo": {
+                                    "name": "str",
+                                    "shortname": "str",
+                                    "@id": "str"
+                                },
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "arrived": "int",
+                                "canceled": "int",
+                                "walking": "int",
+                                "direction": {
+                                    "name": "str"
+                                }
+                            },
+                            "duration": "int",
+                            "vias": {
+                                "number": "int",
+                                "via": [
+                                    {
+                                        "id": "str",
+                                        "arrival": {
+                                            "time": "int",
+                                            "platform": "str",
+                                            "platforminfo": {
+                                                "name": "str",
+                                                "normal": "str"
+                                            },
+                                            "arrived": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "vehicle": "str",
+                                            "walking": "int",
+                                            "direction": {
+                                                "name": "str"
+                                            }
+                                        },
+                                        "departure": {
+                                            "time": "int",
+                                            "platform": "str",
+                                            "platforminfo": {
+                                                "name": "str",
+                                                "normal": "str"
+                                            },
+                                            "left": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "departureConnection": "str",
+                                            "vehicle": "str",
+                                            "walking": "int",
+                                            "alerts": {
+                                                "number": "int",
+                                                "alert": [
+                                                    {
+                                                        "id": "int",
+                                                        "header": "str",
+                                                        "lead": "str",
+                                                        "link": "str",
+                                                        "startTime": "int",
+                                                        "endTime": "int"
+                                                    }
+                                                ]
+                                            },
+                                            "direction": {
+                                                "name": "str"
+                                            },
+                                            "stops": {
+                                                "number": "int",
+                                                "stop": [
+                                                    {
+                                                        "id": "int",
+                                                        "station": "str",
+                                                        "stationinfo": {
+                                                            "id": "str",
+                                                            "@id": "str",
+                                                            "locationX": "float",
+                                                            "locationY": "float",
+                                                            "standardname": "str",
+                                                            "name": "str"
+                                                        },
+                                                        "time": "int",
+                                                        "delay": "int",
+                                                        "canceled": "int",
+                                                        "departureDelay": "int",
+                                                        "departureCanceled": "int",
+                                                        "scheduledDepartureTime": "int",
+                                                        "arrivalDelay": "int",
+                                                        "arrivalCanceled": "int",
+                                                        "isExtraStop": "int",
+                                                        "scheduledArrivalTime": "int",
+                                                        "departureConnection": "str"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "timeBetween": "int",
+                                        "station": "str",
+                                        "stationinfo": {
+                                            "id": "str",
+                                            "@id": "str",
+                                            "locationX": "float",
+                                            "locationY": "float",
+                                            "standardname": "str",
+                                            "name": "str"
+                                        },
+                                        "vehicle": "str",
+                                        "direction": {
+                                            "name": "str"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Transportation",
+                "tool_name": "irail",
+                "api_name": "vehicle",
+                "api_description": "Retrieve information about a vehicle, including stops, occupancy, current location and delays.",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "The id of the vehicle (train).",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The response format.",
+                        "default": "json",
+                        "choices": [
+                            "xml",
+                            "json",
+                            "jsonp"
+                        ]
+                    },
+                    {
+                        "name": "lang",
+                        "type": "ENUM",
+                        "description": "The language of the response.",
+                        "default": "en",
+                        "choices": [
+                            "nl",
+                            "fr",
+                            "en",
+                            "de"
+                        ]
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Whether or not to include alerts about the train.",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "version": "str",
+                    "timestamp": "int",
+                    "vehicle": "str",
+                    "vehicleinfo": {
+                        "name": "str",
+                        "locationX": "float",
+                        "locationY": "float",
+                        "shortname": "str",
+                        "@id": "str"
+                    },
+                    "stops": {
+                        "number": "int",
+                        "stop": [
+                            {
+                                "id": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "delay": "int",
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "canceled": "int",
+                                "departureDelay": "int",
+                                "departureCanceled": "int",
+                                "scheduledDepartureTime": "int",
+                                "arrivalDelay": "int",
+                                "arrivalCanceled": "int",
+                                "isExtraStop": "int",
+                                "scheduledArrivalTime": "int",
+                                "departureConnection": "str",
+                                "occupancy": {
+                                    "@id": "str",
+                                    "name": "str"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "Find the next train connection from Antwerp Central to Brussels, including intermediate stops and real-time delays.",
+        "relevant APIs": [],
+        "query_id": 3
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_astro_forecast",
+                "api_description": "Get the 3-day astronomical weather forecast",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location",
+                        "default": 113.17
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location",
+                        "default": 23.09
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "output",
+                        "type": "ENUM",
+                        "description": "Output format (xml or json)",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "product": "astro",
+                    "init": "str",
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "lifted_index": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "str",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the 3-day astronomical weather forecast for the location with longitude 113.17 and latitude 23.09?",
+        "relevant APIs": [],
+        "query_id": 4
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "FakeData",
+                "tool_name": "randomuser",
+                "api_name": "get_user",
+                "api_description": "Generate a random user",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "results",
+                        "type": "INT",
+                        "description": "Number of users to generate",
+                        "default": 1
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter results by gender",
+                        "default": ""
+                    },
+                    {
+                        "name": "nat",
+                        "type": "STRING",
+                        "description": "Filter results by nationality",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "gender": "str",
+                            "name": {
+                                "title": "str",
+                                "first": "str",
+                                "last": "str"
+                            },
+                            "location": {
+                                "street": {
+                                    "number": "int",
+                                    "name": "str"
+                                },
+                                "city": "str",
+                                "state": "str",
+                                "country": "str",
+                                "postcode": "str",
+                                "coordinates": {
+                                    "latitude": "str",
+                                    "longitude": "str"
+                                },
+                                "timezone": {
+                                    "offset": "str",
+                                    "description": "str"
+                                }
+                            },
+                            "email": "str",
+                            "login": {
+                                "uuid": "str",
+                                "username": "str",
+                                "password": "str",
+                                "salt": "str",
+                                "md5": "str",
+                                "sha1": "str",
+                                "sha256": "str"
+                            },
+                            "dob": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "registered": {
+                                "date": "str",
+                                "age": "int"
+                            },
+                            "phone": "str",
+                            "cell": "str",
+                            "id": {
+                                "name": "str",
+                                "value": "str"
+                            },
+                            "picture": {
+                                "large": "str",
+                                "medium": "str",
+                                "thumbnail": "str"
+                            },
+                            "nat": "str"
+                        }
+                    ],
+                    "info": {
+                        "seed": "str",
+                        "results": "int",
+                        "page": "int",
+                        "version": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Generate a random user with details like name, email, and phone number.",
+        "relevant APIs": [],
+        "query_id": 5
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "FakeData",
+                "tool_name": "uuidandguidgen",
+                "api_name": "generate_v3",
+                "api_description": "Generate Version-3 UUIDs",
+                "required_parameters": [
+                    {
+                        "name": "namespace",
+                        "type": "STRING",
+                        "description": "Namespace for the UUID (e.g., ns:url, ns:dns, ns:OID, ns:X500, or UUID)",
+                        "default": "ns:url"
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name for the UUID generation",
+                        "default": "https://www.google.com"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        "uuid_string"
+                    ]
+                }
+            },
+            {
+                "category_name": "FakeData",
+                "tool_name": "uuidandguidgen",
+                "api_name": "decode",
+                "api_description": "Decode a UUID to get its details",
+                "required_parameters": [
+                    {
+                        "name": "uuid",
+                        "type": "STRING",
+                        "description": "UUID to decode",
+                        "default": "b01eb720-171a-11ea-b949-73c91bba743d"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "encode": {
+                        "STR": "uuid_string",
+                        "SIV": "numeric_string"
+                    },
+                    "decode": {
+                        "variant": "string",
+                        "version": "string",
+                        "content": {
+                            "time": "timestamp",
+                            "clock": "numeric_string",
+                            "node": "string"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Generate a version-3 UUID using the URL 'https://www.example.com' as the namespace and then decode the generated UUID to get its details.",
+        "relevant APIs": [],
+        "query_id": 6
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Transportation",
+                "tool_name": "irail",
+                "api_name": "liveboard",
+                "api_description": "Retrieve real-time information on arriving and departing trains for a specific station.",
+                "required_parameters": [
+                    {
+                        "name": "station",
+                        "type": "STRING",
+                        "description": "The name of the station to query.",
+                        "default": "Antwerp-Central"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "The id of the station, used as an alternative to the station name.",
+                        "default": ""
+                    },
+                    {
+                        "name": "arrdep",
+                        "type": "ENUM",
+                        "description": "Whether the results should show arrivals or departures.",
+                        "default": "departure",
+                        "choices": [
+                            "departure",
+                            "arrival"
+                        ]
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "time",
+                        "type": "STRING",
+                        "description": "The time to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The response format.",
+                        "default": "json",
+                        "choices": [
+                            "xml",
+                            "json",
+                            "jsonp"
+                        ]
+                    },
+                    {
+                        "name": "lang",
+                        "type": "ENUM",
+                        "description": "The language of the response.",
+                        "default": "en",
+                        "choices": [
+                            "nl",
+                            "fr",
+                            "en",
+                            "de"
+                        ]
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Whether or not to include alerts about the trains.",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "version": "str",
+                    "timestamp": "int",
+                    "station": "str",
+                    "stationinfo": {
+                        "id": "str",
+                        "@id": "str",
+                        "locationX": "float",
+                        "locationY": "float",
+                        "standardname": "str",
+                        "name": "str"
+                    },
+                    "departures": {
+                        "number": "int",
+                        "departure": [
+                            {
+                                "id": "int",
+                                "delay": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "vehicle": "str",
+                                "vehicleinfo": {
+                                    "name": "str",
+                                    "shortname": "str",
+                                    "@id": "str"
+                                },
+                                "platform": "int",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "canceled": "int",
+                                "left": "int",
+                                "departureConnection": "str",
+                                "occupancy": {
+                                    "@id": "str",
+                                    "name": "str"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "I need the liveboard details for Antwerp Central station.",
+        "relevant APIs": [],
+        "query_id": 7
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_astro_forecast",
+                "api_description": "Get the 3-day astronomical weather forecast",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location",
+                        "default": 113.17
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location",
+                        "default": 23.09
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "output",
+                        "type": "ENUM",
+                        "description": "Output format (xml or json)",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "product": "astro",
+                    "init": "str",
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "lifted_index": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "str",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_civil_forecast",
+                "api_description": "Get the 8-day civil weather forecast",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location",
+                        "default": 113.17
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location",
+                        "default": 23.09
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "output",
+                        "type": "ENUM",
+                        "description": "Output format (xml or json)",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "product": "civil",
+                    "init": "str",
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "lifted_index": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "str",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "str",
+                            "prec_amount": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I need the 3-day astronomical weather forecast and the 8-day civil weather forecast for the location with longitude 113.17 and latitude 23.09. Please provide detailed information about cloud cover, temperature, wind, and precipitation.",
+        "relevant APIs": [],
+        "query_id": 8
+    }
+]

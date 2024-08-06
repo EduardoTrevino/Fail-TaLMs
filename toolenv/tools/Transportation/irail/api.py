@@ -1,5 +1,5 @@
 import requests
-from typing import Optional, Dict
+from typing import Optional
 
 def liveboard(station: str, id: Optional[str] = None, arrdep: Optional[str] = "departure",
               date: Optional[str] = None, time: Optional[str] = None, format: Optional[str] = "json",
@@ -25,7 +25,6 @@ def liveboard(station: str, id: Optional[str] = None, arrdep: Optional[str] = "d
     except:
         observation = response.text
     return observation
-
 
 def connections(from_station: str, to_station: str, timesel: Optional[str] = "departure", typeOfTransport: Optional[str] = "automatic",
                 alerts: Optional[bool] = False, results: Optional[int] = 6, time: Optional[str] = None, date: Optional[str] = None,
