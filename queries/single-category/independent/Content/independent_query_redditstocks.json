@@ -1,0 +1,42 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "redditstocks",
+        "api_name": "topstocks",
+        "api_description": "Retrieve the top stocks discussed on Wallstreetbets.",
+        "required_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The number of top stocks to retrieve.",
+            "default": 10
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "timeframe",
+            "type": "STRING",
+            "description": "The timeframe for the data (e.g., 'day', 'week', 'month').",
+            "default": "day"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "stocks": [
+            {
+              "ticker": "str",
+              "mentions": "int",
+              "sentiment_score": "float",
+              "price": "float"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What are the top 10 stocks discussed on Wallstreetbets today?",
+    "relevant APIs": ["redditstocks.topstocks"],
+    "query_id": 1
+  }
+]

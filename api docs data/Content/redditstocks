@@ -1,0 +1,58 @@
+Reddit APIs
+Get top 50 stocks discussed on Reddit subeddit - Wallstreetbets
+
+curl -XGET 'https://tradestie.com/api/v1/apps/reddit'
+
+You would get following JSON response...
+
+[
+{
+"no_of_comments": 179,
+"sentiment": "Bullish",
+"sentiment_score": 0.13,
+"ticker": "GME"
+},
+{
+"no_of_comments": 37,
+"sentiment": "Bullish",
+"sentiment_score": 0.159,
+"ticker": "AMC"
+},
+{
+"no_of_comments": 17,
+"sentiment": "Bullish",
+"sentiment_score": 0.22,
+"ticker": "PLTR"
+},
+...
+]
+
+To find the stocks discussed by date. specify date paraemeter...
+
+curl -XGET 'https://tradestie.com/api/v1/apps/reddit?date=2022-04-03'
+
+Note - The list gets updated every 15 mins. Every 15 minutes, algorithm takes in to account all the comments till that point of time and re-calculates the sentiment. The sentiment reflects the daily sentiment.
+
+TTM Squeeze Stocks Scanner Api
+This Api returns stocks which are in TTM Squeeze or out of Squeeze
+
+curl -XGET 'https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date=2022-11-18'
+
+    		[
+    			{
+    				'date': 'Fri, 18 Nov 2022 00:00:00 GMT',
+    				'in_squeeze': False,
+    				'no_of_days_in_squeeze': 0,
+    				'no_of_days_out_of_squeeze': 2,
+    				'out_of_squeeze': True,
+    				'ticker': 'AA'
+    			}
+    			...
+    		]
+
+
+Change the date to find the stocks for a different date.
+
+curl -XGET 'https://tradestie.com/api/v1/apps/ttm-squeeze-stocks?date=2022-11-17'
+
+Note - The list gets updated every day around 6pm EST

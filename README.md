@@ -35,7 +35,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Mediawiki                        | 2         | :x:        | TBD      |
 | Content          | Open Library                     | 2         | :x:        | TBD      |
 | Content          | Reddit                           | 0         | :x:        | TBD      |
-| Content          | Reddit Stocks                    | 0         | :x:        | TBD      |
+| Content          | Reddit Stocks                    | 2         | :x:        | TBD      |
 | Content          | Rick and Morty                   | 0         | :x:        | TBD      |
 | Content          | STAPI                            | 0         | :x:        | TBD      |
 | Content          | SWAPI                            | 0         | :x:        | TBD      |
