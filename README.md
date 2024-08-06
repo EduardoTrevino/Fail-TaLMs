@@ -36,7 +36,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Open Library                     | 2         | :x:        | TBD      |
 | Content          | Reddit                           | 0         | :x:        | TBD      |
 | Content          | Reddit Stocks                    | 2         | :x:        | TBD      |
-| Content          | Rick and Morty                   | 0         | :x:        | TBD      |
+| Content          | Rick and Morty                   | 2         | :x:        | TBD      |
 | Content          | STAPI                            | 0         | :x:        | TBD      |
 | Content          | SWAPI                            | 0         | :x:        | TBD      |
 | Content          | The Rosary                       | 0         | :x:        | TBD      |
