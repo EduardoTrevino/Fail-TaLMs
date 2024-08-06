@@ -2,1094 +2,6 @@
     {
         "api_list": [
             {
-                "category_name": "FakeData",
-                "tool_name": "uuidandguidgen",
-                "api_name": "generate_v1",
-                "api_description": "Generate Version-1 UUIDs",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "count",
-                        "type": "INTEGER",
-                        "description": "Number of UUIDs to generate (up to 100)",
-                        "default": 1
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        "uuid_string"
-                    ]
-                }
-            }
-        ],
-        "query": "Generate 5 version-1 UUIDs for me.",
-        "relevant APIs": [],
-        "query_id": 1
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "FakeData",
-                "tool_name": "randomuser",
-                "api_name": "get_user",
-                "api_description": "Generate a random user",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "results",
-                        "type": "INT",
-                        "description": "Number of users to generate",
-                        "default": 1
-                    },
-                    {
-                        "name": "gender",
-                        "type": "STRING",
-                        "description": "Filter results by gender",
-                        "default": ""
-                    },
-                    {
-                        "name": "nat",
-                        "type": "STRING",
-                        "description": "Filter results by nationality",
-                        "default": ""
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        {
-                            "gender": "str",
-                            "name": {
-                                "title": "str",
-                                "first": "str",
-                                "last": "str"
-                            },
-                            "location": {
-                                "street": {
-                                    "number": "int",
-                                    "name": "str"
-                                },
-                                "city": "str",
-                                "state": "str",
-                                "country": "str",
-                                "postcode": "str",
-                                "coordinates": {
-                                    "latitude": "str",
-                                    "longitude": "str"
-                                },
-                                "timezone": {
-                                    "offset": "str",
-                                    "description": "str"
-                                }
-                            },
-                            "email": "str",
-                            "login": {
-                                "uuid": "str",
-                                "username": "str",
-                                "password": "str",
-                                "salt": "str",
-                                "md5": "str",
-                                "sha1": "str",
-                                "sha256": "str"
-                            },
-                            "dob": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "registered": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "phone": "str",
-                            "cell": "str",
-                            "id": {
-                                "name": "str",
-                                "value": "str"
-                            },
-                            "picture": {
-                                "large": "str",
-                                "medium": "str",
-                                "thumbnail": "str"
-                            },
-                            "nat": "str"
-                        }
-                    ],
-                    "info": {
-                        "seed": "str",
-                        "results": "int",
-                        "page": "int",
-                        "version": "str"
-                    }
-                }
-            },
-            {
-                "category_name": "FakeData",
-                "tool_name": "randomuser",
-                "api_name": "get_multiple_users",
-                "api_description": "Generate multiple random users",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "results",
-                        "type": "INT",
-                        "description": "Number of users to generate",
-                        "default": 10
-                    },
-                    {
-                        "name": "gender",
-                        "type": "STRING",
-                        "description": "Filter results by gender",
-                        "default": ""
-                    },
-                    {
-                        "name": "nat",
-                        "type": "STRING",
-                        "description": "Filter results by nationality",
-                        "default": ""
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        {
-                            "gender": "str",
-                            "name": {
-                                "title": "str",
-                                "first": "str",
-                                "last": "str"
-                            },
-                            "location": {
-                                "street": {
-                                    "number": "int",
-                                    "name": "str"
-                                },
-                                "city": "str",
-                                "state": "str",
-                                "country": "str",
-                                "postcode": "str",
-                                "coordinates": {
-                                    "latitude": "str",
-                                    "longitude": "str"
-                                },
-                                "timezone": {
-                                    "offset": "str",
-                                    "description": "str"
-                                }
-                            },
-                            "email": "str",
-                            "login": {
-                                "uuid": "str",
-                                "username": "str",
-                                "password": "str",
-                                "salt": "str",
-                                "md5": "str",
-                                "sha1": "str",
-                                "sha256": "str"
-                            },
-                            "dob": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "registered": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "phone": "str",
-                            "cell": "str",
-                            "id": {
-                                "name": "str",
-                                "value": "str"
-                            },
-                            "picture": {
-                                "large": "str",
-                                "medium": "str",
-                                "thumbnail": "str"
-                            },
-                            "nat": "str"
-                        }
-                    ],
-                    "info": {
-                        "seed": "str",
-                        "results": "int",
-                        "page": "int",
-                        "version": "str"
-                    }
-                }
-            }
-        ],
-        "query": "Generate a random user and also provide a list of 5 other random users from the same nationality as the generated user.",
-        "relevant APIs": [],
-        "query_id": 2
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Transportation",
-                "tool_name": "irail",
-                "api_name": "connections",
-                "api_description": "Get routes between two stations, including real-time data on delays.",
-                "required_parameters": [
-                    {
-                        "name": "from",
-                        "type": "STRING",
-                        "description": "The name or id of the station of departure.",
-                        "default": "Antwerp-Central"
-                    },
-                    {
-                        "name": "to",
-                        "type": "STRING",
-                        "description": "The name or id of the destination.",
-                        "default": "Brussels"
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "timesel",
-                        "type": "ENUM",
-                        "description": "Whether the results should show arrivals or departures.",
-                        "default": "departure",
-                        "choices": [
-                            "departure",
-                            "arrival"
-                        ]
-                    },
-                    {
-                        "name": "typeOfTransport",
-                        "type": "ENUM",
-                        "description": "The types of transport to include in the search.",
-                        "default": "automatic",
-                        "choices": [
-                            "automatic",
-                            "trains",
-                            "nointernationaltrains",
-                            "all"
-                        ]
-                    },
-                    {
-                        "name": "alerts",
-                        "type": "BOOLEAN",
-                        "description": "Whether or not to include alerts about the route.",
-                        "default": "false"
-                    },
-                    {
-                        "name": "results",
-                        "type": "NUMBER",
-                        "description": "The number of results to return.",
-                        "default": 6
-                    },
-                    {
-                        "name": "time",
-                        "type": "STRING",
-                        "description": "The time to query.",
-                        "default": ""
-                    },
-                    {
-                        "name": "date",
-                        "type": "STRING",
-                        "description": "The date to query.",
-                        "default": ""
-                    },
-                    {
-                        "name": "format",
-                        "type": "ENUM",
-                        "description": "The response format.",
-                        "default": "json",
-                        "choices": [
-                            "xml",
-                            "json",
-                            "jsonp"
-                        ]
-                    },
-                    {
-                        "name": "lang",
-                        "type": "ENUM",
-                        "description": "The language of the response.",
-                        "default": "en",
-                        "choices": [
-                            "nl",
-                            "fr",
-                            "en",
-                            "de"
-                        ]
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "version": "str",
-                    "timestamp": "int",
-                    "connection": [
-                        {
-                            "id": "int",
-                            "departure": {
-                                "delay": "int",
-                                "station": "str",
-                                "stationinfo": {
-                                    "id": "str",
-                                    "@id": "str",
-                                    "locationX": "float",
-                                    "locationY": "float",
-                                    "standardname": "str",
-                                    "name": "str"
-                                },
-                                "time": "int",
-                                "vehicle": "str",
-                                "vehicleinfo": {
-                                    "name": "str",
-                                    "shortname": "str",
-                                    "@id": "str"
-                                },
-                                "platform": "str",
-                                "platforminfo": {
-                                    "name": "str",
-                                    "normal": "str"
-                                },
-                                "left": "int",
-                                "canceled": "int",
-                                "direction": {
-                                    "name": "str"
-                                },
-                                "stops": {
-                                    "number": "int",
-                                    "stop": [
-                                        {
-                                            "id": "int",
-                                            "station": "str",
-                                            "stationinfo": {
-                                                "id": "str",
-                                                "@id": "str",
-                                                "locationX": "float",
-                                                "locationY": "float",
-                                                "standardname": "str",
-                                                "name": "str"
-                                            },
-                                            "time": "int",
-                                            "delay": "int",
-                                            "canceled": "int",
-                                            "departureDelay": "int",
-                                            "departureCanceled": "int",
-                                            "scheduledDepartureTime": "int",
-                                            "arrivalDelay": "int",
-                                            "arrivalCanceled": "int",
-                                            "isExtraStop": "int",
-                                            "scheduledArrivalTime": "int",
-                                            "departureConnection": "str"
-                                        }
-                                    ]
-                                },
-                                "alerts": {
-                                    "number": "int",
-                                    "alert": [
-                                        {
-                                            "id": "int",
-                                            "header": "str",
-                                            "lead": "str",
-                                            "link": "str",
-                                            "startTime": "int",
-                                            "endTime": "int"
-                                        }
-                                    ]
-                                },
-                                "walking": "int",
-                                "departureConnection": "str"
-                            },
-                            "arrival": {
-                                "delay": "int",
-                                "station": "str",
-                                "stationinfo": {
-                                    "id": "str",
-                                    "@id": "str",
-                                    "locationX": "float",
-                                    "locationY": "float",
-                                    "standardname": "str",
-                                    "name": "str"
-                                },
-                                "time": "int",
-                                "vehicle": "str",
-                                "vehicleinfo": {
-                                    "name": "str",
-                                    "shortname": "str",
-                                    "@id": "str"
-                                },
-                                "platform": "str",
-                                "platforminfo": {
-                                    "name": "str",
-                                    "normal": "str"
-                                },
-                                "arrived": "int",
-                                "canceled": "int",
-                                "walking": "int",
-                                "direction": {
-                                    "name": "str"
-                                }
-                            },
-                            "duration": "int",
-                            "vias": {
-                                "number": "int",
-                                "via": [
-                                    {
-                                        "id": "str",
-                                        "arrival": {
-                                            "time": "int",
-                                            "platform": "str",
-                                            "platforminfo": {
-                                                "name": "str",
-                                                "normal": "str"
-                                            },
-                                            "arrived": "int",
-                                            "delay": "int",
-                                            "canceled": "int",
-                                            "vehicle": "str",
-                                            "walking": "int",
-                                            "direction": {
-                                                "name": "str"
-                                            }
-                                        },
-                                        "departure": {
-                                            "time": "int",
-                                            "platform": "str",
-                                            "platforminfo": {
-                                                "name": "str",
-                                                "normal": "str"
-                                            },
-                                            "left": "int",
-                                            "delay": "int",
-                                            "canceled": "int",
-                                            "departureConnection": "str",
-                                            "vehicle": "str",
-                                            "walking": "int",
-                                            "alerts": {
-                                                "number": "int",
-                                                "alert": [
-                                                    {
-                                                        "id": "int",
-                                                        "header": "str",
-                                                        "lead": "str",
-                                                        "link": "str",
-                                                        "startTime": "int",
-                                                        "endTime": "int"
-                                                    }
-                                                ]
-                                            },
-                                            "direction": {
-                                                "name": "str"
-                                            },
-                                            "stops": {
-                                                "number": "int",
-                                                "stop": [
-                                                    {
-                                                        "id": "int",
-                                                        "station": "str",
-                                                        "stationinfo": {
-                                                            "id": "str",
-                                                            "@id": "str",
-                                                            "locationX": "float",
-                                                            "locationY": "float",
-                                                            "standardname": "str",
-                                                            "name": "str"
-                                                        },
-                                                        "time": "int",
-                                                        "delay": "int",
-                                                        "canceled": "int",
-                                                        "departureDelay": "int",
-                                                        "departureCanceled": "int",
-                                                        "scheduledDepartureTime": "int",
-                                                        "arrivalDelay": "int",
-                                                        "arrivalCanceled": "int",
-                                                        "isExtraStop": "int",
-                                                        "scheduledArrivalTime": "int",
-                                                        "departureConnection": "str"
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "timeBetween": "int",
-                                        "station": "str",
-                                        "stationinfo": {
-                                            "id": "str",
-                                            "@id": "str",
-                                            "locationX": "float",
-                                            "locationY": "float",
-                                            "standardname": "str",
-                                            "name": "str"
-                                        },
-                                        "vehicle": "str",
-                                        "direction": {
-                                            "name": "str"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "category_name": "Transportation",
-                "tool_name": "irail",
-                "api_name": "vehicle",
-                "api_description": "Retrieve information about a vehicle, including stops, occupancy, current location and delays.",
-                "required_parameters": [
-                    {
-                        "name": "id",
-                        "type": "STRING",
-                        "description": "The id of the vehicle (train).",
-                        "default": ""
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "date",
-                        "type": "STRING",
-                        "description": "The date to query.",
-                        "default": ""
-                    },
-                    {
-                        "name": "format",
-                        "type": "ENUM",
-                        "description": "The response format.",
-                        "default": "json",
-                        "choices": [
-                            "xml",
-                            "json",
-                            "jsonp"
-                        ]
-                    },
-                    {
-                        "name": "lang",
-                        "type": "ENUM",
-                        "description": "The language of the response.",
-                        "default": "en",
-                        "choices": [
-                            "nl",
-                            "fr",
-                            "en",
-                            "de"
-                        ]
-                    },
-                    {
-                        "name": "alerts",
-                        "type": "BOOLEAN",
-                        "description": "Whether or not to include alerts about the train.",
-                        "default": "false"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "version": "str",
-                    "timestamp": "int",
-                    "vehicle": "str",
-                    "vehicleinfo": {
-                        "name": "str",
-                        "locationX": "float",
-                        "locationY": "float",
-                        "shortname": "str",
-                        "@id": "str"
-                    },
-                    "stops": {
-                        "number": "int",
-                        "stop": [
-                            {
-                                "id": "int",
-                                "station": "str",
-                                "stationinfo": {
-                                    "id": "str",
-                                    "@id": "str",
-                                    "locationX": "float",
-                                    "locationY": "float",
-                                    "standardname": "str",
-                                    "name": "str"
-                                },
-                                "time": "int",
-                                "delay": "int",
-                                "platform": "str",
-                                "platforminfo": {
-                                    "name": "str",
-                                    "normal": "str"
-                                },
-                                "canceled": "int",
-                                "departureDelay": "int",
-                                "departureCanceled": "int",
-                                "scheduledDepartureTime": "int",
-                                "arrivalDelay": "int",
-                                "arrivalCanceled": "int",
-                                "isExtraStop": "int",
-                                "scheduledArrivalTime": "int",
-                                "departureConnection": "str",
-                                "occupancy": {
-                                    "@id": "str",
-                                    "name": "str"
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
-        "query": "Find the next train connection from Antwerp Central to Brussels, including intermediate stops and real-time delays.",
-        "relevant APIs": [],
-        "query_id": 3
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Weather",
-                "tool_name": "seventimer",
-                "api_name": "get_astro_forecast",
-                "api_description": "Get the 3-day astronomical weather forecast",
-                "required_parameters": [
-                    {
-                        "name": "lon",
-                        "type": "FLOAT",
-                        "description": "Longitude of the location",
-                        "default": 113.17
-                    },
-                    {
-                        "name": "lat",
-                        "type": "FLOAT",
-                        "description": "Latitude of the location",
-                        "default": 23.09
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "output",
-                        "type": "ENUM",
-                        "description": "Output format (xml or json)",
-                        "default": "json"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "product": "astro",
-                    "init": "str",
-                    "dataseries": [
-                        {
-                            "timepoint": "int",
-                            "cloudcover": "int",
-                            "seeing": "int",
-                            "transparency": "int",
-                            "lifted_index": "int",
-                            "rh2m": "int",
-                            "wind10m": {
-                                "direction": "str",
-                                "speed": "int"
-                            },
-                            "temp2m": "int",
-                            "prec_type": "str"
-                        }
-                    ]
-                }
-            }
-        ],
-        "query": "What is the 3-day astronomical weather forecast for the location with longitude 113.17 and latitude 23.09?",
-        "relevant APIs": [],
-        "query_id": 4
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "FakeData",
-                "tool_name": "randomuser",
-                "api_name": "get_user",
-                "api_description": "Generate a random user",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "results",
-                        "type": "INT",
-                        "description": "Number of users to generate",
-                        "default": 1
-                    },
-                    {
-                        "name": "gender",
-                        "type": "STRING",
-                        "description": "Filter results by gender",
-                        "default": ""
-                    },
-                    {
-                        "name": "nat",
-                        "type": "STRING",
-                        "description": "Filter results by nationality",
-                        "default": ""
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        {
-                            "gender": "str",
-                            "name": {
-                                "title": "str",
-                                "first": "str",
-                                "last": "str"
-                            },
-                            "location": {
-                                "street": {
-                                    "number": "int",
-                                    "name": "str"
-                                },
-                                "city": "str",
-                                "state": "str",
-                                "country": "str",
-                                "postcode": "str",
-                                "coordinates": {
-                                    "latitude": "str",
-                                    "longitude": "str"
-                                },
-                                "timezone": {
-                                    "offset": "str",
-                                    "description": "str"
-                                }
-                            },
-                            "email": "str",
-                            "login": {
-                                "uuid": "str",
-                                "username": "str",
-                                "password": "str",
-                                "salt": "str",
-                                "md5": "str",
-                                "sha1": "str",
-                                "sha256": "str"
-                            },
-                            "dob": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "registered": {
-                                "date": "str",
-                                "age": "int"
-                            },
-                            "phone": "str",
-                            "cell": "str",
-                            "id": {
-                                "name": "str",
-                                "value": "str"
-                            },
-                            "picture": {
-                                "large": "str",
-                                "medium": "str",
-                                "thumbnail": "str"
-                            },
-                            "nat": "str"
-                        }
-                    ],
-                    "info": {
-                        "seed": "str",
-                        "results": "int",
-                        "page": "int",
-                        "version": "str"
-                    }
-                }
-            }
-        ],
-        "query": "Generate a random user with details like name, email, and phone number.",
-        "relevant APIs": [],
-        "query_id": 5
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "FakeData",
-                "tool_name": "uuidandguidgen",
-                "api_name": "generate_v3",
-                "api_description": "Generate Version-3 UUIDs",
-                "required_parameters": [
-                    {
-                        "name": "namespace",
-                        "type": "STRING",
-                        "description": "Namespace for the UUID (e.g., ns:url, ns:dns, ns:OID, ns:X500, or UUID)",
-                        "default": "ns:url"
-                    },
-                    {
-                        "name": "name",
-                        "type": "STRING",
-                        "description": "Name for the UUID generation",
-                        "default": "https://www.google.com"
-                    }
-                ],
-                "optional_parameters": [],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        "uuid_string"
-                    ]
-                }
-            },
-            {
-                "category_name": "FakeData",
-                "tool_name": "uuidandguidgen",
-                "api_name": "decode",
-                "api_description": "Decode a UUID to get its details",
-                "required_parameters": [
-                    {
-                        "name": "uuid",
-                        "type": "STRING",
-                        "description": "UUID to decode",
-                        "default": "b01eb720-171a-11ea-b949-73c91bba743d"
-                    }
-                ],
-                "optional_parameters": [],
-                "method": "GET",
-                "template_response": {
-                    "encode": {
-                        "STR": "uuid_string",
-                        "SIV": "numeric_string"
-                    },
-                    "decode": {
-                        "variant": "string",
-                        "version": "string",
-                        "content": {
-                            "time": "timestamp",
-                            "clock": "numeric_string",
-                            "node": "string"
-                        }
-                    }
-                }
-            }
-        ],
-        "query": "Generate a version-3 UUID using the URL 'https://www.example.com' as the namespace and then decode the generated UUID to get its details.",
-        "relevant APIs": [],
-        "query_id": 6
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Transportation",
-                "tool_name": "irail",
-                "api_name": "liveboard",
-                "api_description": "Retrieve real-time information on arriving and departing trains for a specific station.",
-                "required_parameters": [
-                    {
-                        "name": "station",
-                        "type": "STRING",
-                        "description": "The name of the station to query.",
-                        "default": "Antwerp-Central"
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "id",
-                        "type": "STRING",
-                        "description": "The id of the station, used as an alternative to the station name.",
-                        "default": ""
-                    },
-                    {
-                        "name": "arrdep",
-                        "type": "ENUM",
-                        "description": "Whether the results should show arrivals or departures.",
-                        "default": "departure",
-                        "choices": [
-                            "departure",
-                            "arrival"
-                        ]
-                    },
-                    {
-                        "name": "date",
-                        "type": "STRING",
-                        "description": "The date to query.",
-                        "default": ""
-                    },
-                    {
-                        "name": "time",
-                        "type": "STRING",
-                        "description": "The time to query.",
-                        "default": ""
-                    },
-                    {
-                        "name": "format",
-                        "type": "ENUM",
-                        "description": "The response format.",
-                        "default": "json",
-                        "choices": [
-                            "xml",
-                            "json",
-                            "jsonp"
-                        ]
-                    },
-                    {
-                        "name": "lang",
-                        "type": "ENUM",
-                        "description": "The language of the response.",
-                        "default": "en",
-                        "choices": [
-                            "nl",
-                            "fr",
-                            "en",
-                            "de"
-                        ]
-                    },
-                    {
-                        "name": "alerts",
-                        "type": "BOOLEAN",
-                        "description": "Whether or not to include alerts about the trains.",
-                        "default": "false"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "version": "str",
-                    "timestamp": "int",
-                    "station": "str",
-                    "stationinfo": {
-                        "id": "str",
-                        "@id": "str",
-                        "locationX": "float",
-                        "locationY": "float",
-                        "standardname": "str",
-                        "name": "str"
-                    },
-                    "departures": {
-                        "number": "int",
-                        "departure": [
-                            {
-                                "id": "int",
-                                "delay": "int",
-                                "station": "str",
-                                "stationinfo": {
-                                    "id": "str",
-                                    "@id": "str",
-                                    "locationX": "float",
-                                    "locationY": "float",
-                                    "standardname": "str",
-                                    "name": "str"
-                                },
-                                "time": "int",
-                                "vehicle": "str",
-                                "vehicleinfo": {
-                                    "name": "str",
-                                    "shortname": "str",
-                                    "@id": "str"
-                                },
-                                "platform": "int",
-                                "platforminfo": {
-                                    "name": "str",
-                                    "normal": "str"
-                                },
-                                "canceled": "int",
-                                "left": "int",
-                                "departureConnection": "str",
-                                "occupancy": {
-                                    "@id": "str",
-                                    "name": "str"
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
-        "query": "I need the liveboard details for Antwerp Central station.",
-        "relevant APIs": [],
-        "query_id": 7
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Weather",
-                "tool_name": "seventimer",
-                "api_name": "get_astro_forecast",
-                "api_description": "Get the 3-day astronomical weather forecast",
-                "required_parameters": [
-                    {
-                        "name": "lon",
-                        "type": "FLOAT",
-                        "description": "Longitude of the location",
-                        "default": 113.17
-                    },
-                    {
-                        "name": "lat",
-                        "type": "FLOAT",
-                        "description": "Latitude of the location",
-                        "default": 23.09
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "output",
-                        "type": "ENUM",
-                        "description": "Output format (xml or json)",
-                        "default": "json"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "product": "astro",
-                    "init": "str",
-                    "dataseries": [
-                        {
-                            "timepoint": "int",
-                            "cloudcover": "int",
-                            "seeing": "int",
-                            "transparency": "int",
-                            "lifted_index": "int",
-                            "rh2m": "int",
-                            "wind10m": {
-                                "direction": "str",
-                                "speed": "int"
-                            },
-                            "temp2m": "int",
-                            "prec_type": "str"
-                        }
-                    ]
-                }
-            },
-            {
-                "category_name": "Weather",
-                "tool_name": "seventimer",
-                "api_name": "get_civil_forecast",
-                "api_description": "Get the 8-day civil weather forecast",
-                "required_parameters": [
-                    {
-                        "name": "lon",
-                        "type": "FLOAT",
-                        "description": "Longitude of the location",
-                        "default": 113.17
-                    },
-                    {
-                        "name": "lat",
-                        "type": "FLOAT",
-                        "description": "Latitude of the location",
-                        "default": 23.09
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "output",
-                        "type": "ENUM",
-                        "description": "Output format (xml or json)",
-                        "default": "json"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "product": "civil",
-                    "init": "str",
-                    "dataseries": [
-                        {
-                            "timepoint": "int",
-                            "cloudcover": "int",
-                            "lifted_index": "int",
-                            "rh2m": "int",
-                            "wind10m": {
-                                "direction": "str",
-                                "speed": "int"
-                            },
-                            "temp2m": "int",
-                            "prec_type": "str",
-                            "prec_amount": "int"
-                        }
-                    ]
-                }
-            }
-        ],
-        "query": "I need the 3-day astronomical weather forecast and the 8-day civil weather forecast for the location with longitude 113.17 and latitude 23.09. Please provide detailed information about cloud cover, temperature, wind, and precipitation.",
-        "relevant APIs": [],
-        "query_id": 8
-    },
-    {
-        "api_list": [
-            {
                 "category_name": "Content",
                 "tool_name": "rickandmorty",
                 "api_name": "character",
@@ -1282,12 +194,8 @@
             }
         ],
         "query": "I want to know about the episodes where Rick Sanchez appears and also the details of the locations he visits.",
-        "relevant APIs": [
-            "character",
-            "location",
-            "episode"
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 1
     },
     {
         "api_list": [
@@ -1412,9 +320,9 @@
     {
         "api_list": [
             {
-                "category_name": "content",
-                "tool_name": "Crossref",
-                "api_name": "Search Works",
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "search_works",
                 "api_description": "Search for works based on a query.",
                 "required_parameters": [
                     {
@@ -1468,9 +376,9 @@
                 }
             },
             {
-                "category_name": "content",
-                "tool_name": "Crossref",
-                "api_name": "Get Work Metadata",
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "get_work_metadata",
                 "api_description": "Retrieve metadata for a specific work identified by DOI.",
                 "required_parameters": [
                     {
@@ -1514,24 +422,15 @@
             }
         ],
         "query": "Find works related to 'quantum computing' and provide detailed metadata for the first result.",
-        "relevant APIs": [
-            [
-                "content",
-                "Search Works"
-            ],
-            [
-                "content",
-                "Get Work Metadata"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 3
     },
     {
         "api_list": [
             {
-                "category_name": "Data",
+                "category_name": "Content",
                 "tool_name": "swapi",
-                "api_name": "people",
+                "api_name": "get_person_details",
                 "api_description": "Get details of a specific person by ID.",
                 "required_parameters": [
                     {
@@ -1571,9 +470,9 @@
                 }
             },
             {
-                "category_name": "Data",
+                "category_name": "Content",
                 "tool_name": "swapi",
-                "api_name": "films",
+                "api_name": "get_film_details",
                 "api_description": "Get details of a specific film by ID.",
                 "required_parameters": [
                     {
@@ -1615,14 +514,14 @@
         ],
         "query": "Tell me about Luke Skywalker and list all the films he appears in.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 4
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "Final Space API",
-                "api_name": "Single Character",
+                "tool_name": "finalspace",
+                "api_name": "get_single_character",
                 "api_description": "Get details of a single character by ID.",
                 "required_parameters": [
                     {
@@ -1656,7 +555,7 @@
             {
                 "category_name": "Content",
                 "tool_name": "Final Space API",
-                "api_name": "All Episodes",
+                "api_name": "get_all_episodes",
                 "api_description": "Get all episodes from Final Space.",
                 "required_parameters": [],
                 "optional_parameters": [
@@ -1696,17 +595,8 @@
             }
         ],
         "query": "Show me the details of the character Gary Goodspeed and list all episodes.",
-        "relevant_APIs": [
-            [
-                "Final Space API",
-                "Single Character"
-            ],
-            [
-                "Final Space API",
-                "All Episodes"
-            ]
-        ],
-        "query_id": 2
+        "relevant_APIs": [],
+        "query_id": 5
     },
     {
         "api_list": [
@@ -1743,14 +633,14 @@
         ],
         "query": "What is today's rosary prayer and can you give details about the Joyful Mysteries?",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 6
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "IceAndFire",
-                "api_name": "Get Character",
+                "tool_name": "iceandfire",
+                "api_name": "get_character",
                 "api_description": "Retrieve information about a specific character from the Ice and Fire universe",
                 "required_parameters": [
                     {
@@ -1798,7 +688,7 @@
             {
                 "category_name": "Content",
                 "tool_name": "IceAndFire",
-                "api_name": "Get House",
+                "api_name": "get_house",
                 "api_description": "Retrieve information about a specific house from the Ice and Fire universe",
                 "required_parameters": [
                     {
@@ -1841,24 +731,15 @@
             }
         ],
         "query": "Tell me about Petyr Baelish and his house.",
-        "relevant APIs": [
-            [
-                "IceAndFire",
-                "Get Character"
-            ],
-            [
-                "IceAndFire",
-                "Get House"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 7
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "Hacker News API",
-                "api_name": "Get Story by ID",
+                "tool_name": "hackernews",
+                "api_name": "get_story_by_id",
                 "api_description": "Fetch a Hacker News story by its ID.",
                 "required_parameters": [
                     {
@@ -1886,8 +767,8 @@
             },
             {
                 "category_name": "Content",
-                "tool_name": "Hacker News API",
-                "api_name": "Get Comment by ID",
+                "tool_name": "hackernews",
+                "api_name": "get_comment_by_id",
                 "api_description": "Fetch a Hacker News comment by its ID.",
                 "required_parameters": [
                     {
@@ -1913,17 +794,8 @@
             }
         ],
         "query": "Get details of the Hacker News story with ID 8863 and fetch the top-level comments for this story.",
-        "relevant APIs": [
-            [
-                "Hacker News API",
-                "Get Story by ID"
-            ],
-            [
-                "Hacker News API",
-                "Get Comment by ID"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 8
     },
     {
         "api_list": [
@@ -2022,18 +894,15 @@
             }
         ],
         "query": "I want to get the HTML content of the Wikipedia page for 'Pet door' and also retrieve its revision history and categories.",
-        "relevant_apis": [
-            "query",
-            "parse"
-        ],
-        "query_id": 2
+        "relevant_apis": [],
+        "query_id": 9
     },
     {
         "api_list": [
             {
-                "category_name": "Anime",
+                "category_name": "Content",
                 "tool_name": "jikan",
-                "api_name": "getAnimeById",
+                "api_name": "get_anime_by_id",
                 "api_description": "Retrieve information about a specific anime by its MyAnimeList ID.",
                 "required_parameters": [
                     {
@@ -2087,9 +956,9 @@
                 }
             },
             {
-                "category_name": "Anime",
+                "category_name": "Content",
                 "tool_name": "jikan",
-                "api_name": "getAnimeCharacters",
+                "api_name": "get_anime_characters",
                 "api_description": "Retrieve the characters of a specific anime by its MyAnimeList ID.",
                 "required_parameters": [
                     {
@@ -2120,9 +989,9 @@
                 }
             },
             {
-                "category_name": "Anime",
+                "category_name": "Content",
                 "tool_name": "jikan",
-                "api_name": "getAnimeStaff",
+                "api_name": "get_anime_staff",
                 "api_description": "Retrieve the staff of a specific anime by its MyAnimeList ID.",
                 "required_parameters": [
                     {
@@ -2153,14 +1022,14 @@
         ],
         "query": "Give me detailed information about the anime with ID 1, including its characters and staff.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 10
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "CeskaTelevize",
-                "api_name": "Schedule",
+                "tool_name": "ceskatelevize",
+                "api_name": "get_schedule",
                 "api_description": "Fetches the TV schedule for a given date and channel",
                 "required_parameters": [
                     {
@@ -2241,105 +1110,18 @@
                         ]
                     }
                 }
-            },
-            {
-                "category_name": "Content",
-                "tool_name": "CeskaTelevize",
-                "api_name": "Schedule",
-                "api_description": "Fetches the TV schedule for a given date and channel",
-                "required_parameters": [
-                    {
-                        "name": "user",
-                        "type": "STRING",
-                        "description": "User login",
-                        "default": "test"
-                    },
-                    {
-                        "name": "date",
-                        "type": "STRING",
-                        "description": "Date in dd.mm.yyyy format",
-                        "default": "04.08.2024"
-                    },
-                    {
-                        "name": "channel",
-                        "type": "STRING",
-                        "description": "Channel identifier",
-                        "default": "ct2"
-                    }
-                ],
-                "optional_parameters": [],
-                "method": "GET",
-                "template_response": {
-                    "program": {
-                        "datum_vysilani": "str",
-                        "kanal": "str",
-                        "generovano": "str",
-                        "porad": [
-                            {
-                                "link": "str",
-                                "ivysilani": "str",
-                                "vps": "str",
-                                "datum": "str",
-                                "cas": "str",
-                                "nazvy": {
-                                    "nadtitul": "str",
-                                    "nazev": "str",
-                                    "original": "str",
-                                    "nazev_casti": "str"
-                                },
-                                "dil": "str",
-                                "zanr": "str",
-                                "stopaz": "str",
-                                "noticka": "str",
-                                "regionalni": "str",
-                                "alternativa": "str",
-                                "ikony": {
-                                    "zvuk": "str",
-                                    "ad": "int",
-                                    "skryte_titulky": "int",
-                                    "neslysici": "int",
-                                    "live": "int",
-                                    "premiera": "int",
-                                    "cb": "int",
-                                    "hvezdicka": "int",
-                                    "labeling": "str",
-                                    "puvodni_zneni": "int",
-                                    "pomer": "str"
-                                },
-                                "obrazky": {
-                                    "tv_program": "str",
-                                    "nahled": "str"
-                                },
-                                "dostupnost": {
-                                    "stav": "str",
-                                    "od": "str",
-                                    "do": "str"
-                                }
-                            }
-                        ]
-                    }
-                }
             }
         ],
         "query": "What are the schedules for \u010cT1 and \u010cT2 on 04.08.2024, including regional broadcasts for \u010cT1?",
-        "relevant APIs": [
-            [
-                "CeskaTelevize",
-                "Schedule"
-            ],
-            [
-                "CeskaTelevize",
-                "Schedule"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 11
     },
     {
         "api_list": [
             {
-                "category_name": "Encyclopedia",
-                "tool_name": "Anime News Network",
-                "api_name": "Recently Added Anime",
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_recently_added_anime",
                 "api_description": "Fetch a list of recently added anime",
                 "required_parameters": [],
                 "optional_parameters": [
@@ -2368,9 +1150,9 @@
                 }
             },
             {
-                "category_name": "Encyclopedia",
-                "tool_name": "Anime News Network",
-                "api_name": "Anime Details",
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_anime_details",
                 "api_description": "Fetch detailed information about an anime using its ID",
                 "required_parameters": [
                     {
@@ -2417,24 +1199,15 @@
             }
         ],
         "query": "Get a list of recently added anime and detailed information about each anime in the list.",
-        "relevant APIs": [
-            [
-                "Anime News Network",
-                "Recently Added Anime"
-            ],
-            [
-                "Anime News Network",
-                "Anime Details"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 12
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
                 "tool_name": "openlibrary",
-                "api_name": "search",
+                "api_name": "search_books",
                 "api_description": "Search results for books, authors, and more",
                 "required_parameters": [
                     {
@@ -2505,7 +1278,7 @@
             {
                 "category_name": "Content",
                 "tool_name": "openlibrary",
-                "api_name": "authors",
+                "api_name": "get_author_details",
                 "api_description": "Retrieve an author and their works by author identifier",
                 "required_parameters": [
                     {
@@ -2538,7 +1311,7 @@
         ],
         "query": "Find all books related to 'artificial intelligence' and provide details of the author of the most relevant book.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 13
     },
     {
         "api_list": [
@@ -2603,7 +1376,7 @@
         ],
         "query": "What are the details of the next MCU film and the one following it?",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 14
     },
     {
         "api_list": [
@@ -2680,26 +1453,15 @@
             }
         ],
         "query": "Can you show me the details of post with ID 10 and its comments?",
-        "relevant APIs": [
-            {
-                "category_name": "Content",
-                "tool_name": "wordpress",
-                "api_name": "retrieve_post"
-            },
-            {
-                "category_name": "Content",
-                "tool_name": "wordpress",
-                "api_name": "list_comments"
-            }
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 15
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "Chronicling America",
-                "api_name": "Search Titles",
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_titles",
                 "api_description": "Search the directory of newspaper titles using OpenSearch.",
                 "required_parameters": [
                     {
@@ -2735,8 +1497,8 @@
             },
             {
                 "category_name": "Content",
-                "tool_name": "Chronicling America",
-                "api_name": "Search Pages",
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_pages",
                 "api_description": "Search digitized newspaper pages using OpenSearch.",
                 "required_parameters": [
                     {
@@ -2773,15 +1535,8 @@
             }
         ],
         "query": "Find all newspaper titles and their first pages mentioning 'Thomas' from Michigan.",
-        "relevant APIs": [
-            [
-                "Search Titles"
-            ],
-            [
-                "Search Pages"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 16
     },
     {
         "api_list": [
@@ -2848,18 +1603,15 @@
             }
         ],
         "query": "Can you provide the top 5 stocks discussed on Wallstreetbets this week and detailed information about each stock?",
-        "relevant APIs": [
-            "redditstocks.topstocks",
-            "redditstocks.stockdetails"
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 17
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
                 "tool_name": "4chan",
-                "api_name": "Thread List",
+                "api_name": "get_thread_list",
                 "api_description": "List of all threads on a board with their attributes.",
                 "required_parameters": [
                     {
@@ -2885,7 +1637,7 @@
             {
                 "category_name": "Content",
                 "tool_name": "4chan",
-                "api_name": "Thread",
+                "api_name": "get_thread",
                 "api_description": "Retrieve the full content of a specific thread.",
                 "required_parameters": [
                     {
@@ -2949,17 +1701,8 @@
             }
         ],
         "query": "Get a list of all threads on the 'po' board and retrieve the full content of the most recent thread.",
-        "relevant APIs": [
-            [
-                "4chan",
-                "Thread List"
-            ],
-            [
-                "4chan",
-                "Thread"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 18
     },
     {
         "api_list": [
@@ -3015,14 +1758,14 @@
         ],
         "query": "What is the 3-day astronomical weather forecast for the location with longitude 113.17 and latitude 23.09?",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 19
     },
     {
         "api_list": [
             {
                 "category_name": "Colors",
                 "tool_name": "Colourlovers API",
-                "api_name": "Top Colors",
+                "api_name": "top_colors",
                 "api_description": "Fetch top colors based on specific parameters",
                 "required_parameters": [],
                 "optional_parameters": [
@@ -3118,7 +1861,7 @@
             {
                 "category_name": "Patterns",
                 "tool_name": "Colourlovers API",
-                "api_name": "Top Patterns",
+                "api_name": "top_patterns",
                 "api_description": "Fetch top patterns based on specific parameters",
                 "required_parameters": [],
                 "optional_parameters": [
@@ -3210,24 +1953,15 @@
             }
         ],
         "query": "I want to see the top colors and patterns created by the user 'COLOURlover' with a hue range between 12 and 68 and keywords related to 'nature'.",
-        "relevant APIs": [
-            [
-                "Colours API",
-                "Top Colors"
-            ],
-            [
-                "Patterns API",
-                "Top Patterns"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 20
     },
     {
         "api_list": [
             {
-                "category_name": "Image Compression",
-                "tool_name": "resmush.it",
-                "api_name": "Compress Image",
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image",
                 "api_description": "Compress an image using resmush.it API",
                 "required_parameters": [
                     {
@@ -3264,9 +1998,9 @@
                 }
             },
             {
-                "category_name": "Image Compression",
-                "tool_name": "resmush.it",
-                "api_name": "Check Error",
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "check_error",
                 "api_description": "Check the error log of the compressed image",
                 "required_parameters": [
                     {
@@ -3285,24 +2019,15 @@
             }
         ],
         "query": "How can I compress an image and check for any errors using resmush.it API?",
-        "relevant APIs": [
-            [
-                "resmush.it",
-                "Compress Image"
-            ],
-            [
-                "resmush.it",
-                "Check Error"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 21
     },
     {
         "api_list": [
             {
                 "category_name": "Art",
-                "tool_name": "Metropolitan Museum of Art Collection",
-                "api_name": "Search",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
                 "api_description": "Search for objects in the Met's collection",
                 "required_parameters": [
                     {
@@ -3330,8 +2055,8 @@
             },
             {
                 "category_name": "Art",
-                "tool_name": "Metropolitan Museum of Art Collection",
-                "api_name": "Object",
+                "tool_name": "metmuseum",
+                "api_name": "get_object",
                 "api_description": "Get detailed information about an object",
                 "required_parameters": [
                     {
@@ -3431,24 +2156,117 @@
             }
         ],
         "query": "I want to find Impressionist paintings in the European Paintings department and get detailed information about the first result.",
-        "relevant APIs": [
-            [
-                "Metropolitan Museum of Art Collection",
-                "Search"
-            ],
-            [
-                "Metropolitan Museum of Art Collection",
-                "Object"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 22
     },
     {
         "api_list": [
             {
-                "category_name": "Images",
-                "tool_name": "Random Dog Image",
-                "api_name": "Display Single Random Image",
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks_search",
+                "api_description": "Search artworks data in the aggregator. Artworks in the groups of essentials are boosted so they'll show up higher in results.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Your search query.",
+                        "default": "monet"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of results to return. Pagination via Elasticsearch conventions.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Used in conjunction with query to sort results.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "agents",
+                "api_description": "A list of all agents sorted by last updated date in descending order.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of resources to return per page.",
+                        "default": "2"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "description": "str",
+                            "birth_date": "int",
+                            "death_date": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find artworks related to Monet and provide details of the artists.",
+        "relevant APIs": [],
+        "query_id": 23
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "random_image",
                 "api_description": "Fetches a single random dog image from the entire collection.",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -3461,13 +2279,8 @@
             }
         ],
         "query": "Show me a random dog image.",
-        "relevant APIs": [
-            [
-                "Random Dog Image",
-                "Display Single Random Image"
-            ]
-        ],
-        "query_id": 101
+        "relevant APIs": [],
+        "query_id": 24
     },
     {
         "api_list": [
@@ -3875,7 +2688,7 @@
         ],
         "query": "Find the next train connection from Antwerp Central to Brussels, including intermediate stops and real-time delays.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 25
     },
     {
         "api_list": [
@@ -3903,7 +2716,7 @@
         ],
         "query": "Generate 5 version-1 UUIDs for me.",
         "relevant APIs": [],
-        "query_id": 101
+        "query_id": 26
     },
     {
         "api_list": [
@@ -4098,14 +2911,14 @@
         ],
         "query": "Generate a random user and also provide a list of 5 other random users from the same nationality as the generated user.",
         "relevant APIs": [],
-        "query_id": 102
+        "query_id": 27
     },
     {
         "api_list": [
             {
                 "category_name": "Calendar",
-                "tool_name": "Nager.Date",
-                "api_name": "PublicHolidays",
+                "tool_name": "nagerdate",
+                "api_name": "get_public_holidays",
                 "api_description": "Get the public holidays for a specific year and country.",
                 "required_parameters": [
                     {
@@ -4143,8 +2956,8 @@
             },
             {
                 "category_name": "Calendar",
-                "tool_name": "Nager.Date",
-                "api_name": "LongWeekend",
+                "tool_name": "nagerdate",
+                "api_name": "get_long_weekends",
                 "api_description": "Get the long weekends for a specific year and country.",
                 "required_parameters": [
                     {
@@ -4175,24 +2988,15 @@
             }
         ],
         "query": "What are the public holidays and long weekends in Austria for the year 2024?",
-        "relevant APIs": [
-            [
-                "Nager.Date",
-                "PublicHolidays"
-            ],
-            [
-                "Nager.Date",
-                "LongWeekend"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 28
     },
     {
         "api_list": [
             {
                 "category_name": "Calendar",
-                "tool_name": "UK Bank Holidays",
-                "api_name": "Bank Holidays",
+                "tool_name": "ukbankholidays",
+                "api_name": "get_bank_holidays",
                 "api_description": "Get all bank holidays in the UK",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -4218,8 +3022,8 @@
             },
             {
                 "category_name": "Calendar",
-                "tool_name": "UK Bank Holidays",
-                "api_name": "Past Bank Holidays",
+                "tool_name": "ukbankholidays",
+                "api_name": "get_past_bank_holidays",
                 "api_description": "Get past bank holidays in the UK",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -4245,24 +3049,15 @@
             }
         ],
         "query": "Can you provide a comparison of upcoming and past bank holidays in the UK for the current year?",
-        "relevant APIs": [
-            [
-                "UK Bank Holidays",
-                "Bank Holidays"
-            ],
-            [
-                "UK Bank Holidays",
-                "Past Bank Holidays"
-            ]
-        ],
-        "query_id": 2
+        "relevant APIs": [],
+        "query_id": 29
     },
     {
         "api_list": [
             {
-                "category_name": "Anime",
+                "category_name": "Contnet",
                 "tool_name": "jikan",
-                "api_name": "getAnimeById",
+                "api_name": "get_anime_by_id",
                 "api_description": "Retrieve information about a specific anime by its MyAnimeList ID.",
                 "required_parameters": [
                     {
@@ -4318,14 +3113,14 @@
         ],
         "query": "Tell me about the anime with ID 1.",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 30
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "Hacker News API",
-                "api_name": "Get Story by ID",
+                "tool_name": "hackernews",
+                "api_name": "get_story_by_id",
                 "api_description": "Fetch a Hacker News story by its ID.",
                 "required_parameters": [
                     {
@@ -4353,20 +3148,15 @@
             }
         ],
         "query": "Get details of the Hacker News story with ID 8863.",
-        "relevant APIs": [
-            [
-                "Hacker News API",
-                "Get Story by ID"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 31
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "IceAndFire",
-                "api_name": "Get Character",
+                "tool_name": "iceandfire",
+                "api_name": "get_character",
                 "api_description": "Retrieve information about a specific character from the Ice and Fire universe",
                 "required_parameters": [
                     {
@@ -4413,20 +3203,15 @@
             }
         ],
         "query": "Who is Jon Snow?",
-        "relevant APIs": [
-            [
-                "IceAndFire",
-                "Get Character"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 32
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "CeskaTelevize",
-                "api_name": "Schedule",
+                "tool_name": "ceskatelevize",
+                "api_name": "get_schedule",
                 "api_description": "Fetches the TV schedule for a given date and channel",
                 "required_parameters": [
                     {
@@ -4510,20 +3295,15 @@
             }
         ],
         "query": "What is the schedule for \u010cT1 on 04.08.2024?",
-        "relevant APIs": [
-            [
-                "CeskaTelevize",
-                "Schedule"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 33
     },
     {
         "api_list": [
             {
-                "category_name": "Data",
+                "category_name": "Content",
                 "tool_name": "swapi",
-                "api_name": "planets",
+                "api_name": "get_all_planets",
                 "api_description": "Get all planets.",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -4559,14 +3339,14 @@
         ],
         "query": "Show me all planets in the Star Wars universe.",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 34
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
                 "tool_name": "openlibrary",
-                "api_name": "search",
+                "api_name": "search_books",
                 "api_description": "Search results for books, authors, and more",
                 "required_parameters": [
                     {
@@ -4637,7 +3417,7 @@
         ],
         "query": "Find all books related to 'artificial intelligence'.",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 35
     },
     {
         "api_list": [
@@ -4676,17 +3456,15 @@
             }
         ],
         "query": "What are the top 10 stocks discussed on Wallstreetbets today?",
-        "relevant APIs": [
-            "redditstocks.topstocks"
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 36
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
-                "tool_name": "Chronicling America",
-                "api_name": "Search Titles",
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_titles",
                 "api_description": "Search the directory of newspaper titles using OpenSearch.",
                 "required_parameters": [
                     {
@@ -4722,19 +3500,68 @@
             }
         ],
         "query": "Find newspapers that mention 'Michigan'.",
-        "relevant APIs": [
-            [
-                "Search Titles"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 37
     },
     {
         "api_list": [
             {
-                "category_name": "content",
-                "tool_name": "Crossref",
-                "api_name": "Get Work Metadata",
+                "category_name": "Content",
+                "tool_name": "finalspace",
+                "api_name": "get_all_characters",
+                "api_description": "Get all characters from Final Space.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "ENUM",
+                        "description": "Sort the characters by ID",
+                        "default": "asc",
+                        "values": [
+                            "asc",
+                            "desc"
+                        ]
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of characters returned",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "id": "int",
+                            "name": "string",
+                            "status": "string",
+                            "species": "string",
+                            "gender": "string",
+                            "hair": "string",
+                            "origin": "string",
+                            "abilities": [
+                                "array of strings"
+                            ],
+                            "alias": [
+                                "array of strings"
+                            ],
+                            "img_url": "string (url)"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Show me all the characters from Final Space.",
+        "relevant_APIs": [],
+        "query_id": 38
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "get_work_metadata",
                 "api_description": "Retrieve metadata for a specific work identified by DOI.",
                 "required_parameters": [
                     {
@@ -4778,13 +3605,8 @@
             }
         ],
         "query": "What is the metadata for the work with DOI 10.1038/nphys1170?",
-        "relevant APIs": [
-            [
-                "content",
-                "Get Work Metadata"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 39
     },
     {
         "api_list": [
@@ -4862,7 +3684,7 @@
         ],
         "query": "Find the show 'Breaking Bad'.",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 40
     },
     {
         "api_list": [
@@ -4886,7 +3708,7 @@
         ],
         "query": "What is today's rosary prayer?",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 41
     },
     {
         "api_list": [
@@ -4926,7 +3748,7 @@
         ],
         "query": "When is the next MCU film releasing?",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 42
     },
     {
         "api_list": [
@@ -4978,72 +3800,8 @@
             }
         ],
         "query": "Can you show me the latest posts?",
-        "relevant APIs": [
-            {
-                "category_name": "Content",
-                "tool_name": "wordpress",
-                "api_name": "list_posts"
-            }
-        ],
-        "query_id": 1
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Content",
-                "tool_name": "Final Space API",
-                "api_name": "All Characters",
-                "api_description": "Get all characters from Final Space.",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "sort",
-                        "type": "ENUM",
-                        "description": "Sort the characters by ID",
-                        "default": "asc",
-                        "values": [
-                            "asc",
-                            "desc"
-                        ]
-                    },
-                    {
-                        "name": "limit",
-                        "type": "INTEGER",
-                        "description": "Limit the number of characters returned",
-                        "default": null
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "results": [
-                        {
-                            "id": "int",
-                            "name": "string",
-                            "status": "string",
-                            "species": "string",
-                            "gender": "string",
-                            "hair": "string",
-                            "origin": "string",
-                            "abilities": [
-                                "array of strings"
-                            ],
-                            "alias": [
-                                "array of strings"
-                            ],
-                            "img_url": "string (url)"
-                        }
-                    ]
-                }
-            }
-        ],
-        "query": "Show me all the characters from Final Space.",
-        "relevant_APIs": [
-            [
-                "Final Space API",
-                "All Characters"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 43
     },
     {
         "api_list": [
@@ -5134,17 +3892,15 @@
             }
         ],
         "query": "I want to know the details of Rick Sanchez from the Rick and Morty series.",
-        "relevant APIs": [
-            "character"
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 44
     },
     {
         "api_list": [
             {
                 "category_name": "Content",
                 "tool_name": "4chan",
-                "api_name": "Boards",
+                "api_name": "get_boards",
                 "api_description": "List of all boards and their attributes.",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -5191,13 +3947,8 @@
             }
         ],
         "query": "List all boards and their attributes.",
-        "relevant APIs": [
-            [
-                "4chan",
-                "Boards"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 45
     },
     {
         "api_list": [
@@ -5241,17 +3992,15 @@
             }
         ],
         "query": "I want to get the HTML content of the Wikipedia page for 'Pet door'.",
-        "relevant_apis": [
-            "parse"
-        ],
-        "query_id": 1
+        "relevant_apis": [],
+        "query_id": 46
     },
     {
         "api_list": [
             {
-                "category_name": "Encyclopedia",
-                "tool_name": "Anime News Network",
-                "api_name": "Anime Details",
+                "category_name": "Contnet",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_anime_details",
                 "api_description": "Fetch detailed information about an anime using its ID",
                 "required_parameters": [
                     {
@@ -5298,13 +4047,8 @@
             }
         ],
         "query": "Get the details of an anime by its ID.",
-        "relevant APIs": [
-            [
-                "Anime News Network",
-                "Anime Details"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 47
     },
     {
         "api_list": [
@@ -5408,14 +4152,14 @@
         ],
         "query": "I need the 3-day astronomical weather forecast and the 8-day civil weather forecast for the location with longitude 113.17 and latitude 23.09. Please provide detailed information about cloud cover, temperature, wind, and precipitation.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 48
     },
     {
         "api_list": [
             {
                 "category_name": "Art",
-                "tool_name": "Metropolitan Museum of Art Collection",
-                "api_name": "Search",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
                 "api_description": "Search for objects in the Met's collection",
                 "required_parameters": [
                     {
@@ -5443,20 +4187,70 @@
             }
         ],
         "query": "I want to see artworks related to sunflowers that have images.",
-        "relevant APIs": [
-            [
-                "Metropolitan Museum of Art Collection",
-                "Search"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 49
     },
     {
         "api_list": [
             {
-                "category_name": "Image Compression",
-                "tool_name": "resmush.it",
-                "api_name": "Compress Image",
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks",
+                "api_description": "A list of all artworks sorted by last updated date in descending order.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of resources to return per page.",
+                        "default": "2"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Show me the latest updated artworks from the Art Institute of Chicago.",
+        "relevant APIs": [],
+        "query_id": 50
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image",
                 "api_description": "Compress an image using resmush.it API",
                 "required_parameters": [
                     {
@@ -5494,20 +4288,15 @@
             }
         ],
         "query": "How can I compress an image using resmush.it API?",
-        "relevant APIs": [
-            [
-                "resmush.it",
-                "Compress Image"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 51
     },
     {
         "api_list": [
             {
                 "category_name": "Colors",
                 "tool_name": "Colourlovers API",
-                "api_name": "Top Colors",
+                "api_name": "top_colors",
                 "api_description": "Fetch top colors based on specific parameters",
                 "required_parameters": [],
                 "optional_parameters": [
@@ -5608,14 +4397,14 @@
                 "Top Colors"
             ]
         ],
-        "query_id": 1
+        "query_id": 52
     },
     {
         "api_list": [
             {
-                "category_name": "Data",
-                "tool_name": "List Breeds",
-                "api_name": "List All Breeds",
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "list_all_breeds",
                 "api_description": "Fetches a list of all dog breeds.",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -5868,9 +4657,9 @@
                 }
             },
             {
-                "category_name": "Images",
-                "tool_name": "Random Dog Image by Breed",
-                "api_name": "Display Multiple Random Images by Breed",
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "random_image_from_breed",
                 "api_description": "Fetches multiple random dog images from a specified breed collection.",
                 "required_parameters": [
                     {
@@ -5899,71 +4688,8 @@
             }
         ],
         "query": "List all dog breeds and show me three random images of the Akita breed.",
-        "relevant APIs": [
-            [
-                "List Breeds",
-                "List All Breeds"
-            ],
-            [
-                "Random Dog Image by Breed",
-                "Display Multiple Random Images by Breed"
-            ]
-        ],
-        "query_id": 102
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Art",
-                "tool_name": "artchicago",
-                "api_name": "artworks",
-                "api_description": "A list of all artworks sorted by last updated date in descending order.",
-                "required_parameters": [
-                    {
-                        "name": "limit",
-                        "type": "INTEGER",
-                        "description": "The number of resources to return per page",
-                        "default": 2
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "page",
-                        "type": "INTEGER",
-                        "description": "The page of resources to retrieve",
-                        "default": 1
-                    },
-                    {
-                        "name": "fields",
-                        "type": "STRING",
-                        "description": "A comma-separated list of fields to return per resource",
-                        "default": ""
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "data": [
-                        {
-                            "id": "int",
-                            "title": "str",
-                            "artist_display": "str",
-                            "date_display": "str",
-                            "dimensions": "str",
-                            "medium_display": "str",
-                            "image_id": "uuid"
-                        }
-                    ]
-                }
-            }
-        ],
-        "query": "Can you provide a list of the latest artworks from the Art Institute of Chicago?",
-        "relevant APIs": [
-            [
-                "artchicago",
-                "artworks"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 53
     },
     {
         "api_list": [
@@ -6094,7 +4820,7 @@
         ],
         "query": "I need the liveboard details for Antwerp Central station.",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 54
     },
     {
         "api_list": [
@@ -6195,7 +4921,7 @@
         ],
         "query": "Generate a random user with details like name, email, and phone number.",
         "relevant APIs": [],
-        "query_id": 101
+        "query_id": 55
     },
     {
         "api_list": [
@@ -6260,14 +4986,14 @@
         ],
         "query": "Generate a version-3 UUID using the URL 'https://www.example.com' as the namespace and then decode the generated UUID to get its details.",
         "relevant APIs": [],
-        "query_id": 102
+        "query_id": 56
     },
     {
         "api_list": [
             {
                 "category_name": "Calendar",
-                "tool_name": "Nager.Date",
-                "api_name": "PublicHolidays",
+                "tool_name": "nagerdate",
+                "api_name": "get_public_holidays",
                 "api_description": "Get the public holidays for a specific year and country.",
                 "required_parameters": [
                     {
@@ -6305,20 +5031,15 @@
             }
         ],
         "query": "What are the public holidays in Austria for the year 2024?",
-        "relevant APIs": [
-            [
-                "Nager.Date",
-                "PublicHolidays"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 57
     },
     {
         "api_list": [
             {
                 "category_name": "Calendar",
-                "tool_name": "UK Bank Holidays",
-                "api_name": "Bank Holidays",
+                "tool_name": "ukbankholidays",
+                "api_name": "get_bank_holidays",
                 "api_description": "Get all bank holidays in the UK",
                 "required_parameters": [],
                 "optional_parameters": [],
@@ -6344,12 +5065,7 @@
             }
         ],
         "query": "What are the upcoming bank holidays in the UK?",
-        "relevant APIs": [
-            [
-                "UK Bank Holidays",
-                "Bank Holidays"
-            ]
-        ],
-        "query_id": 1
+        "relevant APIs": [],
+        "query_id": 58
     }
 ]
