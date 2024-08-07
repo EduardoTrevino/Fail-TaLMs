@@ -1,0 +1,4107 @@
+Get all capsules
+Method : GET
+
+URL : https://api.spacexdata.com/v4/capsules
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "reuse_count": 1,
+        "water_landings": 1,
+        "land_landings": 0,
+        "last_update": "Reentered after three weeks in orbit",
+        "launches": [
+            "5eb87cdeffd86e000604b330"
+        ],
+        "serial": "C101",
+        "status": "retired",
+        "type": "Dragon 1.0",
+        "id": "5e9e2c5bf35918ed873b2664"
+    },
+    ...
+]
+Get one capsule
+Method : GET
+
+URL : https://api.spacexdata.com/v4/capsules/:id
+
+URL Parameters : id=[string] where id is the ID of the capsule
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "reuse_count": 1,
+    "water_landings": 1,
+    "land_landings": 0,
+    "last_update": "Reentered after three weeks in orbit",
+    "launches": [
+        "5eb87cdeffd86e000604b330"
+    ],
+    "serial": "C101",
+    "status": "retired",
+    "type": "Dragon 1.0",
+    "id": "5e9e2c5bf35918ed873b2664"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query capsules
+Method : POST
+
+URL : https://api.spacexdata.com/v4/capsules/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+        {
+            "reuse_count": 1,
+            "water_landings": 1,
+            "land_landings": 0,
+            "last_update": "Reentered after three weeks in orbit",
+            "launches": [
+                "5eb87cdeffd86e000604b330"
+            ],
+            "serial": "C101",
+            "status": "retired",
+            "type": "Dragon 1.0",
+            "id": "5e9e2c5bf35918ed873b2664"
+        },
+        ...
+    ],
+    "totalDocs": 19,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 2,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": true,
+    "prevPage": null,
+    "nextPage": 2
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Capsule Schema
+{
+  "serial": {
+    "type": "String",
+    "required": true,
+    "unique": true,
+  },
+  "status": {
+    "type": "String",
+    "enum": ["unknown", "active", "retired", "destroyed"],
+    "required": true,
+  },
+  "type": {
+    "type": "String",
+    "enum": ["Dragon 1.0", "Dragon 1.1", "Dragon 2.0"],
+    "required": true,
+  },
+  "dragon": {
+    "type": "UUID",
+  },
+  "reuse_count": {
+    "type": "Number",
+    "default": 0,
+  },
+  "water_landings": {
+    "type": "Number",
+    "default": 0,
+  },
+  "land_landings": {
+    "type": "Number",
+    "default": 0,
+  },
+  "last_update": {
+    "type": "String",
+    "default": null,
+  },
+  "launches": [{
+    "type": "UUID",
+  }],
+}
+
+Get all company info
+Method : GET
+
+URL : https://api.spacexdata.com/v4/company
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+{
+    "headquarters": {
+        "address": "Rocket Road",
+        "city": "Hawthorne",
+        "state": "California"
+    },
+    "links": {
+        "website": "https://www.spacex.com/",
+        "flickr": "https://www.flickr.com/photos/spacex/",
+        "twitter": "https://twitter.com/SpaceX",
+        "elon_twitter": "https://twitter.com/elonmusk"
+    },
+    "name": "SpaceX",
+    "founder": "Elon Musk",
+    "founded": 2002,
+    "employees": 8000,
+    "vehicles": 3,
+    "launch_sites": 3,
+    "test_sites": 1,
+    "ceo": "Elon Musk",
+    "cto": "Elon Musk",
+    "coo": "Gwynne Shotwell",
+    "cto_propulsion": "Tom Mueller",
+    "valuation": 52000000000,
+    "summary": "SpaceX designs, manufactures and launches advanced rockets and spacecraft. The company was founded in 2002 to revolutionize space technology, with the ultimate goal of enabling people to live on other planets.",
+    "id": "5eb75edc42fea42237d7f3ed"
+}
+
+Company Info Schema
+{
+  "name": {
+    "type": "String"
+  },
+  "founder": {
+    "type": "String"
+  },
+  "founded": {
+    "type": "Number"
+  },
+  "employees": {
+    "type": "Number"
+  },
+  "vehicles": {
+    "type": "Number"
+  },
+  "launch_sites": {
+    "type": "Number"
+  },
+  "test_sites": {
+    "type": "Number"
+  },
+  "ceo": {
+    "type": "String"
+  },
+  "cto": {
+    "type": "String"
+  },
+  "coo": {
+    "type": "String"
+  },
+  "cto_propulsion": {
+    "type": "String"
+  },
+  "valuation": {
+    "type": "Number"
+  },
+  "headquarters": {
+    "address": {
+      "type": "String"
+    },
+    "city": {
+      "type": "String"
+    },
+    "state": {
+      "type": "String"
+    }
+  },
+  "links": {
+    "website": {
+      "type": "String"
+    },
+    "flickr": {
+      "type": "String"
+    },
+    "twitter": {
+      "type": "String"
+    },
+    "elon_twitter": {
+      "type": "String"
+    }
+  },
+  "summary": {
+    "type": "String"
+  }
+}
+
+Get all cores
+Method : GET
+
+URL : https://api.spacexdata.com/v4/cores
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "block": 5,
+        "reuse_count": 3,
+        "rtls_attempts": 1,
+        "rtls_landings": 1,
+        "asds_attempts": 3,
+        "asds_landings": 3,
+        "last_update": "Landed on OCISLY as of Jan 29, 2020. ",
+        "launches": [
+            "5eb87d2bffd86e000604b375",
+            "5eb87d31ffd86e000604b379",
+            "5eb87d3fffd86e000604b382",
+            "5eb87d44ffd86e000604b386"
+        ],
+        "serial": "B1051",
+        "status": "active",
+        "id": "5e9e28a6f35918c0803b265c"
+    },
+    ...
+]
+
+Get one core
+Method : GET
+
+URL : https://api.spacexdata.com/v4/cores/:id
+
+URL Parameters : id=[string] where id is the ID of the core
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "block": 5,
+    "reuse_count": 3,
+    "rtls_attempts": 1,
+    "rtls_landings": 1,
+    "asds_attempts": 3,
+    "asds_landings": 3,
+    "last_update": "Landed on OCISLY as of Jan 29, 2020. ",
+    "launches": [
+        "5eb87d2bffd86e000604b375",
+        "5eb87d31ffd86e000604b379",
+        "5eb87d3fffd86e000604b382",
+        "5eb87d44ffd86e000604b386"
+    ],
+    "serial": "B1051",
+    "status": "active",
+    "id": "5e9e28a6f35918c0803b265c"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query cores
+Method : POST
+
+URL : https://api.spacexdata.com/v4/cores/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+      {
+        "block": 5,
+        "reuse_count": 3,
+        "rtls_attempts": 1,
+        "rtls_landings": 1,
+        "asds_attempts": 2,
+        "asds_landings": 2,
+        "last_update": "Missed the droneship and made successful water landing; apparently scuttled at sea afterward. ",
+        "launches": [
+            "5eb87d2effd86e000604b377",
+            "5eb87d36ffd86e000604b37b",
+            "5eb87d3bffd86e000604b37f",
+            "5eb87d41ffd86e000604b383"
+        ],
+        "serial": "B1056",
+        "status": "lost",
+        "id": "5e9e28a7f3591809313b2660"
+      },
+      ...
+    ],
+    "totalDocs": 65,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 7,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": true,
+    "prevPage": null,
+    "nextPage": 2
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Core Schema
+{
+  "serial": {
+    "type": "String",
+    "unique": true,
+    "required": true,
+  },
+  "block": {
+    "type": "Number",
+    "default": null,
+  },
+  "status": {
+    "type": "String",
+    "enum": ["active", "inactive", "unknown", "expended", "lost", "retired"],
+    "required": true,
+  },
+  "reuse_count": {
+    "type": "Number",
+    "default": 0,
+  },
+  "rtls_attempts": {
+    "type": "Number",
+    "default": 0,
+  },
+  "rtls_landings": {
+    "type": "Number",
+    "default": 0,
+  },
+  "asds_attempts": {
+    "type": "Number",
+    "default": 0,
+  },
+  "asds_landings": {
+    "type": "Number",
+    "default": 0,
+  },
+  "last_update": {
+    "type": "String",
+    "default": null,
+  },
+  "launches": [{
+    "type": "UUID",
+  }],
+}
+
+Get all crew
+Method : GET
+
+URL : https://api.spacexdata.com/v4/crew
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "name": "Robert Behnken",
+        "agency": "NASA",
+        "image": "https://imgur.com/0smMgMH.png",
+        "wikipedia": "https://en.wikipedia.org/wiki/Robert_L._Behnken",
+        "launches": [
+            "5eb87d46ffd86e000604b388"
+        ],
+        "status": "active",
+        "id": "5ebf1a6e23a9a60006e03a7a"
+    },
+    ...
+]
+
+Get one crew member
+Method : GET
+
+URL : https://api.spacexdata.com/v4/crew/:id
+
+URL Parameters : id=[string] where id is the ID of the crew member
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "name": "Douglas Hurley",
+    "agency": "NASA",
+    "image": "https://i.imgur.com/ooaayWf.png",
+    "wikipedia": "https://en.wikipedia.org/wiki/Douglas_G._Hurley",
+    "launches": [
+        "5eb87d46ffd86e000604b388"
+    ],
+    "status": "active",
+    "id": "5ebf1b7323a9a60006e03a7b"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query crew members
+Method : POST
+
+URL : https://api.spacexdata.com/v4/crew/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+        {
+            "name": "Robert Behnken",
+            "agency": "NASA",
+            "image": "https://imgur.com/0smMgMH.png",
+            "wikipedia": "https://en.wikipedia.org/wiki/Robert_L._Behnken",
+            "launches": [
+                "5eb87d46ffd86e000604b388"
+            ],
+            "status": "active",
+            "id": "5ebf1a6e23a9a60006e03a7a"
+        },
+        ...
+    ],
+    "totalDocs": 2,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Crew Schema
+{
+  "name": {
+    "type": "String",
+    "default": null
+  },
+  "status": {
+    "type": "String",
+    "required": true,
+    "enum": ["active", "inactive", "retired", "unknown"]
+  },
+  "agency": {
+    "type": "String",
+    "default": null
+  },
+  "image": {
+    "type": "String",
+    "default": null
+  },
+  "wikipedia": {
+    "type": "String",
+    "default": null
+  },
+  "launches": [{
+      "type": "UUID"
+  }]
+}
+
+Get all Dragons
+Method : GET
+
+URL : https://api.spacexdata.com/v4/dragons
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+  {
+      "heat_shield": {
+          "material": "PICA-X",
+          "size_meters": 3.6,
+          "temp_degrees": 3000,
+          "dev_partner": "NASA"
+      },
+      "launch_payload_mass": {
+          "kg": 6000,
+          "lb": 13228
+      },
+      "launch_payload_vol": {
+          "cubic_meters": 25,
+          "cubic_feet": 883
+      },
+      "return_payload_mass": {
+          "kg": 3000,
+          "lb": 6614
+      },
+      "return_payload_vol": {
+          "cubic_meters": 11,
+          "cubic_feet": 388
+      },
+      "pressurized_capsule": {
+          "payload_volume": {
+              "cubic_meters": 11,
+              "cubic_feet": 388
+          }
+      },
+      "trunk": {
+          "trunk_volume": {
+              "cubic_meters": 14,
+              "cubic_feet": 494
+          },
+          "cargo": {
+              "solar_array": 2,
+              "unpressurized_cargo": true
+          }
+      },
+      "height_w_trunk": {
+          "meters": 7.2,
+          "feet": 23.6
+      },
+      "diameter": {
+          "meters": 3.7,
+          "feet": 12
+      },
+      "first_flight": "2010-12-08",
+      "flickr_images": [
+          "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2015_-_04_crs5_dragon_orbit13.jpg?itok=9p8_l7UP",
+          "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2012_-_4_dragon_grapple_cots2-1.jpg?itok=R2-SeuMX",
+          "https://farm3.staticflickr.com/2815/32761844973_4b55b27d3c_b.jpg",
+          "https://farm9.staticflickr.com/8618/16649075267_d18cbb4342_b.jpg"
+      ],
+      "name": "Dragon 1",
+      "type": "capsule",
+      "active": true,
+      "crew_capacity": 0,
+      "sidewall_angle_deg": 15,
+      "orbit_duration_yr": 2,
+      "dry_mass_kg": 4200,
+      "dry_mass_lb": 9300,
+      "thrusters": [
+          {
+              "type": "Draco",
+              "amount": 18,
+              "pods": 4,
+              "fuel_1": "nitrogen tetroxide",
+              "fuel_2": "monomethylhydrazine",
+              "isp": 300,
+              "thrust": {
+                  "kN": 0.4,
+                  "lbf": 90
+              }
+          }
+      ],
+      "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_Dragon",
+      "description": "Dragon is a reusable spacecraft developed by SpaceX, an American private space transportation company based in Hawthorne, California. Dragon is launched into space by the SpaceX Falcon 9 two-stage-to-orbit launch vehicle. The Dragon spacecraft was originally designed for human travel, but so far has only been used to deliver cargo to the International Space Station (ISS).",
+      "id": "5e9d058759b1ff74a7ad5f8f"
+  },
+  ...
+]
+
+Get one Dragon
+Method : GET
+
+URL : https://api.spacexdata.com/v4/dragons/:id
+
+URL Parameters : id=[string] where id is the ID of the dragon
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "heat_shield": {
+        "material": "PICA-X",
+        "size_meters": 3.6,
+        "temp_degrees": 3000,
+        "dev_partner": "NASA"
+    },
+    "launch_payload_mass": {
+        "kg": 6000,
+        "lb": 13228
+    },
+    "launch_payload_vol": {
+        "cubic_meters": 25,
+        "cubic_feet": 883
+    },
+    "return_payload_mass": {
+        "kg": 3000,
+        "lb": 6614
+    },
+    "return_payload_vol": {
+        "cubic_meters": 11,
+        "cubic_feet": 388
+    },
+    "pressurized_capsule": {
+        "payload_volume": {
+            "cubic_meters": 11,
+            "cubic_feet": 388
+        }
+    },
+    "trunk": {
+        "trunk_volume": {
+            "cubic_meters": 14,
+            "cubic_feet": 494
+        },
+        "cargo": {
+            "solar_array": 2,
+            "unpressurized_cargo": true
+        }
+    },
+    "height_w_trunk": {
+        "meters": 7.2,
+        "feet": 23.6
+    },
+    "diameter": {
+        "meters": 3.7,
+        "feet": 12
+    },
+    "first_flight": "2010-12-08",
+    "flickr_images": [
+        "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2015_-_04_crs5_dragon_orbit13.jpg?itok=9p8_l7UP",
+        "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2012_-_4_dragon_grapple_cots2-1.jpg?itok=R2-SeuMX",
+        "https://farm3.staticflickr.com/2815/32761844973_4b55b27d3c_b.jpg",
+        "https://farm9.staticflickr.com/8618/16649075267_d18cbb4342_b.jpg"
+    ],
+    "name": "Dragon 1",
+    "type": "capsule",
+    "active": true,
+    "crew_capacity": 0,
+    "sidewall_angle_deg": 15,
+    "orbit_duration_yr": 2,
+    "dry_mass_kg": 4200,
+    "dry_mass_lb": 9300,
+    "thrusters": [
+        {
+            "type": "Draco",
+            "amount": 18,
+            "pods": 4,
+            "fuel_1": "nitrogen tetroxide",
+            "fuel_2": "monomethylhydrazine",
+            "isp": 300,
+            "thrust": {
+                "kN": 0.4,
+                "lbf": 90
+            }
+        }
+    ],
+    "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_Dragon",
+    "description": "Dragon is a reusable spacecraft developed by SpaceX, an American private space transportation company based in Hawthorne, California. Dragon is launched into space by the SpaceX Falcon 9 two-stage-to-orbit launch vehicle. The Dragon spacecraft was originally designed for human travel, but so far has only been used to deliver cargo to the International Space Station (ISS).",
+    "id": "5e9d058759b1ff74a7ad5f8f"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query Dragons
+Method : POST
+
+URL : https://api.spacexdata.com/v4/dragons/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+        {
+            "heat_shield": {
+                "material": "PICA-X",
+                "size_meters": 3.6,
+                "temp_degrees": 3000,
+                "dev_partner": "NASA"
+            },
+            "launch_payload_mass": {
+                "kg": 6000,
+                "lb": 13228
+            },
+            "launch_payload_vol": {
+                "cubic_meters": 25,
+                "cubic_feet": 883
+            },
+            "return_payload_mass": {
+                "kg": 3000,
+                "lb": 6614
+            },
+            "return_payload_vol": {
+                "cubic_meters": 11,
+                "cubic_feet": 388
+            },
+            "pressurized_capsule": {
+                "payload_volume": {
+                    "cubic_meters": 11,
+                    "cubic_feet": 388
+                }
+            },
+            "trunk": {
+                "trunk_volume": {
+                    "cubic_meters": 14,
+                    "cubic_feet": 494
+                },
+                "cargo": {
+                    "solar_array": 2,
+                    "unpressurized_cargo": true
+                }
+            },
+            "height_w_trunk": {
+                "meters": 7.2,
+                "feet": 23.6
+            },
+            "diameter": {
+                "meters": 3.7,
+                "feet": 12
+            },
+            "first_flight": "2010-12-08",
+            "flickr_images": [
+                "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2015_-_04_crs5_dragon_orbit13.jpg?itok=9p8_l7UP",
+                "https://www.spacex.com/sites/spacex/files/styles/media_gallery_large/public/2012_-_4_dragon_grapple_cots2-1.jpg?itok=R2-SeuMX",
+                "https://farm3.staticflickr.com/2815/32761844973_4b55b27d3c_b.jpg",
+                "https://farm9.staticflickr.com/8618/16649075267_d18cbb4342_b.jpg"
+            ],
+            "name": "Dragon 1",
+            "type": "capsule",
+            "active": true,
+            "crew_capacity": 0,
+            "sidewall_angle_deg": 15,
+            "orbit_duration_yr": 2,
+            "dry_mass_kg": 4200,
+            "dry_mass_lb": 9300,
+            "thrusters": [
+                {
+                    "type": "Draco",
+                    "amount": 18,
+                    "pods": 4,
+                    "fuel_1": "nitrogen tetroxide",
+                    "fuel_2": "monomethylhydrazine",
+                    "isp": 300,
+                    "thrust": {
+                        "kN": 0.4,
+                        "lbf": 90
+                    }
+                }
+            ],
+            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_Dragon",
+            "description": "Dragon is a reusable spacecraft developed by SpaceX, an American private space transportation company based in Hawthorne, California. Dragon is launched into space by the SpaceX Falcon 9 two-stage-to-orbit launch vehicle. The Dragon spacecraft was originally designed for human travel, but so far has only been used to deliver cargo to the International Space Station (ISS).",
+            "id": "5e9d058759b1ff74a7ad5f8f"
+        },
+        ...
+    ],
+    "totalDocs": 2,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Dragon Schema
+{
+  "name": {
+    "type": "String",
+    "unique": true,
+    "required": true
+  },
+  "type": {
+    "type": "String",
+    "required": true
+  },
+  "active": {
+    "type": "Boolean",
+    "required": true
+  },
+  "crew_capacity": {
+    "type": "Number",
+    "required": true
+  },
+  "sidewall_angle_deg": {
+    "type": "Number",
+    "required": true
+  },
+  "orbit_duration_yr": {
+    "type": "Number",
+    "required": true
+  },
+  "dry_mass_kg": {
+    "type": "Number",
+    "required": true
+  },
+  "dry_mass_lb": {
+    "type": "Number",
+    "required": true
+  },
+  "first_flight": {
+    "type": "String",
+    "default": null
+  },
+  "heat_shield": {
+    "material": {
+      "type": "String",
+      "required": true
+    },
+    "size_meters": {
+      "type": "Number",
+      "required": true
+    },
+    "temp_degrees": {
+      "type": "Number"
+    },
+    "dev_partner": {
+      "type": "String"
+    }
+  },
+  "thrusters": {
+    "type": "Object"
+  },
+  "launch_payload_mass": {
+    "kg": {
+      "type": "Number"
+    },
+    "lb": {
+      "type": "Number"
+    }
+  },
+  "launch_payload_vol": {
+    "cubic_meters": {
+      "type": "Number"
+    },
+    "cubic_feet": {
+      "type": "Number"
+    }
+  },
+  "return_payload_mass": {
+    "kg": {
+      "type": "Number"
+    },
+    "lb": {
+      "type": "Number"
+    }
+  },
+  "return_payload_vol": {
+    "cubic_meters": {
+      "type": "Number"
+    },
+    "cubic_feet": {
+      "type": "Number"
+    }
+  },
+  "pressurized_capsule": {
+    "payload_volume": {
+      "cubic_meters": {
+        "type": "Number"
+      },
+      "cubic_feet": {
+        "type": "Number"
+      }
+    }
+  },
+  "trunk": {
+    "trunk_volume": {
+      "cubic_meters": {
+        "type": "Number"
+      },
+      "cubic_feet": {
+        "type": "Number"
+      }
+    },
+    "cargo": {
+      "solar_array": {
+        "type": "Number"
+      },
+      "unpressurized_cargo": {
+        "type": "Boolean"
+      }
+    }
+  },
+  "height_w_trunk": {
+    "meters": {
+      "type": "Number"
+    },
+    "feet": {
+      "type": "Number"
+    }
+  },
+  "diameter": {
+    "meters": {
+      "type": "Number"
+    },
+    "feet": {
+      "type": "Number"
+    }
+  },
+  "flickr_images": {
+    "type": [
+      "String"
+    ]
+  },
+  "wikipedia": {
+    "type": "String"
+  },
+  "description": {
+    "type": "String"
+  }
+}
+
+Get all history events
+Method : GET
+
+URL : https://api.spacexdata.com/v4/history
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+  {
+    "title": "SpaceX successfully launches humans to ISS",
+    "event_date_utc": "2020-05-30T19:22:00Z",
+    "event_date_unix": 1590866520,
+    "details": "This mission was the first crewed flight to launch from the United States since the end of the Space Shuttle program in 2011. It carried NASA astronauts Doug Hurley and Bob Behnken to the ISS.",
+    "links": {
+      "article": "https://spaceflightnow.com/2020/05/30/nasa-astronauts-launch-from-us-soil-for-first-time-in-nine-years/"
+    }
+  }
+  ...
+]
+
+Get one history event
+Method : GET
+
+URL : https://api.spacexdata.com/v4/history/:id
+
+URL Parameters : id=[string] where id is the ID of the history event
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "title": "SpaceX successfully launches humans to ISS",
+    "event_date_utc": "2020-05-30T19:22:00Z",
+    "event_date_unix": 1590866520,
+    "details": "This mission was the first crewed flight to launch from the United States since the end of the Space Shuttle program in 2011. It carried NASA astronauts Doug Hurley and Bob Behnken to the ISS.",
+    "links": {
+        "article": "https://spaceflightnow.com/2020/05/30/nasa-astronauts-launch-from-us-soil-for-first-time-in-nine-years/"
+    }
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query history events
+Method : POST
+
+URL : https://api.spacexdata.com/v4/history/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+        {
+            "title": "SpaceX successfully launches humans to ISS",
+            "event_date_utc": "2020-05-30T19:22:00Z",
+            "event_date_unix": 1590866520,
+            "details": "This mission was the first crewed flight to launch from the United States since the end of the Space Shuttle program in 2011. It carried NASA astronauts Doug Hurley and Bob Behnken to the ISS.",
+            "links": {
+                "article": "https://spaceflightnow.com/2020/05/30/nasa-astronauts-launch-from-us-soil-for-first-time-in-nine-years/"
+            }
+        }
+        ...
+    ],
+    "totalDocs": 7,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+History Event Schema
+{
+  "title": {
+    "type": "String",
+    "default": null,
+  },
+  "event_date_utc": {
+    "type": "String",
+    "default": null,
+  },
+  "event_date_unix": {
+    "type": "Number",
+    "default": null,
+  },
+  "details": {
+    "type": "String",
+    "default": null,
+  },
+  "links": {
+    "article": {
+      "type": "String",
+      "default": null,
+    },
+  },
+}
+
+Get all landing pads
+Method : GET
+
+URL : https://api.spacexdata.com/v4/landpads
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "name": "LZ-2",
+        "full_name": "Landing Zone 2",
+        "status": "active",
+        "type": "RTLS",
+        "locality": "Cape Canaveral",
+        "region": "Florida",
+        "latitude": 28.485833,
+        "longitude": -80.544444,
+        "landing_attempts": 3,
+        "landing_successes": 3,
+        "wikipedia": "https://en.wikipedia.org/wiki/Landing_Zones_1_and_2",
+        "details": "SpaceX's first east coast landing pad is Landing Zone 1, where the historic first Falcon 9 landing occurred in December 2015. LC-13 was originally used as a launch pad for early Atlas missiles and rockets from Lockheed Martin. LC-1 was later expanded to include Landing Zone 2 for side booster RTLS Falcon Heavy missions, and it was first used in February 2018 for that purpose.",
+        "launches": [
+            "5eb87d13ffd86e000604b360",
+            "5eb87d2dffd86e000604b376",
+            "5eb87d35ffd86e000604b37a"
+        ],
+        "id": "5e9e3032383ecb90a834e7c8"
+    },
+    ...
+]
+
+Get one landing pad
+Method : GET
+
+URL : https://api.spacexdata.com/v4/landpads/:id
+
+URL Parameters : id=[string] where id is the ID of the landing pad
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "name": "LZ-2",
+    "full_name": "Landing Zone 2",
+    "status": "active",
+    "type": "RTLS",
+    "locality": "Cape Canaveral",
+    "region": "Florida",
+    "latitude": 28.485833,
+    "longitude": -80.544444,
+    "landing_attempts": 3,
+    "landing_successes": 3,
+    "wikipedia": "https://en.wikipedia.org/wiki/Landing_Zones_1_and_2",
+    "details": "SpaceX's first east coast landing pad is Landing Zone 1, where the historic first Falcon 9 landing occurred in December 2015. LC-13 was originally used as a launch pad for early Atlas missiles and rockets from Lockheed Martin. LC-1 was later expanded to include Landing Zone 2 for side booster RTLS Falcon Heavy missions, and it was first used in February 2018 for that purpose.",
+    "launches": [
+        "5eb87d13ffd86e000604b360",
+        "5eb87d2dffd86e000604b376",
+        "5eb87d35ffd86e000604b37a"
+    ],
+    "id": "5e9e3032383ecb90a834e7c8"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query landing pads
+Method : POST
+
+URL : https://api.spacexdata.com/v4/landpads/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "docs": [
+        {
+            "name": "LZ-1",
+            "full_name": "Landing Zone 1",
+            "status": "active",
+            "type": "RTLS",
+            "locality": "Cape Canaveral",
+            "region": "Florida",
+            "latitude": 28.485833,
+            "longitude": -80.544444,
+            "landing_attempts": 15,
+            "landing_successes": 14,
+            "wikipedia": "https://en.wikipedia.org/wiki/Landing_Zones_1_and_2",
+            "details": "SpaceX's first east coast landing pad is Landing Zone 1, where the historic first Falcon 9 landing occurred in December 2015. LC-13 was originally used as a launch pad for early Atlas missiles and rockets from Lockheed Martin. LC-1 was later expanded to include Landing Zone 2 for side booster RTLS Falcon Heavy missions, and it was first used in February 2018 for that purpose.",
+            "launches": [
+                "5eb87cefffd86e000604b342",
+                "5eb87cf9ffd86e000604b349",
+                "5eb87cfeffd86e000604b34d",
+                "5eb87d01ffd86e000604b350",
+                "5eb87d03ffd86e000604b352",
+                "5eb87d07ffd86e000604b356",
+                "5eb87d09ffd86e000604b358",
+                "5eb87d0effd86e000604b35c",
+                "5eb87d10ffd86e000604b35e",
+                "5eb87d13ffd86e000604b360",
+                "5eb87d26ffd86e000604b371",
+                "5eb87d2dffd86e000604b376",
+                "5eb87d35ffd86e000604b37a",
+                "5eb87d36ffd86e000604b37b",
+                "5eb87d42ffd86e000604b384"
+            ],
+            "id": "5e9e3032383ecb267a34e7c7"
+        },
+        ...
+    ],
+    "totalDocs": 7,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Landing Pad Schema
+{
+  "name": {
+    "type": "String",
+    "default": null
+  },
+  "full_name": {
+    "type": "String",
+    "default": null
+  },
+  "status": {
+    "type": "String",
+    "enum": [
+      "active",
+      "inactive",
+      "unknown",
+      "retired",
+      "lost",
+      "under construction"
+    ],
+    "required": true
+  },
+  "type": {
+    "type": "String",
+    "default": null
+  },
+  "locality": {
+    "type": "String",
+    "default": null
+  },
+  "region": {
+    "type": "String",
+    "default": null
+  },
+  "latitude": {
+    "type": "Number",
+    "default": null
+  },
+  "longitude": {
+    "type": "Number",
+    "default": null
+  },
+  "landing_attempts": {
+    "type": "Number",
+    "default": 0
+  },
+  "landing_successes": {
+    "type": "Number",
+    "default": 0
+  },
+  "wikipedia": {
+    "type": "String",
+    "default": null
+  },
+  "details": {
+    "type": "String",
+    "default": null
+  },
+  "launches": [
+    {
+      "type": "UUID"
+    }
+  ]
+}
+
+Get all launches
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "fairings": null,
+        "links": {
+            "patch": {
+                "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+                "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+            },
+            "reddit": {
+                "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+                "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+                "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+                "recovery": null
+            },
+            "flickr": {
+                "small": [],
+                "original": [
+                    "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                    "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                    "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+                ]
+            },
+            "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+            "webcast": "https://youtu.be/1MkcWK2PnsU",
+            "youtube_id": "1MkcWK2PnsU",
+            "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+        },
+        "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+        "static_fire_date_unix": 1583058000,
+        "tdb": false,
+        "net": false,
+        "window": 0,
+        "rocket": "5e9d0d95eda69973a809d1ec",
+        "success": true,
+        "failures": [],
+        "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+        "crew": [],
+        "ships": [],
+        "capsules": [
+            "5e9e2c5cf359185d753b266f"
+        ],
+        "payloads": [
+            "5eb0e4d0b6c3bb0006eeb253"
+        ],
+        "launchpad": "5e9e4501f509094ba4566f84",
+        "auto_update": true,
+        "flight_number": 91,
+        "name": "CRS-20",
+        "date_utc": "2020-03-07T04:50:31.000Z",
+        "date_unix": 1583556631,
+        "date_local": "2020-03-06T23:50:31-05:00",
+        "date_precision": "hour",
+        "upcoming": false,
+        "cores": [
+            {
+                "core": "5e9e28a7f359187afd3b2662",
+                "flight": 2,
+                "gridfins": true,
+                "legs": true,
+                "reused": true,
+                "landing_attempt": true,
+                "landing_success": true,
+                "landing_type": "RTLS",
+                "landpad": "5e9e3032383ecb267a34e7c7"
+            }
+        ],
+        "id": "5eb87d42ffd86e000604b384"
+    },
+    ...
+]
+
+Get all launches
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "fairings": null,
+        "links": {
+            "patch": {
+                "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+                "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+            },
+            "reddit": {
+                "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+                "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+                "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+                "recovery": null
+            },
+            "flickr": {
+                "small": [],
+                "original": [
+                    "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                    "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                    "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+                ]
+            },
+            "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+            "webcast": "https://youtu.be/1MkcWK2PnsU",
+            "youtube_id": "1MkcWK2PnsU",
+            "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+        },
+        "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+        "static_fire_date_unix": 1583058000,
+        "tdb": false,
+        "net": false,
+        "window": 0,
+        "rocket": "5e9d0d95eda69973a809d1ec",
+        "success": true,
+        "failures": [],
+        "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+        "crew": [],
+        "ships": [],
+        "capsules": [
+            "5e9e2c5cf359185d753b266f"
+        ],
+        "payloads": [
+            "5eb0e4d0b6c3bb0006eeb253"
+        ],
+        "launchpad": "5e9e4501f509094ba4566f84",
+        "auto_update": true,
+        "flight_number": 91,
+        "name": "CRS-20",
+        "date_utc": "2020-03-07T04:50:31.000Z",
+        "date_unix": 1583556631,
+        "date_local": "2020-03-06T23:50:31-05:00",
+        "date_precision": "hour",
+        "upcoming": false,
+        "cores": [
+            {
+                "core": "5e9e28a7f359187afd3b2662",
+                "flight": 2,
+                "gridfins": true,
+                "legs": true,
+                "reused": true,
+                "landing_attempt": true,
+                "landing_success": true,
+                "landing_type": "RTLS",
+                "landpad": "5e9e3032383ecb267a34e7c7"
+            }
+        ],
+        "id": "5eb87d42ffd86e000604b384"
+    },
+    ...
+]
+
+Get next launch
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches/next
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+{
+    "fairings": null,
+    "links": {
+        "patch": {
+            "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+            "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+        },
+        "reddit": {
+            "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+            "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+            "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+            "recovery": null
+        },
+        "flickr": {
+            "small": [],
+            "original": [
+                "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+            ]
+        },
+        "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+        "webcast": "https://youtu.be/1MkcWK2PnsU",
+        "youtube_id": "1MkcWK2PnsU",
+        "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+        "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+    },
+    "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+    "static_fire_date_unix": 1583058000,
+    "tdb": false,
+    "net": false,
+    "window": 0,
+    "rocket": "5e9d0d95eda69973a809d1ec",
+    "success": true,
+    "failures": [],
+    "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+    "crew": [],
+    "ships": [],
+    "capsules": [
+        "5e9e2c5cf359185d753b266f"
+    ],
+    "payloads": [
+        "5eb0e4d0b6c3bb0006eeb253"
+    ],
+    "launchpad": "5e9e4501f509094ba4566f84",
+    "auto_update": true,
+    "flight_number": 91,
+    "name": "CRS-20",
+    "date_utc": "2020-03-07T04:50:31.000Z",
+    "date_unix": 1583556631,
+    "date_local": "2020-03-06T23:50:31-05:00",
+    "date_precision": "hour",
+    "upcoming": false,
+    "cores": [
+        {
+            "core": "5e9e28a7f359187afd3b2662",
+            "flight": 2,
+            "gridfins": true,
+            "legs": true,
+            "reused": true,
+            "landing_attempt": true,
+            "landing_success": true,
+            "landing_type": "RTLS",
+            "landpad": "5e9e3032383ecb267a34e7c7"
+        }
+    ],
+    "id": "5eb87d42ffd86e000604b384"
+}
+
+Get one launch
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches/:id
+
+URL Parameters : id=[string] where id is the ID of the launch
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "fairings": null,
+    "links": {
+        "patch": {
+            "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+            "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+        },
+        "reddit": {
+            "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+            "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+            "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+            "recovery": null
+        },
+        "flickr": {
+            "small": [],
+            "original": [
+                "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+            ]
+        },
+        "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+        "webcast": "https://youtu.be/1MkcWK2PnsU",
+        "youtube_id": "1MkcWK2PnsU",
+        "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+        "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+    },
+    "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+    "static_fire_date_unix": 1583058000,
+    "tdb": false,
+    "net": false,
+    "window": 0,
+    "rocket": "5e9d0d95eda69973a809d1ec",
+    "success": true,
+    "failures": [],
+    "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+    "crew": [],
+    "ships": [],
+    "capsules": [
+        "5e9e2c5cf359185d753b266f"
+    ],
+    "payloads": [
+        "5eb0e4d0b6c3bb0006eeb253"
+    ],
+    "launchpad": "5e9e4501f509094ba4566f84",
+    "auto_update": true,
+    "flight_number": 91,
+    "name": "CRS-20",
+    "date_utc": "2020-03-07T04:50:31.000Z",
+    "date_unix": 1583556631,
+    "date_local": "2020-03-06T23:50:31-05:00",
+    "date_precision": "hour",
+    "upcoming": false,
+    "cores": [
+        {
+            "core": "5e9e28a7f359187afd3b2662",
+            "flight": 2,
+            "gridfins": true,
+            "legs": true,
+            "reused": true,
+            "landing_attempt": true,
+            "landing_success": true,
+            "landing_type": "RTLS",
+            "landpad": "5e9e3032383ecb267a34e7c7"
+        }
+    ],
+    "id": "5eb87d42ffd86e000604b384"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Get all past launches
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches/past
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "fairings": null,
+        "links": {
+            "patch": {
+                "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+                "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+            },
+            "reddit": {
+                "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+                "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+                "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+                "recovery": null
+            },
+            "flickr": {
+                "small": [],
+                "original": [
+                    "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                    "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                    "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+                ]
+            },
+            "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+            "webcast": "https://youtu.be/1MkcWK2PnsU",
+            "youtube_id": "1MkcWK2PnsU",
+            "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+        },
+        "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+        "static_fire_date_unix": 1583058000,
+        "tdb": false,
+        "net": false,
+        "window": 0,
+        "rocket": "5e9d0d95eda69973a809d1ec",
+        "success": true,
+        "failures": [],
+        "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+        "crew": [],
+        "ships": [],
+        "capsules": [
+            "5e9e2c5cf359185d753b266f"
+        ],
+        "payloads": [
+            "5eb0e4d0b6c3bb0006eeb253"
+        ],
+        "launchpad": "5e9e4501f509094ba4566f84",
+        "auto_update": true,
+        "flight_number": 91,
+        "name": "CRS-20",
+        "date_utc": "2020-03-07T04:50:31.000Z",
+        "date_unix": 1583556631,
+        "date_local": "2020-03-06T23:50:31-05:00",
+        "date_precision": "hour",
+        "upcoming": false,
+        "cores": [
+            {
+                "core": "5e9e28a7f359187afd3b2662",
+                "flight": 2,
+                "gridfins": true,
+                "legs": true,
+                "reused": true,
+                "landing_attempt": true,
+                "landing_success": true,
+                "landing_type": "RTLS",
+                "landpad": "5e9e3032383ecb267a34e7c7"
+            }
+        ],
+        "id": "5eb87d42ffd86e000604b384"
+    }
+    ...
+]
+
+Query launches
+Method : POST
+
+URL : https://api.spacexdata.com/v5/launches/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+  "docs": [
+    {
+      "fairings": {
+        "reused": false,
+        "recovery_attempt": true,
+        "recovered": false,
+        "ships": ["5ea6ed2e080df4000697c908"]
+      },
+      "links": {
+        "patch": {
+          "small": "https://images2.imgbox.com/02/51/7NLaBm8c_o.png",
+          "large": "https://images2.imgbox.com/69/f5/04lBXd2F_o.png"
+        },
+        "reddit": {
+          "campaign": "https://www.reddit.com/r/spacex/comments/73ttkd/koreasat_5a_launch_campaign_thread/",
+          "launch": "https://www.reddit.com/r/spacex/comments/79iuvb/rspacex_koreasat_5a_official_launch_discussion/",
+          "media": "https://www.reddit.com/r/spacex/comments/79lmdu/rspacex_koreasat5a_media_thread_videos_images/",
+          "recovery": null
+        },
+        "flickr": {
+          "small": [],
+          "original": [
+            "https://farm5.staticflickr.com/4477/38056454431_a5f40f9fd7_o.jpg",
+            "https://farm5.staticflickr.com/4455/26280153979_b8016a829f_o.jpg",
+            "https://farm5.staticflickr.com/4459/38056455051_79ef2b949a_o.jpg",
+            "https://farm5.staticflickr.com/4466/26280153539_ecbc2b3fa9_o.jpg",
+            "https://farm5.staticflickr.com/4482/26280154209_bf08d76361_o.jpg",
+            "https://farm5.staticflickr.com/4493/38056455211_a4565a9cee_o.jpg"
+          ]
+        },
+        "presskit": "http://www.spacex.com/sites/spacex/files/koreasat5apresskit.pdf",
+        "webcast": "https://www.youtube.com/watch?v=RUjH14vhLxA",
+        "youtube_id": "RUjH14vhLxA",
+        "article": "https://spaceflightnow.com/2017/10/30/spacex-launches-and-lands-third-rocket-in-three-weeks/",
+        "wikipedia": "https://en.wikipedia.org/wiki/Koreasat_5A"
+      },
+      "static_fire_date_utc": "2017-10-26T16:00:00.000Z",
+      "static_fire_date_unix": 1509033600,
+      "tdb": false,
+      "net": false,
+      "window": 8640,
+      "rocket": "5e9d0d95eda69973a809d1ec",
+      "success": true,
+      "failures": [],
+      "details": "KoreaSat 5A is a Ku-band satellite capable of providing communication services from East Africa and Central Asia to southern India, Southeast Asia, the Philippines, Guam, Korea, and Japan. The satellite will be placed in GEO at 113Â° East Longitude, and will provide services ranging from broadband internet to broadcasting services and maritime communications.",
+      "crew": [],
+      "ships": [
+        "5ea6ed2f080df4000697c90d",
+        "5ea6ed2e080df4000697c908",
+        "5ea6ed30080df4000697c913"
+      ],
+      "capsules": [],
+      "payloads": ["5eb0e4c5b6c3bb0006eeb217"],
+      "launchpad": "5e9e4502f509094188566f88",
+      "auto_update": true,
+      "flight_number": 50,
+      "name": "KoreaSat 5A",
+      "date_utc": "2017-10-30T19:34:00.000Z",
+      "date_unix": 1509392040,
+      "date_local": "2017-10-30T15:34:00-04:00",
+      "date_precision": "hour",
+      "upcoming": false,
+      "cores": [
+        {
+          "core": "5e9e28a4f359185cc03b2651",
+          "flight": 1,
+          "gridfins": true,
+          "legs": true,
+          "reused": false,
+          "landing_attempt": true,
+          "landing_success": true,
+          "landing_type": "ASDS",
+          "landpad": "5e9e3032383ecb6bb234e7ca"
+        }
+      ],
+      "id": "5eb87d0dffd86e000604b35b"
+    }
+  ],
+  "totalDocs": 109,
+  "limit": 10,
+  "totalPages": 11,
+  "page": 5,
+  "pagingCounter": 41,
+  "hasPrevPage": true,
+  "hasNextPage": true,
+  "prevPage": 4,
+  "nextPage": 6
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Query + Pagination Guide
+All /query routes support pagination parameters via mongoose-paginate.
+
+The default body for /query routes is:
+
+{
+  "query": {},
+  "options": {},
+}
+query accepts any valid MongoDB find() query, documented here
+
+options accepts any of the options documented here, but here are some of the most common:
+
+select { Object | String } - Fields to return (by default returns all fields). Documentation
+sort { Object | String } - Sort order. Documentation
+offset { Number } - Use offset or page to set skip position
+page { Number }
+limit { Number }
+pagination { Boolean } - If set to false, it will return all docs without adding limit condition. (Default: True)
+populate {Array | Object | String} - Paths which should be populated with other documents. Documentation
+This is the default return structure for paginated results:
+
+{
+    "docs": [],
+    "totalDocs": 0,
+    "offset": 0,
+    "limit": 10,
+    "totalPages": 1,
+    "page": 1,
+    "pagingCounter": 1,
+    "hasPrevPage": false,
+    "hasNextPage": false,
+    "prevPage": null,
+    "nextPage": null
+}
+By default, UUID's are used to reference documents in another collection. For example, the launches endpoint has an array of UUID's named payloads that references a payload in the payloads endpoint.
+
+{
+  "payloads": [
+    "5eb0e4c6b6c3bb0006eeb21e"
+  ]
+}
+This allows us to populate or replace the UUID with the payload that it references. In this example, to populate payloads with the corresponding document, we would send a POST request to https://api.spacexdata.com/v4/launches/query with the following body:
+
+{
+  "query": {},
+  "options": {
+    "populate": [
+      "payloads"
+    ]
+  },
+}
+Which returns the linked payload object in place of the UUID:
+
+{
+  ...
+  "payloads": [
+    {
+      "dragon": {
+        "capsule": null,
+        "mass_returned_kg": null,
+        "mass_returned_lbs": null,
+        "flight_time_sec": null,
+        "manifest": null,
+        "water_landing": null,
+        "land_landing": null
+      },
+      "name": "Tintin A & B",
+      "type": "Satellite",
+      "reused": false,
+      "launch": "5eb87d14ffd86e000604b361",
+      "customers": [
+        "SpaceX"
+      ],
+      "norad_ids": [
+        43216,
+        43217
+      ],
+      "nationalities": [
+        "United States"
+      ],
+      "manufacturers": [
+        "SpaceX"
+      ],
+      "mass_kg": 800,
+      "mass_lbs": 1763.7,
+      "orbit": "SSO",
+      "reference_system": "geocentric",
+      "regime": "low-earth",
+      "longitude": null,
+      "semi_major_axis_km": 6737.42,
+      "eccentricity": 0.0012995,
+      "periapsis_km": 350.53,
+      "apoapsis_km": 368.04,
+      "inclination_deg": 97.4444,
+      "period_min": 91.727,
+      "lifespan_years": 1,
+      "epoch": "2020-06-13T13:46:31.000Z",
+      "mean_motion": 15.69864906,
+      "raan": 176.6734,
+      "arg_of_pericenter": 174.2326,
+      "mean_anomaly": 185.9087,
+      "id": "5eb0e4c6b6c3bb0006eeb21e"
+    }
+  ]
+  ...
+}
+Populate also allows you to select specific fields to return. For example, if you were only interested in the payload name, you could use the following:
+
+{
+  "options": {
+    "populate": [
+      {
+        "path": "payloads",
+        "select": {
+          "name": 1
+        }
+      }
+    ]
+  }
+}
+Which would return:
+
+{
+  "payloads": [
+    {
+      "name": "Tintin A & B",
+      "id": "5eb0e4c6b6c3bb0006eeb21e"
+    }
+  ]
+}
+Populate can also be nested inside another populate to recursively fill fields. For example, you could populate the payloads array, and also populate the launch property inside each payload:
+
+{
+  "options": {
+    "populate": [
+      {
+        "path":"payloads",
+        "populate": [
+          {
+            "path":"launch"
+          }
+        ]
+      }
+    ]
+  }
+}
+Examples
+Query between 2 dates
+Dates need to be ISO 8601 friendly for these operators to work properly
+
+{
+  "query": {
+    "date_utc": {
+      "$gte": "2017-06-22T00:00:00.000Z",
+      "$lte": "2017-06-25T00:00:00.000Z"
+    }
+ }
+}
+Full text search
+This will search all text indexes in a collection. All string fields get indexed
+
+See the mongo reference for more details on additional operators.
+
+{
+ "query": {
+    "$text": {
+      "$search": "crs"
+    }
+  }
+}
+Next Upcoming Launch
+{
+   "query":{
+      "upcoming":true
+   },
+   "options":{
+      "limit":1,
+      "sort":{
+         "flight_number":"asc"
+      }
+   }
+}
+Complex Query
+{
+  "query": {
+    "date_utc": {
+      "$gte": "2017-06-22T00:00:00.000Z",
+      "$lte": "2017-06-25T00:00:00.000Z"
+    },
+    "$or": [
+      {
+        "flight_number": {
+          "$gt": 30
+        }
+      },
+      {
+        "tbd": true
+      }
+    ],
+    "date_precision": {
+      "$in": [
+        "month",
+        "day"
+      ]
+    }
+  },
+  "options": {
+    "sort": {
+      "flight_number": "asc"
+    },
+    "limit": 50
+  }
+}
+
+Launch Schema
+{
+  "flight_number": {
+    "type": "Number",
+    "required": true
+  },
+  "name": {
+    "type": "String",
+    "unique": true,
+    "required": true
+  },
+  "date_utc": {
+    "type": "String",
+    "required": true
+  },
+  "date_unix": {
+    "type": "Number",
+    "required": true
+  },
+  "date_local": {
+    "type": "String",
+    "required": true
+  },
+  "date_precision": {
+    "type": "String",
+    "required": true,
+    "enum": [
+      "half",
+      "quarter",
+      "year",
+      "month",
+      "day",
+      "hour"
+    ]
+  },
+  "static_fire_date_utc": {
+    "type": "String",
+    "default": null
+  },
+  "static_fire_date_unix": {
+    "type": "Number",
+    "default": null
+  },
+  "tdb": {
+    "type": "Boolean",
+    "default": false
+  },
+  "net": {
+    "type": "Boolean",
+    "default": false
+  },
+  "window": {
+    "type": "Number",
+    "default": null
+  },
+  "rocket": {
+    "type": "UUID",
+    "default": null
+  },
+  "success": {
+    "type": "Boolean",
+    "default": null
+  },
+  "failures": [
+    {
+      "time": {
+        "type": "Number",
+      },
+      "altitude": {
+        "type": "Number",
+      },
+      "reason": {
+        "type": "String",
+      },
+    },
+  ],
+  "upcoming": {
+    "type": "Boolean",
+    "required": true
+  },
+  "details": {
+    "type": "String",
+    "default": null
+  },
+  "fairings": {
+    "reused": {
+      "type": "Boolean",
+      "default": null
+    },
+    "recovery_attempt": {
+      "type": "Boolean",
+      "default": null
+    },
+    "recovered": {
+      "type": "Boolean",
+      "default": null
+    },
+    "ships": [
+      "UUID"
+    ]
+  },
+  "crew": [
+    {
+      "crew": {
+        "type": "UUID",
+        "default": null
+      },
+      "role": {
+        "type": "String",
+        "default": null
+      },
+    }
+  ],
+  "ships": [
+    "UUID"
+  ],
+  "capsules": [
+    "UUID"
+  ],
+  "payloads": [
+    "UUID"
+  ],
+  "launchpad": {
+    "type": "UUID",
+    "default": null
+  },
+  "cores": [
+    {
+      "core": {
+        "type": "UUID",
+        "default": null
+      },
+      "flight": {
+        "type": "Number",
+        "default": null
+      },
+      "gridfins": {
+        "type": "Boolean",
+        "default": null
+      },
+      "legs": {
+        "type": "Boolean",
+        "default": null
+      },
+      "reused": {
+        "type": "Boolean",
+        "default": null
+      },
+      "landing_attempt": {
+        "type": "Boolean",
+        "default": null
+      },
+      "landing_success": {
+        "type": "Boolean",
+        "default": null
+      },
+      "landing_type": {
+        "type": "String",
+        "default": null
+      },
+      "landpad": {
+        "type": "UUID",
+        "default": null
+      }
+    }
+  ],
+  "links": {
+    "patch": {
+      "small": {
+        "type": "String",
+        "default": null
+      },
+      "large": {
+        "type": "String",
+        "default": null
+      }
+    },
+    "reddit": {
+      "campaign": {
+        "type": "String",
+        "default": null
+      },
+      "launch": {
+        "type": "String",
+        "default": null
+      },
+      "media": {
+        "type": "String",
+        "default": null
+      },
+      "recovery": {
+        "type": "String",
+        "default": null
+      }
+    },
+    "flickr": {
+      "small": [
+        "String"
+      ],
+      "original": [
+        "String"
+      ]
+    },
+    "presskit": {
+      "type": "String",
+      "default": null
+    },
+    "webcast": {
+      "type": "String",
+      "default": null
+    },
+    "youtube_id": {
+      "type": "String",
+      "default": null
+    },
+    "article": {
+      "type": "String",
+      "default": null
+    },
+    "wikipedia": {
+      "type": "String",
+      "default": null
+    }
+  },
+  "auto_update": {
+    "type": "Boolean",
+    "default": true
+  }
+}
+
+Get all upcoming launches
+Method : GET
+
+URL : https://api.spacexdata.com/v5/launches/upcoming
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "fairings": null,
+        "links": {
+            "patch": {
+                "small": "https://images2.imgbox.com/53/22/dh0XSLXO_o.png",
+                "large": "https://images2.imgbox.com/15/2b/NAcsTEB6_o.png"
+            },
+            "reddit": {
+                "campaign": "https://www.reddit.com/r/spacex/comments/ezn6n0/crs20_launch_campaign_thread",
+                "launch": "https://www.reddit.com/r/spacex/comments/fe8pcj/rspacex_crs20_official_launch_discussion_updates/",
+                "media": "https://www.reddit.com/r/spacex/comments/fes64p/rspacex_crs20_media_thread_videos_images_gifs/",
+                "recovery": null
+            },
+            "flickr": {
+                "small": [],
+                "original": [
+                    "https://live.staticflickr.com/65535/49635401403_96f9c322dc_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202657_e81210a3ca_o.jpg",
+                    "https://live.staticflickr.com/65535/49636202572_8831c5a917_o.jpg",
+                    "https://live.staticflickr.com/65535/49635401423_e0bef3e82f_o.jpg",
+                    "https://live.staticflickr.com/65535/49635985086_660be7062f_o.jpg"
+                ]
+            },
+            "presskit": "https://www.spacex.com/sites/spacex/files/crs-20_mission_press_kit.pdf",
+            "webcast": "https://youtu.be/1MkcWK2PnsU",
+            "youtube_id": "1MkcWK2PnsU",
+            "article": "https://spaceflightnow.com/2020/03/07/late-night-launch-of-spacex-cargo-ship-marks-end-of-an-era/",
+            "wikipedia": "https://en.wikipedia.org/wiki/SpaceX_CRS-20"
+        },
+        "static_fire_date_utc": "2020-03-01T10:20:00.000Z",
+        "static_fire_date_unix": 1583058000,
+        "tdb": false,
+        "net": false,
+        "window": 0,
+        "rocket": "5e9d0d95eda69973a809d1ec",
+        "success": true,
+        "failures": [],
+        "details": "SpaceX's 20th and final Crew Resupply Mission under the original NASA CRS contract, this mission brings essential supplies to the International Space Station using SpaceX's reusable Dragon spacecraft. It is the last scheduled flight of a Dragon 1 capsule. (CRS-21 and up under the new Commercial Resupply Services 2 contract will use Dragon 2.) The external payload for this mission is the Bartolomeo ISS external payload hosting platform. Falcon 9 and Dragon will launch from SLC-40, Cape Canaveral Air Force Station and the booster will land at LZ-1. The mission will be complete with return and recovery of the Dragon capsule and down cargo.",
+        "crew": [],
+        "ships": [],
+        "capsules": [
+            "5e9e2c5cf359185d753b266f"
+        ],
+        "payloads": [
+            "5eb0e4d0b6c3bb0006eeb253"
+        ],
+        "launchpad": "5e9e4501f509094ba4566f84",
+        "auto_update": true,
+        "flight_number": 91,
+        "name": "CRS-20",
+        "date_utc": "2020-03-07T04:50:31.000Z",
+        "date_unix": 1583556631,
+        "date_local": "2020-03-06T23:50:31-05:00",
+        "date_precision": "hour",
+        "upcoming": false,
+        "cores": [
+            {
+                "core": "5e9e28a7f359187afd3b2662",
+                "flight": 2,
+                "gridfins": true,
+                "legs": true,
+                "reused": true,
+                "landing_attempt": true,
+                "landing_success": true,
+                "landing_type": "RTLS",
+                "landpad": "5e9e3032383ecb267a34e7c7"
+            }
+        ],
+        "id": "5eb87d42ffd86e000604b384"
+    }
+    ...
+]
+
+Get all launchpads
+Method : GET
+
+URL : https://api.spacexdata.com/v4/launchpads
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "name": "VAFB SLC 4E",
+        "full_name": "Vandenberg Air Force Base Space Launch Complex 4E",
+        "locality": "Vandenberg Air Force Base",
+        "region": "California",
+        "timezone": "America/Los_Angeles",
+        "latitude": 34.632093,
+        "longitude": -120.610829,
+        "launch_attempts": 15,
+        "launch_successes": 15,
+        "rockets": [
+            "5e9d0d95eda69973a809d1ec"
+        ],
+        "launches": [
+            "5eb87ce1ffd86e000604b334",
+            "5eb87cf0ffd86e000604b343",
+            "5eb87cfdffd86e000604b34c",
+            "5eb87d05ffd86e000604b354",
+            "5eb87d08ffd86e000604b357",
+            "5eb87d0affd86e000604b359",
+            "5eb87d0fffd86e000604b35d",
+            "5eb87d14ffd86e000604b361",
+            "5eb87d16ffd86e000604b363",
+            "5eb87d1affd86e000604b367",
+            "5eb87d1fffd86e000604b36b",
+            "5eb87d23ffd86e000604b36e",
+            "5eb87d25ffd86e000604b370",
+            "5eb87d28ffd86e000604b373",
+            "5eb87d31ffd86e000604b379"
+        ],
+        "status": "active",
+        "id": "5e9e4502f509092b78566f87"
+    },
+    ...
+]
+
+Get one launchpad
+Method : GET
+
+URL : https://api.spacexdata.com/v4/launchpads/:id
+
+URL Parameters : id=[string] where id is the ID of the launchpad
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "name": "VAFB SLC 4E",
+    "full_name": "Vandenberg Air Force Base Space Launch Complex 4E",
+    "locality": "Vandenberg Air Force Base",
+    "region": "California",
+    "timezone": "America/Los_Angeles",
+    "latitude": 34.632093,
+    "longitude": -120.610829,
+    "launch_attempts": 15,
+    "launch_successes": 15,
+    "rockets": [
+        "5e9d0d95eda69973a809d1ec"
+    ],
+    "launches": [
+        "5eb87ce1ffd86e000604b334",
+        "5eb87cf0ffd86e000604b343",
+        "5eb87cfdffd86e000604b34c",
+        "5eb87d05ffd86e000604b354",
+        "5eb87d08ffd86e000604b357",
+        "5eb87d0affd86e000604b359",
+        "5eb87d0fffd86e000604b35d",
+        "5eb87d14ffd86e000604b361",
+        "5eb87d16ffd86e000604b363",
+        "5eb87d1affd86e000604b367",
+        "5eb87d1fffd86e000604b36b",
+        "5eb87d23ffd86e000604b36e",
+        "5eb87d25ffd86e000604b370",
+        "5eb87d28ffd86e000604b373",
+        "5eb87d31ffd86e000604b379"
+    ],
+    "status": "active",
+    "id": "5e9e4502f509092b78566f87"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query launchpads
+Method : POST
+
+URL : https://api.spacexdata.com/v4/launchpads/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+  "docs": [
+      {
+          "name": "VAFB SLC 4E",
+          "full_name": "Vandenberg Air Force Base Space Launch Complex 4E",
+          "locality": "Vandenberg Air Force Base",
+          "region": "California",
+          "timezone": "America/Los_Angeles",
+          "latitude": 34.632093,
+          "longitude": -120.610829,
+          "launch_attempts": 15,
+          "launch_successes": 15,
+          "rockets": [
+              "5e9d0d95eda69973a809d1ec"
+          ],
+          "launches": [
+              "5eb87ce1ffd86e000604b334",
+              "5eb87cf0ffd86e000604b343",
+              "5eb87cfdffd86e000604b34c",
+              "5eb87d05ffd86e000604b354",
+              "5eb87d08ffd86e000604b357",
+              "5eb87d0affd86e000604b359",
+              "5eb87d0fffd86e000604b35d",
+              "5eb87d14ffd86e000604b361",
+              "5eb87d16ffd86e000604b363",
+              "5eb87d1affd86e000604b367",
+              "5eb87d1fffd86e000604b36b",
+              "5eb87d23ffd86e000604b36e",
+              "5eb87d25ffd86e000604b370",
+              "5eb87d28ffd86e000604b373",
+              "5eb87d31ffd86e000604b379"
+          ],
+          "status": "active",
+          "id": "5e9e4502f509092b78566f87"
+      },
+      ...
+  ],
+  "totalDocs": 6,
+  "offset": 0,
+  "limit": 10,
+  "totalPages": 1,
+  "page": 1,
+  "pagingCounter": 1,
+  "hasPrevPage": false,
+  "hasNextPage": false,
+  "prevPage": null,
+  "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Launchpad Schema
+{
+  "name": {
+    "type": "String",
+    "default": null
+  },
+  "full_name": {
+    "type": "String",
+    "default": null
+  },
+  "status": {
+    "type": "String",
+    "enum": [
+      "active",
+      "inactive",
+      "unknown",
+      "retired",
+      "lost",
+      "under construction"
+    ],
+    "required": true
+  },
+  "locality": {
+    "type": "String",
+    "default": null
+  },
+  "region": {
+    "type": "String",
+    "default": null
+  },
+  "timezone": {
+    "type": "String",
+    "default": null
+  },
+  "latitude": {
+    "type": "Number",
+    "default": null
+  },
+  "longitude": {
+    "type": "Number",
+    "default": null
+  },
+  "launch_attempts": {
+    "type": "Number",
+    "default": 0
+  },
+  "launch_successes": {
+    "type": "Number",
+    "default": 0
+  },
+  "rockets": [
+    "UUID"
+  ],
+  "launches": [
+    "UUID"
+  ]
+}
+
+Get all payloads
+Method : GET
+
+URL : https://api.spacexdata.com/v4/payloads
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+    {
+        "dragon": {
+            "capsule": null,
+            "mass_returned_kg": null,
+            "mass_returned_lbs": null,
+            "flight_time_sec": null,
+            "manifest": null,
+            "water_landing": null,
+            "land_landing": null
+        },
+        "name": "Tintin A & B",
+        "type": "Satellite",
+        "reused": false,
+        "launch": "5eb87d14ffd86e000604b361",
+        "customers": [
+            "SpaceX"
+        ],
+        "norad_ids": [
+            43216,
+            43217
+        ],
+        "nationalities": [
+            "United States"
+        ],
+        "manufacturers": [
+            "SpaceX"
+        ],
+        "mass_kg": 800,
+        "mass_lbs": 1763.7,
+        "orbit": "SSO",
+        "reference_system": "geocentric",
+        "regime": "low-earth",
+        "longitude": null,
+        "semi_major_axis_km": 6737.42,
+        "eccentricity": 0.0012995,
+        "periapsis_km": 350.53,
+        "apoapsis_km": 368.04,
+        "inclination_deg": 97.4444,
+        "period_min": 91.727,
+        "lifespan_years": 1,
+        "epoch": "2020-06-13T13:46:31.000Z",
+        "mean_motion": 15.69864906,
+        "raan": 176.6734,
+        "arg_of_pericenter": 174.2326,
+        "mean_anomaly": 185.9087,
+        "id": "5eb0e4c6b6c3bb0006eeb21e"
+    },
+    ...
+]
+
+Get one payload
+Method : GET
+
+URL : https://api.spacexdata.com/v4/payloads/:id
+
+URL Parameters : id=[string] where id is the ID of the payload
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "dragon": {
+        "capsule": null,
+        "mass_returned_kg": null,
+        "mass_returned_lbs": null,
+        "flight_time_sec": null,
+        "manifest": null,
+        "water_landing": null,
+        "land_landing": null
+    },
+    "name": "Tintin A & B",
+    "type": "Satellite",
+    "reused": false,
+    "launch": "5eb87d14ffd86e000604b361",
+    "customers": [
+        "SpaceX"
+    ],
+    "norad_ids": [
+        43216,
+        43217
+    ],
+    "nationalities": [
+        "United States"
+    ],
+    "manufacturers": [
+        "SpaceX"
+    ],
+    "mass_kg": 800,
+    "mass_lbs": 1763.7,
+    "orbit": "SSO",
+    "reference_system": "geocentric",
+    "regime": "low-earth",
+    "longitude": null,
+    "semi_major_axis_km": 6737.42,
+    "eccentricity": 0.0012995,
+    "periapsis_km": 350.53,
+    "apoapsis_km": 368.04,
+    "inclination_deg": 97.4444,
+    "period_min": 91.727,
+    "lifespan_years": 1,
+    "epoch": "2020-06-13T13:46:31.000Z",
+    "mean_motion": 15.69864906,
+    "raan": 176.6734,
+    "arg_of_pericenter": 174.2326,
+    "mean_anomaly": 185.9087,
+    "id": "5eb0e4c6b6c3bb0006eeb21e"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query payloads
+Method : POST
+
+URL : https://api.spacexdata.com/v4/payloads/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+  "docs": [
+    {
+      "dragon": {
+        "capsule": null,
+        "mass_returned_kg": null,
+        "mass_returned_lbs": null,
+        "flight_time_sec": null,
+        "manifest": null,
+        "water_landing": null,
+        "land_landing": null
+      },
+      "name": "Tintin A & B",
+      "type": "Satellite",
+      "reused": false,
+      "launch": "5eb87d14ffd86e000604b361",
+      "customers": [
+        "SpaceX"
+      ],
+      "norad_ids": [
+        43216,
+        43217
+      ],
+      "nationalities": [
+        "United States"
+      ],
+      "manufacturers": [
+        "SpaceX"
+      ],
+      "mass_kg": 800,
+      "mass_lbs": 1763.7,
+      "orbit": "SSO",
+      "reference_system": "geocentric",
+      "regime": "low-earth",
+      "longitude": null,
+      "semi_major_axis_km": 6737.42,
+      "eccentricity": 0.0012995,
+      "periapsis_km": 350.53,
+      "apoapsis_km": 368.04,
+      "inclination_deg": 97.4444,
+      "period_min": 91.727,
+      "lifespan_years": 1,
+      "epoch": "2020-06-13T13:46:31.000Z",
+      "mean_motion": 15.69864906,
+      "raan": 176.6734,
+      "arg_of_pericenter": 174.2326,
+      "mean_anomaly": 185.9087,
+      "id": "5eb0e4c6b6c3bb0006eeb21e"
+    }
+    ...
+  ],
+  "totalDocs": 136,
+  "offset": 0,
+  "limit": 10,
+  "totalPages": 14,
+  "page": 1,
+  "pagingCounter": 1,
+  "hasPrevPage": false,
+  "hasNextPage": true,
+  "prevPage": null,
+  "nextPage": 2
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Payload Schema
+{
+  "name": {
+    "type": "String",
+    "default": null,
+    "unique": true
+  },
+  "type": {
+    "type": "String",
+    "default": null
+  },
+  "reused": {
+    "type": "Boolean",
+    "default": false
+  },
+  "launch": {
+    "type": "UUID",
+    "default": null
+  },
+  "customers": [
+    "String"
+  ],
+  "norad_ids": [
+    "Number"
+  ],
+  "nationalities": [
+    "String"
+  ],
+  "manufacturers": [
+    "String"
+  ],
+  "mass_kg": {
+    "type": "Number",
+    "default": null
+  },
+  "mass_lbs": {
+    "type": "Number",
+    "default": null
+  },
+  "orbit": {
+    "type": "String",
+    "default": null
+  },
+  "reference_system": {
+    "type": "String",
+    "default": null
+  },
+  "regime": {
+    "type": "String",
+    "default": null
+  },
+  "longitude": {
+    "type": "Number",
+    "default": null
+  },
+  "semi_major_axis_km": {
+    "type": "Number",
+    "default": null
+  },
+  "eccentricity": {
+    "type": "Number",
+    "default": null
+  },
+  "periapsis_km": {
+    "type": "Number",
+    "default": null
+  },
+  "apoapsis_km": {
+    "type": "Number",
+    "default": null
+  },
+  "inclination_deg": {
+    "type": "Number",
+    "default": null
+  },
+  "period_min": {
+    "type": "Number",
+    "default": null
+  },
+  "lifespan_years": {
+    "type": "Number",
+    "default": null
+  },
+  "epoch": {
+    "type": "String",
+    "default": null
+  },
+  "mean_motion": {
+    "type": "Number",
+    "default": null
+  },
+  "raan": {
+    "type": "Number",
+    "default": null
+  },
+  "arg_of_pericenter": {
+    "type": "Number",
+    "default": null
+  },
+  "mean_anomaly": {
+    "type": "Number",
+    "default": null
+  },
+  "dragon": {
+    "capsule": {
+      "type": "UUID",
+      "default": null
+    },
+    "mass_returned_kg": {
+      "type": "Number",
+      "default": null
+    },
+    "mass_returned_lbs": {
+      "type": "Number",
+      "default": null
+    },
+    "flight_time_sec": {
+      "type": "Number",
+      "default": null
+    },
+    "manifest": {
+      "type": "String",
+      "default": null
+    },
+    "water_landing": {
+      "type": "Boolean",
+      "default": null
+    },
+    "land_landing": {
+      "type": "Boolean",
+      "default": null
+    }
+  }
+}
+
+Get roadster info
+Method : GET
+
+URL : https://api.spacexdata.com/v4/roadster
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+{
+    "flickr_images": [
+        "https://farm5.staticflickr.com/4615/40143096241_11128929df_b.jpg",
+        "https://farm5.staticflickr.com/4702/40110298232_91b32d0cc0_b.jpg",
+        "https://farm5.staticflickr.com/4676/40110297852_5e794b3258_b.jpg",
+        "https://farm5.staticflickr.com/4745/40110304192_6e3e9a7a1b_b.jpg"
+    ],
+    "name": "Elon Musk's Tesla Roadster",
+    "launch_date_utc": "2018-02-06T20:45:00.000Z",
+    "launch_date_unix": 1517949900,
+    "launch_mass_kg": 1350,
+    "launch_mass_lbs": 2976,
+    "norad_id": 43205,
+    "epoch_jd": 2459014.345891204,
+    "orbit_type": "heliocentric",
+    "apoapsis_au": 1.663950009802517,
+    "periapsis_au": 0.9859657216725529,
+    "semi_major_axis_au": 196.2991348009594,
+    "eccentricity": 0.2558512635239784,
+    "inclination": 1.077499248052439,
+    "longitude": 317.0839961949045,
+    "periapsis_arg": 177.5240278992875,
+    "period_days": 557.059427465354,
+    "speed_kph": 72209.97792,
+    "speed_mph": 44869.18619012833,
+    "earth_distance_km": 220606726.83228922,
+    "earth_distance_mi": 137078622.45850638,
+    "mars_distance_km": 89348334.47067611,
+    "mars_distance_mi": 55518463.93837848,
+    "wikipedia": "https://en.wikipedia.org/wiki/Elon_Musk%27s_Tesla_Roadster",
+    "video": "https://youtu.be/wbSwFU6tY1c",
+    "details": "Elon Musk's Tesla Roadster is an electric sports car that served as the dummy payload for the February 2018 Falcon Heavy test flight and is now an artificial satellite of the Sun. Starman, a mannequin dressed in a spacesuit, occupies the driver's seat. The car and rocket are products of Tesla and SpaceX. This 2008-model Roadster was previously used by Musk for commuting, and is the only consumer car sent into space.",
+    "id": "5eb75f0842fea42237d7f3f4"
+}
+
+Query roadster
+Method : POST
+
+URL : https://api.spacexdata.com/v4/roadster/query
+
+Auth required : False
+
+Body :
+
+NOTE: Unlike other /query endpoints, this does not provide pagination, and only exposes the select ability in options to allow you to hide/show specific fields in the response. For more info on how select works, see the mongoose docs.
+
+{
+  "query": {},
+  "options": {
+    "select":  {
+      "norad_id": 1,
+    }
+  }
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "flickr_images": [
+        "https://farm5.staticflickr.com/4615/40143096241_11128929df_b.jpg",
+        "https://farm5.staticflickr.com/4702/40110298232_91b32d0cc0_b.jpg",
+        "https://farm5.staticflickr.com/4676/40110297852_5e794b3258_b.jpg",
+        "https://farm5.staticflickr.com/4745/40110304192_6e3e9a7a1b_b.jpg"
+    ],
+    "name": "Elon Musk's Tesla Roadster",
+    "launch_date_utc": "2018-02-06T20:45:00.000Z",
+    "launch_date_unix": 1517949900,
+    "launch_mass_kg": 1350,
+    "launch_mass_lbs": 2976,
+    "norad_id": 43205,
+    "epoch_jd": 2459014.345891204,
+    "orbit_type": "heliocentric",
+    "apoapsis_au": 1.663950009802517,
+    "periapsis_au": 0.9859657216725529,
+    "semi_major_axis_au": 196.2991348009594,
+    "eccentricity": 0.2558512635239784,
+    "inclination": 1.077499248052439,
+    "longitude": 317.0839961949045,
+    "periapsis_arg": 177.5240278992875,
+    "period_days": 557.059427465354,
+    "speed_kph": 72209.97792,
+    "speed_mph": 44869.18619012833,
+    "earth_distance_km": 220606726.83228922,
+    "earth_distance_mi": 137078622.45850638,
+    "mars_distance_km": 89348334.47067611,
+    "mars_distance_mi": 55518463.93837848,
+    "wikipedia": "https://en.wikipedia.org/wiki/Elon_Musk%27s_Tesla_Roadster",
+    "video": "https://youtu.be/wbSwFU6tY1c",
+    "details": "Elon Musk's Tesla Roadster is an electric sports car that served as the dummy payload for the February 2018 Falcon Heavy test flight and is now an artificial satellite of the Sun. Starman, a mannequin dressed in a spacesuit, occupies the driver's seat. The car and rocket are products of Tesla and SpaceX. This 2008-model Roadster was previously used by Musk for commuting, and is the only consumer car sent into space.",
+    "id": "5eb75f0842fea42237d7f3f4"
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Roadster Schema
+{
+  "name": {
+    "type": "String"
+  },
+  "launch_date_utc": {
+    "type": "String"
+  },
+  "launch_date_unix": {
+    "type": "Number"
+  },
+  "launch_mass_kg": {
+    "type": "Number"
+  },
+  "launch_mass_lbs": {
+    "type": "Number"
+  },
+  "norad_id": {
+    "type": "Number"
+  },
+  "epoch_jd": {
+    "type": "Number"
+  },
+  "orbit_type": {
+    "type": "String"
+  },
+  "apoapsis_au": {
+    "type": "Number"
+  },
+  "periapsis_au": {
+    "type": "Number"
+  },
+  "semi_major_axis_au": {
+    "type": "Number"
+  },
+  "eccentricity": {
+    "type": "Number"
+  },
+  "inclination": {
+    "type": "Number"
+  },
+  "longitude": {
+    "type": "Number"
+  },
+  "periapsis_arg": {
+    "type": "Number"
+  },
+  "period_days": {
+    "type": "Number"
+  },
+  "speed_kph": {
+    "type": "Number"
+  },
+  "speed_mph": {
+    "type": "Number"
+  },
+  "earth_distance_km": {
+    "type": "Number"
+  },
+  "earth_distance_mi": {
+    "type": "Number"
+  },
+  "mars_distance_km": {
+    "type": "Number"
+  },
+  "mars_distance_mi": {
+    "type": "Number"
+  },
+  "flickr_images": [
+    "String"
+  ],
+  "wikipedia": {
+    "type": "String"
+  },
+  "video": {
+    "type": "String"
+  },
+  "details": {
+    "type": "String"
+  }
+}
+
+Get all rockets
+Method : GET
+
+URL : https://api.spacexdata.com/v4/rockets
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+  {
+    "height": {
+      "meters": 70,
+      "feet": 229.6
+    },
+    "diameter": {
+      "meters": 12.2,
+      "feet": 39.9
+    },
+    "mass": {
+      "kg": 1420788,
+      "lb": 3125735
+    },
+    "first_stage": {
+      "thrust_sea_level": {
+        "kN": 22819,
+        "lbf": 5130000
+      },
+      "thrust_vacuum": {
+        "kN": 24681,
+        "lbf": 5548500
+      },
+      "reusable": true,
+      "engines": 27,
+      "fuel_amount_tons": 1155,
+      "burn_time_sec": 162
+    },
+    "second_stage": {
+      "thrust": {
+        "kN": 934,
+        "lbf": 210000
+      },
+      "payloads": {
+        "composite_fairing": {
+          "height": {
+            "meters": 13.1,
+            "feet": 43
+          },
+          "diameter": {
+            "meters": 5.2,
+            "feet": 17.1
+          }
+        },
+        "option_1": "dragon"
+      },
+      "reusable": false,
+      "engines": 1,
+      "fuel_amount_tons": 90,
+      "burn_time_sec": 397
+    },
+    "engines": {
+      "isp": {
+        "sea_level": 288,
+        "vacuum": 312
+      },
+      "thrust_sea_level": {
+        "kN": 845,
+        "lbf": 190000
+      },
+      "thrust_vacuum": {
+        "kN": 914,
+        "lbf": 205500
+      },
+      "number": 27,
+      "type": "merlin",
+      "version": "1D+",
+      "layout": "octaweb",
+      "engine_loss_max": 6,
+      "propellant_1": "liquid oxygen",
+      "propellant_2": "RP-1 kerosene",
+      "thrust_to_weight": 180.1
+    },
+    "landing_legs": {
+      "number": 12,
+      "material": "carbon fiber"
+    },
+    "payload_weights": [
+      {
+        "id": "leo",
+        "name": "Low Earth Orbit",
+        "kg": 63800,
+        "lb": 140660
+      },
+      {
+        "id": "gto",
+        "name": "Geosynchronous Transfer Orbit",
+        "kg": 26700,
+        "lb": 58860
+      },
+      {
+        "id": "mars",
+        "name": "Mars Orbit",
+        "kg": 16800,
+        "lb": 37040
+      },
+      {
+        "id": "pluto",
+        "name": "Pluto Orbit",
+        "kg": 3500,
+        "lb": 7720
+      }
+    ],
+    "flickr_images": [
+      "https://farm5.staticflickr.com/4599/38583829295_581f34dd84_b.jpg",
+      "https://farm5.staticflickr.com/4645/38583830575_3f0f7215e6_b.jpg",
+      "https://farm5.staticflickr.com/4696/40126460511_b15bf84c85_b.jpg",
+      "https://farm5.staticflickr.com/4711/40126461411_aabc643fd8_b.jpg"
+    ],
+    "name": "Falcon Heavy",
+    "type": "rocket",
+    "active": true,
+    "stages": 2,
+    "boosters": 2,
+    "cost_per_launch": 90000000,
+    "success_rate_pct": 100,
+    "first_flight": "2018-02-06",
+    "country": "United States",
+    "company": "SpaceX",
+    "wikipedia": "https://en.wikipedia.org/wiki/Falcon_Heavy",
+    "description": "With the ability to lift into orbit over 54 metric tons (119,000 lb)--a mass equivalent to a 737 jetliner loaded with passengers, crew, luggage and fuel--Falcon Heavy can lift more than twice the payload of the next closest operational vehicle, the Delta IV Heavy, at one-third the cost.",
+    "id": "5e9d0d95eda69974db09d1ed"
+  },
+  ...
+]
+
+Get one rocket
+Method : GET
+
+URL : https://api.spacexdata.com/v4/rockets/:id
+
+URL Parameters : id=[string] where id is the ID of the rocket
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "height": {
+      "meters": 70,
+      "feet": 229.6
+    },
+    "diameter": {
+      "meters": 12.2,
+      "feet": 39.9
+    },
+    "mass": {
+      "kg": 1420788,
+      "lb": 3125735
+    },
+    "first_stage": {
+      "thrust_sea_level": {
+        "kN": 22819,
+        "lbf": 5130000
+      },
+      "thrust_vacuum": {
+        "kN": 24681,
+        "lbf": 5548500
+      },
+      "reusable": true,
+      "engines": 27,
+      "fuel_amount_tons": 1155,
+      "burn_time_sec": 162
+    },
+    "second_stage": {
+      "thrust": {
+        "kN": 934,
+        "lbf": 210000
+      },
+      "payloads": {
+        "composite_fairing": {
+          "height": {
+            "meters": 13.1,
+            "feet": 43
+          },
+          "diameter": {
+            "meters": 5.2,
+            "feet": 17.1
+          }
+        },
+        "option_1": "dragon"
+      },
+      "reusable": false,
+      "engines": 1,
+      "fuel_amount_tons": 90,
+      "burn_time_sec": 397
+    },
+    "engines": {
+      "isp": {
+        "sea_level": 288,
+        "vacuum": 312
+      },
+      "thrust_sea_level": {
+        "kN": 845,
+        "lbf": 190000
+      },
+      "thrust_vacuum": {
+        "kN": 914,
+        "lbf": 205500
+      },
+      "number": 27,
+      "type": "merlin",
+      "version": "1D+",
+      "layout": "octaweb",
+      "engine_loss_max": 6,
+      "propellant_1": "liquid oxygen",
+      "propellant_2": "RP-1 kerosene",
+      "thrust_to_weight": 180.1
+    },
+    "landing_legs": {
+      "number": 12,
+      "material": "carbon fiber"
+    },
+    "payload_weights": [
+      {
+        "id": "leo",
+        "name": "Low Earth Orbit",
+        "kg": 63800,
+        "lb": 140660
+      },
+      {
+        "id": "gto",
+        "name": "Geosynchronous Transfer Orbit",
+        "kg": 26700,
+        "lb": 58860
+      },
+      {
+        "id": "mars",
+        "name": "Mars Orbit",
+        "kg": 16800,
+        "lb": 37040
+      },
+      {
+        "id": "pluto",
+        "name": "Pluto Orbit",
+        "kg": 3500,
+        "lb": 7720
+      }
+    ],
+    "flickr_images": [
+      "https://farm5.staticflickr.com/4599/38583829295_581f34dd84_b.jpg",
+      "https://farm5.staticflickr.com/4645/38583830575_3f0f7215e6_b.jpg",
+      "https://farm5.staticflickr.com/4696/40126460511_b15bf84c85_b.jpg",
+      "https://farm5.staticflickr.com/4711/40126461411_aabc643fd8_b.jpg"
+    ],
+    "name": "Falcon Heavy",
+    "type": "rocket",
+    "active": true,
+    "stages": 2,
+    "boosters": 2,
+    "cost_per_launch": 90000000,
+    "success_rate_pct": 100,
+    "first_flight": "2018-02-06",
+    "country": "United States",
+    "company": "SpaceX",
+    "wikipedia": "https://en.wikipedia.org/wiki/Falcon_Heavy",
+    "description": "With the ability to lift into orbit over 54 metric tons (119,000 lb)--a mass equivalent to a 737 jetliner loaded with passengers, crew, luggage and fuel--Falcon Heavy can lift more than twice the payload of the next closest operational vehicle, the Delta IV Heavy, at one-third the cost.",
+    "id": "5e9d0d95eda69974db09d1ed"
+  }
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query rockets
+Method : POST
+
+URL : https://api.spacexdata.com/v4/rockets/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+  "docs": [
+    {
+      "height": {
+        "meters": 70,
+        "feet": 229.6
+      },
+      "diameter": {
+        "meters": 3.7,
+        "feet": 12
+      },
+      "mass": {
+        "kg": 549054,
+        "lb": 1207920
+      },
+      "first_stage": {
+        "thrust_sea_level": {
+          "kN": 7607,
+          "lbf": 1710000
+        },
+        "thrust_vacuum": {
+          "kN": 8227,
+          "lbf": 1849500
+        },
+        "reusable": true,
+        "engines": 9,
+        "fuel_amount_tons": 385,
+        "burn_time_sec": 162
+      },
+      "second_stage": {
+        "thrust": {
+          "kN": 934,
+          "lbf": 210000
+        },
+        "payloads": {
+          "composite_fairing": {
+            "height": {
+              "meters": 13.1,
+              "feet": 43
+            },
+            "diameter": {
+              "meters": 5.2,
+              "feet": 17.1
+            }
+          },
+          "option_1": "dragon"
+        },
+        "reusable": false,
+        "engines": 1,
+        "fuel_amount_tons": 90,
+        "burn_time_sec": 397
+      },
+      "engines": {
+        "isp": {
+          "sea_level": 288,
+          "vacuum": 312
+        },
+        "thrust_sea_level": {
+          "kN": 845,
+          "lbf": 190000
+        },
+        "thrust_vacuum": {
+          "kN": 914,
+          "lbf": 205500
+        },
+        "number": 9,
+        "type": "merlin",
+        "version": "1D+",
+        "layout": "octaweb",
+        "engine_loss_max": 2,
+        "propellant_1": "liquid oxygen",
+        "propellant_2": "RP-1 kerosene",
+        "thrust_to_weight": 180.1
+      },
+      "landing_legs": {
+        "number": 4,
+        "material": "carbon fiber"
+      },
+      "payload_weights": [
+        {
+          "id": "leo",
+          "name": "Low Earth Orbit",
+          "kg": 22800,
+          "lb": 50265
+        },
+        {
+          "id": "gto",
+          "name": "Geosynchronous Transfer Orbit",
+          "kg": 8300,
+          "lb": 18300
+        },
+        {
+          "id": "mars",
+          "name": "Mars Orbit",
+          "kg": 4020,
+          "lb": 8860
+        }
+      ],
+      "flickr_images": [
+        "https://farm1.staticflickr.com/929/28787338307_3453a11a77_b.jpg",
+        "https://farm4.staticflickr.com/3955/32915197674_eee74d81bb_b.jpg",
+        "https://farm1.staticflickr.com/293/32312415025_6841e30bf1_b.jpg",
+        "https://farm1.staticflickr.com/623/23660653516_5b6cb301d1_b.jpg",
+        "https://farm6.staticflickr.com/5518/31579784413_d853331601_b.jpg",
+        "https://farm1.staticflickr.com/745/32394687645_a9c54a34ef_b.jpg"
+      ],
+      "name": "Falcon 9",
+      "type": "rocket",
+      "active": true,
+      "stages": 2,
+      "boosters": 0,
+      "cost_per_launch": 50000000,
+      "success_rate_pct": 97,
+      "first_flight": "2010-06-04",
+      "country": "United States",
+      "company": "SpaceX",
+      "wikipedia": "https://en.wikipedia.org/wiki/Falcon_9",
+      "description": "Falcon 9 is a two-stage rocket designed and manufactured by SpaceX for the reliable and safe transport of satellites and the Dragon spacecraft into orbit.",
+      "id": "5e9d0d95eda69973a809d1ec"
+    },
+    ...
+  ],
+  "totalDocs": 4,
+  "offset": 0,
+  "limit": 10,
+  "totalPages": 1,
+  "page": 1,
+  "pagingCounter": 1,
+  "hasPrevPage": false,
+  "hasNextPage": false,
+  "prevPage": null,
+  "nextPage": null
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Rocket Schema
+{
+  "name": {
+    "type": "String"
+  },
+  "type": {
+    "type": "String"
+  },
+  "active": {
+    "type": "Boolean"
+  },
+  "stages": {
+    "type": "Number"
+  },
+  "boosters": {
+    "type": "Number"
+  },
+  "cost_per_launch": {
+    "type": "Number"
+  },
+  "success_rate_pct": {
+    "type": "Number"
+  },
+  "first_flight": {
+    "type": "String"
+  },
+  "country": {
+    "type": "String"
+  },
+  "company": {
+    "type": "String"
+  },
+  "height": {
+    "meters": {
+      "type": "Number"
+    },
+    "feet": {
+      "type": "Number"
+    }
+  },
+  "diameter": {
+    "meters": {
+      "type": "Number"
+    },
+    "feet": {
+      "type": "Number"
+    }
+  },
+  "mass": {
+    "kg": {
+      "type": "Number"
+    },
+    "lb": {
+      "type": "Number"
+    }
+  },
+  "payload_weights": {
+    "type": [
+      "Object"
+    ]
+  },
+  "first_stage": {
+    "reusable": {
+      "type": "Boolean"
+    },
+    "engines": {
+      "type": "Number"
+    },
+    "fuel_amount_tons": {
+      "type": "Number"
+    },
+    "burn_time_sec": {
+      "type": "Number"
+    },
+    "thrust_sea_level": {
+      "kN": {
+        "type": "Number"
+      },
+      "lbf": {
+        "type": "Number"
+      }
+    },
+    "thrust_vacuum": {
+      "kN": {
+        "type": "Number"
+      },
+      "lbf": {
+        "type": "Number"
+      }
+    }
+  },
+  "second_stage": {
+    "reusable": {
+      "type": "Boolean"
+    },
+    "engines": {
+      "type": "Number"
+    },
+    "fuel_amount_tons": {
+      "type": "Number"
+    },
+    "burn_time_sec": {
+      "type": "Number"
+    },
+    "thrust": {
+      "kN": {
+        "type": "Number"
+      },
+      "lbf": {
+        "type": "Number"
+      }
+    },
+    "payloads": {
+      "option_1": {
+        "type": "String"
+      },
+      "composite_fairing": {
+        "height": {
+          "meters": {
+            "type": "Number"
+          },
+          "feet": {
+            "type": "Number"
+          }
+        },
+        "diameter": {
+          "meters": {
+            "type": "Number"
+          },
+          "feet": {
+            "type": "Number"
+          }
+        }
+      }
+    }
+  },
+  "engines": {
+    "number": {
+      "type": "Number"
+    },
+    "type": {
+      "type": "String"
+    },
+    "version": {
+      "type": "String"
+    },
+    "layout": {
+      "type": "String"
+    },
+    "isp": {
+      "sea_level": {
+        "type": "Number"
+      },
+      "vacuum": {
+        "type": "Number"
+      }
+    },
+    "engine_loss_max": {
+      "type": "Number"
+    },
+    "propellant_1": {
+      "type": "String"
+    },
+    "propellant_2": {
+      "type": "String"
+    },
+    "thrust_sea_level": {
+      "kN": {
+        "type": "Number"
+      },
+      "lbf": {
+        "type": "Number"
+      }
+    },
+    "thrust_vacuum": {
+      "kN": {
+        "type": "Number"
+      },
+      "lbf": {
+        "type": "Number"
+      }
+    },
+    "thrust_to_weight": {
+      "type": "Number"
+    }
+  },
+  "landing_legs": {
+    "number": {
+      "type": "Number"
+    },
+    "material": {
+      "type": "Object"
+    }
+  },
+  "flickr_images": {
+    "type": [
+      "String"
+    ]
+  },
+  "wikipedia": {
+    "type": "String"
+  },
+  "description": {
+    "type": "String"
+  }
+}
+Get all ships
+Method : GET
+
+URL : https://api.spacexdata.com/v4/ships
+
+Auth required : False
+
+Success Responses
+Code : 200 OK
+
+[
+  {
+    "legacy_id": "GOPURSUIT",
+    "model": null,
+    "type": "Cargo",
+    "roles": [
+      "Support Ship",
+      "Fairing Recovery"
+    ],
+    "imo": 9458884,
+    "mmsi": 367191410,
+    "abs": 1201189,
+    "class": 7174230,
+    "mass_kg": 502999,
+    "mass_lbs": 1108925,
+    "year_built": 2007,
+    "home_port": "Port Canaveral",
+    "status": "",
+    "speed_kn": null,
+    "course_deg": null,
+    "latitude": null,
+    "longitude": null,
+    "last_ais_update": null,
+    "link": "https://www.marinetraffic.com/en/ais/details/ships/shipid:439594/mmsi:367191410/imo:9458884/vessel:GO_PURSUIT",
+    "image": "https://i.imgur.com/5w1ZWre.jpg",
+    "launches": [
+      "5eb87d18ffd86e000604b365",
+      "5eb87d19ffd86e000604b366",
+      "5eb87d1bffd86e000604b368",
+      "5eb87d1effd86e000604b36a"
+    ],
+    "name": "GO Pursuit",
+    "active": false,
+    "id": "5ea6ed2e080df4000697c90a"
+  },
+  ...
+]
+
+Get one ship
+Method : GET
+
+URL : https://api.spacexdata.com/v4/ships/:id
+
+URL Parameters : id=[string] where id is the ID of the ship
+
+Auth required : False
+
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+    "legacy_id": "GOPURSUIT",
+    "model": null,
+    "type": "Cargo",
+    "roles": [
+        "Support Ship",
+        "Fairing Recovery"
+    ],
+    "imo": 9458884,
+    "mmsi": 367191410,
+    "abs": 1201189,
+    "class": 7174230,
+    "mass_kg": 502999,
+    "mass_lbs": 1108925,
+    "year_built": 2007,
+    "home_port": "Port Canaveral",
+    "status": "",
+    "speed_kn": null,
+    "course_deg": null,
+    "latitude": null,
+    "longitude": null,
+    "last_ais_update": null,
+    "link": "https://www.marinetraffic.com/en/ais/details/ships/shipid:439594/mmsi:367191410/imo:9458884/vessel:GO_PURSUIT",
+    "image": "https://i.imgur.com/5w1ZWre.jpg",
+    "launches": [
+        "5eb87d18ffd86e000604b365",
+        "5eb87d19ffd86e000604b366",
+        "5eb87d1bffd86e000604b368",
+        "5eb87d1effd86e000604b36a"
+    ],
+    "name": "GO Pursuit",
+    "active": false,
+    "id": "5ea6ed2e080df4000697c90a"
+}
+Error Responses
+Code : 404 NOT FOUND
+
+Content : Not Found
+
+Query ships
+Method : POST
+
+URL : https://api.spacexdata.com/v4/ships/query
+
+Auth required : False
+
+Body :
+
+See query guide for more details on building queries and paginating results.
+
+{
+  "query": {},
+  "options": {}
+}
+Success Response
+Code : 200 OK
+
+Content example :
+
+{
+  "docs": [
+    {
+      "legacy_id": "GOPURSUIT",
+      "model": null,
+      "type": "Cargo",
+      "roles": [
+        "Support Ship",
+        "Fairing Recovery"
+      ],
+      "imo": 9458884,
+      "mmsi": 367191410,
+      "abs": 1201189,
+      "class": 7174230,
+      "mass_kg": 502999,
+      "mass_lbs": 1108925,
+      "year_built": 2007,
+      "home_port": "Port Canaveral",
+      "status": "",
+      "speed_kn": null,
+      "course_deg": null,
+      "latitude": null,
+      "longitude": null,
+      "last_ais_update": null,
+      "link": "https://www.marinetraffic.com/en/ais/details/ships/shipid:439594/mmsi:367191410/imo:9458884/vessel:GO_PURSUIT",
+      "image": "https://i.imgur.com/5w1ZWre.jpg",
+      "launches": [
+        "5eb87d18ffd86e000604b365",
+        "5eb87d19ffd86e000604b366",
+        "5eb87d1bffd86e000604b368",
+        "5eb87d1effd86e000604b36a"
+      ],
+      "name": "GO Pursuit",
+      "active": false,
+      "id": "5ea6ed2e080df4000697c90a"
+    },
+    ...
+  ],
+  "totalDocs": 22,
+  "offset": 0,
+  "limit": 10,
+  "totalPages": 3,
+  "page": 1,
+  "pagingCounter": 1,
+  "hasPrevPage": false,
+  "hasNextPage": true,
+  "prevPage": null,
+  "nextPage": 2
+}
+Error Responses
+Code : 400 Bad Request
+
+Content : Mongoose error is shown, with suggestions to fix the query.
+
+Ship Schema
+{
+  "name": {
+    "type": "String",
+    "unique": true,
+    "required": true
+  },
+  "legacy_id": {
+    "type": "String",
+    "default": null
+  },
+  "model": {
+    "type": "String",
+    "default": null
+  },
+  "type": {
+    "type": "String",
+    "default": null
+  },
+  "roles": [
+    "String"
+  ],
+  "active": {
+    "type": "Boolean",
+    "required": true
+  },
+  "imo": {
+    "type": "Number",
+    "default": null
+  },
+  "mmsi": {
+    "type": "Number",
+    "default": null
+  },
+  "abs": {
+    "type": "Number",
+    "default": null
+  },
+  "class": {
+    "type": "Number",
+    "default": null
+  },
+  "mass_kg": {
+    "type": "Number",
+    "default": null
+  },
+  "mass_lbs": {
+    "type": "Number",
+    "default": null
+  },
+  "year_built": {
+    "type": "Number",
+    "default": null
+  },
+  "home_port": {
+    "type": "String",
+    "default": null
+  },
+  "status": {
+    "type": "String",
+    "default": null
+  },
+  "speed_kn": {
+    "type": "Number",
+    "default": null
+  },
+  "course_deg": {
+    "type": "Number",
+    "default": null
+  },
+  "latitude": {
+    "type": "Number",
+    "default": null
+  },
+  "longitude": {
+    "type": "Number",
+    "default": null
+  },
+  "last_ais_update": {
+    "type": "String",
+    "default": null
+  },
+  "link": {
+    "type": "String",
+    "default": null
+  },
+  "image": {
+    "type": "String",
+    "default": null
+  },
+  "launches": [
+    {
+      "type": "UUID"
+    }
+  ]
+}
+
