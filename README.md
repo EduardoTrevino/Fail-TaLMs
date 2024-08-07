@@ -50,7 +50,7 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | CoinGecko                        | 2         | :x:        | TBD      |
 | Crypto & Finance | CoinLore                         | 2         | :x:        | TBD      |
 | Crypto & Finance | CoinMap                          | 2         | :x:        | TBD      |
-| Crypto & Finance | Coinpaprika                      | 0         | :x:        | TBD      |
+| Crypto & Finance | Coinpaprika                      | 2         | :x:        | TBD      |
 | Crypto & Finance | Currency Rates                   | 0         | :x:        | TBD      |
 | Crypto & Finance | DEX Screener                     | 0         | :x:        | TBD      |
 | Crypto & Finance | ExchangeRate-API                 | 0         | :x:        | TBD      |
