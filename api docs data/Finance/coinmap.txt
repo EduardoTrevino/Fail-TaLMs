@@ -1,0 +1,233 @@
+coinmap
+coinmap REST API
+Data served and stored using this API are licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMap Foundation (OSMF).
+
+You are free to copy, distribute, transmit and adapt our data, as long as you credit coinmap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence.
+
+Venue
+Venue - List of Venues
+https://coinmap.org/api/v1/venues/
+Parameter
+Field	Type	Description
+lat1optional	Float	
+Minimum latitude (>=)
+
+lat2optional	Float	
+Maximum latitude (<=)
+
+lon1optional	Float	
+Minimum longitude (>=)
+
+lon2optional	Float	
+Maximum longitude (<=)
+
+queryoptional	String	
+Substring search in venue names
+
+categoryoptional	String	
+Filter category
+
+owneroptional	String	
+Venue owner (userhash)
+
+upvoteroptional	String	
+User who upvoted the venue (userhash)
+
+beforeoptional	Date	
+Only show venues created before YYYY-MM-DD
+
+afteroptional	Date	
+Only show venues created after YYYY-MM-DD
+
+promotedoptional	Boolean	
+Show promoted venues (unset = both)
+
+limitoptional	Number	
+Limit number of results
+
+offsetoptional	Number	
+Skip first N results
+
+modeoptional	String	
+Return result as ...
+
+Allowed values: "list", "full", "count", "points", "ids", "csv"
+
+Success 200
+Field	Type	Description
+venues	Object[]	
+List of venues
+
+count	Number	
+Count of venues
+
+points	Object[]	
+Coordinates of venues
+
+Venue - Create New Venue
+https://coinmap.org/api/v1/venues/
+Parameter
+Field	Type	Description
+venue	Object	
+Venue to be added
+
+Success 200
+Field	Type	Description
+venue	Object	
+Added venue
+
+Error 4xx
+Field	Description
+error	
+Invalid venue posted
+
+Venue - Read Venue
+https://coinmap.org/api/v1/venues/:id
+Parameter
+Field	Type	Description
+id	Number	
+ID of the venue to be returned
+
+Success 200
+Field	Type	Description
+venue	Object	
+Venue info
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Venue - Update Venue
+https://coinmap.org/api/v1/venues/:id
+Parameter
+Field	Type	Description
+id	Number	
+ID of the venue to be modified
+
+Success 200
+Field	Type	Description
+venue	Object	
+Venue info
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Venue - Delete Venue
+https://coinmap.org/api/v1/venues/:id
+Parameter
+Field	Type	Description
+id	Number	
+ID of the venue to be deleted
+
+Success 200
+Field	Type	Description
+status	Object	
+OK
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Comment
+Comment - List of Comments
+https://coinmap.org/api/v1/venues/:venue_id/comments/
+Parameter
+Field	Type	Description
+venue_id	Number	
+Venue ID
+
+Success 200
+Field	Type	Description
+Venue	Object	
+comments
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Comment - Create Comment
+https://coinmap.org/api/v1/venues/:venue_id/comments/
+Parameter
+Field	Type	Description
+venue_id	Number	
+Venue ID
+
+text	Text	
+Comment text
+
+Success 200
+Field	Type	Description
+Venue	Object	
+comments
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Rating
+Rating - Get Rating
+https://coinmap.org/api/v1/venues/:venue_id/ratings/
+Parameter
+Field	Type	Description
+venue_id	Number	
+Venue ID
+
+Success 200
+Field	Type	Description
+ratings	Object	
+The first field is the sum of all positive ratings and the second field is the sum of all negative ratings. The third field indicates if the venue was rated by a user who is logged in; logged-in users can provide ratings of 1 (a positive rating), -1 (a negative rating), or 0 (no rating).
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+Rating - Create Rating
+https://coinmap.org/api/v1/venues/:venue_id/ratings/
+Parameter
+Field	Type	Description
+venue_id	Number	
+Venue ID
+
+vote	Number	
+Rating vote
+
+Success 200
+Field	Type	Description
+Venue	Object	
+ratings
+
+Error 4xx
+Field	Description
+error	
+Venue not found
+
+AtmOperators
+AtmOperators - List of ATM operators
+https://coinmap.org/api/v1/atm-operators/
+Success 200
+Field	Type	Description
+operators	Object[]	
+List of ATM operators
+
+Coins
+Coins - List of Coins
+https://coinmap.org/api/v1/coins/
+Success 200
+Field	Type	Description
+coins	Object[]	
+List of coins
+
+Providers
+Providers - List of ATM providers
+https://coinmap.org/api/v1/providers/
+Success 200
+Field	Type	Description
+providers	Object[]	
+List of ATM providers

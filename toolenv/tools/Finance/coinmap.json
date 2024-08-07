@@ -1,0 +1,145 @@
+{
+  "tool_name": "coinmap",
+  "tool_description": "Coinmap API to access data about crypto ATMs and related information.",
+  "title": "Coinmap",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 200,
+    "avgSuccessRate": 95,
+    "popularityScore": 8.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://coinmap.org/",
+  "host": "coinmap.org",
+  "api_list": [
+    {
+      "name": "Get Venues",
+      "url": "https://coinmap.org/api/v1/venues/",
+      "description": "Retrieve a list of crypto ATMs based on location parameters and filter by provider.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "lat1",
+          "type": "FLOAT",
+          "description": "Minimum latitude (>=)",
+          "default": null
+        },
+        {
+          "name": "lat2",
+          "type": "FLOAT",
+          "description": "Maximum latitude (<=)",
+          "default": null
+        },
+        {
+          "name": "lon1",
+          "type": "FLOAT",
+          "description": "Minimum longitude (>=)",
+          "default": null
+        },
+        {
+          "name": "lon2",
+          "type": "FLOAT",
+          "description": "Maximum longitude (<=)",
+          "default": null
+        },
+        {
+          "name": "category",
+          "type": "STRING",
+          "description": "Filter category",
+          "default": "ATM"
+        },
+        {
+          "name": "owner",
+          "type": "STRING",
+          "description": "Venue owner (userhash)",
+          "default": null
+        },
+        {
+          "name": "limit",
+          "type": "NUMBER",
+          "description": "Limit number of results",
+          "default": 50
+        },
+        {
+          "name": "offset",
+          "type": "NUMBER",
+          "description": "Skip first N results",
+          "default": 0
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://coinmap.org/api/v1/venues/\"\nparams = {\"lat1\": lat1, \"lat2\": lat2, \"lon1\": lon1, \"lon2\": lon2, \"category\": category, \"owner\": owner, \"limit\": limit, \"offset\": offset}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\ndata = response.json() if response.status_code == 200 else response.text\nprint(data)",
+      "statuscode": 200,
+      "body": {
+        "venues": [
+          {
+            "id": "int",
+            "name": "str",
+            "latitude": "float",
+            "longitude": "float",
+            "category": "str",
+            "url": "str"
+          }
+        ],
+        "count": "int",
+        "points": [
+          {
+            "latitude": "float",
+            "longitude": "float"
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "venues": {
+            "type": "array"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "points": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "Get Ratings",
+      "url": "https://coinmap.org/api/v1/venues/{venue_id}/ratings/",
+      "description": "Retrieve ratings of a specific venue.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "venue_id",
+          "type": "NUMBER",
+          "description": "ID of the venue to get ratings for",
+          "default": null
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://coinmap.org/api/v1/venues/{venue_id}/ratings/\"\nresponse = requests.get(url)\ndata = response.json() if response.status_code == 200 else response.text\nprint(data)",
+      "statuscode": 200,
+      "body": {
+        "ratings": [
+          {
+            "positive": "int",
+            "negative": "int",
+            "user_rating": "int"
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ratings": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}
