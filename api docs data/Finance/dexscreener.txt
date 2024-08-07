@@ -1,0 +1,155 @@
+Reference
+DEX Screener API reference
+
+This API is still in beta and endpoints/types may change in the future
+
+API calls are limited to 300 requests per minute
+
+Pairs
+Get one or multiple pairs by chain and pair address
+GET
+ https://api.dexscreener.com/latest/dex/pairs/:chainId/:pairAddresses
+
+Try this endpoint here 🤞🏼
+
+Path Parameters
+Name	Type	Description
+chainId*
+
+string
+
+ethereum | bsc | polygon | etc..
+
+pairAddresses*
+
+string[]
+
+One or multiple, comma-separated pair addresses (up to 30 addresses)
+
+E.g.: 0xAbc1 or 0xAbc1,0xAbc2,0xAbc3
+
+String
+
+200: OK
+Copy
+interface PairsResponse {
+  schemaVersion: string;
+  /** @deprecated use pairs field instead */
+  pair: Pair | null;
+  pairs: Pair[] | null;
+}
+Request
+Response
+https://api.dexscreener.io/latest/dex/pairs/bsc/0x7213a321F1855CF1779f42c0CD85d3D95291D34C,0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae
+
+Tokens
+Get one or multiple pairs by token address
+GET
+ https://api.dexscreener.com/latest/dex/tokens/:tokenAddreses
+
+Try this endpoint here 🤞🏼
+
+Path Parameters
+Name	Type	Description
+tokenAddresses*
+
+string[]
+
+One or multiple, comma-separated token addresses (up to 30 addresses)
+
+E.g.: 0xAbc1 or 0xAbc1,0xAbc2,0xAbc3
+
+200: OK
+Copy
+interface TokensResponse {
+  schemaVersion: string;
+  pairs: Pair[] | null;
+}
+Request
+Sample Response
+https://api.dexscreener.io/latest/dex/tokens/0x2170Ed0880ac9A755fd29B2688956BD959F933F8,0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c
+
+Search
+Search for pairs matching query
+GET
+ https://api.dexscreener.com/latest/dex/search/?q=:q
+
+Query may include pair address, token address, token name or token symbol.
+
+Try this endpoint here 🤞🏼
+
+Path Parameters
+Name	Type	Description
+q*
+
+String
+
+query
+
+E.g.: WBTC or WBTC/USDC or 0xAbc01
+
+200: OK
+Copy
+interface SearchResponse {
+  schemaVersion: string;
+  pairs: Pair[];
+}
+Request
+Response
+https://api.dexscreener.io/latest/dex/search?q=WBNB%20USDC
+
+Pair type
+Copy
+interface Pair {
+  chainId: string;
+  dexId: string;
+  url: string;
+  pairAddress: string;
+  baseToken: {
+    address: string;
+    name: string;
+    symbol: string;
+  };
+  quoteToken: {
+    symbol: string;
+  };
+  priceNative: string;
+  priceUsd?: string;
+  txns: {
+    m5: {
+      buys: number;
+      sells: number;
+    };
+    h1: {
+      buys: number;
+      sells: number;
+    };
+    h6: {
+      buys: number;
+      sells: number;
+    };
+    h24: {
+      buys: number;
+      sells: number;
+    };
+  };
+  volume: {
+    m5: number;
+    h1: number;
+    h6: number;
+    h24: number;
+  };
+  priceChange: {
+    m5: number;
+    h1: number;
+    h6: number;
+    h24: number;
+  };
+  liquidity?: {
+    usd?: number;
+    base: number;
+    quote: number;
+  };
+  fdv?: number;
+  pairCreatedAt?: number;
+}
