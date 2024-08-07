@@ -1,0 +1,121 @@
+{
+  "tool_name": "binance",
+  "tool_description": "Binance API for fetching cryptocurrency data.",
+  "title": "Binance",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 99,
+    "popularityScore": 10,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.binance.com/en/binance-api",
+  "host": "api.binance.com",
+  "api_list": [
+    {
+      "name": "ticker_24hr",
+      "url": "https://api.binance.com/api/v3/ticker/24hr",
+      "description": "Get 24-hour price change statistics.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "symbol",
+          "type": "STRING",
+          "description": "The trading symbol (e.g., BTCUSDT).",
+          "default": "BTCUSDT"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.binance.com/api/v3/ticker/24hr\"\nquerystring = {\"symbol\": symbol}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "symbol": { "type": "string" },
+          "priceChange": { "type": "string" },
+          "priceChangePercent": { "type": "string" },
+          "weightedAvgPrice": { "type": "string" },
+          "prevClosePrice": { "type": "string" },
+          "lastPrice": { "type": "string" },
+          "lastQty": { "type": "string" },
+          "bidPrice": { "type": "string" },
+          "askPrice": { "type": "string" },
+          "openPrice": { "type": "string" },
+          "highPrice": { "type": "string" },
+          "lowPrice": { "type": "string" },
+          "volume": { "type": "string" },
+          "quoteVolume": { "type": "string" },
+          "openTime": { "type": "integer" },
+          "closeTime": { "type": "integer" },
+          "firstId": { "type": "integer" },
+          "lastId": { "type": "integer" },
+          "count": { "type": "integer" }
+        }
+      }
+    },
+    {
+      "name": "ticker_price",
+      "url": "https://api.binance.com/api/v3/ticker/price",
+      "description": "Get the latest price for a symbol.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "symbol",
+          "type": "STRING",
+          "description": "The trading symbol (e.g., BTCUSDT).",
+          "default": "BTCUSDT"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.binance.com/api/v3/ticker/price\"\nquerystring = {\"symbol\": symbol}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "symbol": { "type": "string" },
+          "price": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "avg_price",
+      "url": "https://api.binance.com/api/v3/avgPrice",
+      "description": "Get the current average price for a symbol.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "symbol",
+          "type": "STRING",
+          "description": "The trading symbol (e.g., BTCUSDT).",
+          "default": "BTCUSDT"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.binance.com/api/v3/avgPrice\"\nquerystring = {\"symbol\": symbol}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "mins": { "type": "integer" },
+          "price": { "type": "string" }
+        }
+      }
+    }
+  ]
+}
