@@ -1,0 +1,489 @@
+Wallet API: Users/User (Deprecated)
+Table of Endpoints
+Name	Method	Endpoint	Legacy Scope	CDP API Key Scope
+Show User (Removed Mar 6)	GET	/v2/users/:user_id	N/A	N/A
+Show Current User	GET	/v2/user	- N/A for public data
+- wallet:user:read
+- wallet:user:email	view
+Show Authorization Information	GET	/v2/user/auth	N/A	N/A
+Update Current User (Removed Feb 9)				
+info
+/user refers to the current user making the request.
+/users allows you to pass an ID of a User from whom you want data.
+Overview
+The User resource represents generic user information. By default, only public information is shared without any scopes. More detailed information or email can be requested with additional scopes.
+
+Parameter	Description
+id string	Resource ID
+name string, optional	User's public name
+username string, optional	Payment method's native currency
+profile_location string, optional	Location for user's public profile
+profile_bio string, optional	Bio for user's public profile
+profile_url string, optional	Public profile location if user has one
+avatar_url string	User's avatar url
+resource string, constant user	
+resource_path string	
+User's Public Info (default)
+{
+  "id": "9da7a204-544e-5fd1-9a12-61176c5d4cd8",
+  "name": "User One",
+  "username": "user1",
+  "profile_location": null,
+  "profile_bio": null,
+  "profile_url": "https://coinbase.com/user1",
+  "avatar_url": "https://images.coinbase.com/avatar?h=vR%2FY8igBoPwuwGren5JMwvDNGpURAY%2F0nRIOgH%2FY2Qh%2BQ6nomR3qusA%2Bh6o2%0Af9rH&s=128",
+  "resource": "user",
+  "resource_path": "/v2/user"
+}
+
+
+Detailed Info of Authenticated User (wallet:user:read)
+{
+  ...
+  "time_zone": "Pacific Time (US & Canada)",
+  "native_currency": "USD",
+  "bitcoin_unit": "bits",
+  "country": {
+    "code": "US",
+    "name": "United States"
+  },
+  "created_at": "2015-01-31T20:49:02Z"
+}
+
+Authenticated User with Email (wallet:user:email)
+{
+  ...
+  "email": "user1@example.com"
+}
+
+Show Current User
+Get current user's public information. To get user's email or private information, use permissions wallet:user:email and wallet:user:read. If current request has a wallet:transactions:send scope, then the response will contain a boolean sends_disabled field that indicates if the user's send functionality has been disabled.
+
+HTTP Request
+GET https://api.coinbase.com/v2/user
+
+Scopes
+No scope required for public data
+wallet:user:read
+wallet:user:email
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/user /
+   -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Response
+{
+  "data": {
+    "id": "9da7a204-544e-5fd1-9a12-61176c5d4cd8",
+    "name": "User One",
+    "username": "user1",
+    "profile_location": null,
+    "profile_bio": null,
+    "profile_url": "https://coinbase.com/user1",
+    "avatar_url": "https://images.coinbase.com/avatar?h=vR%2FY8igBoPwuwGren5JMwvDNGpURAY%2F0nRIOgH%2FY2Qh%2BQ6nomR3qusA%2Bh6o2%0Af9rH&s=128",
+    "resource": "user",
+    "resource_path": "/v2/user"
+  }
+}
+
+
+Show Authorization Information
+Get current user's authorization information including granted scopes and send limits when using OAuth2 authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/user/auth
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/user/auth /
+   -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Response
+{
+  "data": {
+    "method": "oauth",
+    "scopes": [
+        "wallet:user:read",
+        "wallet:user:email"
+    ],
+    "oauth_meta": {}
+  }
+}
+
+Sign In With Coinbase Fields
+IDs and Referencing Other Objects
+All Sign In With Coinbase API resource IDs are represented in UUID format. All resources have also a resource field which represents the resource type and resource_path for the location under api.coinbase.com. These values can be useful when building wrappers around the API or when linking to other resources.
+
+{
+  "id": "2bbf394c-193b-5b2a-9155-3b4732659ede",
+  ...
+  "resource": "account",
+  "resource_path": "/v2/accounts/2bbf394c-193b-5b2a-9155-3b4732659ede"
+}
+
+Money Hash
+Money values are represented by a hash object which contains amount and currency fields. Amount is always returned as a string which you should be careful when parsing to have correct decimal precision.
+
+{
+    "amount": "39.59000000",
+    "currency": "BTC"
+}
+
+Timestamps
+All timestamps are returned in ISO8601 format in UTC with fields ending in postfix _at. Example:
+
+{
+  `"created_at": "2015-07-01T00:55:47Z"`
+}
+
+Enumerable Values
+Some fields like type usually have a constant set of values. As Coinbase is actively growing and adding features, new values can be added or removed over time and you should take this into account when designing implementation. A good example is the Transaction resource which has multiple type values and new ones are added as new features are added to Coinbase.
+
+{
+  "id": "57ffb4ae-0c59-5430-bcd3-3f98f797a66c",
+  "type": "send",
+  },
+
+Lists
+Similar to enumerable values, list values can be added or removed over time. Instead of hard-coding for specific values, your implementation should be flexible enough to take these requirements into account.
+
+Sign In With Coinbase Authorization
+Both API key and OAuth2 authentication require that you obtain correct authorization scopes to access different API endpoints.
+
+All authenticated endpoints, except GET /user, require a specific scope for access. In general, permissions follow the service-name:resource:action pattern, where the main services are wallet and data.
+
+With OAuth2, scopes should be considered as grants. Users can select which scopes they grant access to for the application. The application might need to request new scopes over the lifecycle of the authorization. In general, only ask for the scopes that your application needs, and avoid asking for access to unnessary ones.
+
+Sign in with Coinbase Pagination
+Overview
+curl https://api.coinbase.com/v2/accounts \
+  -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Example response
+
+{
+  "pagination": {
+    "ending_before": null,
+    "starting_after": null,
+    "limit": 25,
+    "order": "desc",
+    "previous_uri": null,
+    "next_uri": "/v2/accounts?&limit=25&starting_after=5d5aed5f-b7c0-5585-a3dd-a7ed9ef0e414"
+  },
+  "data": [
+    ...
+  ]
+}
+
+GET endpoints that return an object list support cursor based pagination, with pagination information inside a pagination object. This means that to get all objects, you must paginate through the results by always using the id of the last resource in the list as a starting_after parameter for the next call.
+
+To make it easier, the API contructs the next call into next_uri together with all the currently used pagination parameters. You know that you have paginated all the results when the response's next_uri is empty.
+
+Cursor based pagination protects you from the situation where the resulting object list changes during pagination (new resource gets added or removed).
+
+The default limit is set to 25, but values up to 100 are permitted. Due to permissions and access level control, the response list might in some cases return less objects than specified by the limit parameter. This is normal behaviour and should be expected.
+
+The result list is in descending order by default (newest item first) but it can be reversed by supplying order=asc instead.
+
+Arguments
+Parameter	Description
+limit optional	Number of results per call. Accepted values: 0 - 100 (default 25)
+order optional	Result order. Accepted values: asc, desc (default)
+starting_after optional	Pagination cursor. Resource ID that defines your place in the list.
+ending_before optional	Pagination cursor. Resource ID that defines your place in the list.
+
+Data API: Currencies
+Table of Endpoints
+Name	Method	Endpoint	Scope
+Get Fiat Currencies	GET	/v2/currencies	N/A
+Get Cryptocurrencies	GET	/v2/currencies/crypto	N/A
+Get Fiat Currencies
+Lists known fiat currencies. Currency codes conform to the ISO 4217 standard where possible. Currencies with no representation in ISO 4217 may use a custom code.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/currencies
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/currencies
+
+Response
+{
+  "data": [
+    {
+      "id": "AED",
+      "name": "United Arab Emirates Dirham",
+      "min_size": "0.01000000"
+    },
+    {
+      "id": "AFN",
+      "name": "Afghan Afghani",
+      "min_size": "0.01000000"
+    },
+    {
+      "id": "ALL",
+      "name": "Albanian Lek",
+      "min_size": "0.01000000"
+    },
+    {
+      "id": "AMD",
+      "name": "Armenian Dram",
+      "min_size": "0.01000000"
+    }
+  ],
+  ...
+}
+
+Get Cryptocurrencies
+Lists known cryptocurrencies.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/currencies/crypto
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/currencies
+
+Response
+[
+  {
+    "code": "BTC",
+    "name": "Bitcoin",
+    "color": "#F7931A",
+    "sort_index": 100,
+    "exponent": 8,
+    "type": "crypto",
+    "address_regex": "^([13][a-km-zA-HJ-NP-Z1-9]{25,34})|^(bc1[qzry9x8gf2tvdw0s3jn54khce6mua7l]([qpzry9x8gf2tvdw0s3jn54khce6mua7l]{38}|[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{58}))$",
+    "asset_id": "5b71fc48-3dd3-540c-809b-f8c94d0e68b5"
+  },
+  {
+    "code": "ETH",
+    "name": "Ethereum",
+    "color": "#627EEA",
+    "sort_index": 102,
+    "exponent": 8,
+    "type": "crypto",
+    "address_regex": "^(?:0x)?[0-9a-fA-F]{40}$",
+    "asset_id": "d85dce9b-5b73-5c3c-8978-522ce1d1c1b4"
+  },
+  {
+    "code": "ETH2",
+    "name": "Ethereum 2",
+    "color": "#8E76FF",
+    "sort_index": 161,
+    "exponent": 8,
+    "type": "crypto",
+    "address_regex": "^(?:0x)?[0-9a-fA-F]{40}$",
+    "asset_id": "3bec5bf3-507a-51ba-8e41-dc953b1a5c4d"
+  },
+  {
+    "code": "ETC",
+    "name": "Ethereum Classic",
+    "color": "#59D4AF",
+    "sort_index": 103,
+    "exponent": 8,
+    "type": "crypto",
+    "address_regex": "^(?:0x)?[0-9a-fA-F]{40}$",
+    "asset_id": "c16df856-0345-5358-8a70-2a78c804e61f"
+  }
+]
+
+Data API: Exchange Rates
+Table of Endpoints
+Name	Method	Endpoint	Scope
+Get Exchange Rates	GET	/v2/exchange-rates	N/A
+Get Exchange Rates
+Get current exchange rates. Default base currency is USD but it can be defined as any supported currency (see Currencies endpoint). Returned rates will define the exchange rate for one unit of the base currency.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/exchange-rates
+
+Scopes
+No permission required
+Arguments
+Parameter	Type	Required	Description
+currency	string	Optional	Base currency (default: USD)
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/exchange-rates?currency=BTC
+
+Response
+{
+  "data": {
+    "currency": "BTC",
+    "rates": {
+      "AED": "36.73",
+      "AFN": "589.50",
+      "ALL": "1258.82",
+      "AMD": "4769.49",
+      "ANG": "17.88",
+      "AOA": "1102.76",
+      "ARS": "90.37",
+      "AUD": "12.93",
+      "AWG": "17.93",
+      "AZN": "10.48",
+      "BAM": "17.38",
+      ...
+    }
+  }
+}
+
+Data API: Prices
+Table of Endpoints
+Name	Method	Endpoint	Scope
+Get Buy Price	GET	/v2/prices/:currency_pair/buy	N/A
+Get Sell Price	GET	/v2/prices/:currency_pair/sell	N/A
+Get Spot Price	GET	/v2/prices/:currency_pair/spot	N/A
+Get Buy Price
+Get the total price to buy one bitcoin or ether.
+
+Note that exchange rates fluctuates so the price is only correct for seconds at the time. This buy price includes standard Coinbase fee (1%) but excludes any other fees including bank fees. If you need more accurate price estimate for a specific payment method or amount, see buy bitcoin endpoint and quote: true option.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/prices/:currency_pair/buy
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/prices/BTC-USD/buy \
+  -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Response
+{
+  "data": {
+    "amount": "1020.25",
+    "currency": "USD"
+  }
+}
+
+Get Sell Price
+Get the total price to sell one bitcoin or ether.
+
+Note that exchange rates fluctuates so the price is only correct for seconds at the time. This sell price includes standard Coinbase fee (1%) but excludes any other fees including bank fees. If you need more accurate price estimate for a specific payment method or amount, see sell bitcoin endpoint and quote: true option.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/prices/:currency_pair/sell
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/prices/BTC-USD/sell /
+  -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Response
+{
+  "data": {
+    "amount": "1010.25",
+    "currency": "USD"
+  }
+}
+
+Get Spot Price
+Get the current market price for bitcoin. This is usually somewhere in between the buy and sell price.
+
+Note that exchange rates fluctuates so the price is only correct for seconds at the time.
+
+You can also get historic prices with date parameter.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/prices/:currency_pair/spot
+
+Scopes
+No permission required
+Arguments
+Parameter	Type	Required	Description
+date	string	Optional	For historic spot price, use format YYYY-MM-DD (UTC)
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/prices/BTC-USD/spot \
+  -H 'Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c'
+
+Response
+{
+  "data": {
+    "amount": "1015.00",
+    "currency": "USD"
+  }
+}
+
+Data API: Time
+Table of Endpoints
+Name	Method	Endpoint	Scope
+Get Current Time	GET	/v2/time	N/A
+Get Current Time
+Get the API server time.
+
+This endpoint doesn't require authentication.
+
+HTTP Request
+GET https://api.coinbase.com/v2/time
+
+Scopes
+No permission required
+Examples
+Request
+Shell
+Ruby
+Python
+JavaScript
+curl https://api.coinbase.com/v2/time
+
+Response
+{
+  "data": {
+    "iso": "2015-06-23T18:02:51Z",
+    "epoch": 1435082571
+  }
+}

@@ -44,7 +44,7 @@ Please update as you add and intergrate diffrent apis
 | Content          | Wolne Lektury                    | 0         | :x:        | TBD      |
 | Content          | WordPress                        | 2         | :x:        | TBD      |
 | Crypto & Finance | Binance                          | 2         | :x:        | TBD      |
-| Crypto & Finance | CoinBase                         | 0         | :x:        | TBD      |
+| Crypto & Finance | CoinBase                         | 2         | :x:        | TBD      |
 | Crypto & Finance | CoinCap                          | 0         | :x:        | TBD      |
 | Crypto & Finance | CoinDesk                         | 0         | :x:        | TBD      |
 | Crypto & Finance | CoinGecko                        | 0         | :x:        | TBD      |
