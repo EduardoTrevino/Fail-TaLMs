@@ -1,0 +1,153 @@
+{
+  "tool_name": "coinlore",
+  "tool_description": "Coinlore offers a public and free cryptocurrency API for developers and research projects, providing reliable and independent data for over 12,000 crypto coins and more than 300 crypto exchanges.",
+  "title": "Coinlore Cryptocurrency API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 100,
+    "avgSuccessRate": 99,
+    "popularityScore": 9.8,
+    "__typename": "Score"
+  },
+  "home_url": "https://api.coinlore.net/",
+  "host": "api.coinlore.net",
+  "api_list": [
+    {
+      "name": "global_stats",
+      "url": "https://api.coinlore.net/api/global/",
+      "description": "Get global crypto statistics, including the total count of coins, overall market capitalization, BTC dominance, total trading volume, ATH market capitalization, and more.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = 'https://api.coinlore.net/api/global/'\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "coins_count": { "type": "integer" },
+          "active_markets": { "type": "integer" },
+          "total_mcap": { "type": "number" },
+          "total_volume": { "type": "number" },
+          "btc_d": { "type": "string" },
+          "eth_d": { "type": "string" },
+          "mcap_change": { "type": "string" },
+          "volume_change": { "type": "string" },
+          "avg_change_percent": { "type": "string" },
+          "volume_ath": { "type": "number" },
+          "mcap_ath": { "type": "number" }
+        }
+      }
+    },
+    {
+      "name": "tickers",
+      "url": "https://api.coinlore.net/api/tickers/",
+      "description": "Retrieve tick data for multiple crypto coins, sorted by market cap. The data includes details such as name, ID, symbol, price, price change, market cap, volume, and supply for each ticker.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "start",
+          "type": "INTEGER",
+          "description": "The starting index for the list of coins.",
+          "default": 0
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "The number of coins to retrieve.",
+          "default": 100
+        }
+      ],
+      "code": "import requests\n\nurl = 'https://api.coinlore.net/api/tickers/?start=0&limit=100'\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "symbol": { "type": "string" },
+                "name": { "type": "string" },
+                "rank": { "type": "integer" },
+                "price_usd": { "type": "string" },
+                "percent_change_24h": { "type": "string" },
+                "percent_change_1h": { "type": "string" },
+                "percent_change_7d": { "type": "string" },
+                "price_btc": { "type": "string" },
+                "market_cap_usd": { "type": "string" },
+                "volume24": { "type": "string" },
+                "csupply": { "type": "string" },
+                "tsupply": { "type": "string" },
+                "msupply": { "type": "string" }
+              }
+            }
+          },
+          "info": {
+            "type": "object",
+            "properties": {
+              "coins_num": { "type": "integer" },
+              "time": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "coin_markets",
+      "url": "https://api.coinlore.net/api/coin/markets/",
+      "description": "Retrieve top 50 exchanges and markets for a specific coin.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "description": "The ID of the coin.",
+          "default": 90
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = 'https://api.coinlore.net/api/coin/markets/?id=90'\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "base": { "type": "string" },
+                "quote": { "type": "string" },
+                "price": { "type": "number" },
+                "price_usd": { "type": "number" },
+                "volume": { "type": "number" },
+                "volume_usd": { "type": "number" },
+                "time": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
