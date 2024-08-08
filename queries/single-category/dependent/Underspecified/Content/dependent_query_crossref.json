@@ -1,0 +1,98 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "search_works",
+                "api_description": "Search for works based on a query.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "rows",
+                        "type": "INTEGER",
+                        "description": "Number of rows to return.",
+                        "default": 20
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "string",
+                    "message-type": "work-list",
+                    "message-version": "string",
+                    "message": {
+                        "items": [
+                            {
+                                "DOI": "string",
+                                "title": ["string"],
+                                "author": [
+                                    {
+                                        "given": "string",
+                                        "family": "string"
+                                    }
+                                ],
+                                "container-title": ["string"],
+                                "published": {
+                                    "date-parts": [
+                                        [0]
+                                    ]
+                                },
+                                "abstract": "string",
+                                "URL": "string"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "get_work_metadata",
+                "api_description": "Retrieve metadata for a specific work identified by DOI.",
+                "required_parameters": [
+                    {
+                        "name": "doi",
+                        "type": "STRING",
+                        "description": "The DOI of the work.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "status": "string",
+                    "message-type": "work",
+                    "message-version": "string",
+                    "message": {
+                        "DOI": "string",
+                        "title": ["string"],
+                        "author": [
+                            {
+                                "given": "string",
+                                "family": "string"
+                            }
+                        ],
+                        "container-title": ["string"],
+                        "published": {
+                            "date-parts": [
+                                [0]
+                            ]
+                        },
+                        "abstract": "string",
+                        "URL": "string"
+                    }
+                }
+            }
+        ],
+        "query": "Find works related to 'quantum computing' and provide detailed metadata for the first result.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

@@ -1,0 +1,104 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks_search",
+                "api_description": "Search artworks data in the aggregator. Artworks in the groups of essentials are boosted so they'll show up higher in results.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Your search query.",
+                        "default": "monet"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of results to return. Pagination via Elasticsearch conventions.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Used in conjunction with query to sort results.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "agents",
+                "api_description": "A list of all agents sorted by last updated date in descending order.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of resources to return per page.",
+                        "default": "2"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "description": "str",
+                            "birth_date": "int",
+                            "death_date": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find artworks related to Monet and provide details of the artists.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

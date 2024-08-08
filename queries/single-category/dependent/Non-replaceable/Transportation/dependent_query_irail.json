@@ -1,0 +1,384 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Transportation",
+                "tool_name": "irail",
+                "api_name": "connections",
+                "api_description": "Get routes between two stations, including real-time data on delays.",
+                "required_parameters": [
+                    {
+                        "name": "from",
+                        "type": "STRING",
+                        "description": "The name or id of the station of departure.",
+                        "default": "Antwerp-Central"
+                    },
+                    {
+                        "name": "to",
+                        "type": "STRING",
+                        "description": "The name or id of the destination.",
+                        "default": "Brussels"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timesel",
+                        "type": "ENUM",
+                        "description": "Whether the results should show arrivals or departures.",
+                        "default": "departure",
+                        "choices": ["departure", "arrival"]
+                    },
+                    {
+                        "name": "typeOfTransport",
+                        "type": "ENUM",
+                        "description": "The types of transport to include in the search.",
+                        "default": "automatic",
+                        "choices": ["automatic", "trains", "nointernationaltrains", "all"]
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Whether or not to include alerts about the route.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "results",
+                        "type": "NUMBER",
+                        "description": "The number of results to return.",
+                        "default": 6
+                    },
+                    {
+                        "name": "time",
+                        "type": "STRING",
+                        "description": "The time to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The response format.",
+                        "default": "json",
+                        "choices": ["xml", "json", "jsonp"]
+                    },
+                    {
+                        "name": "lang",
+                        "type": "ENUM",
+                        "description": "The language of the response.",
+                        "default": "en",
+                        "choices": ["nl", "fr", "en", "de"]
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "version": "str",
+                    "timestamp": "int",
+                    "connection": [
+                        {
+                            "id": "int",
+                            "departure": {
+                                "delay": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "vehicle": "str",
+                                "vehicleinfo": {
+                                    "name": "str",
+                                    "shortname": "str",
+                                    "@id": "str"
+                                },
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "left": "int",
+                                "canceled": "int",
+                                "direction": {
+                                    "name": "str"
+                                },
+                                "stops": {
+                                    "number": "int",
+                                    "stop": [
+                                        {
+                                            "id": "int",
+                                            "station": "str",
+                                            "stationinfo": {
+                                                "id": "str",
+                                                "@id": "str",
+                                                "locationX": "float",
+                                                "locationY": "float",
+                                                "standardname": "str",
+                                                "name": "str"
+                                            },
+                                            "time": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "departureDelay": "int",
+                                            "departureCanceled": "int",
+                                            "scheduledDepartureTime": "int",
+                                            "arrivalDelay": "int",
+                                            "arrivalCanceled": "int",
+                                            "isExtraStop": "int",
+                                            "scheduledArrivalTime": "int",
+                                            "departureConnection": "str"
+                                        }
+                                    ]
+                                },
+                                "alerts": {
+                                    "number": "int",
+                                    "alert": [
+                                        {
+                                            "id": "int",
+                                            "header": "str",
+                                            "lead": "str",
+                                            "link": "str",
+                                            "startTime": "int",
+                                            "endTime": "int"
+                                        }
+                                    ]
+                                },
+                                "walking": "int",
+                                "departureConnection": "str"
+                            },
+                            "arrival": {
+                                "delay": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "vehicle": "str",
+                                "vehicleinfo": {
+                                    "name": "str",
+                                    "shortname": "str",
+                                    "@id": "str"
+                                },
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "arrived": "int",
+                                "canceled": "int",
+                                "walking": "int",
+                                "direction": {
+                                    "name": "str"
+                                }
+                            },
+                            "duration": "int",
+                            "vias": {
+                                "number": "int",
+                                "via": [
+                                    {
+                                        "id": "str",
+                                        "arrival": {
+                                            "time": "int",
+                                            "platform": "str",
+                                            "platforminfo": {
+                                                "name": "str",
+                                                "normal": "str"
+                                            },
+                                            "arrived": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "vehicle": "str",
+                                            "walking": "int",
+                                            "direction": {
+                                                "name": "str"
+                                            }
+                                        },
+                                        "departure": {
+                                            "time": "int",
+                                            "platform": "str",
+                                            "platforminfo": {
+                                                "name": "str",
+                                                "normal": "str"
+                                            },
+                                            "left": "int",
+                                            "delay": "int",
+                                            "canceled": "int",
+                                            "departureConnection": "str",
+                                            "vehicle": "str",
+                                            "walking": "int",
+                                            "alerts": {
+                                                "number": "int",
+                                                "alert": [
+                                                    {
+                                                        "id": "int",
+                                                        "header": "str",
+                                                        "lead": "str",
+                                                        "link": "str",
+                                                        "startTime": "int",
+                                                        "endTime": "int"
+                                                    }
+                                                ]
+                                            },
+                                            "direction": {
+                                                "name": "str"
+                                            },
+                                            "stops": {
+                                                "number": "int",
+                                                "stop": [
+                                                    {
+                                                        "id": "int",
+                                                        "station": "str",
+                                                        "stationinfo": {
+                                                            "id": "str",
+                                                            "@id": "str",
+                                                            "locationX": "float",
+                                                            "locationY": "float",
+                                                            "standardname": "str",
+                                                            "name": "str"
+                                                        },
+                                                        "time": "int",
+                                                        "delay": "int",
+                                                        "canceled": "int",
+                                                        "departureDelay": "int",
+                                                        "departureCanceled": "int",
+                                                        "scheduledDepartureTime": "int",
+                                                        "arrivalDelay": "int",
+                                                        "arrivalCanceled": "int",
+                                                        "isExtraStop": "int",
+                                                        "scheduledArrivalTime": "int",
+                                                        "departureConnection": "str"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "timeBetween": "int",
+                                        "station": "str",
+                                        "stationinfo": {
+                                            "id": "str",
+                                            "@id": "str",
+                                            "locationX": "float",
+                                            "locationY": "float",
+                                            "standardname": "str",
+                                            "name": "str"
+                                        },
+                                        "vehicle": "str",
+                                        "direction": {
+                                            "name": "str"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Transportation",
+                "tool_name": "irail",
+                "api_name": "vehicle",
+                "api_description": "Retrieve information about a vehicle, including stops, occupancy, current location and delays.",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "The id of the vehicle (train).",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date to query.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format",
+                        "type": "ENUM",
+                        "description": "The response format.",
+                        "default": "json",
+                        "choices": ["xml", "json", "jsonp"]
+                    },
+                    {
+                        "name": "lang",
+                        "type": "ENUM",
+                        "description": "The language of the response.",
+                        "default": "en",
+                        "choices": ["nl", "fr", "en", "de"]
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Whether or not to include alerts about the train.",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "version": "str",
+                    "timestamp": "int",
+                    "vehicle": "str",
+                    "vehicleinfo": {
+                        "name": "str",
+                        "locationX": "float",
+                        "locationY": "float",
+                        "shortname": "str",
+                        "@id": "str"
+                    },
+                    "stops": {
+                        "number": "int",
+                        "stop": [
+                            {
+                                "id": "int",
+                                "station": "str",
+                                "stationinfo": {
+                                    "id": "str",
+                                    "@id": "str",
+                                    "locationX": "float",
+                                    "locationY": "float",
+                                    "standardname": "str",
+                                    "name": "str"
+                                },
+                                "time": "int",
+                                "delay": "int",
+                                "platform": "str",
+                                "platforminfo": {
+                                    "name": "str",
+                                    "normal": "str"
+                                },
+                                "canceled": "int",
+                                "departureDelay": "int",
+                                "departureCanceled": "int",
+                                "scheduledDepartureTime": "int",
+                                "arrivalDelay": "int",
+                                "arrivalCanceled": "int",
+                                "isExtraStop": "int",
+                                "scheduledArrivalTime": "int",
+                                "departureConnection": "str",
+                                "occupancy": {
+                                    "@id": "str",
+                                    "name": "str"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "Find the next train connection from Antwerp Central to Brussels, including intermediate stops and real-time delays.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

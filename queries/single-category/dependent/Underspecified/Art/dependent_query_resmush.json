@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image",
+                "api_description": "Compress an image using resmush.it API",
+                "required_parameters": [
+                    {
+                        "name": "img",
+                        "type": "STRING",
+                        "description": "URL of the image to compress",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "qlty",
+                        "type": "INTEGER",
+                        "description": "Quality level for JPG compression (0-100)",
+                        "default": 92
+                    },
+                    {
+                        "name": "exif",
+                        "type": "BOOLEAN",
+                        "description": "Retain EXIF data during compression",
+                        "default": false
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "src": "str",
+                    "dest": "str",
+                    "src_size": "int",
+                    "dest_size": "int",
+                    "percent": "float",
+                    "expires": "str",
+                    "error": "int",
+                    "error_log": "str"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "check_error",
+                "api_description": "Check the error log of the compressed image",
+                "required_parameters": [
+                    {
+                        "name": "img",
+                        "type": "STRING",
+                        "description": "URL of the image to check",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "error": "int",
+                    "error_log": "str"
+                }
+            }
+        ],
+        "query": "How can I compress an image and check for any errors using resmush.it API?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

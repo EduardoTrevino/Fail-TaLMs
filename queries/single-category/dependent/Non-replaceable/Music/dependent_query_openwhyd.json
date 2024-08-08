@@ -1,0 +1,102 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "dataexport",
+                "api_description": "Download the list of tracks from a playlist posted publicly on Openwhyd",
+                "required_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Format of the response data (json or links)",
+                        "default": "json"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of posts to return",
+                        "default": 20
+                    },
+                    {
+                        "name": "after",
+                        "type": "STRING",
+                        "description": "Identifier of the post from which entries must be returned (for pagination)",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "_id": "str",
+                            "uId": "str",
+                            "uNm": "str",
+                            "text": "str",
+                            "name": "str",
+                            "eId": "str",
+                            "img": "str",
+                            "nbP": "int",
+                            "nbR": "int",
+                            "lov": []
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "userapi",
+                "api_description": "Get details about a user by user ID",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "ID of the user to get info about",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "isSubscr",
+                        "type": "BOOLEAN",
+                        "description": "If set to true, the isSubscribing attribute will be returned",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "_id": "str",
+                    "name": "str",
+                    "handle": "str",
+                    "email": "str",
+                    "bio": "str",
+                    "loc": "str",
+                    "img": "str",
+                    "cvrImg": "str",
+                    "isSubscribing": "bool",
+                    "nbSubscribers": "int",
+                    "nbPosts": "int",
+                    "nbLikes": "int",
+                    "nbSubscriptions": "int",
+                    "lastArtists": ["str"],
+                    "fbId": "str",
+                    "fbTok": "str",
+                    "twId": "str",
+                    "twTok": "str",
+                    "twSec": "str",
+                    "lastFm": {
+                        "name": "str",
+                        "sk": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Get the list of tracks from a user's playlist in JSON format and fetch the details of the user who created the playlist.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

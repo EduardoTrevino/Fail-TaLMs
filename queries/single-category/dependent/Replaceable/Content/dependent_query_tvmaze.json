@@ -1,0 +1,118 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "tvmaze",
+        "api_name": "showsearch",
+        "api_description": "Search through all the shows in the database by the show's name. A fuzzy algorithm is used to find shows even if the query contains small typos. Results are returned in order of relevancy and contain each show's full information.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The name of the show to search for.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "id": "int",
+              "name": "str",
+              "language": "str",
+              "genres": ["list of str"],
+              "status": "str",
+              "runtime": "int",
+              "premiered": "str",
+              "officialSite": "str",
+              "schedule": {
+                "time": "str",
+                "days": ["list of str"]
+              },
+              "rating": {
+                "average": "float"
+              },
+              "weight": "int",
+              "network": {
+                "id": "int",
+                "name": "str",
+                "country": {
+                  "name": "str",
+                  "code": "str",
+                  "timezone": "str"
+                }
+              },
+              "webChannel": "NoneType",
+              "externals": {
+                "tvrage": "int",
+                "thetvdb": "int",
+                "imdb": "str"
+              },
+              "image": {
+                "medium": "str",
+                "original": "str"
+              },
+              "summary": "str",
+              "updated": "int",
+              "_links": {
+                "self": {
+                  "href": "str"
+                },
+                "previousepisode": {
+                  "href": "str"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "tvmaze",
+        "api_name": "showepisodes",
+        "api_description": "A complete list of episodes for the given show. Episodes are returned in their airing order, and include full episode information. By default, specials are not included in the list.",
+        "required_parameters": [
+          {
+            "name": "id",
+            "type": "INT",
+            "description": "The TVmaze ID of the show.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "episodes": [
+            {
+              "id": "int",
+              "url": "str",
+              "name": "str",
+              "season": "int",
+              "number": "int",
+              "type": "str",
+              "airdate": "str",
+              "airtime": "str",
+              "airstamp": "str",
+              "runtime": "int",
+              "image": {
+                "medium": "str",
+                "original": "str"
+              },
+              "summary": "str",
+              "_links": {
+                "self": {
+                  "href": "str"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Find the show 'Breaking Bad' and list all its episodes.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

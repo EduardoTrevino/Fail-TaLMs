@@ -1,0 +1,84 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_recently_added_anime",
+                "api_description": "Fetch a list of recently added anime",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "nskip",
+                        "type": "INT",
+                        "description": "Number of records to skip",
+                        "default": 0
+                    },
+                    {
+                        "name": "nlist",
+                        "type": "INT",
+                        "description": "Number of records to list",
+                        "default": 50
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "anime_list": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_anime_details",
+                "api_description": "Fetch detailed information about an anime using its ID",
+                "required_parameters": [
+                    {
+                        "name": "anime",
+                        "type": "STRING",
+                        "description": "The ID of the anime",
+                        "default": "4658"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "anime": {
+                        "id": "str",
+                        "type": "str",
+                        "name": "str",
+                        "genres": ["str"],
+                        "themes": ["str"],
+                        "plot_summary": "str",
+                        "number_of_episodes": "int",
+                        "vintage": "str",
+                        "ratings": {
+                            "weighted_score": "float",
+                            "bayesian_score": "float"
+                        },
+                        "staff": [
+                            {
+                                "task": "str",
+                                "person": "str"
+                            }
+                        ],
+                        "cast": [
+                            {
+                                "role": "str",
+                                "person": "str"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "Get a list of recently added anime and detailed information about each anime in the list.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

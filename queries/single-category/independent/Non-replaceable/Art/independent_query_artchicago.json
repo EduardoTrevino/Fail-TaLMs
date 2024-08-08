@@ -1,0 +1,57 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks",
+                "api_description": "A list of all artworks sorted by last updated date in descending order.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of resources to return per page.",
+                        "default": "2"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Show me the latest updated artworks from the Art Institute of Chicago.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_ticker_for_specific_coin",
+        "api_description": "Returns price data of a single cryptocurrency on coinpaprika.com including identity, ranking, supplies, beta coefficient, price data in a given currency, and more.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the coin to get data for.",
+            "default": "btc-bitcoin"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quotes",
+            "type": "STRING",
+            "description": "Comma separated list of quotes to return.",
+            "default": "USD"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "string",
+          "name": "string",
+          "symbol": "string",
+          "rank": "number",
+          "circulating_supply": "number",
+          "total_supply": "number",
+          "max_supply": "number",
+          "beta_value": "number",
+          "first_data_at": "string",
+          "last_updated": "string",
+          "quotes": {}
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_historical_ohlcv",
+        "api_description": "Returns Open/High/Low/Close values with volume and market capitalization for a given cryptocurrency over a specified date range.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the coin to get historical data for.",
+            "default": "btc-bitcoin"
+          },
+          {
+            "name": "start",
+            "type": "STRING",
+            "description": "Start point for historical data.",
+            "default": "2023-01-01"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "end",
+            "type": "STRING",
+            "description": "End point for historical data.",
+            "default": "2023-12-31"
+          },
+          {
+            "name": "quote",
+            "type": "STRING",
+            "description": "Returned data quote.",
+            "default": "USD"
+          },
+          {
+            "name": "interval",
+            "type": "STRING",
+            "description": "Returned OHLCV point interval.",
+            "default": "24h"
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "time_open": "string",
+            "time_close": "string",
+            "open": "number",
+            "high": "number",
+            "low": "number",
+            "close": "number",
+            "volume": "number",
+            "market_cap": "number"
+          }
+        ]
+      }
+    ],
+    "query": "What is the current price of Bitcoin and its historical price data for the last year?",
+    "relevant APIs": ["get_ticker_for_specific_coin", "get_historical_ohlcv"],
+    "query_id": 2
+  }
+]
