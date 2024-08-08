@@ -1,0 +1,65 @@
+{
+    "tool_name": "remotejobs",
+    "tool_description": "API to access the latest remote job listings from a diverse range of industries and companies.",
+    "title": "Remote Jobs API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 85,
+        "avgLatency": 700,
+        "avgSuccessRate": 90,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://jobicy.com/api",
+    "host": "jobicy.com",
+    "api_list": [
+        {
+            "name": "latestjobs",
+            "url": "https://jobicy.com/api/v2/remote-jobs",
+            "description": "Retrieve the latest remote job listings.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of listings to return (default: 50, range: 1-50).",
+                    "default": 50
+                },
+                {
+                    "name": "geo",
+                    "type": "STRING",
+                    "description": "Filter by job region (default: all regions).",
+                    "default": "all regions"
+                },
+                {
+                    "name": "industry",
+                    "type": "STRING",
+                    "description": "Filter by job category (default: all categories).",
+                    "default": "all categories"
+                },
+                {
+                    "name": "tag",
+                    "type": "STRING",
+                    "description": "Search by job title and description (default: all jobs).",
+                    "default": "all jobs"
+                }
+            ],
+            "code": "import requests\n\nurl = \"https://jobicy.com/api/v2/remote-jobs\"\nparams = {\"count\": count}\nif geo:\n    params[\"geo\"] = geo\nif industry:\n    params[\"industry\"] = industry\nif tag:\n    params[\"tag\"] = tag\n\nresponse = requests.get(url, params=params)\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\nprint(observation)",
+            "statuscode": 200,
+            "body": {
+                "key1": "value",
+                "key2": "value"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "jobs": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}

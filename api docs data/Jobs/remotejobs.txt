@@ -1,0 +1,214 @@
+Remote Jobs API/RSS Feed
+Seeking to enhance your remote job feed with top-tier opportunities?
+
+Discover the power of Jobicy’s public API, RSS and XML feeds! Effortlessly integrate our expansive selection of remote job listings into your platform. Transform your job feed into a gateway of career possibilities!
+
+Table of content:
+API feed
+   – API Examples
+   – Live API call
+RSS feed
+   – RSS feed generator
+XML feed
+Fair Use and Restrictions
+IFTTT Applets
+AI Bots
+API feed
+This API provides access to the latest remote job listings from a diverse range of industries and companies. It’s a valuable resource for developers looking to integrate remote job data into their applications, websites, or research projects. Please read the guidelines and instructions below to understand how to effectively use the API.
+
+To retrieve the latest remote job listings, use the following API call:
+
+GET https://jobicy.com/api/v2/remote-jobs
+API Query Parameters (optional)
+count - Number of listings to return (default: 50, range: 1-50)
+geo - Filter by job region (default: all regions)
+industry - Filter by job category (default: all categories)
+tag - Search by job title and description (default: all jobs)
+Eg: https://jobicy.com/api/v2/remote-jobs?count=20&geo=usa&industry=marketing&tag=seo
+
+The API response is structured in JSON format with the following main components:
+
+ "id": Unique Job ID,
+ "url": Job link,
+ "jobTitle": Job title,
+ "companyName": Company name,
+ "companyLogo": Company logo link,
+ "jobIndustry": Job function (industry),
+ "jobType": Job type (full-time, contract, part-time or internship)
+ "jobGeo": Geographic restriction for employment (or Anywhere if not applicable), 
+ "jobLevel": Seniority level (or Any if not applicable), 
+ "jobExcerpt": Excerpt job description (max 55 characters), 
+ "jobDescription": Full job description (HTML), 
+ "pubDate": Publication date and time (UTC+00:00),
+ "annualSalaryMin": Annual min salary (if applicable),
+ "annualSalaryMax": Annual max salary (if applicable),
+ "salaryCurrency": ISO 4217 salary currency code (if applicable)
+API Examples
+Get the 20 latest remote jobs with the keyword "Python" from any region:
+https://jobicy.com/api/v2/remote-jobs?count=20&tag=python
+Get the 15 latest remote jobs from Canada:
+https://jobicy.com/api/v2/remote-jobs?count=15&geo=canada
+Get the 30 latest remote jobs in the Copywriting category from USA:
+https://jobicy.com/api/v2/remote-jobs?count=30&geo=usa&industry=copywriting
+Get the 10 latest remote jobs in the Customer Support category from any region:
+https://jobicy.com/api/v2/remote-jobs?count=10&industry=supporting
+
+Live API call
+count
+5
+geo
+
+🇺🇸 USA
+
+industry
+
+Customer Success
+
+tag
+Execute
+GET https://jobicy.com/api/v2/remote-jobs?count=5&geo=usa&industry=supporting
+
+{
+  "apiVersion": "2.0",
+  "documentationUrl": "https://jobi.cy/apidocs",
+  "friendlyNotice": "We appreciate your use of Jobicy API in your projects! Please note that our API access is designed primarily to facilitate broader distribution of our content. We kindly request that you refrain from distributing Jobicy’s job listings to any external job platforms, such as Jooble, Google Jobs, and LinkedIn, among others. To ensure that Jobicy is credited as the original source across various platforms, content in the feeds is published with a slight delay. As our data doesn't change frequently, accessing the Feed a few times daily is sufficient and recommended. Be advised that excessive querying may lead to restricted access. Thank you for understanding and cooperating!",
+  "jobCount": 5,
+  "xRayHash": "xID_66b3c1696099e2.21419452",
+  "clientKey": "key_66b3c169609a5",
+  "lastUpdate": "2024-08-07 08:46:14",
+  "jobs": [
+    {
+      "id": 105962,
+      "url": "https://jobicy.com/jobs/105962-director-customer-success",
+      "jobSlug": "105962-director-customer-success",
+      "jobTitle": "Director, Customer Success",
+      "companyName": "Innovaccer",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2022/01/0b9459ca04b9978e8eda6928e9973248.jpg",
+      "jobIndustry": [
+        "Customer Success"
+      ],
+      "jobType": [
+        "full-time"
+      ],
+      "jobGeo": "USA",
+      "jobLevel": "Director",
+      "jobExcerpt": "The role of the Director-Customer Success is to be a trusted advisor to the client who not only plans, and manages the team and delivers work according to deadlines and within budget but also drives new solutions to best serve the clients. You&#8217;ll work as part of and also manage a driven and creative team&#8230;",
+      "jobDescription": "<p>The role of the Director-Customer Success is to be a trusted advisor to the client who not only plans, and manages the team and delivers work according to deadlines and within budget but also drives new solutions to best serve the clients. You&#8217;ll work as part of and also manage a driven and creative team of product, data, and integration engineers and designers to deploy our platform and solutions against the most challenging problems in the healthcare industry.</p>\n<p>You’ll immerse yourselves in our customers&#8217; most intricate workflows, explore the business problems and understand their true needs, and deliver our solutions that enable our customers to scale and drive adoption while ensuring a great experience for your customers. The problems you tackle will require an analytical and technological mindset, a sharp intuition for the key business and technology issues, and a strong degree of user empathy.</p>\n<h2><strong>A Day in the Life:</strong><strong><br />\n</strong></h2>\n<ul>\n<li>Understand customer needs and be a client-counselor by working together with the customer to come up with solutions to key customer problems and business objectives. Build a client relationship and acts as a trusted advisor to the client</li>\n<li>Manage the overall delivery of the project (charters, kickoffs, requirement gathering, delivery, QBRs) as well as the team including the engineering/product manager and delivery pod (DAs, FDEs, QA engineers, developers, and designers).</li>\n<li>Manage the overall budget and adherence to schedule.</li>\n<li>Identify relevant datasets through deep engagement with customer problems and workflows, and work with forward-deployed engineers to integrate the data into a stable and extensible pipeline as well as customer and product engineering teams to build bespoke workflows for new user groups.</li>\n<li>Present the results of our work and proposals for future work to audiences across all layers of our customers organization</li>\n</ul>\n<h2><strong> </strong><strong>What You Need:</strong><strong><br />\n</strong></h2>\n<ul>\n<li>Experience in technical account management, customer success, or client services/management consulting in the technology and healthcare sector (for a portfolio of 3-5 customers).</li>\n<li>Analytical mindset and demonstrated capability to have worked on analytical or digital transformation projects</li>\n<li>Computer Science or Engineering (any discipline) background.</li>\n<li>Experience in the Payer market.</li>\n<li>Executive presence and the ability to engage with senior-level clients with excellent written, verbal communication skills</li>\n<li>Experience in business requirement gathering and expectation management during projects to ensure customer satisfaction.</li>\n<li>Experience in leading delivery/engineering teams in a technology company is a strong plus</li>\n<li>Worked with offshore/India teams extensively</li>\n<li>Extraordinary ability to take on open-ended problems in unstructured environments, dive into details and deliver outcomes</li>\n<li>Ability to travel 30%-40%. Varies by location and team.</li>\n</ul>\n<p>We offer competitive benefits to set you up for success in and outside of work.</p>\n<h2><strong>Here’s What We Offer:</strong></h2>\n<ul>\n<li><strong>Generous PTO Benefits: </strong>Enjoy PTO benefit accrual of 22 days per year.</li>\n<li><strong>Parental Leave:</strong> Experience one of the industry&#8217;s best parental leave policies to spend time with your new addition.</li>\n<li><strong>Rewards &amp; Recognition:</strong><strong> </strong>Unlock your potential and be rewarded generously with both monetary incentives and widespread recognition for your dedication and outstanding performance. Unlock your potential and be rewarded generously with both monetary incentives and widespread recognition for your dedication and outstanding performance.</li>\n<li><strong>Insurance Benefits:</strong> We offer medical, dental, and vision benefits along with 100% company-sponsored short and long-term disability and basic life insurance. Legal aid and pet insurance options are available at a discounted rate.</li>\n</ul>\n<p>Innovaccer is an equal-opportunity employer. We celebrate diversity, and we are committed to fostering an inclusive and diverse workplace where all employees, regardless of race, color, religion, gender, gender identity or expression, sexual orientation, national origin, genetics, disability, age, marital status, or veteran status, feel valued and empowered.</p>\n<p><strong>Disclaimer:</strong> Innovaccer does not charge fees or require payment from individuals or agencies for securing employment with us. We do not guarantee job spots or engage in any financial transactions related to employment. If you encounter any posts or requests asking for payment or personal information, we strongly advise you to report them immediately to our HR department at px@innovaccer.com. Additionally, please exercise caution and verify the authenticity of any requests before disclosing personal and confidential information, including bank account details.</p>",
+      "pubDate": "2024-08-04 08:13:36"
+    },
+    {
+      "id": 12325,
+      "url": "https://jobicy.com/jobs/12325-solution-consultant-customer-success",
+      "jobSlug": "12325-solution-consultant-customer-success",
+      "jobTitle": "Solution Consultant, Customer Success",
+      "companyName": "Sage",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2022/02/6f27626c36b5d87b047a5d9dd88606e5.jpeg",
+      "jobIndustry": [
+        "Customer Success"
+      ],
+      "jobType": [
+        "full-time"
+      ],
+      "jobGeo": "USA",
+      "jobLevel": "Any",
+      "jobExcerpt": "At Sage, we recognize that the world of work has rapidly shifted over the last few years, particularly how we work. That is why we have committed to working in a hybrid way going forward. Human connection is an essential ingredient of the 4 principles that make up our Flexible Human Work hybrid framework and&#8230;",
+      "jobDescription": "<p>At Sage, we recognize that the world of work has rapidly shifted over the last few years, particularly how we work. That is why we have committed to working in a hybrid way going forward. Human connection is an essential ingredient of the 4 principles that make up our Flexible Human Work hybrid framework and we want to be transparent in what that looks like when you join our Sage family. On one hand, our offices will continue to play an important role in our future and serve as a place for spontaneous conversations, connection, collaboration as well as focused time. On the other hand, we have learned to reimagine where and when we work and to unlock that flexibility and innovation for our colleagues offering them the opportunity to work flex across their home, Sage offices or customer sites.</p>\n<p>Solution Consultant (SC) helps existing Sage Intacct customers expand the adoption of Sage Intacct’s product offerings. The SC is responsible for evoking confidence in Sage Intacct’s functionality and technology infrastructure and removing all technical objections in the sales cycle. The SC will collaborate with Customer Account Managers (CAM) and Customer Account Executives (CAE) in sales cycles and is primarily responsible for:</p>\n<ul>\n<li>Gathering Business Requirements</li>\n<li>Suggesting, positioning and presenting Sage Intacct product offerings and Partner Solutions to solve customer business requirements</li>\n<li>Prepare and present impactful presentations that clearly articulate Sage Intacct’s value.</li>\n</ul>\n<p>SC is also required to complete other SC related tasks assigned by Sage Intacct management.</p>\n<h2>Responsibilities:</h2>\n<ul>\n<li>Support Customer Success add-on and renewal opportunities with the objective of expanding Sage Intacct product adoption and reducing product/customer churn.</li>\n<li>Clearly articulate the benefits of Sage Intacct’s solutions to all levels including lines of business managers and “C” level executives</li>\n<li>Understand customer requirements/needs and establish Sage Intacct’s solution to address their needs</li>\n<li>Develop, present, and deliver high-impact demonstrations of the Sage Intacct solution</li>\n<li>Support CAM’s and CAE’s in production of high-quality sales proposals and supporting materials</li>\n<li>Meet quarterly and annual quota objectives working in tandem with CAM’s and CAE’s</li>\n<li>Provide input to other cross-functional departments pertaining to prospect requests and product enhancements as needed</li>\n</ul>\n<h2>Requirements:</h2>\n<ul>\n<li>Previous Experience with Sage Intacct desired.</li>\n<li>2+ years’ experience as; pre-sales engineer, implementation consulting or customer support for an accounting or financial software application.</li>\n<li>In depth knowledge of accounting (or demonstrable experience of accounting processes)</li>\n<li>Solid oral, written, presentation and interpersonal communication skills</li>\n<li>Proven track record of increasing deal size and accelerating the sales cycle</li>\n<li>Successful quota achievement</li>\n<li>Familiar with internet application software, XML and web services.</li>\n</ul>\n<p>People make Sage great. From our colleagues delivering ground-breaking solutions to the customers who use them: people have helped us grow for more than thirty years, and people are driving our future as a great SaaS company. We&#8217;re writing our next chapter. Be part of it!</p>\n<p>At Sage, we recognize that the world of work has rapidly shifted over the last few years, particularly how we work. That is why we have committed to working in a hybrid way going forward. Human connection is an essential ingredient of the 4 principles that make up our Flexible Human Work hybrid framework and we want to be transparent in what that looks like when you join our Sage family. On one hand, our offices will continue to play an important role in our future and serve as a place for spontaneous conversations, connection, collaboration as well as focused time. On the other hand, we have learned to reimagine where and when we work and to unlock that flexibility and innovation for our colleagues offering them the opportunity to work flex across their home, Sage offices or customer sites.</p>",
+      "pubDate": "2024-08-02 07:26:41"
+    },
+    {
+      "id": 108104,
+      "url": "https://jobicy.com/jobs/108104-customer-onboarding-specialist",
+      "jobSlug": "108104-customer-onboarding-specialist",
+      "jobTitle": "Customer Onboarding Specialist",
+      "companyName": "Fleetio",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2023/07/e571b83c37e0ed5371754d319be16e76.jpeg",
+      "jobIndustry": [
+        "Customer Success"
+      ],
+      "jobType": [
+        "full-time"
+      ],
+      "jobGeo": "USA",
+      "jobLevel": "Any",
+      "jobExcerpt": "As an Onboarding Services Specialist for Fleetio&#8217;s Onboarding Services, your job is to ensure our customers fully adopt our fleet management and maintenance software platform. You&#8217;ll achieve this by establishing a strong rapport with key stakeholders and executing a process-driven onboarding experience. You&#8217;ll work directly with customers to document their desired outcomes, complete product training, configure their&#8230;",
+      "jobDescription": "<p>As an <strong>Onboarding Services Specialist</strong> for Fleetio&#8217;s Onboarding Services, your job is to ensure our customers fully adopt our fleet management and maintenance software platform. You&#8217;ll achieve this by establishing a strong rapport with key stakeholders and executing a process-driven onboarding experience. You&#8217;ll work directly with customers to document their desired outcomes, complete product training, configure their Fleetio account, import their data, and roll out the product to their users.</p>\n<p>In this role, you&#8217;ll manage a portfolio of onboarding projects representing a diverse set of customer industries and geographies. In addition, you&#8217;ll work with and be supported by several other Fleetio teams and integration partners as you lead our customers through their onboarding journey. We&#8217;re looking for a highly organized, detail-oriented, and tech-savvy team member who excels at optimizing processes to help customers adopt new technology to develop more successful habits. If this is you, we encourage you to apply. Be sure to mention coffee in your application so we know you actually read this.</p>\n<p>A little about us…Fleetio is a modern software platform that helps thousands of organizations around the world manage their fleet operations. Transportation technology is a hot market and we’re leading the charge, with raving fans and new customers signing up every day. We raised $144M in Series C in June of 2023 and are on an exciting trajectory as a company. Fleetio is also a proud founding member of the Rails Foundation!</p>\n<h2>What you&#8217;ll be doing:</h2>\n<ul>\n<li class=\"p1\">Work closely with customers to assess their goals and existing business practices to ensure onboarding alignment, proper account setup, and implementation support</li>\n<li class=\"p1\">Track tasks against a schedule, execute onboarding efforts, and coordinate with internal staff to ensure milestones are met on a timely basis</li>\n<li class=\"p1\">Measure and track customer onboarding outcomes</li>\n<li class=\"p1\">Strive for 100% customer satisfaction and happiness during the onboarding process</li>\n<li class=\"p1\">Share the voice of the customer as you partner with Engineering, Marketing, Product, and Sales to deliver a best-in-class customer experience</li>\n<li class=\"p2\">Become a trusted resource for software and productivity trends in the fleet management domain</li>\n</ul>\n<h2>What&#8217;s in it for you:</h2>\n<ul>\n<li>Work with fascinating customers and prospects who are leading the global transportation industry</li>\n<li>Be a part of an incredible team of &#8220;A&#8221; players who go above and beyond to make Fleetio a successful company. We&#8217;re a customer-centric team with a great product, excellent support, and countless happy customers</li>\n<li>This position can work remotely within the United States or from our awesome HQ in downtown Birmingham, AL</li>\n<li>Collaborate in a transparent environment where you are provided the necessary tools, processes, and encouragement to excel every day</li>\n<li>Be heard by colleagues who are eager to apply the ideas and best practices you bring to the table — and who will share their ideas as well</li>\n<li>Thrive in an environment where you are encouraged to give your customers the proper care and attention they need to be successful</li>\n</ul>\n<h2>Requirements:</h2>\n<ul>\n<li>At least 2 years of experience in a customer-facing role in a SaaS environment (<em>experience in customer success or support with an emphasis on training or implementation</em>)</li>\n<li>Experience working with our tools — Project Management tool (Gainsight), CRM systems (Salesforce), online project management tools (Asana) and internal communication tool (Slack)</li>\n<li>Strong Excel skills + comfortable manipulating and importing large amounts of data</li>\n<li>Impeccable written and verbal communication skills and the ability and ease to interact with every level of customer to quickly build trust</li>\n<li>Your work is meticulous and precise when executing a task. When it comes to details, you are painstakingly accurate and consistently thorough all while managing your time appropriately</li>\n<li>Strong team player but also a self-starter who can work autonomously</li>\n<li>Empathetic &#8211; you want to help and serve our customers to become natural Fleetio evangelists</li>\n<li>You are passionate about organization and can adhere to and improve organizational systems. If there&#8217;s a way to reduce redundant work, you&#8217;re on it</li>\n<li>Comfortable with change, experimenting, and trying new ideas</li>\n</ul>\n<h2>Benefits:</h2>\n<ul>\n<li>100% health/dental coverage (50% coverage for family)</li>\n<li>Vision insurance</li>\n<li>Incentive stock options</li>\n<li>401(k) match of 4%</li>\n<li>PTO &#8211; 4 weeks</li>\n<li>13 company holidays + 2 floating holidays</li>\n<li>Parental and bonding leave</li>\n<li>Dependent care and medical FSA</li>\n<li>Short and long term disability</li>\n<li>Community service funds</li>\n<li>Professional development funds</li>\n<li>Health and wellness initiatives</li>\n<li>Mac laptop + new hire equipment stipend</li>\n<li>Monthly catered lunches</li>\n<li>Fully stocked kitchen with tons of drinks &amp; snacks</li>\n<li>Remote working friendly since 2012</li>\n</ul>\n<p><em>Fleetio provides equal employment opportunities to all employees and applicants and prohibits discrimination and harassment. We celebrate diversity and are committed to creating an inclusive environment for all. All employment is decided on the basis of qualifications, merit and business need.</em></p>",
+      "pubDate": "2024-08-01 06:05:01"
+    },
+    {
+      "id": 75087,
+      "url": "https://jobicy.com/jobs/75087-sr-group-manager-customer-success-strategic",
+      "jobSlug": "75087-sr-group-manager-customer-success-strategic",
+      "jobTitle": "Clinical Care Navigator",
+      "companyName": "Lyra Health",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2022/01/1594f6d9649b131ca2414928bd60caac.jpeg",
+      "jobIndustry": [
+        "Customer Success"
+      ],
+      "jobType": [
+        "full-time"
+      ],
+      "jobGeo": "USA",
+      "jobLevel": "Any",
+      "jobExcerpt": "Lyra is transforming mental health care through technology with a human touch to help people feel emotionally healthy at work and at home. We work with industry leaders, such as Morgan Stanley, Uber, Amgen, and other Fortune 500 companies, to improve access to effective, high-quality mental health care for their employees and their families. With&#8230;",
+      "jobDescription": "<div class=\"section page-centered\" data-qa=\"job-description\">\n<div class=\"section page-centered\" data-qa=\"job-description\">\n<div class=\"section page-centered\" data-qa=\"job-description\">\n<div class=\"section page-centered\" data-qa=\"job-description\">\n<div>Lyra is transforming mental health care through technology with a human touch to help people feel emotionally healthy at work and at home. We work with industry leaders, such as Morgan Stanley, Uber, Amgen, and other Fortune 500 companies, to improve access to effective, high-quality mental health care for their employees and their families. With our innovative digital care platform and global provider network, 10 million people can receive the best care and feel better, faster. Founded by David Ebersman, former CFO of Facebook and Genentech, Lyra has raised more than $900 million.</div>\n<h2><b>The Role:</b></h2>\n<div>As a Care Navigator, you’ll be doing the important, meaningful work of managing crises, providing in-the-moment telephone support to clients with complex behavioral health issues, ensuring client safety, and connecting clients to high-quality, evidence-based providers and facilities. This position does not involve providing in-person services or therapy but instead focuses on supporting clients in connecting to care, exclusively by phone and email.</div>\n<div></div>\n<div>This role may be for you if you are an excellent written and verbal communicator, an ace at time management, skilled with crisis management, and passionate about connecting individuals to excellent care. It’s important that you’re comfortable adopting new technology platforms and have a growth mindset. We’re all here for the same goal: to improve access to the highest quality mental health care for our clients–when they need it most.</div>\n<p><strong>Current shifts available include:</strong></p>\n<ul>\n<li>Sunday &#8211; Wednesday 7 am &#8211; 6 pm PT</li>\n<li>Friday &#8211; Monday 7 am &#8211; 6 pm PT</li>\n<li>Tuesday &#8211; Saturday 9:30 am &#8211; 6 pm PT</li>\n<li>Sunday &#8211; Thursday 9:30 am &#8211; 6pm PT</li>\n</ul>\n</div>\n<div class=\"section page-centered\">\n<div>\n<h2>Responsibilities:</h2>\n<ul>\n<li>Using evidence-based interventions, skillfully manage client crises, providing brief risk assessment, safety planning, and de-escalation with the goal of connecting the client to treatment</li>\n<li>Identify roadblocks to clinical care options for our clients using Lyra’s proprietary software and other methods to connect clients to the ideal treatment, based on specific needs and preferences</li>\n<li>Independently manage a caseload of complex, multi-need clients</li>\n</ul>\n</div>\n</div>\n<div class=\"section page-centered\">\n<div>\n<h2>Qualifications:</h2>\n<ul>\n<li><b>Master’s degree in clinical social work or equivalent;</b> LCSW or equivalent independent clinical licensure is required (e.g. LMFT, LPC, LPCC, etc). We’re unable to provide supervised hours toward licensure. Candidates without a state license to deliver mental health services, independently, <b>will not be considered</b></li>\n<li><b>Must have Two years post license experience (EAP/clinical call center experience preferred)</b></li>\n<li>Significant experience managing high-risk clinical situations (e.g., suicidality, mandated reporting)</li>\n<li>Bilingual, Spanish-speaking candidates strongly preferred (but not required)</li>\n<li>Must be a full time resident of the United States; work cannot be completed from outside the United States.</li>\n</ul>\n</div>\n</div>\n<div class=\"section page-centered\" data-qa=\"salary-range\">\n<h2><b>Pay and Benefits:</b></h2>\n<div>The anticipated hourly base rate for this full-time position is $38.65 per hour. The base range is determined by role and level, and placement within the range will depend on a number of job-related factors, including but not limited to your skills, qualifications, experience and location. This role may be eligible for discretionary bonuses.</div>\n</div>\n</div>\n</div>\n</div>",
+      "pubDate": "2024-07-31 08:33:11"
+    },
+    {
+      "id": 108901,
+      "url": "https://jobicy.com/jobs/108901-client-retention-specialist",
+      "jobSlug": "108901-client-retention-specialist",
+      "jobTitle": "Client Retention Specialist",
+      "companyName": "Beyond Finance",
+      "companyLogo": "https://jobicy.com/data/server-nyc0409/galaxy/mercury/2022/01/68cd015e123539d873279c7b82f1ca6a.jpg",
+      "jobIndustry": [
+        "Customer Success"
+      ],
+      "jobType": [
+        "full-time"
+      ],
+      "jobGeo": "USA",
+      "jobLevel": "Any",
+      "jobExcerpt": "Our Customer Success Team serves as the primary point of contact for valued customers enrolled in Beyond Finance’s financial hardship programs. Our Retention Specialists play a critical role in ensuring the continued loyalty of our Beyond customer base. As a Retention Specialist, your primary responsibility will be to educate and assist clients who are facing&#8230;",
+      "jobDescription": "<p>Our Customer Success Team serves as the primary point of contact for valued customers enrolled in Beyond Finance’s financial hardship programs. Our Retention Specialists play a critical role in ensuring the continued loyalty of our Beyond customer base. As a Retention Specialist, your primary responsibility will be to educate and assist clients who are facing financial hardship and exploring options to become debt-free. You will play a crucial role in retaining clients within the Beyond Finance financial hardship debt program. In this position, you will interact with clients primarily through inbound phone calls and be responsible for deescalating upset clients, empathizing with their financial difficulties, and helping them navigate the Beyond Finance program. Their primary focus is on our at-risk customers who are struggling with the use and/or value of their enrolled program, requiring creative problem solving to help them better realize and understand the value of their decision.</p>\n<h2>Key Responsibilities:</h2>\n<ul>\n<li><strong>Educate Clients:</strong> Provide comprehensive information about the Beyond Finance financial hardship debt program to clients, ensuring they have a clear understanding of the benefits, process, and available options.</li>\n<li><strong>Empathize and Deescalate: </strong>Display empathy and active listening skills to understand and deescalate upset clients, addressing their concerns and alleviating their stress regarding their financial situation.</li>\n<li><strong>Navigate CRM System: </strong>Effectively use our Customer Relationship Management (CRM) system to quickly access and comprehend client information, including their current financial status and program progress. Maintain accurate and detailed records of all client interactions and program progress in the CRM system.</li>\n<li><strong>Analyze Financial Situation:</strong> Assess the client&#8217;s current financial situation and determine the most appropriate options to help them achieve their goal of becoming debt-free.</li>\n<li><strong>Retain Clients:</strong> Collaborate with clients to develop customized solutions that align with their financial goals, and encourage them to remain in the Beyond Finance program.</li>\n<li><strong>Achieve Retention Goals:</strong> Meet or exceed retention targets and earn commissions based on your ability to enable clients to achieve their financial objectives.</li>\n<li>Above all else, provide a best-in-class customer service experience over the phone and through various communication tools responding to client requests and anticipating unstated needs</li>\n</ul>\n<h2><strong>What We Look For</strong></h2>\n<ul>\n<li>Required &#8211; Experience in Retention, Sales, or Collections</li>\n<li>High school diploma or equivalent (Associate&#8217;s or Bachelor&#8217;s degree is a plus)</li>\n<li>Ability to work in a fast-paced environment and handle high call volumes</li>\n<li>Resilient and able to remain calm under pressure</li>\n<li>Demonstrated ability to negotiate and deescalate client issues effectively</li>\n<li>Tech saavy and proficiency with a Client Relationship Management system (CRM)</li>\n<li>Strong customer focus and adaptability to different personality types</li>\n<li>Strong verbal and written communication skills along with active listening</li>\n<li>Supports team/department collaboration &amp; inclusion</li>\n<li>Troubleshooting  and problem solving skills</li>\n<li>Ability to multi-task, set priorities and manage time effectively</li>\n<li>Willingness to adapt to a changing environment and learn about new financial solutions.</li>\n</ul>\n<div class=\"content-conclusion\">\n<h2><strong>Why Join Us?</strong></h2>\n<p>While you make a difference for others, we’ll work to make a difference for you, providing an uplifting, collaborative work environment and benefits that reflect your value to us. For eligible full-time employees, we offer:</p>\n<ul>\n<li>Considerable employer contributions for health, dental, and vision programs</li>\n<li>Generous PTO, paid holidays, and paid parental leave</li>\n<li>401(k) matching program</li>\n<li>Merit advancement opportunities</li>\n<li>Career development &amp; training</li>\n</ul>\n<p>And finally, our team spirit and culture! We cultivate an environment of community, connection, and belonging across our entire organization.</p>\n<p><em data-stringify-type=\"italic\">Beyond Finance does not accept unsolicited resumes from individual recruiters or third-party recruiting agencies in response to job positions.  No fee will be paid to their parties who submit unsolicited candidates directly to Beyond Finance employees or the Beyond Finance HR team. No placement fee will be paid to any third party unless such a request has been made by the Beyond HR team</em></p>\n</div>",
+      "pubDate": "2024-07-29 17:40:28"
+    }
+  ]
+}
+RSS feed
+RSS (Really Simple Syndication) – is a web feed that allows users and applications to access updates to websites in a standardized, computer-readable format
+
+Most of the jobs are for people from the Americas (USA, Canada and LATAM) and Europe/EMEA. Keep this in mind if your main audience is from other regions. You can find our public RSS feed here for all jobs posted:
+
+RSS feed generator
+
+Any category
+
+
+Any job type
+
+
+From Anywhere
+
+https://jobicy.com/?feed=job_feed
+RSS Jobicy – This interface allows information to be received from the database jobicy.com. You do not need to know in detail how the base is constructed and from which table and field types it consists of. It is enough that API-request “knows” it. The request syntax and the type of data being returned are strictly determined by the service itself.
+
+With this RSS, now you can build job apps with our data feed. Listings of jobs can be derived from the following endpoints:
+
+RSS Query Parameters (optional)
+
+?feed=job_feed (required)
+&job_categories=... (eg. supporting, dev, marketing..)
+&job_types=... (eg. full-time, freelance, contract..)
+&search_keywords=... (eg. designer)
+&search_region=... (eg. Canada, UK, USA, Europe)
+
+Example query string:
+
+https://jobicy.com/?feed=job_feed&job_categories=supporting&job_types=full-time&search_region=USA
+Response: Full-time Customer Service jobs in the U.S. region.
+
+XML feed
+Returns a list of the most recently remote jobs without filtering or query parameters.
+
+https://jobicy.com/feed/newjobs
+Mostly suitable for resources with their own job filtering system.

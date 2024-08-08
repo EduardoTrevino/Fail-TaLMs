@@ -1,0 +1,158 @@
+{
+    "tool_name": "openwhyd",
+    "tool_description": "A free and open-source music curation service that allows users to create playlists of music tracks from various streaming platforms and to discover music posted by other users.",
+    "title": "Openwhyd API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 85,
+        "avgLatency": 250,
+        "avgSuccessRate": 90,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://openwhyd.org",
+    "host": "openwhyd.org",
+    "api_list": [
+        {
+            "name": "dataexport",
+            "url": "https://openwhyd.org/{user}",
+            "description": "Download the list of tracks of any user profile posted publicly on Openwhyd.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Format of the response data (json or links)",
+                    "default": "json"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of posts to return",
+                    "default": 20
+                },
+                {
+                    "name": "after",
+                    "type": "STRING",
+                    "description": "Identifier of the post from which entries must be returned (for pagination)",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = \"https://openwhyd.org/{user}\"\nparams = {\"format\": format, \"limit\": limit}\nif after:\n    params['after'] = after\n\nresponse = requests.get(url, params=params)\n\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\n\nreturn observation\n",
+            "statuscode": 200,
+            "body": {
+                "results": [
+                    {
+                        "_id": "str",
+                        "uId": "str",
+                        "uNm": "str",
+                        "text": "str",
+                        "name": "str",
+                        "eId": "str",
+                        "img": "str",
+                        "nbP": "int",
+                        "nbR": "int",
+                        "lov": []
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "userapi",
+            "url": "https://openwhyd.org/api/user",
+            "description": "Get details about a user by user ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "ID of the user to get info about",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "isSubscr",
+                    "type": "BOOLEAN",
+                    "description": "If set to true, the isSubscribing attribute will be returned",
+                    "default": "false"
+                }
+            ],
+            "code": "import requests\n\nurl = \"https://openwhyd.org/api/user\"\nparams = {\"id\": id}\nif isSubscr:\n    params['isSubscr'] = isSubscr\n\nresponse = requests.get(url, params=params)\n\ntry:\n    observation = response.json()\nexcept:\n    observation = response.text\n\nreturn observation\n",
+            "statuscode": 200,
+            "body": {
+                "_id": "str",
+                "name": "str",
+                "handle": "str",
+                "email": "str",
+                "bio": "str",
+                "loc": "str",
+                "img": "str",
+                "cvrImg": "str",
+                "isSubscribing": "bool",
+                "nbSubscribers": "int",
+                "nbPosts": "int",
+                "nbLikes": "int",
+                "nbSubscriptions": "int",
+                "lastArtists": ["str"],
+                "fbId": "str",
+                "fbTok": "str",
+                "twId": "str",
+                "twTok": "str",
+                "twSec": "str",
+                "lastFm": {
+                    "name": "str",
+                    "sk": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "_id": "string",
+                    "name": "string",
+                    "handle": "string",
+                    "email": "string",
+                    "bio": "string",
+                    "loc": "string",
+                    "img": "string",
+                    "cvrImg": "string",
+                    "isSubscribing": "boolean",
+                    "nbSubscribers": "integer",
+                    "nbPosts": "integer",
+                    "nbLikes": "integer",
+                    "nbSubscriptions": "integer",
+                    "lastArtists": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "fbId": "string",
+                    "fbTok": "string",
+                    "twId": "string",
+                    "twTok": "string",
+                    "twSec": "string",
+                    "lastFm": {
+                        "type": "object",
+                        "properties": {
+                            "name": "string",
+                            "sk": "string"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,100 @@
+CTP API Functions (Current version: 0.9)
+Global parameters
+In addition to the parameters specified for each function, all functions accept the following parameters:
+
+apikey: Optional API key to authenticate an application to the API.
+if: Interface preference. If present, the value of this parameter must be either 'en' (English) or 'zh' (Chinese).
+remap: Remap characters in response. If present, the value of this parameter must be 'gb' (simplified Chinese).
+For general information about the API, please see: http://ctext.org/tools/api
+
+getcapabilities
+Description: Returns a list of available API functions and list of their parameters.
+
+No parameters.
+
+Example: https://api.ctext.org/getcapabilities
+
+getcharacter
+Description: Returns basic data about a character.
+
+Parameter	Required	Description	Example
+char	Yes	Character to describe.	仁
+
+Example: https://api.ctext.org/getcharacter?char=仁
+
+getdictionaryheadwords
+Description: Returns a complete list of headwords for distinct word senses, names, and places having entries in the CTP dictionary.
+
+No parameters.
+
+Example: https://api.ctext.org/getdictionaryheadwords
+
+getdynasties
+Description: Returns a list of identifiers, labels, and dates for dynasties used in the Chinese Text Project.
+
+No parameters.
+
+Example: https://api.ctext.org/getdynasties
+
+getlink
+Description: Returns a http://ctext.org URL corresponding to a URN, or alternatively redirects a web browser to that URL if the "redirect" parameter is set to 1. The returned URL does not point to an API function but to a page on http://ctext.org which should be opened directly in a web browser and not fetched by an API client.
+
+Parameter	Required	Description	Example
+redirect	No	If set to 1, do not return a JSON response, but instead return an HTTP 30x response redirecting to the specified page.	
+search	No	Link to human-readable search results for the phrase 'search' within the specified URN.	朋
+urn	Yes	URN specifying the text to return a link to.	ctp:analects/xue-er
+
+Example: https://api.ctext.org/getlink?search=朋&urn=ctp:analects/xue-er
+
+getstats
+Description: Machine-readable interface to data available at http://ctext.org/system-statistics
+
+No parameters.
+
+Example: https://api.ctext.org/getstats
+
+getstatus
+Description: Returns the status of the current client-server relationship (e.g. whether a user is logged in).
+
+No parameters.
+
+Example: https://api.ctext.org/getstatus
+
+gettext
+Description: Returns the textual content of a chapter of text.
+
+Parameter	Required	Description	Example
+urn	Yes	URN specifying the text to return.	ctp:analects/xue-er
+
+Example: https://api.ctext.org/gettext?urn=ctp:analects/xue-er
+
+gettextinfo
+Description: Returns metadata about a textual object.
+
+Parameter	Required	Description	Example
+urn	Yes	URN specifying the text to describe.	ctp:analects/xue-er
+
+Example: https://api.ctext.org/gettextinfo?urn=ctp:analects/xue-er
+
+gettexttitles
+Description: Returns a complete list of top-level textual items (typically books) in the textual database and Wiki.
+
+No parameters.
+
+Example: https://api.ctext.org/gettexttitles
+
+readlink
+Description: Returns a URN corresponding to a http://ctext.org URL.
+
+Parameter	Required	Description	Example
+url	Yes	URL specifying a text on http://ctext.org.	http://ctext.org/analects/xue-er/zhs
+
+Example: https://api.ctext.org/readlink?url=http://ctext.org/analects/xue-er/zhs
+
+searchtexts
+Description: Returns a list of items in the textual database and Wiki matching specified parameters.
+
+Parameter	Required	Description	Example
+title	Yes	Part or all of the text title.	論語
+
+Example: https://api.ctext.org/searchtexts?title=論語
