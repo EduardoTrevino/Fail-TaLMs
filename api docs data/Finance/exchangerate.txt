@@ -1,0 +1,666 @@
+Fast Start
+You'll want our Standard endpoint to get started right away. This returns a JSON object with exchange rates from your base currency to all our supported codes.
+
+
+⚙️ Main API
+Standard
+
+This is our main API response format - given a supplied base currency it will return the whole list of other currencies we support and their corresponding exchange rates.
+
+Pair Conversion
+
+Submit a pair of codes and optional amount in your request. You'll get back the exchange rate between the codes and the conversion of the optional amount if you included it.
+
+
+🧪 Advanced API Endpoints
+We also have some endpoints with extra functionality. These are only available for users on our Pro, Business or Volume Plans.
+
+Enriched Data
+
+This endpoint includes extra localization data as well as the normal exchange rate. For each currency code you'll get the currency name, its display symbol, associated region or country and a flag image URL.
+
+Historical Data
+
+Fetch exchange rates data from a specific date in the past. This endpoint has an easy to use request format and data going all the way back to 1990 for some currency pairs.
+
+Standard Requests
+Documentation for the Standard ExchangeRate-API endpoint.
+
+Overview
+Our Standard API endpoint is the easiest and fastest way to access our exchange rate data. It's available on all plans including Free.
+
+Choose your base currency and the Standard endpoint will simply return the conversion rates from your base currency code to all the others we support in an easy to parse JSON format.
+
+
+Usage Guide
+To use our Standard endpoint simply make the two substitutions explained below and then send a GET request.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `USD` with the code you want to use as a base currency.
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/latest/USD
+This will return the exchange rates from your base code to all the other currencies we support:
+
+{
+	"result": "success",
+	"documentation": "https://www.exchangerate-api.com/docs",
+	"terms_of_use": "https://www.exchangerate-api.com/terms",
+	"time_last_update_unix": 1585267200,
+	"time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+	"time_next_update_unix": 1585353700,
+	"time_next_update_utc": "Sat, 28 Mar 2020 00:00:00 +0000",
+	"base_code": "USD",
+	"conversion_rates": {
+		"USD": 1,
+		"AUD": 1.4817,
+		"BGN": 1.7741,
+		"CAD": 1.3168,
+		"CHF": 0.9774,
+		"CNY": 6.9454,
+		"EGP": 15.7361,
+		"EUR": 0.9013,
+		"GBP": 0.7679,
+		"...": 7.8536,
+		"...": 1.3127,
+		"...": 7.4722, etc. etc.
+	}
+}
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "unknown-code"
+}
+Where "error-type" can be any of the following:
+
+"unsupported-code" if we don't support the supplied currency code (see supported currencies...).
+"malformed-request" when some part of your request doesn't follow the structure shown above.
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.
+
+Supported Currencies
+List of currency codes and countries supported by our API endpoints
+
+This page describes all the world currencies supported by our exchange rate API and the codes used to describe them in our responses. The "Currency Code" field you see at the start of each line below is the ISO 4217 Three Letter Currency Code for that currency. Wherever you see a currency code field in our API documentation you must supply one of the codes from this list.
+
+Please note that ISO 4217 codes can be deprecated and replaced over time. An example would be Mexico using MXP prior to the 1993 currency revalution but now using MXN to indicate the subsequent version of the Mexican Peso. Some online lists of currency codes still use old codes - so check here if you're uncertain about which codes to include in your currency conversion project.
+
+You can read more about ISO 4217 codes on Wikipedia.
+
+
+Unsupported Currencies
+
+There is only 1 widely known currency we don't offer exchange rate data for due to sanctions & lack of any international trade.
+
+Currency Code
+Currency Name
+Country
+KPW	North Korean Won	North Korea
+
+If you need KPW data the only reliable source of the actual rates available at jangmadang markets in DPRK is Daily NK, which reports on news from inside North Korea via human sources. There is technically an official rate set by the DPRK's Central Bank but this hasn't been updated for years and essentially never reflected actual rates of exchange.
+
+
+Notes For Some Supported Currencies
+
+The following currencies experience heightened volatility & substantial differences between actual rates of exchange available in different markets and those published officially. In these instances we default to the rates published by the appropriate central banks. Please take extra caution when using our data for these currencies as there is a chance it might disagree with other sources.
+
+Currency Code
+Currency Name
+Country
+ARS	Argentine Peso	Argentina
+LYD	Libyan Dinar	Libya
+SSP	South Sudanese Pound	South Sudan
+SYP	Syrian Pound	Syria
+VES	Venezuelan Bolívar Soberano	Venezuela
+YER	Yemeni Rial	Yemen
+ZWL	Zimbabwean Dollar	Zimbabwe
+
+
+All Supported Currencies
+
+We support all 161 commonly circulating world currencies listed below. These cover 99% of all UN recognized states and territories.
+
+Currency Code
+Currency Name
+Country
+AED	UAE Dirham	United Arab Emirates
+AFN	Afghan Afghani	Afghanistan
+ALL	Albanian Lek	Albania
+AMD	Armenian Dram	Armenia
+ANG	Netherlands Antillian Guilder	Netherlands Antilles
+AOA	Angolan Kwanza	Angola
+ARS	Argentine Peso	Argentina
+AUD	Australian Dollar	Australia
+AWG	Aruban Florin	Aruba
+AZN	Azerbaijani Manat	Azerbaijan
+BAM	Bosnia and Herzegovina Mark	Bosnia and Herzegovina
+BBD	Barbados Dollar	Barbados
+BDT	Bangladeshi Taka	Bangladesh
+BGN	Bulgarian Lev	Bulgaria
+BHD	Bahraini Dinar	Bahrain
+BIF	Burundian Franc	Burundi
+BMD	Bermudian Dollar	Bermuda
+BND	Brunei Dollar	Brunei
+BOB	Bolivian Boliviano	Bolivia
+BRL	Brazilian Real	Brazil
+BSD	Bahamian Dollar	Bahamas
+BTN	Bhutanese Ngultrum	Bhutan
+BWP	Botswana Pula	Botswana
+BYN	Belarusian Ruble	Belarus
+BZD	Belize Dollar	Belize
+CAD	Canadian Dollar	Canada
+CDF	Congolese Franc	Democratic Republic of the Congo
+CHF	Swiss Franc	Switzerland
+CLP	Chilean Peso	Chile
+CNY	Chinese Renminbi	China
+COP	Colombian Peso	Colombia
+CRC	Costa Rican Colon	Costa Rica
+CUP	Cuban Peso	Cuba
+CVE	Cape Verdean Escudo	Cape Verde
+CZK	Czech Koruna	Czech Republic
+DJF	Djiboutian Franc	Djibouti
+DKK	Danish Krone	Denmark
+DOP	Dominican Peso	Dominican Republic
+DZD	Algerian Dinar	Algeria
+EGP	Egyptian Pound	Egypt
+ERN	Eritrean Nakfa	Eritrea
+ETB	Ethiopian Birr	Ethiopia
+EUR	Euro	European Union
+FJD	Fiji Dollar	Fiji
+FKP	Falkland Islands Pound	Falkland Islands
+FOK	Faroese Króna	Faroe Islands
+GBP	Pound Sterling	United Kingdom
+GEL	Georgian Lari	Georgia
+GGP	Guernsey Pound	Guernsey
+GHS	Ghanaian Cedi	Ghana
+GIP	Gibraltar Pound	Gibraltar
+GMD	Gambian Dalasi	The Gambia
+GNF	Guinean Franc	Guinea
+GTQ	Guatemalan Quetzal	Guatemala
+GYD	Guyanese Dollar	Guyana
+HKD	Hong Kong Dollar	Hong Kong
+HNL	Honduran Lempira	Honduras
+HRK	Croatian Kuna	Croatia
+HTG	Haitian Gourde	Haiti
+HUF	Hungarian Forint	Hungary
+IDR	Indonesian Rupiah	Indonesia
+ILS	Israeli New Shekel	Israel
+IMP	Manx Pound	Isle of Man
+INR	Indian Rupee	India
+IQD	Iraqi Dinar	Iraq
+IRR	Iranian Rial	Iran
+ISK	Icelandic Króna	Iceland
+JEP	Jersey Pound	Jersey
+JMD	Jamaican Dollar	Jamaica
+JOD	Jordanian Dinar	Jordan
+JPY	Japanese Yen	Japan
+KES	Kenyan Shilling	Kenya
+KGS	Kyrgyzstani Som	Kyrgyzstan
+KHR	Cambodian Riel	Cambodia
+KID	Kiribati Dollar	Kiribati
+KMF	Comorian Franc	Comoros
+KRW	South Korean Won	South Korea
+KWD	Kuwaiti Dinar	Kuwait
+KYD	Cayman Islands Dollar	Cayman Islands
+KZT	Kazakhstani Tenge	Kazakhstan
+LAK	Lao Kip	Laos
+LBP	Lebanese Pound	Lebanon
+LKR	Sri Lanka Rupee	Sri Lanka
+LRD	Liberian Dollar	Liberia
+LSL	Lesotho Loti	Lesotho
+LYD	Libyan Dinar	Libya
+MAD	Moroccan Dirham	Morocco
+MDL	Moldovan Leu	Moldova
+MGA	Malagasy Ariary	Madagascar
+MKD	Macedonian Denar	North Macedonia
+MMK	Burmese Kyat	Myanmar
+MNT	Mongolian Tögrög	Mongolia
+MOP	Macanese Pataca	Macau
+MRU	Mauritanian Ouguiya	Mauritania
+MUR	Mauritian Rupee	Mauritius
+MVR	Maldivian Rufiyaa	Maldives
+MWK	Malawian Kwacha	Malawi
+MXN	Mexican Peso	Mexico
+MYR	Malaysian Ringgit	Malaysia
+MZN	Mozambican Metical	Mozambique
+NAD	Namibian Dollar	Namibia
+NGN	Nigerian Naira	Nigeria
+NIO	Nicaraguan Córdoba	Nicaragua
+NOK	Norwegian Krone	Norway
+NPR	Nepalese Rupee	Nepal
+NZD	New Zealand Dollar	New Zealand
+OMR	Omani Rial	Oman
+PAB	Panamanian Balboa	Panama
+PEN	Peruvian Sol	Peru
+PGK	Papua New Guinean Kina	Papua New Guinea
+PHP	Philippine Peso	Philippines
+PKR	Pakistani Rupee	Pakistan
+PLN	Polish Złoty	Poland
+PYG	Paraguayan Guaraní	Paraguay
+QAR	Qatari Riyal	Qatar
+RON	Romanian Leu	Romania
+RSD	Serbian Dinar	Serbia
+RUB	Russian Ruble	Russia
+RWF	Rwandan Franc	Rwanda
+SAR	Saudi Riyal	Saudi Arabia
+SBD	Solomon Islands Dollar	Solomon Islands
+SCR	Seychellois Rupee	Seychelles
+SDG	Sudanese Pound	Sudan
+SEK	Swedish Krona	Sweden
+SGD	Singapore Dollar	Singapore
+SHP	Saint Helena Pound	Saint Helena
+SLE	Sierra Leonean Leone	Sierra Leone
+SOS	Somali Shilling	Somalia
+SRD	Surinamese Dollar	Suriname
+SSP	South Sudanese Pound	South Sudan
+STN	São Tomé and Príncipe Dobra	São Tomé and Príncipe
+SYP	Syrian Pound	Syria
+SZL	Eswatini Lilangeni	Eswatini
+THB	Thai Baht	Thailand
+TJS	Tajikistani Somoni	Tajikistan
+TMT	Turkmenistan Manat	Turkmenistan
+TND	Tunisian Dinar	Tunisia
+TOP	Tongan Paʻanga	Tonga
+TRY	Turkish Lira	Turkey
+TTD	Trinidad and Tobago Dollar	Trinidad and Tobago
+TVD	Tuvaluan Dollar	Tuvalu
+TWD	New Taiwan Dollar	Taiwan
+TZS	Tanzanian Shilling	Tanzania
+UAH	Ukrainian Hryvnia	Ukraine
+UGX	Ugandan Shilling	Uganda
+USD	United States Dollar	United States
+UYU	Uruguayan Peso	Uruguay
+UZS	Uzbekistani So'm	Uzbekistan
+VES	Venezuelan Bolívar Soberano	Venezuela
+VND	Vietnamese Đồng	Vietnam
+VUV	Vanuatu Vatu	Vanuatu
+WST	Samoan Tālā	Samoa
+XAF	Central African CFA Franc	CEMAC
+XCD	East Caribbean Dollar	Organisation of Eastern Caribbean States
+XDR	Special Drawing Rights	International Monetary Fund
+XOF	West African CFA franc	CFA
+XPF	CFP Franc	Collectivités d'Outre-Mer
+YER	Yemeni Rial	Yemen
+ZAR	South African Rand	South Africa
+ZMW	Zambian Kwacha	Zambia
+ZWL	Zimbabwean Dollar	Zimbabwe
+
+Standard Requests
+Documentation for the Standard ExchangeRate-API endpoint.
+
+Overview
+Our Standard API endpoint is the easiest and fastest way to access our exchange rate data. It's available on all plans including Free.
+
+Choose your base currency and the Standard endpoint will simply return the conversion rates from your base currency code to all the others we support in an easy to parse JSON format.
+
+
+Usage Guide
+To use our Standard endpoint simply make the two substitutions explained below and then send a GET request.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `USD` with the code you want to use as a base currency.
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/latest/USD
+This will return the exchange rates from your base code to all the other currencies we support:
+
+{
+	"result": "success",
+	"documentation": "https://www.exchangerate-api.com/docs",
+	"terms_of_use": "https://www.exchangerate-api.com/terms",
+	"time_last_update_unix": 1585267200,
+	"time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+	"time_next_update_unix": 1585353700,
+	"time_next_update_utc": "Sat, 28 Mar 2020 00:00:00 +0000",
+	"base_code": "USD",
+	"conversion_rates": {
+		"USD": 1,
+		"AUD": 1.4817,
+		"BGN": 1.7741,
+		"CAD": 1.3168,
+		"CHF": 0.9774,
+		"CNY": 6.9454,
+		"EGP": 15.7361,
+		"EUR": 0.9013,
+		"GBP": 0.7679,
+		"...": 7.8536,
+		"...": 1.3127,
+		"...": 7.4722, etc. etc.
+	}
+}
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "unknown-code"
+}
+Where "error-type" can be any of the following:
+
+"unsupported-code" if we don't support the supplied currency code (see supported currencies...).
+"malformed-request" when some part of your request doesn't follow the structure shown above.
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.
+
+Pair Conversion Requests
+Documentation for the Pair ExchangeRate-API endpoint.
+
+Overview
+Our Pair Conversion API endpoint is useful for applications where you just want to convert between two specific currencies and aren't interested in any others.
+
+You'll need to choose your base currency code and the target currency you'd like to get the exchange rate for. You'll then get a minimal JSON response back from our API with exactly the data you need. It's a much smaller response than the one you'd get from our Standard endpoint - quick & easy to develop with.
+
+
+Usage Guide
+To use our Pair endpoint simply make the substitutions explained below and then send a GET request.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `EUR` with the code you want to use as a base currency.
+
+• Substitute `GBP` with the code you want to use as a target currency.
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/pair/EUR/GBP
+This will return the exchange rate from your base code to the other currency you supplied:
+
+{
+	"result": "success",
+	"documentation": "https://www.exchangerate-api.com/docs",
+	"terms_of_use": "https://www.exchangerate-api.com/terms",
+	"time_last_update_unix": 1585267200,
+	"time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+	"time_next_update_unix": 1585270800,
+	"time_next_update_utc": "Sat, 28 Mar 2020 01:00:00 +0000",
+	"base_code": "EUR",
+	"target_code": "GBP",
+	"conversion_rate": 0.8412
+}
+
+Alternatively, you could also supply an optional AMOUNT variable (decimal format xxxx.xxxx).
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/pair/EUR/GBP/AMOUNT
+This will return the exchange rate from your base code to the target currency you supplied, as well as a conversion of the amount you supplied:
+
+{
+	"result": "success",
+	"documentation": "https://www.exchangerate-api.com/docs",
+	"terms_of_use": "https://www.exchangerate-api.com/terms",
+	"time_last_update_unix": 1585267200,
+	"time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+	"time_next_update_unix": 1585270800,
+	"time_next_update_utc": "Sat, 28 Mar 2020 01:00:00 +0000",
+	"base_code": "EUR",
+	"target_code": "GBP",
+	"conversion_rate": 0.8412,
+	"conversion_result": 5.8884
+}
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "unknown-code"
+}
+Where "error-type" can be any of the following:
+
+"unsupported-code" if we don't support the supplied currency code (see supported currencies...).
+"malformed-request" when some part of your request doesn't follow the structure shown above.
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.
+
+Enriched Data Requests
+Documentation for the Enriched ExchangeRate-API endpoint.
+
+Overview
+Our Enriched API endpoint offers the most comprehensive data on each currency you're interested in converting to. It's only available to users on our Business or Volume plans.
+
+You'll need to choose your base currency code and the target currency you'd like to get enriched data for. The API's JSON response will include the country name, country code & flag image URL for the target currency, as well as the currency name and its display symbol.
+
+
+Usage Guide
+To use our Enriched endpoint make the three substitutions explained below and then send a GET request.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `GBP` with the code you want to use as a base currency.
+
+• Substitute `JPY` with the code you want to use as a target currency.
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/enriched/GBP/JPY
+This will return the exchange rate from your base code to the target code, as well as extra data for the target currency:
+
+{
+	"result": "success",
+	"documentation": "https://www.exchangerate-api.com/docs",
+	"terms_of_use": "https://www.exchangerate-api.com/terms",
+	"time_last_update_unix": 1585267200,
+	"time_last_update_utc": "Fri, 27 Mar 2020 00:00:00 +0000",
+	"time_next_update_unix": 1585270800,
+	"time_next_update_utc": "Sat, 28 Mar 2020 01:00:00 +0000",
+	"base_code": "GBP",
+	"target_code": "JPY",
+	"conversion_rate": 142.0543,
+	"target_data": {
+		"locale": "Japan",
+		"two_letter_code": "JP",
+		"currency_name": "Japanese Yen",
+		"currency_name_short": "Yen",
+		"display_symbol": "00A5",
+		"flag_url": "https://www.exchangerate-api.com/img/docs/JP.gif"
+	}
+}
+
+NOTE: How to Use Currency Display Symbols
+
+We supply a comma delimited list of unicode hex references for use in your HTML. You will need to separate and then wrap these hex codes with &#x and ; as follows:
+
+"043B,0432"
+would become
+
+&#x043B;&#x0432;
+yielding лв.
+
+Note that sometimes just a single hex reference will be returned, i.e. without any commas. For instance just "0024", which when wrapped as
+
+&#x0024;
+will display the $ symbol.
+
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "unknown-code"
+}
+Where "error-type" can be any of the following:
+
+"unsupported-code" if we don't support the supplied currency code (see supported currencies...).
+"malformed-request" when some part of your request doesn't follow the structure shown above.
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.
+"plan-upgrade-required" if your plan level doesn't support this type of request.
+
+Historical Data Requests
+Documentation for the Historical Data ExchangeRate-API endpoint.
+
+Overview
+Our Historical Exchange Rates API endpoint lets you fetch all the exchange rate data we have available for a specific day in the past. It's only available to users on our Pro, Business or Volume plans.
+
+There are two distinct data sets used by the endpoint.
+
+From 1 January 2021 onwards we have data for our entire list of supported currencies available.
+
+From 1 January 1990 to 31 December 2020 we offer data for the following smaller list of currency codes:
+
+AUD	ATS	BEF	BRL	CAD	CHF	CNY	DEM
+DKK	ESP	EUR	FIM	FRF	GBP	GRD	HKD
+IEP	INR	IRR	ITL	JPY	KRW	LKR	MXN
+MYR	NOK	NLG	NZD	PTE	SEK	SGD	THB
+TWD	USD	ZAR
+
+Important Notes
+We blend data from different sources to reduce inaccuracies & provide one indicative mid-rate for each calendar day. This data is suitable for reporting, dashboards, academic studies, spreadsheets, market insights etc. but shouldn't be used for processing cross-currency settlements or backtesting day trading models. For these you should use the rates supplied by the banks involved in your planned transactions or the historical spread & price data from the markets you plan to trade in.
+Historical exchange rates are only accessible by paid accounts.
+Data for some currencies is only available for certain time periods - for instance a number of currencies were replaced with the Euro from 1999 onwards.
+
+Usage Guide - Basic Format
+To use our Historical Exchange Rates endpoint you'll need to make the substitutions explained below and then send a GET request.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `USD` with the code you want to use as a base currency.
+
+• Substitute `YEAR` with the year you'd like data for.
+
+• Substitute `MONTH` with the month you'd like data for (no leading zeros).
+
+• Substitute `DAY` with the day you'd like data for (no leading zeros).
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/history/USD/YEAR/MONTH/DAY
+This will return all the exchange rates we have data for on the date in question, in terms of the currency you supplied as the base currency:
+
+{
+	"result":"success",
+	"documentation":"https://www.exchangerate-api.com/docs",
+	"terms_of_use":"https://www.exchangerate-api.com/terms",
+	"year":2015,
+	"month":2,
+	"day":22,
+	"base_code":"USD",
+	"conversion_rates":{
+		"AUD":1.4196,
+		"BRL":4.0003,
+		"CAD":1.324,
+		"CHF":0.9744,
+		"CNY":6.3559,
+		"DKK":6.6601,
+		"EUR":0.8929,
+		"GBP":0.6595,
+		"HKD":7.75,
+		"INR":65.57,
+		"JPY":119.58,
+		"KRW":118,
+		....
+	}
+}
+
+Usage Guide - Specific Pair Conversion Format
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+• Substitute `USD` with the code you want to use as a base currency.
+
+• Substitute `YEAR` with the year you'd like data for.
+
+• Substitute `MONTH` with the month you'd like data for (no leading zeros).
+
+• Substitute `DAY` with the day you'd like data for (no leading zeros).
+
+• Substitute `AMOUNT` with a decimal amount you would like converted.
+
+We use ISO 4217 Three Letter Currency Codes - e.g. USD for US Dollars, EUR for Euro etc. Here are the codes we support.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/history/USD/YEAR/MONTH/DAY/AMOUNT
+The returned JSON will include your supplied base currency amount in terms of all the other currencies that we have data available for on your requested date:
+
+{
+	"result":"success",
+	"documentation":"https://www.exchangerate-api.com/docs",
+	"terms_of_use":"https://www.exchangerate-api.com/terms",
+	"year":2015,
+	"month":2,
+	"day":22,
+	"base_code":"USD",
+	"requested_amount":4.00,
+	"conversion_amounts":{
+		"AUD":5.664,
+		"BRL":16.0012,
+		"CAD":5.296,
+		"CHF":3.8976,
+		"CNY":25.4236,
+		"DKK":26.6404,
+		"EUR":3.5716,
+		"GBP":2.638,
+		"HKD":31,
+		"INR":262.28,
+		"JPY":478.32,
+		"KRW":472,
+		....
+	}
+}
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "unknown-code"
+}
+Where "error-type" can be any of the following:
+
+"no-data-available" is returned when our database doesn't have any exchange rates for the specific date you supplied.
+"unsupported-code" if we don't support the supplied currency code (see supported currencies...).
+"malformed-request" when some part of your request doesn't follow the structure shown above.
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.
+"plan-upgrade-required" if your plan level doesn't support this type of request.
+
+Supported Codes JSON
+Documentation for the Supported Codes ExchangeRate-API endpoint.
+
+Overview
+This endpoint lists the currencies that we support. It's essentially a programmatic JSON version of the human readable page listing our supported currencies.
+
+This endpoint is useful for making your application dynamically support the same currencies we offer data for. In the event that a new currency is added or one removed then this endpoint can be relied on to make sure your application stays up to date. This only happens very rarely so not all users will need to worry about this - but it's useful for those who want the extra assurance.
+
+The JSON response also includes the name of the currency if you're looking to display these somewhere on your website or app. Please note that some include unicode characters, for instance the Mongolian Tögrög.
+
+
+Usage Guide
+To use our Supported Codes endpoint simply include your API key and send a GET request to the URL below, nothing else required.
+
+• Substitute `YOUR-API-KEY` with the API key displayed in your dashboard.
+
+GET https://v6.exchangerate-api.com/v6/YOUR-API-KEY/codes
+This will return a JSON array of all currently supported currencies:
+
+{
+	"result":"success",
+	"documentation":"https://www.exchangerate-api.com/docs",
+	"terms_of_use":"https://www.exchangerate-api.com/terms"
+	"supported_codes":[
+		["AED","UAE Dirham"],
+		["AFN","Afghan Afghani"],
+		["ALL","Albanian Lek"],
+		["AMD","Armenian Dram"],
+		["ANG","Netherlands Antillian Guilder"],
+		["AOA","Angolan Kwanza"],
+		["ARS","Argentine Peso"],
+		["AUD","Australian Dollar"],
+		["AWG","Aruban Florin"],
+		["AZN","Azerbaijani Manat"],
+		["BAM","Bosnia and Herzegovina Convertible Mark"],
+		["BBD","Barbados Dollar"] etc. etc.
+	]
+}
+
+Error Responses
+{
+	"result": "error",
+	"error-type": "invalid-key"
+}
+Where "error-type" can be any of the following:
+
+"invalid-key" when your API key is not valid.
+"inactive-account" if your email address wasn't confirmed.
+"quota-reached" when your account has reached the the number of requests allowed by your plan.

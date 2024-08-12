@@ -1,0 +1,1711 @@
+GeckoTerminal API V2
+ v2-beta 
+OAS3
+GeckoTerminal Public API endpoints.
+
+Beta Release
+The API is in its Beta release, and is subject to frequent changes. However, we aim to provide minimal disruption, and setting the request Version would help avoid unexpected issues.
+
+Please subscribe via this form to be notified of important API updates.
+
+Base URL
+All endpoints below use the base URL: https://api.geckoterminal.com/api/v2
+
+Versioning
+It is recommended to set the API version via the Accept header. The current version is 20230302.
+
+For example, to specify the current version, set header Accept: application/json;version=20230302.
+
+If no version is specified, the latest version will be used.
+
+Data Freshness
+All endpoint tags are cached for 1 minute
+
+All data is updated roughly 10 to 20 seconds after a transaction is finalized on the blockchain, subject to the network's availability.
+
+Rate Limit
+Our free API is limited to 30 calls/minute. Should you require a higher rate limit, you may subscribe to any CoinGecko API paid plan to access higher rate limit for GeckoTerminal endpoints (known as /onchain endpoints) or learn more at CoinGecko.
+
+To share with us your feedback about the public API, let us know here!
+
+simple
+
+
+GET
+/simple/networks/{network}/token_price/{addresses}
+Get current USD prices of multiple tokens on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+addresses *
+string
+(path)
+comma-separated list of token addresses (up to 30 addresses)
+addresses not found in the GeckoTerminal database will be ignored
+
+Note: By using this endpoint, you are leaving to GeckoTerminal's routing to determine the best pool for the price of the token. As liquidity and pool activity changes, you may find that the source for token price can change. If you would like full control over where the price is obtained, pass in the specific pool address using /pool API endpoints instead.
+
+Example: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+
+addresses
+Responses
+Code	Description	Links
+200	
+Get current USD prices of multiple tokens on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "token_prices": {
+          "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "0.996586003049284",
+          "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": "1822.49988301345"
+        }
+      }
+    }
+  ]
+}
+No links
+400	
+Exceeded maximum number of addresses
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+networks
+
+
+GET
+/networks
+Get list of supported networks
+Parameters
+Try it out
+Name	Description
+page
+integer
+(query)
+Page through results
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get list of supported networks
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string"
+      }
+    }
+  ]
+}
+No links
+dexes
+
+
+GET
+/networks/{network}/dexes
+Get list of supported dexes on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+page
+integer
+(query)
+Page through results
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get list of supported dexes on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string"
+      }
+    }
+  ]
+}
+No links
+pools
+
+
+GET
+/networks/trending_pools
+Get trending pools across all networks
+Parameters
+Try it out
+Name	Description
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex, network
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get trending pools across all networks
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/trending_pools
+Get trending pools on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get trending pools on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/pools/{address}
+Get specific pool on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+address *
+string
+(path)
+pool address
+
+Example: 0x60594a405d53811d3bc4766596efd80fd545a270
+
+address
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+Responses
+Code	Description	Links
+200	
+Get specific pool on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": "string",
+  "type": "string",
+  "attributes": {
+    "name": "string",
+    "address": "string",
+    "base_token_price_usd": "string",
+    "quote_token_price_usd": "string",
+    "base_token_price_native_currency": "string",
+    "quote_token_price_native_currency": "string",
+    "base_token_price_quote_token": "string",
+    "quote_token_price_base_token": "string",
+    "pool_created_at": "string",
+    "reserve_in_usd": "string",
+    "fdv_usd": "string",
+    "market_cap_usd": "string",
+    "price_change_percentage": {},
+    "transactions": {},
+    "volume_usd": {}
+  },
+  "relationships": {}
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/pools/multi/{addresses}
+Get multiple pools on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+addresses *
+string
+(path)
+comma-separated list of pool addresses (up to 30 addresses)
+addresses not found in the GeckoTerminal database will be ignored
+
+Example: 0x60594a405d53811d3bc4766596efd80fd545a270,0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640
+
+addresses
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+Responses
+Code	Description	Links
+200	
+Get multiple pools on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+400	
+Exceeded maximum number of addresses
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/pools
+Get top pools on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+sort
+string
+(query)
+Sort pools by one of the following options
+
+Available sort options: h24_tx_count_desc, h24_volume_usd_desc
+
+Default: h24_tx_count_desc
+
+sort
+Responses
+Code	Description	Links
+200	
+Get top pools on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/dexes/{dex}/pools
+Get top pools on a network's dex
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+dex *
+string
+(path)
+dex id from /networks/{network}/dexes list
+
+Example: sushiswap
+
+dex
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+sort
+string
+(query)
+Sort pools by one of the following options
+
+Available sort options: h24_tx_count_desc, h24_volume_usd_desc
+
+Default: h24_tx_count_desc
+
+sort
+Responses
+Code	Description	Links
+200	
+Get top pools on a network's dex
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Specified dex not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/new_pools
+Get latest pools on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get latest pools on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/new_pools
+Get latest pools across all networks
+Parameters
+Try it out
+Name	Description
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex, network
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Get latest pools across all networks
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+
+GET
+/search/pools
+Search for pools on a network
+Parameters
+Try it out
+Name	Description
+query
+string
+(query)
+Search query: can be pool address, token address, or token symbol.
+Returns matching pools.
+
+Example: ETH
+
+query
+network
+string
+(query)
+(optional) network id from /networks list
+
+Example: eth
+
+network
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+Responses
+Code	Description	Links
+200	
+Search for pools on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+tokens
+
+
+GET
+/networks/{network}/tokens/{token_address}/pools
+Get top pools for a token
+contains special field token_price_usd representing price of requested token
+
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+token_address *
+string
+(path)
+address of token
+
+Example: 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+
+token_address
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: base_token, quote_token, dex
+Example: base_token,quote_token
+
+include
+page
+integer
+(query)
+Page through results (maximum: 10)
+
+Default value : 1
+
+1
+sort
+string
+(query)
+Sort pools by one of the following options
+
+Available sort options: h24_volume_usd_liquidity_desc, h24_tx_count_desc, h24_volume_usd_desc
+
+Default: h24_volume_usd_liquidity_desc
+
+sort
+Responses
+Code	Description	Links
+200	
+Get top pools for a token
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "base_token_price_usd": "string",
+        "quote_token_price_usd": "string",
+        "base_token_price_native_currency": "string",
+        "quote_token_price_native_currency": "string",
+        "base_token_price_quote_token": "string",
+        "quote_token_price_base_token": "string",
+        "pool_created_at": "string",
+        "reserve_in_usd": "string",
+        "fdv_usd": "string",
+        "market_cap_usd": "string",
+        "price_change_percentage": {},
+        "transactions": {},
+        "volume_usd": {}
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Token for specified address not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/tokens/{address}
+Get specific token on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+address *
+string
+(path)
+token address
+
+Example: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+
+address
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: top_pools
+Example: top_pools
+
+include
+Responses
+Code	Description	Links
+200	
+Get specific token on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": {
+    "id": "string",
+    "type": "string",
+    "attributes": {
+      "name": "string",
+      "address": "string",
+      "symbol": "string",
+      "decimals": 0,
+      "total_supply": "string",
+      "coingecko_coin_id": "string",
+      "price_usd": "string",
+      "fdv_usd": "string",
+      "total_reserve_in_usd": "string",
+      "volume_usd": {},
+      "market_cap_usd": "string"
+    },
+    "relationships": {}
+  }
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/tokens/multi/{addresses}
+Get multiple tokens on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+addresses *
+string
+(path)
+comma-separated list of token addresses (up to 30 addresses)
+addresses not found in the GeckoTerminal database will be ignored
+
+Note: top_pools for this endpoint returns only the first top pool for each token
+
+Example: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2,0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+
+addresses
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: top_pools
+Example: top_pools
+
+include
+Responses
+Code	Description	Links
+200	
+Get multiple tokens on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "symbol": "string",
+        "decimals": 0,
+        "total_supply": "string",
+        "coingecko_coin_id": "string",
+        "price_usd": "string",
+        "fdv_usd": "string",
+        "total_reserve_in_usd": "string",
+        "volume_usd": {},
+        "market_cap_usd": "string"
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+400	
+Exceeded maximum number of addresses
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/tokens/{address}/info
+Get specific token info on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+address *
+string
+(path)
+token address
+
+Example: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+
+address
+Responses
+Code	Description	Links
+200	
+Get specific token info on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": {
+    "id": "string",
+    "type": "string",
+    "attributes": {
+      "name": "string",
+      "address": "string",
+      "symbol": "string",
+      "decimals": 0,
+      "coingecko_coin_id": "string",
+      "image_url": "string",
+      "websites": [
+        "string"
+      ],
+      "description": "string",
+      "discord_url": "string",
+      "telegram_handle": "string",
+      "twitter_handle": "string",
+      "gt_score": 0,
+      "metadata_updated_at": "string"
+    },
+    "relationships": {}
+  }
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/networks/{network}/pools/{pool_address}/info
+Get pool tokens info on a network
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+pool_address *
+string
+(path)
+pool address
+
+Example: 0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852
+
+pool_address
+Responses
+Code	Description	Links
+200	
+Get pool tokens info on a network
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "symbol": "string",
+        "decimals": 0,
+        "coingecko_coin_id": "string",
+        "image_url": "string",
+        "websites": [
+          "string"
+        ],
+        "description": "string",
+        "discord_url": "string",
+        "telegram_handle": "string",
+        "twitter_handle": "string",
+        "gt_score": 0,
+        "metadata_updated_at": "string"
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+404	
+Specified network not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+GET
+/tokens/info_recently_updated
+Get most recently updated 100 tokens info across all networks
+Parameters
+Try it out
+Name	Description
+include
+string
+(query)
+Attributes for related resources to include, which will be returned under the top-level "included" key
+
+Available resources: network
+Example: network
+
+include
+Responses
+Code	Description	Links
+200	
+Get 100 tokens info across all networks ordered by most recently updated
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "name": "string",
+        "address": "string",
+        "symbol": "string",
+        "decimals": 0,
+        "coingecko_coin_id": "string",
+        "image_url": "string",
+        "websites": [
+          "string"
+        ],
+        "description": "string",
+        "discord_url": "string",
+        "telegram_handle": "string",
+        "twitter_handle": "string",
+        "gt_score": 0,
+        "metadata_updated_at": "string"
+      },
+      "relationships": {}
+    }
+  ]
+}
+No links
+ohlcvs
+
+
+GET
+/networks/{network}/pools/{pool_address}/ohlcv/{timeframe}
+Get OHLCV data of a pool, up to 6 months ago. Empty response if there is no earlier data available.
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+pool_address *
+string
+(path)
+pool address
+
+Example: 0x60594a405d53811d3bc4766596efd80fd545a270
+Note: Pools with more than 2 tokens are not yet supported for this endpoint.
+
+pool_address
+timeframe *
+string
+(path)
+timeframe
+
+Available values: day, hour, minute
+Example: day
+
+timeframe
+aggregate
+string
+(query)
+time period to aggregate for each ohlcv (eg. /minute?aggregate=15 for 15m ohlcv)
+
+Available values (day): 1
+
+Available values (hour): 1, 4, 12
+
+Available values (minute): 1, 5, 15
+Default: 1
+
+aggregate
+before_timestamp
+string
+(query)
+return ohlcv data before this timestamp (integer seconds since epoch)
+Example: 1679414400
+
+before_timestamp
+limit
+string
+(query)
+limit number of ohlcv results to return (default: 100, max: 1000)
+Example: 100
+
+limit
+currency
+string
+(query)
+return ohlcv in USD or quote token (default: usd)
+
+Available values: usd, token
+
+currency
+token
+string
+(query)
+return ohlcv for base or quote token; use this to invert the chart. (default: base)
+
+Available values: base, quote, or a token address
+
+token
+Responses
+Code	Description	Links
+200	
+Get OHLCV data of a pool
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": {
+    "id": "string",
+    "type": "string",
+    "attributes": {
+      "ohlcv_list": [
+        [
+          1708498800,
+          2955.65173795683,
+          2955.65173795683,
+          2933.98026793936,
+          2934.24491263724,
+          131664.76418553386
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "base": {
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "name": "Wrapped Ether",
+      "symbol": "WETH",
+      "coingecko_coin_id": "weth"
+    },
+    "quote": {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "name": "Dai Stablecoin",
+      "symbol": "DAI",
+      "coingecko_coin_id": "dai"
+    }
+  }
+}
+No links
+422	
+Pools with >2 tokens are not yet supported for this endpoint
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+trades
+
+
+GET
+/networks/{network}/pools/{pool_address}/trades
+Get last 300 trades in past 24 hours from a pool
+Parameters
+Try it out
+Name	Description
+network *
+string
+(path)
+network id from /networks list
+
+Example: eth
+
+network
+pool_address *
+string
+(path)
+pool address
+
+Example: 0x60594a405d53811d3bc4766596efd80fd545a270
+
+pool_address
+trade_volume_in_usd_greater_than
+number
+(query)
+return trades with volume greater than this value in USD (default: 0)
+Example: 100000
+
+trade_volume_in_usd_greater_than
+Responses
+Code	Description	Links
+200	
+Get last 300 trades in past 24 hours from a pool
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "data": [
+    {
+      "id": "string",
+      "type": "string",
+      "attributes": {
+        "block_number": 0,
+        "block_timestamp": "string",
+        "tx_hash": "string",
+        "tx_from_address": "string",
+        "from_token_amount": "string",
+        "to_token_amount": "string",
+        "price_from_in_currency_token": "string",
+        "price_to_in_currency_token": "string",
+        "price_from_in_usd": "string",
+        "price_to_in_usd": "string",
+        "kind": "string",
+        "volume_in_usd": "string",
+        "from_token_address": "string",
+        "to_token_address": "string"
+      }
+    }
+  ]
+}
+No links
+404	
+Specified pool not found
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "errors": [
+    {
+      "status": "string",
+      "title": "string"
+    }
+  ]
+}
+No links
+
+Schemas
+errors_object
+relationships
+simple_token_price
+token
+token_info
+pool
+ohlcv
+ohlcv_token
+trade

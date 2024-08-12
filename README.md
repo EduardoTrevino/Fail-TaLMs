@@ -54,7 +54,7 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | Currency Rates                   | 0         | :x:        | TBD      |
 | Crypto & Finance | DEX Screener                     | 2         | :x:        | TBD      |
 | Crypto & Finance | ExchangeRate-API                 | 0         | :x:        | TBD      |
-| Crypto & Finance | GeckoTerminal                    | 0         | :x:        | TBD      |
+| Crypto & Finance | GeckoTerminal                    | 2         | :x:        | TBD      |
 | Crypto & Finance | Gemini                           | 0         | :x:        | TBD      |
 | Crypto & Finance | Kraken                           | 0         | :x:        | TBD      |
 | Crypto & Finance | KuCoin                           | 0         | :x:        | TBD      |
