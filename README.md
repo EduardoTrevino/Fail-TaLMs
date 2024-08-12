@@ -6,56 +6,56 @@ Please update as you add and intergrate diffrent apis
 | ---------------- | -------------------------------- | --------- | ---------- | -------- |
 | API Directories  | APIs.guru                        | 0         | :x:        | TBD      |
 | Art & Images     | Art Institute of Chicago         | 2         | ✅         | 08/01/24 |
-| Art & Images     | COLOURlovers                     | 2         | 🟢        | TBD      |
+| Art & Images     | COLOURlovers                     | 2         | 🟢         | TBD      |
 | Art & Images     | DiceBear                         | 0         | :x:        | TBD      |
-| Art & Images     | Dogs                             | 2         | 🟢        | TBD      |
+| Art & Images     | Dogs                             | 2         | 🟢         | TBD      |
 | Art & Images     | HTTP Cats                        | 0         | :x:        | TBD      |
 | Art & Images     | Lorem Picsum                     | 0         | :x:        | TBD      |
-| Art & Images     | Metropolitan Museum of Art       | 2         | 🟢        | TBD      |
+| Art & Images     | Metropolitan Museum of Art       | 2         | 🟢         | TBD      |
 | Art & Images     | PHP-Noise                        | 0         | :x:        | TBD      |
 | Art & Images     | Placebear                        | 0         | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0         | :x:        | TBD      |
 | Art & Images     | RandomFox                        | 0         | :x:        | TBD      |
-| Art & Images     | ReSmush                          | 2         | 🟢        | TBD      |
+| Art & Images     | ReSmush                          | 2         | 🟢         | TBD      |
 | Art & Images     | RoboHash                         | 0         | :x:        | TBD      |
 | Art & Images     | Vadivelu Status Codes            | 0         | :x:        | TBD      |
-| Calendar         | Nager.Date                       | 2         | 🟢        | TBD      |
-| Calendar         | UK Bank Holidays                 | 2         | 🟢        | TBD      |
-| Content          | 4chan                            | 2         | 🟢        | TBD      |
-| Content          | Anime News Network               | 2         | 🟢        | TBD      |
-| Content          | Ceska Televize                   | 2         | 🟢        | TBD      |
-| Content          | Chronicling America              | 2         | 🟢        | TBD      |
-| Content          | Crossref                         | 2         | 🟢        | TBD      |
-| Content          | Final Space                      | 2         | 🟢        | TBD      |
-| Content          | HackerNews                       | 2         | 🟢        | TBD      |
-| Content          | Ice and Fire                     | 2         | 🟢        | TBD      |
-| Content          | Jikan                            | 2         | 🟢        | TBD      |
+| Calendar         | Nager.Date                       | 2         | 🟢         | TBD      |
+| Calendar         | UK Bank Holidays                 | 2         | 🟢         | TBD      |
+| Content          | 4chan                            | 2         | 🟢         | TBD      |
+| Content          | Anime News Network               | 2         | 🟢         | TBD      |
+| Content          | Ceska Televize                   | 2         | 🟢         | TBD      |
+| Content          | Chronicling America              | 2         | 🟢         | TBD      |
+| Content          | Crossref                         | 2         | 🟢         | TBD      |
+| Content          | Final Space                      | 2         | 🟢         | TBD      |
+| Content          | HackerNews                       | 2         | 🟢         | TBD      |
+| Content          | Ice and Fire                     | 2         | 🟢         | TBD      |
+| Content          | Jikan                            | 2         | 🟢         | TBD      |
 | Content          | Listly                           | 0         | :x:        | TBD      |
-| Content          | MCU-Countdown                    | 2         | 🟢        | TBD      |
-| Content          | Mediawiki                        | 2         | 🟢        | TBD      |
-| Content          | Open Library                     | 2         | 🟢        | TBD      |
+| Content          | MCU-Countdown                    | 2         | 🟢         | TBD      |
+| Content          | Mediawiki                        | 2         | 🟢         | TBD      |
+| Content          | Open Library                     | 2         | 🟢         | TBD      |
 | Content          | Reddit                           | 0         | :x:        | TBD      |
-| Content          | Reddit Stocks                    | 2         | 🟢       | TBD      |
-| Content          | Rick and Morty                   | 2         | 🟢        | TBD      |
+| Content          | Reddit Stocks                    | 2         | 🟢         | TBD      |
+| Content          | Rick and Morty                   | 2         | 🟢         | TBD      |
 | Content          | STAPI                            | 0         | :x:        | TBD      |
-| Content          | SWAPI                            | 2         | 🟢        | TBD      |
-| Content          | The Rosary                       | 2         | 🟢        | TBD      |
-| Content          | TVMaze                           | 2         | 🟢        | TBD      |
+| Content          | SWAPI                            | 2         | 🟢         | TBD      |
+| Content          | The Rosary                       | 2         | 🟢         | TBD      |
+| Content          | TVMaze                           | 2         | 🟢         | TBD      |
 | Content          | Wolne Lektury                    | 0         | :x:        | TBD      |
-| Content          | WordPress                        | 2         | 🟢        | TBD      |
-| Crypto & Finance | Binance                          | 2         | 🟢        | TBD      |
-| Crypto & Finance | CoinBase                         | 2         | 🟢        | TBD      |
-| Crypto & Finance | CoinCap                          | 2         | 🟢        | TBD      |
+| Content          | WordPress                        | 2         | 🟢         | TBD      |
+| Crypto & Finance | Binance                          | 2         | 🟢         | TBD      |
+| Crypto & Finance | CoinBase                         | 2         | 🟢         | TBD      |
+| Crypto & Finance | CoinCap                          | 2         | 🟢         | TBD      |
 | Crypto & Finance | CoinDesk                         | 0         | :x:        | TBD      |
-| Crypto & Finance | CoinGecko                        | 2         | 🟢        | TBD      |
-| Crypto & Finance | CoinLore                         | 2         | 🟢        | TBD      |
-| Crypto & Finance | CoinMap                          | 2         | 🟢        | TBD      |
-| Crypto & Finance | Coinpaprika                      | 2         | 🟢        | TBD      |
+| Crypto & Finance | CoinGecko                        | 2         | 🟢         | TBD      |
+| Crypto & Finance | CoinLore                         | 2         | 🟢         | TBD      |
+| Crypto & Finance | CoinMap                          | 2         | 🟢         | TBD      |
+| Crypto & Finance | Coinpaprika                      | 2         | 🟢         | TBD      |
 | Crypto & Finance | Currency Rates                   | 0         | :x:        | TBD      |
-| Crypto & Finance | DEX Screener                     | 2         | 🟢        | TBD      |
+| Crypto & Finance | DEX Screener                     | 2         | 🟢         | TBD      |
 | Crypto & Finance | ExchangeRate-API                 | 0         | :x:        | TBD      |
-| Crypto & Finance | GeckoTerminal                    | 2         | 🟢        | TBD      |
-| Crypto & Finance | Gemini                           | 0         | :x:        | TBD      |
+| Crypto & Finance | GeckoTerminal                    | 2         | 🟢         | TBD      |
+| Crypto & Finance | Gemini                           | 2         | :x:        | TBD      |
 | Crypto & Finance | Kraken                           | 0         | :x:        | TBD      |
 | Crypto & Finance | KuCoin                           | 0         | :x:        | TBD      |
 | Crypto & Finance | NBP Web                          | 0         | :x:        | TBD      |
@@ -160,21 +160,21 @@ Please update as you add and intergrate diffrent apis
 | Inspiration      | Breaking Bad Quotes              | 0         | :x:        | TBD      |
 | Inspiration      | Dictum                           | 0         | :x:        | TBD      |
 | Inspiration      | Game of Thrones Quotes           | 0         | :x:        | TBD      |
-| Inspiration      | Kanye                            | 1         | 🟢        | TBD      |
+| Inspiration      | Kanye                            | 1         | 🟢         | TBD      |
 | Inspiration      | Quotable                         | 0         | :x:        | TBD      |
 | Inspiration      | Quote Garden                     | 0         | :x:        | TBD      |
 | Inspiration      | Quotes on Design                 | 0         | :x:        | TBD      |
 | Inspiration      | Ron Swanson Quotes               | 0         | :x:        | TBD      |
-| Jobs             | Jobicy                           | 1         | 🟢        | TBD      |
+| Jobs             | Jobicy                           | 1         | 🟢         | TBD      |
 | Language         | Chinese Character Web            | 0         | :x:        | TBD      |
-| Language         | Chinese Text Project             | 2         | 🟢        | TBD      |
+| Language         | Chinese Text Project             | 2         | 🟢         | TBD      |
 | Language         | Datamuse                         | 0         | :x:        | TBD      |
 | Language         | Free Dictionary                  | 0         | :x:        | TBD      |
 | Language         | PurgoMalum                       | 0         | :x:        | TBD      |
 | Music            | Binary Jazz                      | 0         | :x:        | TBD      |
 | Music            | iTunes Search                    | 0         | :x:        | TBD      |
 | Music            | MusicBrainz                      | 0         | :x:        | TBD      |
-| Music            | Openwhyd                         | 2         | 🟢        | TBD      |
+| Music            | Openwhyd                         | 2         | 🟢         | TBD      |
 | Open Data        | Archive.org                      | 0         | :x:        | TBD      |
 | Open Data        | Carbon Intensity                 | 0         | :x:        | TBD      |
 | Open Data        | Data.Police.UK                   | 0         | :x:        | TBD      |
@@ -186,7 +186,7 @@ Please update as you add and intergrate diffrent apis
 | Open Data        | Universities List                | 0         | :x:        | TBD      |
 | Open Data        | Vehicles                         | 0         | :x:        | TBD      |
 | Open Data        | Wayback Machine                  | 0         | :x:        | TBD      |
-| Open Data        | Wikipedia                        | 2         | 🟢        | TBD      |
+| Open Data        | Wikipedia                        | 2         | 🟢         | TBD      |
 | Science          | Arcsecond                        | 0         | :x:        | TBD      |
 | Science          | arXiv                            | 0         | :x:        | TBD      |
 | Science          | Asterank                         | 0         | :x:        | TBD      |
@@ -200,14 +200,14 @@ Please update as you add and intergrate diffrent apis
 | Science          | Numbers                          | 0         | :x:        | TBD      |
 | Science          | Open Notify                      | 0         | :x:        | TBD      |
 | Science          | Spaceflight News                 | 0         | :x:        | TBD      |
-| Science          | SpaceX                           | 2         | 🟢        | TBD      |
+| Science          | SpaceX                           | 2         | 🟢         | TBD      |
 | Science          | SunriseSunset                    | 0         | :x:        | TBD      |
 | Science          | TheSpaceDevs                     | 0         | :x:        | TBD      |
 | Science          | USGS Earthquake Catalog          | 0         | :x:        | TBD      |
 | Sports           | CityBikes                        | 0         | :x:        | TBD      |
 | Sports           | Ergast F1                        | 0         | :x:        | TBD      |
 | Sports           | Football-Data                    | 0         | :x:        | TBD      |
-| Sports           | nhlapi                           | 2         | 🟢        | TBD      |
+| Sports           | nhlapi                           | 2         | 🟢         | TBD      |
 | Test Data        | Bacon Ipsum                      | 0         | :x:        | TBD      |
 | Test Data        | Faker                            | 0         | :x:        | TBD      |
 | Test Data        | JSONPlaceholder                  | 0         | :x:        | TBD      |

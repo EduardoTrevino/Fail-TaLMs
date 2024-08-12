@@ -1,0 +1,109 @@
+{
+  "tool_name": "gemini",
+  "tool_description": "Gemini API provides cryptocurrency market data such as trading symbols, price feeds, and trade history.",
+  "title": "Gemini API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 300,
+    "avgSuccessRate": 99,
+    "popularityScore": 9.8,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.gemini.com/",
+  "host": "api.gemini.com",
+  "api_list": [
+    {
+      "name": "symbols",
+      "url": "https://api.gemini.com/v1/symbols",
+      "description": "Retrieve all available trading symbols.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.gemini.com/v1/symbols\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "ticker_v2",
+      "url": "https://api.gemini.com/v2/ticker/:symbol",
+      "description": "Retrieve recent trading activity for the provided symbol.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "symbol",
+          "type": "STRING",
+          "description": "Trading pair symbol, e.g., BTCUSD",
+          "default": "btcusd"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.gemini.com/v2/ticker/{symbol}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "symbol": { "type": "string" },
+          "open": { "type": "number" },
+          "high": { "type": "number" },
+          "low": { "type": "number" },
+          "close": { "type": "number" },
+          "changes": {
+            "type": "array",
+            "items": { "type": "number" }
+          },
+          "bid": { "type": "number" },
+          "ask": { "type": "number" }
+        }
+      }
+    },
+    {
+      "name": "candles",
+      "url": "https://api.gemini.com/v2/candles/:symbol/:time_frame",
+      "description": "Retrieve time-intervaled data for the provided symbol.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "symbol",
+          "type": "STRING",
+          "description": "Trading pair symbol, e.g., BTCUSD",
+          "default": "btcusd"
+        },
+        {
+          "name": "time_frame",
+          "type": "STRING",
+          "description": "Time range for each candle, e.g., 15m, 1hr, 1day",
+          "default": "15m"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.gemini.com/v2/candles/{symbol}/{time_frame}\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": [
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" }
+          ]
+        }
+      }
+    }
+  ]
+}
