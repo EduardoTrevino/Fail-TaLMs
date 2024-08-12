@@ -1,0 +1,1978 @@
+REST API (1.1.0)
+Download OpenAPI specification:Download
+
+General Usage
+This document details use of Kraken's REST API for our Spot exchange. The Spot exchange Websockets API and the Kraken Futures APIs are documented separately. Our REST API is organised into publicly accessible endpoints (market data, exchange status, etc.), and private authenticated endpoints (trading, funding, user data) which require requests to be signed.
+
+Your use of the Kraken REST API is subject to the Kraken Terms & Conditions, Privacy Notice, as well as all other applicable terms and disclosures made available on www.kraken.com.
+
+You must seek our prior permission for any non personal commercial use of the Kraken REST API, this includes, but is not limited to, any non personal commercial use of market data, exchange status, etc. available via the publicly available endpoints. You may seek such permission by contacting marketdata@kraken.com.
+
+Support
+Further information and FAQs may be found on the API section of our support pages. If you have trouble making any standard requests that our system permits, please send us a ticket with a full copy of the request(s) that you're attempting, including your IP address and all headers, so that we may investigate further.
+
+Requests, Responses and Errors
+Requests
+Request payloads are form-encoded (Content-Type: application/x-www-form-urlencoded), and all requests must specify a User-Agent in their headers.
+
+Responses
+Responses are JSON encoded and contain one or two top-level keys (result and error for successful requests or those with warnings, or only error for failed or rejected requests)
+
+Example Successful Response
+{
+  "error": [],
+  "result": {
+    "status": "online",
+    "timestamp": "2021-03-22T17:18:03Z"
+  }
+}
+GET https://api.kraken.com/0/public/SystemStatus
+
+Example Rejection
+{
+  "error": [
+    "EGeneral:Invalid arguments:ordertype"
+  ]
+}
+Error Details
+HTTP status codes are generally not used by our API to convey information about the state of requests -- any errors or warnings are denoted in the error field of the response as described above. Status codes other than 200 indicate that there was an issue with the request reaching our servers.
+
+error messages follow the general format <severity><category>:<error msg>[:add'l text]
+
+severity can be either E for error or W for warning
+category can be one of General, Auth, API, Query, Order, Trade, Funding, or Service
+error msg can be any text string that describes the reason for the error
+Some Common Examples
+Error	Additional Info
+EGeneral:Invalid arguments	The request payload is malformed, incorrect or ambiguous
+EGeneral:Invalid arguments:Index unavailable	Index pricing is unavailable for stop/profit orders on this pair
+EGeneral:Temporary lockout	Too many sequential EAPI:Invalid key errors
+EService:Unavailable	The matching engine or API is offline
+EService:Market in cancel_only mode	Request can't be made at this time (See SystemStatus endpoint)
+EService:Market in post_only mode	Request can't be made at this time (See SystemStatus endpoint)
+EService:Deadline elapsed	The request timed out according to the default or specified deadline
+EAPI:Invalid key	An invalid API-Key header was supplied (see Authentication section)
+EAPI:Invalid signature	An invalid API-Sign header was supplied (see Authentication section)
+EAPI:Invalid nonce	An invalid nonce was supplied (see Authentication section)
+EGeneral:Permission denied	API key doesn't have permission to make this request
+EOrder:Cannot open position	User/tier is ineligible for margin trading
+EOrder:Margin allowance exceeded	User has exceeded their margin allowance
+EOrder:Margin level too low	Client has insufficient equity or collateral
+EOrder:Margin position size exceeded	Client would exceed the maximum position size for this pair
+EOrder:Insufficient margin	Exchange does not have available funds for this margin trade
+EOrder:Insufficient funds	Client does not have the necessary funds
+EOrder:Order minimum not met	Order size does not meet ordermin (See AssetPairs endpoint)
+EOrder:Cost minimum not met	Cost (price * volume) does not meet costmin (See AssetPairs endpoint)
+EOrder:Tick size check failed	Price submitted is not a valid multiple of the pair's tick_size (See AssetPairs endpoint)
+EOrder:Orders limit exceeded	(See Rate Limits section)
+EOrder:Rate limit exceeded	(See Rate Limits section)
+EOrder:Domain rate limit exceeded	(See Rate Limits section)
+EOrder:Positions limit exceeded	
+EOrder:Unknown position	
+EBM:limit exceeded:CAL	Exceeded Canadian Acquisition Limits (CAL)
+EFunding:Max fee exceeded	Processed fee exceeds max_fee set in Withdraw request
+Additional information can be found on our support center.
+
+Authentication
+Authenticated requests must include both API-Key and API-Sign HTTP headers, and nonce in the request payload. otp is also required in the payload if two-factor authentication (2FA) is enabled.
+
+Nonce and 2FA
+nonce
+Nonce must be an always increasing, unsigned 64-bit integer, for each request that is made with a particular API key. While a simple counter would provide a valid nonce, a more usual method of generating a valid nonce is to use e.g. a UNIX timestamp in milliseconds.
+
+Note: There is no way to reset the nonce for an API key to a lower value, so be sure to use a nonce generation method that won't produce numbers less than the previous nonce. Too many requests with invalid nonces (EAPI:Invalid nonce) can result in temporary bans. Problems can arise from requests arriving out of order due to API keys being shared across processes, or from system clock drift/recalibration. An optional "nonce window" can be configured to specify a tolerance between nonce values. Additional info can be found in our support pages.
+
+otp
+If two-factor authentication (2FA) is enabled for the API key and action in question, the one time password must be specified in the payload's otp value.
+
+Headers and Signature
+All responses will include the x-trace-id header. This uniquely identifies your request. When contacting support, please include a trace-id where possible.
+
+API-Key
+The "API-Key" header should contain your API key.
+
+Security Scheme Type: API Key
+Header parameter name: API-Key
+API-Sign
+Authenticated requests should be signed with the "API-Sign" header, using a signature generated with your private key, nonce, encoded payload, and URI path according to:
+
+HMAC-SHA512 of (URI path + SHA256(nonce + POST data)) and base64 decoded secret API key
+Example Signature
+The following is a specific example of a signature generated with a particular private key, nonce, and payload corresponding to a new limit order (buy 1.25 XBTUSD at $37,500). If your code is generating a different signature ("API-Sign") for this example, then there is likely an issue with your application of the above methodology. Code snippets for generating the signature in Python, Golang and Node.js follow below.
+
+Field	Value
+Private Key	kQH5HW/8p1uGOVjbgWA7FunAmGO8lsSUXNsu3eow76sz84Q18fWxnyRzBHCd3pd5nE9qa99HAZtuZuj6F1huXg==
+Nonce	1616492376594
+Encoded Payload	nonce=1616492376594&ordertype=limit&pair=XBTUSD&price=37500&type=buy&volume=1.25
+URI Path	/0/private/AddOrder
+API-Sign	4/dpxb3iT4tp/ZCVEwSnEsLxx0bqyhLpdfOpc6fn7OR8+UClSV5n9E6aSS8MPtnRfp32bAb0nmbRn6H8ndwLUQ==
+Code Examples
+Python
+import urllib.parse
+import hashlib
+import hmac
+import base64
+
+def get_kraken_signature(urlpath, data, secret):
+
+    postdata = urllib.parse.urlencode(data)
+    encoded = (str(data['nonce']) + postdata).encode()
+    message = urlpath.encode() + hashlib.sha256(encoded).digest()
+
+    mac = hmac.new(base64.b64decode(secret), message, hashlib.sha512)
+    sigdigest = base64.b64encode(mac.digest())
+    return sigdigest.decode()
+
+api_sec = "kQH5HW/8p1uGOVjbgWA7FunAmGO8lsSUXNsu3eow76sz84Q18fWxnyRzBHCd3pd5nE9qa99HAZtuZuj6F1huXg=="
+
+data = {
+    "nonce": "1616492376594",
+    "ordertype": "limit",
+    "pair": "XBTUSD",
+    "price": 37500,
+    "type": "buy",
+    "volume": 1.25
+}
+
+signature = get_kraken_signature("/0/private/AddOrder", data, api_sec)
+print("API-Sign: {}".format(signature))
+Golang link
+package main
+
+import (
+  "crypto/hmac"
+  "crypto/sha256"
+  "crypto/sha512"
+  "encoding/base64"
+  "net/url"
+  "fmt"
+)
+
+func getKrakenSignature(url_path string, values url.Values, secret []byte) string {
+
+  sha := sha256.New()
+  sha.Write([]byte(values.Get("nonce") + values.Encode()))
+  shasum := sha.Sum(nil)
+
+  mac := hmac.New(sha512.New, secret)
+  mac.Write(append([]byte(url_path), shasum...))
+  macsum := mac.Sum(nil)
+  return base64.StdEncoding.EncodeToString(macsum)
+}
+
+func main() {
+
+  apiSecret := "kQH5HW/8p1uGOVjbgWA7FunAmGO8lsSUXNsu3eow76sz84Q18fWxnyRzBHCd3pd5nE9qa99HAZtuZuj6F1huXg=="
+
+  payload := url.Values{}
+  payload.Add("pair","XBTUSD")
+  payload.Add("type","buy")
+  payload.Add("ordertype","limit")
+  payload.Add("price","37500")
+  payload.Add("volume","1.25")
+  payload.Add("nonce","1616492376594")
+
+  b64DecodedSecret, _ := base64.StdEncoding.DecodeString(apiSecret)
+
+  signature := getKrakenSignature("/0/private/AddOrder", payload, b64DecodedSecret)
+  fmt.Printf("API-Sign: " + signature +"\n")
+}
+Node JS
+const crypto = require('crypto');
+const qs     = require('qs');
+
+const getMessageSignature = (path, request, secret, nonce) => {
+    const message       = qs.stringify(request);
+    const secret_buffer = new Buffer(secret, 'base64');
+    const hash          = new crypto.createHash('sha256');
+    const hmac          = new crypto.createHmac('sha512', secret_buffer);
+    const hash_digest   = hash.update(nonce + message).digest('binary');
+    const hmac_digest   = hmac.update(path + hash_digest, 'binary').digest('base64');
+
+    return hmac_digest;
+};
+Security Scheme Type: API Key
+Header parameter name: API-Sign
+Rate Limits
+We have various safeguards in place to protect against system abuse, order book manipulation, DDoS attacks, etc. For REST API requests, these are broadly organised into rate limits specific to the REST API, and rate limits which apply to any trading requests.
+
+Note: For clients with performance sensitive applications, we strongly recommend the use of our Websockets API for minimising request latency and receiving real-time information, reducing or eliminating the need to frequently poll REST endpoints.
+
+REST API Rate Limits
+Limits
+Every REST API user has a "call counter" which starts at 0. Ledger/trade history calls increase the counter by 2. All other API calls increase this counter by 1 (except AddOrder, CancelOrder which operate on a different limiter detailed further below).
+
+Tier	Max API Counter	API Counter Decay
+Starter	15	-0.33/sec
+Intermediate	20	-0.5/sec
+Pro	20	-1/sec
+The user's counter is reduced every couple of seconds depending on their verification tier. Each API key's counter is separate, and if the counter exceeds the maximum value, subsequent calls using that API key would be rate limited. If the rate limits are reached, additional calls will be restricted for a few seconds (or possibly longer if calls continue to be made while the rate limits are active).
+
+Note: Master accounts and subaccounts will share the same default trading rate limits as determined by the master account's tier.
+
+Errors
+"EAPI:Rate limit exceeded" if the REST API counter exceeds the user's maximum.
+"EService: Throttled: [UNIX timestamp]" if there are too many concurrent requests. Try again after [timestamp].
+Additional information can be found on our support center.
+
+Matching Engine Rate Limits
+Limits
+Separate limits apply to the number of orders clients may have open in each pair at a time, and the speed with which they may add and cancel orders in each pair. These limits vary by the account verification tier:
+
+Tier	Max Num Orders	Max Ratecount	Ratecount Decay
+Starter	60	60	-1/sec
+Intermediate	80	125	-2.34/sec
+Pro	225	180	-3.75/sec
+Penalties
+The speed is controlled by a ratecounter for each (client, pair) which starts at zero, is incremented when penalties are applied, and decremented according to the decay rates above. A penalty is added to the ratecounter for each new order placed (AddOrder) or cancelled (CancelOrder, CancelAll, CancelAllOrdersAfter) on the pair. The cancellation penalty varies according to the lifetime of the order.
+
+Action		<5sec	<10sec	<15sec	<45sec	<90sec	<300s	>300s
+Add Order	+1							
+AddOrderBatch***	+(n/2)							
+Edit Order		+6	+5	+4	+2	+1	0	0
+Cancel Order		+8	+6	+5	+4	+2	+1	0
+CancelOrderBatch**		+8	+6	+5	+4	+2	+1	0
+*** n is number of orders in batch
+
+** Rate limits penalty for CancelOrderBatch will be cumulative sum of individual orders penalty, accumulated upto max ratecount. In case, the cumulative penalty in the batch exceeds max ratecount, cancel requests in batch are still accepted.
+
+Note: A client's exact ratecounter values can be monitored via the Websockets openOrders feed.
+
+Errors
+"EOrder:Orders limit exceeded" if the number of open orders in a given pair is exceeded
+"EOrder:Rate limit exceeded" if the user's max ratecount is exceeded for a given pair
+Additional information can be found on our support center.
+
+Changelog
+Mar 2024 - Removed Staking section, deprecated and no longer supported.
+Feb 2024 - Added maker and ledgers fields to TradesHistory and QueryTrades. Added NFT Market Data and Trading documentation.
+Jan 2024 - Removed support for POST requests to all public endpoints; these requests will now return a 4xx error, please use a GET request instead. Added notes to Balance and Ledger endpoints on migration from Staking to Earn and asset suffixes.
+Dec 2023 - Added support for trailing-stop and trailing-stop-limit order types.
+Nov 2023 - Added WithdrawMethods and WithdrawAddresses endpoints, and start, end, cursor, and limit parameters to WithdrawStatus.
+Oct 2023 - Added max_fee parameter to Withdraw and minimum field in response for DepositMethods.
+Sep 2023 - Added start, end, cursor, and limit parameters to DepositStatus.
+Aug 2023 - Added Earn service documentation.
+July 2023 - Added private BalanceEx documentation.
+June 2023 - Added amount parameter to DepositAddresses, required for Bitcoin Lightning deposits. Added count parameter to Trades.
+May 2023 - Added address parameter to Withdraw. Added since parameter to Spread.
+Mar 2023 - Added originators paramater to DepositStatus.
+Feb 2023 - Added long and short margin position limits to AssetPairs.
+Feb 2023 - Specified minimum and maximum number of txids and userrefs for CancelOrderBatch.
+Feb 2023 - Specified maximum number of responses for DepositStatus and WithdrawStatus.
+Feb 2023 - Noted to use %2b instead of + for URL encoding in AddOrder starttm and expiretm parameters.
+Jan 2023 - Removed requirement for asset in DepositStatus and WithdrawalStatus.
+Jan 2023 - Documented reduce_only parameter in AddOrder and AddOrderBatch.
+Jan 2023 - Added consolidate_taker to TradesHistory, ClosedOrders, and QueryOrders.
+Jan 2023 - Added Subaccounts section with CreateSubaccount and AccountTransfer endpoints.
+Jan 2023 - Added trade_id to private TradesHistory.
+Dec 2022 - Fixed pair parameter restriction on TradeVolume.
+Dec 2022 - EditOrder allowed on margin orders.
+Nov 2022 - Added tick_size and status parameters to AssetPairs, status and collateral_value to Assets, and trade_id to public Trades.
+Oct 2022 - Documented uv (unexecuted value) field in TradeBalance.
+Oct 2022 - Added costmin trading parameter to AssetPairs.
+Oct 2022 - Ticker wildcard support - pair no longer required, no pair parameter returns tickers for all tradeable exchange assets.
+Sep 2022 - AddOrder/EditOrder/AddOrderBatch now support icebergs.
+July 2022 - Added support for restricting API keys to specified IP address(es)/range.
+June 2022 - Added custom self trade prevention options.
+May 2022 - Added new REST AddOrderBatch endpoint to send multiple new orders and CancelOrderBatch endpoint to cancel multiple open orders.
+Mar 2022 - Added new REST EditOrder endpoint to edit volume and price on open orders.
+Dec 2021 - Added REST AddOrder support for optional parameter trigger and values last (last traded price) and index.
+Note: Most changes affecting our APIs or trading engine behaviour are currently being tracked on our Websockets changelog, until these documents are combined.
+
+Example API Clients
+In order to achieve maximum performance, security and flexibility for your particular needs, we strongly encourage the implementation of this API with your own code, and to minimise reliance on third party software.
+
+That being said, in order to aid with rapid development and prototyping, we're in the process of producing 'official' API clients in Python and Golang that will be actively maintained, coincident with the release of newer versions of both our Websockets and REST APIs. In the meantime, our Client Engagement team has compiled a number of code snippets, examples and Postman collections that many find useful.
+
+Third Party Software
+Below are other third party API client code libraries that may be used when writing your own API client. Please keep in mind that Payward nor the third party authors are responsible for losses due to bugs or improper use of the APIs. Payward has performed an initial review of the safety of the third party code before listing them but cannot vouch for any changes added since then, or for those that may be stale. If you have concerns, please contact support.
+
+Language	Link
+C++	https://github.com/voidloop/krakenapi
+Golang	https://github.com/Beldur/kraken-go-api-client
+Python 3	https://github.com/veox/python3-krakenex
+Other
+
+Spot Market Data
+Note: As of 31st Jan 2024, the undocumented use of POST requests to /0/public/* endpoints will be deprecated to improve the performance of our systems and experience for consumers of the API. The endpoints will now return a 4xx error when accessed with a POST request instead of a GET.
+
+Get Server Time
+Get the server's time.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+Responses
+200 Success response
+Response Schema: application/json
+result	
+object (ServerTime)
+error	
+Array of strings (error)
+
+get
+/public/Time
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Time"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"unixtime": 1688669448,
+"rfc1123": "Thu, 06 Jul 23 18:50:48 +0000"
+}
+}
+Get System Status
+Get the current system status or trading mode.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+Responses
+200 Success response
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/SystemStatus
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/SystemStatus"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"status": "online",
+"timestamp": "2023-07-06T18:52:00Z"
+}
+}
+Get Asset Info
+Get information about the assets that are available for deposit, withdrawal, trading and earn.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+asset	
+string
+Example: asset=XBT,ETH
+Comma delimited list of assets to get info on (optional, default all available assets)
+
+aclass	
+string
+Example: aclass=currency
+Asset class (optional, default: currency)
+
+Responses
+200 Asset info retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/Assets
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Assets"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBT": {
+"aclass": "currency",
+"altname": "XBT",
+"decimals": 10,
+"display_decimals": 5,
+"collateral_value": 1,
+"status": "enabled"
+},
+"ZEUR": {
+"aclass": "currency",
+"altname": "EUR",
+"decimals": 4,
+"display_decimals": 2,
+"collateral_value": 1,
+"status": "enabled"
+},
+"ZUSD": {
+"aclass": "currency",
+"altname": "USD",
+"decimals": 4,
+"display_decimals": 2,
+"collateral_value": 1,
+"status": "enabled"
+}
+}
+}
+Get Tradable Asset Pairs
+Get tradable asset pairs.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair	
+string
+Example: pair=BTC/USD,ETH/BTC
+Asset pairs to get data for
+
+info	
+string
+Default: "info"
+Enum: "info" "leverage" "fees" "margin"
+Info to retrieve (optional)
+
+info = all info
+leverage = leverage info
+fees = fees schedule
+margin = margin info
+Responses
+200 Tradable asset pairs retrieved.
+Response Schema: application/json
+result	
+object
+Pair names and their info
+
+error	
+Array of strings (error)
+
+get
+/public/AssetPairs
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/AssetPairs?pair=XXBTZUSD,XETHXXBT"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XETHXXBT": {
+"altname": "ETHXBT",
+"wsname": "ETH/XBT",
+"aclass_base": "currency",
+"base": "XETH",
+"aclass_quote": "currency",
+"quote": "XXBT",
+"lot": "unit",
+"cost_decimals": 6,
+"pair_decimals": 5,
+"lot_decimals": 8,
+"lot_multiplier": 1,
+"leverage_buy": [
+2,
+3,
+4,
+5
+],
+"leverage_sell": [
+2,
+3,
+4,
+5
+],
+"fees": [
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+],
+"fees_maker": [
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+],
+"fee_volume_currency": "ZUSD",
+"margin_call": 80,
+"margin_stop": 40,
+"ordermin": "0.01",
+"costmin": "0.00002",
+"tick_size": "0.00001",
+"status": "online",
+"long_position_limit": 1100,
+"short_position_limit": 400
+},
+"XXBTZUSD": {
+"altname": "XBTUSD",
+"wsname": "XBT/USD",
+"aclass_base": "currency",
+"base": "XXBT",
+"aclass_quote": "currency",
+"quote": "ZUSD",
+"lot": "unit",
+"cost_decimals": 5,
+"pair_decimals": 1,
+"lot_decimals": 8,
+"lot_multiplier": 1,
+"leverage_buy": [
+2,
+3,
+4,
+5
+],
+"leverage_sell": [
+2,
+3,
+4,
+5
+],
+"fees": [
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+],
+"fees_maker": [
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+],
+"fee_volume_currency": "ZUSD",
+"margin_call": 80,
+"margin_stop": 40,
+"ordermin": "0.0001",
+"costmin": "0.5",
+"tick_size": "0.1",
+"status": "online",
+"long_position_limit": 250,
+"short_position_limit": 200
+}
+}
+}
+Get Ticker Information
+Get ticker information for all or requested markets. To clarify usage, note that:
+
+Today's prices start at midnight UTC
+Leaving the pair parameter blank will return tickers for all tradeable assets on Kraken
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair	
+string
+Example: pair=XBTUSD
+Asset pair to get data for (optional, default: all tradeable exchange pairs)
+
+Responses
+200 Ticker info retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/Ticker
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Ticker?pair=XBTUSD"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBTZUSD": {
+"a": [
+"30300.10000",
+"1",
+"1.000"
+],
+"b": [
+"30300.00000",
+"1",
+"1.000"
+],
+"c": [
+"30303.20000",
+"0.00067643"
+],
+"v": [
+"4083.67001100",
+"4412.73601799"
+],
+"p": [
+"30706.77771",
+"30689.13205"
+],
+"t": [
+34619,
+38907
+],
+"l": [
+"29868.30000",
+"29868.30000"
+],
+"h": [
+"31631.00000",
+"31631.00000"
+],
+"o": "30502.80000"
+}
+}
+}
+Get OHLC Data
+Get OHLC (open/high/low/close, otherwise known as candle) data for a given market. Note that the last entry in the OHLC array is for the current, not-yet-committed frame and will always be present, regardless of the value of since.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair
+required
+string
+Example: pair=XBTUSD
+Asset pair to get data for
+
+interval	
+integer
+Default: 1
+Enum: 1 5 15 30 60 240 1440 10080 21600
+Example: interval=60
+Time frame interval in minutes
+
+since	
+integer
+Example: since=1548111600
+Return up to 720 OHLC data points since given timestamp
+
+Responses
+200 OHLC data retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/OHLC
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/OHLC?pair=XBTUSD"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBTZUSD": [
+[
+1688671200,
+"30306.1",
+"30306.2",
+"30305.7",
+"30305.7",
+"30306.1",
+"3.39243896",
+23
+],
+[
+1688671260,
+"30304.5",
+"30304.5",
+"30300.0",
+"30300.0",
+"30300.0",
+"4.42996871",
+18
+],
+[
+1688671320,
+"30300.3",
+"30300.4",
+"30291.4",
+"30291.4",
+"30294.7",
+"2.13024789",
+25
+],
+[
+1688671380,
+"30291.8",
+"30295.1",
+"30291.8",
+"30295.0",
+"30293.8",
+"1.01836275",
+9
+]
+],
+"last": 1688672160
+}
+}
+Get Order Book
+Get current order book details.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair
+required
+string
+Example: pair=XBTUSD
+Asset pair to get data for
+
+count	
+integer [ 1 .. 500 ]
+Default: 100
+Example: count=2
+Maximum number of asks/bids
+
+Responses
+200 Order book entries retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/Depth
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Depth?pair=XBTUSD"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBTZUSD": {
+"asks": [
+[],
+[],
+[]
+],
+"bids": [
+[],
+[],
+[]
+]
+}
+}
+}
+Get Recent Trades
+Returns the last 1000 trades by default.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair
+required
+string
+Example: pair=XBTUSD
+Asset pair to get data for
+
+since	
+string
+Example: since=1616663618
+Return trade data since given timestamp
+
+count	
+integer [ 1 .. 1000 ]
+Default: 1000
+Example: count=2
+Return specific number of trades, up to 1000
+
+Responses
+200 Trade data retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/Trades
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Trades?pair=XBTUSD"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBTZUSD": [
+[
+"30243.40000",
+"0.34507674",
+1688669597.8277369,
+"b",
+"m",
+"",
+61044952
+],
+[
+"30243.30000",
+"0.00376960",
+1688669598.2804112,
+"s",
+"l",
+"",
+61044953
+],
+[
+"30243.30000",
+"0.01235716",
+1688669602.698379,
+"s",
+"m",
+"",
+61044956
+]
+],
+"last": "1688671969993150842"
+}
+}
+Get Recent Spreads
+Returns the last ~200 top-of-book spreads for a given pair.
+
+Note: Despite working previously, POST requests to this endpoint will now return a 4xx error. Please use a GET request instead.
+
+query Parameters
+pair
+required
+string
+Example: pair=XBTUSD
+Asset pair to get data for
+
+since	
+integer
+Example: since=1678219570
+Returns spread data since given timestamp. Optional, intended for incremental updates within available dataset (does not contain all historical spreads).
+
+Responses
+200 Spread data retrieved.
+Response Schema: application/json
+result	
+object
+error	
+Array of strings (error)
+
+get
+/public/Spread
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Spread?pair=XBTUSD"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"XXBTZUSD": [
+[
+1688671834,
+"30292.10000",
+"30297.50000"
+],
+[
+1688671834,
+"30292.10000",
+"30296.70000"
+],
+[
+1688671834,
+"30292.70000",
+"30296.70000"
+]
+],
+"last": 1688672106
+}
+}
+NFT Market Data
+Get NFT
+Operation GetNft returns an NFT object by its identifier where identifier is a kraken internal identifier
+
+Request Body schema: application/x-www-form-urlencoded
+currency	
+string or null
+Fiat currency used for converting crypto prices
+
+nft_id
+required
+string
+Identifier of the NFT
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/Nft
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Nft?nft_id=NT4GUCU-SIJE2-YSQQG2"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"nft": {
+"id": "NT4GUCU-SIJE2-YSQQG2",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"max_count": 1,
+"external_url": null,
+"image": {
+"kind": "Main",
+"media": {}
+},
+"media": [
+{},
+{}
+],
+"date_added": 1696526499,
+"date_minted": 1696525888,
+"token_uri": "https://nft-metadata.kraken.com/williams-grid-pass/3210",
+"token": {
+"blockchain": {},
+"id": "3210",
+"address": "0x1c09f530950513666b16da672d5f010fdb66d9da",
+"symbol": "WRGRIDPASS",
+"standard": "ERC-721",
+"owner": "0xfc3e484b7da631b40c3b5495023d161b7ab8cb51"
+},
+"creators": [
+{}
+],
+"creator_fee": "0.0000",
+"is_owned_by_user": false,
+"custody": null,
+"collection": {
+"id": "NCQNABO-XYCA7-JMMSDF",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Plus-up your Williams Racing experience with our brand-new Grid Pass, presented by Kraken. Collect your free pass and unlock immediate exclusive digital and physical perks, plus access to unique Williams Racing experiences. The Grid Pass is each holders’ “ignition key” to power the engine of benefits and experiences that the Williams Racing Collectibles+ program will provide.",
+"date_added": 1696338839,
+"image": {},
+"top_banner": {},
+"media": [],
+"floor_price": {},
+"creators": [],
+"total_items": 100000,
+"total_owners": 0,
+"total_sales": null,
+"total_volume": null,
+"market_cap": null,
+"seven_day_volume": null,
+"seven_day_average_price": null,
+"tags": [ ],
+"verified": true,
+"traits": { },
+"blockchain_data": [],
+"social_media_links": {}
+},
+"attributes": [ ],
+"categories": [ ],
+"rarity_rank": null,
+"tags": [ ],
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {
+"native": {},
+"fiat": {}
+},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"burned": false,
+"expiry_date": null
+}
+}
+}
+List NFTs
+Returns a list of NFTs with support for sorting and filtration.
+
+Request Body schema: application/x-www-form-urlencoded
+currency	
+string or null
+Fiat currency used for converting crypto prices.
+
+cursor	
+string or null
+Cursor token. Pass tokens obtained from successful responses.
+
+filter	
+object or null
+Filters to apply. Note: if filters are present, they are required to be passed for an initial request and omitted for subsequent ones.
+
+page_size
+required
+integer <uint16> >= 0
+Maximum number of items to be returned by a single request.
+
+sort	
+string or null
+Enum: "MostRelevant" "RecentlyAdded" "RecentlyVerified" "RecentlySold" "EndingSoon" "PriceLowToHigh" "PriceHighToLow" "HighestLastSell" "RarityRankLowToHigh" "RarityRankHighToLow"
+Sorting to apply. Note: sort parameter is required to be passed for an initial request and omitted for subsequent ones.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+Batch of paginated items from list APIs.
+
+
+get
+/public/Nfts
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/Nfts?filter%5Bcollection_id%5D=NCQNABO-XYCA7-JMMSDF&page_size=10"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"total_items": {
+"relation": "eq",
+"value": 100000
+},
+"cursor": "NuWr7HkEMs9pN4,UBVpe32qpoQplFO5T_HecRDdZEoZzWzfqRVKvUEEVA5P2prYP4ZmWIIBxOBlo9W,q28GJHxCvKukO2ReG8NHsvLMiaX44C17YXda4sWW,BdUC33tqzE_WDCk9i7bYK8M,p3lddZpJxG,UyBKeGPZ2DjTHu,cm1tdQxjaK_plqeSlvVTPwCKdaeFSHIZ5HciRI0XKD8s5fp,P5mIN39GtGUjDmekj8,9VCdPs3dD5GfIUmfwuMNWJln00wsEN,eWkrWUjcCc7eqNDm1OX8f0KhTAlb9XLVZQyEVRi8f9DKhf0T65U-",
+"items": [
+{
+"id": "NTCI6ZY-NBTDN-IP62PI",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTBRNB5-IMIO6-VYYDJ6",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTD5GGR-62YXS-TPXJ25",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTE3TPA-S6CQW-JFKHPH",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTG2L7E-ONIM2-PKOWCB",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTVDHXK-Z5SB3-HCIHHL",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTFYE5N-BSHHB-KUDY3A",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTWVZSQ-B3UUH-ZWOWJK",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NTUJNQA-MMKPA-RA4SUD",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+},
+{
+"id": "NT3Y7R6-5TWD4-T6UNAY",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Grants access to a community of Williams Racing super-fans.",
+"image": {},
+"media": [],
+"date_added": 1697127194,
+"creator_fee": "0.0000",
+"creators": [],
+"collection": {},
+"is_owned_by_user": false,
+"custody": null,
+"on_sale": false,
+"on_sale_status": "NotListed",
+"price": {},
+"buy_now": null,
+"last_auction_sale": null,
+"last_sale_or_mint": null,
+"best_offer": null,
+"token": {},
+"burned": false,
+"rarity_rank": null
+}
+]
+}
+}
+getNftProvenance
+Operation GetNftProvenance returns history of NFT ownership for a particular nft ID.
+
+Request Body schema: application/x-www-form-urlencoded
+currency	
+string or null
+Fiat currency used for converting crypto prices
+
+nft_id
+required
+string
+page	
+integer <uint16> [ 1 .. 65536 ]
+Default: 1
+Page number with query results starting from one
+
+per_page	
+integer <uint16> [ 1 .. 1000 ]
+Default: 5
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftProvenance
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftProvenance?nft_id=NT7EYX2-D7QVC-S7JDLE"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"items": [
+{
+"kind": "sale",
+"nft_id": "NT7EYX2-D7QVC-S7JDLE",
+"blockchain": "Ethereum",
+"from": "0xaeb3fea566c8bcb7ae6826a03f818d9d386169ba",
+"to": "0xdc5dc5b18f09cdf1ae14862e8e4665369e614ce7",
+"count": 1,
+"when": 1658139300,
+"txid": "0x1fced7290921922e6b1f2b1566e71968d31549b3762740d03a1ed443a8ef2762",
+"amount": {}
+},
+{
+"kind": "mint",
+"nft_id": "NT7EYX2-D7QVC-S7JDLE",
+"blockchain": "Ethereum",
+"from": "0x0000000000000000000000000000000000000000",
+"to": "0xaeb3fea566c8bcb7ae6826a03f818d9d386169ba",
+"count": 1,
+"when": 1639091332,
+"txid": "0xf8db308e1f0c5a7dfe75b78a0b8d1090a61e05de1c89a7e287f65687e61e7f32",
+"amount": null
+}
+],
+"total": 2
+}
+}
+getCollection
+Returns a NFT Collection object by its identifier where identifier is a kraken internal identifier
+
+Request Body schema: application/x-www-form-urlencoded
+collection_id
+required
+string
+ID of the collection
+
+currency	
+string or null
+Fiat currency used for converting crypto prices
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftCollection
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftCollection?collection_id=NCQNABO-XYCA7-JMMSDF"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"collection": {
+"id": "NCQNABO-XYCA7-JMMSDF",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Plus-up your Williams Racing experience with our brand-new Grid Pass, presented by Kraken. Collect your free pass and unlock immediate exclusive digital and physical perks, plus access to unique Williams Racing experiences. The Grid Pass is each holders’ “ignition key” to power the engine of benefits and experiences that the Williams Racing Collectibles+ program will provide.",
+"date_added": 1696338839,
+"image": {
+"kind": "Main",
+"media": {}
+},
+"top_banner": {
+"kind": "TopBanner",
+"media": {}
+},
+"media": [
+{},
+{}
+],
+"floor_price": {
+"original": {},
+"native": {},
+"fiat": {}
+},
+"creators": [
+{}
+],
+"total_items": 100000,
+"total_owners": 0,
+"total_sales": null,
+"total_volume": null,
+"market_cap": null,
+"seven_day_volume": null,
+"seven_day_average_price": null,
+"tags": [ ],
+"verified": true,
+"traits": { },
+"blockchain_data": [
+{}
+],
+"social_media_links": {
+"facebook": "https://facebook.com/WilliamsF1Team",
+"web": "https://www.williamsf1.com/",
+"instagram": "https://instagram.com/williamsracing/",
+"twitter": "https://twitter.com/WilliamsRacing"
+}
+}
+}
+}
+listCollections
+Returns a list of NFTs with support for sorting and filtration.
+
+Request Body schema: application/x-www-form-urlencoded
+currency	
+string or null
+Fiat currency used for converting crypto prices.
+
+cursor	
+string or null
+Cursor token. Pass tokens obtained from successful responses.
+
+filter	
+object or null
+Filters to apply. Note: if filters are present, they are required to be passed for an initial request and omitted for subsequent ones.
+
+page_size
+required
+integer <uint16> >= 0
+Maximum number of items to be returned by a single request.
+
+sort	
+string or null
+Enum: "RecentlyAdded" "RecentlyVerified" "PriceLowToHigh" "PriceHighToLow" "NameAsc" "NameDesc" "TotalVolumeAsc" "TotalVolumeDesc" "SevenDayVolumeAsc" "SevenDayVolumeDesc" "SevenDayAveragePriceAsc" "SevenDayAveragePriceDesc" "OwnerCountAsc" "OwnerCountDesc" "MostRelevant" "ByAllTimeKrakenVolumeAsc" "ByAllTimeKrakenVolumeDesc" "By30DaysKrakenVolumeAsc" "By30DaysKrakenVolumeDesc" "By7DaysKrakenVolumeAsc" "By7DaysKrakenVolumeDesc" "By24HoursKrakenVolumeAsc" "By24HoursKrakenVolumeDesc"
+Sorting to apply. Note: sort parameter is required to be passed for an initial request and omitted for subsequent ones.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+Batch of paginated items from list APIs.
+
+
+get
+/public/NftCollections
+
+Request samples
+cURLPython
+
+Copy
+curl  "https://api.kraken.com/0/public/NftCollections?page_size=10&filter%5Bsearch%5D=Williams"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"total_items": {
+"relation": "eq",
+"value": 2
+},
+"items": [
+{
+"id": "NCQNABO-XYCA7-JMMSDF",
+"name": "Williams Racing Collectibles+ Grid Pass",
+"description": "Plus-up your Williams Racing experience with our brand-new Grid Pass, presented by Kraken. Collect your free pass and unlock immediate exclusive digital and physical perks, plus access to unique Williams Racing experiences. The Grid Pass is each holders’ “ignition key” to power the engine of benefits and experiences that the Williams Racing Collectibles+ program will provide.",
+"date_added": 1696338839,
+"image": {},
+"top_banner": {},
+"floor_price": {},
+"creators": [],
+"total_items": 100000,
+"total_owners": 0,
+"total_owners_change": null,
+"total_sales": null,
+"total_volume": null,
+"total_volume_change": null,
+"market_cap": null,
+"seven_day_volume": null,
+"seven_day_volume_change": null,
+"seven_day_average_price": null,
+"seven_day_average_price_change": null,
+"verified": true,
+"volume_stats_kraken": {}
+},
+{
+"id": "NC35CAI-A5DKX-BHMJDT",
+"name": "Gulf x Williams Racing 'Bolder than Bold' Fan Livery",
+"description": "A collectible created by Kraken in collaboration with Williams and Gulf Oil.",
+"date_added": 1701203657,
+"image": {},
+"top_banner": {},
+"floor_price": {},
+"creators": [],
+"total_items": 31423,
+"total_owners": 0,
+"total_owners_change": null,
+"total_sales": null,
+"total_volume": null,
+"total_volume_change": null,
+"market_cap": null,
+"seven_day_volume": null,
+"seven_day_volume_change": null,
+"seven_day_average_price": null,
+"seven_day_average_price_change": null,
+"verified": true,
+"volume_stats_kraken": {}
+}
+]
+}
+}
+getCreator
+Returns a NFT Collection object by its identifier where identifier is a kraken internal identifier
+
+Request Body schema: application/x-www-form-urlencoded
+creator_id
+required
+string
+Identifier of the Creator.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftCreator
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftCreator?creator_id=NA7NELE-FOQFZ-ODWOTV"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"creator": {
+"id": "NA7NELE-FOQFZ-ODWOTV",
+"name": "Williams Racing",
+"username": " ",
+"description": "Williams Racing is one of the world’s leading Formula One teams. It exists purely to race in the top echelon of motor racing, where it’s been winning grands prix for more than three decades. The Williams name has been synonymous with top-level motorsport since the 1960s. \n\nAfter running teams on the sport’s nursery slopes, team patron Frank Williams founded Frank Williams (Racing Cars) in 1966 and he entered F1 in 1969 with his friend Piers Courage behind the wheel. Frank quickly earned a reputation as one of the industry’s more determined individuals and after selling his controlling interest in his original team, he established Williams Grand Prix Engineering with British engineer Patrick Head in 1977. They built their first car, the FW06, the following year and the team immediately went from strength-to-strength. \n\nWilliams is now the third most successful team on the grid.",
+"blockchain_data": [
+{}
+],
+"image": {
+"kind": "Main",
+"media": {}
+},
+"top_banner": {
+"kind": "TopBanner",
+"media": {}
+},
+"media": [
+{},
+{}
+],
+"tags": [ ],
+"social_media_links": {
+"facebook": "https://facebook.com/WilliamsF1Team",
+"twitter": "https://twitter.com/WilliamsRacing",
+"instagram": "https://instagram.com/williamsracing/",
+"web": "https://www.williamsf1.com/"
+},
+"verified": true,
+"date_added": 1696953575
+}
+}
+}
+listCreators
+Returns a list of NFTs with support for sorting and filtration.
+
+Request Body schema: application/x-www-form-urlencoded
+currency	
+string or null
+Fiat currency used for converting crypto prices.
+
+cursor	
+string or null
+Cursor token. Pass tokens obtained from successful responses.
+
+filter	
+object or null
+Filters to apply. Note: if filters are present, they are required to be passed for an initial request and omitted for subsequent ones.
+
+page_size
+required
+integer <uint16> >= 0
+Maximum number of items to be returned by a single request.
+
+sort	
+string or null
+Enum: "RecentlyAdded" "RecentlyVerified" "MostRelevant"
+Sorting to apply. Note: sort parameter is required to be passed for an initial request and omitted for subsequent ones.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+Batch of paginated items from list APIs.
+
+
+get
+/public/NftCreators
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftCreators?filter%5Bcollection_search%5D=Williams&page_size=10"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"total_items": {
+"relation": "eq",
+"value": 1
+},
+"items": [
+{
+"id": "NA7NELE-FOQFZ-ODWOTV",
+"name": "Williams Racing",
+"username": " ",
+"description": "Williams Racing is one of the world’s leading Formula One teams. It exists purely to race in the top echelon of motor racing, where it’s been winning grands prix for more than three decades. The Williams name has been synonymous with top-level motorsport since the 1960s. \n\nAfter running teams on the sport’s nursery slopes, team patron Frank Williams founded Frank Williams (Racing Cars) in 1966 and he entered F1 in 1969 with his friend Piers Courage behind the wheel. Frank quickly earned a reputation as one of the industry’s more determined individuals and after selling his controlling interest in his original team, he established Williams Grand Prix Engineering with British engineer Patrick Head in 1977. They built their first car, the FW06, the following year and the team immediately went from strength-to-strength. \n\nWilliams is now the third most successful team on the grid.",
+"image": {},
+"top_banner": {},
+"verified": true,
+"date_added": 1696953575
+}
+]
+}
+}
+listBlockchains
+Returns a list of supported blockchains and associated currencies.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftBlockchains
+
+Request samples
+cURLPython
+
+Copy
+curl -X "GET" "https://api.kraken.com/0/public/NftBlockchains"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"items": [
+{
+"id": "Ethereum",
+"asset": "ETH"
+},
+{
+"id": "Solana",
+"asset": "SOL"
+},
+{
+"id": "Polygon",
+"asset": "MATIC"
+}
+],
+"total": 3
+}
+}
+getAuctions
+Get NFT auctions. Returns information about a specific auction. The auction can be retrieved by either the auction identifier or the NFT identifier.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+Array of objects or null
+
+get
+/public/NftAuctions
+
+Request samples
+cURLPython
+
+Copy
+curl -X "GET" "https://api.kraken.com/0/public/NftAuctions?status=open&nft_id[]=NTN63WS-PBAV3-FQDQDG"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": [
+{
+"auction_id": "AJ4ZEP-7BC2W-AAK2P6",
+"quote_currency": "SOL",
+"user": "utility-oyster-kiwi",
+"type": "fixed",
+"bids": [ ],
+"status": "open",
+"start_time": 0,
+"expiry_time": 0,
+"extension_time": 0,
+"reserve_price": "0.0000000000",
+"buyout_price": "6.9500000000",
+"nft_ids": [
+"NTN63WS-PBAV3-FQDQDG"
+],
+"root_id": "",
+"status_detail": "OPEN"
+}
+]
+}
+getOffers
+Get NFT offers. Gets the offers placed for a specific NFT.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftOffers
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftOffers?nft_id=NT4GUCU-SIJE2-YSQQG2"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"result": {
+"offers": [
+{
+"id": "ONQYPLG-OFARL-35RBGO",
+"amount": "0.5000000000",
+"volume": 1,
+"time": 1700703273865968600,
+"social_id": "fee-web-combine",
+"currency": "ETH",
+"type": "Buy",
+"status": "Open",
+"nft_ids": [],
+"lock_time": 1700706873865968600,
+"usd_equivalence": "10338700",
+"status_detail": "LOCKED"
+}
+]
+},
+"error": [ ]
+}
+getNftQuotes
+Get NFT quotes. Creates a new quote for an NFT. This method accepts the quote details (or an array of multiple quotes). In the response, the method returns the identifier of the quotes.
+
+Responses
+200 Response
+Response Schema: application/json
+error
+required
+Array of strings (error)
+result	
+object or null
+
+get
+/public/NftQuotes
+
+Request samples
+cURLPython
+
+Copy
+curl "https://api.kraken.com/0/public/NftQuotes?nft_id%5B0%5D=NT4GUCU-SIJE2-YSQQG2&count=2"
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"error": [ ],
+"result": {
+"NT4EFBO-OWGI5-QLO7AG": [
+{
+"quote_id": "QNSFZED-QWKVB-GLI227",
+"currency": "ETH",
+"amount": "0.0420000000",
+"expire_time": null,
+"has_offer": false
+}
+]
+}
+}

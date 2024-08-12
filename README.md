@@ -56,7 +56,7 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | ExchangeRate-API                 | 0         | :x:        | TBD      |
 | Crypto & Finance | GeckoTerminal                    | 2         | 🟢         | TBD      |
 | Crypto & Finance | Gemini                           | 2         | :x:        | TBD      |
-| Crypto & Finance | Kraken                           | 0         | :x:        | TBD      |
+| Crypto & Finance | Kraken                           | 2         | :x:        | TBD      |
 | Crypto & Finance | KuCoin                           | 0         | :x:        | TBD      |
 | Crypto & Finance | NBP Web                          | 0         | :x:        | TBD      |
 | Crypto & Finance | Nexchange                        | 0         | :x:        | TBD      |

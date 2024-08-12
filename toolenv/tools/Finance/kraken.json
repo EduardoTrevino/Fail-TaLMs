@@ -1,0 +1,80 @@
+{
+  "tool_name": "kraken",
+  "tool_description": "API to interact with Kraken exchange and retrieve various market data and information.",
+  "title": "Kraken API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 350,
+    "avgSuccessRate": 92,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.kraken.com/features/api",
+  "host": "api.kraken.com",
+  "api_list": [
+    {
+      "name": "getTicker",
+      "url": "https://api.kraken.com/0/public/Ticker",
+      "description": "Get ticker information for all or requested markets.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "pair",
+          "type": "STRING",
+          "description": "Asset pair to get data for.",
+          "default": "XBTUSD"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.kraken.com/0/public/Ticker\"\nquerystring = {\"pair\": pair}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "key1": "value",
+        "key2": "value"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "name": "getOHLCData",
+      "url": "https://api.kraken.com/0/public/OHLC",
+      "description": "Get OHLC (open/high/low/close, also known as candle) data for a given market.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "pair",
+          "type": "STRING",
+          "description": "Asset pair to get data for.",
+          "default": "XBTUSD"
+        },
+        {
+          "name": "interval",
+          "type": "INTEGER",
+          "description": "Time frame interval in minutes.",
+          "default": 60
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "since",
+          "type": "INTEGER",
+          "description": "Return up to 720 OHLC data points since given timestamp.",
+          "default": null
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://api.kraken.com/0/public/OHLC\"\nquerystring = {\"pair\": pair, \"interval\": interval}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": ""
+    }
+  ]
+}
