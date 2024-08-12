@@ -1,0 +1,409 @@
+Beginners
+Introduction
+Welcome to KuCoin’s trader and developer documentation. These documents outline the exchange functionality, market details, and APIs.
+
+The whole documentation is divided into two parts: REST API and Websocket feed.
+
+The REST API contains five sections: Account, Asset, Spot Trade, margin Trade, Futures Trade, Earn The WebSocket contains two sections: Public Channels, Private Channels
+
+HFTrading
+High-frequency accounts are now officially launched. Compared with ordinary accounts, trading with high-frequency accounts has lower latency and has a looser frequency limit.
+
+This account type is an account paralleled with main, trade, margin, and future.
+
+The type of spot high-frequency account is: trade_hf (the WEB side is called Pro Account)
+The type of cross-margin high-frequency account is: margin_v2
+The type of high-frequency account with isolated margin is: isolated_v2
+At present, high-frequency accounts only support spot and margin, not futures, and high-frequency trading only supports api, and orders cannot be queried on the web.
+
+If you are a spot/margin high-frequency trader, it is strongly recommended to update the spot/margin API code to the high-frequency account.
+
+The current signature method of high-frequency accounts is exactly the same as that of ordinary accounts. Interfaces such as order placement and cancellation have been added, and other data still use the existing medium interface of the api document.
+
+The following are the activation steps for high-frequency accounts:
+
+Use POST /api/v2/accounts/inner-transfer transfer funds to the specified high-frequency account, after the transfer is completed, the specified high-frequency account will be opened automatically
+
+Just use POST /api/v1/hf/orders [spot high-frequency account order transaction] (/docs/rest/spot-trading/spot-hf-trade-pro-account/place-hf-order), the leverage is the same reason.
+
+Note: Currently, high-frequency accounts can only be opened through the whitelist. We expect to fully open spot high-frequency accounts in May. If you expect to use them in advance, please contact us through the contact information below and provide all your uid List (including master-uidand sub-uid).
+
+If you need more API communication or feedback, please join our official API telegram group: https://t.me/KuCoin_API or send an email to api@kucoin.com
+
+Reading Guide
+Read Sandbox to learn how to debug API in a test environment.
+Read REST API to learn how to build a request.
+Read Time if you want to make a test request (and receive a sample response) without having to authorize.
+Read Service Status to maintain your trading strategy based on service status
+Read Authentication to learn how to make an authorized request.
+Read Inner Transfer to see how to transfer assets.
+Read List Accounts to learn how to get the data of your account balance.
+Read Place a new order to see how to place an order.
+Read Order Book to get a snapshot of the order book.
+Read Websocket Feed to learn how to establish a websocket connection.
+Read Level-2 Market Data to see how to build a local real-time order book with websocket.
+Read Account balance notice to see how to get a private websocket feed and get real time notice of balance changes.
+
+Base URL
+The request URL needs to be determined by BASE and specific endpoint combination.
+
+Spot & Margin REST API: Base URL: https://api.kucoin.com
+
+Futures REST API: Base URL: https://api-futures.kucoin.com
+
+Spot & Margin Websocket API: Base URL: Please refer to Apply connect token to dynamically obtain the base URL
+
+Futures Websocket API: Base URL: Please refer to Apply connect token to dynamically obtain the base URL
+
+Connection Method
+Endpoint of the Interface
+Each interface has its own endpoint, described by field HTTP REQUEST in the docs.
+
+For the GET METHOD API, the endpoint needs to contain the query parameters string.
+
+E.G. For "List Accounts" , the default endpoint of this API is /api/v1/accounts. If you pass the "currency" parameter(BTC), the endpoint will become /api/v1/accounts?currency=BTC and the final request URL will be https://api.kucoin.com/api/v1/accounts?currency=BTC.
+
+E.G. For "Position", the default endpoint of this API is /api/v1/position. If you pass the "symbol" parameter (XBTUSDM), the endpoint will become /api/v1/position?symbol=XBTUSDM and the final request URL will be https://api-futures.kucoin.com/api/v1/position?symbol=XBTUSDM.
+
+Pager
+Introduction
+KuCoin Spot & Margin uses Pagination for all REST requests which return arrays.
+
+KuCoin Futures uses Pagination or HasMore for all REST requests which return arrays.
+
+Pagination
+Pagination allows for fetching results with the current page and is well suited for real time data. Endpoints like /api/v1/deposit-list, /api/v1/orders, /api/v1/fills, return the latest items by default. To retrieve more results, users should specify the currentPage number in the subsequent requests to turn the page based on the data previously returned.
+
+Example
+GET /api/v1/orders?currentPage=1&pageSize=50
+
+  {
+      "currentPage": 1,
+      "pageSize": 50,
+      "totalNum": 6,
+      "totalPage": 1,
+      "data": ...
+  }
+PARAMETERS
+Parameter	Default	Description
+currentPage	1	Current request page.
+pageSize	50	Number of results per request. Minimum is 10, maximum is 500.
+
+HasMore
+The HasMore pager uses sliding window scheme to obtain paged data by sliding a fixed-sized window on data stream. The returned results will provide field HasMore to show if there are more data. The HasMore pager is efficient and takes the same amount of time for each sliding which makes HasMore pager well suited for the real-time streaming data queries.
+
+Example
+GET /api/v1/interest/query?symbol=.XBTINT&offset=1558079160000&forward=true&maxCount=10
+
+PARAMETERS
+Parameter	Default	Description
+offset	-	Start offset. The unique attribute of the last returned result of the last request. The data of the first page will be returned by default.
+forward	boolean	Slide direction. Set to “TRUE” to look up data of the next page
+maxCount	int	The maximum amount for each sliding
+
+Types
+Timestamps
+Unless otherwise specified, all timestamps from API are returned in milliseconds(e.g. 1546658861000). Most modern languages and libraries will handle this without issues.
+
+But please note that the timestamps between the matching engine and the order system are in nanoseconds.
+
+The KC-API-TIMESTAMP header MUST be number of milliseconds since Unix Epoch in UTC, Unix Time (opens new window). e.g. 1547015186532
+
+Decimal values are allowed, e.g. 1547015186532. But you need to be aware that timestamp between match and order is nanosecond.
+
+The difference between your timestamp and the API service time must be less than 5 seconds , or your request will be considered expired and rejected. We recommend using the time endpoint to query for the API server time if you believe there may be time skew between your server and the API server.
+
+Numbers
+Decimal numbers are returned as strings in order to preserve the full precision across platforms. When making a request, it is recommended that you also convert your numbers to strings to avoid truncation and precision errors.
+Request
+Introduction
+All requests and responses are application/json content type.
+
+Unless otherwise stated, all timestamp parameters should in milliseconds. e.g. 1544657947759
+
+For the GET, DELETE request, all query parameters need to be included in the request url. (e.g. /api/v1/accounts?currency=BTC)
+
+For the POST request, all query parameters need to be included in the request body with JSON. (e.g. {"currency":"BTC"}).
+
+Do not include extra spaces in JSON strings.
+
+PARAMETERS
+Parameter	Default	Description
+currentPage	1	Current request page.
+pageSize	50	Number of results per request. Minimum is 10, maximum is 500.
+
+Transfer
+Get the Transferable
+This endpoint returns the transferable balance of a specified account.
+
+HTTP REQUEST
+GET /api/v1/accounts/transferable
+
+Example
+GET /api/v1/accounts/transferable?currency=BTC&type=MAIN
+
+{
+  "currency": "KCS",
+  "balance": "0",
+  "available": "0",
+  "holds": "0",
+  "transferable": "0"
+}
+API KEY PERMISSIONS
+This endpoint requires the General permission.
+
+REQUEST URL
+This endpoint support Spot URL
+
+REQUEST RATE LIMIT
+Manage weight：20
+
+PARAMETERS
+Param	Type	Mandatory	Description
+currency	String	Yes	Currency
+type	String	Yes	The account type:MAIN、TRADE、TRADE_HF、MARGIN、ISOLATED
+tag	String	No	Trading pair, required when the account type is ISOLATED; other types are not passed, e.g.: BTC-USDT
+RESPONSES
+Param	Description
+currency	Currency
+balance	Total funds in an account.
+available	Funds available to withdraw or trade.
+holds	Funds on hold (not available for use).
+transferable	Funds available to transfer.
+
+FlexTransfer
+HTTP REQUEST
+POST /api/v3/accounts/universal-transfer
+
+Example
+POST /api/v3/accounts/universal-transfer
+
+//internal transfer
+{
+  "clientOid": "64ccc0f164781800010d8c09",
+  "type": "INTERNAL",
+  "currency": "BTC",
+  "amount": 1,
+  "fromAccountType": "TRADE",
+  "toAccountType": "CONTRACT"
+}
+//master-sub transfer - transfer from master-uid to sub-uid
+{
+  "clientOid": "64ccc0f164781800010d8c09",
+  "type": "PARENT_TO_SUB",
+  "currency": "BTC",
+  "amount": 1,
+  "fromAccountType": "TRADE",
+  "toUserId": "62f5f5d4d72aaf000122707e",
+  "toAccountType": "CONTRACT"
+}
+//master-sub transfer - transfer from sub-uid to master-uid
+{
+  "clientOid": "64ccc0f164781800010d8c09",
+  "type": "SUB_TO_PARENT",
+  "currency": "BTC",
+  "amount": 1,
+  "fromUserId": "62f5f5d4d72aaf000122707e",
+  "fromAccountType": "TRADE",
+  "toAccountType": "CONTRACT"
+}
+API KEY PERMISSIONS
+This endpoint requires the FlexTransfers permission.
+
+REQUEST URL
+This endpoint support Spot URL
+
+REQUEST RATE LIMIT
+Manage weight：4
+
+PARAMETERS
+Param	Type	Mandatory	Description
+clientOid	String	Yes	Unique order id created by users to identify their orders, e.g. UUID, with a maximum length of 128 bits
+currency	String	No	Currency
+amount	String	Yes	Transfer amount, the amount is a positive integer multiple of the currency precision.
+fromUserId	String	No	Transfer out UserId， This is required when transferring sub-account to master-account. It is optional for internal transfers.
+fromAccountType	String	Yes	Account type：MAIN、TRADE、CONTRACT、MARGIN、ISOLATED、TRADE_HF、MARGIN_V2、ISOLATED_V2
+fromAccountTag	String	No	Symbol, required when the account type is ISOLATED or ISOLATED_V2, for example: BTC-USDT
+type	String	Yes	Transfer type：INTERNAL(Transfer within account)、PARENT_TO_SUB(Transfer from master-account to sub-account)，SUB_TO_PARENT(Transfer from sub-account to master-account)
+toUserId	String	No	Transfer in UserId， This is required when transferring master-account to sub-account. It is optional for internal transfers.
+toAccountType	String	Yes	Account type：MAIN、TRADE、CONTRACT、MARGIN、ISOLATED、TRADE_HF、MARGIN_V2、ISOLATED_V2
+toAccountTag	String	No	Symbol, required when the account type is ISOLATED or ISOLATED_V2, for example: BTC-USDT
+RESPONSES
+Param	Description
+orderId	Transfer order ID
+Description
+The API Key needs to have universal transfer permission when calling.
+
+Support internal transfer,do not support transfers between sub-accounts.
+
+Support transfer between master and sub accounts (only applicable to master account APIKey).
+
+MARGIN_V2 only supports internal transfers between MARGIN and does not support transfers between master and sub accounts.
+
+ISOLATED_V2 only supports internal transfers between ISOLATED and does not support transfers between master and sub accounts.
+
+Transfer between Master Account and Sub-Account
+Funds in the main account, trading account and margin account of a Master Account can be transferred to the main account, trading account, futures account and margin account of its Sub-Account. The futures account of both the Master Account and Sub-Account can only accept funds transferred in from the main account, trading account and margin account and cannot transfer out to these accounts.
+
+HTTP REQUEST
+POST /api/v2/accounts/sub-transfer
+
+TIP
+
+Recommended for use
+
+Example
+POST /api/v2/accounts/sub-transfer
+
+{
+  "orderId": "5cbd870fd9575a18e4438b9a"
+}
+API KEY PERMISSIONS
+This endpoint requires the Spot Trading permission.
+
+REQUEST URL
+This endpoint support Spot URL
+
+REQUEST RATE LIMIT
+Manage weight：30
+
+PARAMETERS
+Param	Type	Mandatory	Description
+clientOid	String	Yes	Unique order id created by users to identify their orders, e.g. UUID, with a maximum length of 128 bits.
+currency	String	Yes	Currency
+amount	String	Yes	Transfer amount, the amount is a positive integer multiple of the currency precision.
+direction	String	Yes	OUT — the master user to sub user
+IN — the sub user to the master user.
+accountType	String	No	The account type of the master user: MAIN, TRADE, TRADE_HF, MARGIN or CONTRACT, default is MAIN.
+subAccountType	String	No	The account type of the sub user: MAIN, TRADE, TRADE_HF, MARGIN or CONTRACT, default is MAIN.
+subUserId	String	Yes	the user ID of a sub-account.
+RESPONSES
+Param	Description
+orderId	The order ID of a master-sub assets transfer.
+
+Inner Transfer
+{
+  "orderId": "5bd6e9286d99522a52e458de"
+}
+This API endpoint can be used to transfer funds between accounts internally. Users can transfer funds between their account free of charge. notice:
+
+It is not supported to transfer funds from contract account to other accounts.
+The margin_v2 account currently only supports mutual transfers with margin accounts, and cannot be directly transferred from other accounts to margin_v2
+The isolated_v2 account currently only supports mutual transfer with the margin account, and cannot be directly transferred from other accounts to isolated_v2
+HTTP REQUEST
+POST /api/v2/accounts/inner-transfer
+
+API KEY PERMISSIONS
+This endpoint requires the Spot Trading permission.
+
+REQUEST URL
+This endpoint support Spot URL
+
+REQUEST RATE LIMIT
+Manage weight：10
+
+PARAMETERS
+Param	Type	Mandatory	Description
+clientOid	String	Yes	clientOid, the unique identifier created by the client, use of UUID, with a maximum length of 128 bits.
+currency	String	Yes	Currency
+from	String	Yes	Payment Account Type: main, trade, trade_hf, margin, isolated, margin_v2, isolated_v2
+to	String	Yes	Receiving Account Type: main, trade, trade_hf, margin, isolated, margin_v2, isolated_v2, contract
+amount	String	Yes	Transfer amount, the precision being a positive integer multiple of the Currency Precision
+fromTag	String	No	Trading pair, required when the payment account type is isolated, e.g.: BTC-USDT
+toTag	String	No	Trading pair, required when the payment account type is isolated, e.g.: BTC-USDT
+RESPONSES
+Param	Description
+orderId	The order ID of a funds transfer
+
+Transfer to Main or TRADE Account
+The amount to be transferred will be deducted from the KuCoin Futures Account. Please ensure that you have sufficient funds in your KuCoin Futures Account, or the transfer will fail.
+
+HTTP REQUEST
+POST /api/v3/transfer-out
+
+Example
+POST /api/v3/transfer-out
+
+{
+  "applyId": "620a0bbefeaa6a000110e833", //Transfer-out request ID
+  "bizNo": "620a0bbefeaa6a000110e832", //Business number
+  "payAccountType": "CONTRACT", //Pay account type
+  "payTag": "DEFAULT", //Pay account sub type
+  "remark": "", //User remark
+  "recAccountType": "MAIN", //Receive account type
+  "recTag": "DEFAULT", //Receive account sub type
+  "recRemark": "", //Receive account tx remark
+  "recSystem": "KUCOIN", //Receive system
+  "status": "PROCESSING", //Status
+  "currency": "USDT", //Currency
+  "amount": "0.001", //Transfer amout
+  "fee": "0", //Transfer fee
+  "sn": 889048787670001, //Serial number
+  "reason": "", //Fail Reason
+  "createdAt": 1644825534000, //Create time
+  "updatedAt": 1644825534000 //Update time
+}
+API KEY PERMISSIONS
+This endpoint requires the Futures Trading permission.
+
+REQUEST URL
+This endpoint support Futures URL
+
+REQUEST RATE LIMIT
+Manage weight：20
+
+PARAMETERS
+Param	Type	Mandatory	Description
+amount	Number	Yes	Amount to be transfered out, the maximum cannot exceed 1000000000
+currency	String	Yes	Currency, including XBT,USDT
+recAccountType	String	Yes	Receive account type, including MAIN,TRADE
+RESPONSES
+Param	Description
+applyId	Transfer-out request ID
+bizNo	Business number
+payAccountType	Pay account type
+payTag	Pay account sub type
+remark	User remark
+recAccountType	Receive account type
+recTag	Receive account sub type
+recRemark	Receive account tx remark
+recSystem	Receive system
+status	Status:APPLY, PROCESSING, PENDING_APPROVAL, APPROVED, REJECTED, PENDING_CANCEL, CANCEL, SUCCESS
+currency	Currency
+amount	Transfer amout
+fee	Transfer fee
+sn	Serial number
+reason	Fail Reason
+createdAt	Create time
+updatedAt	Update time
+
+Transfer to Futures Account
+The amount to be transferred will be deducted from the payAccount. Please ensure that you have sufficient funds in your payAccount Account, or the transfer will fail.
+
+HTTP REQUEST
+POST /api/v1/transfer-in
+
+Example
+POST /api/v1/transfer-in
+
+{
+  "code": "200", //If the code is 200, it means the transfer is successful, otherwise it means failure.
+  "msg": "",
+  "retry": true,
+  "success": true
+}
+API KEY PERMISSIONS
+This endpoint requires the Futures Trading permission.
+
+REQUEST URL
+This endpoint support Futures URL
+
+REQUEST RATE LIMIT
+Manage weight：20
+
+PARAMETERS
+Param	Type	Mandatory	Description
+amount	Number	Yes	Amount to be transfered out
+currency	String	Yes	Currency, including XBT,USDT
+payAccountType	String	Yes	Payment account type, including MAIN,TRADE
+If the code is 200, it means the transfer is successful, otherwise it means failure.

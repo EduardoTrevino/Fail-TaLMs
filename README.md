@@ -58,7 +58,7 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | Gemini                           | 2         | :x:        | TBD      |
 | Crypto & Finance | Kraken                           | 2         | :x:        | TBD      |
 | Crypto & Finance | KuCoin                           | 0         | :x:        | TBD      |
-| Crypto & Finance | NBP Web                          | 0         | :x:        | TBD      |
+| Crypto & Finance | NBP Web                          | 2         | :x:        | TBD      |
 | Crypto & Finance | Nexchange                        | 0         | :x:        | TBD      |
 | Crypto & Finance | OKX                              | 0         | :x:        | TBD      |
 | Crypto & Finance | Razorpay IFSC                    | 0         | :x:        | TBD      |
