@@ -1,0 +1,988 @@
+n.exchangeIntroductionAPI for crypto currency exchange.
+Reference
+Get Currencies
+Get Currencies
+Get all supported currencies.Get Pairs
+Get Pairs
+Get all supported currency pairs.Get Price
+Get Price
+Get price quote of a given amount of currency, or get how much currency you would get for a given amount of currencyRate Info
+Get Rate Info
+Gets price info by rate_id.Latest Price
+Get Latest Price
+Gets latest price of the pair.Price History
+Get Price History
+Returns price history for selected pair.Prices Info List
+Prices Info List
+Returns list of rates with minimal and maximal amounts.Get Orders
+Get Orders
+Returns orders.Get Order
+Get Order
+Get order data.
+Set Order Withdrawal Address and/or Refund Address
+Set Order Withdrawal Address and/or Refund Address
+Stop Order Processing
+Stop Order Processing by Flagging ItGet User Orders
+Get User Orders
+Get user orders.User Order
+Get User Order
+Get user order.
+Update User Order
+Update user order.Create User Order
+Create User Order
+Create order.Create support inquiry
+Create support inquiry
+Create Anonymous Order
+Create Anonymous Order
+Create order.Referrals
+Get Referrals
+Ger referrals.Ticker - Summarized Volume
+Get Ticker
+Get trade Volume.Trade Volume
+Get Volume
+Get trade Volume.Create Limit Order - BETA
+Create Limit Order
+Create order.Get Trade History
+Get Trade History
+Returns list of trades (all released orders).Register New User
+Create New User
+Register new user.Reset Password
+Reset User Password
+Reset user password.Complete Password Reset
+Complete Password Reset
+Complete password reset.
+
+Get Currencies/Get CurrenciesGEThttps://api.n.exchange/en/api/v1/currency/Request
+ResponseAttributes
+0
+object
+code
+required
+string
+currency code.
+
+name
+string
+currency name.
+
+min_confirmations
+number
+minimum number of confirmations required to approve a transaction on this currency's blockchain. Only relevant for currencies that have 'is_crypto' = true
+
+is_crypto
+boolean
+if true, this is a crypto currency, else it is a fiat currency.
+
+minimal_amount
+string
+minimal amount allowed on this currency transaction.
+
+is_base_of_enabled_pair
+boolean
+true if where is pair with this currency as base.
+
+is_quote_of_enabled_pair
+boolean
+true if exists a pair with this currency as quote.
+
+has_enabled_pairs
+boolean
+true if pair with this currency as base or quote and enabled exchange exists.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+[
+  {
+    "code": "BTC",
+    "name": "bitcoin",
+    "min_confirmations": 1,
+    "is_crypto": true,
+    "minimal_amount": "0.01000000",
+    "is_base_of_enabled_pair": true,
+    "is_quote_of_enabled_pair": true,
+    "has_enabled_pairs": true,
+    "withdrawal_fee": "0.00250000"
+  },
+  {
+    "code": "LTC",
+    "name": "litecoin",
+    "min_confirmations": 6,
+    "is_crypto": true,
+    "minimal_amount": "0.50000000",
+    "is_base_of_enabled_pair": true,
+    "is_quote_of_enabled_pair": true,
+    "has_enabled_pairs": true,
+    "withdrawal_fee": "0.00010000"
+  }
+]
+
+Get Pairs/Get PairsGEThttps://api.n.exchange/en/api/v1/pair/Request
+ResponseAttributes
+0
+object
+name
+required
+string
+name of the pair. i.e. BTCLTC for base BTC(bitcoin) and quote LTC(litecoin) pair.
+
+base
+required
+string
+base currency code.
+
+quote
+required
+string
+quote currency code.
+
+fee_ask
+required
+string
+asking fee, 0.001 equals 0.1%.
+
+fee_bid
+required
+string
+biding fee, 0.001 equals 0.1% (depreciated).
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+[
+  {
+    "name": "BTCLTC",
+    "base": "BTC",
+    "quote": "LTC",
+    "fee_ask": "0.00100000",
+    "fee_bid": "0.00100000"
+  },
+  {
+    "name": "BTCETH",
+    "base": "BTC",
+    "quote": "ETH",
+    "fee_ask": "0.00100000",
+    "fee_bid": "0.00100000"
+  }
+]
+
+Get Price/Get PriceGEThttps://api.n.exchange/en/api/v1/get_price/pair_name/?amount_base=1.06935074&amount_quote=100Parameters
+pair_name
+name of exchanged pair i.e. BTCLTC, LTCBTC, ETHBTC. Example: BTCLTC.
+String
+amount_base
+amount of base currency which user gets. Example: 1.06935074.
+Double
+amount_quote
+amount of base currency which user sends. Example: 100.
+Double
+Request
+ResponseAttributes
+amount_base
+required
+number
+amount of base currency which user gets.
+
+amount_quote
+required
+number
+amount of quote currency which user sends.
+
+timestamp
+required
+number
+UNIX timestamp.
+
+price
+required
+number
+price (amount_quote / amount_base).
+
+pair
+required
+object
+max_amount_base
+required
+number
+maximum amount of base currency which user can get.
+
+max_amount_quote
+required
+number
+maximum amount of quote currency which user can send.
+
+min_amount_base
+required
+number
+minimum amount of base currency which user can get.
+
+min_amount_quote
+required
+number
+minimum amount of quote currency which user can send.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+  "amount_base": 1.24354147,
+  "amount_quote": 100.0,
+  "timestamp": 1530292405.642548,
+  "price": 80.4154927
+}
+{
+  "amount_base": 1.06935074,
+  "amount_quote": 100.0,
+  "timestamp": 1532432055.609627,
+  "price": 93.52884297,
+  "pair": {
+    "base": "BTC",
+    "quote": "LTC"
+  },
+  "max_amount_base": 3.20049466,
+  "max_amount_quote": 300.0,
+  "min_amount_base": 0.001,
+  "min_amount_quote": 0.14019423
+}
+
+Rate Info/Get Rate InfoGEThttps://api.n.exchange/en/api/v1/rate/rate_id/Parameters
+rate_id
+unique rate id value of a price. Example: PINDUF8.
+String
+Request
+ResponseAttributes
+created_on
+required
+string
+time of price creation (ISO 8601).
+
+unix_time
+required
+string
+price creation unix timestamp.
+
+expiration_time_unix
+required
+string
+price expration unix timestamp.
+
+ticker
+required
+object
+market
+required
+object
+rate
+required
+string
+rate.
+
+rate_id
+required
+string
+rate id unique value.
+
+allowed_historic_price_variance
+required
+boolean
+is historic price variance allowed.
+
+allowed_historic_price_age
+required
+boolean
+is historic price age allowed.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+  "created_on": "2019-04-03T11:53:47.290000Z",
+  "unix_time": "1554292427",
+  "expiration_time_unix": "1554292547",
+  "ticker": {
+    "ask": "296.85533155",
+    "bid": "272.38601638"
+  },
+  "market": {
+    "name": "n.exchange",
+    "code": "nex"
+  },
+  "rate": "296.85533155",
+  "rate_id": "PINDUF8",
+  "allowed_historic_price_variance": true,
+  "allowed_historic_price_age": false
+}
+
+Latest Price/Get Latest PriceGEThttps://api.n.exchange/en/api/v1/price/pair_name/latest/?market_code=nexParameters
+pair_name
+name of exchanged pair i.e. BTCLTC, LTCBTC, ETHBTC. Example: BTCLTC.
+String
+market_code
+price market code. Default market is n.exchange(nex) - prices of this market are used for calculations of orders amounts. Example: nex.
+String
+Request
+ResponseAttributes
+0
+object
+created_on
+required
+string
+time of price creation (ISO 8601).
+
+unix_time
+required
+string
+price creation unix timestamp.
+
+expiration_time_unix
+required
+string
+price expration unix timestamp.
+
+ticker
+required
+object
+market
+required
+object
+rate
+required
+string
+rate.
+
+rate_id
+required
+string
+rate id unique value.
+
+allowed_historic_price_variance
+required
+boolean
+is historic price variance allowed.
+
+allowed_historic_price_age
+required
+boolean
+is historic price age allowed.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+[
+  {
+    "created_on": "2017-08-15T12:45:01.443265Z",
+    "unix_time": "1502801101",
+    "ticker": {
+      "ask": "97.06196063",
+      "bid": "96.33558341"
+    },
+    "market": {
+      "name": "n.exchange",
+      "code": "nex"
+    }
+  }
+]
+
+Price History/Get Price HistoryGEThttps://api.n.exchange/en/api/v1/price/pair_name/history/?hours=0.1&data_points=3&market_code=nexParameters
+pair_name
+name of exchanged pair i.e. BTCLTC, LTCBTC, ETHBTC. Example: BTCLTC.
+String
+hours
+how many hours back would you like to get prices for. Amount of hours to check i.e. 0.3 means 18 min, 2 - 2 hours. Example: 0.1.
+Double
+data_points
+how many data points in the selected hour range would you like to get. For example, If you pass 1 hour and data_points=60, you will get 1 data point per minute (our max supported resolution), if you pass hour=1 and data_points=30 you will get one point per 2 minutes. Example: 3.
+Int
+market_code
+price market code. Default market is n.exchange(nex) - prices of this market are used for calculations of orders amounts. Example: nex.
+String
+Request
+ResponseAttributes
+0
+object
+created_on
+required
+string
+time of price creation (ISO 8601).
+
+unix_time
+required
+string
+price creation unix timestamp.
+
+expiration_time_unix
+required
+string
+price expration unix timestamp.
+
+ticker
+required
+object
+market
+required
+object
+rate
+required
+string
+rate.
+
+rate_id
+required
+string
+rate id unique value.
+
+allowed_historic_price_variance
+required
+boolean
+is historic price variance allowed.
+
+allowed_historic_price_age
+required
+boolean
+is historic price age allowed.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+[
+  {
+    "created_on": "2017-08-15T13:37:05.746301Z",
+    "unix_time": "1502804225",
+    "ticker": {
+      "ask": "93.50770668",
+      "bid": "93.01675978"
+    },
+    "market": {
+      "name": "n.exchange",
+      "code": "nex"
+    }
+  },
+  {
+    "created_on": "2017-08-15T13:38:05.877523Z",
+    "unix_time": "1502804285",
+    "ticker": {
+      "ask": "92.71952575",
+      "bid": "91.87051683"
+    },
+    "market": {
+      "name": "n.exchange",
+      "code": "nex"
+    }
+  }
+]
+
+Prices Info List/Prices Info ListGEThttps://api.n.exchange/en/api/v1/info/bulk/Request
+ResponseAttributes
+0
+object
+pair
+required
+string
+pair name
+
+from
+required
+string
+currency from
+
+to
+required
+string
+currency to
+
+rate
+required
+string
+base rate excluding payment method fees
+
+rate_id
+required
+string
+rate id of latest price
+
+max_amount
+required
+string
+maximal of currency "to" to buy
+
+min_amount
+required
+string
+minimal of currency "to" to buy
+
+max_receive_amount
+required
+string
+maximal currency ("to") amount to receive
+
+min_receive_amount
+required
+string
+minimal currency ("to") amount to receive
+
+max_deposit_amount
+required
+string
+maximal currency ("from") amount to deposit
+
+min_deposit_amount
+required
+string
+minimal currency ("from") amount to deposit
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+    [
+      {
+          "pair": "XVGUSD",
+          "rate_id": "PWKQ1KG",
+          "from": "USD",
+          "to": "XVG",
+          "rate": "0.00597474",
+          "withdrawal_fee": "1.00",
+          "max_amount": "30000.0",
+          "min_amount": "1170.599099"
+          "max_receive_amount": "30000.0",
+          "min_receive_amount": "1170.599099",
+          "max_deposit_amount": "5000",
+          "min_deposit_amount": "50",
+  },
+  {
+      "pair": "XVGRUB",
+      "rate_id": "PVIGMHD",
+      "from": "RUB",
+      "to": "XVG",
+      "rate": "0.45941279",
+      "withdrawal_fee": "1.00",
+      "max_amount": "30000.0",
+      "min_amount": "1020.570418"
+      "max_receive_amount": "30000.0",
+      "min_receive_amount": "1020.570418",
+      "max_deposit_amount": "7000000",
+      "min_deposit_amount": "5000",
+  },
+  {
+      "pair": "BTCUSD",
+      "rate_id": "PH7KAQ3",
+      "from": "USD",
+      "to": "BTC",
+      "rate": "9636.68",
+      "withdrawal_fee": "0.0002",
+      "max_amount": "0.9748937",
+      "min_amount": "0.001"
+      "max_receive_amount": "0.9748937",
+      "min_receive_amount": "0.001"
+      "max_deposit_amount": "5000",
+      "min_deposit_amount": "50",
+  }
+]
+
+Get Orders/Get OrdersGEThttps://api.n.exchange/en/api/v1/orders/?page=1&page_size=3&pair=BTCETH&status=11Parameters
+page
+page number. Example: 1.
+Int
+page_size
+number of orders in one page. Example: 3.
+Int
+pair
+pair name. Example: BTCETH.
+String
+status
+order status. CANCELED-0, INITIAL-11, PAID_UNCONFIRMED-12, PAID-13, PRE_RELEASE-14, RELEASED-15, COMPLETED-16, REFUNDED-8 Example: 11.
+Int
+Request
+ResponseAttributes
+count
+required
+number
+number of orders.
+
+next
+string
+link to the next page.
+
+previous
+string
+link to previous page.
+
+results
+array
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+  "count": 21,
+  "next": "http://localhost:8000/en/api/v1/orders/?page=2&page_size=3",
+  "previous": null,
+  "results": [
+    {
+      "amount_base": "0.50000000",
+      "is_default_rule": false,
+      "unique_reference": "LOUA3",
+      "amount_quote": "7.17000000",
+      "pair": 2,
+      "withdraw_address": {
+        "type": "W",
+        "name": "",
+        "address": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+        "currency_code": "BTC"
+      },
+      "created_on": "2017-08-16T07:27:04.964665Z",
+      "from_default_rule": false,
+      "order_type": 1,
+      "deposit_address": {
+        "type": "D",
+        "name": "",
+        "address": "0xF00667496B353d77492e0f7167843d5d5802030b",
+        "currency_code": "ETH"
+      },
+      "pair_name": "BTCETH",
+      "withdrawal_fee": "0.0025",
+      "withdrawal_fee_quote": "0.03585",
+      "user_provided_amount": "0"
+    },
+    {
+      "amount_base": "0.50000000",
+      "is_default_rule": false,
+      "unique_reference": "OMTE7",
+      "amount_quote": "7.17000000",
+      "pair": 2,
+      "withdraw_address": null,
+      "created_on": "2017-08-16T07:27:01.099226Z",
+      "from_default_rule": false,
+      "order_type": 1,
+      "deposit_address": {
+        "type": "D",
+        "name": "",
+        "address": "0x7b92910B52DAE980702d4EDc270B031b60359904",
+        "currency_code": "ETH"
+      },
+      "pair_name": "BTCETH"
+    },
+    {
+      "amount_base": "0.50000000",
+      "is_default_rule": false,
+      "unique_reference": "57KJB",
+      "amount_quote": "7.17000000",
+      "pair": 2,
+      "withdraw_address": null,
+      "created_on": "2017-08-16T07:26:57.076292Z",
+      "from_default_rule": false,
+      "order_type": 1,
+      "deposit_address": {
+        "type": "D",
+        "name": "",
+        "address": "0x408a05c9F62E8eaECd258BB27213ee6e59d2E7Ef",
+        "currency_code": "ETH"
+      },
+      "pair_name": "BTCETH",
+      "withdrawal_fee": "0.0025",
+      "withdrawal_fee_quote": "0.03585",
+      "user_provided_amount": "0"
+    }
+  ]
+}
+
+Get Order/Get OrderGEThttps://api.n.exchange/en/api/v1/orders/unique_reference/Parameters
+unique_reference
+unique reference of the order. Example: V08PD.
+String
+RequestAttributes
+Headers
+object
+Headers
+Authorization:Bearer 3HrghbVeDUQWaOriqrXYLZmCb4cEXB
+ResponseAttributes
+amount_base
+required
+string
+amount of base currency which user gets.
+
+is_default_rule
+required
+boolean
+if True any incoming funds will be converted automatically (To the withdraw_address defined on the same order).
+
+unique_reference
+required
+string
+unique ID of an order.
+
+amount_quote
+required
+string
+amount of base currency which user sends.
+
+withdraw_address
+object
+transactions
+array
+created_on
+required
+string
+time of order creation (ISO 8601).
+
+modified_on
+string
+latest time on which this order was updated (ISO 8601).
+
+deposit_address
+required
+object
+from_default_rule
+required
+boolean
+indicates that the order was created as a result of is_default_rule as described above.
+
+pair
+required
+object
+status_name
+required
+array
+price
+required
+object
+amount_usd
+required
+number
+order amount in USD.
+
+amount_btc
+required
+number
+order amount in BTC.
+
+amount_eur
+required
+number
+order amount in EUR.
+
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+  "amount_base": "0.50000000",
+  "is_default_rule": false,
+  "unique_reference": "1CPL5",
+  "amount_quote": "48.00000000",
+  "pair": 1,
+  "withdraw_address": null,
+  "created_on": "2017-08-16T10:36:02.248639Z",
+  "from_default_rule": false,
+  "order_type": 1,
+  "deposit_address": {
+    "type": "D",
+    "name": "",
+    "address": "LewxThDasEA2JTDVDdGMot92kG6XYNFNQN",
+    "currency_code": "LTC"
+  },
+  "pair_name": "BTCLTC",
+  "withdrawal_fee": "0.0025",
+  "withdrawal_fee_quote": "0.03585",
+  "user_provided_amount": "0"
+}
+
+Ticker - Summarized Volume/Get TickerGEThttps://api.n.exchange/en/api/v1/ticker/?hours=24Parameters
+hours
+how many hours back would you like to get trade Volume for. Example: 24.
+Double
+Request
+Headers
+Content-Type:aplication/json
+ResponseAttributes
+hours
+required
+number
+trade volume time. If hours=24 it means that response contains data of last 24h trade volumes.
+
+total_volume
+required
+object
+tradable_pairs
+array
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+    "hours": 24.0,
+    "total_volume": {
+        "volume_btc": 0.53614493,
+    },
+    "tradable_pairs": [
+        {
+            "pair": {
+                "name": "BTCLTC",
+                "base": {
+                    "code": "BTC",
+                    "name": "bitcoin"
+                },
+                "quote": {
+                    "code": "LTC",
+                    "name": "litecoin"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.5,
+            "base_volume": 0.5,
+            "quote_volume": 36.69,
+            "last_ask": 73.05502846,
+            "quote_volume_btc": 0.50418824
+        },
+        {
+            "pair": {
+                "name": "BTCETH",
+                "base": {
+                    "code": "BTC",
+                    "name": "bitcoin"
+                },
+                "quote": {
+                    "code": "ETH",
+                    "name": "ethereum"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.0,
+            "base_volume": 0.0,
+            "quote_volume": 0.0,
+            "last_ask": 13.86042647,
+            "quote_volume_btc": 0.0
+        },
+        {
+            "pair": {
+                "name": "ETHLTC",
+                "base": {
+                    "code": "ETH",
+                    "name": "ethereum"
+                },
+                "quote": {
+                    "code": "LTC",
+                    "name": "litecoin"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.03614493,
+            "base_volume": 0.5,
+            "quote_volume": 2.66,
+            "last_ask": 5.28626186,
+            "quote_volume_btc": 0.0365533
+        }
+    ]
+}
+
+Trade Volume/Get VolumeGEThttps://api.n.exchange/en/api/v1/volume/?hours=24Parameters
+hours
+how many hours back would you like to get trade Volume for. Example: 24.
+Double
+Request
+Headers
+Content-Type:aplication/json
+ResponseAttributes
+hours
+required
+number
+trade volume time. If hours=24 it means that response contains data of last 24h trade volumes.
+
+total_volume
+required
+object
+tradable_pairs
+array
+200
+Headers
+Content-Type:application/json
+Body
+Show JSON Schema
+{
+    "hours": 24.0,
+    "total_volume": {
+        "base_volume_btc": 0.53614493,
+        "quote_volume_btc": 0.54074154
+    },
+    "tradable_pairs": [
+        {
+            "pair": {
+                "name": "BTCLTC",
+                "base": {
+                    "code": "BTC",
+                    "name": "bitcoin"
+                },
+                "quote": {
+                    "code": "LTC",
+                    "name": "litecoin"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.5,
+            "base_volume": 0.5,
+            "quote_volume": 36.69,
+            "last_ask": 73.05502846,
+            "quote_volume_btc": 0.50418824
+        },
+        {
+            "pair": {
+                "name": "BTCETH",
+                "base": {
+                    "code": "BTC",
+                    "name": "bitcoin",
+                },
+                "quote": {
+                    "code": "ETH",
+                    "name": "ethereum"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.0,
+            "base_volume": 0.0,
+            "quote_volume": 0.0,
+            "last_ask": 13.86042647,
+            "quote_volume_btc": 0.0
+        },
+        {
+            "pair": {
+                "name": "ETHLTC",
+                "base": {
+                    "code": "ETH",
+                    "name": "ethereum"
+                },
+                "quote": {
+                    "code": "LTC",
+                    "name": "litecoin"
+                },
+                "fee_ask": 0.001,
+                "fee_bid": 0.001
+            },
+            "base_volume_btc": 0.03614493,
+            "base_volume": 0.5,
+            "quote_volume": 2.66,
+            "last_ask": 5.28626186,
+            "quote_volume_btc": 0.0365533
+        }
+    ]
+}

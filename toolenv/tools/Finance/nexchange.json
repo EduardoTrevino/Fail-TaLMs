@@ -1,0 +1,147 @@
+{
+  "tool_name": "nexchange",
+  "tool_description": "n.exchange API provides comprehensive cryptocurrency market data including currency pairs, prices, and trading volume.",
+  "title": "n.exchange",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 500,
+    "avgSuccessRate": 95,
+    "popularityScore": 9.7,
+    "__typename": "Score"
+  },
+  "home_url": "https://n.exchange/",
+  "host": "api.n.exchange",
+  "api_list": [
+    {
+      "name": "get_currencies",
+      "url": "https://api.n.exchange/en/api/v1/currency/",
+      "description": "Get a list of all supported currencies and their details.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.n.exchange/en/api/v1/currency/\"\nresponse = requests.get(url)\nprint(response.json())",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "array",
+        "properties": {
+          "code": { "type": "string" },
+          "name": { "type": "string" },
+          "min_confirmations": { "type": "number" },
+          "is_crypto": { "type": "boolean" },
+          "minimal_amount": { "type": "string" },
+          "is_base_of_enabled_pair": { "type": "boolean" },
+          "is_quote_of_enabled_pair": { "type": "boolean" },
+          "has_enabled_pairs": { "type": "boolean" },
+          "withdrawal_fee": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "get_price",
+      "url": "https://api.n.exchange/en/api/v1/get_price/{pair_name}/",
+      "description": "Get the price quote of a given amount of currency, or determine how much currency you would get for a specified amount of currency.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "pair_name",
+          "type": "STRING",
+          "description": "Name of the currency pair, e.g., BTCLTC."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "amount_base",
+          "type": "DOUBLE",
+          "description": "Amount of the base currency."
+        },
+        {
+          "name": "amount_quote",
+          "type": "DOUBLE",
+          "description": "Amount of the quote currency."
+        }
+      ],
+      "code": "import requests\n\nurl = f\"https://api.n.exchange/en/api/v1/get_price/{{pair_name}}/\"\nquerystring = {'amount_base': amount_base, 'amount_quote': amount_quote}\nresponse = requests.get(url, params=querystring)\nprint(response.json())",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "amount_base": { "type": "number" },
+          "amount_quote": { "type": "number" },
+          "timestamp": { "type": "number" },
+          "price": { "type": "number" },
+          "pair": {
+            "type": "object",
+            "properties": {
+              "base": { "type": "string" },
+              "quote": { "type": "string" }
+            }
+          },
+          "max_amount_base": { "type": "number" },
+          "max_amount_quote": { "type": "number" },
+          "min_amount_base": { "type": "number" },
+          "min_amount_quote": { "type": "number" }
+        }
+      }
+    },
+    {
+      "name": "get_price_history",
+      "url": "https://api.n.exchange/en/api/v1/price/{pair_name}/history/",
+      "description": "Returns the price history for a selected pair over a specified period of time.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "pair_name",
+          "type": "STRING",
+          "description": "Name of the currency pair, e.g., BTCLTC."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "hours",
+          "type": "DOUBLE",
+          "description": "Number of hours back to get the price history for."
+        },
+        {
+          "name": "data_points",
+          "type": "INT",
+          "description": "Number of data points in the selected time range."
+        },
+        {
+          "name": "market_code",
+          "type": "STRING",
+          "description": "Price market code. Default is 'nex'."
+        }
+      ],
+      "code": "import requests\n\nurl = f\"https://api.n.exchange/en/api/v1/price/{{pair_name}}/history/\"\nquerystring = {'hours': hours, 'data_points': data_points, 'market_code': market_code}\nresponse = requests.get(url, params=querystring)\nprint(response.json())",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "array",
+        "properties": {
+          "created_on": { "type": "string" },
+          "unix_time": { "type": "number" },
+          "ticker": {
+            "type": "object",
+            "properties": {
+              "ask": { "type": "number" },
+              "bid": { "type": "number" }
+            }
+          },
+          "market": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "code": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

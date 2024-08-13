@@ -1,0 +1,434 @@
+Public Rest API for WazirX
+Introduction
+This document details the use of Wazirx’s REST API for spot exchange. This helps you automate trades in real-time, stream live crypto rates and build other integrations for your trading journey.
+
+Our REST API is organized into publicly accessible endpoints (market data, exchange status, etc.), and private authenticated endpoints (trading, funding, user data) which require requests to be signed.
+
+API Key Setup
+Some endpoints will require an API Key. Please refer to this page regarding API key creation.
+Once API key is created, it is recommended to set IP restrictions on the key for security reasons.
+Never share your API key/secret key to ANYONE. If the API keys were accidentally shared, please delete them immediately and create a new key.
+API Key Restrictions
+The default settings of the API key enable you to a Read-Only key. You can enable trading rights by explicity enabling SPOT Trade option under permissions for a key
+You can create 5 api keys for an account
+Spot Account
+A SPOT account is provided by default upon creation of a WazirX Account.
+
+Python connector
+This is a lightweight library that works as a connector to WazirX public API, written in Python. - Python connector
+
+Ruby connector
+This is a lightweight library that works as a connector to WazirX public API, written in Ruby. - Ruby connector
+
+Postman Collections
+There is now a Postman collection containing the API endpoints for quick and easy use. This is recommended for new users who want to get a quick-start into using the API. For more information please refer to this page: WazirX API Postman
+
+Contact Us
+WazirX Email
+Please email us at api@wazirx.com
+WazirX API Telegram Group
+For latest updates on new features, enhancements and maintenance/downtime activities.
+API third party Integrations
+These integrations will help you in increasing your speed to build bots
+
+CCXT connector
+
+CCXT is a SDK provider and you may access the WazirX API through CCXT. For more information, please visit: https://ccxt.trade
+Hummingbot
+
+For traders who want to get started with bot trading but are unsure how to use APIs, Hummingbot is the perfect solution as it is an automated trading bot with inbuilt trading strategies and automated market making services. Please refer here on how to get your Hummingbot trading set up.
+ WazirX does not endorse nor will be held liable for the usage of the any of the third party platforms and any resulting financial losses, if any.
+General API Information
+The base endpoint is: https://api.wazirx.com
+All endpoints return either a JSON object or array.
+All time and timestamp related fields are in milliseconds.
+HTTP Return Codes
+HTTP 4XX return codes are used for malformed requests; the issue is on the sender's side.
+HTTP 403 return code is used when the WAF Limit (Web Application Firewall) has been violated.
+HTTP 429 return code is used when breaking a request rate limit.
+HTTP 418 return code is used when an IP has been auto-banned for continuing to send requests after receiving 429 codes.
+HTTP 5XX return codes are used for internal errors; the issue is on WazirX's side. It is important to NOT treat this as a failure operation; the execution status is UNKNOWN and could have been a success.
+Error Codes and Messages
+Sample Payload below:
+
+{
+  "code": -1121,
+  "message": "Invalid symbol."
+}
+If there is an error, the API will return an error with a message of the reason.
+Specific error codes and messages defined in Error Codes.
+Any endpoint can return an ERROR
+General Information on Endpoints
+For GET endpoints, parameters must be sent as a query string.
+For POST, PUT, and DELETE endpoints, the parameters must be sent as a request body with content type application/x-www-form-urlencoded.
+Parameters may be sent in any order.
+If a parameter sent in both the query string and request body, the query string parameter will be used.
+Limits
+General Info on Limits
+Limits are set on specific api endpoints. These will be mentioned in the description of the endpoint. For e.g the Ping api will have a limit of 1 request/sec while Place order api will have a limit of 10 requests/sec
+A 429 will be returned when rate limit is violated.
+The limits on the API are based on the API keys.
+We recommend using the websocket for getting data as much as possible, as this will not count to the request rate limit.
+IP Limits
+When a 429 is received, it's your obligation as an API to back off and not spam the API.
+Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (HTTP status 418).
+IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days.
+A Retry-After header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 429, to prevent a ban, or, in the case of a 418, until the ban is over.
+Websocket Limits
+WebSocket connections have a limit of 5 incoming messages per second. A message is considered:
+A PING frame
+A PONG frame
+A JSON controlled message (e.g. subscribe, unsubscribe)
+A connection that goes beyond the limit will be disconnected; IPs that are repeatedly disconnected may be banned.
+A single connection can listen to a maximum of 1024 streams.
+Endpoint security type
+Each endpoint has a security type that determines the how you will interact with it. This is stated next to the NAME of the endpoint.
+If no security type is stated, assume the security type is NONE.
+API-keys are passed into the Rest API via the X-API-KEY header.
+API-keys and secret-keys are case sensitive.
+API-keys can be configured to only access certain types of secure endpoints. For example, one API-key could be used for TRADE only, while another API-key can access everything except for TRADE routes.
+By default, API-keys can access all secure routes.
+Security Type	Description
+NONE	Endpoint can be accessed freely.
+TRADE	Endpoint requires sending a valid API-Key and signature.
+USER_DATA	Endpoint requires sending a valid API-Key and signature.
+MARKET_DATA	Endpoint requires sending a valid API-Key.
+TRADE and USER_DATA endpoints are SIGNED endpoints.
+SIGNED (TRADE and USER_DATA) Endpoint security
+SIGNED endpoints require an additional parameter, signature, to be sent in the query string or request body.
+Endpoints use HMAC SHA256 signatures. The HMAC SHA256 signature is a keyed HMAC SHA256 operation. Use your secretKey as the key and totalParams as the value for the HMAC operation.
+The signature is not case sensitive.
+totalParams is defined as the query string concatenated with the request body.
+Timing security
+A SIGNED endpoint also requires a parameter, timestamp, to be sent which should be the millisecond timestamp of when the request was created and sent.
+An additional parameter, recvWindow, may be sent to specify the number of milliseconds after timestamp the request is valid for. If recvWindow is not sent, it defaults to 5000.
+The logic is as follows:
+
+  if (timestamp < (serverTime + 1000) && (serverTime - timestamp) <= recvWindow) {
+    // process request
+  } else {
+    // reject request
+  }
+Serious trading is about timing. Networks can be unstable and unreliable, which can lead to requests taking varying amounts of time to reach the servers. With recvWindow, you can specify that the request must be processed within a certain number of milliseconds or be rejected by the server.
+
+It is recommended to use a small recvWindow of 5000 or less! The max cannot go beyond 60,000!
+
+SIGNED Endpoint Examples for POST /sapi/v1/order
+Here is a step-by-step example of how to send a vaild signed payload from the Linux command line using echo, openssl, and curl.
+
+Key	Value
+apiKey	vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A
+secretKey	NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j
+Parameter	Value
+symbol	ltcbtc
+side	buy
+type	limit
+quantity	1
+price	0.1
+recvWindow	5000
+timestamp	1499827319559
+Example 1: As a request body
+Request Body:
+
+symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+HMAC SHA256 signature:
+
+[linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "Nh***0j"
+(stdin)= a0***60
+(HMAC SHA256)
+
+[linux]$ curl -H "X-API-KEY: vm***8A" -X POST 'https://api.wazirx.com/sapi/v1/order' -d 'symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a0***60'
+Example 2: As a query string
+Query String:
+
+symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559
+HMAC SHA256 signature:
+
+[linux]$ echo -n "symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559" | openssl dgst -sha256 -hmac "Nh***0j"
+(stdin)= a0***60
+Curl Command:
+
+[linux]$ curl -H "X-API-KEY: vm***8A" -X POST 'https://api.wazirx.com/sapi/v1/order?symbol=ltcbtc&side=buy&type=limit&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559&signature=a0***60'
+Public API Endpoints
+ENUM definitions
+Order status (status):
+
+idle - The order is idle not yet triggered.
+wait - The order is still open and waiting to be filled completely.
+done - The order has been completely filled.
+cancel - The order has been canceled by the user.
+Order types (orderTypes, type):
+
+limit
+stop_limit
+Order side (side):
+
+buy
+sell
+General endpoints
+Test connectivity
+GET /sapi/v1/ping
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/ping'
+Response:
+
+{}
+Test connectivity to the Rest API.
+
+Rate limit: 1 per second
+
+Query Parameters: NONE
+
+
+
+
+System status
+GET /sapi/v1/systemStatus
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/systemStatus'
+Response:
+
+{
+    "status": "normal",  // normal or system maintenance
+    "message": "System is running normally."
+}
+Fetch system status.
+
+Rate limit: 1 per second
+
+Query Parameters: NONE
+
+
+
+
+
+
+
+Check server time
+GET /sapi/v1/time
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/time'
+Response:
+
+{
+  "serverTime": 1499827319559
+}
+Test connectivity to the Rest API and get the current server time.
+
+Rate limit: 1 per second
+
+Query Parameters: NONE
+
+
+
+
+
+
+
+Exchange Info
+GET /sapi/v1/exchangeInfo
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/exchangeInfo'
+Response:
+
+{
+  "timezone": "UTC",
+    "serverTime": 1631531599247,
+    "symbols": [
+        {
+            "symbol": "btcinr",
+            "status": "trading",
+            "baseAsset": "btc",
+            "quoteAsset": "inr",
+            "baseAssetPrecision": 5,
+            "quoteAssetPrecision": 0,
+            "orderTypes": [
+                "limit",
+                "stop_limit"
+            ],
+            "isSpotTradingAllowed": true,
+            "filters": [
+                {
+                    "filterType": "PRICE_FILTER",
+                    "minPrice": "1",
+                    "tickSize": "1"
+                }
+            ]
+        }
+      ]
+}
+Fetch all exchange information
+
+Rate limit: 1 per second
+
+Query Parameters: NONE
+
+Market Data endpoints
+24hr tickers price change statistics
+GET /sapi/v1/tickers/24hr
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/tickers/24hr'
+Response:
+
+[
+  {
+    "symbol": "btcinr",
+    "baseAsset": "btc",
+    "quoteAsset": "inr",
+    "openPrice": "704999.0",
+    "lowPrice": "702603.0",    
+    "highPrice": "730001.0",
+    "lastPrice": "720101.0",
+    "volume": "891.8329",
+    "bidPrice": "720102.0",
+    "askPrice": "722999.0",
+    "at": 1588829734
+  }
+]
+24 hour rolling window price change statistics.
+
+Rate limit: 1 per second
+
+24hr ticker price change statistics
+GET /sapi/v1/ticker/24hr
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/ticker/24hr?symbol=wrxinr'
+Response:
+
+{
+  "symbol": "wrxinr",
+  "baseAsset": "wrx",
+  "quoteAsset": "inr",
+  "openPrice": "704999.0",
+  "lowPrice": "702603.0",    
+  "highPrice": "730001.0",
+  "lastPrice": "720101.0",
+  "volume": "891.8329",
+  "bidPrice": "720102.0",
+  "askPrice": "722999.0",
+  "at": 1588829734
+}
+24 hour rolling window price change statistics.
+
+Rate limit: 1 per second
+
+Query Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	YES	
+ If the symbol is not sent, response will throw error.
+Kline/Candlestick Data
+GET /sapi/v1/klines
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/klines?symbol=btcinr&limit=5&interval=1m&startTime=1647822960&endTime=1647823020'
+Response:
+
+[
+    [
+        1647822960,   // Kline start time
+        20,           // Open price
+        20,           // High price
+        20,           // Low price
+        20,           // Close price
+        0             // Base asset volume
+    ],
+    [
+        1647823020,   // Kline start time
+        20,           // Open price
+        20,           // High price
+        20,           // Low price
+        20,           // Close price
+        0             // Base asset volume
+    ]
+]
+Request via this endpoint to get the klines data of the specified symbol.
+
+Rate limit: 1 per second
+
+Query Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	YES	
+limit	STRING	NO	default 500, max 2000
+interval	STRING	NO	allowed values [1m,5m,15m,30m,1h,2h,4h,6h,12h,1d,1w]
+startTime	LONG	NO	
+endTime	LONG	NO	
+ If startTime and endTime are not sent, the most recent klines are returned.
+Order book
+GET /sapi/v1/depth
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/depth?symbol=wrxinr&limit=5'
+Response:
+
+{
+   "lastUpdateAt": 1588831243,
+   "asks":[
+      [
+         "9291.0",   // PRICE
+         "0.0119"    // QTY
+      ]
+   ],
+   "bids":[
+      [
+         "9253.0",   // PRICE
+         "1.0456"    // QTY
+      ]
+   ]
+}
+Rate limit: 2 per second
+
+Query Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	YES	
+limit	INT	NO	Default 20; max 1000. Valid limits:[1, 5, 10, 20, 50, 100, 500, 1000]
+
+
+Recent trades list
+GET /sapi/v1/trades
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/trades?symbol=wrxinr&limit=10'
+Response:
+
+[
+  {
+    "id": 28457,
+    "price": "4.00000100",
+    "qty": "12.00000000",
+    "quoteQty": "48.000012",
+    "time": 1499865549590,
+    "isBuyerMaker": true
+  }
+]
+Get recent trades.
+
+Rate limit: 1 per second
+
+Query Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	YES	
+limit	INT	NO	Default 500; max 1000.
+
+
+Old trade lookup (MARKET_DATA)
+GET /sapi/v1/historicalTrades
+curl --location --request GET 'https://api.wazirx.com/sapi/v1/historicalTrades?limit=10&symbol=wrxinr&signature=e0***cb&recvWindow=10000&timestamp=1632376801204' \
+--header 'X-Api-Key: Ry***n0'
+Response:
+
+[
+  {
+    "id": 28457,
+    "price": "4.00000100",
+    "qty": "12.00000000",
+    "quoteQty": "48.000012",
+    "time": 1499865549590,
+    "isBuyerMaker": true
+  }
+]
+Get older trades.
+
+Rate limit: 1 per second
+
+Headers:
+
+Name	Type	Mandatory	Description
+X-API-KEY	STRING	YES	
+Query Parameters:
+
+Name	Type	Mandatory	Description
+symbol	STRING	YES	
+limit	INT	NO	Default 500; max 1000.
+fromId	LONG	NO	TradeId to fetch from. Default gets most recent trades.

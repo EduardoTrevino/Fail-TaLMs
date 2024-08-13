@@ -1,0 +1,68 @@
+{
+  "tool_name": "razorpay",
+  "tool_description": "API for retrieving details about Indian Financial Systems Codes.",
+  "title": "Razorpay IFSC API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://ifsc.razorpay.com/",
+  "host": "ifsc.razorpay.com",
+  "api_list": [
+    {
+      "name": "ifsc",
+      "url": "https://ifsc.razorpay.com/:ifsc",
+      "description": "Retrieve details of a bank branch using the IFSC code.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "ifsc",
+          "type": "STRING",
+          "description": "The IFSC code of the bank branch.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = f\"https://ifsc.razorpay.com/{ifsc}\"\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "BRANCH": "Delhi Nagrik Sehkari Bank IMPS",
+        "CENTRE": "DELHI",
+        "DISTRICT": "DELHI",
+        "STATE": "MAHARASHTRA",
+        "ADDRESS": "720, NEAR GHANTAGHAR, SUBZI MANDI, DELHI - 110007",
+        "CONTACT": "+919560344685",
+        "IMPS": true,
+        "CITY": "MUMBAI",
+        "UPI": true,
+        "MICR": "110196002",
+        "RTGS": true,
+        "NEFT": true,
+        "SWIFT": "",
+        "ISO3166": "IN-MH",
+        "BANK": "Delhi Nagrik Sehkari Bank",
+        "BANKCODE": "DENS",
+        "IFSC": "YESB0DNB002"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "BANK": {
+            "type": "string"
+          },
+          "BRANCH": {
+            "type": "string"
+          },
+          "ADDRESS": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

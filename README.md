@@ -59,10 +59,10 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | Kraken                           | 2         | :x:        | TBD      |
 | Crypto & Finance | KuCoin                           | 0         | :x:        | TBD      |
 | Crypto & Finance | NBP Web                          | 2         | :x:        | TBD      |
-| Crypto & Finance | Nexchange                        | 0         | :x:        | TBD      |
+| Crypto & Finance | Nexchange                        | 2         | :x:        | TBD      |
 | Crypto & Finance | OKX                              | 0         | :x:        | TBD      |
-| Crypto & Finance | Razorpay IFSC                    | 0         | :x:        | TBD      |
-| Crypto & Finance | WazirX                           | 0         | :x:        | TBD      |
+| Crypto & Finance | Razorpay IFSC                    | 2         | :x:        | TBD      |
+| Crypto & Finance | WazirX                           | 2         | :x:        | TBD      |
 | Developer Tools  | Agify                            | 0         | :x:        | TBD      |
 | Developer Tools  | APIC Agent                       | 0         | :x:        | TBD      |
 | Developer Tools  | Arul's Public APIs               | 0         | :x:        | TBD      |

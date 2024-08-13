@@ -1,0 +1,97 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "nexchange",
+                "api_name": "get_price",
+                "api_description": "Get the price quote of a given amount of currency, or determine how much currency you would get for a specified amount of currency.",
+                "required_parameters": [
+                    {
+                        "name": "pair_name",
+                        "type": "STRING",
+                        "description": "Name of the currency pair, e.g., BTCLTC."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "amount_base",
+                        "type": "DOUBLE",
+                        "description": "Amount of the base currency."
+                    },
+                    {
+                        "name": "amount_quote",
+                        "type": "DOUBLE",
+                        "description": "Amount of the quote currency."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amount_base": "number",
+                    "amount_quote": "number",
+                    "timestamp": "number",
+                    "price": "number",
+                    "pair": {
+                        "base": "string",
+                        "quote": "string"
+                    },
+                    "max_amount_base": "number",
+                    "max_amount_quote": "number",
+                    "min_amount_base": "number",
+                    "min_amount_quote": "number"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "nexchange",
+                "api_name": "get_price_history",
+                "api_description": "Returns the price history for a selected pair over a specified period of time.",
+                "required_parameters": [
+                    {
+                        "name": "pair_name",
+                        "type": "STRING",
+                        "description": "Name of the currency pair, e.g., BTCLTC."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hours",
+                        "type": "DOUBLE",
+                        "description": "Number of hours back to get the price history for."
+                    },
+                    {
+                        "name": "data_points",
+                        "type": "INT",
+                        "description": "Number of data points in the selected time range."
+                    },
+                    {
+                        "name": "market_code",
+                        "type": "STRING",
+                        "description": "Price market code. Default is 'nex'."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "created_on": "string",
+                        "unix_time": "number",
+                        "ticker": {
+                            "ask": "number",
+                            "bid": "number"
+                        },
+                        "market": {
+                            "name": "string",
+                            "code": "string"
+                        }
+                    }
+                ]
+            }
+        ],
+        "query": "I want to know the current price of Bitcoin in Litecoin and the price history for the last hour.",
+        "relevant APIs": [
+            "get_price",
+            "get_price_history"
+        ],
+        "query_id": 2
+    }
+]

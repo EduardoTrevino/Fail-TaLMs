@@ -1,0 +1,50 @@
+API
+Nemo edited this page on Aug 11, 2022 · 12 revisions
+Razorpay IFSC API Documentation
+API server that serves Razorpay's IFSC API. API Root is https://ifsc.razorpay.com/
+
+Routes:
+Route	Method	Response
+/:ifsc	GET	JSON
+A sample response is:
+
+{
+	"BRANCH": "Delhi Nagrik Sehkari Bank IMPS",
+	"CENTRE": "DELHI",
+	"DISTRICT": "DELHI",
+	"STATE": "MAHARASHTRA",
+	"ADDRESS": "720, NEAR GHANTAGHAR, SUBZI MANDI, DELHI - 110007",
+	"CONTACT": "+919560344685",
+	"IMPS": true,
+	"CITY": "MUMBAI",
+	"UPI": true,
+	"MICR": "110196002",
+	"RTGS": true,
+	"NEFT": true,
+	"SWIFT": "",
+	"ISO3166": "IN-MH",
+	"BANK": "Delhi Nagrik Sehkari Bank",
+	"BANKCODE": "DENS",
+	"IFSC": "YESB0DNB002"
+}
+URL: https://ifsc.razorpay.com/YESB0DNB002.
+
+Notes
+For an invalid IFSC code a 404 is returned.
+The contact field can either be a string or be null. It will be a E.164 formatted number as per best-effort (ie, wherever possible).
+The MICR/SWIFT code can either be a string or null. If you notice an invalid string (such as "" or "NA", please file an issue).
+The API supports CORS, so you make requests directly from the frontend
+The RTGS/NEFT enablement is based on the IFSC's inclusion in RBI's NEFT/RTGS datasets
+The IMPS flag is enabled for all IFSCs by default, unless known otherwise (such as in the case of RBI Bank)
+The BANK and BANKCODE fields are based on sublet branches, and may not necessarily match the bank name that you were expecting. For eg, since YESB0DNB002 is used by Delhi Nagrik Sehkari Bank, we return DENS as the bank code (and not YESB).
+The UPI field is based on NPCI's UPI Live Member list.
+Field Summary
+BANK	IFSC	BRANCH	ADDRESS	CONTACT	CITY	RTGS	MICR	UPI	NEFT	IMPS
+Bank Name	Branch IFSC	Branch Name	Branch Address	Branch Contact Details (if available)	City	(boolean) Whether branch supports RTGS	MICR Code for the Branch (nullable)	UPI enabled (bool)	NEFT enabled (bool)	IMPS enabled (bool)
+Pages 8
+IFSC Toolkit
+Dataset
+Source Code
+Release Guide
+
+Clone this wiki locally
