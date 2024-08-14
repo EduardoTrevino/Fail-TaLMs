@@ -1,0 +1,115 @@
+{
+  "tool_name": "apicagent",
+  "tool_description": "API to detect browser, OS, and device from user agent.",
+  "title": "apicagent",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 99,
+    "avgLatency": 100,
+    "avgSuccessRate": 100,
+    "popularityScore": 9.9,
+    "__typename": "Score"
+  },
+  "home_url": "https://apicagent.com/",
+  "host": "api.apicagent.com",
+  "api_list": [
+    {
+      "name": "getuseragentdata",
+      "url": "https://api.apicagent.com/",
+      "description": "Get browser, OS, and device information by parsing a user-agent string.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "ua",
+          "type": "STRING",
+          "description": "The user-agent string to be parsed.",
+          "default": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.apicagent.com/\"\nquerystring = {\"ua\": ua}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "browser_family": "Chrome",
+        "client": {
+          "engine": "Blink",
+          "engine_version": "unknown",
+          "name": "Chrome",
+          "type": "browser",
+          "version": "89.0.4389.114"
+        },
+        "device": {
+          "brand": "Apple",
+          "model": "unknown",
+          "type": "desktop"
+        },
+        "os": {
+          "name": "Mac",
+          "platform": "unknown",
+          "version": "10.15.5"
+        },
+        "os_family": "Mac"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "browser_family": { "type": "string" },
+          "client": { "type": "object" },
+          "device": { "type": "object" },
+          "os": { "type": "object" },
+          "os_family": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "postuseragentdata",
+      "url": "https://api.apicagent.com/",
+      "description": "Send a user-agent string inside a JSON object to retrieve browser, OS, and device information.",
+      "method": "POST",
+      "required_parameters": [
+        {
+          "name": "ua",
+          "type": "STRING",
+          "description": "The user-agent string to be parsed.",
+          "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.apicagent.com/\"\npayload = {\"ua\": ua}\n\nresponse = requests.post(url, json=payload)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "browser_family": "Chrome",
+        "client": {
+          "engine": "Blink",
+          "engine_version": "unknown",
+          "name": "Chrome",
+          "type": "browser",
+          "version": "91.0.4472.124"
+        },
+        "device": {
+          "brand": "unknown",
+          "model": "unknown",
+          "type": "desktop"
+        },
+        "os": {
+          "name": "Windows",
+          "platform": "unknown",
+          "version": "10.0"
+        },
+        "os_family": "Windows"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "browser_family": { "type": "string" },
+          "client": { "type": "object" },
+          "device": { "type": "object" },
+          "os": { "type": "object" },
+          "os_family": { "type": "string" }
+        }
+      }
+    }
+  ]
+}

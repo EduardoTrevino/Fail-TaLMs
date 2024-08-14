@@ -1,0 +1,170 @@
+Agify API reference
+A simple API that estimates the age of a person based on a first name
+The Agify API allows you to estimate the age of a person based on their first name.
+
+The API exposes a single endpoint that accepts a name and returns a payload with the prediction. It uses query parameters for requests and returns JSON-encoded responses.
+
+The API is free for up to 100 names/day. No sign-up or API key is needed. So go ahead and try it out. You can sign up for an API key if you need more requests.
+
+We support batch processing to reduce the overhead of many HTTP calls.
+
+The endpoint also supports localization , allowing you to scope the gender prediction to a single country for higher accuracy.
+
+The API is built for high-volume processing, and as such, there is no rate limiting except your daily or monthly limit. You can keep track of that through rate-limiting headers or your account .
+
+Client libraries
+Not looking to write your own client code? Our amazing community has open sourced libraries and SDK's for almost every programming language.
+
+Python icon
+Python
+
+R icon
+R
+
+Javascript icon
+Javascript
+
+PHP icon
+PHP
+
+Go icon
+Go
+
+C# icon
+C#
+
+Ruby icon
+Ruby
+
+Scala icon
+Scala
+
+Java icon
+Java
+
+Basic Usage
+Estimating the age of a single name
+For basic usage you just need to pass a name as the name parameter. It's recommended to always use a first name if you have it available. If not, the API will attempt to parse the input as a full name and pick out the first name.
+
+The response includes the estimated age, and a count. The probability which indicates the amount of data rows examined for the response. You can read more about our data here.
+
+It's worth noting that demographics can influence naming conventions, so check out how to scope for a specific country .
+
+Request
+https://api.agify.io?name=michael
+Try me
+Response
+{
+    "count": 298219,
+    "name": "michael",
+    "age": 62
+}
+Authentication
+Accessing the API
+The API is free to use for up to 100 requests/day. If you need to do more predictions than that, you can obtain an API key from the store .
+
+You should append the key to every request using the apikey parameter.
+
+To keep track of the number of requests you have left for a given period, you can use the following HTTP headers returned in the response. If you're using an API key, you can also check your account to keep track of your usage.
+
+X-Rate-Limit-Limit
+
+The total amount of names available in the current time window. For free usage, this will be 100 predictions and for subscriptions it will follow your tier.
+
+X-Rate-Limit-Remaining
+
+The remaining amount of names available in the current time window.
+
+X-Rate-Limit-Reset
+
+Seconds remaining until a new time window open. Free usage runs on a daily window and subscriptions follow the monthly billing period.
+
+https://api.genderize.io?name=peter&apikey=YOUR_API_KEY
+Localization
+Improve estimation accuracy with localization
+Naming conventions can rely heavily on demographics, so specifying a country for the lookup will, in many cases, make the prediction better.
+
+The API accepts an optional country_id parameter. The API will return a prediction specifically for the provided country when used. We recommend using it whenever you have the data available.
+
+The dataset might be smaller for some countries, so it is worth checking the count and redoing the request globally if it's too low.
+
+The service follows ISO 3166-1 alpha-2 for country codes. See our list of supported countries to understand the coverage for each country.
+
+Request
+https://api.agify.io?name=michael&country_id=US
+Try me
+Response
+{
+    "count": 108496,
+    "name": "michael",
+    "age": 62,
+    "country_id": "US"
+}
+Batch Usage
+Estimating the age of multiple names
+The API allows you to estimate the age of up to ten names per request. To do so, send a list of names as the name parameter. The response will be a list of predictions.
+
+Using localization on a batch request will apply the given country_id to every name in the batch.
+
+Each name will count as a request towards rate limiting . If you don't have enough requests to process every name, an error will be returned.
+
+Request
+https://api.agify.io?name[]=michael&name[]=matthew&name[]=jane
+Try me
+Response
+[
+    {
+        "count": 298219,
+        "name": "michael",
+        "age": 62
+    },
+    {
+        "count": 53379,
+        "name": "matthew",
+        "age": 44
+    },
+    {
+        "count": 40935,
+        "name": "jane",
+        "age": 68
+    }
+]
+Input Fallbacks
+How input fallbacks work
+The API uses a few fallbacks to find a match in our database for cases where the input name is not directly found.
+
+The first fallback will remove all diacritics from the input name and make an attempt to find a match without it. The second fallback will attempt to parse the name in case it's a full name and use the found first name.
+
+So the lookup priority looks like this.
+
+Direct look up of the input name
+Look up of the input name with diacritics removed
+Attemp to parse the name into it's parts and look up the first name
+Even though we support name parsing, it's recommended to always use a first name if you have it available. Naming conventions are different across cultures and contexts and the parsing will never be perfect.
+
+Responses & Errors
+Understanding the API responses
+All responses wil be in content-type: application/json, charset=utf-8.
+
+Here's a list of possible error codes and their explanation.
+
+Code
+Description
+Response
+401
+Unauthorized
+{ "error": "Invalid API key" }
+402
+Payment Required
+{ "error": "Subscription is not active" }
+422
+Unprocessable Content
+{ "error": "Missing 'name' parameter" }
+422
+Unprocessable Content
+{ "error": "Invalid 'name' parameter" }
+429
+Too many requests
+{ "error": "Request limit reached" }
+429
+Too many requests

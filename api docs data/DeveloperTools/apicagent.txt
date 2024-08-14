@@ -1,0 +1,42 @@
+Documentation
+Using apicagent's API is very easy. We provide GET or POST variants of the same API - choose as per your preference, send your user-agent string as input and you get the response that you can use in your application.
+
+GET https://api.apicagent.com
+Simple and easy to get started with, works in browser too. If you prefer GET APIs, use this.
+
+Learn More
+POST https://api.apicagent.com
+This works exactly like the GET API, except user-agent string is sent inside a JSON object.
+
+Learn More
+GET API
+GET https://api.apicagent.com
+
+This API is the simplest way to get started with apicagent's user-agent parsing API. It accepts user agent string in ua parameter and returns the JSON object with parsed data.
+
+API	GET https://api.apicagent.com
+Input Parameter	ua - user agent string in url encoded format
+Example Request	curl https://api.apicagent.com/?ua=Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_15_5)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/89.0.4389.114%20Safari/537.36
+Example Output	
+
+{
+  "browser_family": "Chrome",
+  "client": {
+    "engine": "Blink",
+    "engine_version": "unknown",
+    "name": "Chrome",
+    "type": "browser",
+    "version": "89.0.4389.114"
+  },
+  "device": {
+    "brand": "Apple",
+    "model": "unknown",
+    "type": "desktop"
+  },
+  "os": {
+    "name": "Mac",
+    "platform": "unknown",
+    "version": "10.15.5"
+  },
+  "os_family": "Mac"
+}

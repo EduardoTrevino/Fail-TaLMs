@@ -63,8 +63,8 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | OKX                              | 0         | :x:        | TBD      |
 | Crypto & Finance | Razorpay IFSC                    | 2         | :x:        | TBD      |
 | Crypto & Finance | WazirX                           | 2         | :x:        | TBD      |
-| Developer Tools  | Agify                            | 0         | :x:        | TBD      |
-| Developer Tools  | APIC Agent                       | 0         | :x:        | TBD      |
+| Developer Tools  | Agify                            | 2         | :x:        | TBD      |
+| Developer Tools  | APIC Agent                       | 2         | :x:        | TBD      |
 | Developer Tools  | Arul's Public APIs               | 0         | :x:        | TBD      |
 | Developer Tools  | Cloudflare Trace                 | 0         | :x:        | TBD      |
 | Developer Tools  | Digital Ocean Status             | 0         | :x:        | TBD      |
