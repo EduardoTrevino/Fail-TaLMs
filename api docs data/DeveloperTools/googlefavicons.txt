@@ -1,0 +1,33 @@
+Get favicons from any domain using a hidden google API
+#
+webdev
+#
+tooling
+#
+todayilearned
+Did you know ?
+
+Google offers a secret URL that can automatically pull the favicon image of any domain. Cherries on the cake, we can ask for different sizes and the images returned are in PNG format (not ICO), meaning they will render correctly in all browsers using the <img> tag.
+
+The API works using a simple GET:
+https://www.google.com/s2/favicons?domain=${domain}&sz=${size}
+The query parameters are:
+
+domain: mandatory, the domain you are interested in,
+sz: optional, a size hint such as 256.
+In case the right size is not found, it will return the default one, usually 16x16.
+
+https://www.google.com/s2/favicons?domain=dev.to&sz=128
+128x128
+
+https://www.google.com/s2/favicons?domain=dev.to&sz=512 (nothing found for 512x512, so returns a 16x16 PNG)
+16x16 fallback
+
+https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=128 (yep, sometimes the quality is far from optimal)
+stackoverflow 128x128
+
+👋 Before you go
+
+Do your career a favor. Join DEV. (The website you're on right now)
+
+It takes one minute and is worth it for your career.

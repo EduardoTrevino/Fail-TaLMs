@@ -1,0 +1,70 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "predictgender",
+        "api_description": "Predict the gender based on a single name.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name you want to predict the gender for.",
+            "default": "kim"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "ISO 3166-1 alpha-2 country code for localization.",
+            "default": "US"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "gender": "str",
+          "probability": "float",
+          "count": "int",
+          "country_id": "str"
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "predictbatchgender",
+        "api_description": "Predict the gender for multiple names in a single request.",
+        "required_parameters": [
+          {
+            "name": "name[]",
+            "type": "LIST",
+            "description": "A list of names you want to predict the gender for.",
+            "default": "[peter, lois, stewie]"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "ISO 3166-1 alpha-2 country code for localization, applied to all names in the batch.",
+            "default": "US"
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "name": "str",
+            "gender": "str",
+            "probability": "float",
+            "count": "int"
+          }
+        ]
+      }
+    ],
+    "query": "What is the gender prediction for the names Peter, Lois, and Stewie in the US? How about the name Kim in both the US and Denmark?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

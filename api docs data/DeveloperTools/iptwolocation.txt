@@ -1,0 +1,562 @@
+Documentation
+Discover & learn more about API
+There are 3 types of APIs, which are IP geolocation API, bulk IP geolocation API and Domain WHOIS API.
+
+IP Geolocation API
+IP2Location.io IP Geolocation API
+This API returns geolocation information like country, region, city, latitude & longitude, ZIP code, time zone, ASN, ISP and so on.
+
+Domain WHOIS API
+IP2WHOIS Domain WHOIS API
+This API returns a comprehensive WHOIS data such as creation date, updated date, expiration date, domain age and so on.
+
+Bulk IP Geolocation API
+IP2Location.io Bulk IP Geolocation API
+This API allows users to check IP address location in bulk. It returns geolocation information like country, region, city, and so on.
+
+IP2Location.io IP Geolocation API
+Overview
+IP2Location.io provides RESTful API allowing users to check IP address location in real time. The REST API supports both IPv4 and IPv6 address lookup.
+
+What data you can get:
+Country, region, district, city, latitude & longitude, ZIP code, time zone, ASN, ISP, domain, net speed, IDD code, area code, weather station data, MNC, MCC, mobile brand, elevation, usage type, address type, advertisement category and proxy data with an IP address.
+
+The API does not requires any API key to work, but it has limitation. It is free for up to 500 queries daily. If you need more queries, you can sign up for a Free Plan and get an API key with just a few clicks!
+
+Rate Limiting
+An API rate limit refers to the maximum number of API calls that can be made within a specific time period. IP2Location.io allows you to perform up to 500 queries per day without the need to sign up for an API key (keyless). Once this limit is reached, any additional API calls will fail until the time period resets at 00:00 UTC daily.
+
+If you wish to remove the daily rate limit and perform more than 500 queries per day, you can get started by signing up for our Free Plan to obtain an API key. It's free, and with this plan, you are able to make up to 30,000 queries per month.
+
+Below is the command to perform the keyless query:
+
+https://api.ip2location.io/?ip=8.8.8.8
+Parameters
+The REST API calling syntax. Please see the table below for the description of each parameter.
+
+Name	Description
+key	(required) API key. Get a FREE API Key.
+ip	(required) IP address (IPv4 or IPv6) for reverse IP location lookup purposes. If not present, the server IP address will be used for the location lookup.
+format	(optional) Format of the response message.
+Valid value: json | xml
+
+If unspecified, json format will be used for the response message.
+lang	(optional) Translation information(ISO639-1). The translation is only applicable for continent, country, region and city name.
+Valid value: ar | cs | da | de | en | es | et | fi | fr | ga | it | ja | ko | ms | nl | pt | ru | sv | tr | vi | zh-cn | zh-tw
+
+You can only specify one language value for the returns.
+
+Note: This parameter is only available for Plus and Security plan only.
+API Endpoint
+The IP2Location.io API supports json(default) and xml response formats. Please find the sample response of all plans below.
+
+Free Plan
+Starter Plan
+Plus Plan
+Security Plan
+Query String
+JSON
+XML
+https://api.ip2location.io/?key={YOUR_API_KEY}&ip=8.8.8.8&format=json    
+Response
+{
+	"ip":"8.8.8.8",
+	"country_code":"US",
+	"country_name":"United States of America",
+	"region_name":"California",
+	"city_name":"Mountain View",
+	"latitude":37.405992,
+	"longitude":-122.078515,
+	"zip_code":"94043",
+	"time_zone":"-07:00",
+	"asn":"15169",
+	"as":"Google LLC",
+	"is_proxy":false
+}
+Don't have a free account? Sign up now.
+
+Response Format
+The REST API returns the following fields and values.
+
+Field	Description
+ip	IP address
+country_code	Two-character country code based on ISO 3166.
+country_name	Country name based on ISO 3166.
+region_name	Region or state name.
+city_name	City name.
+latitude	City latitude. Defaults to capital city latitude if city is unknown.
+longitude	City longitude. Defaults to capital city longitude if city is unknown.
+zip_code	ZIP/Postal code.
+time_zone	UTC time zone (with DST supported).
+asn	Autonomous system number (ASN).
+as	Autonomous system (AS) name.
+isp	Internet Service Provider or company's name.
+domain	Internet domain name associated with IP address range.
+net_speed	Internet connection type.
+DIAL = dial-up, DSL = broadband/cable/fiber/mobile, COMP = corporate, T1 = data center/transit, SAT = satellite
+idd_code	The IDD prefix to call the city from another country.
+area_code	A varying length number assigned to geographic areas for calls between cities.
+weather_station_code	The special code to identify the nearest weather observation station.
+weather_station_name	The name of the nearest weather observation station.
+mcc	Mobile Country Codes (MCC) as defined in ITU E.212 for use in identifying mobile stations in wireless telephone networks, particularly GSM and UMTS networks.
+mnc	Mobile Network Code (MNC) is used in combination with a Mobile Country Code (MCC) to uniquely identify a mobile phone operator or carrier.
+mobile_brand	Commercial brand associated with the mobile carrier.
+elevation	Average height of city above sea level in meters (m).
+usage_type	Usage type classification of ISP or company
+(COM) Commercial
+(ORG) Organization
+(GOV) Government
+(MIL) Military
+(EDU) University/College/School
+(LIB) Library
+(CDN) Content Delivery Network
+(ISP) Fixed Line ISP
+(MOB) Mobile ISP
+(DCH) Data Center/Web Hosting/Transit
+(SES) Search Engine Spider
+(RSV) Reserved
+address_type	IP address types as defined in Internet Protocol version 4 (IPv4) and Internet Protocol version 6 (IPv6).
+(A) Anycast - One to the closest
+(U) Unicast - One to one
+(M) Multicast - One to multiple
+(B) Broadcast - One to all
+ads_category	The domain category code based on IAB Tech Lab Content Taxonomy.
+ads_category_name	The domain category based on IAB Tech Lab Content Taxonomy. These categories are comprised of Tier-1 and Tier-2 (if available) level categories widely used in services like advertising, Internet security and filtering appliances.
+district	District or county name.
+continent.name	Continent name.
+continent.code	Two-character continent code.
+continent.hemisphere	The hemisphere of where the country located. The data in array format with first item indicates (north/south) hemisphere and second item indicates (east/west) hemisphere information.
+continent.translation	Translation data based on the given lang code.
+country.name	Country name based on ISO 3166.
+country.alpha3_code	Three-character country code based on ISO 3166.
+country.numeric_code	Three-character country numeric code based on ISO 3166.
+country.demonym	Native of the country
+country.flag	URL of the country flag image.
+country.capital	Capital of the country.
+country.total_area	Total area in km2.
+country.population	Population of the country.
+country.currency	Currency of the country
+country.language	Language of the country
+country.tld	Country-Code Top-Level Domain.
+country.translation	Translation data based on the given lang code.
+region.name	Region or state name.
+region.code	ISO3166-2 code.
+region.translation	Translation data based on the given lang code.
+city.name	City name.
+city.translation	Translation data based on the given lang code.
+time_zone_info.olson	Time zone in Olson format.
+time_zone_info.current_time	Current time in ISO 8601 format.
+time_zone_info.gmt_offset	GMT offset value in seconds.
+time_zone_info.is_dst	Indicate if the time zone value is in DST.
+time_zone_info.sunrise	Time of sunrise. (hh:mm format in local time, i.e, 07:47)
+time_zone_info.sunset	Time of sunset. (hh:mm format in local time, i.e 19:50)
+geotargeting.metro	Metro code based on zip/postal code.
+is_proxy	Whether is a proxy or not
+proxy.last_seen	Proxy last seen in days.
+proxy.proxy_type	Type of proxy.
+(VPN) Virtual Private Networks
+(TOR) Tor Exit Nodes
+(DCH) Hosting Providers, Data Centers or Content Delivery Networks
+(PUB) Public Proxies
+(WEB) Web Proxies
+(SES) Search Engine Robots
+(RES) Residential Proxies
+(CPN) Consumer Privacy Networks
+(EPN) Enterprise Private Networks
+proxy.threat	Security threat reported.
+(SPAM) Email and forum spammers
+(SCANNER) Network security scanners
+(BOTNET) Malware infected devices
+proxy.provider	Name of VPN provider if available.
+proxy.is_vpn	Anonymizing VPN services.
+proxy.is_tor	Tor Exit Nodes.
+proxy.is_data_center	Hosting Provider, Data Center or Content Delivery Network.
+proxy.is_public_proxy	Public Proxies.
+proxy.is_web_proxy	Web Proxies.
+proxy.is_web_crawler	Search Engine Robots.
+proxy.is_residential_proxy	Residential proxies.
+proxy.is_spammer	Email and forum spammers.
+proxy.is_scanner	Network security scanners.
+proxy.is_botnet	Malware infected devices.
+proxy.is_consumer_privacy_network	Consumer Privacy Networks.
+proxy.is_enterprise_private_network	Enterprise Private Networks.
+Error Object & Codes
+An Error object will be returned for any error encountered. For example:
+
+{
+    "error": {
+		"error_code": 10001,
+		"error_message": "Invalid IP address."
+    }
+}
+Below is the complete list of the error code and message returned by the IP2Location.io API.
+
+Error Code	Error Message
+10000	Invalid API key or insufficient query.
+10001	Invalid IP address.
+10002	Internal server error.
+10003	Invalid language code.
+10004	Translation is not available with your plan.
+Sample Codes
+You can use the sample codes below for different applications.
+
+PHP
+Java
+VB.NET
+C#
+Python
+cURL
+Ruby
+Node.js
+Go
+Rust
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.ip2location.io/?' . http_build_query([
+	'ip'				=> '8.8.8.8',
+	'key'     => 'YOUR_API_KEY',
+	'format'  => 'json',
+]));
+
+curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+$response = curl_exec($ch);
+
+var_dump($response);
+Unlock Location Insights For Free
+Empower your applications with accurate IP geolocation information now.
+
+
+Parameters
+API Endpoint
+Response Format
+Error Object & Codes
+Sample Codes
+SDK
+IP2WHOIS Domain WHOIS API
+Overview
+IP2WHOIS Domain WHOIS API helps users to obtain domain information and WHOIS record by using a domain name. The WHOIS API returns a comprehensive WHOIS data such as creation date, updated date, expiration date, domain age, the contact information of the registrant, mailing address, phone number, email address, nameservers the domain is using and much more. It supports the query for 1221 TLDs and 634 ccTLDs.
+
+You may try the WHOIS API demo at here. The API requires an API key to function. If you do not have one, you may click on the below button to sign up for a Free Plan.
+
+Parameters
+The REST API calling syntax. Please see the table below for the description of each parameter.
+
+Name	Description
+key	(required) API key. Get a FREE API Key.
+domain	(required) Domain name.
+format	(optional) Format of the response message.
+Valid value: json | xml
+
+If unspecified, json format will be used for the response message.
+API Endpoint
+The IP2WHOIS Domain WHOIS API supports json(default) and xml response formats. Please find the sample response below.
+
+Query String
+JSON
+XML
+https://api.ip2whois.com/v2?key={YOUR_API_KEY}&domain=locaproxy.com    
+Response
+{
+    "domain": "locaproxy.com",
+    "domain_id": "1710914405_DOMAIN_COM-VRSN",
+    "status": "clientTransferProhibited https://icann.org/epp#clientTransferProhibited",
+    "create_date": "2012-04-03T02:34:32Z",
+    "update_date": "2021-12-03T02:54:57Z",
+    "expire_date": "2024-04-03T02:34:32Z",
+    "domain_age": 3863,
+    "whois_server": "whois.godaddy.com",
+    "registrar": {
+        "iana_id": "146",
+        "name": "GoDaddy.com, LLC",
+        "url": "https://www.godaddy.com"
+    },
+    "registrant": {
+        "name": "Registration Private",
+        "organization": "Domains By Proxy, LLC",
+        "street_address": "DomainsByProxy.com",
+        "city": "Tempe",
+        "region": "Arizona",
+        "zip_code": "85284",
+        "country": "US",
+        "phone": "+1.4806242599",
+        "fax": "+1.4806242598",
+        "email": "Select Contact Domain Holder link at https://www.godaddy.com/whois/results.aspx?domain=LOCAPROXY.COM"
+    },
+    "admin": {
+        "name": "Registration Private",
+        "organization": "Domains By Proxy, LLC",
+        "street_address": "DomainsByProxy.com",
+        "city": "Tempe",
+        "region": "Arizona",
+        "zip_code": "85284",
+        "country": "US",
+        "phone": "+1.4806242599",
+        "fax": "+1.4806242598",
+        "email": "Select Contact Domain Holder link at https://www.godaddy.com/whois/results.aspx?domain=LOCAPROXY.COM"
+    },
+    "tech": {
+        "name": "Registration Private",
+        "organization": "Domains By Proxy, LLC",
+        "street_address": "DomainsByProxy.com",
+        "city": "Tempe",
+        "region": "Arizona",
+        "zip_code": "85284",
+        "country": "US",
+        "phone": "+1.4806242599",
+        "fax": "+1.4806242598",
+        "email": "Select Contact Domain Holder link at https://www.godaddy.com/whois/results.aspx?domain=LOCAPROXY.COM"
+    },
+    "billing": {
+        "name": "",
+        "organization": "",
+        "street_address": "",
+        "city": "",
+        "region": "",
+        "zip_code": "",
+        "country": "",
+        "phone": "",
+        "fax": "",
+        "email": ""
+    },
+    "nameservers": ["vera.ns.cloudflare.com", "walt.ns.cloudflare.com"]
+}
+Don't have a free account? Sign up now.
+
+Response Format
+The REST API returns the following fields and values.
+
+Field	Description
+domain	Domain name.
+domain_id	Domain name ID.
+status	Domain name status.
+create_date	Domain name creation date.
+update_date	Domain name updated date.
+expire_date	Domain name expiration date.
+domain_age	Domain name age in day(s).
+whois_server	WHOIS server name.
+registrar.iana_id	Registrar IANA ID.
+registrar.name	Registrar name.
+registrar.url	Registrar URL.
+registrant.name	Registrant name.
+registrant.organization	Registrant organization.
+registrant.street_address	Registrant street address.
+registrant.city	Registrant city.
+registrant.region	Registrant region.
+registrant.zip_code	Registrant ZIP Code.
+registrant.country	Registrant country.
+registrant.phone	Registrant phone number.
+registrant.fax	Registrant fax number.
+registrant.email	Registrant email address.
+admin.name	Admin name.
+admin.organization	Admin organization.
+admin.street_address	Admin street address.
+admin.city	Admin city.
+admin.region	Admin region.
+admin.zip_code	Admin ZIP Code.
+admin.country	Admin country.
+admin.phone	Admin phone number.
+admin.fax	Admin fax number.
+admin.email	Admin email address.
+tech.name	Tech name.
+tech.organization	tech.organization
+tech.street_address	Tech street address.
+tech.city	Tech city.
+tech.region	Tech region.
+tech.zip_code	Tech ZIP Code.
+tech.country	Tech country.
+tech.phone	Tech phone number.
+tech.fax	Tech fax number.
+tech.email	Tech email address.
+billing.name	Billing name.
+billing.organization	Billing organization.
+billing.street_address	Billing street address.
+billing.city	Billing city.
+billing.region	Billing region.
+billing.zip_code	Billing ZIP Code.
+billing.country	Billing country.
+billing.phone	Billing phone number.
+billing.fax	Billing fax number.
+billing.email	Billing email address.
+nameservers	Name servers
+Error Object & Codes
+An Error object will be returned for any error encountered. For example:
+
+{
+    "error": {
+        "error_code": 10000,
+        "error_message": "Missing parameter."
+    }
+}
+Below is the complete list of the error code and message returned by the IP2WHOIS Domain WHOIS API.
+
+Error Code	Error Message
+10000	Missing parameter.
+10001	API key not found.
+10002	API key disabled.
+10003	API key expired.
+10004	Insufficient queries.
+10005	Unknown error.
+10006	No data found.
+10007	Invalid domain.
+10008	Invalid format.
+Sample Codes
+You can use the sample codes below for different applications.
+
+PHP
+Java
+VB.NET
+C#
+Python
+Ruby
+Node.js
+Rust
+<?php
+$apiKey = 'YOUR_API_KEY';
+$params['domain'] = 'Enter_Domain_Name';
+$params['format'] = 'json';
+
+$query = '';
+
+foreach($params as $key=>$value){
+    $query .= '&' . $key . '=' . rawurlencode($value);
+}
+
+$result = file_get_contents('https://api.ip2whois.com/v2?key=' . $apiKey . $query);
+
+$data = json_decode($result);
+
+print_r($data);
+?>
+SDK
+For the ease of developers, SDK for various programming languages are available. You may use our official SDK to assist you in code implementation.
+
+PHP Module
+Ruby Module
+Python Module
+Node.js Module
+Go Module
+Unlock Location Insights For Free
+Empower your applications with accurate IP geolocation information now.
+
+IP2Location.io Bulk IP Geolocation API
+Overview
+IP2Location.io provides RESTful API allowing users to check IP address location in bulk. This API supports up to 1000 IPv4 and IPv6 addresses per query.
+
+What data you can get:
+Country, region, district, city, latitude & longitude, ZIP code, time zone, ASN, and proxy data.
+
+This API endpoint requires a Starter, Plus or Security Plan to work.
+
+Parameters
+The REST API calling syntax. Please see the table below for the description of each parameter.
+
+Name	Description
+key	(required) API key.
+format	(optional) Format of the response message.
+Valid value: json | csv
+
+If unspecified, json format will be used for the response message.
+fields	(optional) Custom fields returned by the API endpoint.
+Valid value: country_code | country_name | region_name | city_name | latitude | longitude | zip_code | time_zone | asn | as | is_proxy
+
+You can specify multiple fields by separating them with comma (,). If unspecified, all fields will be returned.
+(POST Body)	(required) A list of IP address separated by new line or JSON encoded IP list.
+API Endpoint
+The IP2Location.io API supports json(default) and CSV response formats. Please find the sample response of all plans below.
+
+Query String
+JSON
+CSV
+echo -e '1.1.1.1\n2.2.2.2' | curl -XPOST --data-binary @- "bulk.ip2location.io/?key=YOUR_API_KEY&format=json"
+Response
+{
+    "1.1.1.1": {
+        "country_code": "US",
+        "country_name": "United States of America",
+        "region_name": "California",
+        "city_name": "San Jose",
+        "latitude": 37.33939,
+        "longitude": -121.89496,
+        "zip_code": "95101",
+        "time_zone": "America/Los_Angeles",
+        "asn": "13335",
+        "as": "CloudFlare Inc.",
+        "is_proxy": false
+    },
+    "2.2.2.2": {
+        "country_code": "FR",
+        "country_name": "France",
+        "region_name": "Auvergne-Rhone-Alpes",
+        "city_name": "Lyon",
+        "latitude": 45.748313,
+        "longitude": 4.846578,
+        "zip_code": "69998",
+        "time_zone": "Europe/Paris",
+        "asn": "3215",
+        "as": "Orange S.A.",
+        "is_proxy": false
+    }
+}
+Response Format
+The REST API returns the following fields and values.
+
+Field	Description
+country_code	Two-character country code based on ISO 3166.
+country_name	Country name based on ISO 3166.
+region_name	Region or state name.
+city_name	City name.
+latitude	City latitude. Defaults to capital city latitude if city is unknown.
+longitude	City longitude. Defaults to capital city longitude if city is unknown.
+zip_code	ZIP/Postal code.
+time_zone	UTC time zone (with DST supported).
+asn	Autonomous system number (ASN).
+as	Autonomous system (AS) name.
+is_proxy	Whether is a proxy or not
+Error Object & Codes
+An Error object will be returned for any error encountered. For example:
+
+{
+    "error": {
+		"error_code": 401,
+		"error_message": "Invalid API key or insufficient query."
+    }
+}
+Below is the complete list of the error code and message returned by the IP2Location.io API.
+
+Error Code	Error Message
+401	Invalid API key or insufficient query.
+500	Internal server error.
+Sample Codes
+You can use the sample codes below for different applications.
+
+PHP
+Java
+VB.NET
+C#
+Python
+cURL
+Ruby
+Node.js
+Go
+Rust
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://bulk.ip2location.io/?' . http_build_query([
+	'key'     => 'YOUR_API_KEY',
+	'format'  => 'json',
+]));
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, '["1.1.1.1", "2.2.2.2", "3.3.3.3", "4.4.4.4"]');
+curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+$response = curl_exec($ch);
+
+var_dump($response);
+Unlock Location Insights For Free
+Empower your applications with accurate IP geolocation information now.
+

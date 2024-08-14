@@ -65,17 +65,17 @@ Please update as you add and intergrate diffrent apis
 | Crypto & Finance | WazirX                           | 2         | :x:        | TBD      |
 | Developer Tools  | Agify                            | 2         | :x:        | TBD      |
 | Developer Tools  | APIC Agent                       | 2         | :x:        | TBD      |
-| Developer Tools  | Arul's Public APIs               | 0         | :x:        | TBD      |
-| Developer Tools  | Cloudflare Trace                 | 0         | :x:        | TBD      |
-| Developer Tools  | Digital Ocean Status             | 0         | :x:        | TBD      |
-| Developer Tools  | FilterLists                      | 0         | :x:        | TBD      |
-| Developer Tools  | Genderize.io                     | 0         | :x:        | TBD      |
-| Developer Tools  | Google Favicons                  | 0         | :x:        | TBD      |
+| Developer Tools  | Arul's Public APIs               | 2         | :x:        | TBD      |
+| Developer Tools  | Cloudflare Trace                 | 2         | :x:        | TBD      |
+| Developer Tools  | Digital Ocean Status             | 2         | :x:        | TBD      |
+| Developer Tools  | FilterLists                      | 2         | :x:        | TBD      |
+| Developer Tools  | Genderize.io                     | 2         | :x:        | TBD      |
+| Developer Tools  | Google Favicons                  | 2         | :x:        | TBD      |
 | Developer Tools  | goQR                             | 0         | :x:        | TBD      |
 | Developer Tools  | HTTPBin                          | 0         | :x:        | TBD      |
 | Developer Tools  | Image-Charts                     | 0         | :x:        | TBD      |
-| Developer Tools  | IP2Location                      | 0         | :x:        | TBD      |
-| Developer Tools  | IPify                            | 0         | :x:        | TBD      |
+| Developer Tools  | IP2Location                      | 2         | :x:        | TBD      |
+| Developer Tools  | IPify                            | 2         | :x:        | TBD      |
 | Developer Tools  | is.gd                            | 0         | :x:        | TBD      |
 | Developer Tools  | Microlink                        | 0         | :x:        | TBD      |
 | Developer Tools  | Nationalize.io                   | 0         | :x:        | TBD      |

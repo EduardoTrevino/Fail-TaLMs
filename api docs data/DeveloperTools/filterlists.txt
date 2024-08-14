@@ -1,0 +1,395 @@
+FilterLists Directory API
+ v1 
+OAS 3.0
+/v1/openapi.json
+An ASP.NET Core API serving the core FilterList information.
+
+Terms of service
+FilterLists - Website
+MIT License
+Languages
+A written form of communication used by sites targeted by a FilterList
+
+FilterLists Language Wiki
+
+
+GET
+/languages
+Gets the languages targeted by the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 37,
+    "iso6391": "en",
+    "name": "English",
+    "filterListIds": [
+      114,
+      141
+    ]
+  }
+]
+No links
+Licenses
+A legal document governing the use or redistribution of a FilterList
+
+FilterLists License Wiki
+
+
+GET
+/licenses
+Gets the licenses applied to the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 5,
+    "name": "All Rights Reserved",
+    "url": "https://en.wikipedia.org/wiki/All_rights_reserved",
+    "permitsModification": false,
+    "permitsDistribution": false,
+    "permitsCommercialUse": false,
+    "filterListIds": [
+      6,
+      31
+    ]
+  }
+]
+No links
+FilterLists
+A text file containing a list of rules for blocking or manipulating internet traffic
+
+FilterLists FilterList Wiki
+
+
+GET
+/lists
+Gets the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 301,
+    "name": "EasyList",
+    "description": "EasyList is the primary filter list that removes most adverts from international web pages...",
+    "licenseId": 4,
+    "syntaxIds": [
+      3
+    ],
+    "languageIds": [
+      37
+    ],
+    "tagIds": [
+      2
+    ],
+    "primaryViewUrl": "https://easylist.to/easylist/easylist.txt",
+    "maintainerIds": [
+      7
+    ]
+  }
+]
+No links
+
+GET
+/lists/{id}
+Gets the details of the FilterList.
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The identifier of the FilterList.
+
+Example : 1
+
+1
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 301,
+  "name": "EasyList",
+  "description": "\n                EasyList is the primary filter list that removes most adverts from international web pages, including unwanted\n                frames, images, and objects. It is the most popular list used by many ad blockers and forms the basis of over a\n                dozen combination and supplementary filter lists.\n            ",
+  "licenseId": 4,
+  "syntaxIds": [
+    3
+  ],
+  "languageIds": [
+    37
+  ],
+  "tagIds": [
+    2
+  ],
+  "viewUrls": [
+    {
+      "segmentNumber": 1,
+      "primariness": 1,
+      "url": "https://easylist.to/easylist/easylist.txt"
+    }
+  ],
+  "homeUrl": "https://easylist.to/",
+  "onionUrl": null,
+  "policyUrl": null,
+  "submissionUrl": null,
+  "issuesUrl": "https://github.com/easylist/easylist/issues",
+  "forumUrl": "https://forums.lanik.us/viewforum.php?f=23",
+  "chatUrl": null,
+  "emailAddress": "easylist@protonmail.com",
+  "donateUrl": null,
+  "maintainerIds": [
+    7
+  ],
+  "upstreamFilterListIds": [
+    0
+  ],
+  "forkFilterListIds": [
+    166,
+    565
+  ],
+  "includedInFilterListIds": [
+    0
+  ],
+  "includesFilterListIds": [
+    11,
+    13,
+    168
+  ],
+  "dependencyFilterListIds": [
+    0
+  ],
+  "dependentFilterListIds": [
+    0
+  ]
+}
+No links
+404	
+Not Found
+
+No links
+Maintainers
+An individual, group, or organization who maintains one or more FilterLists
+
+FilterLists Maintainer Wiki
+
+
+GET
+/maintainers
+Gets the maintainers of the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 7,
+    "name": "The EasyList Authors",
+    "url": "https://easylist.to/",
+    "emailAddress": null,
+    "twitterHandle": null,
+    "filterListIds": [
+      11,
+      13,
+      301
+    ]
+  }
+]
+No links
+Software
+An application, browser extension, or other utility that consumes FilterLists
+
+FilterLists Software Wiki
+
+
+GET
+/software
+Gets the software that subscribes to the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 2,
+    "name": "Adblock Plus",
+    "description": "Adblock Plus is a free extension that allows you to customize your web experience...",
+    "homeUrl": "https://adblockplus.org/",
+    "downloadUrl": "https://adblockplus.org/",
+    "supportsAbpUrlScheme": true,
+    "syntaxIds": [
+      3,
+      28,
+      38,
+      48
+    ]
+  }
+]
+No links
+Syntaxes
+A named set of rules that govern the format of a FilterList
+
+FilterLists Syntax Wiki
+
+
+GET
+/syntaxes
+Gets the syntaxes of the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 3,
+    "name": "Adblock Plus",
+    "description": null,
+    "url": "https://adblockplus.org/filters",
+    "filterListIds": [
+      2,
+      6,
+      11
+    ],
+    "softwareIds": [
+      1,
+      2,
+      3
+    ]
+  }
+]
+No links
+Tags
+A generic taxonomy applied to a FilterList to provide information about its contents and/or purpose
+
+FilterLists Tag Wiki
+
+
+GET
+/tags
+Gets the tags of the FilterLists.
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 2,
+    "name": "ads",
+    "description": "Blocks advertisements",
+    "filterListIds": [
+      1,
+      3,
+      6
+    ]
+  }
+]
+No links
+
+Schemas
+FilterLists.Directory.Application.Queries.GetLanguages.Response
+FilterLists.Directory.Application.Queries.GetLicenses.Response
+FilterLists.Directory.Application.Queries.GetListDetails.Response
+FilterLists.Directory.Application.Queries.GetListDetails.ViewUrlResponse
+FilterLists.Directory.Application.Queries.GetLists.Response
+FilterLists.Directory.Application.Queries.GetMaintainers.Response
+FilterLists.Directory.Application.Queries.GetSoftware.Response
+FilterLists.Directory.Application.Queries.GetSyntaxes.Response
+FilterLists.Directory.Application.Queries.GetTags.Response

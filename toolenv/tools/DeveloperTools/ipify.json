@@ -1,0 +1,111 @@
+{
+  "tool_name": "ipify",
+  "tool_description": "A simple public IP address API.",
+  "title": "ipify API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 100,
+    "avgLatency": 50,
+    "avgSuccessRate": 99.9,
+    "popularityScore": 9.9,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.ipify.org",
+  "host": "api.ipify.org",
+  "api_list": [
+    {
+      "name": "get_public_ip",
+      "url": "https://api.ipify.org",
+      "description": "Retrieve the user's public IPv4 or IPv6 address in plain text or JSON format.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "ENUM",
+          "description": "The response format: 'text', 'json', or 'jsonp'.",
+          "default": "text"
+        },
+        {
+          "name": "callback",
+          "type": "STRING",
+          "description": "The name of the JSONP callback function (used only when format is 'jsonp').",
+          "default": ""
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://api.ipify.org\"\nquerystring = {'format': format, 'callback': callback}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json() if format == 'json' or format == 'jsonp' else response.text)\n",
+      "statuscode": 200,
+      "body": {
+        "ip": "string"
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_geolocation",
+      "url": "https://ip-geolocation.whoisxmlapi.com/api/v1",
+      "description": "Retrieve geolocation information based on the user's public IP address.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "ip",
+          "type": "STRING",
+          "description": "The public IP address for which geolocation data is to be retrieved.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://ip-geolocation.whoisxmlapi.com/api/v1?apiKey=your_api_key&ipAddress=\" + ip\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "location": {
+          "country": "string",
+          "region": "string",
+          "city": "string",
+          "latitude": "float",
+          "longitude": "float",
+          "timezone": "string"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "country": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "timezone": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

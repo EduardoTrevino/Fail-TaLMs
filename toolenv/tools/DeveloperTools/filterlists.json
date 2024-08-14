@@ -1,0 +1,88 @@
+{
+  "tool_name": "filterlists",
+  "tool_description": "API to get data about lists of filters used by ad blockers.",
+  "title": "FilterLists API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 98,
+    "popularityScore": 8.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://filterlistsapi.example.com",
+  "host": "filterlistsapi.example.com",
+  "api_list": [
+    {
+      "name": "lists",
+      "url": "https://filterlistsapi.example.com/v1/lists",
+      "description": "Gets the list of FilterLists, including details such as the name, description, license, syntax, languages, tags, and maintainer information.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://filterlistsapi.example.com/v1/lists\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "licenseId": { "type": "integer" },
+          "syntaxIds": { "type": "array" },
+          "languageIds": { "type": "array" },
+          "tagIds": { "type": "array" },
+          "primaryViewUrl": { "type": "string" },
+          "maintainerIds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "languages",
+      "url": "https://filterlistsapi.example.com/v1/languages",
+      "description": "Gets the languages targeted by the FilterLists.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://filterlistsapi.example.com/v1/languages\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "iso6391": { "type": "string" },
+          "name": { "type": "string" },
+          "filterListIds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "licenses",
+      "url": "https://filterlistsapi.example.com/v1/licenses",
+      "description": "Gets the licenses applied to the FilterLists, including details about modification, distribution, and commercial use permissions.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://filterlistsapi.example.com/v1/licenses\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "url": { "type": "string" },
+          "permitsModification": { "type": "boolean" },
+          "permitsDistribution": { "type": "boolean" },
+          "permitsCommercialUse": { "type": "boolean" },
+          "filterListIds": { "type": "array" }
+        }
+      }
+    }
+  ]
+}

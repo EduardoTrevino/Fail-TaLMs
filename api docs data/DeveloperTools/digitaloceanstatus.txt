@@ -1,0 +1,52 @@
+DigitalOcean Status API
+Documentation and functionality
+Basics
+The following documentation is provided to let users of the DigitalOcean status page programmatically access various elements on the page. Endpoints are displayed with examples using cURL and our embeded javascript widget (if available).
+Tools
+Javascript library
+Data endpoints
+Summary
+Status
+Incidents
+Unresolved
+All
+Scheduled maintenances
+Upcoming
+Active
+All
+Javascript library
+A wrapper for the page status api, exposing convenient actions useful for embedding your status anywhere.
+https://cdn.statuspage.io/se-v2.js
+Summary
+Get a summary of the status page, including a status indicator, component statuses, unresolved incidents, and any upcoming or in-progress scheduled maintenances.
+https://status.digitalocean.com/api/v2/summary.jsonClick for example
+Status
+Get the status rollup for the whole page. This endpoint includes an indicator - one of none, minor, major, or critical, as well as a human description of the blended component status. Examples of the blended status include "All Systems Operational", "Partial System Outage", and "Major Service Outage".
+https://status.digitalocean.com/api/v2/status.jsonClick for example
+Components
+Get the components for the page. Each component is listed along with its status - one of operational, degraded_performance, partial_outage, or major_outage.
+https://status.digitalocean.com/api/v2/components.jsonClick for example
+Incidents
+Incidents are the cornerstone of any status page, being composed of many incident updates. Each incident usually goes through a progression of statuses listed below, with an impact calculated from a blend of component statuses (or an optional override).
+Status: Investigating, Identified, Monitoring, Resolved, or Postmortem
+Impact: None (black), Minor (yellow), Major (orange), or Critical (red)
+Unresolved incidents
+Get a list of any unresolved incidents. This endpoint will only return incidents in the Investigating, Identified, or Monitoring state.
+https://status.digitalocean.com/api/v2/incidents/unresolved.jsonClick for example
+All incidents
+Get a list of the 50 most recent incidents. This includes all unresolved incidents as described above, as well as those in the Resolved and Postmortem state.
+https://status.digitalocean.com/api/v2/incidents.jsonClick for example
+Scheduled maintenances
+Scheduled maintenances are planned outages, upgrades, or general notices that you're working on infrastructure and disruptions may occurr. A close sibling of Incidents, each usually goes through a progression of statuses listed below, with an impact calculated from a blend of component statuses (or an optional override).
+Status: Scheduled, In Progress, Verifying, or Completed
+Impact: None (black), Minor (yellow), Major (orange), or Critical (red)
+Upcoming scheduled maintenances
+Get a list of any upcoming maintenances. This endpoint will only return scheduled maintenances still in the Scheduled state.
+https://status.digitalocean.com/api/v2/scheduled-maintenances/upcoming.jsonClick for example
+Active scheduled maintenances
+Get a list of any active maintenances. This endpoint will only return scheduled maintenances in the In Progress or Verifying state.
+https://status.digitalocean.com/api/v2/scheduled-maintenances/active.jsonClick for example
+All scheduled maintenances
+Get a list of the 50 most recent scheduled maintenances. This includes scheduled maintenances as described in the above two endpoints, as well as those in the Completed state.
+https://status.digitalocean.com/api/v2/scheduled-maintenances.jsonClick for example
+← Current Status

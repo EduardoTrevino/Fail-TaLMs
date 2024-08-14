@@ -1,0 +1,89 @@
+{
+  "tool_name": "googlefavicons",
+  "tool_description": "Fetch favicons from any domain using Google's unofficial favicon fetcher.",
+  "title": "Google Favicons Fetcher",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 100,
+    "avgLatency": 10,
+    "avgSuccessRate": 100,
+    "popularityScore": 9.0,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.google.com/s2/favicons",
+  "host": "www.google.com",
+  "api_list": [
+    {
+      "name": "getfavicon",
+      "url": "https://www.google.com/s2/favicons",
+      "description": "Fetch the favicon for a given domain. Optionally, specify the size of the favicon.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "domain",
+          "type": "STRING",
+          "description": "The domain from which to fetch the favicon.",
+          "default": "example.com"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "sz",
+          "type": "INTEGER",
+          "description": "The size of the favicon in pixels (e.g., 16, 32, 64, 128, 256). Defaults to the smallest available size if not specified.",
+          "default": "16"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://www.google.com/s2/favicons\"\nparams = {\"domain\": domain, \"sz\": sz}\n\nresponse = requests.get(url, params=params)\n\nprint(response.url)\n",
+      "statuscode": 200,
+      "body": {
+        "favicon_url": "url"
+      },
+      "headers": {},
+      "schema": {
+        "type": "string",
+        "properties": {
+          "favicon_url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "getfaviconfallback",
+      "url": "https://www.google.com/s2/favicons",
+      "description": "Fetch the fallback favicon if the specified size is not available. Returns the default 16x16 favicon if the requested size is not found.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "domain",
+          "type": "STRING",
+          "description": "The domain from which to fetch the favicon.",
+          "default": "example.com"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "sz",
+          "type": "INTEGER",
+          "description": "The size of the favicon in pixels (optional). Defaults to 16 if not specified or if the requested size is unavailable.",
+          "default": "16"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://www.google.com/s2/favicons\"\nparams = {\"domain\": domain, \"sz\": sz}\n\nresponse = requests.get(url, params=params)\n\nprint(response.url)\n",
+      "statuscode": 200,
+      "body": {
+        "favicon_url": "url"
+      },
+      "headers": {},
+      "schema": {
+        "type": "string",
+        "properties": {
+          "favicon_url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}
