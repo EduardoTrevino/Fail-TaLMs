@@ -84,10 +84,10 @@ Please update as you add and intergrate diffrent apis
 | Developer Tools  | Sixdots                          | 0         | :x:        | TBD      |
 | Developer Tools  | Un-Shorten                       | 2         | :x:        | TBD      |
 | Developer Tools  | URLhaus                          | 2         | :x:        | TBD      |
-| Food & Drink     | Cocktail Database                | 0         | :x:        | TBD      |
-| Food & Drink     | Open Brewery DB                  | 0         | :x:        | TBD      |
+| Food & Drink     | Cocktail Database                | 2         | :x:        | TBD      |
+| Food & Drink     | Open Brewery DB                  | 2         | :x:        | TBD      |
 | Food & Drink     | Open Food Facts                  | 0         | :x:        | TBD      |
-| Food & Drink     | Whisky Hunter                    | 0         | :x:        | TBD      |
+| Food & Drink     | Whisky Hunter                    | 2         | :x:        | TBD      |
 | Fun & Games      | AmiiboAPI                        | 0         | :x:        | TBD      |
 | Fun & Games      | Barter                           | 0         | :x:        | TBD      |
 | Fun & Games      | Board Game Geek                  | 0         | :x:        | TBD      |

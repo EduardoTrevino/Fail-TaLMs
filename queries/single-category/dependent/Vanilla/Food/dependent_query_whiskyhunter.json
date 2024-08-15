@@ -1,0 +1,51 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Food",
+        "tool_name": "whiskyhunter",
+        "api_name": "auctions_info_list",
+        "api_description": "List all online auctions' main information such as auction name, date, and status.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "auction_name": "str",
+              "auction_date": "str",
+              "status": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Food",
+        "tool_name": "whiskyhunter",
+        "api_name": "distillery_data_read",
+        "api_description": "List data for a specific distillery including trading volumes and winning bids.",
+        "required_parameters": [
+          {
+            "name": "slug",
+            "type": "STRING",
+            "description": "The unique identifier (slug) of the distillery.",
+            "default": "ardbeg"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "result": {
+            "distillery_name": "str",
+            "total_volume": "float",
+            "average_price_per_lot": "float",
+            "highest_bid": "float"
+          }
+        }
+      }
+    ],
+    "query": "Can you provide me with the main information about recent whisky auctions, and also give me detailed data for the Ardbeg distillery?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

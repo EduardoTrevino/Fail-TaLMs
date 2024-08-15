@@ -1,0 +1,588 @@
+Data
+Conditions for reuse
+The Open Food Facts database is available under the Open Database License.
+The individual contents of the database are available under the Database Contents License.
+Products images are available under the Creative Commons Attribution ShareAlike licence. They may contain graphical elements subject to copyright or other rights, that may in some cases be reproduced (quotation rights or fair use).
+
+Please read Terms and conditions of use and re-use before re-using the data.
+
+Tell us about your reuse
+We are very interested in learning what the Open Food Facts data is used for. It is not mandatory, but we would very much appreciate it if you tell us about your re-uses so that we can share them with the Open Food Facts community. You can also fill this form to get a chance to get your app featured.
+
+Open Food Facts data exports
+Database dumps and exports are generated nightly. The database is very big, so you can find different ways to use the data, depending on the export flavor.
+
+Information on the different fields for the MongoDB dump and CSV exports is available at https://world.openfoodfacts.org/data/data-fields.txt
+
+MongoDB dump
+Data for all products is available in a MongoDB database dump.
+
+Link
+https://static.openfoodfacts.org/data/openfoodfacts-mongodbdump.gz
+sha256sum
+https://static.openfoodfacts.org/data/gz-sha256sum
+md5sum
+https://static.openfoodfacts.org/data/gz-md5sum
+Delta Export
+Daily delta exports are provided for the previous 14 days. The list of currently available delta files can be found at https://static.openfoodfacts.org/data/delta/index.txt.
+
+Each line represents a file that is available at https://static.openfoodfacts.org/data/delta/{filename}.
+
+The filename contains UNIX timestamp of the first and the last change contained in the JSON file, so that the delta files can be imported (after extraction) with mongoimport in alphabetical order.
+
+Please note that due to the nature of mongoexport, the delta files cannot tell you about deleted products. To remove deleted products from your database, you will need to import the full MongoDB dump.
+
+JSONL data export
+The whole database is also available in JSONL format (sometimes called LDJSON or NDJSON) where each line is a JSON object. It represents the same data as the MongoDB export. The file is compressed with gzip.
+
+Link
+https://static.openfoodfacts.org/data/openfoodfacts-products.jsonl.gz
+A suitable way to exploit the database is to use DuckDB, an in-process analytical tool designed to process large amount of data in a fraction of seconds. You can read our blog post where we walk you through exploring and processing the Open Food Facts database with DuckDB
+
+CSV Data Export
+Data for all products, or some of the products, can be downloaded in the CSV format (readable with LibreOffice, Excel and many other spreadsheet software) through the advanced search form.
+
+Links
+https://static.openfoodfacts.org/data/en.openfoodfacts.org.products.csv.gz (compressed CSV in GZIP format: ~ 0.9 Gb, uncompressed: ~ 9 Gb)
+The file encoding is Unicode UTF-8. The character that separates fields is <tab> (tabulation).
+
+RDF Data Export
+The database is also available in the RDF format. You can read the announcement in French.
+
+Link
+https://world.openfoodfacts.org/data/en.openfoodfacts.org.products.rdf.gz
+Image Data Export
+All images and OCR results can either be downloaded from our server or from AWS (through the AWS Open Data Program). Check out our documentation to learn more about how to download images.
+
+Live JSON and XML API
+A JSON API is also available to read the data for a product. This API is in particular used in the Open Food Facts mobile app for iPhone and Android.
+
+We improve the API over-time but we are careful to keep backwards compatibility. Please get in touch if you use it, so that we can tell you about potential changes.
+
+URL to read data for a product: https://world.openfoodfacts.org/api/v2/product/[barcode].json
+
+Example: https://world.openfoodfacts.org/api/v3/product/737628064502.json
+
+Note that if the output is too overwhelming, you can filter it - as described in the API documentation.
+
+API V3 - new OpenAPI documentation - Work in Progress
+OpenAPI help wanted
+We're eager to finish the documentation of the API, add use-cases, and automate SDK generation. If you are an OpenAPI connoisseur, you are very welcome to help.
+You are very welcome to use the API for production cases, as long as 1 API call = 1 real scan by a user. Any attempt to scrape the database using the API will very likely be blocked, as full daily exports are available on this very page.
+
+Also, sending an HTTP header with your API call is a good way we can get in touch, should any issue arise.
+
+If you are unsure about anything, or have any question (there is no silly question), feel free to ask it on the #api channel on Slack :-)
+
+Experimental XML API
+You can also get the result in XML by using .xml
+
+Example: https://world.openfoodfacts.org/api/v2/product/737628064502.xml
+
+This API is not actively maintained, and not officially documented.
+Wrappers and SDKs
+We probably have a wrapper for your favorite programming language. If we do, you can use it and improve it. If we don't, you can help create it.
+
+They will let you consume data, as well as let your users contribute new data
+
+General principles to make your users happy
+You can search for information about products, including many useful computed values.
+If you can't get the information on a specific product, you can get your user to send photos and data, that will then be processed by Open Food Facts AI and contributors to get the computed result you want to show them.
+You can also implement the complete flow so that they get immediately the result with some effort on their side.
+If your users do not expect a result immediately (e.g. Inventory apps)
+Submit photos (front/nutrition/ingredients): most painless thing for your users
+The Open Food Facts AI - Robotoff - will generate some derived data from the photos
+Over time, other apps, and the Open Food Facts community will fill the data gaps
+If your users expect a result immediately (e.g. Nutrition apps)
+Submit nutrition facts + category > get Nutri-Score
+Submit ingredients > get the NOVA group (about food ultra-processing), additives, allergens, normalized ingredients, vegan, vegetarian…
+Submit category + labels > soon get the Eco-Score (about environmental impact)
+Android and iPhone mobile app
+The code for the Open Food Facts mobile app is available on GitHub (Flutter, Kotlin Android and Swift iOS).
+
+We look to turn the deprecated Kotlin and Swift codebases into Kotlin and Swift SDKs, help welcome :-) The app allows users to scan the barcode of products, to view the product information, and to take and submit pictures and data for missing products.
+
+The app allows users to scan the barcode of products, to view the product information, and to take and submit pictures and data for missing products.
+
+You are welcome to reuse the code (it's open source) and help us improve it, for everyone, on all the planet.
+
+SDKs
+Cordova: GitHub (old Open Food Facts official app)
+DART: GitHub - Package on pub.dev
+Elixir: GitHub - Discussion channel
+Go: GitHub - Discussion channel
+Java: GitHub - Discussion channel
+Kotlin: GitHub - Discussion channel
+NodeJS: GitHub - Discussion channel
+PHP: GitHub - Discussion channel
+PHP (Laravel): GitHub - Discussion channel
+Python: GitHub - Discussion channel
+React Native: GitHub - Discussion channel
+Ruby: GitHub - Discussion channel
+Rust: GitHub - Discussion channel
+R: GitHub - Discussion channel
+Swift: GitHub - Discussion channel
+.NET/C#: GitHub - Discussion channel
+Discussing data, API and exports
+You can look at common FAQ questions about the API and Data Exports and common Open Food Facts questions
+
+You can join the Open Food Facts Slack chatroom which is the preferred way to ask questions and discuss the API. Please ask your questions in the #api channel
+
+You can open a thread on our API documentation repository
+
+For any question regarding the data, you can contact us at reuse@openfoodfacts.org
+
+Product Opener (Open Food Facts web server) documentation#
+Welcome to the documentation of Product Opener, the web server at the heart of Open Food Facts project.
+
+It also powers the sibling Open [Beauty|Pet Food|Products] Facts projects
+
+If you want to use the API or are interested in the data, look at API documentation
+If you are a developer, look at Developer documentation
+The repository for the project is at https://github.com/openfoodfacts/openfoodfacts-server/
+
+Do not hesitate to contribute to this documentation, this is highly appreciated.
+
+Documentation organization#
+The documentation is split between API documentation (for re-users, third party developers) and Developer documentation (for contributors).
+
+The documentation follows the Diátaxis framework.
+
+Page titles should start with:
+
+tutorial on - tutorials aimed at learning
+how to… - how to guides to reach a specific goal
+explain… - explanation to understand a topic
+reference… - providing detailed information
+
+Product Opener (Open Food Facts web server) documentation#
+Welcome to the documentation of Product Opener, the web server at the heart of Open Food Facts project.
+
+It also powers the sibling Open [Beauty|Pet Food|Products] Facts projects
+
+If you want to use the API or are interested in the data, look at API documentation
+If you are a developer, look at Developer documentation
+The repository for the project is at https://github.com/openfoodfacts/openfoodfacts-server/
+
+Do not hesitate to contribute to this documentation, this is highly appreciated.
+
+Documentation organization#
+The documentation is split between API documentation (for re-users, third party developers) and Developer documentation (for contributors).
+
+The documentation follows the Diátaxis framework.
+
+Page titles should start with:
+
+tutorial on - tutorials aimed at learning
+how to… - how to guides to reach a specific goal
+explain… - explanation to understand a topic
+reference… - providing detailed information
+Made with Material for MkDocs
+
+Introduction to Open Food Facts API documentation#
+Everything you need to know about Open Food Facts API.
+
+Overview#
+Open Food Facts is a food products database made by everyone, for everyone, that can help you make better choices about what you eat. Being open data, anyone can reuse it for any purpose.
+
+The Open Food Facts API enables developers to get information like ingredients and nutritional values of products, and even add more facts to the products database. You can use the API to build applications that allow users to contribute to the database and make healthier food choices.
+
+The current version of the API is 2.
+
+Data in the Open Food Facts database is provided voluntarily by users who want to support the program. As a result, there are no assurances that the data is accurate, complete, or reliable. The user assumes the entire risk of using the data.
+
+Before You Start#
+The Open Food Facts database is available under the Open Database License.
+The individual contents of the database are available under the Database Contents License.
+Product images are available under the Creative Commons Attribution ShareAlike license. They may contain graphical elements subject to copyright or other rights that may, in some cases, be reproduced (quotation rights or fair use).
+Please read the Terms and conditions of use and reuse before reusing the data.
+
+We like learning what the Open Food Facts data is used for. It is not mandatory, but we would appreciate it if you would tell us about your use case so that we can share them with the Open Food Facts community.
+
+How to Best Use the API#
+General principles#
+You can search for product information, including many useful computed values.
+Suppose we don't have the information you need on a specific product. In that case, you (or your users) can upload the product photos, and the backend (and our AI algorithms!) will process them, generating helpful info. The photos will also be available for the users of Open Food Facts and every other API user.
+You could also ask your user to enter some of the information about the product (like name, category, and weight) so that they immediately get the computed info.
+Generally, the more information we have about a product, the more we can compute.
+
+Rate limits#
+To protect our infrastructure, we enforce rate-limits on the API and the website. The following limits apply:
+
+100 req/min for all read product queries (GET /api/v*/product requests or product page). There is no limit on product write queries.
+10 req/min for all search queries (GET /api/v*/search or GET /cgi/search.pl requests)
+If these limits are reached, we reserve the right to deny you access to the website and the API through IP address ban. If your IP has been banned, feel free to email us to explain why you reached the limits: reverting the ban is possible.
+
+If your requests come from your users directly (ex: mobile app), the rate limits apply per user.
+
+If you need to fetch a significant fraction of the database, we recommend downloading the data as a CSV or JSONL file directly. If you need to download images in bulk, we have a guide for that.
+
+If your users do not expect a result immediately (e.g., Inventory apps)#
+Submit photos (front packaging/nutrition values/ingredients): the most painless thing for your users.
+The backend (Product Opener) and Open Food Facts AI (Robotoff) will generate some derived data from the photos.
+Over time, other apps and the Open Food Facts community will fill the data gaps.
+If your users expect a result immediately (e.g., Nutrition apps)#
+If you submit the product's nutritional values and category, you'll get the Nutri-Score.
+If you submit the product ingredients, you'll get the NOVA group (about food ultra-processing), additives, allergens, normalized ingredients, vegan, vegetarian…
+If you submit the product's category and labels, you'll get the Eco-Score (a rating of the product's environmental impact)
+API Deployments#
+The OpenFoodFacts API has two deployments.
+
+Production: https://world.openfoodfacts.org
+Staging: https://world.openfoodfacts.net
+Consider using the staging environment if you are not in a production scenario.
+
+While testing your applications, make all API requests to the staging environment. This way, we can ensure the product database is safe.
+
+Authentication#
+We ask you to always use a custom User-Agent to identify you (to not risk being identified as a bot). The User-Agent should be in the form of AppName/Version (ContactEmail). For example, MyApp/1.0 (myapp@example.com).
+
+READ operations (getting info about a product, etc...) do not require authentication other than the custom User-Agent.
+WRITE operations (Editing an Existing Product, Uploading images…) require authentication. We do this as another layer of protection against spam.
+Create an account on the Open Food Facts app. From there, you have two options:
+
+The preferred one: Use the login API to get a session cookie and use this cookie for authentication in your subsequent requests. However, the session must always be used from the same IP address, and there's a limit on sessions per user (currently 10) with older sessions being automatically logged out to stay within the limit.
+If session conditions are too restrictive for your use case, include your account credentials as parameters for authenticated requests where user_id is your username and password is your password (do this on POST / PUT / DELETE requests, not on GET).
+You can create a global account to allow your app users to contribute without registering individual accounts on the Open Food Facts website. This way, we know that these contributions came from your application.
+
+Production and staging have different account databases, so the account you create in the production environment will only work for production requests. If you want to query (WRITE requests) the staging environment, you'll need to create another account there too.
+
+Reference Documentation (OpenAPI)#
+We are building a complete OpenAPI reference. Here is a list of the current API documentation available:
+
+OpenAPI documentation (v2)
+OpenAPI documentation for v3 (for packaging components only)
+A cheatsheet listing some common patterns.
+Tutorials#
+A comprehensive introduction to Using the Open Food Facts API.
+Uploading images to the Open Food Facts API
+Help#
+Try the FAQ - to answer most of your questions.
+Didn't get what you wanted? Contact the Team on the #api Slack Channel.
+Report Bugs on the Open Food Facts GitHub repository.
+Do you have an issue or feature request? You can submit it on GitHub too.
+Are you interested in contributing to this project? See our Contribution Guidelines.
+SDKs#
+SDKs are available for specific languages for easier use of the API. We may have a wrapper for your favourite programming language. If we do, you can use it and improve it. However, If we don't, you can help us create it!
+
+They will let you consume data and let your users contribute new data. Open-source contributors develop our SDKs, and more contributions are welcome to improve these SDKs. You can start by checking the existing issues in their respective repositories.
+
+Warning: Before exploring any SDK, please read the Before You Start section.
+
+Also, remember to check the API Reference Documentation first to verify if the problem is in SDK implementation or in the API itself.
+
+Cordova: GitHub (old Open Food Facts official app)
+DART: GitHub - Package on pub.dev
+Elixir: GitHub - Discussion channel
+Go: GitHub - Discussion channel
+Java: GitHub - Discussion channel
+Kotlin: GitHub - Discussion channel
+NodeJS: GitHub - Discussion channel
+PHP: GitHub - Discussion channel
+PHP (Laravel): GitHub - Discussion channel
+Python: GitHub, published on pypi - Discussion channel
+React Native: GitHub - Discussion channel
+Ruby: GitHub - Discussion channel
+Rust: GitHub - Discussion channel
+R: GitHub - Discussion channel
+Swift: GitHub - Discussion channel
+.NET/C#: GitHub - Discussion channel
+Made with Material for MkDocs
+
+Introduction to the Robotoff Project#
+The Robotoff project is intended to complete missing product information by prompting users to confirm predictions inferred by Artificial Intelligence algorithms. These algorithms are calculated based on "insights", which are facts about a product that have been extracted or deduced from the product pictures, ingredients, categories, labels, etc.
+
+Why you'd use this API#
+Letting your users answer Robotoff insights allow them to get to Nutri-Score, Eco-Score easily, and ensures their satisfaction
+Robotoff documentation#
+The documentation for Robotoff is located here:
+
+General Documentation
+API Documentation (OpenApi)
+Made with Material for MkDocs
+
+Tutorial on using the Open Food Facts API#
+Welcome to this tutorial on basic usage of Open Food Facts API.
+
+First, be sure to see our Introduction to the API.
+
+Scan A Product To Get Nutri-score#
+This basic tutorial shows you can get the Nutri-score of a product, for instance, to display it in a mobile app after scanning the product barcode. Let's use Nutella Ferrero as the product example for this tutorial.
+
+To get a product nutriscore, send a request to the Get A Product By Barcode endpoint.
+
+Authentication#
+Usually, no authentication is required to query Get A Product Nutri-score. However, there is a basic auth to avoid content indexation in the staging environment(which is used throughout this tutorial). For more details, visit the Open Food Facts API Environment.
+
+Describing the Get Request#
+Make a GET request to the Get A Product By Barcode endpoint.
+
+https://world.openfoodfacts.net/api/v2/product/{barcode}
+The {barcode} is the barcode number of the product you are trying to get. The barcode for Nutella Ferrero is 3017624010701. Then the request path to get product data for Nutella Ferrero will look like this:
+
+https://world.openfoodfacts.net/api/v2/product/3017624010701
+The response returns every data about Nutella Ferrero on the database. To get the nutriscore, we need to limit the response by specifying the nutriscore field, which is the nutrition_grades and product_name.
+
+Query Parameters#
+To limit the response of the Get A Product By Barcode response, use query parameters to specify the product fields to be returned. In this example, you need one query parameter called field with the value product_name,nutrition_grades.
+
+The request path will now look like this:
+
+https://world.openfoodfacts.net/api/v2/product/3017624010701?fields=product_name,nutriscore_data
+Nutri-Score Response#
+The response returned contains an object of the code, product, status_verbose, and status. The product object contains the fields specified in the query: the product_name and the nutrition_grades. The status also states if the product was found or not.
+
+{
+    "code": "3017624010701",
+    "product": {
+        "nutrition_grades": "e",
+        "product_name": "Nutella"
+    },
+    "status": 1,
+    "status_verbose": "product found"
+}
+Nutri-Score Computation#
+If you would like to be able to show how the score is computed, add some extra fields like nutriscore_data and nutriments.
+
+The request path to get the Nutri-Score computation for Nutella-Ferroro will be :
+
+https://world.openfoodfacts.net/api/v2/product/3017624010701?fields=product_name,nutriscore_data,nutriments,nutrition_grades
+The product object in the response now contains the extra fields to show how the nutriscore was computed.
+
+{
+    "code": "3017624010701",
+    "product": {
+        "nutriments": {
+            "carbohydrates": 57.5,
+            "carbohydrates_100g": 57.5,
+            "carbohydrates_unit": "g",
+            "carbohydrates_value": 57.5,
+            "energy": 2255,
+            "energy-kcal": 539,
+            "energy-kcal_100g": 539,
+            "energy-kcal_unit": "kcal",
+            ...,
+            ...,
+            "sugars": 56.3,
+            "sugars_100g": 56.3,
+            "sugars_unit": "g",
+            "sugars_value": 56.3
+        },
+        "nutriscore_data": {
+            "energy": 2255,
+            "energy_points": 6,
+            "energy_value": 2255,
+            ...,
+            ...,
+            "sugars_points": 10,
+            "sugars_value": 56.3
+        },
+        "nutrition_grades": "e",
+        "product_name": "Nutella"
+    },
+    "status": 1,
+    "status_verbose": "product found"
+}
+For more details, see the reference documentation for Get A Product By Barcode.
+
+Completing products to get the Nutri-Score#
+Products without a Nutri-Score#
+When these fields are missing in a nutriscore computation response, it signifies that the product does not have a Nutri-Score computation due to some missing nutrition data. Let's look at the 100% Real Orange Juice. If the product nutrition data is missing some fields, you can volunteer and contribute to it by getting the missing tags and writing to the OFF API to add them.
+
+To know the missing tags, check the misc-tags field from the product response.
+
+https://world.openfoodfacts.net/api/v2/product/0180411000803/100-real-orange-juice?fields=misc_tags
+
+The response shows the missing fields and category needed to compute the Nutri-Score.
+
+{
+    "code": "0180411000803",
+    "product": {
+        "misc_tags": [
+            "en:nutriscore-not-computed",
+            "en:nutriscore-missing-category",
+            "en:nutrition-not-enough-data-to-compute-nutrition-score",
+            "en:nutriscore-missing-nutrition-data",
+            "en:nutriscore-missing-nutrition-data-sodium",
+            "en:ecoscore-extended-data-not-computed",
+            "en:ecoscore-not-computed",
+            "en:main-countries-new-product"
+        ]
+    },
+    "status": 1,
+    "status_verbose": "product found"
+}
+The sample response above for 100% Real Orange Juice misc_tags shows that the Nutri-Score is missing category (en:nutriscore-missing-category) and sodium(salt) (en:nutriscore-missing-nutrition-data-sodium). Now you can write to the OFF API to provide these nutriment data (if you have them) so that the Nutri-Score can be computed.
+
+Write data to make Nutri-Score computation possible#
+The WRITE operations in the OFF API require authentication. Therefore you need a valid user_id and password to write the missing nutriment data to 100% Real Orange Juice.
+
+Sign up on the Open Food Facts App to get youruser_id and password if you don't have one.
+
+To write data to a product, make a POST request to the Add or Edit A Product endpoint.
+
+https://world.openfoodfacts.net/cgi/product_jqm2.pl
+Add your valid user_id and password as body parameters to your request for authentication. The code (barcode of the product to be added/edited), user_id, and password are required when adding or editing a product. Then, include other product data to be added in the request body.
+
+To write sodium and category to 100% Real Orange Juice so that the Nutri-Score can be computed, the request body should contain these fields :
+
+Key	Value	Description
+user_id	***	A valid user_id
+password	***	A valid password
+code	0180411000803	The barcode of the product to be added/edited
+nutriment_sodium	0.015	Amount of sodium
+nutriment_sodium_unit	g	Unit of sodium relative to the amount
+categories	Orange Juice	Category of the Product
+Using curl:
+
+curl -XPOST -x POST https://world.openfoodfacts.net/cgi/product_jqm2.pl \
+  -F user_id=your_user_id -F password=your_password \
+  -F code=0180411000803 -F nutriment_sodium=0.015 -F nutriment_sodium_unit=g -F categories="Orange Juice"
+If the request is successful, it returns a response that indicates that the fields have been saved.
+
+{
+    "status_verbose": "fields saved",
+    "status": 1
+}
+Read newly computed Nutri-Score#
+Now, let's check if the Nutri-Score for 100% Real Orange Juice has been computed now that we have provided the missing data. Make a GET request to https://world.openfoodfacts.net/api/v2/product/0180411000803?fields=product_name,nutriscore_data,nutriments,nutrition_grades for Nutri-Score of 100% Real Orange Juice. The response now contains the Nutri-Score computation:
+
+{
+    "code": "0180411000803",
+    "product": {
+        "nutriments": {
+            "carbohydrates": 11.864406779661,
+            .
+            .
+            .
+            "sugars_unit": "g",
+            "sugars_value": 11.864406779661
+        },
+        "nutriscore_data": {
+            "energy": 195,
+            "energy_points": 7,
+            "energy_value": 195,
+            .
+            .
+            .
+            "sugars_value": 11.86
+        },
+        "nutrition_grades": "c",
+        "product_name": "100% Real Orange Juice"
+    },
+    "status": 1,
+    "status_verbose": "product found"
+}
+For more details, see the reference documentation for Add or Edit A Product
+
+You can also check the reference cheatsheet to know how to add/edit other types of product data.
+
+Search for a Product by Nutri-score#
+Using the Open Food Facts API, you can filter products based on different criteria. To search for products in the Orange Juice category with a nutrition_grade of c, query the Search for Products endpoint.
+
+Note: we describe here the v2 search API, but beware that only v1 search API supports full text search.
+
+Describing the Search Request#
+Make a GET request to the Search for Products endpoint.
+
+https://world.openfoodfacts.org/api/v2/search
+Add the search criteria used to filter the products as query parameters. For Orange Juice with a nutrition_grade of c, add query parameters categories_tags_en to filter Orange Juice while nutrition_grades_tags to filter c. The response will return all the products in the database with the category Orange Juice and nutrition_grade c.
+
+https://world.openfoodfacts.net/api/v2/search?categories_tags_en=Orange Juice&nutrition_grades_tags=c
+To limit the response, add fields to the query parameters to specify the fields to be returned in each product object response. For this tutorial, limit the response to code, product_name, nutrition_grades, and categories_tags_en.
+
+https://world.openfoodfacts.net/api/v2/search?categories_tags_en=Orange Juice&nutrition_grades_tags=c&fields=code,nutrition_grades,categories_tags_en
+The response returns all products that belong to the Orange Juice category, with the nutrition_grade "c" and limits each product object response to only the specified fields. It also returns the count(total number) of products that match the search criteria.
+
+{
+    "count": 1629,
+    "page": 1,
+    "page_count": 24,
+    "page_size": 24,
+    "products": [
+        {
+            "categories_tags_en": [
+                "Plant-based foods and beverages",
+                "Beverages",
+                "Plant-based beverages",
+                "Fruit-based beverages",
+                "Juices and nectars",
+                "Fruit juices",
+                "Concentrated fruit juices",
+                "Orange juices",
+                "Concentrated orange juices"
+            ],
+            "code": "3123340008288",
+            "nutrition_grades": "c"
+        },
+        .
+        .
+        .
+        {
+            "categories_tags_en": [
+                "Plant-based foods and beverages",
+                "Beverages",
+                "Plant-based beverages",
+                "Fruit-based beverages",
+                "Juices and nectars",
+                "Fruit juices",
+                "Non-Alcoholic beverages",
+                "Orange juices",
+                "Squeezed juices",
+                "Squeezed orange juices"
+            ],
+            "code": "3608580844136",
+            "nutrition_grades": "c"
+        }
+    ],
+    "skip": 0
+}
+Sorting Search Response#
+You can proceed to also sort the search response by different fields, for example, sort by the product that was modified last or even by the product_name. Now, let's sort the products with Orange Juice and a nutrition_grade of "c" by when they were last modified. To sort the search response, add the sort_by with value last_modified_t as a query parameter to the request.
+
+https://world.openfoodfacts.net/api/v2/search?nutrition_grades_tags=c&fields=code,nutrition_grades,categories_tags_en&categories_tags_en=Orange Juice&sort_by=last_modified_t
+The date that each product was last modified is now used to order the product response.
+
+{
+    "count": 1629,
+    "page": 1,
+    "page_count": 24,
+    "page_size": 24,
+    "products": [
+        {
+            "categories_tags_en": [
+                "Plant-based foods and beverages",
+                "Beverages",
+                "Plant-based beverages",
+                "Fruit-based beverages",
+                "Juices and nectars",
+                "Fruit juices",
+                "Orange juices"
+            ],
+            "code": "3800014268048",
+            "nutrition_grades": "c"
+        },
+        '
+        '
+        '
+        {
+            "categories_tags_en": [
+                "Plant-based foods and beverages",
+                "Beverages",
+                "Plant-based beverages",
+                "Fruit-based beverages",
+                "Juices and nectars",
+                "Fruit juices",
+                "Orange juices",
+                "Squeezed juices",
+                "Squeezed orange juices"
+            ],
+            "code": "4056489641018",
+            "nutrition_grades": "c"
+        }
+    ],
+    "skip": 0
+}
+To see other examples of sorting a search response, see the reference documentation for Search for Products.
+
+Made with Material for MkDocs
