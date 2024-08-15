@@ -1,0 +1,103 @@
+URL Shortening API Reference
+Introduction
+We provide an API (Application Programming Interface) so that other applications can harness our URL shortening service. You can access this by submitting an HTTPS GET or POST request with appropriate parameters (in layman's terms, by accessing a web page). You can choose from several different formats to get our response including simple text, XML and JSON.
+
+Please pay particular attention to the section on API restrictions and limitations when deciding if is.gd is suitable for your application. Our API is primarily intended for low volume applications or applications that run on the machine of an end user (including browser plugins etc.) Our per IP rate limits may make it unsuitable for some server apps that would make very heavy usage of our API and resources.
+
+All of our examples below assume the use of HTTPS GET. For POST the same parameter names are used and they have exactly the same functions, but they must be correctly URL encoded in the body of the request instead of in the URL which is beyond the scope of this document.
+
+Accessing the API
+Our URL shortening API is accessed at https://is.gd/create.php. You add parameters to this URL depending on the options and functionality you want to use.
+
+A basic example that shortens the link www.example.com and returns the shortened URL in plain text format is https://is.gd/create.php?format=simple&url=www.example.com.
+
+A more complex example showing all the possible parameters that can be specified is https://is.gd/create.php?format=json&callback=myfunction&url=www.example.com&shorturl=example&logstats=1.
+
+Parameters
+format (optional)
+The format parameter determines what format is.gd uses to send output back to you (e.g. to tell you what your new shortened URL is or if an error has occurred). Possible values are: -
+
+web (default) - returns the full is.gd URL creation webpage. This mode is mainly for typical users rather than for API access, but can be handy for debugging.
+simple - returns results in a simple plain text format. For many applications this is easiest to process.
+xml - returns results as an XML document.
+json - returns results in JavaScript Object Notation.
+url (required)
+The url parameter is the address that you want to shorten. You must URL encode this parameter before submitting it otherwise your application will not properly support URLs containing symbols such as hash, semicolon, plus and ampersand (among others).
+
+A useful URL to test your app with is https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=louth&sll=53.800651,-4.064941&sspn=33.219383,38.803711&ie=UTF8&hq=&hnear=Louth,+United+Kingdom&ll=53.370272,-0.004034&spn=0.064883,0.075788&z=14. If you try shortening this and your app doesn't correctly URL encode this parameter, the URL will be truncated at the first ampersand.
+
+A lot of languages have a built in function for URL encoding such as encodeURIComponent() in Javascript, urllib.quote() in Python and urlencode() in PHP.
+
+shorturl (optional)
+You can specify the shorturl parameter if you'd like to pick a shortened URL instead of having is.gd randomly generate one. These must be between 5 and 30 characters long and can only contain alphanumeric characters and underscores. Shortened URLs are case sensitive. Bear in mind that a desired short URL might already be taken (this is very often the case with common words) so if you're using this option be prepared to respond to an error and get an alternative choice from your app's user.
+
+callback (optional, only used with format=json)
+The callback parameter is used to specify a callback function to wrap the returned data in when using JSON format. This can be useful when working with cross domain data. Even when using JSON format this parameter is optional.
+
+logstats (optional)
+Adding the parameter logstats=1 turns on logging of detailed statistics when the shortened URL you create is accessed. This allows you to see how many times the link was accessed on a given day, what pages referred people to the link, what browser visitors were using etc. You can access these stats via the link preview page for your shortened URL (add a hyphen/dash to the end of the shortened URL to get to it). Creating links with statistics turned on has twice the "cost" towards our rate limit of other shortened links, so leave this parameter out of your API call if you don't require statistics on usage. See our usage limits page for more information on this.
+
+Examples of responses in different formats
+Here are examples of a success response and error response in the various supported formats so you can see what your application will need to parse.
+
+web
+This format returns the entire standard is.gd URL creation webpage in XHTML format as if you had shortened the URL via the main box on our homepage. It includes a box to shorten another URL just like the standard creation page. Because it's the full webpage example output is too long to include here, but error text etc. will be self explanatory anyway using this format. The HTTP status code of the response is always 200 regardless of whether or not there is an error (any error is described on the webpage).
+
+simple - success
+A successful URL creation will give a single line of output in plain text giving the new shortened URL. This will be similar to: -
+
+https://is.gd/R709K6
+The HTTP status code of the response will be 200.
+
+simple - error
+For any error the body of the response will contain a single line of plain text which will always start with "Error: " followed by a description of the actual error that has occurred. An example would be: -
+
+Error: Please specify a URL to shorten.
+The HTTP status code of the response varies depending on the class of error that occurred (see section on error codes): -
+
+400 Bad Request - error code 1
+406 Not Acceptable - error code 2
+502 Bad Gateway - error code 3
+503 Service Unavailable - error code 4
+xml - success
+A successful URL creation will return an XML document in the following format where the new URL is given between "shorturl" tags: -
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><output><shorturl>https://is.gd/R709K6</shorturl></output>
+xml - error
+For any error the XML response will contain the error code between "errorcode" tags and an appropriate message describing the error between "errormessage" tags.
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><output><errorcode>1</errorcode><errormessage>Please specify a URL to shorten.</errormessage></output>
+json - success
+A successful URL creation will return a JSON document similar to the following: -
+
+{ "shorturl": "https://is.gd/R709K6" }
+If you specified the callback parameter this output will be wrapped in a function, e.g. if the callback was set to "myfunc" the response would be: -
+
+myfunc({ "shorturl": "https://is.gd/R709K6" });
+json - error
+For any error the JSON response will contain the error code and an appropriate error message. It will be similar to the following: -
+
+{ "errorcode": 1, "errormessage": "Please specify a URL to shorten." }
+Or if the callback parameter was set to "myfunc" as above, the response would be: -
+
+myfunc({ "errorcode": 1, "errormessage": "Please specify a URL to shorten." });
+Interpreting error codes
+As you'll have seen from the examples above, is.gd returns different error codes for different classes of error that might occur. This is useful for improving the user friendliness of certain applications e.g. if you know the problem is with the custom short URL the user picked you could automatically highlight it or show the error message that was returned next to that field in your app. The meanings of these error codes are: -
+
+Error code 1 - there was a problem with the original long URL provided
+Error code 2 - there was a problem with the short URL provided (for custom short URLs)
+Error code 3 - our rate limit was exceeded (your app should wait before trying again)
+Error code 4 - any other error (includes potential problems with our service such as a maintenance period)
+Regardless of the format used you always get an error message giving a more specific description of the problem in addition to these codes.
+
+API restrictions/limitations
+Our API is subject to the same terms and conditions as any other usage of is.gd. We don't expect authors to take responsibility for the actions of end-users of their apps, but an application shouldn't appear to endorse or be solely designed to do something that's against our terms.
+
+API users should open a maximum of 5 connections to is.gd at any one time.
+
+Access to our API is rate limited to make sure usage doesn't exceed levels that we consider reasonable. Please see our usage limits page to check the current limits. If your application is exceeding our rate limit and receives an error code 3 response (or an HTTP status code of 502 which is the equivalent when using simple format) it should wait a reasonable period such as 1 minute before making any further requests. Machines that continue to hammer us with requests regardless risk being banned.
+
+API best practices
+Our shortened URLs are permanent so you should cache responses we give you whenever possible and not submit the same one for shortening multiple times. You are likely to hit our rate limit otherwise.
+Avoid making is.gd API calls on every load of your webpage. This will make your page load slower and waste bandwidth (yours and ours). Instead tie shortening URLs to a specific user action (such as clicking a button).
+Terms & Conditions | Privacy Policy | Spam Policy | Report Abuse

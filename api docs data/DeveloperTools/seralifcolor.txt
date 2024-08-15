@@ -1,0 +1,427 @@
+Serialif Color API 1.0.0
+Request
+Colors
+Data
+Response
+Serialif
+Stop color change
+What's this?
+This is an REST API to get a requested color, its complementary and its grayscale in different formats and the black or white text corresponding to each color according to its brightness.
+Color formats
+Keyword
+HEX
+RGB / RGBA
+HSL / HSLA
+Request
+You can use Keyword, HEX(3,4,6 or 8 characters), RGB or RGBA and HSL or HSLA formats to send your color.
+Type	Example value	Note	Possible requests
+Keyword	aquamarine		https://color.serialif.com/aquamarine
+https://color.serialif.com/keyword=aquamarine
+HEX	#55667788	without #	https://color.serialif.com/55667788
+https://color.serialif.com/hex=55667788
+RGB	rgb(85, 102, 119)	without rgb, ( ), or spaces	https://color.serialif.com/85,102,119
+https://color.serialif.com/rgb=85,102,119
+RGBA	rgba(85, 102, 119, 0.53)	without rgba, ( ), or spaces	https://color.serialif.com/85,102,119,0.53
+https://color.serialif.com/rgb=85,102,119,0.53
+https://color.serialif.com/rgba=85,102,119,0.53
+HSL	hsl(85, 102, 119)	without hsl, ( ), or spaces	https://color.serialif.com/hsl=85,102,119
+HSLA	hsla(85, 102, 119, 0.53)	without hsla, ( ), or spaces	https://color.serialif.com/hsl=85,102,119,0.53
+https://color.serialif.com/hsla=85,102,119,0.53
+Returned colors
+Base (requested)
+Base (requested) without alpha
+Contrasted text
+Complementary
+Complementary without alpha
+Contrasted text
+Grayscale
+Grayscale without alpha
+Contrasted text
+Returned colors in JSON
+{
+    "base": {...},
+    "base_without_alpha": {...},
+    "base_without_alpha_contrasted_text": {...},
+    "complementary": {...},
+    "complementary_without_alpha": {...},
+    "complementary_without_alpha_contrasted_text": {...},
+    "grayscale": {...},
+    "grayscale_without_alpha": {...},
+    "grayscale_without_alpha_contrasted_text": {...}
+}
+Data for each color in JSON
+{
+    "keyword": "aquamarine",
+    "hex": {
+        "value": "#7fffd4",
+        "composition": {
+        "red": "7f",
+        "green": "ff",
+        "blue": "d4"
+        }
+    },
+    "rgb": {
+        "value": "rgb(127, 255, 212)",
+        "composition": {
+        "red": 127,
+        "green": 255,
+        "blue": 212
+        }
+    },
+    "hsl": {
+        "value": "hsl(160, 100%, 75%)",
+        "composition": {
+        "hue": 160,
+        "saturation": 100,
+        "lightness": 75
+        }
+    },
+    "hsl_raw": {
+        "value": "hsl(159.84375, 100%, 74.90196%)",
+        "composition": {
+        "hue": 159.84375,
+        "saturation": 100,
+        "lightness": 74.90196
+        }
+    }
+}
+Example error API response
+{
+    "status": "error",
+    "error": {
+        "type": "wrong color format",
+        "value": "yellou",
+        "message": "not a valid KEYWORD color"
+    }
+}
+Example success API response
+{
+    "status": "success",
+    "base": {
+        "keyword": "",
+        "hex": {
+            "value": "#f6e213ec",
+            "composition": {
+                "red": "f6",
+                "green": "e2",
+                "blue": "13",
+                "alpha": "ec"
+            }
+        },
+        "rgba": {
+            "value": "rgba(246, 226, 19, 0.93)",
+            "composition": {
+                "red": 246,
+                "green": 226,
+                "blue": 19,
+                "alpha": 0.92549
+            }
+        },
+        "hsla": {
+            "value": "hsla(55, 93%, 52%, 0.93)",
+            "composition": {
+                "hue": 55,
+                "saturation": 93,
+                "lightness": 52,
+                "alpha": 0.92549
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(54.71366, 92.65306%, 51.96078%, 0.93)",
+            "composition": {
+                "hue": 54.71366,
+                "saturation": 92.65306,
+                "lightness": 51.96078,
+                "alpha": 0.92549
+            }
+        }
+    },
+    "base_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#f6e213",
+            "composition": {
+                "red": "f6",
+                "green": "e2",
+                "blue": "13"
+            }
+        },
+        "rgb": {
+            "value": "rgb(246, 226, 19)",
+            "composition": {
+                "red": 246,
+                "green": 226,
+                "blue": 19
+            }
+        },
+        "hsl": {
+            "value": "hsl(55, 93%, 52%)",
+            "composition": {
+                "hue": 55,
+                "saturation": 93,
+                "lightness": 52
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(54.71366, 92.65306%, 51.96078%)",
+            "composition": {
+                "hue": 54.71366,
+                "saturation": 92.65306,
+                "lightness": 51.96078
+            }
+        }
+    },
+    "base_without_alpha_contrasted_text": {
+        "keyword": "black",
+        "hex": {
+            "value": "#000000",
+            "composition": {
+                "red": "00",
+                "green": "00",
+                "blue": "00"
+            }
+        },
+        "rgb": {
+            "value": "rgb(0, 0, 0)",
+            "composition": {
+                "red": 0,
+                "green": 0,
+                "blue": 0
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        }
+    },
+    "complementary": {
+        "keyword": "",
+        "hex": {
+            "value": "#091decec",
+            "composition": {
+                "red": "09",
+                "green": "1d",
+                "blue": "ec",
+                "alpha": "ec"
+            }
+        },
+        "rgba": {
+            "value": "rgba(9, 29, 236, 0.93)",
+            "composition": {
+                "red": 9,
+                "green": 29,
+                "blue": 236,
+                "alpha": 0.92549
+            }
+        },
+        "hsla": {
+            "value": "hsla(235, 93%, 48%, 0.93)",
+            "composition": {
+                "hue": 235,
+                "saturation": 93,
+                "lightness": 48,
+                "alpha": 0.92549
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(234.71366, 92.65306%, 48.03922%, 0.93)",
+            "composition": {
+                "hue": 234.71366,
+                "saturation": 92.65306,
+                "lightness": 48.03922,
+                "alpha": 0.92549
+            }
+        }
+    },
+    "complementary_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#091dec",
+            "composition": {
+                "red": "09",
+                "green": "1d",
+                "blue": "ec"
+            }
+        },
+        "rgb": {
+            "value": "rgb(9, 29, 236)",
+            "composition": {
+                "red": 9,
+                "green": 29,
+                "blue": 236
+            }
+        },
+        "hsl": {
+            "value": "hsl(235, 93%, 48%)",
+            "composition": {
+                "hue": 235,
+                "saturation": 93,
+                "lightness": 48
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(234.71366, 92.65306%, 48.03922%)",
+            "composition": {
+                "hue": 234.71366,
+                "saturation": 92.65306,
+                "lightness": 48.03922
+            }
+        }
+    },
+    "complementary_without_alpha_contrasted_text": {
+        "keyword": "white",
+        "hex": {
+            "value": "#ffffff",
+            "composition": {
+                "red": "ff",
+                "green": "ff",
+                "blue": "ff"
+            }
+        },
+        "rgb": {
+            "value": "rgb(255, 255, 255)",
+            "composition": {
+                "red": 255,
+                "green": 255,
+                "blue": 255
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 100%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 100
+            }
+        }
+    },
+    "grayscale": {
+        "keyword": "",
+        "hex": {
+            "value": "#848484ec",
+            "composition": {
+                "red": "84",
+                "green": "84",
+                "blue": "84",
+                "alpha": "ec"
+            }
+        },
+        "rgba": {
+            "value": "rgba(132, 132, 132, 0.93)",
+            "composition": {
+                "red": 132,
+                "green": 132,
+                "blue": 132,
+                "alpha": 0.92549
+            }
+        },
+        "hsla": {
+            "value": "hsla(55, 0%, 52%, 0.93)",
+            "composition": {
+                "hue": 55,
+                "saturation": 0,
+                "lightness": 52,
+                "alpha": 0.92549
+            }
+        },
+        "hsla_raw": {
+            "value": "hsla(54.71366, 0%, 51.96078%, 0.93)",
+            "composition": {
+                "hue": 54.71366,
+                "saturation": 0,
+                "lightness": 51.96078,
+                "alpha": 0.92549
+            }
+        }
+    },
+    "grayscale_without_alpha": {
+        "keyword": "",
+        "hex": {
+            "value": "#848484",
+            "composition": {
+                "red": "84",
+                "green": "84",
+                "blue": "84"
+            }
+        },
+        "rgb": {
+            "value": "rgb(132, 132, 132)",
+            "composition": {
+                "red": 132,
+                "green": 132,
+                "blue": 132
+            }
+        },
+        "hsl": {
+            "value": "hsl(55, 0%, 52%)",
+            "composition": {
+                "hue": 55,
+                "saturation": 0,
+                "lightness": 52
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(54.71366, 0%, 51.96078%)",
+            "composition": {
+                "hue": 54.71366,
+                "saturation": 0,
+                "lightness": 51.96078
+            }
+        }
+    },
+    "grayscale_without_alpha_contrasted_text": {
+        "keyword": "black",
+        "hex": {
+            "value": "#000000",
+            "composition": {
+                "red": "00",
+                "green": "00",
+                "blue": "00"
+            }
+        },
+        "rgb": {
+            "value": "rgb(0, 0, 0)",
+            "composition": {
+                "red": 0,
+                "green": 0,
+                "blue": 0
+            }
+        },
+        "hsl": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        },
+        "hsl_raw": {
+            "value": "hsl(0, 0%, 0%)",
+            "composition": {
+                "hue": 0,
+                "saturation": 0,
+                "lightness": 0
+            }
+        }
+    }
+}

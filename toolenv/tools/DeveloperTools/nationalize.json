@@ -1,0 +1,116 @@
+{
+  "tool_name": "nationalize",
+  "tool_description": "A simple API that estimates the nationality of a person based on a last name.",
+  "title": "Nationalize API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 85,
+    "avgLatency": 700,
+    "avgSuccessRate": 95,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://nationalize.io",
+  "host": "api.nationalize.io",
+  "api_list": [
+    {
+      "name": "predict_single_name",
+      "url": "https://api.nationalize.io/",
+      "description": "Predict the nationality of a single name.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "description": "The name to predict the nationality for.",
+          "default": "johnson"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.nationalize.io/\"\nquerystring = {\"name\": name}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "count": 718863,
+        "name": "johnson",
+        "country": [
+          {
+            "country_id": "US",
+            "probability": 0.114
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "country": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "predict_multiple_names",
+      "url": "https://api.nationalize.io/",
+      "description": "Predict the nationality of multiple names.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "name[]",
+          "type": "ARRAY",
+          "description": "The list of names to predict the nationality for.",
+          "default": ["johnson", "bakshi"]
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://api.nationalize.io/\"\nquerystring = {\"name[]\": names}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": [
+        {
+          "count": 718863,
+          "name": "johnson",
+          "country": [
+            {
+              "country_id": "US",
+              "probability": 0.114
+            }
+          ]
+        },
+        {
+          "count": 11506,
+          "name": "bakshi",
+          "country": [
+            {
+              "country_id": "IN",
+              "probability": 0.353
+            }
+          ]
+        }
+      ],
+      "headers": {},
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "country": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

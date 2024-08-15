@@ -1,0 +1,113 @@
+{
+  "tool_name": "isgd",
+  "tool_description": "A simple and fast URL shortening service.",
+  "title": "is.gd URL Shortener",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 200,
+    "avgSuccessRate": 95,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://is.gd/",
+  "host": "is.gd",
+  "api_list": [
+    {
+      "name": "create",
+      "url": "https://is.gd/create.php",
+      "description": "Shortens a given URL and returns the shortened version in the specified format.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "url",
+          "type": "STRING",
+          "description": "The original URL you want to shorten.",
+          "default": "https://www.example.com"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "ENUM",
+          "description": "The format in which the response will be returned. Options include 'web', 'simple', 'xml', 'json'.",
+          "default": "simple"
+        },
+        {
+          "name": "shorturl",
+          "type": "STRING",
+          "description": "Optional custom shortened URL (if available).",
+          "default": ""
+        },
+        {
+          "name": "logstats",
+          "type": "BOOLEAN",
+          "description": "Whether to log statistics for the shortened URL.",
+          "default": "false"
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://is.gd/create.php\"\nquerystring = {'url': url, 'format': format, 'shorturl': shorturl, 'logstats': logstats}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "shorturl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "logstats",
+      "url": "https://is.gd/stats.php",
+      "description": "Retrieves detailed statistics for a shortened URL if logging is enabled.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "shorturl",
+          "type": "STRING",
+          "description": "The shortened URL for which you want to retrieve statistics.",
+          "default": "https://is.gd/example"
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://is.gd/stats.php?url={shorturl}&format=json\"\n\nresponse = requests.get(url)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": "",
+      "headers": "",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "clicks": {
+                "type": "integer"
+              },
+              "referrers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "browsers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "platforms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

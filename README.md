@@ -76,14 +76,14 @@ Please update as you add and intergrate diffrent apis
 | Developer Tools  | Image-Charts                     | 0         | :x:        | TBD      |
 | Developer Tools  | IP2Location                      | 2         | :x:        | TBD      |
 | Developer Tools  | IPify                            | 2         | :x:        | TBD      |
-| Developer Tools  | is.gd                            | 0         | :x:        | TBD      |
-| Developer Tools  | Microlink                        | 0         | :x:        | TBD      |
-| Developer Tools  | Nationalize.io                   | 0         | :x:        | TBD      |
+| Developer Tools  | is.gd                            | 2         | :x:        | TBD      |
+| Developer Tools  | Microlink                        | 2         | :x:        | TBD      |
+| Developer Tools  | Nationalize.io                   | 2         | :x:        | TBD      |
 | Developer Tools  | QuickChart                       | 0         | :x:        | TBD      |
-| Developer Tools  | Serialif Color                   | 0         | :x:        | TBD      |
+| Developer Tools  | Serialif Color                   | 2         | :x:        | TBD      |
 | Developer Tools  | Sixdots                          | 0         | :x:        | TBD      |
-| Developer Tools  | Un-Shorten                       | 0         | :x:        | TBD      |
-| Developer Tools  | URLhaus                          | 0         | :x:        | TBD      |
+| Developer Tools  | Un-Shorten                       | 2         | :x:        | TBD      |
+| Developer Tools  | URLhaus                          | 2         | :x:        | TBD      |
 | Food & Drink     | Cocktail Database                | 0         | :x:        | TBD      |
 | Food & Drink     | Open Brewery DB                  | 0         | :x:        | TBD      |
 | Food & Drink     | Open Food Facts                  | 0         | :x:        | TBD      |

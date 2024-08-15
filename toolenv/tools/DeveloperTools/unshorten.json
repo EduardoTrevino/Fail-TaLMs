@@ -1,0 +1,59 @@
+{
+  "tool_name": "unshorten",
+  "tool_description": "API to unshorten a wide range of shortened URLs.",
+  "title": "Unshorten API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 500,
+    "avgSuccessRate": 95,
+    "popularityScore": 8.7,
+    "__typename": "Score"
+  },
+  "home_url": "https://unshorten.me/",
+  "host": "unshorten.me",
+  "api_list": [
+    {
+      "name": "unshorten",
+      "url": "https://unshorten.me/api/v2/unshorten",
+      "description": "Unshorten a shortened URL to retrieve the original URL.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "url",
+          "type": "STRING",
+          "description": "The shortened URL to be unshortened.",
+          "default": "https://bit.ly/3DKWm5t"
+        }
+      ],
+      "optional_parameters": [],
+      "headers": {
+        "Authorization": {
+          "type": "STRING",
+          "description": "Token for API authentication. Format: 'Token {your_token}'"
+        }
+      },
+      "code": "import requests\n\nurl = \"https://unshorten.me/api/v2/unshorten?url={shortened_url}\"\nheaders = {\"Authorization\": \"Token {token}\"}\n\nresponse = requests.get(url, headers=headers)\n\nprint(response.json())\n",
+      "statuscode": 200,
+      "body": {
+        "unshortened_url": "str",
+        "shortened_url": "str",
+        "success": "bool"
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "unshortened_url": {
+            "type": "string"
+          },
+          "shortened_url": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  ]
+}

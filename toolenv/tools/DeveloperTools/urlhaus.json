@@ -1,0 +1,97 @@
+{
+  "tool_name": "urlhaus",
+  "tool_description": "API to gather information on specific URLs, file hashes, or tags related to malware from URLhaus.",
+  "title": "urlhaus",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 250,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://urlhaus-api.abuse.ch/",
+  "host": "urlhaus-api.abuse.ch",
+  "api_list": [
+    {
+      "name": "recent_urls",
+      "url": "https://urlhaus-api.abuse.ch/v1/urls/recent/",
+      "description": "Retrieve a list of recent URLs (malware URLs) added to URLhaus within the past 3 days.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Limit the number of results returned (max 1000).",
+          "default": ""
+        }
+      ],
+      "code": "import requests\n\nurl = \"https://urlhaus-api.abuse.ch/v1/urls/recent/\"\nif limit:\n    url = f\"https://urlhaus-api.abuse.ch/v1/urls/recent/limit/{limit}/\"\nresponse = requests.get(url)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query_status": { "type": "string" },
+          "urls": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "host_info",
+      "url": "https://urlhaus-api.abuse.ch/v1/host/",
+      "description": "Retrieve information about a specific host (IP address, hostname, or domain name) related to malware activity.",
+      "method": "POST",
+      "required_parameters": [
+        {
+          "name": "host",
+          "type": "STRING",
+          "description": "The host (IPv4 address, hostname, or domain name) to query.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://urlhaus-api.abuse.ch/v1/host/\"\npayload = {\"host\": host}\nresponse = requests.post(url, data=payload)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query_status": { "type": "string" },
+          "urlhaus_reference": { "type": "string" },
+          "host": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "payload_info",
+      "url": "https://urlhaus-api.abuse.ch/v1/payload/",
+      "description": "Retrieve information about a specific payload (malware sample) based on its SHA256 hash.",
+      "method": "POST",
+      "required_parameters": [
+        {
+          "name": "sha256_hash",
+          "type": "STRING",
+          "description": "The SHA256 hash of the payload (malware sample) to query.",
+          "default": ""
+        }
+      ],
+      "optional_parameters": [],
+      "code": "import requests\n\nurl = \"https://urlhaus-api.abuse.ch/v1/payload/\"\npayload = {\"sha256_hash\": sha256_hash}\nresponse = requests.post(url, data=payload)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {},
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "query_status": { "type": "string" },
+          "md5_hash": { "type": "string" },
+          "sha256_hash": { "type": "string" }
+        }
+      }
+    }
+  ]
+}

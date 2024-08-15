@@ -1,0 +1,535 @@
+Overview
+Microlink API provides a powerful API for automating any browser action.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+
+You can hit the API directly from your browser or any environment that allows you to perform a simple HTTP GET request.
+The Microlink CLI is helpful to explore the API under local development.
+Giving a url as input, you get structured data as output.
+{
+  "status": "success",
+  "data": {
+    "title": "microlink.io",
+    "description": "Turn websites into data. microlink.io has 34 repositories available. Follow their code on GitHub.",
+    "lang": "en",
+    "author": null,
+    "publisher": "GitHub",
+    "image": {
+      "url": "https://avatars0.githubusercontent.com/u/29799436?s=280&v=4",
+      "type": "png",
+      "size": 4118,
+      "height": 280,
+      "width": 280,
+      "size_pretty": "4.12 kB"
+    },
+    "date": "2020-09-22T09:33:36.000Z",
+    "url": "https://github.com/microlinkhq",
+    "logo": {
+      "url": "https://logo.clearbit.com/github.com",
+      "type": "png",
+      "size": 6313,
+      "height": 128,
+      "width": 128,
+      "size_pretty": "6.31 kB"
+    }
+  }
+}
+There are some of the most common workflow you can do with Microlink API:
+Retrieve meta data from any link.
+Take a screenshot or generate a pdf of the target website.
+Get a predominant color palette per each image detected.
+Make easy embed content directly in your HTML markup.
+Identify technologies behind a target URL.
+prerender mode, useful for getting more information from websites that use client-side frameworks.
+The following documentation is going to teach you all these things and more.
+
+Data fields
+When you send a url to Microlink API, the following data fields are detected by default:
+author (e.g., 'SpaceX')
+A human-readable representation of the author's name.
+date (e.g., 2018-01-24T18:39:47.000Z)
+An ISO 8601 representation of the date the article was published.
+description (e.g., 'First static fire test of Falcon Heavy…')
+The publisher's chosen description of the article.
+image (e.g., https://cdn.instagram.com/…/171196260320789.jpg)
+An image URL that best represents the article.
+video (e.g., 'https://cdn.instagram.com/…/26867070.mp4')
+A video URL that best represents the article.
+lang (e.g., en)
+An ISO 639-1 representation of the url content language.
+logo (e.g., 'https://logo.clearbit.com/instagram.com')
+An image URL that best represents the publisher brand.
+publisher (e.g., 'Instagram')
+A human-readable representation of the publisher's name.
+title (e.g., 'Manufactures Advanced Rockets & Spacecraft')
+The publisher's chosen title of the article.
+url (e.g., 'https://instagram.com/p/BeV6tOhFUor')
+The URL of the article.
+When a data field is media content, the following contextual data will be also returned:
+width: file width in pixels.
+height: file width in pixels.
+type: file type extension.
+size: file size in bytes.
+size_pretty file size in a human readable format.
+Moreover, if the media content is playable (such as video or audio), the following fields will be added as well:
+duration: source duration in seconds.
+duration_pretty source duration in a human readable format.
+You can customize this behavior via meta and/or data in order to add specific data rules over the target URL.
+Additionally, Microlink gives you some HTTP information over the target URL, such as:
+statusCode: The HTTP status code associated with the url response.
+headers: The HTTP response headers associated with the url response.
+The service also returns a status field to represent the stage of the current transaction.
+You can read format section to know more about that.
+
+CLI
+We provide a command-line interface for interacting with Microlink API from your terminal, available as an npm package.
+npm install @microlink/cli --global
+Alternatively, if you have npx, you can just run it.
+npx install @microlink/cli --help
+After that, microlink command will be available in your system.
+microlink <url> [flags]
+
+Flags
+  --api-key      authenticate using an API key (default is `$MICROLINK_API_KEY`
+  --colors       colorize output (default is `true`
+  --copy         copy output to clipboard (default is `false`).
+  --pretty       beauty response payload (default is `true`).
+
+
+Examples
+  microlink https://microlink.io&palette
+  microlink https://microlink.io&palette --no-pretty
+  microlink https://microlink.io&palette --api-key MY_API_KEY
+
+  Cache
+Microlink API has a built-in cache layer to speed up consecutive requests over the same resource.
+The cache layer is enabled for any request under the following workflow:
+The first time a resource is requested, a cache copy will be created.
+Sucessive access over the resource will consume the cache copy.
+The cache layer is a combination of a unified cache and edge node cache. The combination provides eventual consistency.
+Unified cache
+When you query for a resource against Microlink API for the first time, the request will generate a shallow cache copy.
+That known as 'MISS' and it's reflect as x-cache-status on response headers.
+Any successive API access based on the same URL will consume the shallow copy created, reflecting a 'HIT' at x-cache-status response headers.
+Edge node cache
+Since Microlink relies on CloudFlare CDN, after the unified cache is warm, any successive API access based on the sam URL will be served from the nearest edge node over CloudFlare Network.
+That means not only response will be served from cache, also it will be served from the nearest distance relative to the request origin. That's reflected under cf-cache-status response header as 'HIT'.
+Edge nodes cache is per edge location, meaning every edge node as their own cache, causing a 'MISS' reflected at cf-cache-status response header when the access comes from a different location.
+When this happen, the edge node cache will fallback automatically into the unified cache, creating a new edge cache copy.
+Cache invalidation
+The cached request will be considered as valid until it reached the expiration time, reflected at the cache-control response header.
+There is two ways to setup the expiration:
+ttl: It sets the maximum quantity of time the value is considered valid.
+force: It invalidates the cache immediately, generating a new fresh cache copy.
+Last edited on May 30, 2024
+
+
+Compression
+The compression algorithms brotli and gzip are supported.
+If you are performing the API requests using SDK or MQL, compression will be enabled by default.
+Otherwise, ensure to specify what compression you want to use using Accept-Encoding header.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://github.com'}
+
+response = requests.get(url, params)
+
+print(response.json())
+You can check what compression algorithm has been used after the HTTP negotiation seeing content-encoding response header.
+
+Endpoint
+Microlink API is exposed from two endpoints:
+free (api.microlink.io): The endpoint to be used for unauthenticated requests. It has daily rate limit.
+pro (pro.microlink.io): The endpoint to be used for authenticated requests. It needs a previously register API key.
+All you need to do for accessing any of these endpoints it to hit them using HTTP GET method, nothing else.
+microlink https://github.io/microlinkhq&userAgent=googlebot
+Any additional API Parameter needs to be provided as query parameter.
+The endpoint accepts multiple query parameters. It doesn't matter if they are camel or snake case, both styles are supported.
+microlink https://github.io/microlinkhq&user_agent=googlebot
+Provide the same API parameter but using snake_case has the same effect.
+If you are using Microlink Query Language, the endpoint is automatically determined in case you provide an API Key.
+
+Error codes
+Microlink API considers an unexpected situation any request performed on which status is different from 'success'.
+When this happens, the response payload includes some useful information in order to determine the root cause of the problem:
+id: The unique identifier associated with the request.
+code: The error code that represents the final request state.
+message: A brief explanantion about why the error happened.
+more: A link pointing this documentation.
+report: A link for reporting the problem directly to us.
+If you are experience any of these errors are you not sure how to proceed, please feel free to reach us.
+EAUTH
+Message
+Invalid API key. Make sure you are attaching your API key as x-api-key header.
+Solution
+Ensure to authenticate your requests providing an API key attached as x-api-key.
+EBRWSRTIMEOUT
+Message
+The URL provided reached the maximum browser navigation time allowed.
+Solution
+When the target url reached the timeout associated with the request lifecycle, this error is thrown.
+In order to avoid this error, the request should be resolved before timeout.
+EFATAL
+Message
+Resolved the target URL failed. Make sure your URL is valid and it has HTML content.
+Solution
+This is the generic error used when it wasn't possible to determine the root cause of the problem.
+If you are experimenting with this error, please contact us, reporting the request id to make it possible to reproduce the original request.
+EFILENAME
+Message
+You need a PRO plan for using filename query parameter.
+Solution
+See pricing for upgrading your plan.
+EFATALCLIENT
+Message
+(no message)
+Solution
+There is a network problem trying to reach the API endpoint.
+If you are experimenting with this error, please contact us.
+EFORBIDDENURL
+Message
+The URL is being resolved into an IP address whose range is not allowed.
+Solution
+The service will only resolve URLs that point to unicast IP addresses.
+EHEADERS
+Message
+You need a PRO plan for using headers query parameters.
+Solution
+See pricing for upgrading your plan.
+EINVALURL
+Message
+The target URL is considered not valid.
+Solution
+Ensure the url provided has protocol, hostname and follows WHATWG URL standard.
+EINVALPROXY
+Message
+The proxy URL is considered not valid.
+Solution
+Ensure the url provided can be parsed as WHATWG URL.
+EINVALURLCLIENT
+Message
+The target URL is considered not valid.
+Solution
+Ensure the url provided has protocol, hostname and follows WHATWG URL standard.
+EINVALTTL
+Message
+The ttl value is invalid.
+Solution
+The ttl value should be a value between '1m' to '31d' range.
+EINVALSTTL
+Message
+The staleTtl value is invalid.
+Solution
+The staleTtl value should be a value less than the current ttl provided.
+EMAXREDIRECTS
+Message
+The target URL reached the maximum number of redirect after 10 times.
+Solution
+Ensure the url provided reaches the destination URL in less than 10 hops.
+EPRO
+Message
+The request has x-api-key header present and it has been performed against api.microlink.io endpoint.
+Solution
+In order to authenticate your requests, you need to perform them against pro.microlink.io. Check endpoint to know more.
+EPROXY
+Message
+You need a PRO plan for using proxy query parameter.
+Solution
+See pricing for upgrading your plan.
+ERATE
+Message
+Your daily rate limit has been reached. You need to wait or extend your plan.
+Solution
+You need to extend your rate limit quota or wait until you’re quota reset.
+ETIMEOUT
+Message
+The request reached maximum timeout.
+Solution
+When the target url reached the timeout associated with the request lifecycle, this error is thrown.
+In order to avoid this error, the request should be resolved before timeout.
+ETTL
+Message
+You need a PRO plan for using ttl query parameter.
+
+Format
+All the responses are served as JSON.
+The response format is based on JSend specification. That means every API response have the following fields:
+status
+Type: <string>
+The status associated with the response. The value can be:
+'success': The request was resolved successfully. Associated with Type: 2xx HTTP status code.
+'fail': The request failed. Probably a missing or wrong value for a parameter. Associated with 4xx` HTTP status code.
+'error': Uh oh. Something unexpected happened. Associated with 5xx HTTP status code.
+A simple rule here is, if the request was resolved successfully, then the 'success' status will be associated. In other case check for 'fail' or 'error'.
+data
+Type: <object>
+The API response payload.
+message
+Optional
+Type: <string>
+An human readable extra information, such as an error message or explanation.
+more
+Optional
+Type: <string>
+An additional link pointing to external resource for reading more about message.
+Last edited on May 30, 2024
+
+Rate limit
+The API quota is the number of requests you can perform during a quantity of time.
+Your API quota depends on the endpoint you are using:
+free: It's the plan applied for unauthenticated requests. It has a soft limitation of 50 reqs.
+pro: It's the plan applied for authenticated requests. It's based on the plan associated with your API Key, starting from 14,000 reqs.
+You can perform HTTP calls always you are under your the API quota limit.
+When you reach the API quota limit, you will experience HTTP 429 errors, meaning you need to wait until the API quota reset (or upgrade your plan).
+When the API quota is reset, you have a fresh start again.
+For the free endpoint, your current rate limit status is reflected as part of your response with the following headers:
+x-rate-limit-limit: The maximum number of requests that the consumer is permitted to make per minute.
+x-rate-limit-remaining: The number of requests remaining in the current rate limit window.
+x-rate-limit-reset: The time at which the current rate limit window resets in UTC epoch seconds.
+We don't apply any throttling limitation: You can perform as much parallel requests as your daily quota allowed you.
+If you are hitting the daily quota very often and you want to upgrade your plan, just contact us.
+
+adblock
+Type: <boolean>
+Default: true
+It allows/disallows third party sub-requests related to advertisements or trackers services over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://www.youtube.com', 'adblock': True}
+
+response = requests.get(url, params)
+
+print(response.json())
+These third party requests aren't essential and they generally bloat the response time.
+The adblock engine world-in-class powered by Cliqz.
+
+animations
+Type: <boolean>
+Default: false
+It enables/disables CSS animations and transitions over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://microlink.io', 'screenshot': True, 'animations': False}
+
+response = requests.get(url, params)
+
+print(response.json())
+This value also modifies prefers-reduced-motion consequently into the browser page.
+
+audio
+Type: <boolean>
+Default: false
+It enables audio source detection over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://open.spotify.com/track/1W2919zs8SBCLTrOB1ftQT', 'audio': True}
+
+response = requests.get(url, params)
+
+print(response.json())
+Some websites can be different output based on User Agent.
+The audio source URL detected will be in a browser-friendly format to be possible embedded it.
+The audio detection introduce some human readable fields as part of the payload:
+{
+  "status": "success",
+  "data": {
+    "title": "Format",
+    "description": "Format, a song by _91nova on Spotify",
+    "lang": "en",
+    "author": "_91nova",
+    "publisher": "Spotify",
+    "image": {
+      "url": "https://i.scdn.co/image/ab67616d0000b27351b9595d03c3a8fb3ffe9f1a",
+      "type": "jpg",
+      "size": 88064,
+      "height": 640,
+      "width": 640,
+      "size_pretty": "88.1 kB"
+    },
+    "audio": {
+      "url": "https://p.scdn.co/mp3-preview/f36438afe87418f2dc0b7497eb5e7e5fa89e6bf8?cid=162b7dc01f3a4a2ca32ed3cec83d1e02",
+      "type": "mp3",
+      "duration": 30.040816,
+      "size": 362861,
+      "duration_pretty": "30s",
+      "size_pretty": "363 kB"
+    },
+    "url": "https://open.spotify.com/track/1W2919zs8SBCLTrOB1ftQT",
+    "date": "2019-11-11T08:50:08.000Z",
+    "logo": {
+      "url": "https://open.scdn.co/static/images/favicon.png",
+      "type": "png",
+      "size": 11125,
+      "height": 196,
+      "width": 196,
+      "size_pretty": "11.1 kB"
+    }
+  }
+}
+You can read data fields section to know more about the data returned.
+
+click
+Type: <string> | <string[]>
+It clicks the DOM elements matching the given CSS selectors over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://microlink.io', 'screenshot': True, 'click': '#features'}
+
+response = requests.get(url, params)
+
+print(response.json())
+It can be combined with other browser interaction, such as scroll, to mutates the browser page state.
+
+colorScheme
+Type: <string>
+Default: 'no-preference'
+Sets prefers-color-scheme CSS media feature, indicating user preference to use 'light' or 'dark' color theme over the target url.
+
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://googlechromelabs.github.io/dark-mode-toggle/demo/', 'screenshot': True, 'colorScheme': 'dark'}
+
+response = requests.get(url, params)
+
+print(response.json())
+
+data
+Type: <object>
+it enables specific data extraction over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://kikobeats.com', 'data': [object Object]}
+
+response = requests.get(url, params)
+
+print(response.json())
+The data extraction need to be defined at least with a CSS selector.
+As a result, the extracted data will be part of the data payload in the response:
+{
+  "data": {
+    "avatar": {
+      "url": "https://d33wubrfki0l68.cloudfront.net/ad0e96f5e30e3c65b7ff31e5a637fea070356f0b/eaa58/images/avatar.jpg",
+      "width": 500,
+      "height": 500,
+      "type": "jpg",
+      "size": 53310,
+      "size_pretty": "53.3 kB"
+    }
+  },
+  "status": "success"
+}
+You can read Microlink Query Language section to know more about how to define data extraction.
+
+embed
+Type: <string>
+It returns the specified data field as response over the target url, mimic the same headers and body.
+
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://news.ycombinator.com/item?id=13713480', 'screenshot': True, 'embed': 'screenshot.url'}
+
+response = requests.get(url, params)
+
+print(response.json())
+You can use dot notation to reference a nested data field of the response payload.
+In this way, you can embed any data field directly as part of your HTML markup.
+<img 
+  src="https://api.microlink.io/?url=https%3A%2F%2Fnews.ycombinator.com%2Fitem%3Fid%3D13713480&meta=false&screenshot=&embed=screenshot.url" alt="Hacker News">
+In order to authenticate your requests, you should use proxy and edge-proxy to don't expose your credentials.
+Read more about that at authentication section.
+
+filenamePRO
+Type: <string>
+It defines the filename to be associated with a generated asset over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://padlet.com/padlets/mjl7vtq8a26g/exports/print', 'pdf': True, 'filename': 'solar system'}
+
+response = requests.get(url, params)
+
+print(response.json())
+This query parameter should be combine with screenshot or pdf.
+
+filter
+Type: <string>
+A comma-separated list of data fields to pick from the response payload over the target url.
+CLI
+JavaScript
+Shell
+Python
+Ruby
+import requests
+
+url = 'https://api.microlink.io'
+params = {'url': 'https://news.ycombinator.com', 'filter': 'url,title'}
+
+response = requests.get(url, params)
+
+print(response.json())
+You can use dot notation to reference a nested data field of the response payload.
+Then the data payload is going to just get these data fields.
+{
+  "status": "success",
+  "data": {
+    "url": "https://news.ycombinator.com/",
+    "title": "Hacker News"
+  }
+}
+This parameter has been designed to make API payload tiny as possible, improving response bandwidth timing.

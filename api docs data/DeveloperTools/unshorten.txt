@@ -1,0 +1,99 @@
+Un-Shorten API
+Unshorten.me API provides an easy method to unshorten a wide range of shortened URLs.
+
+Rate Limit
+The API is limited to specific requests per hour for new short URLs for different users based on their subscription. If the URL is already shortened by our service, then the result is stored in the database.If you need to send more requests, please contact us at contact @ unshorten.me.
+
+Request
+Method: GET
+URL: https://unshorten.me/api/v2/unshorten?url={short_url}
+Replace the {short_url} with your short URL.
+Headers
+Include the following header in your request:
+
+Authorization: Token {token in your profile page}
+Response
+The response will contain the unshortened URL corresponding to the provided short URL and success status.
+
+Example:
+Url: https://unshorten.me/api/v2/unshorten?url=https://bit.ly/3DKWm5t
+
+Header: Authorization: Token b74063cbdba8f2e13d0a174d8fd52873791dbfef
+
+Response:
+
+        {
+        "unshortened_url": "https://www.youtube.com/",
+        "shortened_url": "https://bit.ly/3DKWm5t",
+        "success": true
+        }
+    
+In javascript,
+        const url = "https://unshorten.me/api/v2/unshorten?url=https://bit.ly/3DKWm5t";
+        const headers = {
+        Authorization: "Token b74063cbdba8f2e13d0a174d8fd52873791dbfef"
+        };
+        fetch(url, {
+        headers: headers
+        })
+        .then(response => response.json())
+        .then(data => {
+        // Handle the response data here
+        })
+        .catch(error => {
+        // Handle any errors that occurred during the request
+        });
+    
+Using cURL,
+    curl -X GET "https://unshorten.me/api/v2/unshorten?url=https://bit.ly/3DKWm5t" -H "Authorization: Token 06b49781035a2ee93b42f07378b2385417007f34"
+    
+Using Python,
+                import requests
+                import json
+
+                url = "https://unshorten.me/api/v2/unshorten?url=https://bit.ly/3DKWm5t"
+                headers = {
+                    "Authorization": "Token 06b49781035a2ee93b42f07378b2385417007f34"
+                }
+
+                response = requests.get(url, headers=headers)
+
+                if response.status_code == 200:
+                    data = response.json()  # Convert response text to JSON
+                    print(json.dumps(data, indent=4))  # Pretty-print the JSON
+                else:
+                    print("Request failed with status code:", response.status_code)
+
+            
+Using PHP,
+                < ?php
+
+                $url = "https://unshorten.me/api/v2/unshorten?url=https://bit.ly/3DKWm5t";
+                $headers = array(
+                    "Authorization: Token 06b49781035a2ee93b42f07378b2385417007f34"
+                );
+
+                $options = array(
+                    'http' => array(
+                        'header' => implode("\r\n", $headers),
+                        'method' => 'GET'
+                        )
+                    );
+
+                $context = stream_context_create($options);
+                $response = file_get_contents($url, false, $context);
+
+                if ($response !== false) {
+                    $jsonData = json_decode($response, true);
+                    if ($jsonData) {
+                        echo json_encode($jsonData, JSON_PRETTY_PRINT);
+                    } else {
+                        echo "Failed to decode JSON response.";
+                    }
+                } else {
+                    echo "Request failed.";
+                }
+
+                ?>
+            
+© 2016 - 2024 Unshorten.mePrivacy Policy

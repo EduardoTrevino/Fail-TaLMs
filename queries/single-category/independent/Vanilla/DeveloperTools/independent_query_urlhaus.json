@@ -1,0 +1,46 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "urlhaus",
+        "api_name": "recent_urls",
+        "api_description": "Retrieve a list of recent URLs (malware URLs) added to URLhaus within the past 3 days. You can limit the number of results returned.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit the number of results returned (max 1000).",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "query_status": "str",
+          "urls": [
+            {
+              "id": "str",
+              "urlhaus_reference": "str",
+              "url": "str",
+              "url_status": "str",
+              "host": "str",
+              "date_added": "str",
+              "threat": "str",
+              "blacklists": {
+                "spamhaus_dbl": "str",
+                "surbl": "str"
+              },
+              "reporter": "str",
+              "larted": "bool",
+              "tags": ["list of str"]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you show me the most recent malware URLs added to URLhaus?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]
