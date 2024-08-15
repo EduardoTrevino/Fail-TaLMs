@@ -88,9 +88,9 @@ Please update as you add and intergrate diffrent apis
 | Food & Drink     | Open Brewery DB                  | 2         | :x:        | TBD      |
 | Food & Drink     | Open Food Facts                  | 0         | :x:        | TBD      |
 | Food & Drink     | Whisky Hunter                    | 2         | :x:        | TBD      |
-| Fun & Games      | AmiiboAPI                        | 0         | :x:        | TBD      |
-| Fun & Games      | Barter                           | 0         | :x:        | TBD      |
-| Fun & Games      | Board Game Geek                  | 0         | :x:        | TBD      |
+| Fun & Games      | AmiiboAPI                        | 2         | :x:        | TBD      |
+| Fun & Games      | Barter                           | 2         | :x:        | TBD      |
+| Fun & Games      | Board Game Geek                  | 2         | :x:        | TBD      |
 | Fun & Games      | CheapShark                       | 0         | :x:        | TBD      |
 | Fun & Games      | Chuck Norris Jokes               | 0         | :x:        | TBD      |
 | Fun & Games      | D&D 5th Edition                  | 0         | :x:        | TBD      |

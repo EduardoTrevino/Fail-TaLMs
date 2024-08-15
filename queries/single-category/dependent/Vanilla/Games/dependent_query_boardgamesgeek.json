@@ -1,0 +1,104 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "search",
+        "api_description": "Search for board games by name or keyword.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The name or keyword to search for.",
+            "default": "Gloomhaven"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "ENUM",
+            "description": "The type of item to search for (e.g., boardgame, boardgameexpansion).",
+            "default": "boardgame"
+          },
+          {
+            "name": "exact",
+            "type": "BOOLEAN",
+            "description": "Set to 1 for an exact match.",
+            "default": "0"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "id": "int",
+              "name": "str",
+              "type": "str",
+              "yearpublished": "int",
+              "minplayers": "int",
+              "maxplayers": "int",
+              "playingtime": "int",
+              "image": "str",
+              "thumbnail": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "thing",
+        "api_description": "Retrieve detailed information about a specific board game, including statistics and comments.",
+        "required_parameters": [
+          {
+            "name": "id",
+            "type": "STRING",
+            "description": "The ID of the board game to retrieve.",
+            "default": "174430"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "stats",
+            "type": "BOOLEAN",
+            "description": "Set to 1 to include game statistics (rank, rating, etc.).",
+            "default": "1"
+          },
+          {
+            "name": "comments",
+            "type": "BOOLEAN",
+            "description": "Set to 1 to include user comments.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "item": {
+            "id": "int",
+            "name": "str",
+            "description": "str",
+            "yearpublished": "int",
+            "minplayers": "int",
+            "maxplayers": "int",
+            "playingtime": "int",
+            "statistics": {
+              "rank": "int",
+              "rating": "float"
+            },
+            "comments": [
+              {
+                "username": "str",
+                "rating": "float",
+                "comment": "str"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "query": "Find detailed information about the board game Gloomhaven, including its statistics and user comments.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
