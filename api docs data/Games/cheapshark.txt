@@ -1,0 +1,102 @@
+CheapShark API
+CheapShark is a price comparison website for digital PC Games. We keep track of prices across multiple stores including Steam, GreenManGaming, Fanatical, and many others.
+
+We offer a fully documented public API for developers to use CheapShark pricing data on their own app or website.
+
+📌 Important Usage Notes
+The API is completely free, the only condition being that you use CheapShark links when sending users to deals (see details in Deals section below). This is how we pay for hosting and development! 😉
+
+While not required, it is always appreciated if you mention somewhere that your app or site is making use of the CheapShark API.
+
+🔑 Authorization & Rate Limiting
+Two of the most common questions we see are regarding API Keys and Rate Limits. The API is completely public, no authorization or API Key is needed. You can get started right away!
+
+To ensure server performance, we rate limit API calls. If you make too many requests in too short of time, you will receive a 429 HTTP response status code and be temporarily blocked. The ban will be automatically lifted after it expires. All API clients are subject to the same limits. For this reason, during development you may wish to create and use a Mock API instead (Postman offers this feature).
+
+In general the API is designed to be called directly in response to user input / queries in your application. For example, a user searching for a particular game or browsing through pages of deals. Excessive automated requests to build a cached catalog of data will run into rate limiting issues and should be avoided.
+
+The API fully supports CORS, so requests should come directly from the user's browser or app (whenever possible). This will help avoid most rate limiting issues.
+
+🙋‍♂️Help & Support
+For some real-world examples of this API in action, we suggest you check out the CheapShark website itself. Using your browser's DevTools, you can inspect how various pages and interactions use the API.
+
+If you run into any issues, need help with your implementation, or just want to share what you'll be using the API for, feel free to get in touch with us anytime!
+
+We're always happy to help on our Discord's dedicated #api-help channel or via email - admin@cheapshark.com.
+
+📢Updates
+We'll occasionally share important changes or news regarding the API via the #api-announcements channel on our Discord server. Be sure to right-click and set "Notification Settings" to "All Messages" on the channel if you'd like to stay informed!
+
+📧 Alerts
+Price alerts are a combination of email address, gameID, and price.
+
+Emails are sent when any deal for the game reaches (or drops below) the desired price.
+
+GET
+Edit Alert
+https://www.cheapshark.com/api/1.0/alerts?action=set&email=someone@example.org&gameID=59&price=14.99
+Set or deletes a price alert.
+
+When setting, returns true for valid email / gameID / price, otherwise false.
+
+When deleting, returns true for valid email / gameID, otherwise false.
+
+PARAMS
+action
+set
+
+(required, string)
+
+The action to take on the price alert (set or delete)
+
+email
+someone@example.org
+
+(required, string)
+
+Any valid email address
+
+gameID
+59
+
+(required, integer)
+
+An existing gameID
+
+price
+14.99
+
+(required, decimal)
+
+The price to wait for, only required when using set value for action parameter
+
+Example Request
+Edit Alert
+View More
+curl
+curl --location 'https://www.cheapshark.com/api/1.0/alerts?action=set&email=someone%40example.org&gameID=59&price=14.99'
+200 OK
+Example Response
+Body
+Headers (13)
+html
+true
+GET
+Manage Alerts
+https://www.cheapshark.com/api/1.0/alerts?action=manage&email=address-with-alerts@example.org
+Send an email containing a link to manage your alerts.
+
+PARAMS
+action
+manage
+
+(required, string)
+
+The action to take on the price alert
+
+email
+address-with-alerts@example.org
+
+(required, string)
+
+Any valid email address with existing alerts

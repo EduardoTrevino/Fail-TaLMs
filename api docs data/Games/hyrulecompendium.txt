@@ -1,0 +1,252 @@
+
+Hyrule Compendium API
+An API serving data on all in-game items and regions in Breath of the Wild and Tears of the Kingdom
+Concept
+The Hyrule compendium is an encyclopedia of all the in-game interactive items in the world of Hyrule. With this brilliant API, you can access its data and embed it into your own application.
+
+Here is an example request and response, retrieving data on the white-maned lynel:
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/entry/white-maned_lynel
+{
+    "data": {
+        "name": "white-maned lynel",
+        "id": 123,
+        "category": "monsters",
+        "description": "These fearsome monsters have lived in Hyrule since ancient times. Their ability to breathe fire makes White-Maned Lynels among the toughest of the species; each one of their attacks is an invitation to the grave. There are so few eyewitness accounts of this breed because a White-Maned Lynel is not one to let even simple passersby escape with their lives.",
+        "common_locations":[
+            "Hyrule Field",
+            "Hebra Mountains"
+        ]
+        "drops": [
+            "lynel horn",
+            "lynel hoof",
+            "lynel guts"
+        ],
+        "image": "https://botw-compendium.herokuapp.com/api/v3/compendium/entry/white-maned_lynel/image"
+    }
+}
+
+Compendium API
+The /compendium endpoint serves data on creatures, equipment, materials, monsters, and treasure.
+
+Get entry
+Endpoint: /compendium/entry
+
+This endpoint retrieves a specific entry given its name or ID. If you are using a name to search for an item, spaces should be replaced with an underscore or "%20" (usually done automatically when encoding the URL). The schema of the response depends on the category of the entry.
+
+HTTP Request
+
+GET https://botw-compendium.herokuapp.com/api/v3/compendium/entry/<entry>
+Example Request
+
+With name:
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/entry/moblin
+With ID:
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/entry/108
+Try endpoint
+Entry ID/Name: 
+
+
+Get all entries
+Endpoint: /compendium/all
+
+This endpoint retrieves all compendium entries.
+
+HTTP Request
+
+GET https://botw-compendium.herokuapp.com/api/v3/compendium/all
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/all
+Get category
+Endpoint: /compendium/category
+
+This endpoint is used for retrieving all entries in a given category. The categories are:
+
+Creatures
+Equipment
+Materials
+Monsters
+Treasure
+HTTP Request
+
+GET https://botw-compendium.herokuapp.com/api/v3/compendium/category/<category>
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/category/monsters
+Get master mode entry
+Endpoint: /compendium/master_mode/entry
+
+This endpoint retrieves data on a master mode exclusive entry given its name or ID. If you are using a name to search for an item, spaces are to be replaced with an underscore or "%20".
+
+HTTP Request
+
+GET https://botw-compendium.herokuapp.com/api/v3/compendium/master_mode/entry/<entry>
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/master_mode/entry/golden_bokoblin
+Get all master mode entries
+Endpoint: /compendium/master_mode/all
+
+This endpoint retrieves all master mode exclusive entries.
+
+HTTP Request
+
+GET https://botw-compendium.herokuapp.com/api/v3/compendium/master_mode/all
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/compendium/master_mode/all
+Tears of the Kingdom entries
+You can configure which game to query by setting URL parameter game. If game is not set, it defaults to Breath of the Wild. If it is set to 1 or botw, Breath of the Wild is queried. If game is set to 2 or totk, Tears of the Kingdom is queried.
+
+Example URLs for Breath of the Wild:
+
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/123
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/123?game=1
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/123?game=botw
+Example URLs for Tears of the Kingdom:
+
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/123?game=2
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/123?game=totk
+NOTE: If the game paramater is defined and is not 1, 2, botw, totk, you will recieve a 400 status code.
+
+Images
+This API also serves images of each entry. Each compendium entry has the field image. Its value of image is a link to the entry's image in a 280x280 pixel PNG format. The image links follow this schema:
+
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/<entry>/image
+<entry> can be either the entry's ID or name. For example, the white-maned lynel's image could be retrieved from either of the two links:
+
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/lynel/image
+https://botw-compendium.herokuapp.com/api/v3/compendium/entry/121/image
+NOTE: You do not have to make a request to /entry/<entry> every time you want an image! Entry image links are guaranteed to be in the format /entry/<entry>/image.
+
+They can be referenced just as you would reference any other image from the web. For example, using HTML:
+
+<img src="https://botw-compendium.herokuapp.com/api/v3/compendium/entry/lynel/image">
+Results in:
+
+
+NOTE: Master mode entry images use the format: /master_mode/entry/<entry>/image.
+
+WARNING: Tears of the Kingdom images are not yet supported. It is in the roadmap.
+
+Entry schemas
+The schema of an entry's data depends on the category of the item.
+
+Monster schema:
+
+{ 
+    "name": "...", // string; entry name
+    "id": 0,  // integer; ID as shown in compendium
+    "category": "...", // string; "monsters"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "drops": [], // array of strings or null for unknown; recoverable materials from killing
+    "dlc": false // boolean; whether the entry is from a DLC pack
+}
+Equipment schema:
+
+{ 
+    "name": "...", // string; entry name
+    "id": 0,  // integer; ID as shown in compendium
+    "category": "...", // string; "equipment"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "properties": { 
+        "attack": 0, // integer; damage the entry does (0 for sheilds and arrows)
+        "defense": 0, // integer; defense the entry offers (0 for equipment that aren't shields)
+        /* TEARS OF THE KINGDOM ONLY */
+        "effect": "...", // string; special effect of the weapon (e.g. "wind razor"), empty if none
+        "type": "..." // string; type of weapon (e.g. "one-handed weapon")
+        /* */
+    },
+    "dlc": false // boolean; whether the entry is from a DLC pack
+
+}
+Material schema:
+
+{
+    "name": "...", // string; entry name
+    "id": 0, // integer; ID as shown in compendium
+    "category": "...", // string; "materials"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "hearts_recovered": 0.0, // float; health recovered when eaten raw
+    "cooking_effect": "...", // string; special effect when used in a dish/elixir (e.g. "stamina recovery"), empty if none
+    "dlc": false, // boolean; whether the entry is from a DLC pack
+    /* TEARS OF THE KINGDOM ONLY */
+    "fuse_attack_power": 0 // integer; damage added when fused with a weapon
+    /* */
+},
+Creature schema:
+
+Food (field "edible" is true):
+
+{
+    "name": "...", // string; entry name
+    "id": 0, // integer; ID as shown in compendium
+    "category": "...", // string; "creatures"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "cooking_effect": "...", // string; special effect when used in a dish/elixir (e.g. "stamina recovery"), empty if none
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "edible": true, // boolean; true, whether the creature can be eaten or incorporated into a dish/elixir
+    "hearts_recovered": 0.0, // float; hearts recovered when eaten raw
+    "dlc": false // boolean; whether the entry is from a DLC pack
+}
+Non-food (field "edible" is false):
+
+{
+    "name": "...", // string; entry name
+    "id": 0, // integer; ID as shown in compendium
+    "category": "...", // string; "creatures"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "edible": false, // boolean; false, whether the creature can be eaten or incorporated into a dish/elixir
+    "drops": [], // array of strings or null for unknown; recoverable materials from killing
+    "dlc": false // boolean; whether the entry is from a DLC pack
+}
+Treasure schema:
+
+{ 
+    "name": "...", // string
+    "id": 0,  // integer; ID as shown in compendium
+    "category": "...", // string; "treasure"
+    "description": "...", // string; short paragraph
+    "image": "...", // string; URL of image
+    "common_locations": [], // array of strings or null for unknown; where the entry is commonly seen
+    "drops": [], // array of strings or null for unknown; recoverable materials when accessed
+    "dlc": false // boolean; whether the entry is from a DLC pack
+}
+
+Regions API
+The /regions endpoint provides data on Hyrule's eight geographical regions, like encompassed shrines and settlements. The Regions API only supports the Breath of the Wild map as of now.
+
+Get region
+Endpoint: /regions
+
+This endpoint retrieves information on a single region given its name.
+
+HTTP Request:
+
+GET https://botw-compendium.herokuapp.com/api/v3/regions/<region>
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/regions/eldin
+Get all regions
+Endpoint: /regions/all
+
+This endpoint retrieves all regions.
+
+HTTP Request:
+
+GET https://botw-compendium.herokuapp.com/api/v3/regions/all
+Example Request
+
+$ curl https://botw-compendium.herokuapp.com/api/v3/regions/all

@@ -1,0 +1,1027 @@
+Introduction
+➡️ Skip to the tutorials
+If you wanna skip right into the tutorial, go ahead. We don't mind!
+
+👋 Welcome
+Welcome to the D&D 5e SRD API, the Dungeons & Dragons 5th Edition API!
+
+This documentation should help you familiarize yourself with the resources available and how to consume them with HTTP requests. Read through the Tutorial getting started section before you dive in.
+
+Most of your problems should be solved just by reading through it.
+
+🔒 Authentication
+This is a completely open API. No authentication is required to query and get data. This also means that we've limited what you can do to just GET-ing the data.
+
+If you find a mistake in the data, feel free to message us!
+
+😄 Chat
+Come hang out with us on Discord! We're friendly and would love to hear what you make with the API!
+
+🤝 Contribute
+This API is built from two repositories:
+
+The repo containing the data lives here: https://github.com/5e-bits/5e-database
+The repo with the API implementation lives here: https://github.com/5e-bits/5e-srd-api
+This is a evolving API and having fresh ideas are always welcome! You can open an issue in either repo, open a PR for changes, or just discuss with other users in this Discord.
+
+Get all resource URLs.
+Making a request to the API's base URL returns an object containing available endpoints.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+object
+Next
+Get list of all available resources for an endpoint.
+GET /api
+https://www.dnd5eapi.co
+Copy
+curl -L 'https://www.dnd5eapi.co/api' \
+-H 'Accept: application/json'
+
+Get list of all available resources for an endpoint.
+Currently only the /spells and /monsters endpoints support filtering with query parameters. Use of these query parameters is documented under the respective Spells and Monsters sections.
+
+Path Parameters
+endpoint string — REQUIRED
+Possible values: [ability-scores, alignments, backgrounds, classes, conditions, damage-types, equipment, equipment-categories, feats, features, languages, magic-items, magic-schools, monsters, proficiencies, races, rule-sections, rules, skills, spells, subclasses, subraces, traits, weapon-properties]
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get an ability score by index.
+Ability Score
+Represents one of the six abilities that describes a creature's physical and mental characteristics. The three main rolls of the game - the ability check, the saving throw, and the attack roll - rely on the ability scores. [SRD p76]
+
+Path Parameters
+index string — REQUIRED
+Possible values: [cha, con, dex, int, str, wis]
+
+The index of the ability score to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+desc string[] — OPTIONAL
+Description of the resource.
+
+full_name string — OPTIONAL
+Full name of the ability score.
+
+skills object[] — OPTIONAL
+List of skills that use this ability score.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get an alignment by index.
+Alignment
+A typical creature in the game world has an alignment, which broadly describes its moral and personal attitudes. Alignment is a combination of two factors: one identifies morality (good, evil, or neutral), and the other describes attitudes toward society and order (lawful, chaotic, or neutral). Thus, nine distinct alignments define the possible combinations.[SRD p58]
+
+Path Parameters
+index string — REQUIRED
+Possible values: [chaotic-neutral, chaotic-evil, chaotic-good, lawful-neutral, lawful-evil, lawful-good, neutral, neutral-evil, neutral-good]
+
+The index of the alignment to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+desc string — OPTIONAL
+Brief description of the resource.
+
+abbreviation string — OPTIONAL
+Abbreviation/initials/acronym for the alignment.
+
+Get a background by index.
+Background
+Every story has a beginning. Your character's background reveals where you came from, how you became an adventurer, and your place in the world. Choosing a background provides you with important story cues about your character's identity. [SRD p60]
+
+Note: acolyte is the only background included in the SRD.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [acolyte]
+
+The index of the background to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+starting_proficiencies object[] — OPTIONAL
+Starting proficiencies for all new characters of this background.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+starting_equipment object[] — OPTIONAL
+Starting equipment for all new characters of this background.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+starting_equipment_options object — OPTIONAL
+Choice
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+language_options object — OPTIONAL
+Choice
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+feature object — OPTIONAL
+Special feature granted to new characters of this background.
+
+name string — OPTIONAL
+desc string[] — OPTIONAL
+personality_traits object — OPTIONAL
+Choice of personality traits for this background.
+
+ideals object — OPTIONAL
+Choice
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+bonds object — OPTIONAL
+Choice
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+flaws object — OPTIONAL
+Choice
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+
+Get a class by index.
+Class
+A character class is a fundamental part of the identity and nature of characters in the Dungeons & Dragons role-playing game. A character's capabilities, strengths, and weaknesses are largely defined by its class. A character's class affects a character's available skills and abilities. [SRD p8-55]
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+hit_die number — OPTIONAL
+Hit die of the class. (ex: 12 == 1d12).
+
+class_levels string — OPTIONAL
+URL of the level resource for the class.
+
+multi_classing object — OPTIONAL
+Multiclassing
+
+prerequisites object[] — OPTIONAL
+List of prerequisites that must be met.
+
+ability_score object — OPTIONAL
+APIReference
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+minimum_score number — OPTIONAL
+Minimum score to meet the prerequisite.
+
+prerequisite_options object[] — OPTIONAL
+List of choices of prerequisites to meet for.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+proficiencies object[] — OPTIONAL
+List of proficiencies available when multiclassing.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+proficiency_choices object[] — OPTIONAL
+List of choices of proficiencies that are given when multiclassing.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+spellcasting object — OPTIONAL
+Spellcasting
+
+level number — OPTIONAL
+Level at which the class can start using its spellcasting abilities.
+
+info object[] — OPTIONAL
+Descriptions of the class' ability to cast spells.
+
+name string — OPTIONAL
+Feature name.
+
+desc string[] — OPTIONAL
+Feature description.
+
+spellcasting_ability object — OPTIONAL
+Reference to the AbilityScore used for spellcasting by the class.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+spells string — OPTIONAL
+URL of the spell resource list for the class.
+
+starting_equipment object[] — OPTIONAL
+List of equipment and their quantities all players of the class start with.
+
+quantity number — OPTIONAL
+equipment object — OPTIONAL
+APIReference
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+starting_equipment_options object[] — OPTIONAL
+List of choices of starting equipment.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+proficiency_choices object[] — OPTIONAL
+List of choices of starting proficiencies.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+proficiencies object[] — OPTIONAL
+List of starting proficiencies for all new characters of this class.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+saving_throws object[] — OPTIONAL
+Saving throws the class is proficient in.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+subclasses object[] — OPTIONAL
+List of all possible subclasses this class can specialize in.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get subclasses available for a class.
+Get subclasses available for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get spells available for a class.
+Get spells available for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get spellcasting info for a class.
+Get spellcasting info for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+level number — OPTIONAL
+Level at which the class can start using its spellcasting abilities.
+
+info object[] — OPTIONAL
+Descriptions of the class' ability to cast spells.
+
+name string — OPTIONAL
+Feature name.
+
+desc string[] — OPTIONAL
+Feature description.
+
+spellcasting_ability object — OPTIONAL
+Reference to the AbilityScore used for spellcasting by the class.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+404
+Not found.
+
+Schema — OPTIONAL
+error string
+
+Get features available for a class.
+Get features available for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+List of features for the class.
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get proficiencies available for a class.
+Get proficiencies available for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+List of proficiencies for the class.
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get multiclassing resource for a class.
+Get multiclassing resource for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+prerequisites object[] — OPTIONAL
+List of prerequisites that must be met.
+
+ability_score object — OPTIONAL
+APIReference
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+minimum_score number — OPTIONAL
+Minimum score to meet the prerequisite.
+
+prerequisite_options object[] — OPTIONAL
+List of choices of prerequisites to meet for.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+proficiencies object[] — OPTIONAL
+List of proficiencies available when multiclassing.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+proficiency_choices object[] — OPTIONAL
+List of choices of proficiencies that are given when multiclassing.
+
+desc string — OPTIONAL
+Description of the choice to be made.
+
+choose number — OPTIONAL
+Number of items to pick from the list.
+
+type string — OPTIONAL
+Type of the resources to choose from.
+
+from (circular) — OPTIONAL
+
+Get all level resources for a class.
+Get all level resources for a class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+Query Parameters
+subclass string
+Adds subclasses for class to the response
+
+Example (single-value): berserker
+
+Example (partial-value): ber
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+object[]
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+level number — OPTIONAL
+The number value for the current level object.
+
+ability_score_bonuses number — OPTIONAL
+Total number of ability score bonuses gained, added from previous levels.
+
+prof_bonus number — OPTIONAL
+Proficiency bonus for this class at the specified level.
+
+features object[] — OPTIONAL
+Features automatically gained at this level.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+spellcasting object — OPTIONAL
+Summary of spells known at this level.
+
+cantrips_known number — OPTIONAL
+spells_known number — OPTIONAL
+spell_slots_level_1 number — OPTIONAL
+spell_slots_level_2 number — OPTIONAL
+spell_slots_level_3 number — OPTIONAL
+spell_slots_level_4 number — OPTIONAL
+spell_slots_level_5 number — OPTIONAL
+spell_slots_level_6 number — OPTIONAL
+spell_slots_level_7 number — OPTIONAL
+spell_slots_level_8 number — OPTIONAL
+spell_slots_level_9 number — OPTIONAL
+class_specific — OPTIONAL
+Class specific information such as dice values for bard songs and number of warlock invocations.
+
+Get level resource for a class and level.
+Get level resource for a class and level.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+class_level number — REQUIRED
+Possible values: value ≤ 20
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+level number — OPTIONAL
+The number value for the current level object.
+
+ability_score_bonuses number — OPTIONAL
+Total number of ability score bonuses gained, added from previous levels.
+
+prof_bonus number — OPTIONAL
+Proficiency bonus for this class at the specified level.
+
+features object[] — OPTIONAL
+Features automatically gained at this level.
+
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+spellcasting object — OPTIONAL
+Summary of spells known at this level.
+
+cantrips_known number — OPTIONAL
+spells_known number — OPTIONAL
+spell_slots_level_1 number — OPTIONAL
+spell_slots_level_2 number — OPTIONAL
+spell_slots_level_3 number — OPTIONAL
+spell_slots_level_4 number — OPTIONAL
+spell_slots_level_5 number — OPTIONAL
+spell_slots_level_6 number — OPTIONAL
+spell_slots_level_7 number — OPTIONAL
+spell_slots_level_8 number — OPTIONAL
+spell_slots_level_9 number — OPTIONAL
+class_specific — OPTIONAL
+Class specific information such as dice values for bard songs and number of warlock invocations.
+
+Get features available to a class at the requested level.
+Get features available to a class at the requested level.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+class_level number — REQUIRED
+Possible values: value ≤ 20
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get spells of the requested level available to the class.
+Get spells of the requested level available to the class.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard]
+
+The index of the class to get.
+
+spell_level number — REQUIRED
+Possible values: 1 ≤ value ≤ 9
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+count number — OPTIONAL
+Total number of resources available.
+
+results object[] — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+Get a condition by index.
+Condition
+A condition alters a creature’s capabilities in a variety of ways and can arise as a result of a spell, a class feature, a monster’s attack, or other effect. Most conditions, such as blinded, are impairments, but a few, such as invisible, can be advantageous.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [blinded, charmed, deafened, exhaustion, frightened, grappled, incapacitated, invisible, paralyzed, petrified, poisoned, prone, restrained, stunned, unconscious]
+
+The index of the condition to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+desc string[] — OPTIONAL
+Description of the resource.
+
+Get a damage type by index.
+Damage type
+Different attacks, damaging spells, and other harmful effects deal different types of damage. Damage types have no rules of their own, but other rules, such as damage resistance, rely on the types.
+
+Path Parameters
+index string — REQUIRED
+Possible values: [acid, bludgeoning, cold, fire, force, lightning, necrotic, piercing, poison, psychic, radiant, slashing, thunder]
+
+The index of the damage type to get.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+index string — OPTIONAL
+Resource index for shorthand searching.
+
+level integer — OPTIONAL
+Level of the referenced resource.
+
+name string — OPTIONAL
+Name of the referenced resource.
+
+url string — OPTIONAL
+URL of the referenced resource.
+
+desc string[] — OPTIONAL
+Description of the resource.
+
+Get an equipment item by index.
+Equipment
+Opportunities abound to find treasure, equipment, weapons, armor, and more in the dungeons you explore. Normally, you can sell your treasures and trinkets when you return to a town or other settlement, provided that you can find buyers and merchants interested in your loot.
+
+Path Parameters
+index string — REQUIRED
+The index of the equipment to get.
+
+Available values can be found in the ResourceList for equipment.
+
+Responses
+200
+OK
+
+Schema — OPTIONAL
+undefined
+Equipment
