@@ -1,0 +1,962 @@
+Nominatim API
+Attention
+
+The current version of Nominatim implements two different search frontends: the old PHP frontend and the new Python frontend. They have a very similar API but differ in some implementation details. These are marked in the documentation as [Python-only] or [PHP-only].
+
+https://nominatim.openstreetmap.org implements the Python frontend. So users should refer to the [Python-only] comments.
+
+This section describes the API V1 of the Nominatim web service. The service offers the following endpoints:
+
+/search - search OSM objects by name or type
+/reverse - search OSM object by their location
+/lookup - look up address details for OSM objects by their ID
+/status - query the status of the server
+/deletable - list objects that have been deleted in OSM but are held back in Nominatim in case the deletion was accidental
+/polygons - list of broken polygons detected by Nominatim
+/details - show internal details for an object (for debugging only)
+Copyright © Nominatim developer community
+
+Search queries
+The search API allows you to look up a location from a textual description or address. Nominatim supports structured and free-form search queries.
+
+The search query may also contain special phrases which are translated into specific OpenStreetMap (OSM) tags (e.g. Pub => amenity=pub). This can be used to narrow down the kind of objects to be returned.
+
+Note
+
+Special phrases are not suitable to query all objects of a certain type in an area. Nominatim will always just return a collection of the best matches. To download OSM data by object type, use the Overpass API.
+
+Endpoint
+The search API has the following format:
+
+
+   https://nominatim.openstreetmap.org/search?<params>
+Deprecation warning
+
+The API can also be used with the URL https://nominatim.openstreetmap.org/search.php. This is now deprecated and will be removed in future versions.
+
+The query term can be given in two different forms: free-form or structured.
+
+Free-form query
+Parameter	Value
+q	Free-form query string to search for
+In this form, the query can be unstructured. Free-form queries are processed first left-to-right and then right-to-left if that fails. So you may search for pilkington avenue, birmingham as well as for birmingham, pilkington avenue. Commas are optional, but improve performance by reducing the complexity of the search.
+
+The free-form may also contain special phrases to describe the type of place to be returned or a coordinate to search close to a position.
+
+Structured query
+Parameter	Value
+amenity	name and/or type of POI
+street	housenumber and streetname
+city	city
+county	county
+state	state
+country	country
+postalcode	postal code
+The structured form of the search query allows to lookup up an address that is already split into its components. Each parameter represents a field of the address. All parameters are optional. You should only use the ones that are relevant for the address you want to geocode.
+
+Attention
+
+Cannot be combined with the q=<query> parameter. Newer versions of the API will return an error if you do so. Older versions simply return unexpected results.
+
+Parameters
+The following parameters can be used to further restrict the search and change the output. They are usable for both forms of the search query.
+
+Output format
+Parameter	Value	Default
+format	one of: xml, json, jsonv2, geojson, geocodejson	jsonv2
+See Place Output Formats for details on each format.
+
+Note
+
+The Nominatim service at https://nominatim.openstreetmap.org has a different default behaviour for historical reasons. When the format parameter is omitted, the request will be forwarded to the Web UI.
+
+Parameter	Value	Default
+json_callback	function name	unset
+When given, then JSON output will be wrapped in a callback function with the given name. See JSONP for more information.
+
+Only has an effect for JSON output formats.
+
+Parameter	Value	Default
+limit	number	10
+Limit the maximum number of returned results. Cannot be more than 40. Nominatim may decide to return less results than given, if additional results do not sufficiently match the query.
+
+Output details
+Parameter	Value	Default
+addressdetails	0 or 1	0
+When set to 1, include a breakdown of the address into elements. The exact content of the address breakdown depends on the output format.
+
+Tip
+
+If you are interested in a stable classification of address categories (suburb, city, state, etc), have a look at the geocodejson format. All other formats return classifications according to OSM tagging. There is a much larger set of categories and they are not always consistent, which makes them very hard to work with.
+
+Parameter	Value	Default
+extratags	0 or 1	0
+When set to 1, the response include any additional information in the result that is available in the database, e.g. wikipedia link, opening hours.
+
+Parameter	Value	Default
+namedetails	0 or 1	0
+When set to 1, include a full list of names for the result. These may include language variants, older names, references and brand.
+
+Language of results
+Parameter	Value	Default
+accept-language	browser language string	content of "Accept-Language" HTTP header
+Preferred language order for showing search results. This may either be a simple comma-separated list of language codes or have the same format as the "Accept-Language" HTTP header.
+
+Tip
+
+First-time users of Nominatim tend to be confused that they get different results when using Nominatim in the browser versus in a command-line tool like wget or curl. The command-line tools usually don't send any Accept-Language header, prompting Nominatim to show results in the local language. Browsers on the contratry always send the currently chosen browser language.
+
+Result restriction
+There are two ways to influence the results. Filters exclude certain kinds of results completely. Boost parameters only change the order of the results and thus give a preference to some results over others.
+
+Parameter	Value	Default
+countrycodes	comma-separated list of country codes	unset
+Filer that limits the search results to one or more countries. The country code must be the ISO 3166-1alpha2 code of the country, e.g. gb for the United Kingdom, de for Germany.
+
+Each place in Nominatim is assigned to one country code based on OSM country boundaries. In rare cases a place may not be in any country at all, for example, when it is in international waters. These places are also excluded when the filter is set.
+
+Note
+
+This parameter should not be confused with the 'country' parameter of the structured query. The 'country' parameter contains a search term and will be handled with some fuzziness. The countrycodes parameter is a hard filter and as such should be preferred. Having both parameters in the same query will work. If the parameters contradict each other, the search will come up empty.
+
+Parameter	Value	Default
+layer	comma-separated list of: address, poi, railway, natural, manmade	unset (no restriction)
+[Python-only]
+
+The layer filter allows to select places by themes.
+
+The address layer contains all places that make up an address: address points with house numbers, streets, inhabited places (suburbs, villages, cities, states tec.) and administrative boundaries.
+
+The poi layer selects all point of interest. This includes classic POIs like restaurants, shops, hotels but also less obvious features like recycling bins, guideposts or benches.
+
+The railway layer includes railway infrastructure like tracks. Note that in Nominatim's standard configuration, only very few railway features are imported into the database.
+
+The natural layer collects features like rivers, lakes and mountains while the manmade layer functions as a catch-all for features not covered by the other layers.
+
+Parameter	Value	Default
+featureType	one of: country, state, city, settlement	unset
+The featureType allows to have a more fine-grained selection for places from the address layer. Results can be restricted to places that make up the 'state', 'country' or 'city' part of an address. A featureType of settlement selects any human inhabited feature from 'state' down to 'neighbourhood'.
+
+When featureType is set, then results are automatically restricted to the address layer (see above).
+
+Tip
+
+Instead of using the featureType filters country, state or city, you can also use a structured query without the finer-grained parameters amenity or street.
+
+Parameter	Value	Default
+exclude_place_ids	comma-separated list of place ids	
+If you do not want certain OSM objects to appear in the search result, give a comma separated list of the place_ids you want to skip. This can be used to retrieve additional search results. For example, if a previous query only returned a few results, then including those here would cause the search to return other, less accurate, matches (if possible).
+
+Parameter	Value	Default
+viewbox	<x1>,<y1>,<x2>,<y2>	unset
+Boost parameter which focuses the search on the given area. Any two corner points of the box are accepted as long as they make a proper box. x is longitude, y is latitude.
+
+Parameter	Value	Default
+bounded	0 or 1	0
+When set to 1, then it turns the 'viewbox' parameter (see above) into a filter parameter, excluding any results outside the viewbox.
+
+When bounded=1 is given and the viewbox is small enough, then an amenity-only search is allowed. Give the special keyword for the amenity in square brackets, e.g. [pub] and a selection of objects of this type is returned. There is no guarantee that the result returns all objects in the area.
+
+Polygon output
+Parameter	Value	Default
+polygon_geojson	0 or 1	0
+polygon_kml	0 or 1	0
+polygon_svg	0 or 1	0
+polygon_text	0 or 1	0
+Add the full geometry of the place to the result output. Output formats in GeoJSON, KML, SVG or WKT are supported. Only one of these options can be used at a time.
+
+Parameter	Value	Default
+polygon_threshold	floating-point number	0.0
+When one of the polygon_* outputs is chosen, return a simplified version of the output geometry. The parameter describes the tolerance in degrees with which the geometry may differ from the original geometry. Topology is preserved in the geometry.
+
+Other
+Parameter	Value	Default
+email	valid email address	unset
+If you are making large numbers of request please include an appropriate email address to identify your requests. See Nominatim's Usage Policy for more details.
+
+Parameter	Value	Default
+dedupe	0 or 1	1
+Sometimes you have several objects in OSM identifying the same place or object in reality. The simplest case is a street being split into many different OSM ways due to different characteristics. Nominatim will attempt to detect such duplicates and only return one match. Setting this parameter to 0 disables this deduplication mechanism and ensures that all results are returned.
+
+Parameter	Value	Default
+debug	0 or 1	0
+Output assorted developer debug information. Data on internals of Nominatim's "search loop" logic, and SQL queries. The output is HTML format. This overrides the specified machine readable format.
+
+Examples
+XML with KML polygon
+https://nominatim.openstreetmap.org/search?q=135+pilkington+avenue,+birmingham&format=xml&polygon_kml=1&addressdetails=1
+<?xml version="1.0" encoding="UTF-8" ?>
+<searchresults timestamp="Tue, 08 Aug 2023 15:45:41 +00:00"
+               attribution="Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright"
+               querystring="135 pilkington avenue, birmingham"
+               more_url="https://nominatim.openstreetmap.org/search?q=135+pilkington+avenue%2C+birmingham&amp;polygon_kml=1&amp;addressdetails=1&amp;limit=20&amp;exclude_place_ids=125279639&amp;format=xml"
+               exclude_place_ids="125279639">
+  <place place_id="125279639"
+         osm_type="way"
+         osm_id="90394480"
+         lat="52.5487921"
+         lon="-1.8164308"
+         boundingbox="52.5487473,52.5488481,-1.8165130,-1.8163464"
+         place_rank="30"
+         address_rank="30"
+         display_name="135, Pilkington Avenue, Maney, Sutton Coldfield, Wylde Green, Birmingham, West Midlands Combined Authority, England, B72 1LH, United Kingdom"
+         class="building"
+         type="residential"
+         importance="9.999999994736442e-08">
+    <geokml>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>-1.816513,52.5487566 -1.816434,52.5487473 -1.816429,52.5487629 -1.8163717,52.5487561 -1.8163464,52.5488346 -1.8164599,52.5488481 -1.8164685,52.5488213 -1.8164913,52.548824 -1.816513,52.5487566</coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </geokml>
+    <house_number>135</house_number>
+    <road>Pilkington Avenue</road>
+    <hamlet>Maney</hamlet>
+    <town>Sutton Coldfield</town>
+    <village>Wylde Green</village>
+    <city>Birmingham</city>
+    <ISO3166-2-lvl8>GB-BIR</ISO3166-2-lvl8>
+    <state_district>West Midlands Combined Authority</state_district>
+    <state>England</state>
+    <ISO3166-2-lvl4>GB-ENG</ISO3166-2-lvl4>
+    <postcode>B72 1LH</postcode>
+    <country>United Kingdom</country>
+    <country_code>gb</country_code>
+  </place>
+</searchresults>
+JSON with SVG polygon
+https://nominatim.openstreetmap.org/search?q=Unter%20den%20Linden%201%20Berlin&format=json&addressdetails=1&limit=1&polygon_svg=1
+
+
+[
+  {
+    "address": {
+      "ISO3166-2-lvl4": "DE-BE",
+      "borough": "Mitte",
+      "city": "Berlin",
+      "country": "Deutschland",
+      "country_code": "de",
+      "historic": "Kommandantenhaus",
+      "house_number": "1",
+      "neighbourhood": "Friedrichswerder",
+      "postcode": "10117",
+      "road": "Unter den Linden",
+      "suburb": "Mitte"
+    },
+    "boundingbox": [
+      "52.5170798",
+      "52.5173311",
+      "13.3975116",
+      "13.3981577"
+    ],
+    "class": "historic",
+    "display_name": "Kommandantenhaus, 1, Unter den Linden, Friedrichswerder, Mitte, Berlin, 10117, Deutschland",
+    "importance": 0.8135042058306902,
+    "lat": "52.51720765",
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "lon": "13.397834399325466",
+    "osm_id": 15976890,
+    "osm_type": "way",
+    "place_id": 108681845,
+    "svg": "M 13.3975116 -52.5172905 L 13.397549 -52.5170798 13.397715 -52.5170906 13.3977122 -52.5171064 13.3977392 -52.5171086 13.3977417 -52.5170924 13.3979655 -52.5171069 13.3979623 -52.5171233 13.3979893 -52.5171248 13.3979922 -52.5171093 13.3981577 -52.5171203 13.398121 -52.5173311 13.3978115 -52.5173103 Z",
+    "type": "house"
+  }
+]
+JSON with address details
+https://nominatim.openstreetmap.org/search?addressdetails=1&q=bakery+in+berlin+wedding&format=jsonv2&limit=1
+
+[
+  {
+    "address": {
+      "ISO3166-2-lvl4": "DE-BE",
+      "borough": "Mitte",
+      "city": "Berlin",
+      "country": "Deutschland",
+      "country_code": "de",
+      "neighbourhood": "Sprengelkiez",
+      "postcode": "13347",
+      "road": "Lindower Straße",
+      "shop": "Ditsch",
+      "suburb": "Wedding"
+    },
+    "addresstype": "shop",
+    "boundingbox": [
+      "52.5427201",
+      "52.5427654",
+      "13.3668619",
+      "13.3669442"
+    ],
+    "category": "shop",
+    "display_name": "Ditsch, Lindower Straße, Sprengelkiez, Wedding, Mitte, Berlin, 13347, Deutschland",
+    "importance": 9.99999999995449e-06,
+    "lat": "52.54274275",
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "lon": "13.36690305710228",
+    "name": "Ditsch",
+    "osm_id": 437595031,
+    "osm_type": "way",
+    "place_id": 204751033,
+    "place_rank": 30,
+    "type": "bakery"
+  }
+]
+GeoJSON
+https://nominatim.openstreetmap.org/search?q=17+Strada+Pictor+Alexandru+Romano%2C+Bukarest&format=geojson
+
+
+{
+  "type": "FeatureCollection",
+  "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": "35811445",
+        "osm_type": "node",
+        "osm_id": "2846295644",
+        "display_name": "17, Strada Pictor Alexandru Romano, Bukarest, Bucharest, Sector 2, Bucharest, 023964, Romania",
+        "place_rank": "30",
+        "category": "place",
+        "type": "house",
+        "importance": 0.62025
+      },
+      "bbox": [
+        26.1156689,
+        44.4354754,
+        26.1157689,
+        44.4355754
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.1157189,
+          44.4355254
+        ]
+      }
+    }
+  ]
+}
+GeocodeJSON
+https://nominatim.openstreetmap.org/search?q=%CE%91%CE%B3%CE%AF%CE%B1+%CE%A4%CF%81%CE%B9%CE%AC%CE%B4%CE%B1%2C+%CE%91%CE%B4%CF%89%CE%BD%CE%B9%CE%B4%CE%BF%CF%82%2C+Athens%2C+Greece&format=geocodejson
+
+
+{
+  "type": "FeatureCollection",
+  "geocoding": {
+    "version": "0.1.0",
+    "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "licence": "ODbL",
+    "query": "Αγία Τριάδα, Αδωνιδος, Athens, Greece"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "geocoding": {
+          "type": "place_of_worship",
+          "label": "Αγία Τριάδα, Αδωνιδος, Άγιος Νικόλαος, 5º Δημοτικό Διαμέρισμα Αθηνών, Athens, Municipality of Athens, Regional Unit of Central Athens, Region of Attica, Attica, 11472, Greece",
+          "name": "Αγία Τριάδα",
+          "admin": null
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.72949633941,
+          38.0051697
+        ]
+      }
+    }
+  ]
+}
+
+Reverse Geocoding
+Reverse geocoding generates an address from a coordinate given as latitude and longitude.
+
+How it works
+The reverse geocoding API does not exactly compute the address for the coordinate it receives. It works by finding the closest suitable OSM object and returning its address information. This may occasionally lead to unexpected results.
+
+First of all, Nominatim only includes OSM objects in its index that are suitable for searching. Small, unnamed paths for example are missing from the database and can therefore not be used for reverse geocoding either.
+
+The other issue to be aware of is that the closest OSM object may not always have a similar enough address to the coordinate you were requesting. For example, in dense city areas it may belong to a completely different street.
+
+Endpoint
+The main format of the reverse API is
+
+
+https://nominatim.openstreetmap.org/reverse?lat=<value>&lon=<value>&<params>
+where lat and lon are latitude and longitude of a coordinate in WGS84 projection. The API returns exactly one result or an error when the coordinate is in an area with no OSM data coverage.
+
+Deprecation warning
+
+The reverse API used to allow address lookup for a single OSM object by its OSM id for [PHP-only]. The use is considered deprecated. Use the Address Lookup API instead.
+
+Deprecation warning
+
+The API can also be used with the URL https://nominatim.openstreetmap.org/reverse.php. This is now deprecated and will be removed in future versions.
+
+Parameters
+This section lists additional parameters to further influence the output.
+
+Output format
+Parameter	Value	Default
+format	one of: xml, json, jsonv2, geojson, geocodejson	xml
+See Place Output Formats for details on each format.
+
+Parameter	Value	Default
+json_callback	function name	unset
+When given, then JSON output will be wrapped in a callback function with the given name. See JSONP for more information.
+
+Only has an effect for JSON output formats.
+
+Output details
+Parameter	Value	Default
+addressdetails	0 or 1	1
+When set to 1, include a breakdown of the address into elements. The exact content of the address breakdown depends on the output format.
+
+Tip
+
+If you are interested in a stable classification of address categories (suburb, city, state, etc), have a look at the geocodejson format. All other formats return classifications according to OSM tagging. There is a much larger set of categories and they are not always consistent, which makes them very hard to work with.
+
+Parameter	Value	Default
+extratags	0 or 1	0
+When set to 1, the response include any additional information in the result that is available in the database, e.g. wikipedia link, opening hours.
+
+Parameter	Value	Default
+namedetails	0 or 1	0
+When set to 1, include a full list of names for the result. These may include language variants, older names, references and brand.
+
+Language of results
+Parameter	Value	Default
+accept-language	browser language string	content of "Accept-Language" HTTP header
+Preferred language order for showing search results. This may either be a simple comma-separated list of language codes or have the same format as the "Accept-Language" HTTP header.
+
+Tip
+
+First-time users of Nominatim tend to be confused that they get different results when using Nominatim in the browser versus in a command-line tool like wget or curl. The command-line tools usually don't send any Accept-Language header, prompting Nominatim to show results in the local language. Browsers on the contratry always send the currently chosen browser language.
+
+Result restriction
+Parameter	Value	Default
+zoom	0-18	18
+Level of detail required for the address. This is a number that corresponds roughly to the zoom level used in XYZ tile sources in frameworks like Leaflet.js, Openlayers etc. In terms of address details the zoom levels are as follows:
+
+zoom	address detail
+3	country
+5	state
+8	county
+10	city
+12	town / borough
+13	village / suburb
+14	neighbourhood
+15	any settlement
+16	major streets
+17	major and minor streets
+18	building
+Parameter	Value	Default
+layer	comma-separated list of: address, poi, railway, natural, manmade	unset (no restriction)
+[Python-only]
+
+The layer filter allows to select places by themes.
+
+The address layer contains all places that make up an address: address points with house numbers, streets, inhabited places (suburbs, villages, cities, states etc.) and administrative boundaries.
+
+The poi layer selects all point of interest. This includes classic points of interest like restaurants, shops, hotels but also less obvious features like recycling bins, guideposts or benches.
+
+The railway layer includes railway infrastructure like tracks. Note that in Nominatim's standard configuration, only very few railway features are imported into the database.
+
+The natural layer collects features like rivers, lakes and mountains while the manmade layer functions as a catch-all for features not covered by the other layers.
+
+Polygon output
+Parameter	Value	Default
+polygon_geojson	0 or 1	0
+polygon_kml	0 or 1	0
+polygon_svg	0 or 1	0
+polygon_text	0 or 1	0
+Add the full geometry of the place to the result output. Output formats in GeoJSON, KML, SVG or WKT are supported. Only one of these options can be used at a time.
+
+Parameter	Value	Default
+polygon_threshold	floating-point number	0.0
+When one of the polygon_* outputs is chosen, return a simplified version of the output geometry. The parameter describes the tolerance in degrees with which the geometry may differ from the original geometry. Topology is preserved in the geometry.
+
+Other
+Parameter	Value	Default
+email	valid email address	unset
+If you are making large numbers of request please include an appropriate email address to identify your requests. See Nominatim's Usage Policy for more details.
+
+Parameter	Value	Default
+debug	0 or 1	0
+Output assorted developer debug information. Data on internals of Nominatim's "search loop" logic, and SQL queries. The output is HTML format. This overrides the specified machine readable format.
+
+Examples
+https://nominatim.openstreetmap.org/reverse?format=xml&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1
+
+  <reversegeocode timestamp="Fri, 06 Nov 09 16:33:54 +0000" querystring="...">
+    <result place_id="1620612" osm_type="node" osm_id="452010817">
+      135, Pilkington Avenue, Wylde Green, City of Birmingham, West Midlands (county), B72, United Kingdom
+    </result>
+    <addressparts>
+      <house_number>135</house_number>
+      <road>Pilkington Avenue</road>
+      <village>Wylde Green</village>
+      <town>Sutton Coldfield</town>
+      <city>City of Birmingham</city>
+      <county>West Midlands (county)</county>
+      <postcode>B72</postcode>
+      <country>United Kingdom</country>
+      <country_code>gb</country_code>
+    </addressparts>
+  </reversegeocode>
+Example with format=jsonv2
+https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-34.44076&lon=-58.70521
+
+{
+  "place_id":"134140761",
+  "licence":"Data © OpenStreetMap contributors, ODbL 1.0. https:\/\/www.openstreetmap.org\/copyright",
+  "osm_type":"way",
+  "osm_id":"280940520",
+  "lat":"-34.4391708",
+  "lon":"-58.7064573",
+  "place_rank":"26",
+  "category":"highway",
+  "type":"motorway",
+  "importance":"0.1",
+  "addresstype":"road",
+  "display_name":"Autopista Pedro Eugenio Aramburu, El Triángulo, Partido de Malvinas Argentinas, Buenos Aires, 1.619, Argentina",
+  "name":"Autopista Pedro Eugenio Aramburu",
+  "address":{
+    "road":"Autopista Pedro Eugenio Aramburu",
+    "village":"El Triángulo",
+    "state_district":"Partido de Malvinas Argentinas",
+    "state":"Buenos Aires",
+    "postcode":"1.619",
+    "country":"Argentina",
+    "country_code":"ar"
+  },
+  "boundingbox":["-34.44159","-34.4370994","-58.7086067","-58.7044712"]
+}
+Example with format=geojson
+https://nominatim.openstreetmap.org/reverse?format=geojson&lat=44.50155&lon=11.33989
+{
+  "type": "FeatureCollection",
+  "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "place_id": "18512203",
+        "osm_type": "node",
+        "osm_id": "1704756187",
+        "place_rank": "30",
+        "category": "place",
+        "type": "house",
+        "importance": "0",
+        "addresstype": "place",
+        "name": null,
+        "display_name": "71, Via Guglielmo Marconi, Saragozza-Porto, Bologna, BO, Emilia-Romagna, 40122, Italy",
+        "address": {
+          "house_number": "71",
+          "road": "Via Guglielmo Marconi",
+          "suburb": "Saragozza-Porto",
+          "city": "Bologna",
+          "county": "BO",
+          "state": "Emilia-Romagna",
+          "postcode": "40122",
+          "country": "Italy",
+          "country_code": "it"
+        }
+      },
+      "bbox": [
+        11.3397676,
+        44.5014307,
+        11.3399676,
+        44.5016307
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.3398676,
+          44.5015307
+        ]
+      }
+    }
+  ]
+}
+Example with format=geocodejson
+https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=60.2299&lon=11.1663
+
+{
+  "type": "FeatureCollection",
+  "geocoding": {
+    "version": "0.1.0",
+    "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "licence": "ODbL",
+    "query": "60.229917843587,11.16630979382"
+  },
+  "features": {
+    "type": "Feature",
+    "properties": {
+      "geocoding": {
+        "place_id": "42700574",
+        "osm_type": "node",
+        "osm_id": "3110596255",
+        "type": "house",
+        "accuracy": 0,
+        "label": "1, Løvenbergvegen, Mogreina, Ullensaker, Akershus, 2054, Norway",
+        "name": null,
+        "housenumber": "1",
+        "street": "Løvenbergvegen",
+        "postcode": "2054",
+        "county": "Akershus",
+        "country": "Norway",
+        "admin": {
+          "level7": "Ullensaker",
+          "level4": "Akershus",
+          "level2": "Norway"
+        }
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        11.1658572,
+        60.2301296
+      ]
+    }
+  }
+}
+Copyright © Nominatim developer community
+Made with Material for MkDocs
+
+Address lookup
+The lookup API allows to query the address and other details of one or multiple OSM objects like node, way or relation.
+
+Endpoint
+The lookup API has the following format:
+
+
+  https://nominatim.openstreetmap.org/lookup?osm_ids=[N|W|R]<value>,…,…,&<params>
+osm_ids is mandatory and must contain a comma-separated list of OSM ids each prefixed with its type, one of node(N), way(W) or relation(R). Up to 50 ids can be queried at the same time.
+
+Deprecation warning
+
+The API can also be used with the URL https://nominatim.openstreetmap.org/lookup.php. This is now deprecated and will be removed in future versions.
+
+Parameters
+This section lists additional optional parameters.
+
+Output format
+Parameter	Value	Default
+format	one of: xml, json, jsonv2, geojson, geocodejson	jsonv2
+See Place Output Formats for details on each format.
+
+Parameter	Value	Default
+json_callback	function name	unset
+When given, then JSON output will be wrapped in a callback function with the given name. See JSONP for more information.
+
+Only has an effect for JSON output formats.
+
+Output details
+Parameter	Value	Default
+addressdetails	0 or 1	0
+When set to 1, include a breakdown of the address into elements. The exact content of the address breakdown depends on the output format.
+
+Tip
+
+If you are interested in a stable classification of address categories (suburb, city, state, etc), have a look at the geocodejson format. All other formats return classifications according to OSM tagging. There is a much larger set of categories and they are not always consistent, which makes them very hard to work with.
+
+Parameter	Value	Default
+extratags	0 or 1	0
+When set to 1, the response include any additional information in the result that is available in the database, e.g. wikipedia link, opening hours.
+
+Parameter	Value	Default
+namedetails	0 or 1	0
+When set to 1, include a full list of names for the result. These may include language variants, older names, references and brand.
+
+Language of results
+Parameter	Value	Default
+accept-language	browser language string	content of "Accept-Language" HTTP header
+Preferred language order for showing search results. This may either be a simple comma-separated list of language codes or have the same format as the "Accept-Language" HTTP header.
+
+Tip
+
+First-time users of Nominatim tend to be confused that they get different results when using Nominatim in the browser versus in a command-line tool like wget or curl. The command-line tools usually don't send any Accept-Language header, prompting Nominatim to show results in the local language. Browsers on the contratry always send the currently chosen browser language.
+
+Polygon output
+Parameter	Value	Default
+polygon_geojson	0 or 1	0
+polygon_kml	0 or 1	0
+polygon_svg	0 or 1	0
+polygon_text	0 or 1	0
+Add the full geometry of the place to the result output. Output formats in GeoJSON, KML, SVG or WKT are supported. Only one of these options can be used at a time.
+
+Parameter	Value	Default
+polygon_threshold	floating-point number	0.0
+When one of the polygon_* outputs is chosen, return a simplified version of the output geometry. The parameter describes the tolerance in degrees with which the geometry may differ from the original geometry. Topology is preserved in the geometry.
+
+Other
+Parameter	Value	Default
+email	valid email address	unset
+If you are making large numbers of request please include an appropriate email address to identify your requests. See Nominatim's Usage Policy for more details.
+
+Parameter	Value	Default
+debug	0 or 1	0
+Output assorted developer debug information. Data on internals of Nominatim's "search loop" logic, and SQL queries. The output is HTML format. This overrides the specified machine readable format.
+
+Examples
+XML
+https://nominatim.openstreetmap.org/lookup?osm_ids=R146656,W104393803,N240109189
+
+
+  <lookupresults timestamp="Mon, 28 Mar 22 14:38:54 +0000" attribution="Data &#xA9; OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright" querystring="R146656,W50637691,N240109189" more_url="">
+    <place place_id="282236157" osm_type="relation" osm_id="146656" place_rank="16" address_rank="16" boundingbox="53.3401044,53.5445923,-2.3199185,-2.1468288" lat="53.44246175" lon="-2.2324547359718547" display_name="Manchester, Greater Manchester, North West England, England, United Kingdom" class="boundary" type="administrative" importance="0.35">
+      <city>Manchester</city>
+      <county>Greater Manchester</county>
+      <state_district>North West England</state_district>
+      <state>England</state>
+      <country>United Kingdom</country>
+      <country_code>gb</country_code>
+    </place>
+    <place place_id="115462561" osm_type="way" osm_id="50637691" place_rank="30" address_rank="30" boundingbox="52.3994612,52.3996426,13.0479574,13.0481754" lat="52.399550700000006" lon="13.048066846939687" display_name="Brandenburger Tor, Brandenburger Stra&#xDF;e, Historische Innenstadt, Innenstadt, Potsdam, Brandenburg, 14467, Germany" class="tourism" type="attraction" importance="0.29402874005524">
+      <tourism>Brandenburger Tor</tourism>
+      <road>Brandenburger Stra&#xDF;e</road>
+      <suburb>Historische Innenstadt</suburb>
+      <city>Potsdam</city>
+      <state>Brandenburg</state>
+      <postcode>14467</postcode>
+      <country>Germany</country>
+      <country_code>de</country_code>
+    </place>
+    <place place_id="567505" osm_type="node" osm_id="240109189" place_rank="15" address_rank="16" boundingbox="52.3586925,52.6786925,13.2396024,13.5596024" lat="52.5186925" lon="13.3996024" display_name="Berlin, 10178, Germany" class="place" type="city" importance="0.78753902824914">
+      <city>Berlin</city>
+      <state>Berlin</state>
+      <postcode>10178</postcode>
+      <country>Germany</country>
+      <country_code>de</country_code>
+    </place>
+  </lookupresults>
+JSON with extratags
+https://nominatim.openstreetmap.org/lookup?osm_ids=W50637691&format=json&extratags=1
+
+[
+   {
+      "place_id": 115462561,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 50637691,
+      "boundingbox": [
+        "52.3994612",
+        "52.3996426",
+        "13.0479574",
+        "13.0481754"
+      ],
+      "lat": "52.399550700000006",
+      "lon": "13.048066846939687",
+      "display_name": "Brandenburger Tor, Brandenburger Straße, Historische Innenstadt, Innenstadt, Potsdam, Brandenburg, 14467, Germany",
+      "class": "tourism",
+      "type": "attraction",
+      "importance": 0.2940287400552381,
+      "address": {
+        "tourism": "Brandenburger Tor",
+        "road": "Brandenburger Straße",
+        "suburb": "Historische Innenstadt",
+        "city": "Potsdam",
+        "state": "Brandenburg",
+        "postcode": "14467",
+        "country": "Germany",
+        "country_code": "de"
+      },
+      "extratags": {
+        "image": "http://commons.wikimedia.org/wiki/File:Potsdam_brandenburger_tor.jpg",
+        "heritage": "4",
+        "wikidata": "Q695045",
+        "architect": "Carl von Gontard;Georg Christian Unger",
+        "wikipedia": "de:Brandenburger Tor (Potsdam)",
+        "wheelchair": "yes",
+        "description": "Kleines Brandenburger Tor in Potsdam",
+        "heritage:website": "http://www.bldam-brandenburg.de/images/stories/PDF/DML%202012/04-p-internet-13.pdf",
+        "heritage:operator": "bldam",
+        "architect:wikidata": "Q68768;Q95223",
+        "year_of_construction": "1771"
+      }
+   }
+]
+Copyright © Nominatim developer community
+Made with Material for MkDocs
+
+Status
+Report on the state of the service and database. Useful for checking if the service is up and running. The JSON output also reports when the database was last updated.
+
+Endpoint
+The status API has the following format:
+
+
+https://nominatim.openstreetmap.org/status
+Deprecation warning
+
+The API can also be used with the URL https://nominatim.openstreetmap.org/status.php. This is now deprecated and will be removed in future versions.
+
+Parameters
+The status endpoint takes a single optional parameter:
+
+Parameter	Value	Default
+format	one of: text, json	'text'
+Selects the output format. See below.
+
+Output
+Text format
+When everything is okay, a status code 200 is returned and a simple message: OK
+
+On error it will return HTTP status code 500 and print a detailed error message, e.g. ERROR: Database connection failed.
+
+JSON format
+Always returns a HTTP code 200, when the status call could be executed.
+
+On success a JSON dictionary with the following structure is returned:
+
+
+  {
+      "status": 0,
+      "message": "OK",
+      "data_updated": "2020-05-04T14:47:00+00:00",
+      "software_version": "3.6.0-0",
+      "database_version": "3.6.0-0"
+  }
+The software_version field contains the version of Nominatim used to serve the API. The database_version field contains the version of the data format in the database.
+
+On error will return a shorter JSON dictionary with the error message and status only, e.g.
+
+
+   {
+       "status": 700,
+       "message": "Database connection failed"
+   }
+Copyright © Nominatim developer community
+Made with Material for MkDocs
+
+Place details
+Show all details about a single place saved in the database.
+
+This API endpoint is meant for visual inspection of the data in the database, mainly together with Nominatim-UI. The parameters of the endpoint and the output may change occasionally between versions of Nominatim. Do not rely on the output in scripts or applications.
+
+Warning
+
+The details endpoint at https://nominatim.openstreetmap.org may not used in scripts or bots at all. See Nominatim Usage Policy.
+
+The details API supports the following two request formats:
+
+
+https://nominatim.openstreetmap.org/details?osmtype=[N|W|R]&osmid=<value>&class=<value>
+osmtype and osmid are required parameters. The type is one of node (N), way (W) or relation (R). The id must be a number. The class parameter is optional and allows to distinguish between entries, when the corresponding OSM object has more than one main tag. For example, when a place is tagged with tourism=hotel and amenity=restaurant, there will be two place entries in Nominatim, one for a restaurant, one for a hotel. You need to specify class=tourism or class=amentity to get exactly the one you want. If there are multiple places in the database but the class parameter is left out, then one of the places will be chosen at random and displayed.
+
+
+https://nominatim.openstreetmap.org/details?place_id=<value>
+Place IDs are assigned sequentially during Nominatim data import. The ID for a place is different between Nominatim installation (servers) and changes when data gets reimported. Therefore it cannot be used as a permanent id and shouldn't be used in bug reports.
+
+Deprecation warning
+
+The API can also be used with the URL https://nominatim.openstreetmap.org/details.php. This is now deprecated and will be removed in future versions.
+
+Parameters
+This section lists additional optional parameters.
+
+Output format
+Parameter	Value	Default
+json_callback	function name	unset
+When set, then JSON output will be wrapped in a callback function with the given name. See JSONP for more information.
+
+Parameter	Value	Default
+pretty	0 or 1	0
+[PHP-only] Add indentation to the output to make it more human-readable.
+
+Output details
+Parameter	Value	Default
+addressdetails	0 or 1	0
+When set to 1, include a breakdown of the address into elements.
+
+Parameter	Value	Default
+keywords	0 or 1	0
+When set to 1, include a list of name keywords and address keywords in the result.
+
+Parameter	Value	Default
+linkedplaces	0 or 1	1
+Include details of places that are linked with this one. Places get linked together when they are different forms of the same physical object. Nominatim links two kinds of objects together: place nodes get linked with the corresponding administrative boundaries. Waterway relations get linked together with their members.
+
+Parameter	Value	Default
+hierarchy	0 or 1	0
+Include details of places lower in the address hierarchy.
+
+[Python-only] will only return properly parented places. These are address or POI-like places that reuse the address of their parent street or place.
+
+Parameter	Value	Default
+group_hierarchy	0 or 1	0
+When set to 1, the output of the address hierarchy will be grouped by type.
+
+Parameter	Value	Default
+polygon_geojson	0 or 1	0
+Include geometry of result.
+
+Language of results
+Parameter	Value	Default
+accept-language	browser language string	content of "Accept-Language" HTTP header
+Preferred language order for showing search results. This may either be a simple comma-separated list of language codes or have the same format as the "Accept-Language" HTTP header.
+
+Examples
+JSON
+https://nominatim.openstreetmap.org/details.php?osmtype=W&osmid=38210407&format=json
+
+{
+  "place_id": 85993608,
+  "parent_place_id": 72765313,
+  "osm_type": "W",
+  "osm_id": 38210407,
+  "category": "place",
+  "type": "square",
+  "admin_level": "15",
+  "localname": "Pariser Platz",
+  "names": {
+    "name": "Pariser Platz",
+    "name:be": "Парыжская плошча",
+    "name:de": "Pariser Platz",
+    "name:es": "Plaza de París",
+    "name:he": "פאריזר פלאץ",
+    "name:ko": "파리저 광장",
+    "name:la": "Forum Parisinum",
+    "name:ru": "Парижская площадь",
+    "name:uk": "Паризька площа",
+    "name:zh": "巴黎廣場"
+  },
+  "addresstags": {
+    "postcode": "10117"
+  },
+  "housenumber": null,
+  "calculated_postcode": "10117",
+  "country_code": "de",
+  "indexed_date": "2018-08-18T17:02:45+00:00",
+  "importance": 0.339401620591472,
+  "calculated_importance": 0.339401620591472,
+  "extratags": {
+    "wikidata": "Q156716",
+    "wikipedia": "de:Pariser Platz"
+  },
+  "calculated_wikipedia": "de:Pariser_Platz",
+  "rank_address": 30,
+  "rank_search": 30,
+  "isarea": true,
+  "centroid": {
+    "type": "Point",
+    "coordinates": [
+      13.3786822618517,
+      52.5163654
+    ]
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      13.3786822618517,
+      52.5163654
+    ]
+  }
+}

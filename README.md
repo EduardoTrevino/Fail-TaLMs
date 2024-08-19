@@ -115,22 +115,22 @@ Please update as you add and intergrate diffrent apis
 | Fun & Games      | XIVAPI                           | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | xkcd                             | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | Yes or No?                       | 0          | :x:        | TBD      |
-| Geo              | Adresse                          | 0          | :x:        | TBD      |
-| Geo              | Country.is                       | 0          | :x:        | TBD      |
-| Geo              | Geocode                          | 0          | :x:        | TBD      |
-| Geo              | GeoJS                            | 0          | :x:        | TBD      |
-| Geo              | geoPlugin                        | 0          | :x:        | TBD      |
-| Geo              | GetTheData                       | 0          | :x:        | TBD      |
-| Geo              | HelloSalut                       | 0          | :x:        | TBD      |
+| Geo              | Adresse                          | 0(scraped) | :x:        | TBD      |
+| Geo              | Country.is                       | 0(scraped) | :x:        | TBD      |
+| Geo              | Geocode                          | 0(scraped) | :x:        | TBD      |
+| Geo              | GeoJS                            | 0(scraped) | :x:        | TBD      |
+| Geo              | geoPlugin                        | 0(scraped) | :x:        | TBD      |
+| Geo              | GetTheData                       | 0(scraped) | :x:        | TBD      |
+| Geo              | HelloSalut                       | 0(scraped) | :x:        | TBD      |
 | Geo              | Hong Kong GeoData Store          | 0          | :x:        | TBD      |
-| Geo              | ipapi                            | 0          | :x:        | TBD      |
+| Geo              | ipapi                            | 0(scraped) | :x:        | TBD      |
 | Geo              | IPGeo                            | 0          | :x:        | TBD      |
-| Geo              | Nominatum                        | 0          | :x:        | TBD      |
-| Geo              | Open Topo Data                   | 0          | :x:        | TBD      |
-| Geo              | Postcodes                        | 0          | :x:        | TBD      |
-| Geo              | ViaCEP                           | 0          | :x:        | TBD      |
-| Geo              | Zippopotamus                     | 0          | :x:        | TBD      |
-| Geo              | Ziptastic                        | 0          | :x:        | TBD      |
+| Geo              | Nominatum                        | 0(scraped) | :x:        | TBD      |
+| Geo              | Open Topo Data                   | 0(scraped) | :x:        | TBD      |
+| Geo              | Postcodes                        | 0(scraped) | :x:        | TBD      |
+| Geo              | ViaCEP                           | 0(scraped) | :x:        | TBD      |
+| Geo              | Zippopotamus                     | 0(scraped) | :x:        | TBD      |
+| Geo              | Ziptastic                        | 0(scraped) | :x:        | TBD      |
 | Government       | Banco Central Do Brasil          | 0          | :x:        | TBD      |
 | Government       | Belgian Open Data Initiative     | 0          | :x:        | TBD      |
 | Government       | Brasil                           | 0          | :x:        | TBD      |

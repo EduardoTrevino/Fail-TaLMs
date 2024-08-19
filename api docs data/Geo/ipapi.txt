@@ -1,0 +1,327 @@
+Introduction
+Documentation for IP address location API
+ipapi.co provides a REST API to find the location of an IP address.
+
+Specifically, you can get the following information for any IP address:
+city, region (name & code), country (name & code), continent, postal code / zip code, latitude, longitude, timezone, utc offset, european union (EU) membership, country calling code, country capital, country tld (top-level domain), currency (name & code), area & population of the country, languages spoken, asn, organization and hostname*.
+
+* hostname is an optional add-on, currently in beta. Please contact us to learn more about it or to enable it for your account.
+
+The API can also help you to find the public IP address of a device.
+
+The API can be integrated in your application either on the server side or on the client side. The documentation below uses json format as an example. Other supported formats are xml, csv, yaml and jsonp.
+
+Both IPv4 & IPv6 type addresses are supported.
+
+Please refer to the right pane for examples in Ruby, Python, PHP, Javascript, Node.js, jQuery, Java, C# and Go. If your language of choice isn’t listed here, it doesn’t mean that the API can’t handle it, as long as you can send an HTTP web request and consume the response. Please contact us for any support requests.
+
+Location of a specific IP
+Complete location
+curl 'https://ipapi.co/8.8.8.8/json/'
+The above code returns the following JSON output (except for hostname, which is an optional add-on)
+
+{
+    "ip": "8.8.8.8",
+    "version": "IPv4",
+    "city": "Mountain View",
+    "region": "California",
+    "region_code": "CA",
+    "country_code": "US",
+    "country_code_iso3": "USA",
+    "country_name": "United States",
+    "country_capital": "Washington",
+    "country_tld": ".us",
+    "continent_code": "NA",
+    "in_eu": false,
+    "postal": "94035",
+    "latitude": 37.386,
+    "longitude": -122.0838,
+    "timezone": "America/Los_Angeles",
+    "utc_offset": "-0700",
+    "country_calling_code": "+1",
+    "currency": "USD",
+    "currency_name": "Dollar",
+    "languages": "en-US,es-US,haw,fr",
+    "country_area": 9629091.0,
+    "country_population": 310232863,
+    "asn": "AS15169",
+    "org": "Google LLC"
+    "hostname": "dns.google"
+}
+
+This endpoint returns the complete location information for an IP address specified in the URL. This type of request is typically used on the server side, where the server knows the IP address of a user and wants to retrieve it’s location.
+
+HTTP Request
+GET https://ipapi.co/{ip}/{format}/
+
+URL Parameters
+Parameter	Description
+ip	An IP address for which you want to retrieve the location
+format	Data format of response, possible values are json, jsonp, xml, csv, yaml
+Example
+https://ipapi.co/8.8.8.8/json/
+
+Response
+The response is in one of the following formats : json, jsonp, xml, csv, yaml
+and contains the following fields:
+
+Field	Description
+ip	public (external) IP address (same as URL ip)
+city	city name
+region	region name (administrative division)
+region_code	region code
+country	country code (2 letter, ISO 3166-1 alpha-2)
+country_code	country code (2 letter, ISO 3166-1 alpha-2)
+country_code_iso3	country code (3 letter, ISO 3166-1 alpha-3)
+country_name	short country name
+country_capital	capital of the country
+country_tld	country specific TLD (top-level domain)
+country_area	area of the country (in sq km)
+country_population	population of the country
+continent_code	continent code
+in_eu	whether IP address belongs to a country that is a member of the European Union (EU)
+postal	postal code / zip code
+latitude	latitude
+longitude	longitude
+latlong	comma separated latitude and longitude
+timezone	timezone (IANA format i.e. “Area/Location”)
+utc_offset	UTC offset (with daylight saving time) as +HHMM or -HHMM (HH is hours, MM is minutes)
+country_calling_code	country calling code (dial in code, comma separated)
+currency	currency code (ISO 4217)
+currency_name	currency name
+languages	languages spoken (comma separated 2 or 3 letter ISO 639 code with optional hyphen separated country suffix)
+asn	autonomous system number
+org	organization name
+hostname	host or domain name associated with the IP (*optional beta add-on, please contact us for details)
+Specific location field
+curl 'https://ipapi.co/8.8.8.8/country/'
+
+The above command returns the value for the requested field (e.g. country):
+
+US
+This endpoint returns a single location field for an IP address specified in the URL. This type of request is typically used on the server side, where the server knows the IP address of a user and wants to retrieve a particular location field as plain text.
+
+HTTP Request
+GET https://ipapi.co/{ip}/{field}/
+
+URL Parameters
+Parameter	Description
+ip	An IP address for which you want to retrieve the location field
+field	A specific location field, possible values are : city, region, region_code, country, country_name, continent_code, in_eu, postal, latitude, longitude, latlong, timezone, utc_offset, languages, country_calling_code, currency, asn, org
+Examples
+https://ipapi.co/8.8.8.8/city/
+https://ipapi.co/8.8.8.8/country/
+https://ipapi.co/8.8.8.8/timezone/
+https://ipapi.co/8.8.8.8/languages/
+https://ipapi.co/8.8.8.8/currency/
+
+Response
+The response type is plain text and contains the value of the requested field
+
+Field	Description
+ip	public (external) IP address (same as URL ip)
+city	city name
+region	region name (administrative division)
+region_code	region code
+country	country code (2 letter, ISO 3166-1 alpha-2)
+country_code	country code (2 letter, ISO 3166-1 alpha-2)
+country_code_iso3	country code (3 letter, ISO 3166-1 alpha-3)
+country_name	short country name
+country_capital	capital of the country
+country_tld	country specific TLD (top-level domain)
+country_area	area of the country (in sq km)
+country_population	population of the country
+continent_code	continent code
+in_eu	whether IP address belongs to a country that is a member of the European Union (EU)
+postal	postal code / zip code
+latitude	latitude
+longitude	longitude
+latlong	comma separated latitude and longitude
+timezone	timezone (IANA format i.e. “Area/Location”)
+utc_offset	UTC offset (with daylight saving time) as +HHMM or -HHMM (HH is hours, MM is minutes)
+country_calling_code	country calling code (dial in code, comma separated)
+currency	currency code (ISO 4217)
+currency_name	currency name
+languages	languages spoken (comma separated 2 or 3 letter ISO 639 code with optional hyphen separated country suffix)
+asn	autonomous system number
+org	organization name
+hostname	host or domain name associated with the IP (*optional beta add-on, please contact us for details)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Location of client’s IP
+Complete location
+curl 'https://ipapi.co/json/'
+Retrieve location for your IP address formatted as JSON
+(say your IP address is “208.67.222.222”)
+
+{
+    "ip": "208.67.222.222",
+    "city": "San Francisco",
+    "region": "California",
+    "region_code": "CA",
+    "country": "US",
+    "country_name": "United States",
+    "continent_code": "NA",
+    "in_eu": false,
+    "postal": "94107",
+    "latitude": 37.7697,
+    "longitude": -122.3933,
+    "timezone": "America/Los_Angeles",
+    "utc_offset": "-0700",
+    "country_calling_code": "+1",
+    "currency": "USD",
+    "languages": "en-US,es-US,haw,fr",
+    "asn": "AS36692",
+    "org": "OpenDNS, LLC"
+}
+This endpoint returns the complete location of the client (device) that’s making the request. You do not need to specify the IP address, it is inferred from the request. This type of request is typically used on the client side (user’s browser). The location corresponds to the public IP address of the user.
+
+HTTP Request
+GET https://ipapi.co/{format}/
+
+URL Parameters
+Parameter	Description
+format	Data format of response, possible values are json, jsonp, xml, csv, yaml
+Example
+https://ipapi.co/json/
+
+Response
+The response is in one of the following formats : json, jsonp, xml, csv, yaml
+and contains the following fields:
+
+Field	Description
+ip	public (external) IP address (same as URL ip)
+city	city name
+region	region name (administrative division)
+region_code	region code
+country	country code (2 letter, ISO 3166-1 alpha-2)
+country_code	country code (2 letter, ISO 3166-1 alpha-2)
+country_code_iso3	country code (3 letter, ISO 3166-1 alpha-3)
+country_name	short country name
+country_capital	capital of the country
+country_tld	country specific TLD (top-level domain)
+country_area	area of the country (in sq km)
+country_population	population of the country
+continent_code	continent code
+in_eu	whether IP address belongs to a country that is a member of the European Union (EU)
+postal	postal code / zip code
+latitude	latitude
+longitude	longitude
+latlong	comma separated latitude and longitude
+timezone	timezone (IANA format i.e. “Area/Location”)
+utc_offset	UTC offset (with daylight saving time) as +HHMM or -HHMM (HH is hours, MM is minutes)
+country_calling_code	country calling code (dial in code, comma separated)
+currency	currency code (ISO 4217)
+currency_name	currency name
+languages	languages spoken (comma separated 2 or 3 letter ISO 639 code with optional hyphen separated country suffix)
+asn	autonomous system number
+org	organization name
+hostname	host or domain name associated with the IP (*optional beta add-on, please contact us for details)
+Specific location field
+curl 'https://ipapi.co/ip/'
+Retrieve specific field (e.g. your IP address)
+
+208.67.222.222
+This endpoint returns a single location field for the client (device) that’s making the request. You do not need to specify the IP address, it is inferred from the request. This type of request is typically used on the client side (user’s browser). The location field corresponds to the public IP address of the user. The returned value is plain text.
+
+HTTP Request
+GET https://ipapi.co/{field}/
+
+URL Parameters
+Parameter	Description
+field	A specific location field, possible values are : ip, city, region, region_code, country, country_name, continent_code, in_eu, postal, latitude, longitude, latlong, timezone, utc_offset, languages, country_calling_code, currency, asn, org
+Examples
+https://ipapi.co/ip/
+https://ipapi.co/city/
+https://ipapi.co/country/
+https://ipapi.co/timezone/
+https://ipapi.co/languages/
+https://ipapi.co/currency/
+
+Response
+The response type is plain text and contains the value of the requested field
+
+Field	Description
+ip	public (external) IP address (same as URL ip)
+city	city name
+region	region name (administrative division)
+region_code	region code
+country	country code (2 letter, ISO 3166-1 alpha-2)
+country_code	country code (2 letter, ISO 3166-1 alpha-2)
+country_code_iso3	country code (3 letter, ISO 3166-1 alpha-3)
+country_name	short country name
+country_capital	capital of the country
+country_tld	country specific TLD (top-level domain)
+country_area	area of the country (in sq km)
+country_population	population of the country
+continent_code	continent code
+in_eu	whether IP address belongs to a country that is a member of the European Union (EU)
+postal	postal code / zip code
+latitude	latitude
+longitude	longitude
+latlong	comma separated latitude and longitude
+timezone	timezone (IANA format i.e. “Area/Location”)
+utc_offset	UTC offset (with daylight saving time) as +HHMM or -HHMM (HH is hours, MM is minutes)
+country_calling_code	country calling code (dial in code, comma separated)
+currency	currency code (ISO 4217)
+currency_name	currency name
+languages	languages spoken (comma separated 2 or 3 letter ISO 639 code with optional hyphen separated country suffix)
+asn	autonomous system number
+org	organization name
+hostname	host or domain name associated with the IP (*optional beta add-on, please contact us for details)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Errors
+The API uses the following standard HTTP 4xx client error codes :
+
+HTTP Status Code	Reason	Response
+400	Bad Request	
+404	URL Not Found	
+403	Authentication Failed	
+405	Method Not Allowed	
+429	Quota exceeded	{ "error": true, "reason": "RateLimited", "message": "..." }
+Additional possible errors with a HTTP 200 status code have a response in the following format :
+
+{ "error": true, "reason": "...", "ip": "..."}
+
+Some examples are :
+
+Reason	Response
+Invalid IP Address	{ "error": true, "reason": "Invalid IP Address", "ip": "..." }
+Reserved IP Address	{ "error": true, "reason": "Reserved IP Address", "ip": "127.0.0.1", "reserved": true}
+If there’s no information available for a particular field, then that field would be assigned a value depending on the chosen output format i.e.
+
+Output Format	Value when field is missing
+json	null
+csv	<empty>
+xml	<empty>
+yaml	null
+a field e.g. postal	None

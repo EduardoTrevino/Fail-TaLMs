@@ -1,0 +1,76 @@
+Logo
+We organise UK open data by location and signpost the source.
+postcode or street
+bng2latlong API: Convert easting and northing to latitude and longitude
+Home
+Convert an OSGB36 easting and northing (British National Grid) to WGS84 latitude and longitude.
+
+Syntax
+https://api.getthedata.com/bng2latlong/[easting]/[northing]
+Response Format
+The default response format is JSON, but you can request XML by adding /xml to the end of your request URL:
+
+https://api.getthedata.com/bng2latlong/[easting]/[northing]/xml
+Clickable Examples
+https://api.getthedata.com/bng2latlong/529090/179645
+https://api.getthedata.com/bng2latlong/529090/179645/xml
+Response
+Fieldname	Description
+status	ok or error.
+error	Where status=error an error message will be provided.
+easting	The easting provided to the API in the request.
+northing	The northing provided to the API in the request.
+latitude	The latitude of the converted coordinates.
+longitude	The longitude of the converted coordinates.
+Licence
+Free to use for any purpose.
+
+A credit and a link back to this page would be appreciated, but not required.
+
+Example Responses
+Successful JSON Response
+
+Request: https://api.getthedata.com/bng2latlong/326897/673919
+
+{
+  "status":"ok",
+  "easting":326897,
+  "northing":673919,
+  "latitude":55.95271,
+  "longitude":-3.17227
+}
+        
+JSON Error Response
+
+Request: https://api.getthedata.com/bng2latlong/not-an-easting/not-a-northing
+
+{
+  "status":"error",
+  "error":"Both <easting> and <northing> must be provided, must be positive integers, and must be within range. Where provided, <format> must be \"xml\" or \"json\"."
+}
+        
+Successful XML Response
+
+Request: https://api.getthedata.com/bng2latlong/326897/673919/xml
+
+<?xml version="1.0" ?>
+<result>
+  <status>ok</status>
+  <easting>326897</easting>
+  <northing>673919</northing>
+  <latitude>55.95271</latitude>
+  <longitude>-3.17227</longitude>
+</result>
+        
+XML Error Response
+
+Request: https://api.getthedata.com/bng2latlong/not-an-easting/not-a-northing/xml
+
+<?xml version="1.0" ?>
+<result>
+  <status>error</status>
+  <error>
+    Both <easting> and <northing> must be provided, must be positive integers, and must be within range. Where provided, <format> must be "xml" or "json".
+  </error>
+</result>
+        

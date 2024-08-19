@@ -1,0 +1,1297 @@
+Geocode.xyz
+
+Geocode
+Batch Geocode
+Geoparse
+API
+Contact
+ LOG IN
+SIGN UP
+Pricing
+Geocoding, Reverse Geocoding, Geoparsing API Terms
+This API receives text input and outputs location information in XML,CSV,JSON, GeoJSON Formats - Worldwide.
+You may access this API with a HTTP/HTTPs request. Or via client libraries in the programming language of your choice: Examples: Perl, PHP, Python, Ruby, R, Nodejs, jQuery, Go. Jump to Geocoding and Geoparsing API, Autocomplete API
+
+ Get an API keyQuick start:
+Reverse Geocoding:
+curl 'https://geocode.xyz/51.50354,-0.12768?geoit=xml&auth=your_api_key'
+Forward Geocoding:
+curl 'https://geocode.xyz/Hauptstr.,+57632+Berzhausen?json=1&auth=your_api_key'
+Geoparsing:
+curl -X POST -d scantext="Ma io stasera volevo cenare al lume di candela, non cucinarci! #Milano #blackout" \
+        -d geoit="XML" \
+	-d auth="your_api_key" \
+        https://geocode.xyz  
+curl -X POST -d scantext="The Vienna Tourist Board [3] operates information and booking booths at the airport Arrival Hall, 7AM-11PM and in the center at 1., Albertinaplatz/Maysedergasse. Information and free maps are also avialable from the ÃBB InfoPoints and offices at train stations." \
+        -d json="1" \
+        https://geocode.xyz 
+curl -X POST -d scantext="The most important museums of Amsterdam are located on the Museumplein, located at the southwestern side of the Rijksmuseum." \
+        -d geojson="1" \
+        https://geocode.xyz  
+Geoparsing and Sentiment Analysis:
+curl -X POST -d scantext="The most important museums of Amsterdam are located on the Museumplein, located at the southwestern side of the Rijksmuseum." \
+        -d geoit="xml" \
+	-d sentiment="analysis" \
+        https://geocode.xyz
+curl -X POST -d scantext="In the bestselling novel Crazy Rich Asians, author Kevin Kwan fills his pages with juicy drama involving Singaporeâs elite families, and he almost devotes the same amount of space to the Southeast Asian nationâs mouthwatering food." \
+        -d geoit="json" \
+        -d sentiment="analysis" \
+        https://geocode.xyz
+Forward Geocoding:
+(POST Method)
+curl -X POST -d locate="415 C'WEALTH AVE WEST Singapore" \
+        -d geoit="XML" \
+        https://geocode.xyz
+Reverse Geocoding:
+(POST Method)
+curl -X POST -d locate="55.6802779000,12.5900501000" \
+        -d geoit="XML" \
+        https://geocode.xyz
+Geolocate your IP Address:
+(POST Method)
+curl -X POST -d locate="128.2.149.108" \
+        -d geoit="XML" \
+        https://geocode.xyz
+You may also access our API via a third party module such as Geo::Parser::Text
+
+What is Geocoding?
+Geocoding is an information retrieval process that is normally divided into Forward Geocoding and Reverse Geocoding
+
+Forward Geocoding is the process of converting a place name (like "Plaza Volateria 3 Parque de Negocios Mas Blau I El Prat de Llobregat 08820 Spain") into geographic coordinates (like latitude 41.3189957000 and longitude 2.0746469000).
+
+
+Reverse Geocoding is the process of converting a latitude,longitude point (like 41.3189957000, 2.0746469000 ) into the description of a location nearest to it (like 1 VOLATERIA Plaza, EL PRAT DE LLOBREGAT, ES)
+
+
+The Geocode.xyz API provides a direct way to Forward and Reverse Geocode* or Geoparse* locations in text.
+
+What is Geoparsing?
+Geoparsing is the process of identifying free-text descriptions of places and parsing out the place names from text. These places names are then geocoded to geographic coordinates expressed as latitude-longitude.
+
+* Geocoding returns a single location coordinates (the match with the highest probability), while Geoparsing returns all locations matched ordered by confidence score.
+Geo Projection (CRS)
+We use Web Mercator, also known as Google Web Mercator, Spherical Mercator, WGS 84 Web Mercator or WGS 84/Pseudo-Mercator.
+
+
+Usage Limits
+There are currently no usage limits but response times on the free ports are normally throttled to no more than 1 request per second for all un-authenticated users combined.
+
+If that is too slow for you, get your own server on the Amazon Cloud using this AMI. (Where the only limits are the physical limitations of the hardware you chose to run the software on).
+
+Or obtain an API key for higher access to the API (Which allows up to 10 requests per second per API key).
+
+Please note: Usage Limits for unauthenticated users may be changed at any time without further notice. Email geodata@geocode.xyz if you wish to obtain greater access for non-for-profit uses.
+
+Geocoding API Request Format
+A Geocoding API request must be of the following form:
+
+https://geocode.xyz/location?outputformat or https://geocode.xyz/?locate=location&outputformat
+
+To avoid "File name too long" errors on long input strings, we recommend using the parameterized version with the "locate" parameter via a GET or POST method.
+
+
+There are 4 possible output formats:
+
+https://geocode.xyz/41.3189957000,2.0746469000?json=1 ~ json (recommended) indicates output in JavaScript Object Notation (JSON)
+https://geocode.xyz/41.3189957,2.0746469?json=1&callback=test ~ json with a callback parameter indicates output in "JSON with padding" (JSONp)
+https://geocode.xyz/1 VOLATERIA Plaza, EL PRAT DE LLOBREGAT?geoit=xml ~ xml indicates output as XML
+https://geocode.xyz/1 VOLATERIA Plaza, EL PRAT DE LLOBREGAT?geoit=csv ~ csv indicates output as CSV
+If you have an API key for unthrottled access, include your key with the request,
+eg: https://geocode.xyz/[request]&auth=[your api key]
+Geoparsing API Request Format
+A Geoparsing API request must be of the following form:
+
+https://geocode.xyz/?scantext={text}&outputformat
+
+
+(you may also send text to the API via a POST method)
+
+Geocoding and Geoparsing Lookups
+View Response Data SpecificationsRequired parameters
+There is only one required parameter for single location geocoding - locate, and one required parameter for geoparsing - scantext.
+
+You may pass the location to the API directly as in: https://geocode.xyz/location or via a parameter name as in: https://geocode.xyz/?locate=location or https://geocode.xyz/?scantext=text
+Parameter Name	Description	Permitted Values
+locate	The location may be a street address/postal code/landmark/ip address/city name/etc (forward geocoding) or a latitude,longitude point (reverse geocoding).	A string containing a free text location or a point expressed as a latitude,longitude pair (in that order!)
+scantext	Free form text containing locations.	text
+Output format options
+If the output parameters are ommited, the output will default to html.
+Otherwise you have five output options to choose from, as shown above (XML, JSON, JSONp, GeoJSON and CSV)
+The output format may be set via the geoit parameter, which takes the following values:
+geoit=XML
+geoit=JSON
+geoit=JSONp
+geoit=GeoJSON
+geoit=CSV
+Optional parameters
+Parameter Name	Description	Permitted Values
+auth	The authentication code (for registered/subscribed users).	A string containing the authentication code provided by our registration interface.
+geoit	The output type desired.	Only one of two allowed values: XML or CSV
+json	Output in JSON format.	Optionally you may request data in JSON format. Accepted value: 1 (For JSONp include a callback parameter)
+geojson	Output in GeoJSON format.	Optionally you may request data in GeoJSON format. Accepted value: 1
+callback	Callback string if Output is in JSONP format.	Optionally you may request data in JSONP format. The callback can be any string value and is required if you request JSONp output.
+id	optionally you can include your own transaction id. this will be returned along with the response if provided.	a number or string no longer that 15 bytes.
+strictmode	Just return the core address components on reverse geocoding (skip computing administrative boundaries, poi information, etc)	Allowed values are Integer 0 or 1.
+nostrict	Set promiscuous mode on. Will return all matched locations, even those with low confidence. (might result in a lot of matched items in geoparsing mode)	Allowed values are Integer 0 or 1.
+sentiment	Do Sentiment Analysis in geoparsing mode.	Allowed values are Integer 0 or 1.
+moreinfo	Return more information, such as the Timezone and Elevation of the location.	Allowed values are Integer 0 or 1.
+region	The region parameter defines the region/country to limit the search results for geoparsing functions (scantext) or single response geocoding (locate)	Technical Note: This API geoparses/geocodes a large array of location data, from street addresses to zip codes. Sometimes the exact same zip code or address may exist in more than one country. For example: Zip Code 04548-005 will match:
+11 Rue Astrid Lindgren, Differdange LU 04548-005 Luxembourg
+AVENIDA DOUTOR CARDOSO DE MELO, SÃ£o Paulo BR 04548-005 Brazil
+1 Ratana, Ratana NZ 04548-005 New Zealand
+If you know the region your data is at, you can avoid these ambiguities by using the region parameter. e,g., 04548-005?region=BR
+
+Allowed Values: {AF, AX, AL, DZ, AS, AD, AO, AI, AQ, AG, AR, AM, AW, AU, AT, AZ, BS, BH, BD, BB, BY, BE, BZ, BJ, BM, BT, BO, BQ, BA, BW, BR, IO, VG, BN, BG, BF, BI, KH, CM, CA, CV, KY, CF, TD, CL, CN, CX, CC, CO, KM, CG, CK, CR, HR, CU, CW, CY, CZ, CI, DK, DJ, DM, DO, EC, EG, SV, GQ, ER, EE, ET, FK, FO, FJ, FI, FR, GF, PF, TF, GA, GM, GE, DE, GH, GI, GR, GL, GD, GP, GU, GT, GG, GN, GW, GY, HT, HM, HN, HK, HU, IS, IN, ID, IR, IQ, IE, IM, IL, IT, JM, JP, JE, JO, KZ, KE, KI, KS, KW, KG, LA, LV, LB, LS, LR, LY, LI, LT, LU, MO, MG, MW, MY, MV, ML, MT, MH, MQ, MR, MU, YT, MX, FM, MD, MC, MN, ME, MS, MA, MZ, MM, NA, NR, NP, NL, AN, NC, NZ, NI, NE, NG, NU, NF, KP, MK, MP, NO, OM, PK, PW, PS, PA, PG, PY, PE, PH, PN, PL, PT, PR, QA, RO, RU, RW, RE, GS, SH, KN, LC, PM, VC, BL, SX, MF, WS, SM, ST, SA, SN, RS, SC, SL, SG, SK, SI, SB, SO, ZA, KR, SS, ES, LK, SD, SR, SJ, SZ, SE, CH, SY, TW, TJ, TZ, TH, TL, TG, TK, TO, TT, TN, TR, TM, TC, TV, UM, UG, UA, AE, UK, US, UY, UZ, VU, VA, VE, VN, VI, WF, EH, YE, CD, ZM, ZW, }
+
+For example: region=UK (limit to the UK) or region=FR (limit to France)
+You may also submit more than one region codes divided by commas ",". For example: region=UK,FR (limit to either the UK or France).
+To bias results to larger geographical areas, such as continents, use the following region names:
+
+region=Europe (for Europe, including these countries that are broadly defined as European),
+AD     Andorra
+AL     Albania
+AM     Armenia
+AT     Austria
+AZ     Azerbaijan
+BA     Bosnia
+BE     Belgium
+BG     Bulgaria
+BY     Belarus
+CH     Switzerland
+CY     Cyprus
+CZ     Czech Republic
+DE     Germany
+DK     Denmark
+EE     Estonia
+ES     Spain
+FI     Finland
+FO     Faroe Islands
+FR     France
+GE     Georgia
+GR     Greece
+HR     Croatia
+HU     Hungary
+IE     Ireland
+IL     Israel
+IM     Isle of Man
+IS     Iceland
+IT     Italy
+KS     Kosovo
+LI     Liechtenstein
+LT     Lithuania
+LU     Luxembourg
+LV     Latvia
+MC     Monaco
+MD     Moldova
+ME     Montenegro
+MK     North Macedonia
+MT     Malta
+NL     Netherlands
+NO     Norway
+PL     Poland
+PT     Portugal
+RO     Romania
+RS     Serbia
+RU     Russia
+SE     Sweden
+SI     Slovenia
+SK     Slovakia
+TR     Turkey
+UA     Ukraine
+UK     United Kingdom
+
+region=Oceania (for Asian, Oceania countries such as Australia, New Zealand, etc
+AS 	 American Samoa
+AU 	 Australia
+CK 	 Cook Islands
+FJ 	 Fiji Islands
+FM 	 Federated States of Micronesia
+GU 	 Guam
+KI 	 Kiribati
+MH 	 Marshall Islands
+MP 	 Saipan
+NC 	 New Caledonia
+NF 	 Norfolk Island
+NR 	 Nauru
+NU 	 Niue
+NZ 	 New Zealand
+PF 	 French Polynesia
+PG 	 Papua New Guinea
+PW 	 Palau
+SB 	 Solomon Islands
+TK 	 Tokelau
+TL 	 East Timor
+TO 	 Tonga
+TV 	 Tuvalu
+UM 	 Wake Island
+VU 	 Vanuatu
+WF 	 Wallis and Futuna Islands
+WS 	 Samoa
+
+)
+region=Asia (for the rest of Asia , except Oceania. There may be some overlap with Europe and Oceania)
+AE     United Arab Emirates
+AF     Afghanistan
+AM     Armenia
+AZ     Azerbaijan
+BD     Bangladesh
+BH     Bahrain
+BN     Brunei
+BT     Bhutan
+CC     Cocos Islands
+CN     China
+CX     Christmas Island
+GE     Georgia
+HK     Hong Kong
+ID     Indonesia
+IL     Israel
+IN     India
+IO     Diego Garcia
+IQ     Iraq
+IR     Iran
+JO     Jordan
+JP     Japan
+KG     Kyrgyzstan
+KH     Cambodia
+KP     North Korea
+KR     South Korea
+KW     Kuwait
+KZ     Kazakhstan
+LA     Laos
+LB     Lebanon
+LK     Sri Lanka
+MM     Myanmar
+MN     Mongolia
+MO     Macau
+MV     Maldives
+MY     Malaysia
+NP     Nepal
+OM     Oman
+PH     Philippines
+PK     Pakistan
+PS     Palestine
+QA     Qatar
+SA     Saudi Arabia
+SG     Singapore
+SY     Syria
+TH     Thailand
+TJ     Tajikistan
+TM     Turkmenistan
+TR     Turkey
+TW     Taiwan
+UZ     Uzbekistan
+VN     Vietnam
+YE     Yemen
+
+region=SouthAmerica (or Latin America) Geocoding will be biased to these countries
+AR     Argentina
+BO     Bolivia
+BR     Brazil
+CL     Chile
+CO     Colombia
+EC     Ecuador
+GY     Guyana
+PE     Peru
+PY     Paraguay
+SR     Suriname
+UY     Uruguay
+VE     Venezuela
+
+For North America you may simply pass region=US,CA,MX (Meaning USA, Canada and Mexico).
+Similarly, you may also bias geocoding to specific country subsets by using the country codes above.)
+To further bias results to a specific city or cities, use the citybias parameter by passing city names separated by commas.
+All supported countries of the World
+The complete worldwide country list under the area of coverage (with official country names) is provided here:
+
+AD     Andorra
+AE     United Arab Emirates
+AF     Afghanistan
+AG     Antigua and Barbuda
+AI     Anguilla
+AL     Albania
+AM     Armenia
+AN     Netherlands Antilles
+AO     Angola
+AQ     Antarctica
+AR     Argentina
+AS     American Samoa
+AT     Austria
+AU     Australia
+AW     Aruba
+AX     Aland Islands
+AZ     Azerbaijan
+BA     Bosnia and Herzegovina
+BB     Barbados
+BD     Bangladesh
+BE     Belgium
+BF     Burkina Faso
+BG     Bulgaria
+BH     Bahrain
+BI     Burundi
+BJ     Benin
+BL     Saint-Barthélemy
+BM     Bermuda
+BN     Brunei Darussalam
+BO     Bolivia
+BQ     Bonaire
+BR     Brazil
+BS     Bahamas
+BT     Bhutan
+BW     Botswana
+BY     Belarus
+BZ     Belize
+CA     Canada
+CC     Cocos (Keeling) Islands
+CD     Zaire
+CF     Central African Republic
+CG     Congo
+CH     Switzerland
+CI     Côte d'Ivoire
+CK     Cook Islands
+CL     Chile
+CM     Cameroon
+CN     China
+CO     Colombia
+CR     Costa Rica
+CU     Cuba
+CV     Cape Verde
+CW     Curaçao
+CX     Christmas Island
+CY     Cyprus
+CZ     Czech Republic
+DE     Germany
+DJ     Djibouti
+DK     Denmark
+DM     Dominica
+DO     Dominican Republic
+DZ     Algeria
+EC     Ecuador
+EE     Estonia
+EG     Egypt
+EH     Western Sahara
+ER     Eritrea
+ES     Spain
+ET     Ethiopia
+FI     Finland
+FJ     Fiji
+FK     Falkland Islands
+FM     Micronesia
+FO     Faroe Islands
+FR     France
+GA     Gabon
+GD     Grenada
+GE     Georgia
+GF     French Guiana
+GG     Guernsey
+GH     Ghana
+GI     Gibraltar
+GL     Greenland
+GM     Gambia
+GN     Guinea
+GP     Guadeloupe
+GQ     Equatorial Guinea
+GR     Greece
+GS     SGSSI
+GT     Guatemala
+GU     Guam
+GW     Guinea-Bissau
+GY     Guyana
+HK     Hong Kong
+HM     Heard Island and Mcdonald Islands
+HN     Honduras
+HR     Croatia
+HT     Haiti
+HU     Hungary
+ID     Indonesia
+IE     Ireland
+IL     Israel
+IM     Isle of Man
+IN     India
+IO     British Indian Ocean Territory
+IQ     Iraq
+IR     Iran
+IS     Iceland
+IT     Italy
+JE     Jersey
+JM     Jamaica
+JO     Jordan
+JP     Japan
+KE     Kenya
+KG     Kyrgyzstan
+KH     Cambodia
+KI     Kiribati
+KM     Comoros
+KN     Saint Kitts and Nevis
+KP     North Korea
+KR     South Korea
+KS     Kosovo
+KW     Kuwait
+KY     Cayman Islands
+KZ     Kazakhstan
+LA     Lao PDR
+LB     Lebanon
+LC     Saint Lucia
+LI     Liechtenstein
+LK     Sri Lanka
+LR     Liberia
+LS     Lesotho
+LT     Lithuania
+LU     Luxembourg
+LV     Latvia
+LY     Libya
+MA     Morocco
+MC     Monaco
+MD     Moldova
+ME     Montenegro
+MF     Saint-Martin
+MG     Madagascar
+MH     Marshall Islands
+MK     North Macedonia
+ML     Mali
+MM     Myanmar
+MN     Mongolia
+MO     Macao
+MP     Northern Mariana Islands
+MQ     Martinique
+MR     Mauritania
+MS     Montserrat
+MT     Malta
+MU     Mauritius
+MV     Maldives
+MW     Malawi
+MX     Mexico
+MY     Malaysia
+MZ     Mozambique
+NA     Namibia
+NC     New Caledonia
+NE     Niger
+NF     Norfolk Island
+NG     Nigeria
+NI     Nicaragua
+NL     Netherlands
+NO     Norway
+NP     Nepal
+NR     Nauru
+NU     Niue
+NZ     New Zealand
+OM     Oman
+PA     Panama
+PE     Peru
+PF     French Polynesia
+PG     Papua New Guinea
+PH     Philippines
+PK     Pakistan
+PL     Poland
+PM     Saint Pierre and Miquelon
+PN     Pitcairn
+PR     Puerto Rico
+PS     Palestinian Territory
+PT     Portugal
+PW     Palau
+PY     Paraguay
+QA     Qatar
+RE     Réunion
+RO     Romania
+RS     Serbia
+RU     Russian Federation
+RW     Rwanda
+SA     Saudi Arabia
+SB     Solomon Islands
+SC     Seychelles
+SD     Sudan
+SE     Sweden
+SG     Singapore
+SH     Saint Helena
+SI     Slovenia
+SJ     Svalbard and Jan Mayen Islands
+SK     Slovakia
+SL     Sierra Leone
+SM     San Marino
+SN     Senegal
+SO     Somalia
+SR     Suriname
+SS     South Sudan
+ST     Sao Tome and Principe
+SV     El Salvador
+SX     Saint-Martin
+SY     Syria
+SZ     Swaziland
+TC     Turks and Caicos Islands
+TD     Chad
+TF     French Southern Territories
+TG     Togo
+TH     Thailand
+TJ     Tajikistan
+TK     Tokelau
+TL     Timor-Leste
+TM     Turkmenistan
+TN     Tunisia
+TO     Tonga
+TR     Turkey
+TT     Trinidad and Tobago
+TV     Tuvalu
+TW     Taiwan
+TZ     Tanzania
+UA     Ukraine
+UG     Uganda
+UK     United Kingdom
+UM     US Minor Outlying Islands
+US     United States of America
+UY     Uruguay
+UZ     Uzbekistan
+VA     Vatican
+VC     Saint Vincent and Grenadines
+VE     Venezuela
+VG     British Virgin Islands
+VI     Virgin Islands, US
+VN     Viet Nam
+VU     Vanuatu
+WF     Wallis and Futuna Islands
+WS     Samoa
+YE     Yemen
+YT     Mayotte
+ZA     South Africa
+ZM     Zambia
+ZW     Zimbabwe
+
+citybias	A string containing city names separated by commas.	This is an optional parameter to bias geocoding / geoparsing results to specific cities. (to be used in conjunction with region biasing for best results)
+
+Autocomplete API
+You may submit partial street names/post codes with the streetname and region parameters to get autocomplete results for the most possible street/city names and zip/postal codes if applicable.
+Post Code example: https://geocode.xyz/?region=DE&geoit=json&streetname=0113
+Output:
+
+{
+   "longt":"0.00000",
+   "standard":{
+      "street":{
+         "01139":{
+            "city":"Dresden, SN",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"3178"
+         },
+         "01139 Dresden":{
+            "city":"Dresden",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"2014"
+         },
+         "01139 Radebeul":{
+            "city":"Radebeul",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"21"
+         },
+         "01139 Mickten":{
+            "city":"Mickten",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"6"
+         },
+         "01139 Kaditz":{
+            "city":"Kaditz",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"6"
+         },
+         "01139 Dresden, ":{
+            "city":"Dresden, ",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"4"
+         },
+         "01139 Radebeul, SN":{
+            "city":"Radebeul, SN",
+            "post":"01139",
+            "street":"",
+            "num":"",
+            "score":"1"
+         }
+      }
+   },
+   "matches":7,
+   "error":{
+      "description":"Your request produced the following suggestions.",
+      "code":"008"
+   },
+   "suggestion":{
+      "region":"DE",
+      "locate":"01139 Dresden, SN"
+   },
+   "latt":"0.00000"
+}
+
+Street example: https://geocode.xyz/?region=DE&geoit=JSON&streetname=albani
+Output:
+{
+   "longt":"0.00000",
+   "standard":{
+      "street":{
+         "AlbanistraÃe":{
+            "city":"Munchen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"3"
+         },
+         "AlbanistraÃe MÃ¼nchen":{
+            "city":"MÃ¼nchen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"3"
+         },
+         "Albaniwall":{
+            "city":"GÃ¶ttingen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"3"
+         },
+         "Albaniplatz":{
+            "city":"GÃ¶ttingen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"2"
+         },
+         "Albanikirchhof":{
+            "city":"GÃ¶ttingen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"2"
+         },
+         "Albanistrasse":{
+            "city":"Munchen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"2"
+         },
+         "Albanistrasse MÃ¼nchen":{
+            "city":"MÃ¼nchen",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"2"
+         }
+      }
+   },
+   "matches":7,
+   "error":{
+      "description":"Your request produced the following suggestions.",
+      "code":"008"
+   },
+   "suggestion":{
+      "region":"DE",
+      "locate":"AlbanistraÃe Munchen"
+   },
+   "latt":"0.00000"
+}
+You may also provide a cityname parameter, to autocomplete both the city the street names. For eg:
+https://geocode.xyz/?region=DE&geoit=JSON&streetname=Gartenstra%C3%9Fe&cityname=Bad+Segeberg
+Output:
+
+{
+   "longt":"0.00000",
+   "standard":{
+      "street":{
+         "GartenstraÃe":{
+            "city":"Bad Segeberg",
+            "post":"",
+            "street":"",
+            "num":"",
+            "score":"28"
+         }
+      }
+   },
+   "matches":1,
+   "error":{
+      "description":"Your request produced the following suggestions.",
+      "code":"008"
+   },
+   "suggestion":{
+      "region":"DE",
+      "locate":""
+   },
+   "latt":"0.00000"
+}
+
+Required Input Parameters
+Parameter Name	Description
+region	Two letter region code.
+streetname	The partial street name or the partial zip code
+cityname	The partial city name
+geoit	Output type: Either XML or JSON.
+Expected Output Parameters
+Parameter Name	Description	Expected Output Values
+name	The full street name.	String.
+cities	The city names for each street	An array of city names.
+city	city name	A single city name.
+post	the post or zip code	A single postal or zip code.
+street	street name	A single street name.
+num	street number	A single street number.
+score	The ranking score of the match. The larger the number the better the match	A single number.
+
+Geocoding and/or Geoparsing Responses
+Geocoding/Geoparsing responses are returned in the format indicated by the output flag within the URL request's path.
+The output may contain the following parameters:
+
+Parameter Name	Description	Expected Output Values
+latt	The latitude.	A decimal number.
+longt	The longitude.	A decimal number.
+elevation	The elevation in meters.	A decimal number.
+timezone	The timezone.	A string.
+geocode	geocode is an alphanumeric string representing both latitude and longitude as one value. Nearby points will have similar geocodes.	A string composed of two parts: 1) The name/acronym of the most promiment location in the vicinity, 2) A string no longer than 5 bytes defining the location within a 10 m by 10 m box.
+altgeocode	altgeocode is an alternative geocode. Differently from geocode, altgeocode contains the closest location name to the point. If geocode and altgeocode are the same, then you are near the center of the promiment location.	A string composed of two parts: 1) The name/acronym of the closest location in the vicinity, 2) A string no longer than 5 bytes defining the location within a 10 m by 10 m box.
+geonumber	geonumber is the geocode number. Every 10m by 10m square of the earth is converted to a unique integer, the geo number.	An integer. (Note: To retreive the latitude,longitude of the center of the 10x10m2 polygon, pass the geonumber parameter to the API: For example: geocode.xyz/?geonumber=3058575098175 )
+id	Transaction id.	If supplied in the input the transaction id will be returned along with the output.
+stnumber	The properly formated address to be returned.	The street number (integer value).
+staddress	The properly formated address to be returned.	The formated street address.
+city	The properly formated address to be returned.	The city name.
+prov	The properly formated address to be returned.	The country code.
+countryname	The properly formated address to be returned.	The country name.
+confidence	The Geocoding Confidence Score is a number representing our accuracy estimate on a geocoding request. This number ranges from 1 to 0. A higher score indicates a closer match (A score of 1 meaning best match accuracy.) A result with confidence score less than 0.5 is rarely returned to the user (it will most likely result in a suggestion being returned.)
+The algorithm that computes the confidence score takes into account two main factors: a) The quality of the matched data in the DB, b) The number and type of matches between the input string and the structured location data in the DB.
+
+a number [0..1] 1=best match, 0=no response.
+MentionIndices	In a Geoparsing response indicates the index location in the string where a given location was matched.	One or more numbers, separated by commas.
+matchtype	In a Geoparsing response indicates the type of location matched.	Possible values {street, intersection, locality, landmark, postcode}
+inlatt	The input latitude.	If the input contains a latitude/longitude pair for reverse geocoding.
+inlongt	The input longitude.	If the input contains a latitude/longitude pair for reverse geocoding.
+distance	The distance of the result location from the input location.	in kilometres (km)
+class	The class parameter, derived from OpenStreetMap's maxspeed, indicates the speed limit and/or the road type.	In the reverse geocoding API. For eg: class=100 indicates speed limit of 100 km/h, or class=footway the path type. If class is a number it is a speed limit in kilometers per hour, otherwise it is the road type or a number with miles per hour indication.
+For a detailed explanation of the class parameter read the maxspeed wiki page.
+
+poi	poi - Point of Interest data is derived from OpenStreetMap's POI tags.	It will return the nearest point of interest to the input point. For example: https://geocode.xyz/40.47552,19.49845?geoit=xml will return: 
+<poi>
+<amenity>restaurant</amenity>
+<name>Kuzum Baba Restaurant</name>
+<poilat>40.46744</poilat>
+<poilon>19.49298</poilon>
+<poidist>1.011</poidist>
+</poi>
+
+ The poidist is the distance of the input point to the point of interest location in kilometres (km).
+osmtags	osmtags - OpenStreetMap administrative area tags of the smallest admin level.	It will return the administrative area tags of the smallest admin level polygon where the input point is in. For example: https://geocode.xyz/40.47552,19.49845?geoit=xml&lang=en will return: 
+<osmtags>
+<ADMINSTATE>MUNICIPALITY</ADMINSTATE>
+<COMMUN-NAM>Vlore</COMMUN-NAM>
+<COM-ID>12312</COM-ID>
+<DIS-ID>123</DIS-ID>
+<ET-ID>352</ET-ID>
+<FAM-97>22114.00000000000</FAM-97>
+<POP-97>86107.00000000000</POP-97>
+<PREFECTURE>VLORE</PREFECTURE>
+<PRE-ID>12</PRE-ID>
+<Shape-Area>18585393.9730999991</Shape-Area>
+<Shape-Leng>27870.71835150000</Shape-Leng>
+<addr-district>BASHKIA VLORE</addr-district>
+<admin-level>8</admin-level>
+<boundary>administrative</boundary>
+<email>info@vlora.gov.al</email>
+<name-ckb>vloer</name-ckb>
+<name-eo>Vlora</name-eo>
+<name-fr>Vlora</name-fr>
+<name-ku>Vlor</name-ku>
+<name-nl>Vlore</name-nl>
+<name-pl>Wlora</name-pl>
+<name>Vlore</name>
+<phone>+355 33 421 421;+355 33 421 422</phone>
+<population>130827</population>
+<postal-code>9401-9403</postal-code>
+<type>boundary</type>
+<website>https://www.vlora.gov.al/</website>
+<wikidata>Q159610</wikidata>
+<wikipedia-en>Vlore</wikipedia-en>
+<wikipedia>sq:Vlora</wikipedia>
+</osmtags>
+
+adminareas	adminareas - All admin levels of the OpenStreetMap administrative area tags.	It will return the administrative area polygon hierarchy where the input point is in. For example: https://geocode.xyz/40.47552,19.49845?geoit=xml&lang=en will return: 
+
+<adminareas>
+<admin>
+<level>6</level>
+<ISO3166-2>AL-12</ISO3166-2>
+<admin-level>6</admin-level>
+<boundary>administrative</boundary>
+<contact-email>info@qarkuvlore.gov.al;kryetari@qarkuvlore.gov.al</contact-email>
+<contact-phone>+355 33 421 612</contact-phone>
+<contact-website>https://www.qarkuvlore.gov.al</contact-website>
+<name-an>Prefectura de Vlore</name-an>
+<name-ar>mqT`@ flwrh</name-ar>
+<name-be-tarask>Vliora</name-be-tarask>
+<name-be>Voblasts' Vliora</name-be>
+<name-bg>Vl'ora (oblast)</name-bg>
+<name-br>Vlore (rannvro)</name-br>
+<name-ca>Comtat de Vlore</name-ca>
+<name-ceb>Qarku i Vlores</name-ceb>
+<name-cs>Vlora (kraj)</name-cs>
+<name-de>Qark Vlora</name-de>
+<name-el>Nomos Aulona</name-el>
+<name-en>Vlore County</name-en>
+<name-eo>Provinco Vlore</name-eo>
+<name-es>Condado de Vlore</name-es>
+<name-et>Vlore maakond</name-et>
+<name-eu>Vlore konderria</name-eu>
+<name-fi>Vloren maakunta</name-fi>
+<name-fr>Prefecture de Vlore</name-fr>
+<name-ga>Contae Vlore</name-ga>
+<name-gl>Condado de Vlore</name-gl>
+<name-hi>vlore praaNt</name-hi>
+<name-hr>Vlorski okrug</name-hr>
+<name-hu>Vlora megye</name-hu>
+<name-hy>Vlyorayi gavarh</name-hy>
+<name-it>Prefettura di Valona</name-it>
+<name-ja>vuroraZhou </name-ja>
+<name-ka>vloris olk`i</name-ka>
+<name-kg>Vlore (kizunga)</name-kg>
+<name-ko>beulroreo ju</name-ko>
+<name-lmo>Prefettura de Valona</name-lmo>
+<name-lt>Vliores apskritis</name-lt>
+<name-mk>Valona (oblast)</name-mk>
+<name-nl>Vlore (prefectuur)</name-nl>
+<name-no>Vlore (region)</name-no>
+<name-pl>Obwod Wlora</name-pl>
+<name-pnb>Swbh wlwrh</name-pnb>
+<name-pt>Vlore (prefeitura)</name-pt>
+<name-ro>Regiunea Vlore</name-ro>
+<name-ru>Vliora (oblast')</name-ru>
+<name-sco>Vlore Coonty</name-sco>
+<name-simple>Vlore County</name-simple>
+<name-sk>Vlore (kraj)</name-sk>
+<name-sv>Vlore prefektur</name-sv>
+<name-tl>Kondado ng Vlore</name-tl>
+<name-tr>Avlonya ili</name-tr>
+<name-uk>Vl'ora (oblast')</name-uk>
+<name-ur>Swbh wlwrh</name-ur>
+<name-vi>Vlore (hat)</name-vi>
+<name-war>Vlore (condado)</name-war>
+<name-zh>Fu Luo Le Zhou </name-zh>
+<name>Qarku i Vlores</name>
+<population>189282</population>
+<ref-nuts-3>AL035</ref-nuts-3>
+<ref-nuts>AL035</ref-nuts>
+<ref>AL035</ref>
+<type>boundary</type>
+<wikidata>Q192849</wikidata>
+<wikipedia>sq:Qarku i Vlores</wikipedia>
+</admin>
+<admin>
+<level>7</level>
+<admin-level>7</admin-level>
+<boundary>administrative</boundary>
+<email>info@vlora.gov.al</email>
+<name-fr>District de Vlora</name-fr>
+<name-ru>Vliora</name-ru>
+<name>Bashkia Vlore</name>
+<phone>+355 33 421 421;+355 33 421 422</phone>
+<population>194147</population>
+<type>boundary</type>
+<website>https://www.vlora.gov.al/</website>
+<wikidata>Q159610</wikidata>
+<wikipedia>en:Vlore</wikipedia>
+</admin>
+<admin>
+<level>8</level>
+<ADMINSTATE>MUNICIPALITY</ADMINSTATE>
+<COMMUN-NAM>Vlore</COMMUN-NAM>
+<COM-ID>12312</COM-ID>
+<DIS-ID>123</DIS-ID>
+<ET-ID>352</ET-ID>
+<FAM-97>22114.00000000000</FAM-97>
+<POP-97>86107.00000000000</POP-97>
+<PREFECTURE>VLORE</PREFECTURE>
+<PRE-ID>12</PRE-ID>
+<Shape-Area>18585393.9730999991</Shape-Area>
+<Shape-Leng>27870.71835150000</Shape-Leng>
+<addr-district>BASHKIA VLORE</addr-district>
+<admin-level>8</admin-level>
+<boundary>administrative</boundary>
+<email>info@vlora.gov.al</email>
+<name-ckb>vloer</name-ckb>
+<name-eo>Vlora</name-eo>
+<name-fr>Vlora</name-fr>
+<name-ku>Vlor</name-ku>
+<name-nl>Vlore</name-nl>
+<name-pl>Wlora</name-pl>
+<name>Vlore</name>
+<phone>+355 33 421 421;+355 33 421 422</phone>
+<population>130827</population>
+<postal-code>9401-9403</postal-code>
+<type>boundary</type>
+<website>https://www.vlora.gov.al/</website>
+<wikidata>Q159610</wikidata>
+<wikipedia-en>Vlore</wikipedia-en>
+<wikipedia>sq:Vlora</wikipedia>
+</admin>
+</adminareas>
+
+NearRoad	The nearest Road to the input point.	
+NearRoadDistance	The distance of the nearest Road to the input point in kilometres (km).	
+Error Codes
+The output could contain an error code. If your query does not produce coordinates the latt and longt containers will be empty.
+These are the error codes that could be returned upon an unsuccessful lookup:
+002 auth has ran out of credits.
+
+003 Authentication token: auth not found.
+
+005 Postal Code is not in the proper Format.
+
+006 Request Throttled.
+
+007 Supply a valid query.
+
+008 Your request did not produce any results. Check your spelling and try again.
+
+Sometimes when a location is not found a suggestion (or more) will be contained within <suggestion> xml or json tags.
+for example:
+Little Plate Shop 9 11 Deodar Drive Burliegh Heads QLD 4220
+<geodata>
+	<error>
+		<code>008</code>
+		<description>16. Your request did not produce any results.</description>
+	</error>
+	<suggestion>
+		<locate>9 11 DEODAR DRIVE BURLIEGH HEADS 4220 QLD </locate>
+		<region>AU</region>
+	</suggestion>
+</geodata>
+
+
+or in JSON format:
+{ 
+  "matches": null,
+  "error": {
+    "description": "15. Your request did not produce any results.",
+    "code": "008"
+  },
+  "suggestion": {
+    "region": "AU", 
+    "locate": "9 11 DEODAR DRIVE BURLIEGH HEADS  4220 QLD "
+  }
+}
+
+
+Running the suggestion back to the API with the region parameter (if defined) produces the correct response:
+Example: https://geocode.xyz/9 11 DEODAR DRIVE BURLIEGH HEADS 4220 QLD?region=AU
+<geodata>
+	<latt>-28.0814</latt>
+	<longt>153.44616</longt>
+	<standard>
+		<addresst>DEODAR DR</addresst>
+		<region>QLD</region>
+		<postal>4220</postal>
+		<stnumber>11</stnumber>
+		<prov>AU</prov>
+		<city>BURLEIGH HEADS</city>
+		<countryname>Australia</countryname>
+		<confidence>0.7</confidence>
+	</standard>
+</geodata>
+
+
+Batch Geocoding Example
+Bash one liner for batch geocoding CSV/Text files using the geocode.xyz CSV API
+Here is a bash one liner that takes as input a CSV file of locations, and outputs the file with the location information appended at the end of each line:
+#!/bin/bash
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    echo $line,`curl -X POST -d locate="$line" -d geoit="csv" https://geocode.xyz`;
+done < "$1"
+Save as geocode.sh then chmod a+x geocode.sh then run it as:
+./geocode.sh input.csv>output.csv
+Your input file might look something like:
+input.csv
+
+Berlin, DE
+London, UK
+Rome, IT
+and the output
+output.csv
+
+Berlin, DE,200,0.90,52.50219,13.40741
+London, UK,200,0.90,51.50565,-0.11599
+Rome, IT,200,0.80,41.94176,12.61489
+Four columns were appended to the input file. The status (200 success), the confidence score (a number between 0 and 1, with 1 being best match), the Latitude and the Longitude.
+Here is another batch geocoding example, which sends a set number of calls in parallel, and prints out more results on the output file:
+
+#!/usr/bin/perl
+use strict;
+use utf8::all;
+my $o = open(F, ">out.csv");
+my $oo = open(NOTF, ">outerr.csv");
+use JSON::XS;
+use Encode;
+use Data::Dumper;
+use File::Slurp;
+use URI::Escape;
+use HTTP::Request;
+my @lines = read_file( "/home/ec2-user/smalltest.txt", {binmode => ':utf8'} ) ;
+use HTTP::Async;
+my %args = (
+           slots =>  30,
+         timeout =>  180, #(seconds)
+max_request_time =>  300, #(seconds)
+   max_redirect  =>   7,
+   poll_interval =>  0.05 #(seconds)
+);
+my $async = HTTP::Async->new(%args);
+my %rows;
+my $rownum=1;
+my %output;
+foreach (@lines) {
+chomp;
+$rows{$rownum} = $_;
+my $safe = uri_escape_utf8($_);
+$async->add( HTTP::Request->new( GET => "https://geocode.xyz/$safe?json=1&row=$rownum&auth="         ) );
+$rownum++;
+}
+while ( $async->not_empty ) {
+    if ( my $response = $async->next_response ) {
+        my $input = Dumper $response->{_request}->{'_uri'};
+        if ($input =~ /geocode.xyz\/(.*)\?json=1\&row=(\d+)/) {
+		$output{$2} = $response->{'_content'};
+        }
+        } else {
+        }
+}
+foreach (sort {$a <=> $b} keys %rows) {
+	my $response = $output{$_};
+eval {
+	my $myHashRefDecoded = decode_json($response);
+ 	my %ohash = %$myHashRefDecoded;
+	if ($ohash{error}) {
+		print NOTF $rows{$_} . ",error\n";
+	} else {
+		delete $ohash{postal} if $ohash{postal}=~ /^HASH/;
+		delete $ohash{stnumber} if $ohash{stnumber}=~ /^HASH/;
+		my $confidence = $ohash{standard}{confidence} || $ohash{confidence};
+		my $stnumber = $ohash{standard}{stnumber} || $ohash{stnumber};
+		my $addresst = $ohash{standard}{addresst} || $ohash{staddress};
+		my $city = $ohash{standard}{city} || $ohash{city};
+		my $prov = $ohash{standard}{prov} || $ohash{prov};
+		my $postal = $ohash{standard}{postal} || $ohash{postal};
+		my $countryname = $ohash{standard}{countryname} || $ohash{countryname};
+		print F $rows{$_} . ",$ohash{latt},$ohash{longt},$confidence,\"$stnumber\",\"$addresst\",\"$city\",\"$prov\",\"$postal\",\"$countryname\"\n";
+	}
+};
+}
+close F;
+close NOTF;
+
+
+For best results, use our Batch Geocoding Interface.
+
+
+More Code examples:
+Python Reverse Geocoding:
+
+import requests
+
+resp = requests.get("https://geocode.xyz/51.4647,0.0079?json=1&auth=your auth code")
+json = resp.json()
+print(json['altgeocode'])
+Forward Geocoding:
+# Python 3
+import http.client, urllib.parse
+
+conn = http.client.HTTPConnection('geocode.xyz')
+
+params = urllib.parse.urlencode({
+    'auth': 'your auth code',
+    'locate': '34 THREADNEEDLE STREET, London, United Kingdom',
+    'region': 'UK',
+    'json': 1,
+    })
+
+conn.request('GET', '/?{}'.format(params))
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode('utf-8'))
+Reverse Geocoding:
+# Python 3
+import http.client, urllib.parse
+
+conn = http.client.HTTPConnection('geocode.xyz')
+
+params = urllib.parse.urlencode({
+    'auth': 'your auth code',
+    'locate': '51.51420,-0.08477',
+    'region': 'UK',
+    'json': 1,
+    })
+
+conn.request('GET', '/?{}'.format(params))
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode('utf-8'))
+Geoparsing:
+# Python 3
+import http.client, urllib.parse
+
+conn = http.client.HTTPConnection('geocode.xyz')
+
+params = urllib.parse.urlencode({
+    'auth': 'your auth code',
+    'scantext': 'The most important museums of Amsterdam are located on the Museumplein, located at the southwestern side of the Rijksmuseum.',
+    'region': 'NL',
+    'json': 1,
+    'sentiment': 1
+    })
+
+conn.request('GET', '/?{}'.format(params))
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode('utf-8'))
+
+R tidygeocoder
+
+Ruby Reverse Geocoding:
+
+
+require "net/http"
+require "json"
+
+resp = Net::HTTP.get(URI("https://geocode.xyz/48.1206,16.55724?json=1&auth=your auth code"))
+json = JSON.parse(resp)
+puts json['altgeocode']
+Forward Geocoding:
+require 'uri'
+require 'net/http'
+
+uri = URI('https://geocode.xyz')
+
+params = {
+    'auth' => 'your auth code',
+    'locate' => 'Plein 1944 in Nijmegen',
+    'geoit' => 'xml'
+}
+
+uri.query = URI.encode_www_form(params)
+
+response = Net::HTTP.get_response(uri)
+
+puts response.read_body
+
+PHP Geoparsing:
+
+$queryString = http_build_query([
+  'auth' => 'your auth code',
+  'scantext' => 'Stora Torget 1, 582 19 Linkoping',
+  'region' => 'SE',
+  'geojson' => '1'
+]);
+
+$ch = curl_init(sprintf('%s?%s', 'https://geocode.xyz', $queryString));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$json = curl_exec($ch);
+
+curl_close($ch);
+
+$apiResult = json_decode($json, true);
+
+print_r($apiResult);
+Nodejs Forward Geocoding:
+
+const axios = require('axios');
+const params = {
+  auth: 'your auth code',
+  locate: 'Stora Torget 1, 582 19 Linkoping',
+  json: '1'
+}
+
+axios.get('https://geocode.xyz', {params})
+  .then(response => {
+    console.log(response.data);
+  }).catch(error => {
+    console.log(error);
+  });
+Reverse Geocoding:
+const axios = require('axios');
+const params = {
+  auth: 'your auth code',
+  locate: '58.41032,15.62162',
+  json: '1'
+}
+
+axios.get('https://geocode.xyz', {params})
+  .then(response => {
+    console.log(response.data);
+  }).catch(error => {
+    console.log(error);
+  });
+jQuery Forward Geocoding:
+
+$.ajax({
+    url: 'https://geocode.xyz',
+    data: {
+      auth: 'your auth code',
+      locate: 'Avenue FR DE LA JOSNIERE 13 LE DORAT',
+      json: '1'
+    }
+  }).done(function(data) {
+    console.log(data);
+  });
+Reverse Geocoding:
+$.ajax({
+    url: 'https://geocode.xyz',
+    data: {
+      auth: 'your auth code',
+      locate: '46.21777,1.07601',
+      json: '1'
+    }
+  }).done(function(data) {
+    console.log(JSON.parse(data));
+  });
+
+Go Reverse Geocoding:
+
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+)
+
+func main() {
+	baseURL, _ := url.Parse("https://geocode.xyz")
+
+	baseURL.Path += "/"
+
+	params := url.Values{}
+	params.Add("auth", "your auth code")
+	// Query = latitude,longitude
+	params.Add("locate", "51.507822,-0.076702")
+	// Optional parameters
+	params.Add("lang", "en")
+	params.Add("json", "1")
+
+	baseURL.RawQuery = params.Encode()
+
+	req, _ := http.NewRequest("GET", baseURL.String(), nil)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+}

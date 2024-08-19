@@ -1,0 +1,291 @@
+IP Location - Geolocation
+IP Geolocation and reverse IP geocoding technology on the web are about detecting requests coming from your visitors and locating them in the world, down to the city they are in, based on their IP address.
+
+geoPlugin is the easiest way for you to geolocate your visitors, allowing you to provide geolocalised content more relevant to their geographical location. Simple examples are redirecting visitors to language-specific pages, providing your product prices in your visitor's local currency, knowing whether European GDPR privacy rules apply, and much more.
+
+We have been providing stable, reliable, fast and free IP geolocation coming from many millions of visitors for our many thousands of clients worldwide since 2006 (and our website hasn't changed in design since!).
+
+API access
+geoPlugin provides a free geolocation API in multiple different programming languages in a single API call. There is no software installation required, no API key and whether your programming language of choice be Javascript, PHP, XML, JSON, ASP, or CSV, geoPlugin has a way to simply and efficiently geo-localize your visitors.
+
+Each simple call to the API will also provide an accurate and up-to-date geolocalized currency converter so you know how much your product costs in your visitor's currency
+
+IP Geolocation can be performed on both IPv4 and IPv6 addresses using the same API request format. geoPlugin detects whether the IP is IPv4 or IPv6 automatically so you don't have to.
+
+Check out the main IP geolocation WebServices section or the additional reverse geocoding extras for more information
+
+View the IP geolocation data you can easily for your web applications
+IP geolocation example (IPv4 or IPv6) (IP shown is your IP address)
+128.2.149.108
+  
+
+
+A free AJAX currency converter
+Convert 
+
+United States Dollars $
+into	
+Euro €
+
+
+geoplugin.net Status
+Below are our external monitors for webservice uptime and internal live graphs on the lookups we handle.
+Live API statistics
+
+Our live graphs (live delay 5 minutes) on all our geolocation APIs on geoplugin.net
+(scale 1000 requests per second)
+
+
+
+And API latency in processing your request (time taken from request received to reply sent)
+(scale 100m = 100 milliseconds)
+
+
+Please keep geoPlugin a free and valuable webmaster resource
+by linking back to us on your pages that use geoPlugin:
+<a href="http://www.geoplugin.com/geolocation/" target="_new">IP Geolocation</a> by <a href="http://www.geoplugin.com/" target="_new">geoPlugin</a>
+IP Geolocation by geoPlugin
+
+
+
+geoPlugin uses the GeoLite database from MaxMind.
+Use of geoPlugin services making use of geolocation data is under condition of acceptance of the Creative Commons Attribution-ShareAlike 3.0 Unported License. The attribution requirement may be met by including the following in all advertising and documentation mentioning features of or use of this database:
+This product includes GeoLite data created by MaxMind, available from
+  <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
+
+
+Use of any of our web services implies agreement to our Privacy Policy and User Agreement
+
+
+
+
+To get started using geoPlugin, use the links below.
+Quickstart User Guide
+In-depth User Guide
+About geoPlugin
+To register or not register?
+geoPlugin web services
+SSL Requests
+Javascript
+PHP
+JSON
+XML
+ASP
+CSV
+geoPlugin Currency Converter
+Free IP Geolocation Currency Conversion
+A full IP Geolocation Currency Converter API
+geoPlugin webservice Extras
+Free IP Geolocation Currency Conversion
+A full Currency Converter API
+geoPlugin webservice Extras
+Latitude/Longitude to Place
+Place to Latitude/Longitude
+Nearby Places
+Nearest Transport
+Latitude/Longitude to Postal Code
+Postal Code to Latitude/Longitude
+EU Cookie Law
+GDPR
+EU VAT Rate
+Some real-world examples
+Discussion Group
+Frequently Asked Questions
+Premium geoPlugin access
+
+Some ideas of how to use geoPlugin web services
+Below are just a few examples1) using geoPlugin's geolocation webservice, with detailed code for reproduction of how you can use the values returned from geoPlugin.
+For sure, the things you can do with these geolocalized data are pretty much limitless, but here are just a few examples to give you some ideas.
+
+If you have other examples, submit them to us and once verified, we will post them here (of course with credits).
+Example 1: Simple Hello World
+<html>
+ <head>
+  <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+ </head>
+ <body>
+  <script language="Javascript"> 
+	document.write("Welcome to our visitors from "+geoplugin_city()+", "+geoplugin_countryName()); 
+  </script>
+ </body>
+</html>
+
+Welcome to our visitors from Pittsburgh, United States
+
+
+
+
+Example 2: Buying a television
+<?php
+$geoPlugin_array = unserialize( file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']) );
+ 
+if ( $geoPlugin_array['geoplugin_currencyCode'] == 'USD' ) { //let's use a different base currency
+ 
+	$geoPlugin_array = unserialize( file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR'] . '&base_currency=EUR') );
+ 
+	echo '<h3>A &#8364;800 television from Germany will cost you '.$geoPlugin_array['geoplugin_currencySymbol'] . round( (800 * $geoPlugin_array['geoplugin_currencyConverter']),0) . '</h3>';
+ 
+} else {
+ 
+	echo '<h3>A $800 television from the US will cost you ' . $geoPlugin_array['geoplugin_currencySymbol'] . round( (800 * $geoPlugin_array['geoplugin_currencyConverter']),0) . '</h3>';
+ 
+}
+?>
+
+A €800 television from Germany will cost you $884
+
+
+Example 3: Your own personalized weather forecast
+Using the webservice from the Weather Underground, we can easily provide a personalized geolocated weather forecast for our visitors.
+
+This code requires the ParseXml class.
+<?php
+ 
+$geoplugin = unserialize( file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']) );
+ 
+if ( is_numeric($geoplugin['geoplugin_latitude']) && is_numeric($geoplugin['geoplugin_longitude']) ) {
+ 
+	$lat = $geoplugin['geoplugin_latitude'];
+	$long = $geoplugin['geoplugin_longitude'];
+	//set farenheight for US
+	if ($geoplugin['geoplugin_countryCode'] == 'US') {
+		$tempScale = 'fahrenheit';
+		$tempUnit = '&deg;F';
+	} else {
+		$tempScale = 'celsius';
+		$tempUnit = '&deg;C';
+	}
+	require_once('ParseXml.class.php');
+ 
+	$xml = new ParseXml(); 
+	$xml->LoadRemote("http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query={$lat},{$long}", 3);
+	$dataArray = $xml->ToArray();
+ 
+	$html = "<center><h2>Weather forecast for " . $geoplugin['geoplugin_city'];
+	$html .= "</h2><table cellpadding=5 cellspacing=10><tr>";
+ 
+	foreach ($dataArray['simpleforecast']['forecastday'] as $arr) {
+ 
+		$html .= "<td align='center'>" . $arr['date']['weekday'] . "<br />";
+		$html .= "<img src='http://icons-pe.wxug.com/i/c/a/" . $arr['icon'] . ".gif' border=0 /><br />";
+		$html .= "<font color='red'>" . $arr['high'][$tempScale] . $tempUnit . " </font>";
+		$html .= "<font color='blue'>" . $arr['low'][$tempScale] . $tempUnit . "</font>";
+		$html .= "</td>";
+ 
+ 
+	}
+	$html .= "</tr></table>";
+ 
+	echo $html;
+}
+ 
+?>
+
+will output your own weather forecast.
+Weather forecast for Pittsburgh
+
+
+Example 4: Embedding a Google Map
+This is a geolocation example to embed a map. The example uses Google maps and as such requires your own free Google maps API key
+<html>
+ <head>
+  <script src="http://maps.google.com/maps?file=api&v=2&key=Your_Google_Maps_API_Key" type="text/javascript"></script>
+  <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+ 
+  <script type="text/javascript">
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.addControl(new GLargeMapControl());
+        map.addControl(new GMapTypeControl());
+        map.setCenter(new GLatLng(geoplugin_latitude(), geoplugin_longitude()), 12);
+      }
+    }
+  </script>
+ </head>
+ <body>
+   <div id="map" style="width: 500px; height: 300px"></div>
+   <script>load();</script>
+ </body>
+</html>
+
+
+
+Example 5: An AJAX Currency Converter
+Normally, AJAX can't be used to perform cross-site requests, but using jQuery's JSON request, we can sidestep this annoyance.
+This example, while not geolocation, stemmed from the currency converter that is included in the geolocation webservice.
+The following currency converter example uses Google's Javascript API as the source for jQuery, and geoPlugin for the currency converter javascript. Of course, you may substitute these for your own versions.
+
+ 
+<script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+<!-- when using Google to load JSON API -->
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="http://www.geoplugin.net/ajax_currency_converter.gp" type="text/javascript"></script>
+<!-- When using your own JSON API -->
+<!-- <script src="http://www.geoplugin.net/ajax_currency_converter.gp?nogoog=1" type="text/javascript">
+</script> -->
+<input type='text' id='gp_amount' size='4' /> 
+<select id="gp_from"></select> to <select id="gp_to"></select>
+<p><input type='button' onClick='gp_convertIt()' value = 'Convert It' /></p>
+<div id="gp_converted"></div>
+<script>gp_currencySymbols()</script>
+
+That's all that is needed to embed an AJAX real-time currency converter like below on your pages!
+
+Convert 
+ 
+United States Dollars $
+ to 
+Euro €
+
+
+
+Submit your own examples
+Geolocation is very powerful and what you can do with it is practically limitless.
+
+Do you have any geolocation examples that use geoPlugin that you want to share with the world? If so, submit them to us and once verified, we will post them here (of course with credits).
+
+geoPlugin is all about helping webmasters in the simplest way with geolocation, so share your ideas with others. Currently supported languages for examples are Javascript, JSON, PHP, and XML.
+
+
+
+Help geoPlugin grow
+For geoPlugin to grow, we need to spread the word of this service.
+All that we ask in return for us helping you, is that you add some recognition of geoPlugin in your pages, by adding the following unobtrusive HTML to the foot of your pages:
+
+<a href="http://www.geoplugin.com/" target="_new" title="geoPlugin for IP geolocation">Geolocation by geoPlugin</a>
+Geolocation by geoPlugin
+
+
+Support geoPlugin and keep this service free!
+
+See also
+Quickstart User Guide
+In-depth User Guide
+About geoPlugin
+To register or not register?
+geoPlugin web services
+SSL Requests
+Javascript
+PHP
+JSON
+XML
+ASP
+CSV
+geoPlugin Currency Converter
+Free IP Geolocation Currency Conversion
+A full Currency Converter API
+geoPlugin webservice Extras
+Latitude/Longitude to Place
+Place to Latitude/Longitude
+Nearby Places
+Nearest Transport
+Latitude/Longitude to Postal Code
+Postal Code to Latitude/Longitude
+EU Cookie Law
+GDPR
+EU VAT Rate
+Some real-world examples
+Discussion Group
+Frequently Asked Questions
+Premium geoPlugin access

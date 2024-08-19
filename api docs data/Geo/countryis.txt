@@ -1,0 +1,46 @@
+Country.is
+Country is an open-source geolocation API that finds a user's country (and nothing else) from their IP address. It works both with IPv4 and IPv6.
+
+The public instance we run at api.country.is is free to use. It does not require an API key or impose usage quotas.
+
+ 
+Usage
+Country has a minimal 🔥 interface.
+
+Have your browser or app query its own IP address.
+
+ https://api.country.is
+{
+  "ip": "128.2.149.108",
+  "country": "US"
+}
+Query an abitrary IP.
+
+ https://api.country.is/9.9.9.9
+{
+  "ip": "9.9.9.9",
+  "country": "US"
+}
+See the data sources.
+
+ https://api.country.is/info
+{
+  "cloudflare": {
+    "enabled": true
+  },
+  "maxmind": {
+    "enabled": true,
+    "build": "2024-07-16"
+  }
+}
+Country automatically checks for new MaxMind data every 24 hours.
+
+Deployment
+If you prefer not to use the hosted service, run your own private server with Docker.
+
+Notes
+Country uses geolocation data provided by Cloudfare and MaxMind.
+
+Since 30 December 2019, you need to register for a license key to download the MaxMind data if you're running a private instance.
+
+Our public instance does not log requests.

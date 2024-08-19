@@ -1,0 +1,187 @@
+API Address
+Last search engine update: 08/19/2024
+The address API allows you to quickly perform an address search, but also to be able to associate coordinates with an address ("geocode") according to several criteria. We explain everything in detail here: Guide to the Address API
+
+Are you frequently reaching the API request limit of 50 calls/second/IP?
+
+You have 2 options:
+
+You can install an instance of the API on your own servers. We show you how to do this on this page: Install a docker instance with BAN data
+You are a public actor AND you cannot install an instance on your Information System: you can request a lifting of this limit using this Simplified Procedure: Request a lifting of limit
+/search/
+Entry point for geocoding.
+
+Use the q parameter to do a full-text search:
+
+curl "https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port"
+With limit we can control the number of elements returned:
+
+curl "https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&limit=15"
+With autocomplete you can disable autocomplete processing:
+
+curl "https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&autocomplete=0"
+With lat and lon we can give a geographic priority:
+
+curl "https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&lat=48.789&lon=2.789"
+The type , postcode (Postal code) and citycode (INSEE code) filters allow you to restrict your search:
+
+curl "https://api-adresse.data.gouv.fr/search/?q=8+bd+du+port&postcode=44380"
+curl "https://api-adresse.data.gouv.fr/search/?q=paris&type=street"
+The return is a geojson FeatureCollection respecting the GeoCodeJSON spec :
+
+{
+     "type":"FeatureCollection",
+     "version":"draft",
+     "features":[
+        {
+           "type":"Feature",
+           "geometry":{
+              "type":"Point",
+              "coordinates":[
+                 2.290084,
+                 49.897443
+              ]
+           },
+           "properties":{
+              "label":"8 Boulevard du Port 80000 Amiens",
+              "score":0.49159121588068583,
+              "housenumber":"8",
+              "id":"80021_6590_00008",
+              "type":"housenumber",
+              "name":"8 Boulevard du Port",
+              "postcode":"80000",
+              "citycode":"80021",
+              "x":648952.58,
+              "y":6977867.25,
+              "city":"Amiens",
+              "context":"80, Somme, Hauts-de-France",
+              "importance":0.6706612694243868,
+              "street":"Boulevard du Port"
+           }
+        }
+     ],
+     "attribution":"BAN",
+     "licence":"ODbL 1.0",
+     "query":"8 bd du port",
+     "limit":1
+  }
+GeoJSON coordinates are expressed in WGS-84 (EPSG 4326)
+
+The returned attributes are:
+
+id  : address identifier (interoperability key)
+type  : type of result found
+housenumber  : number “on the plate”
+street  : “on the road” position, placed approximately in the center of the road
+locality  : place name
+municipality  : number “to the municipality”
+score  : value from 0 to 1 indicating the relevance of the result
+housenumber  : number with possible repetition index (bis, ter, A, B)
+street  : name of the road
+name  : possible number and name of road or place
+postcode  : postal code
+city ​​code  : INSEE code of the municipality
+city  : name of the municipality
+district  : name of the district (Paris/Lyon/Marseille)
+oldcitycode  : INSEE code of the old municipality (if applicable)
+oldcity  : name of the old municipality (if applicable)
+context  : department number, department and region name
+label  : full label of the address
+x : geographic coordinates in legal projection
+y : geographic coordinates in legal projection
+importance : importance indicator (technical field)
+/reverse/
+Entry point for reverse geocoding.
+
+The lat and lon parameters are required:
+
+curl "https://api-adresse.data.gouv.fr/reverse/?lon=2.37&lat=48.357"
+The type parameter allows you to force the return type:
+
+curl "https://api-adresse.data.gouv.fr/reverse/?lon=2.37&lat=48.357&type=street"
+Same response format as for the /search/ entry point .
+
+/search/csv/
+Entry point for mass geocoding from a CSV file.
+
+The CSV file, which must not exceed 50 MB in size, must be passed via the data parameter . Please note the at sign after data= .
+
+curl -X POST -F data=@path/to/file.csv https://api-adresse.data.gouv.fr/search/csv/
+By default, all columns are concatenated to form the address that will be geocoded. The columns to be used can be defined via multiple columns parameters :
+
+curl -X POST -F data=@path/to/file.csv -F columns=voie -F columns=ville https://api-adresse.data.gouv.fr/search/csv/
+It is possible to specify the name of a column containing the INSEE code or the Postal code to limit searches, for example:
+
+curl -X POST -F data=@path/to/file.csv -F columns=voie -F columns=ville -F citycode=ma_colonne_code_insee https://api-adresse.data.gouv.fr/search/csv/
+curl -X POST -F data=@path/to/file.csv -F columns=voie -F columns=ville -F postcode=colonne_code_postal https://api-adresse.data.gouv.fr/search/csv/
+We can use the file https://adresse.data.gouv.fr/exemples/search.csv as an example.
+
+curl -X POST -F data=@search.csv -F columns=adresse -F columns=postcode https://api-adresse.data.gouv.fr/search/csv/
+Finally, in the event of industrialization of geocoding, it may be relevant to specifically list the fields expected in the response, to limit the size of the file obtained, and therefore speed up the transfer and reduce the carbon footprint.
+
+curl -X POST -F data=@search.csv -F columns=adresse -F columns=postcode -F result_columns=result_id -F result_columns=result_score https://api-adresse.data.gouv.fr/search/csv/
+/reverse/csv/
+Entry point for mass reverse geocoding from a CSV file.
+
+The CSV file, encoded in UTF-8 and currently limited to 6 MB, must be passed via the data parameter . It must contain the latitude (or lat ) and longitude (or lon or lng ) columns.
+
+curl -X POST -F data=@path/to/file.csv https://api-adresse.data.gouv.fr/reverse/csv/
+We can use the file https://adresse.data.gouv.fr/exemples/reverse.csv as an example.
+
+Technical documentation
+
+get
+/search
+Entry point for geocoding
+
+post
+/search/csv
+Entry point for mass geocoding from a CSV file
+
+get
+/reverse
+Entry point for reverse geocoding
+
+post
+/reverse/csv
+Entry point for mass reverse geocoding from a CSV file
+
+Attributes
+ Search by text
+The q variable allows you to search by name.
+
+Good to know
+It is possible to use name search to do autocomplete.
+curl 'https://api-adresse.data.gouv.fr/search/?q=20%20avenue%20de%20S%C3%A9gur%2C%20Paris&type=housenumber&autocomplete=1'
+Copy
+[
+  {
+    "label": "20 Avenue de Ségur 75007 Paris",
+    "score": 0.9716981818181817,
+    "housenumber": "20",
+    "id": "75107_8909_00020",
+    "name": "20 Avenue de Ségur",
+    "postcode": "75007",
+    "citycode": "75107",
+    "x": 649266.35,
+    "y": 6861406.23,
+    "city": "Paris",
+    "district": "Paris 7e Arrondissement",
+    "context": "75, Paris, Île-de-France",
+    "type": "housenumber",
+    "importance": 0.68868,
+    "street": "Avenue de Ségur"
+  }
+]
+Try me
+20 avenue de Ségur, Paris
+Autocomplete
+Kind
+
+number
+
+Street
+
+place name
+
+municipality

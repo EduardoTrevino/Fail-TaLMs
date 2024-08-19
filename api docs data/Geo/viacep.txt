@@ -1,0 +1,104 @@
+Free high-performance webservice for consulting Brazilian Postal Codes (CEPs).
+
+Accessing the CEP webservice
+To access the webservice, a zip code in the format of {8} digits must be provided, example: " 01001000 ".
+After the zip code, the desired return type must be provided, which must be " json " or " xml ".
+
+Example of CEP query:
+viacep.com.br/ws/ 01001000 / json /
+
+CEP Validation
+When querying a ZIP code with an invalid format, for example: " 950100100 " (9 digits), " 95010A10 " (alphanumeric), " 95010 10 " (space), the return code of the query will be a 400 (Bad Request). Before accessing the webservice, validate the ZIP code format and make sure it has {8} digits. An example of how to validate the ZIP code format in javascript is available in the examples below.
+
+When querying a valid but non-existent ZIP code, for example: " 99999999 ", the return will contain an " error " value equal to " true ". This means that the ZIP code queried was not found in the database. See how to handle this "error" in javascript in the examples below.
+
+Return Formats
+See examples of accessing the webservice and the different types of return:
+
+JSON
+URL : viacep.com.br/ws/01001000/json/​​​
+
+    {
+      "cep": "01001-000",
+      "logradouro": "Praça da Sé",
+      "complemento": "lado ímpar",
+      "unidade": "",
+      "bairro": "Sé",
+      "localidade": "São Paulo",
+      "uf": "SP",
+      "ibge": "3550308",
+      "gia": "1004",
+      "ddd": "11",
+      "siafi": "7107"
+    }
+            
+JSONP
+URL : viacep.com.br/ws/01001000/json/?callback=callback_name​​​
+
+    callback_name({
+      "cep": "01001-000",
+      "logradouro": "Praça da Sé",
+      "complemento": "lado ímpar",
+      "unidade": "",
+      "bairro": "Sé",
+      "localidade": "São Paulo",
+      "uf": "SP",
+      "ibge": "3550308",
+      "gia": "1004",
+      "ddd": "11",
+      "siafi": "7107"
+    });
+            
+XML
+URL: viacep.com.br/ws/ 01001000 / xml /
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <xmlcep>
+        <cep>01001-000</cep>
+        <logradouro>Praça da Sé</logradouro>
+        <complemento>lado ímpar</complemento>
+        <unidade></unidade>
+        <bairro>Sé</bairro>
+        <localidade>São Paulo</localidade>
+        <uf>SP</uf>
+        <ibge>3550308</ibge>
+        <gia>1004</gia>
+        <ddd>11</ddd>
+        <siafi>7107</siafi>
+    </xmlcep>
+            
+IBGE Origin: Access Website
+GIA/ICMS Origin (SP only): View PDF (Page 137)
+DDD Origin: Access Website
+SIAFI Origin: Access Website
+
+Examples: Auto-Fill Address via Zip Code
+Example using jQuery
+Example of accessing the webservice using jQuery.
+Filling in addresses via zip code with jQuery
+
+Javascript example
+Example of accessing the webservice with Javascript.
+Filling in the address via zip code with Javascript
+
+ZIP Code Search
+There are needs, for example, when registering online, where the customer does not know the ZIP code of their street and it will be necessary to perform a search to verify the existence of a ZIP code that corresponds to the address. To search for a ZIP code in the database, three mandatory parameters are required (State, City and Street), and for City and Street a minimum number of three characters is also required in order to avoid extremely broad results.
+
+Identical to the query by ZIP code, when searching by address it is also necessary to inform the return format which must be " json " or " xml ". The result will be ordered by the proximity of the street name and has a maximum limit of 50 (fifty) ZIP codes. Therefore, the more specific the input parameters, the greater the accuracy of the result.
+
+Examples of searching by address:
+viacep.com.br/ws/ RS / Porto Alegre / Domingos / json /
+viacep.com.br/ws/ RS / Porto Alegre / Domingos Jose / json /
+viacep.com.br/ws/ RS / Porto Alegre / Domingos+Jose / json /
+
+The examples above demonstrate different ways of searching for the occurrences "Domingos" and "José" in the city of "Porto Algre/RS". When the name of the city or street does not contain at least three characters, the return code will be a 400 (Bad Request).
+
+Found an outdated ZIP code?
+Access the form below to update online.
+Update ZIP Code
+
+Modules and Packages provided by Collaborators
+Do you need to integrate your programming language with ViaCEP?
+Check for modules or packages to facilitate your process.
+Modules and Packages
+
