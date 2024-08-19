@@ -1,0 +1,160 @@
+Free database for election polls, API with JSON file (Open Data, ODbL)
+We make our database of election polls available to the public as an API via a JSON file as part of Open Data under the ODC Open Database License (ODC-ODbL) .
+
+Contents of the free database
+Structure of the JSON file
+Terms of use for the free database (license)
+Compact version of the database
+Integration of the database API
+JavaScript
+python
+PHP
+Contents of the free database
+This JSON file contains information from each election poll about:
+
+Parliament, Institute and Client
+Survey results for the individual parties
+Date of publication
+Survey period
+Number of respondents
+Survey method [Data field added on 11/23/2022 with values ​​from November 2018]
+Our API is automatically updated when a new election poll is entered into our database and is therefore always up to date with our SQL database. The API contains election polls for federal and state elections from 2017 onwards.
+
+Structure of the JSON file
+The JSON file consists of six blocks:
+
+Database : Information about the database
+License : long ( name ) and short ( shortcut ) name of the license with address of the website ( link )
+Publisher : Domain of our site
+Author : Creator of the database
+Last_Update : last update of the database (format DateTime::W3C) / identical to the content of last_update.txt
+Parliaments : IDs and names
+Shortcut : Federal State / Bundestag
+Name : Name of the Parliament
+Election : Name of the election
+Institutes : IDs and names of institutes ( name )
+Taskers : IDs and names of the clients ( name )
+Methods : IDs and names of the survey methods ( Name )
+Parties : IDs and names
+Shortcut : Abbreviation of the party
+Name : full name of the party
+Surveys : IDs and details of election polls
+Parliament_ID , Institute_ID , Tasker_ID , Method_ID
+Results : Party ID with poll result
+Date : Publication date (in ISO 8601)
+Survey_Period : Survey period with Date_Start and Date_End
+Surveyed_Persons : Number of respondents
+Terms of use for the free database (license)
+Our database with the individual election polls, which is available via our API , can be used within the framework of the ODC-ODbL license . Any use of the database requires, in particular, the naming and linking of our site as well as the retention, naming and linking of the ODC-ODbL license. This is also required for all content that has been created based on the data in our database.
+
+For example, the reference to the use of the database could be:
+Data from dawum.de (License: ODC-ODbL )
+
+Compact version of the database
+If you only need the latest election polls from each institute for each parliament, it is better to use the adapted JSON file , which is much smaller than the file with all election polls and can therefore be loaded more quickly.
+
+Integration of the database API
+Checking the timeliness
+To easily check whether the transferred database on your server is up to date with the current version at DAWUM, the value for Last_Update in Database in your copied database can be compared with the contents of the text file last_update.txt .
+
+Integration with JavaScript and TypeScript
+To integrate the database for election polls, Github user Clemens Rustemeier has provided a free NPM package for JavaScript and TypeScript called German Election Polls . With this NPM package, our database API can be easily used in any JavaScript or TypeScript project. The data can be updated with a single command and the result can be filtered or sorted with another. Everything else can be read in the wiki . If bugs or similar occur, the author recommends opening a new issue . In addition, Clemens Rustemeier asks that questions, feedback, ideas and participation in the NPM package be sent to the following email address:
+
+
+For example, using the NPM package can look like this:
+
+const query = polls.select([
+    Query.include([DataType.Surveys]),
+    Query.Survey.Tasker.ID.isNot([4, 6]),
+    Query.Survey.Release.isGreater(new Date('2021-11-21')),
+    Query.Survey.Parliament.Shortcut.is(['Nordrhein-Westfalen (NRW)', 'Baden-Württemberg']),
+    Query.Survey.Sort.byParticipants(Order.Asc),
+    Query.Survey.Sort.allResults(Order.Desc),
+]);
+The example outputs the following: (1) Only election polls (2) whose sponsors have the ID 4 or 6, (3) were published after November 21, 2021, (4) are for the state elections in North Rhine-Westphalia or Baden-Württemberg and are sorted in ascending order with regard to (5) the election polls and in descending order with regard to (6) the poll values.
+
+Integration with Python
+To integrate the database API with Python, Github user Kevin Kennell has developed a Python script that can be used to convert our JSON database into a CSV format .
+
+Integration with PHP
+To integrate our database API with PHP, the following code can be used, for example. This makes it easy to create a table of election polls by creating and updating your own JSON file:
+
+// Auslesen und Aktualisierung der eigenen JSON-Datei
+
+$API_File_Last_Update = file_get_contents('https://api.dawum.de/last_update.txt');
+
+$MyFile = 'myfile.json';
+
+	// Auslesen der eigenen JSON-Datei
+
+	if (file_exists($MyFile)) {
+		$MyFile_Content = file_get_contents($MyFile);	
+		$PHP_Array = json_decode($MyFile_Content, true);
+	}
+
+	// Aktualisieren / Neuschreiben sowie (Neu)Auslesen der eigenen JSON-Datei
+		
+	if (!file_exists($MyFile) OR ($PHP_Array['Database']['Last_Update'] != $API_File_Last_Update)) {
+		$API_File_Content = file_get_contents('https://api.dawum.de/');	
+		file_put_contents($MyFile, $API_File_Content);
+		
+		$MyFile_Content = file_get_contents($MyFile);
+		$PHP_Array = json_decode($MyFile_Content, true);
+	}
+
+
+// Sortierung der Parteien (ID) nach den Umfragewerten
+
+foreach ($PHP_Array['Surveys'] AS $Surveys) {
+	foreach ($Surveys['Results'] AS $Party_ID => $Result) {
+		$Parties_Sum[$Party_ID] += $Result;
+		$Parties_Count[$Party_ID] += 1;
+	}
+}
+
+	// Bildung des Durchschnitts je Partei
+
+	foreach ($Parties_Sum AS $Party_ID => $Party_Sum) {
+		$Parties_Average[$Party_ID] = ($Party_Sum/$Parties_Count[$Party_ID]);
+	}
+
+arsort($Parties_Average);
+
+
+// Ausgabe des Tabellenkopfes
+
+echo '<table><thead><td>Datum</td><td>Parlament</td><td>Institut</td><td>Auftraggeber</td>';
+
+foreach ($Parties_Average AS $Party_ID => $Party_Average) {
+	echo '<td title="'.$PHP_Array['Parties'][$Party_ID]['Name'].'">'.$PHP_Array['Parties'][$Party_ID]['Shortcut'].'</td>';
+}
+
+echo '</thead>';
+
+
+// Ausgabe des Tabellenkörpers
+
+foreach ($PHP_Array['Surveys'] AS $Content) {
+	echo '<tr><td>'.$Content['Date'].'</td><td>'.$PHP_Array['Parliaments'][$Content['Parliament_ID']]['Name'].'</td><td>'.$PHP_Array['Institutes'][$Content['Institute_ID']]['Name'].'</td><td>'.$PHP_Array['Taskers'][$Content['Tasker_ID']]['Name'].'</td>';
+	
+	// Ausgabe der Parteien/Umfragewerte in der Reihenfolge des Tabellenkopfes
+	
+	foreach ($Parties_Average AS $Party_ID => $Party_Average) {
+		echo '<td>'.$Content['Results'][$Party_ID].'</td>';
+	}
+	
+	echo '</tr>';
+}
+
+echo '</table>';
+The output of this code can be viewed here .
+
+Questions about integration
+If you have any questions about integrating our database API for election polls, please feel free to contact us .
+
+API-using projects and apps
+With the help of our database API, Manuel Gutsche in particular has created PolitPro, a website and apps for Android and iOS that calculates and visualizes current election trends on a daily basis using DAWUM data, as well as analyzing and evaluating election polls.
+
+In addition, Henning Tillmann used our database to create an iOS shortcut in 2018 that allows Siri to display the current poll results, as well as an iOS widget in 2020 that can display the current election polls and an average for the federal election on the home screen of the iPhone or iPad.
+
+Since November 2019, Polittalk , a Discord server for discussing, exchanging and debating current events with discussion rooms and a news feed, has also been using our API to retrieve and output the latest election polls for the federal election, the state elections and the European elections.

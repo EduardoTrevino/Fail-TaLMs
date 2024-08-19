@@ -1,0 +1,297 @@
+CiviX Server API
+CiviX Server is an electronic library providing free public access to law and bylaw content of British Columbia.
+
+CiviX Server contains a comprehensive collection of BC Provincial legislation, civic bylaw content and related policy and legislative materials. It is available on the internet in two forms:
+
+First: The library is available as a web site in which users can browse and search the laws of British Columbia.
+
+Second: The library is available as a portal to the data that runs the site in raw XML1 data format, accessible via a RESTFUL API2.
+
+This direct access to raw data is intended to enable third parties to build or add their own custom applications based on the structure of the data and all the associated search functionality inherent in that structure. The BC Laws website is an example of one such application.
+
+CiviX Server API
+The CiviX Server API specifies how to search and retrieve from the library’s collection in either form: website or XML. Data can be returned formatted for display on another web site, or it can be returned as raw XML data for further processing. Using the API, users can request a list of documents, a specific document, a specific part of a document, a document that contains a search term, a document that contains a search term in a specific part, and more.
+
+The API is updated continually with new features and other changes. If you are interested in working with the CiviX Server API, please sign up for our mailing list to get notifications of new features and other changes.
+
+The CiviX Server API is made available for use under the permissive King’s Printer Licence found here; or the Local Government Bylaw Licence found here. The Licence is dependent on the content you are consuming:
+
+Website	Licence
+www.bclaws.gov.bc.ca	King’s Printer Licence
+City of Abbotsford Bylaws	Local Government Bylaw Licence
+1  XML — eXtensible Markup Language.
+
+2  API — Application Program Interface.
+
+CiviX Server API — In Detail
+ 	∟	Content
+ 	∟	Document
+ 	∟	Search
+
+    Content
+Overview
+The CiviX Server API can be described in terms of how to make a request, and what to expect as the result.
+
+The Content API describes the documents and directories available within the content library.
+
+The CiviX Server content is divided into groups called aspects. The following aspects are currently available:
+
+complete - The complete listing of Statutes and Regulations for the Province of British Columbia.
+coa - The complete listing of Bylaws, Policies and Procedures for the municipality of Abbotsford.
+Many other aspects can be found on the landing page of www.bclaws.ca
+
+You can browse the xml content by appending the aspect you want to www.bclaws.ca/EPLibraries_beta/content/
+
+For example, by navigating to http://www.bclaws.ca/civix/content/complete
+(or for Abbotsford Bylaw content by navigating to https://municipal.qp.gov.bc.ca/civix/content/coa/) you can get a listing of Meta data available at the highest level of the aspect.you can get a listing of Meta data available at the highest level of the aspect.
+
+Example XML Result
+
+     <root>
+        <index>
+            <CIVIX_DOCUMENT_TITLE>Statutes and Regulations</CIVIX_DOCUMENT_TITLE>
+            <CIVIX_DOCUMENT_ID>statreg</CIVIX_DOCUMENT_ID>
+            <CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+            <CIVIX_DOCUMENT_TYPE>index</CIVIX_DOCUMENT_TYPE>
+            <CIVIX_INDEX_FIELDS>XPATH:chapter://*:chapter</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:desc://*:desc</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:oic://*:oic</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:term://*:term</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:regnum:/*[1]/*:regnum</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:type:/*[1]/name()</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:marginalnote://*:marginalnote</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:yearenacted:/*[1]/*:yearenacted</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:insert://*:insert</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:hnote://*:hnote</CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>
+            XPATH:amendment://text()[preceding::processing-instruction()[1][name() = 'amendment-start']]
+            </CIVIX_INDEX_FIELDS>
+            <CIVIX_INDEX_FIELDS>XPATH:title://*:title[1]</CIVIX_INDEX_FIELDS>
+        </index>
+    </root>  
+Navigating
+If the CIVIX_DOCUMENT_TYPE is "index" or "dir", you can navigate through the various index or directory levels by appending the CIVIX_DOCUMENT_ID to the url.
+
+So in our example above you could append the CIVIX_DOCUMENT_ID "statreg" plus "/" to the url giving you http://www.bclaws.ca/civix/content/complete/statreg/
+
+Example XML (Shortened for brevity)
+
+    <root>
+        <dir>
+            <CIVIX_DOCUMENT_TITLE>-- A --</CIVIX_DOCUMENT_TITLE>
+            <CIVIX_DOCUMENT_ID>524872423</CIVIX_DOCUMENT_ID>
+            <CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+            <CIVIX_DOCUMENT_TYPE>dir</CIVIX_DOCUMENT_TYPE>
+            <CIVIX_DOCUMENT_PARENT>statreg</CIVIX_DOCUMENT_PARENT>
+            <CIVIX_DOCUMENT_ANCESTORS>statreg</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_VISIBLE>true</CIVIX_DOCUMENT_VISIBLE>
+        </dir>
+        <dir>
+            <CIVIX_DOCUMENT_TITLE>-- B --</CIVIX_DOCUMENT_TITLE>
+            <CIVIX_DOCUMENT_ID>1944036832</CIVIX_DOCUMENT_ID>
+            <CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+            <CIVIX_DOCUMENT_TYPE>dir</CIVIX_DOCUMENT_TYPE>
+            <CIVIX_DOCUMENT_PARENT>statreg</CIVIX_DOCUMENT_PARENT>
+            <CIVIX_DOCUMENT_ANCESTORS>statreg</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_VISIBLE>true</CIVIX_DOCUMENT_VISIBLE>
+        </dir>
+    </root>
+The content API gives consumers of the API a self-describing RESTFUL interface for navigating BCLaws content. Once a document type is reached (Meta data where CIVIX_DOCUMENT_TYPE is equal to "document") you can then use the Document API to interact with document content
+
+Document
+Overview
+The Document API allows you to retrieve actual documents from a library repository.
+
+To retrieve a document from the repository you need two specific pieces of information: the index identifier and the document identifier. These unique identifiers can be retrieved from the Content API. As an example, the Content API returns the following XML snippet from http://www.bclaws.ca/civix/content/complete/statreg/1421132707/01009/
+
+HTTP Example XML (Shortened for Brevity)
+
+    <root>
+        <document>
+            <CIVIX_DOCUMENT_TITLE>Drinking Water Protection Act</CIVIX_DOCUMENT_TITLE>
+            <CIVIX_DOCUMENT_LOC>-- D --/Drinking Water Protection Act [SBC 2001] c. 9/00_01009_01.xml</CIVIX_DOCUMENT_LOC>
+            <CIVIX_DOCUMENT_ID>01009_01</CIVIX_DOCUMENT_ID>
+            <CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+            <CIVIX_DOCUMENT_INDEX>true</CIVIX_DOCUMENT_INDEX>
+            <CIVIX_DOCUMENT_TYPE>document</CIVIX_DOCUMENT_TYPE>
+            <CIVIX_DOCUMENT_PARENT>01009</CIVIX_DOCUMENT_PARENT>
+            <CIVIX_DOCUMENT_ANCESTORS>01009</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_ANCESTORS>1421132707</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_ANCESTORS>statreg</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_VISIBLE>true</CIVIX_DOCUMENT_VISIBLE>
+            <CIVIX_DOCUMENT_MATERIAL>000000007691000104</CIVIX_DOCUMENT_MATERIAL>
+        </document>
+   </root>
+
+In this example we will retrieve the Drinking Water Protection Act. Its unique document identifier (CIVIX_DOCUMENT_ID) is "01009_01". The unique identifer for the index that it belongs to is "statreg" (CIVIX_INDEX_ID) and by combining these two pieces of information with the aspect identifier "complete" (See Content API) you can retrieve the document using the following url http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01.
+
+Any document within the CiviX Server API can be accessed in this way
+
+XML Documents
+Many of the legislative documents available through the CiviX Server API are in XML format. If a document is available in XML the BCLaws API is able to give enhances API functionality for consuming the information. For the following examples we will user the Drinking Waster Protection Act mentioned above.
+
+Retrieving XML vs HTML
+By default XML documents are transformed into HTML for viewing. If you are interested in accessing the XML content the keyword XML can be appended to the document id link mentioned above.
+
+Example Document URL
+http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01/xml would return the following:
+
+HTTP Example XML (Shortened for Brevity)
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <act:act xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    	xmlns:act="http://www.gov.bc.ca/2013/legislation/act" 
+    	xmlns:bcl="http://www.gov.bc.ca/2013/bclegislation" 
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:in="http://www.qp.gov.bc.ca/2013/inline" 
+        xmlns:fun="http://www.bclaws.ca/xslt/functions" 
+        xmlns:oasis="http://docs.oasis-open.org/ns/oasis-exchange/table" 
+        xmlns:reg="http://www.gov.bc.ca/2013/legislation/regulation"
+        xsi:schemaLocation="http://www.gov.bc.ca/2013/legislation/act 
+        	http://standards.qp.gov.bc.ca/standards/act.xsd" 
+        id="00_01009_01">
+        <act:title>Drinking Water Protection Act</act:title>
+        <act:chapter>9</act:chapter>
+        <act:yearenacted>2001</act:yearenacted>
+        <act:currency>
+            <act:tlc>E3tlc01009</act:tlc>
+        </act:currency>
+        <act:assentedto>April 11, 2001</act:assentedto>
+        <act:content>
+            <bcl:part id="d2e25">
+                <bcl:num>1</bcl:num>
+                <bcl:text>Introductory Provisions</bcl:text>
+                <bcl:section id="d2e34">
+                    <bcl:marginalnote>Definitions</bcl:marginalnote>
+                    <bcl:num>1</bcl:num>
+                    <bcl:text>In this Act:</bcl:text>
+                    <bcl:definition id="d2e45">
+                        <bcl:text>
+                            <bcl:term>aquifer</bcl:term>means an aquifer as defined in the 
+                            <bcl:link resource="leg" xlink:href="/legislation/96483_01" xlink:type="locator"><in:doc>Water 
+                            Act</in:doc></bcl:link>;</bcl:text>
+                    </bcl:definition>
+Multi documents
+Multi documents are documents large enough in size to warrant being split into multiple parts. This can be evidenced by finding documents with an html table of contents within a directory. The Business Corporations Act [SBC 2002] is such an example: http://www.bclaws.ca/civix/content/complete/statreg/1944036832/02057/472785307/?xsl=/templates/browse.xsl
+
+To retrieve the original complete XML document you can take the ID of the table of contents, and append "_multi". For example, the aforementioned Business Corporations Act [SBC 2002] has a table of contents with the ID: "02057_00". To retrieve the full xml document use the ID: "02057_00_multi".
+
+The full document will be listed within the markup with CIVIX_DOCUMENT_VISIBLE and CIVIX_DOCUMENT_INDEX both set to "false":
+
+HTTP Example XML (Shortened for Brevity)
+	
+<document>
+	<CIVIX_DOCUMENT_TITLE>Business Corporations Act</CIVIX_DOCUMENT_TITLE>
+	<CIVIX_DOCUMENT_LOC>-- B --/Business Corporations Act [SBC 2002] c. 57/00_Act/hidden_00_02057_multi.xml</CIVIX_DOCUMENT_LOC>
+	<CIVIX_DOCUMENT_ID>02057_00</CIVIX_DOCUMENT_ID>
+	<CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+	<CIVIX_DOCUMENT_INDEX>false</CIVIX_DOCUMENT_INDEX>
+	<CIVIX_DOCUMENT_TYPE>document</CIVIX_DOCUMENT_TYPE>
+	<CIVIX_DOCUMENT_PARENT>472785307</CIVIX_DOCUMENT_PARENT>
+	<CIVIX_DOCUMENT_ANCESTORS>472785307</CIVIX_DOCUMENT_ANCESTORS>
+	<CIVIX_DOCUMENT_ANCESTORS>02057</CIVIX_DOCUMENT_ANCESTORS>
+	<CIVIX_DOCUMENT_ANCESTORS>1944036832</CIVIX_DOCUMENT_ANCESTORS>
+	<CIVIX_DOCUMENT_ANCESTORS>statreg</CIVIX_DOCUMENT_ANCESTORS>
+	<CIVIX_DOCUMENT_ANCESTORS>02057_00</CIVIX_DOCUMENT_ANCESTORS>
+	<CIVIX_DOCUMENT_VISIBLE>false</CIVIX_DOCUMENT_VISIBLE>
+	<CIVIX_DOCUMENT_ORDER>80</CIVIX_DOCUMENT_ORDER>
+</document>
+Navigating the document with XPath
+XPath is a language for navigating XML documents. XPath syntax is out of scope of this document but there is a good tutorial at W3C Schools.
+
+By using the XPath API users can consume xml documents in a much more granular way.
+
+By appending ""/xpath/"" to the document id url above then appending a valid xpath expression you can retieve snippets from the document.
+
+Example
+For instance in the following example we will just retrieve the definition that defines the term "local government".
+
+http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01/xpath///bcl:definition[bcl:text/in:term='local government']
+
+The previous technique can also be combined with the extraction of information in xml by placing the XML keyword after the CIVIX_DOCUMENT_ID of the documnet
+
+http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01/xml/xpath///bcl:definition[bcl:text/in:term='local government']
+
+Adding Search to the document
+Search terms may also be added to the url to highlight potential areas of interest. More on searching can be found in the Search API Documentation regarding site wide searches.
+
+Example Document Search
+At the document level the keyword search and a search term can be appended to the url. In the following example we retrieve the Drinking Water Protection Act with the phrase "protection plan" highlighted.
+
+www.bclaws.ca/civix/document/id/complete/statreg/01009_01/search/"protection plan"
+
+If the document is of an XML type we can then begin to layer on the Document functionality by using the other techniques above. For instance let's say that we wanted to see only the sections that contain the phrase "protection plan" we can combine the search and xpath API capabilities in the following way
+
+Example Search and XPath
+http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01/search/"protection plan"/xpath///bcl:section[descendant::hit]
+
+Finally if we then want to view only the sections that contain the phrase "protection plan" in an xml format we can compine all the Document API techniques in the following way
+
+Example Search and XPath return XML
+http://www.bclaws.ca/civix/document/id/complete/statreg/01009_01/xml/search/"protection plan"/xpath///bcl:section[descendant::hit]
+
+Document API ordering
+Just a note of caution that although these techniques can be combined to produce interesting, granular results the order within the url is important. When combining the calls from left to right the order must be:
+
+xml (Convert the document from HTML to XML if it's an xml document)
+search (Highlight a search term within the document
+xpath (Limit the documnet to a given XPath exptression, if that documnet is XML)
+XML Definitions
+We provide Schemas to give API consumers an idea of what XML structure to expect when interacting with Legislative XML documents
+
+XSD Schema syntax is out of scope of this document but there is a good tutorial at W3C Schools.
+
+Note: These Schemas are being finalized and all documents may not validate at this time.
+A full schema definition for Acts can be found here.
+
+A full schema definition for Regulations can be found here.
+
+A full schema definition for Bylaws can be found here.
+
+XSLT Stylesheets
+XSLT is a processing language to convert XML to other formats or structure. The following XSLT are available for converting documents using the above XSD definitions into HTML:
+
+The XSLT for converting Acts from XML to HTML can be found here.
+
+The XSLT for converting Regulations from XML to HTML can be found here.
+
+The XSLT for converting Bylaws from XML to HTML can be found here.
+
+Search
+Overview
+The Search API allows you to retrieve search results from the CiviX Server legislation repository.
+
+HTTP Example Request
+Searches are based on an aspect within the CiviX Server API. A list of aspects can be found in the Content API
+
+In this example we will search the "complete" aspect for every occurrence of "water":
+
+http://www.bclaws.ca/civix/search/complete/fullsearch?q=water&s=0&e=20&nFrag=5&lFrag=100
+
+Query Variable Definition
+ 	q	 - 	The query term that you are searching for.
+ 	s	 - 	The first hit you wish to return. Note: there cannot be a difference greater than 100 between the first hit and the last hit for performance reasons.
+ 	e	 - 	The last hit you wish to return. Note: there cannot be a difference greater than 100 between the first hit and the last hit for performance reasons.
+ 	nFrag	 - 	The number of fragment snippets you want to return. Number must be less than 10 for performance reasons. (Note: May not always return exact number of fragments based on search matrix.)
+ 	lFrag	 - 	The length that each of the above fragments should be. Number must be less than 200 for performance reasons. (Note: May not always return exact length of fragments based on search matrix.)
+HTTP Example XML (Shortened for Brevity)
+
+    <results query="CIVIX_DOCUMENT_ROOT:water">
+        <doc hits="1">
+            <CIVIX_DOCUMENT_TITLE>1st Edition TLC - Water Protection Act</CIVIX_DOCUMENT_TITLE>
+            <CIVIX_DOCUMENT_LOC>-- W --/14_Water Protection Act [RSBC 1996] c. 484/01_Tables of Legislative Changes/60_tlc96484.xml</CIVIX_DOCUMENT_LOC>
+            <CIVIX_DOCUMENT_ID>tlc96484</CIVIX_DOCUMENT_ID>
+            <CIVIX_INDEX_ID>statreg</CIVIX_INDEX_ID>
+            <CIVIX_DOCUMENT_INDEX>true</CIVIX_DOCUMENT_INDEX>
+            <CIVIX_DOCUMENT_TYPE>document</CIVIX_DOCUMENT_TYPE>
+            <CIVIX_DOCUMENT_PARENT>tlc96484_f</CIVIX_DOCUMENT_PARENT>
+            <CIVIX_DOCUMENT_ANCESTORS>tlc96484_f</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_ANCESTORS>96484</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_ANCESTORS>901199259</CIVIX_DOCUMENT_ANCESTORS>
+            <CIVIX_DOCUMENT_ANCESTORS>statreg</CIVIX_DOCUMENT_ANCESTORS>
+            <frag>...
+                <b loc="1">Water</b>Protection Act 1996 484 1 am 2003-7-67 12 Mar 2003 (RA) 5</frag>
+        </doc>
+    </results>
+    
+This Meta information can then be used to return documents using the Document API

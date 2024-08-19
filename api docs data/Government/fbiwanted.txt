@@ -1,0 +1,39 @@
+FBI Wanted API
+The FBI Wanted API is designed to help developers easily get information on the FBI Wanted program.
+
+The API is a simple REST endpoint that accepts query parameters for options and returns application/json responses.
+
+Example Usage in Python
+This python example uses the Requests library.
+
+Simple example:
+
+import requests
+import json
+
+response = requests.get('https://api.fbi.gov/wanted/v1/list')
+data = json.loads(response.content)
+print(data['total'])
+print(data['items'][0]['title'])
+Example providing search parameters:
+
+import requests
+import json
+
+response = requests.get('https://api.fbi.gov/wanted/v1/list', params={
+    'field_offices': 'miami'
+})
+data = json.loads(response.content)
+print(data['total'])
+print(data['items'][0]['title'])
+Example with paging:
+
+import requests
+import json
+
+response = requests.get('https://api.fbi.gov/wanted/v1/list', params={
+    'page': 2
+})
+data = json.loads(response.content)
+print(data['page'])
+print(data['items'][0]['title'])

@@ -1,0 +1,43 @@
+REST API & Interactive Documentation
+Federal Register data originates with the files used to produce the print and PDF editions. During the publication process these are transformed into bulk XML files made available by the Government Publishing Office (GPO). Additional MODS files that contain metadata about each document are also produced at the same time.
+
+Because these files are meant to represent what was printed they can sometimes contain errors in the spelling of agency names (for example) or other properties that require some sort of cleanup. Additionally we make use of other related government data and 3rd party APIs to created links between Federal Register documents and the larger regulatory context they are part of.
+
+Because the work of organizing and normalizing the data on FederalRegister.gov is trivial we’ve released a REST API (CSV/JSON) so that others can access and take advantage of this data.
+
+Our various endpoints are detailed below and you can also take advantage of our Interactive Documentation, detailing the different endpoints and possible parameters.
+
+No API keys are needed; all you need is an HTTP client or browser.
+
+Data Format
+The FederalRegister.gov API returns data in either CSV or JSON formats. For most requests, you can customize the data elements returned to maximize performance and reduce the number of network roundtrips.
+
+Results are paginated; users can customize how many results are returned per page. However, you can only paginate through the first 2000 results. If you wish to download more results, use the date range filters.
+
+The data comes pre-processed; the data provided is a combination of data from the GPO MODS (metadata) files and the GPO bulkdata files and has gone through our cleanup procedures.
+We’re using JSON as a lighter-weight, more web-friendly data transfer format
+The API is fully RESTful; URLs are provided to navigate to the full details or to the next page of results (HATEOAS).
+CORS headers are set for cross domain API requests and a simple JSONP interface is also possible; simply add a `callback=foo` query parameter to the end of any URL to have the results be ready for cross-domain JavaScript consumption
+Usage Restrictions
+Republishers of Federal Register material are not permitted to use official NARA or OFR logos or seals.
+
+Endpoints
+Published Documents
+We provide the following API endpoints for accessing published Federal Register documents:
+
+Fetch single document (get): using the FR document number you can get information about any Federal Register document published since 1994.
+Fetch multiple documents (multi-get): convienence method to fetch information about multiple documents at once.
+Search: exposes the full functionality of the FederalRegister.gov advanced search
+Public Inspection Documents
+We also provide a variety of API endpoints for accessing documents on Public Inspection (documents available for public view before publication; read more about public inspection)
+
+Fetch single document (get): fetch the metadata (and a link to the PI PDF) for any document that appeared on public inspection since November 2011
+Fetch multiple documents (multi-get): fetch multiple PI documents at once
+Search: Search documents currently on public inspection by agency, term, document type, etc.
+Current: Get all documents currently on public inspection
+By Date: Get all the documents that were on the public inspection desk on a given day; available since November 2011
+Agencies
+Basic data about agencies that publish in Federal Register is also available.
+
+Ruby API Client
+We’ve also released an API client gem for the ruby users out there. You can find it on GitHub and RubyGems.

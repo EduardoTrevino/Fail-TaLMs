@@ -133,24 +133,24 @@ Please update as you add and intergrate diffrent apis
 | Geo              | Ziptastic                        | 0(scraped) | :x:        | TBD      |
 | Government       | Banco Central Do Brasil          | 0          | :x:        | TBD      |
 | Government       | Belgian Open Data Initiative     | 0          | :x:        | TBD      |
-| Government       | Brasil                           | 0          | :x:        | TBD      |
-| Government       | CiviX                            | 0          | :x:        | TBD      |
+| Government       | Brasil                           | 0(scraped) | :x:        | TBD      |
+| Government       | CiviX                            | 0(scraped) | :x:        | TBD      |
 | Government       | Colorado Information Marketplace | 0          | :x:        | TBD      |
-| Government       | Data USA                         | 0          | :x:        | TBD      |
+| Government       | Data USA                         | 0(scraped) | :x:        | TBD      |
 | Government       | Data.gov                         | 0          | :x:        | TBD      |
 | Government       | Data.gov.au                      | 0          | :x:        | TBD      |
-| Government       | Dawum                            | 0          | :x:        | TBD      |
+| Government       | Dawum                            | 0(scraped) | :x:        | TBD      |
 | Government       | European Commission Taxation     | 0          | :x:        | TBD      |
-| Government       | FBI Wanted                       | 0          | :x:        | TBD      |
-| Government       | Federal Register                 | 0          | :x:        | TBD      |
+| Government       | FBI Wanted                       | 0(scraped) | :x:        | TBD      |
+| Government       | Federal Register                 | 0(scraped) | :x:        | TBD      |
 | Government       | Food Standards Agency            | 0          | :x:        | TBD      |
 | Government       | NYC Open Data                    | 0          | :x:        | TBD      |
 | Government       | Open Data DC                     | 0          | :x:        | TBD      |
 | Government       | Open Government, Canada          | 0          | :x:        | TBD      |
-| Government       | Represent Civic Information      | 0          | :x:        | TBD      |
-| Government       | USAspending                      | 0          | :x:        | TBD      |
+| Government       | Represent Civic Information      | 0(scraped) | :x:        | TBD      |
+| Government       | USAspending                      | 0(scraped) | :x:        | TBD      |
 | Government       | USPTO                            | 0          | :x:        | TBD      |
-| Government       | World Bank                       | 0          | :x:        | TBD      |
+| Government       | World Bank                       | 0(scraped) | :x:        | TBD      |
 | Health           | HealthCare.gov                   | 0          | :x:        | TBD      |
 | Health           | Makeup                           | 0          | :x:        | TBD      |
 | Health           | NPPES                            | 0          | :x:        | TBD      |

@@ -1,0 +1,1318 @@
+About the Indicators API Documentation
+← Developer Information
+About the Indicators API
+﻿Note:﻿ version 2 of the Indicators API was released several years ago, and version 1 was officially retired in November , 2018. Version 1 was discontinued entirely on June 19, 2020 (see link). If you access the older endpoints you will receive a "Resource not found" error. Use the information here to update your code.
+
+The World Bank Indicators API provides access to nearly 16,000 time series indicators. Most of these indicators are available online through tools such as Databank and the Open Data website. The API provides programmatic access to this same data. Many data series date back over 50 years, and can be used to create interesting applications.
+
+The Indicators API provides access to over 45 databases, including:
+
+World Development Indicators
+International Debt Statistcs
+Doing Business
+Human Capital Index
+Subnational Poverty
+And many more
+The Indicators API documentation, the contents of which you can see to the right side of the page under “Developer Information”, explains the different types of call that can be made to the V2 API. It also explains each call’s purpose, how to structure a specific call, what the response looks like, and provides example URL endpoints for API calls.
+
+Get started by reading about the Basic Call Structure.
+
+How to use the V2 Indicators API
+Version 2 (V2) of the Indicators API has been released and replaces V1 of the API. V1 API calls will no longer be supported. To use the V2 API, you must place v2 in the call. For example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL.
+
+The API supports both “http” and “https” protocols.
+
+Besides making calls to the API using an application or custom program, you can also put any of the example API URL endpoints given in the documentation, or your own custom calls, into a web browser and view the results. If you choose to receive the result in JSON format you can use the JSON View Firefox plugin for easily viewing JSON results directly in Firefox.
+
+There are also third party applications and libraries that can make using the API easier depending on your objectives. See Application Showcase for more details.
+
+API Access / Authentication
+API keys and other authentication methods are no longer necessary to access the API.
+
+New Features and Enhancements in the V2 API
+← Developer Information
+Version 2 of the Indicators API has now been released! Version 1 of the API is no longer supported, and was discontinued entirely on June 19, 2020. If you receive a "Resource not found" error using the old endpoints, you need to update your code.
+
+Note: To use the V2 API, you must place v2 in the call. For example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL
+
+Improved metadata in responses
+Metadata for countries and regions has been improved with the API now returning:
+
+ISO 3 and ISO 2 codes for all countries along with country name, region, admin region, income level, lending type, capital city and geographical co-ordinates.
+Both World Bank codes and ISO 2 codes for Region, Admin Region, Income Level and Lending Type
+Examples:
+
+http://api.worldbank.org/v2/country
+Note: this call also lists regions, incomelevels and lendingtypes along with countries. This helps in filtering country calls using regions/incomelevels/lendingtypes.
+http://api.worldbank.org/v2/region
+http://api.worldbank.org/v2/incomelevel
+http://api.worldbank.org/v2/lendingtype
+Enhancements to indicator data queries
+Indicator query responses have also been enhanced with additional information provided.
+
+Example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL
+
+The following information is now included in the response:
+
+The date(YYYY-mm-dd) of the source’s most recent update.
+
+Country ISO3 code: Returns the country’s ISO3 code.
+
+Country Code (optional): Returns the country’s 3 character code, if desired. Including ctrycode=y gives The World Bank’s 3-character code for the country, region, income level, and/or lending types called. Adding ctrycode=n removes the country code from the response.
+Example: http://api.worldbank.org/v2/country/EAP/indicator/SL.AGR.EMPL.ZS?ctrycode=y
+Footnote (optional): Fetches footnote details in data calls, if desired. Setting footnote=y gives the footnote value for country, indicator and year while footnote=n removes the footnote from the response.
+Example: http://api.worldbank.org/v2/country/chn/indicator/SL.AGR.EMPL.ZS?footnote=y
+Automatic Scale of numbers (optional): Data values will be scaled automatically in thousands, millions, billions or trillions. If the data is less than a thousand, no scaling will be applied. Adding scale=y gives the scale in the response while scale=n removes the scale from the response.
+Example: http://api.worldbank.org/v2/country/ind/indicator/SP.POP.TOTL?scale=y
+Precision: If the user requests scaling, the precision of the decimal point will be based on the <wb:decimal> tag value, found in the response. If <wb:decimal> is 1 then the scaled value will have precision up to 1 decimal point. For example, if the data value is 2500 and <wb:decimal> is 1, then the data value will be scaled to 2.5 and <wb:scale> will read “thousands”.
+Example: http://api.worldbank.org/v2/country/ind/indicator/SP.POP.TOTL?scale=y
+Observation Status: Indicates the observation status for country, indicator and year combination. For example, <wb:obs_status> F </wb:obs_status> in the response indicates that the observation status for that data point is “forecast”.
+Example: http://api.worldbank.org/v2/country/chn/indicator/NYGDPMKTPKDZ
+Enhancements in JSON responses for indicator data queries
+Responses in JSON format are available by using format=json in the API call.
+
+Example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json
+
+The following improvements have been made to JSON responses:
+
+Supports native JSON parser.
+The “fact” data type is now a number.
+Multiple indicators data: Data can be queried for multiple indicators from a particular data source by providing source ID and indicator codes separated by ; (semicolon).
+Example: http://api.worldbank.org/v2/country/chn;ago/indicator/AG.AGR.TRAC.NO;SP.POP.TOTL?source=2
+Note: A maximum of 60 indicators can be included with a maximum of 1,500 characters allowed between two /’s (back-slashes). A maximum of 4,000 characters are allowed in the entire URL.
+Local Languages
+Local language translations are available for some countries. Any call to the API can be prefixed with a language code to retrieve localized results where available. The following local languages are available:
+
+Code	Language
+bg	Bulgarian
+de	German
+hi	Hindi
+id	Indonesian
+ja	Japanese
+km	Khmer
+ko	Korean
+mk	Macedonian
+mn	Mongolian
+pl	Polish
+pt	Portuguese
+ro	Romanian
+ru	Russian
+sq	Albanian
+th	Thai
+tr	Turkish
+uk	Ukrainian
+vi	Vietnamese
+A backslash followed by the country code after http://api.worldbank.org/v2/ in an API call gives localized results.
+
+For example, to retrieve the country name of Vietnam in Vietnamese language you would use the following query: http://api.worldbank.org/v2/vi/country/vn
+
+Note: The translated local language country and region names are not available for all countries.
+
+New JSONstat response format option for indicator data queries (BETA):
+JSONstat is a simple, lightweight JSON dissemination format best suited for data visualization, mobile apps or open data initiatives that has been designed for all kinds of disseminators. Using format=jsonstat returns a JSONstat response.
+
+Example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=jsonstat
+
+Download Enhancements
+Query responses can be downloaded in either zipped CSV or EXCEL format by using the downloadformat query string.
+
+CSV
+Download .zip file that contains data, country metadata, and indicator metadata CSV files.
+Example: http://api.worldbank.org/v2/country/ind/indicator/AG.AGR.TRAC.NO?source=2&downloadformat=csv
+EXCEL
+Download .xls file that contains data, country metadata, and indicator metadata worksheets.
+Example: http://api.worldbank.org/v2/country/ind/indicator/AG.AGR.TRAC.NO?source=2&downloadformat=excel
+Note: Country metadata will have special notes provided only in the English language.
+
+List or Table Formatting
+You can now download indicator data in either List or Table format. The query string dataformat is used to download the indicator data as a list, with the years in either rows or columns. This query string works together with the downloadformat query string.
+
+Possible query strings for dataformat:
+
+dataformat=table returns data in table format (column-wise year).
+dataformat=list returns data in list format (row-wise year).
+Example 1: http://api.worldbank.org/v2/country/usa/indicator/sp.pop.totl/?downloadformat=excel&dataformat=table
+
+Response 1:
+
+*Data Format: Table*
+
+Example 2: http://api.worldbank.org/v2/country/usa/indicator/sp.pop.totl/?downloadformat=excel&dataformat=list
+
+Response 2:
+
+*Data Format: List*
+
+New Metadata API
+Metadata is now available via a Metadata API
+
+API Basic Call Structures
+← Developer Information
+The Indicators API supports two basic ways to build queries: a URL based structure and an argument based structure. For example, the following two requests will return the same data, a list of countries with income level classified as low income:
+
+Argument based: http://api.worldbank.org/V2/country?incomeLevel=LIC
+URL based: http://api.worldbank.org/V2/incomeLevel/LIC/country
+Query Strings
+The API support the following query strings in requests.
+
+Date and Date-Range: Date-range by year, month or quarter that scopes the result-set.
+
+Examples:
+
+http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=2000
+http://api.worldbank.org/v2/country/chn;bra/indicator/DPANUSSPB?date=2012M01
+A range is indicated using the colon (:) separator.
+
+Examples:
+
+http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=2000:2001
+http://api.worldbank.org/v2/country/chn;bra/indicator/DPANUSSPB?date=2012M01:2012M08
+http://api.worldbank.org/v2/country/CHL/indicator/DP.DOD.DECD.CR.BC.CD?date=2013Q1:2013Q4
+Requests additionally support year-to-date values (YTD), which is useful for querying high frequency data.
+
+Example: http://api.worldbank.org/v2/country/chn/indicator/DPANUSSPB?date=YTD:2013
+Output Format: The API supports the following four output formats.
+
+XML format: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=xml
+JSON format: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json
+JSONP format: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=jsonP&prefix=Getdata
+Note: For JSONP format, prefix parameter must be specified.
+JSON-stat format: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=jsonstat
+Note: Refer https://json-stat.org/ for more details.
+Download Format: The API supports the following three download formats.
+
+CSV Download (Downloads to ZIP file): http://api.worldbank.org/v2/country/ind/indicator/AG.AGR.TRAC.NO?source=2&downloadformat=csv
+XML Download (Downloads to ZIP file): http://api.worldbank.org/v2/country/ind/indicator/AG.AGR.TRAC.NO?source=2&downloadformat=xml
+EXCEL Download (Downloads to ZIP file): http://api.worldbank.org/v2/country/ind/indicator/AG.AGR.TRAC.NO?source=2&downloadformat=excel
+Page: For paging through large result-sets. This allows users to indicate the page number requested from the record-set.
+
+Example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?page=2
+Per_page: For determining the number of results per page. The default setting is 50 results per page.
+
+Example: http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?per_page=25
+MRV: Fetches most recent values based on the number specified.
+
+Example: http://api.worldbank.org/v2/country/chn;ago/indicator/AG.AGR.TRAC.NO?mrv=5
+MRNEV: For fetching most recent non-empty values based on the number specified.
+
+Example: http://api.worldbank.org/v2/country/chn;ago/indicator/AG.AGR.TRAC.NO?mrnev=5
+Gap-fill: (Y/N) Works with MRV. Fills values, if not available, by back tracking to the next available period (max number of periods back tracked will be limited by MRV number)
+
+Example: http://api.worldbank.org/v2/en/country/ind;chn/indicator/DPANUSSPF?mrv=7&gapfill=Y
+Frequency: For fetching quarterly (Q), monthly (M) or yearly (Y) values. This feature currently works along with MRV. This query string is useful for querying high frequency data.
+
+Example: http://api.worldbank.org/v2/en/country/ind;chn/indicator/DPANUSSPF?mrv=7&frequency=M
+Multiple Indicators: Data for multiple indicators can be queried from a single data source by providing the indicator codes separated by ";" (semicolon), as well as the source ID.
+
+Example: http://api.worldbank.org/v2/country/chn;ago/indicator/AG.AGR.TRAC.NO;SP.POP.TOTL?source=2
+Note: A maximum of 60 indicators can be used. A maximum of 1,500 characters are allowed between two back-slashes (/). A maximum of 4,000 characters are allowed in the entire URL.
+
+Footnote: For fetching footnote detail in data calls. "footnote=y" gives the footnote value for country, indicator and year.
+
+Example: http://api.worldbank.org/v2/country/chn/indicator/SL.AGR.EMPL.ZS?footnote=y
+Languages
+The following query returns all the languages supported by the World bank API v2: http://api.worldbank.org/v2/languages
+
+When no language is specified English is assumed. The following languages are available:
+
+Code	Language
+en	English
+es	Spanish
+fr	French
+ar	Arabic
+zh	Chinese
+Local Languages
+Local language translations are available for some countries. Any call to the API can be prefixed with a language code to retrieve localized results where available. The following local languages are available:
+
+Code	Language
+bg	Bulgarian
+de	German
+hi	Hindi
+id	Indonesian
+ja	Japanese
+km	Khmer
+ko	Korean
+mk	Macedonian
+mn	Mongolian
+pl	Polish
+pt	Portuguese
+ro	Romanian
+ru	Russian
+sq	Albanian
+th	Thai
+tr	Turkish
+uk	Ukrainian
+vi	Vietnamese
+A backslash followed by the country code after http://api.worldbank.org/v2/ in an API call gives localized results.
+
+For example, to retrieve the country name of Vietnam in Vietnamese language you would use the following query: http://api.worldbank.org/v2/vi/country/vn
+
+Note: The translated local language country and region names are not available for all countries.
+
+Delimiters
+Range: Use a colon : to indicate a range (for numeric values only). For example, 5:10 specifies the numeric value range from 5 to 10.
+
+Example: http://api.worldbank.org/v2/country/chn;ago/indicator/AG.AGR.TRAC.NO;SP.POP.TOTL?source=2&date=2000:2010
+Logical AND: Use a semicolon ; to represent logical “AND”. For example, us;ge specifies the United States AND Georgia.
+
+Example: http://api.worldbank.org/v2/country/us;ge/indicator/AG.AGR.TRAC.NO
+Responses
+Retrieving indicator data about countries is one common use of the API.
+
+For example, the following is a call for 2006 data on the GDP of Brazil: http://api.worldbank.org/v2/country/br/indicator/NY.GDP.MKTP.CD?date=2006
+
+Response Format
+By default, all requests will respond with valid XML. To receive the response in JSON format, provide format=json in any request.
+
+Sample valid request response:
+<wb:sources xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="30">
+<wb:source id="11">
+	<wb:name>Africa Development Indicators</wb:name>
+	<wb:description/>
+	<wb:url/>
+	<wb:dataavailability>Y</wb:dataavailability>
+	<wb:metadataavailability>Y</wb:metadataavailability>
+</wb:source>
+Sample invalid request response:
+1.
+
+<wb:error xmlns:wb="http://www.worldbank.org">
+<wb:message id="150" key="Language is not yet supported in the API">Response requested in an unsupported language.</wb:message>
+</wb:error>
+2.
+
+<wb:error xmlns:wb="http://www.worldbank.org">
+<wb:message id="120" key="Invalid value">The provided parameter value is not valid</wb:message>
+</wb:error>
+Note: See Error Codes for a full listing of possible errors.
+
+Limitations
+You cannot currently sort any requests. Generally results are returned in a reasonable order (i.e. alpha), but that order cannot be controlled.
+
+Country API Queries
+← Developer Information
+Requesting Country Data
+To list all countries: http://api.worldbank.org/v2/country
+
+The following information will appear, when available, in the response when using this country query through the World Bank API:
+
+3 letter ISO 3166-1 alpha-3 code
+2 letter ISO 3166-1 alpha-2 code
+Name
+Region: ID, name and World Bank 2 letter code
+Income Level: ID, name and World Bank 2 letter code
+Lending Type: ID, name and World Bank 2 letter code
+Capital City
+Longitude
+Latitude
+Sample Request Format: Country Query
+For XML format: http://api.worldbank.org/v2/country/br
+
+For JSON format: http://api.worldbank.org/v2/country/br?format=json
+
+Note: “br” is the two-letter ISO code for Brazil.
+
+Sample Response Format: Country Query
+XML:
+http://api.worldbank.org/v2/country/br
+
+<wb:countries xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="1">
+  <wb:country id="BRA">
+    <wb:iso2Code>BR</wb:iso2Code>
+    <wb:name>Brazil</wb:name>
+    <wb:region id="LCN" iso2code="ZJ">Latin America & Caribbean (all income levels)</wb:region>
+    <wb:adminregion id="LAC" iso2code="XJ">Latin America & Caribbean (developing only)</wb:adminregion>
+    <wb:incomeLevel id="UMC" iso2code="XT">Upper middle income</wb:incomeLevel>
+    <wb:lendingType id="IBD" iso2code="XF">IBRD</wb:lendingType>
+    <wb:capitalCity>Brasilia</wb:capitalCity>
+    <wb:longitude>-47.9292</wb:longitude>
+    <wb:latitude>-15.7801</wb:latitude>
+  </wb:country>
+</wb:countries>
+JSON: http://api.worldbank.org/v2/country/br?format=json
+[
+  {
+    "page": 1,
+    "pages": 1,
+    "per_page": "50",
+    "total": 1
+    },
+    [
+      {
+        "id": "BRA",
+        "iso2Code": "BR",
+        "name": "Brazil",
+        "region": {
+          "id": "LCN",
+          "iso2code": "ZJ",
+          "value": "Latin America & Caribbean (all income levels)"
+        },
+        "adminregion": {
+          "id": "LAC",
+          "iso2code": "XJ",
+          "value": "Latin America & Caribbean (developing only)"
+        },
+        "incomeLevel": {
+          "id": "UMC",
+          "iso2code": "XT",
+          "value": "Upper middle income"
+        },
+        "lendingType": {
+          "id": "IBD",
+          "iso2code": "XF",
+          "value": "IBRD"
+        },
+        "capitalCity": "Brasilia",
+        "longitude": "-47.9292",
+        "latitude": "-15.7801"
+      }
+    ]
+  ]
+Note: The API returns ISO 3 and ISO 2 codes wherever present. If ISO codes are not available, it returns WB 3 and WB 2 codes. For example, Channel Islands return WB 3 code CHI and WB2 code JG.
+
+Aggregate API Queries
+← Developer Information
+Aggregates—by region, income level or lending group—are also available in the API. You can retrieve data for aggregates by using the appropriate code where you would otherwise specify a country.
+
+The following two examples retrieve GDP data for Brazil (BRA) and the Latin America and Caribbean region as a whole (LCN):
+
+http://api.worldbank.org/v2/country/BRA/indicator/NY.GDP.MKTP.CD
+http://api.worldbank.org/v2/country/LCN/indicator/NY.GDP.MKTP.CD
+
+Aggregate Definitions in the API
+To get the definition list for all Region codes:
+
+XML
+
+http://api.worldbank.org/v2/region?format=xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<wb:regions page="1" pages="1" per_page="50" total="48" xmlns:wb="http://www.worldbank.org">
+  <wb:region id="">
+    <wb:code>AFR</wb:code>
+    <wb:iso2code>A9</wb:iso2code>
+    <wb:name>Africa</wb:name>
+  </wb:region>
+  ...
+</wb:regions>
+JSON
+
+http://api.worldbank.org/v2/region?format=json
+
+[
+  {
+    "page": "1",
+    "pages": "1",
+    "per_page": "50",
+    "total": "48"
+  },
+  [
+    {
+      "id": "",
+      "code": "AFR",
+      "iso2code": "A9",
+      "name": "Africa"
+    },
+    ...
+  ]
+]
+To get the list of all Income Level code definitions:
+http://api.worldbank.org/v2/incomelevel
+
+To get the list of all Lending Type code definitions:
+http://api.worldbank.org/v2/lendingtypes
+
+Or you can retrieve a list of definitions for specific regions, income levels or lending types, separating multiple codes with semicolons (;):
+
+http://api.worldbank.org/v2/region/LCN
+http://api.worldbank.org/v2/incomelevel/UMC
+http://api.worldbank.org/v2/lendingtype/IBD;IDB
+
+Querying a country shows you which aggregate groups it belongs to:
+
+http://api.worldbank.org/v2/country/BRA
+
+Conversely, you can apply a filter to see all countries in a specified aggregate:
+
+http://api.worldbank.org/v2/country?region=LCN
+http://api.worldbank.org/v2/country?incomelevel=UMC
+http://api.worldbank.org/v2/country?lendingtype=IBD
+
+Indicator API Queries
+← Developer Information
+Indicators represent data like total population, gross national income, energy use, and many more. Indicator queries return the following information in the response:
+
+Code
+Name
+Unit
+Source ID
+Source Note
+Source Organization
+Topic ID
+Topic Name
+Sample Request Format: Indicator Query
+To request all indicators: http://api.worldbank.org/v2/indicator
+
+To request the indicator GDP (Current US$), use its indicator code, NY.GDP.MKTP.CD: http://api.worldbank.org/v2/indicator/NY.GDP.MKTP.CD
+
+Sample Response Format: Indicator Query
+XML: http://api.worldbank.org/v2/indicator/NY.GDP.MKTP.CD?format=xml
+<wb:indicators xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="1">
+  <wb:indicator id="NY.GDP.MKTP.CD">
+    <wb:name>GDP (current US$)</wb:name>
+    <wb:unit></wb:unit>
+    <wb:source id="2">World Development Indicators</wb:source>
+    <wb:sourceNote>
+    GDP at purchaser's prices ...
+    </wb:sourceNote>
+    <wb:sourceOrganization>
+    World Bank national accounts data, and OECD National Accounts data files.
+    </wb:sourceOrganization>
+    <wb:topics>
+      <wb:topic id="19">Climate Change</wb:topic>
+      <wb:topic id="3">Economy & Growth</wb:topic>
+    </wb:topics>
+  </wb:indicator>
+</wb:indicators>
+JSON: http://api.worldbank.org/v2/indicators/NY.GDP.MKTP.CD?format=json
+[{
+  "page": 1,
+  "pages": 1,
+  "per_page": "50",
+  "total": 1
+  },
+  [{
+    "id": "NY.GDP.MKTP.CD","name":
+    "GDP (current US$)",
+    "unit": "",
+    "source": {
+      "id": "2",
+      "value": "World Development Indicators"},
+    "sourceNote": "GDP at purchaser's prices ... ",
+    "sourceOrganization": "World Bank national accounts data, and OECD National Accounts data files.",
+    "topics": [
+      {"id": "19","value": "Climate Change"},
+      {"id": "3","value": "Economy & Growth"}
+    ]
+  }]
+]
+Indicators Belonging to Multiple Sources
+Sometimes indicators belong to multiple sources. To find an indicator from a specific source, the indicator’s source ID must be provided as a query parameter.
+
+For example:
+
+http://api.worldbank.org/v2/indicator/NY.GDP.MKTP.CD?source=11
+http://api.worldbank.org/v2/source/11/indicator/NY.GDP.MKTP.CD
+
+Topic API Queries
+← Developer Information
+Topics are high level categories to which all indicators are mapped. Agriculture & Rural Development, Education, and Trade are examples of topics.
+
+Sample Topic API Requests
+To list all topics:
+
+http://api.worldbank.org/v2/topic
+
+To list specific topics, separating multiple codes with semicolons (;):
+
+http://api.worldbank.org/v2/topic/5
+http://api.worldbank.org/v2/topic/5;11
+
+To list all indicators under a specified topic:
+
+http://api.worldbank.org/v2/topic/5/indicator or:
+http://api.worldbank.org/v2/indicator?topic=5
+
+Sample Response Format: Topic Query
+XML: http://api.worldbank.org/v2/topic/
+
+<wb:topics xmlns:wb="http://www.worldbank.org"  page="1"  pages="1"  per_page="50"  total="21" >
+  <wb:topic id="1" >
+    <wb:value>Agriculture &amp; Rural Development</wb:value>
+    <wb:sourceNote>For the 70 percent of the world's poor...</wb:sourceNote>
+</wb:topic>
+  <wb:topic id="2" >
+    <wb:value>Aid Effectiveness</wb:value>
+JSON: http://api.worldbank.org/v2/topic?format=json
+
+[
+ {
+    "page":1,
+    "pages":1,
+    "per_page":50,
+    "total":21
+ },
+ [
+    {
+       "id":"1",
+       "value":"Agriculture & Rural Development",
+       "sourceNote":"For the 70 percent of the world's poor..."
+    },
+    {
+       "id":"2"
+    }
+  ]
+]
+
+Advanced Data API Queries
+← Developer Information
+About Advanced Data API Queries (BETA)
+Below is an example response to an Advanced Data Query. Please refer to this example when reading the query definitions below:
+
+<wb:data xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="1" lastupdated="2011-12-15">
+  <wb:source id="2" name="World Development Indicators">
+    <wb:data>
+      <wb:variable name="Country" id="IND">India</wb:variable>
+      <wb:variable name="Series" id="SP.POP.TOTL">Population, total</wb:variable>
+      <wb:variable name="Time" id="YR2011">2011</wb:variable>
+      <wb:value>1241491960</wb:value>
+    </wb:data>
+  </wb:source>
+</wb:data>
+Query Definitions
+Advanced Data Queries allow you to retrieve data for any combination of multidimensional data sources and multidimensional concepts. The following Advanced Data Queries can be made through the Metadata API. Detailed explanations and examples are provided for each query type in the following pages. Please refer to the above response example when interpreting these explanations.
+
+Source: Retrieves information about the source database.
+Examples: World Development Indicators, Doing Business, International Debt Statistics, etc.
+
+<wb:source id="2" name="World Development Indicators">
+Concept: Retrieves source Concepts (also known as “Dimensions” or combinations of dimensions).
+Examples: Country, Series, Time, etc.
+<wb:variable name="Country">
+Concept Variables: Retrieves source Concept Variables (also known as “Dimension Variables”). Concept Variables belong to Concepts.
+Examples: High Income, East Asia & Pacific, United States of America, 2012, etc.
+<wb:variable name="Country" id="IND">India</wb:variable>
+Data: Retrieves data for any combination of Source and Concepts.
+Examples: 12341491960, etc.
+<wb:value>1241491960</wb:value>
+Source Queries
+The following data source information will appear, when available, in the response.
+
+Date last updated
+Source ID
+Source Name
+WB Source Code
+Source description
+Source URL
+Data availability: “Y” means indicator data is available for that source; “N” means it is not available.
+Meta data availability: “Y” means Meta data is available for that source; “N” means it is not available.
+Number of concepts
+Sample Request Format: Source Queries
+To request information about all sources: http://api.worldbank.org/v2/sources
+
+Sample Response Format: Source Queries
+XML Request: http://api.worldbank.org/v2/sources
+
+```xml
+
+Africa Development Indicators ADI Y Y 3
+</wb:source> … </wb:sources>
+
+
+* JSON Request: <http://api.worldbank.org/v2/sources?format=json>
+
+  ```json
+  [
+    {
+      "page":1,
+      "pages":1,
+      "per_page":50,
+      "total":42
+    },
+    [
+      {
+        "id":"11",
+        "name":"Africa Development Indicators ",
+        "description": "",
+        "url": "",
+        "dataavailability": "Y",
+        "metadataavailability": "Y"      
+      },
+    ...
+    ]
+  ]
+To request information about a particular source: http://api.worldbank.org/v2/sources/2
+Concept Queries
+This call will return the following information, when available, about concepts of a specific source.
+
+Source ID
+Concept ID
+Concept Name
+Sample Request Formats: Concept Queries
+To request a list of all available concepts: http://api.worldbank.org/v2/sources/2/concepts/data
+
+Sample Response Formats: Concept Queries
+
+XML Request: http://api.worldbank.org/v2/sources/2/concepts/data?format=xml
+
+<wb:data xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="3">
+  <wb:source id="2" name="World Development Indicators">
+    <wb:concept id="Country">Country</wb:concept>
+    <wb:concept id="Series">Series</wb:concept>
+    <wb:concept id="Time">Time</wb:concept>
+  </wb:source>
+</wb:data>
+JSON Request: http://api.worldbank.org/v2/sources/2/concepts/data?format=json
+{
+"page":1,
+"pages":1,
+"per_page":50,
+"total":3,
+"source":[{
+  "id":"2",
+  "name":"World Development Indicators",
+  "concept":[
+    {"id":"Country","value":"Country"},
+    {"id":"Series","value":"Series"},
+    {"id":"Time","value":"Time"}
+  ]
+}]
+}
+Example: to retrieve a specific concept detail for a source (in this example, Concept ID is “Country” and Source is “WDI Database Archives” or source 57): http://api.worldbank.org/v2/sources/57/concepts/country/data
+Concept Variables Queries
+This call will return the following information, when available, about concept variables of a specific source.
+
+Source ID
+Concept ID
+Concept Name
+Variable ID
+Variable Name
+Sample Request Formats: Concept Variables Queries
+To request a list of all available variables in a concept: http://api.worldbank.org/v2/sources/2/country/data
+
+Sample Response Formats: Concept Queries
+XML Request: http://api.worldbank.org/v2/sources/2/country/data?format=xml
+
+<wb:data xmlns:wb="http://www.worldbank.org" page="1" pages="6" per_page="50" total="264">
+  <wb:source id="2" name="World Development Indicators">
+    <wb:concept id="country" name="country">
+      <wb:variable id="ABW">Aruba</wb:variable>
+      <wb:variable id="AFG">Afghanistan</wb:variable>
+      <wb:variable id="AGO">Angola</wb:variable>
+      <wb:variable id="ALB">Albania</wb:variable>
+      ...
+    </wb:concept>
+  </wb:source>
+</wb:data>
+JSON Request: http://api.worldbank.org/v2/sources/2/country/data?format=json
+
+ {
+   "page":1,
+   "pages":6,
+   "per_page":50,
+   "total":264,
+   "source":[{
+     "id":"2",
+     "name":"World Development Indicators",
+     "concept":[{
+       "id":"country",
+       "name":"country",
+       "variable":[
+         {"id":"ABW","value":"Aruba"},
+         {"id":"AFG","value":"Afghanistan"},
+         {"id":"AGO","value":"Angola"},
+         {"id":"ALB","value":"Albania"},
+         ... 
+       ]
+     }]
+   }]
+ }
+Example: to retrieve a specific concept variable detail for a source (in this example, concept ID is “Country”, Country variable id is “ALB” and Source is World Development Indicators or source 2): http://api.worldbank.org/v2/sources/57/country/ALB/data
+
+Advanced Data Queries
+Data can be retrieved for any combination of Sources and Concepts.
+
+Example: The following request provides data for Country ALB (Albania), Series AG.AGR.TRAC.NO ( Agricultural machinery, tractors), Time 1975, Version 1997 Apr.
+
+In this example, “sources”, “country”, “series”, “time”, and “version” are all keywords: http://api.worldbank.org/v2/sources/57/country/ALB/series/AG.AGR.TRAC.NO/time/yr1975/version/199704
+
+Response Format: Advanced Data Queries
+XML Request: http://api.worldbank.org/v2/sources/57/country/ALB/series/AG.AGR.TRAC.NO/time/yr1975/version/199704/data?format=xml
+
+<wb:data xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="1" lastupdated="2017-07-13">
+  <wb:source id="57" name="WDI Database Archives">
+    <wb:data>
+      <wb:variable concept="Country" id="ALB">Albania</wb:variable>
+      <wb:variable concept="Version" id="199704">1997 Apr</wb:variable>
+      <wb:variable concept="Series" id="AG.AGR.TRAC.NO">Agricultural machinery, tractors</wb:variable>
+      <wb:variable concept="Time" id="YR1975">1975</wb:variable>
+      <wb:value>9620</wb:value>
+    </wb:data>
+  </wb:source>
+</wb:data>
+JSON Request: http://api.worldbank.org/v2/sources/57/country/ALB/series/AG.AGR.TRAC.NO/time/all/version/199704/data?format=json
+
+{
+  "page":1,
+  "pages":2,
+  "per_page":50,
+  "total":67,
+  "lastupdated":"2017-07-13",
+  "source":{
+    "id":"57",
+    "name":"WDI Database Archives",
+    "data":[
+      {"variable":[
+        {"concept":"Country","id":"ALB","value":"Albania"},
+        {"concept":"Version","id":"199704","value":"1997 Apr"},
+        {"concept":"Series","id":"AG.AGR.TRAC.NO","value":"Agricultural machinery, tractors"},
+        {"concept":"Time","id":"YR2016","value":"2016"}],
+        "value":null
+      },
+      {"variable":[
+        {"concept":"Country","id":"ALB","value":"Albania"},
+        {"concept":"Version","id":"199704","value":"1997 Apr"},
+        {"concept":"Series","id":"AG.AGR.TRAC.NO","value":"Agricultural machinery, tractors"}]
+      }
+      ]
+    }
+}
+Example: to retrieve all the data for one or more Concepts (in this case, the Concept is “time” and the value is “all”): http://api.worldbank.org/v2/sources/57/country/ALB/series/AG.AGR.TRAC.NO/time/all/version/199704/data
+
+JSON-stat Queries (BETA)
+Data can be retrieved in JSON-stat format.
+
+Sample Request Format: JSON-stat Queries
+http://api.worldbank.org/v2/sources/57/country/ALB/series/AG.AGR.TRAC.NO/time/all/version/199704/data?format=jsonstat
+
+Metadata API Queries
+← Developer Information
+Metadata is data about data. It provides users with more information about the data such as where the data comes from, the way in which the data is measured, and the frequency with which the data is collected, just to name a few. For example, for the indicator Population (total), SP.POP.TOTL, the metadata includes this indicator’s long definition, its sources, its periodicity, its methodology, etc.
+
+About Metadata Queries
+Below is an example response to a Metadata query. Please refer to this example when reading the query definitions below.
+
+<wb:metadata xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="5000" total="24">
+<wb:source id="2" name="World Development Indicators">
+<wb:concept id="Country">
+<wb:variable id="JPN">
+<wb:metatype id="2-alphacode">JP</wb:metatype>
+<wb:metatype id="BalanceofPaymentsManualinuse">IMF Balance of Payments Manual, 6th edition.</wb:metatype>
+<wb:metatype id="CurrencyUnit">Japanese yen</wb:metatype>
+<wb:metatype id="GovernmentAccountingconcept">Consolidated central government</wb:metatype>
+Query Definitions
+The following metadata queries can be made through the Metadata API. Detailed explanations and examples are provided for each query type. Please refer to the above response example when interpreting these explanations.
+
+Source: Retrieves information about the source database.
+
+Examples: World Development Indicators, Doing Business, International Debt Statistics, etc.
+
+<wb:source id="2" name="World Development Indicators">
+Concept: Retrieves source Concepts (also known as “dimensions” or combinations of dimensions).
+
+Examples: Country, Series, Country-Time, Country-Series, Time, etc.
+
+<wb:concept id="Country">
+Metatype: Retrieves the types of Metadata available. Metatypes belong to Concepts; each concept may have one or more Metatypes.
+
+Examples: Region, Income Group, Periodicity, Source, etc.
+
+<wb:metatype id="2-alphacode">JP</wb:metatype>
+Metadata: Retrieves Metadata for any combination of Source, Concept and Metatype.
+
+Examples: High Income, East Asia & Pacific, United States of America, 2012, etc.
+
+<wb:metatype id="2-alphacode">JP</wb:metatype>
+Search: Retrieves Metadata by using keywords in the query string.
+
+Examples: Solid Fuel, United, South, etc.
+http://api.worldbank.org/v2/sources/2/search/solid%20fuel
+
+Download: Retrieves Metatype and their Metadata description in downloaded CSV and EXCEL files.
+
+Examples: CSV, EXCEL, etc.
+http://api.worldbank.org/v2/sources/2/country/usa;jpn/series/SP.POP.TOTL/metadata?downloadformat=excel
+Source Queries
+The following data source information will appear, when available, in the response.
+
+Date last updated
+Source ID
+Source Name
+WB Source Code
+Source description
+Source URL
+Data availability: Y means indicator data is available for that source; N means it is not available.
+Meta data availability: Y means metadata is available for that source; N means it is not available.
+Number of concepts
+Sample Request Format: Source Queries
+To request information about all sources: http://api.worldbank.org/v2/sources
+
+Sample Response Format: Source Queries
+XML Request: http://api.worldbank.org/v2/sources
+
+<wb:sources xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="50" total="42">
+<wb:source lastupdated="2013-02-22" id="11">
+	<wb:name>Africa Development Indicators</wb:name>
+        <wb:code>ADI</wb:code>
+	<wb:description/>
+	<wb:url/>
+	<wb:dataavailability>Y</wb:dataavailability>
+	<wb:metadataavailability>Y</wb:metadataavailability>
+  <wb:concepts>3</wb:concepts>
+</wb:source>
+...
+</wb:sources>
+
+JSON Request: http://api.worldbank.org/v2/sources?format=json
+
+[
+  {
+    "page":1,
+    "pages":1,
+    "per_page":50,
+    "total":42
+  },
+  [
+    {
+      "id":"11",
+      "name":"Africa Development Indicators ",
+      "description": "",
+      "url": "",
+      "dataavailability": "Y",
+      "metadataavailability": "Y"      
+    },
+  ...
+  ]
+]
+More examples
+
+To request information about a particular source:
+http://api.worldbank.org/v2/sources/2
+Concept Queries
+This call will return the following information, when available, about concepts of a specific source.
+
+Source ID
+Source Name
+Concept ID
+Concept Name
+Sample Request Formats: Concept Queries
+To retrieve a list of concepts for a source: http://api.worldbank.org/v2/sources/2/concepts
+
+To request a list of all available concepts:
+http://api.worldbank.org/v2/sources/2/concepts/metadata
+
+Sample Response Formats: Concept Queries
+XML: http://api.worldbank.org/v2/sources/2/concepts/metadata
+
+<wb:metadata xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="5000" total="7">
+<wb:source id="2" name="World Development Indicators">
+    <wb:concept id="Country">Country</wb:concept>
+    <wb:concept id="Country-Series">Country-Series</wb:concept>
+    <wb:concept id="Country-Time">Country-Time</wb:concept>
+    <wb:concept id="FootNote">FootNote</wb:concept>
+    <wb:concept id="Series">Series</wb:concept>
+    <wb:concept id="Series-Time">Series-Time</wb:concept>
+    <wb:concept id="Time">Time</wb:concept>
+</wb:source>
+</wb:metadata>
+JSON: http://api.worldbank.org/v2/sources/2/concepts/metadata?format=json
+
+  {
+    "page": 1,
+    "pages": 1,
+    "per_page": "5000",
+    "total": 7,
+    "source": [{
+      "id": "2",
+      "name": "World Development Indicators",
+      "concept": [
+        {"id": "Country","value": "Country"},
+        {"id": "Country-Series","value": "Country-Series"},
+        {"id": "Country-Time","value": "Country-Time"},
+        {"id": "FootNote","value": "FootNote"},
+        {"id": "Series","value": "Series"},
+        {"id": "Series-Time","value": "Series-Time"},
+        {"id": "Time","value": "Time"}
+      ]
+    }]
+  }
+More examples
+To retrieve a specific concept detail for a source (in this example, concept ID is country and Source is 2 - World Development Indicators):
+http://api.worldbank.org/v2/sources/2/concepts/country/metadata
+Metatype Queries
+Metatype simply describes the type of metadata. Region, Income Group, Periodicity, and Source are all examples of Metatypes. Metatype calls retrieve lists of data types available for the given source. Metatype calls will return the following information in the response, when available.
+
+Source ID
+Concept ID
+Metatype ID
+Metatype Detail (name and description)
+Sample Request Format: Metatype Queries
+To return a list of all available Metatypes for a specific source (in this case, 2 or World Development Indicators):
+http://api.worldbank.org/v2/sources/2/metatypes
+
+Sample Response Format: Metatype Queries
+XML: http://api.worldbank.org/v2/sources/2/metatypes
+
+  <wb:metadata xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="5000" total=" 52">
+    <wb:source id="2">
+      <wb:concept id="Country">
+        <wb:metatype id="2-alphacode">
+          <wb:value>2-alpha code</wb:value>
+          <wb:description>2-alpha code</wb:description>
+        </wb:metatype>
+        <wb:metatype id="Alternativeconversionfactor">
+          <wb:value>Alternative conversion factor</wb:value>
+          <wb:description>Alternative conversion factor</wb:description>
+        </wb:metatype>
+        ...    
+      </wb:concept>
+      ...
+    </wb:source>
+  </wb:metadata>
+JSON: http://api.worldbank.org/v2/sources/2/metatypes?format=json
+
+  {
+    "page": 1,
+    "pages": 1,
+    "per_page": "5000",
+    "total": 52,
+    "source": [{
+      "ETime": null,
+      "STime": null,"id":
+      "2",
+      "concept": [
+        {"id": "Country","metatype": [
+          {"id": "2-alphacode","value": "2-alpha code"},
+          {"id": "Alternativeconversionfactor","value": "Alternative conversion factor"},
+          {"id": "BalanceofPaymentsManualinuse","value": "Balance of Payments Manual in use"}
+        ]}
+      ]
+    }]
+  }
+More examples:
+The following call retrieves metatypes for a specific concept. In this example, country is a concept ID for the source 2:
+http://api.worldbank.org/v2/sources/2/concepts/country/metatypes
+Metadata Queries
+Metadata can be retrieved for any combination of Source, Concept and Metatype.
+
+Sample Request Format: Metadata Queries
+The following request provides metadata for Income Group in the United States and Japan. In this example, sources, country, metatypes, and metadata are all keywords. usa;jpn belongs to the concept country and incomegroup belongs to metatypes.
+
+http://api.worldbank.org/v2/sources/2/country/usa;jpn/metatypes/incomegroup/metadata
+
+Sample Response Format: Metadata Queries
+XML: http://api.worldbank.org/v2/sources/2/country/usa;jpn/metatypes/incomegroup/metadata
+
+  <wb:metadata xmlns:wb="http://www.worldbank.org" page="1" pages="1" per_page="5000" total="2">
+    <wb:source id="2" name="World Development Indicators">
+        <wb:concept id="Country">
+            <wb:variable id="JPN">
+                <wb:metatype id="IncomeGroup">High income</wb:metatype>
+            </wb:variable>
+            <wb:variable id="USA">
+                <wb:metatype id="IncomeGroup">High income</wb:metatype>
+            </wb:variable>
+        </wb:concept>
+    </wb:source>
+  </wb:metadata>
+JSON: http://api.worldbank.org/v2/sources/2/country/usa;jpn/metatypes/incomegroup/metadata?format=json
+
+    {
+      "page": 1,
+      "pages": 1,
+      "per_page": "5000",
+      "total": 2,
+      "source": [{
+        "id": "2",
+        "name": "World Development Indicators",
+        "concept": [{
+          "id": "Country",
+          "variable": [
+            {
+            "id": "JPN",
+            "metatype": [{
+            "id": "IncomeGroup",
+          "value": "High income: OECD"
+        }]
+          },
+            {
+              "id": "USA","metatype": [{
+              "id": "IncomeGroup",
+              "value": "High income: OECD"}]
+            }]
+        }]
+      }]
+    }
+    ...
+More examples:
+To retrieve all the metadata for one concept (in this case, the concept is country, and the country is jpn (Japan)):
+http://api.worldbank.org/v2/sources/2/country/jpn/metadata
+To retrieve metadata for a combination of concepts (in this case, one of the concepts is country and the other is series. United States and Japan belong to the concept country and SP.POP.TOTL belongs to series.):
+http://api.worldbank.org/v2/sources/2/country/usa;jpn/series/SP.POP.TOTL/metadata
+Search Queries
+The Metadata API can be used to search metadata. Search calls will return the following information, when available:
+
+Source ID
+Concept ID
+Variable ID
+Metatype ID and detail
+Request Format
+To search metadata (in this example, for search term Solid Fuel):
+http://api.worldbank.org/v2/sources/2/search/solid%20fuel
+
+Note: To add spaces in search terms, use %20 as in the example above.
+
+Response Format
+XML: http://api.worldbank.org/v2/sources/2/search/solid%20fuel
+
+  <wb:metadata page="1" pages="1" per_page="5000" total="17" xmlns:wb="http://www.worldbank.org">
+    <wb:source id="2">
+      <wb:concept id="Series">
+          <wb:variable id="EG.CFT.ACCS.RU.ZS">
+            <wb:metatype id=" Statisticalconceptandmethodology">
+                Data for access to clean fuels and technologies for cooking are based on the the World Health Organization's (WHO) Global ...
+            </wb:metatype>
+          </wb:variable>
+          ...
+      </wb:concept>
+    </wb:source>
+  </wb:metadata>
+JSON: http://api.worldbank.org/v2/sources/2/search/solid%20fuel?format=json
+
+    {
+      "page": 1,
+      "pages": 1,
+      "per_page": "5000",
+      "total": 17,
+      "source": [
+        {
+          "ETime": null,
+          "STime": null,
+          "id": "2",
+          "concept": [
+            {
+              "id": "Series",
+              "variable": [
+                {
+                  "id": "EG.CFT.ACCS.RU.ZS ",
+                  "name": null,
+                  "metatype": [
+                    {
+                      "id": "Statisticalconceptandmethodology ",
+                      "value": "Data for access to clean fuels and technologies for cooking are based on the the World Health Organization's (WHO) Global Household Energy Database..",
+                    }
+                  ]
+                },
+                ...
+              ]
+            }
+          ]
+        }
+      ]
+    }
+More examples
+To perform a search within a specific concept, for example, to search within the concept “country” for values that contain “united” in its Metatypes:
+http://api.worldbank.org/v2/sources/2/concepts/country/search/united
+To perform search within a specific metatype, for example, to search within the Metatype “region” for values that contain “south”:
+http://api.worldbank.org/v2/sources/2/metatypes/region/search/south
+Download Queries
+Metadata can be downloaded along with Metatype and their Metadata description.
+
+Sample Request Format: Download Queries
+CSV: http://api.worldbank.org/v2/sources/2/country/usa;jpn/series/SP.POP.TOTL/metadata?downloadformat=csv
+EXCEL:
+http://api.worldbank.org/v2/sources/2/country/usa;jpn/series/SP.POP.TOTL/metadata?downloadformat=excel
+
+Examples:
+To download the results of a search within a specific concept, for example, “Country-Series” is a concept and “AFG~1.1_YOUTH.LITERACY.RATE” is a value: http://api.worldbank.org/v2/Sources/34/Country-Series/AFG~1.1_YOUTH.LITERACY.RATE/metadata?downloadformat=csv
+
+SDMX API Queries
+← Developer Information
+Use the SDMX REST API to programmatically access databases that are available in Databank. At present the World Development Indicators (WDI) dataset is available through API, and we are planning to add more datasets soon. If you are interested having SDMX access to a specific dataset currently available in Databank, please let us know by email at data@worldbank.org.
+
+In the SDMX API, users can give various dimensions as a parameter in the URL like series code, country code, or frequency and time range etc., and the resulting data can be downloaded as XML or JSON.
+
+World development Indicators (WDI)
+World Development Indicators (WDI) is the primary World Bank collection of development indicators, compiled from officially recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates. WDI data can be downloaded by specifying values for the dimensions below:
+
+Series
+Series code. Refer to the WDI DSD for a list of series names and codes.
+
+Country
+ISO Country code.
+
+Time
+Specify a single year or range of years.
+
+Limitation on Data Request
+In order to avoid server overload, requests for the entire database are not possible in one query. Data calls are restricted to 15,000 data points per call including null values.
+
+Basic Call structure
+There are two types of request - one request type is to retrieve the metadata, and the other is to retrieve data. The following SDMX response formats are supported in this API.
+
+SDMX-ML 2.1 generic schema:
+This is the default format. Please note that generic format output size will be greater when compared to other formats.
+
+SDMX-ML 2.1 structure specific schema:
+The structure specific schema is more suited for processing of large data. To get responses in this format, modify the HTTP request header field Accept: application/vnd.sdmx.structurespecificdata+xml on the SDMX data query request.
+
+JSON Format:
+To get the data in JSON format, modify the HTTP request header field Accept: application/vnd.sdmx.data+json;version=1.0.0-wd on the SDMX data query request.
+
+Metadata request
+This section explains the call to get DataFlow, Code List and DSD.
+
+Data Flow
+This end-point retrieves the unique dataset code for World Bank datasets.
+
+URL:
+
+http://api.worldbank.org/v2/sdmx/rest/dataflow
+
+Method:
+
+GET
+
+URL Parameter:
+
+None
+
+Response Format:
+
+XML
+
+Success Response:
+
+HTTP Response Status Code: 200
+
+Content: The response has the data flow code to access the World Bank datasets
+
+Sample request and Output
+
+URL:
+http://api.worldbank.org/v2/sdmx/rest/dataflow
+
+Response Data Flow Sample Output
+Code List
+This endpoint retrieves the code list for the WDI dataset.
+
+URL:
+
+http://api.worldbank.org/v2/sdmx/rest/codelist/wb
+
+Method:
+
+GET
+
+URL Parameter:
+
+None
+
+Response Format:
+
+XML
+
+Success Response:
+
+  HTTP Response Status Code: 200  
+  Content: The response has the code list available for various dimension in WDI dataset.
+Sample request and Output
+
+URL: http://api.worldbank.org/v2/sdmx/rest/codelist/wb
+
+Response: Code List Sample Output
+
+Data Structure Definition (DSD)
+This API retrieves the Data Structure Definition (DSD) for the WDI dataset
+
+URL:
+
+http://api.worldbank.org/v2/sdmx/rest/datastructure/wb
+
+Method:
+
+GET
+
+URL Parameter:
+
+None
+
+Response Format:
+
+XML
+
+Success Response:
+
+  HTTP Response Status Code: 200  
+  Content: The response has the Data Structure Definition (DSD) for WDI dataset
+Sample request and Output
+
+URL
+http://api.worldbank.org/v2/sdmx/rest/datastructure/wb
+
+Response DSD Sample Response
+Error Response:
+
+The following error response is returned for invalid parameter value.
+
+  HTTP Response Status Code: 404 
+  Content: Invalid structure code 
+DSD Sample Error Response
+
+Data Request
+Data calls are used to download data in Generic, Compact and JSON format. Users can request data for a country and series over a period, however data points in a single query cannot exceed more than 15,000 data points. In data calls, the dimensions are separated by . dot as shown below
+
+URL:
+
+http://api.worldbank.org/v2/sdmx/rest/data/<dataset%20id>/../?startperiod=&endPeriod=
+
+Method:
+
+GET
+
+URL Parameter:
+
+Dataset id: Dataset id, for example, “WDI”
+
+Freq: The possible value for frequency is “A”. If no value is specified, it is considered as all frequencies.
+
+Series: Series code. Refer WDI DSD for list of series names and codes.
+
+Country: ISO Country code.
+
+StartPeriod: This is a year parameter and can have values from 1960 onwards. If ignored, data for all available years will be returned.
+
+EndPeriod: This is a year parameter and can have values from 1960 onwards. If ignored, all data available from the start period to the latest available years will be returned.
+
+Response Format:
+
+XML- SDMX-ML 2.1 generic schema, XML- SDMX-ML 2.1 structure specific schema or JSON
+
+Success Response:
+
+  HTTP Response Status Code: 200  
+  Content: The response has the following information. 
+      - Series
+      - Country
+      - Time
+Sample Request:
+To request one country, one series and one year:
+
+<http://api.worldbank.org/v2/sdmx/rest/data/WDI/A.SP_POP_TOTL.AFG/?startperiod=2011&endPeriod=2011>
+To request all countries, one series and one year:
+
+<http://api.worldbank.org/v2/sdmx/rest/data/WDI/A.SP_POP_TOTL./?startperiod=2011&endPeriod=2011>
+To request all series, one country and one year:
+
+<http://api.worldbank.org/v2/sdmx/rest/data/WDI/A..AFG/?startperiod=2011&endPeriod=2011>
+To request one country, one series and a range of years:
+
+<http://api.worldbank.org/v2/sdmx/rest/data/WDI/A.SP_POP_TOTL.AFG/?startperiod=2010&endPeriod=2015>
+Sample Response Format:
+SDMX-ML 2.1 generic schema
+
+
+
+SDMX-ML 2.1 structure specific schema
+
+
+
+JSON Format
+
+
+
+The response contains the result value of the Country, Series, Time and Frequency combination. If any of the dimensions are not specified in the request URL, all the data related to that dimension will be retrieved in relation to the other dimensions.
+
+Error Response:
+
+ 

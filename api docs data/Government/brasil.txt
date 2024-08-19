@@ -1,0 +1,1163 @@
+Brasil API (1.0.0)
+Download OpenAPI specification:Download
+
+URL: https://brasilapi.com.br
+License: MIT
+Terms of Service
+Acesso programático de informações é algo fundamental na comunicação entre sistemas, mas, para nossa surpresa, uma informação tão útil e pública quanto um CEP não consegue ser acessada diretamente por um navegador por conta da API dos Correios não possuir CORS habilitado. Dado a isso, este projeto experimental tem como objetivo centralizar e disponibilizar endpoints modernos com baixíssima latência utilizando tecnologias como Vercel Smart CDN responsável por fazer o cache das informações em atualmente 23 regiões distribuídas ao longo do mundo (incluindo Brasil). Então não importa o quão devagar for a fonte dos dados, nós queremos disponibilizá-la da forma mais rápida e moderna possível.
+
+Recursos disponíveis
+
+CEP
+DDD
+Bank
+CNPJ
+IBGE
+Feriados Nacionais
+Tabela FIPE
+ISBN
+Registros de domínio br
+Taxas
+Termos de uso
+Não deixe de ler os termos de uso para o uso da API seja feito de forma correta e responsável.
+
+ler termos
+BANKS
+Informações sobre sistema bancário
+
+Retorna informações de todos os bancos do Brasil
+Responses
+200 Success
+
+get
+/banks/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"ispb": "00000000",
+"name": "BCO DO BRASIL S.A.",
+"code": 1,
+"fullName": "Banco do Brasil S.A."
+}
+]
+Busca as informações de um banco a partir de um código
+Responses
+200 Success
+404 O código do banco não foi encontrado
+
+get
+/banks/v1/{code}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"ispb": "00000000",
+"name": "BCO DO BRASIL S.A.",
+"code": 1,
+"fullName": "Banco do Brasil S.A."
+}
+CEP
+Informações referentes a CEPs
+
+Busca por CEP com múltiplos providers de fallback.
+A busca utiliza como fonte principal o OpenCep, caso não encontre o CEP é buscado em diversos outros providers de CEP.
+
+path Parameters
+cep
+required
+integer <int64>
+O CEP (Código de Endereçamento Postal) é um sistema de códigos que visa racionalizar o processo de encaminhamento e entrega de correspondências através da divisão do país em regiões postais. ... Atualmente, o CEP é composto por oito dígitos, cinco de um lado e três de outro. Cada algarismo do CEP possui um significado.
+
+Responses
+200 Success
+404 Todos os serviços de CEP retornaram erro.
+
+get
+/cep/v1/{cep}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"cep": "89010025",
+"state": "SC",
+"city": "Blumenau",
+"neighborhood": "Centro",
+"street": "Rua Doutor Luiz de Freitas Melro",
+"service": "viacep"
+}
+CEP V2
+A geolocalização dos CEPs estão suscetíveis a erros, pois as coordenadas são provindas do OpenStreetMap. Caso encontre algum erro você poderá corrigir no próprio OpenStreetMap que será refletido no CEP V2.
+
+Versão 2 do serviço de busca por CEP com múltiplos providers de fallback.
+path Parameters
+cep
+required
+integer <int64>
+O CEP (Código de Endereçamento Postal) é um sistema de códigos que visa racionalizar o processo de encaminhamento e entrega de correspondências através da divisão do país em regiões postais. ... Atualmente, o CEP é composto por oito dígitos, cinco de um lado e três de outro. Cada algarismo do CEP possui um significado.
+
+Responses
+200 Success
+404 Todos os serviços de CEP retornaram erro.
+
+get
+/cep/v2/{cep}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"cep": "89010025",
+"state": "SC",
+"city": "Blumenau",
+"neighborhood": "Centro",
+"street": "Rua Doutor Luiz de Freitas Melro",
+"service": "viacep",
+"location": {
+"type": "Point",
+"coordinates": {}
+}
+}
+CNPJ
+Busca dados de empresas por CNPJ
+
+Busca por CNPJ na API Minha Receita.
+path Parameters
+cnpj
+required
+string <string>
+O Cadastro Nacional da Pessoa Jurídica é um número único que identifica uma pessoa jurídica e outros tipos de arranjo jurídico sem personalidade jurídica junto à Receita Federal.
+
+Responses
+200 Success
+404 CNPJ não encontrado na API Minha Receita.
+
+get
+/cnpj/v1/{cnpj}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"cnpj": "19131243000197",
+"identificador_matriz_filial": 1,
+"descricao_matriz_filial": "Matriz",
+"razao_social": "OPEN KNOWLEDGE BRASIL",
+"nome_fantasia": "REDE PELO CONHECIMENTO LIVRE",
+"situacao_cadastral": 2,
+"descricao_situacao_cadastral": "Ativa",
+"data_situacao_cadastral": "2013-10-03",
+"motivo_situacao_cadastral": 0,
+"nome_cidade_exterior": null,
+"codigo_natureza_juridica": 3999,
+"data_inicio_atividade": "2013-10-03",
+"cnae_fiscal": 9430800,
+"cnae_fiscal_descricao": "Atividades de associações de defesa de direitos sociais",
+"descricao_tipo_de_logradouro": "ALAMEDA",
+"logradouro": "FRANCA",
+"numero": "144",
+"complemento": "APT   34",
+"bairro": "JARDIM PAULISTA",
+"cep": 1422000,
+"uf": "SP",
+"codigo_municipio": 7107,
+"municipio": "SAO PAULO",
+"ddd_telefone_1": "11  23851939",
+"ddd_telefone_2": null,
+"ddd_fax": null,
+"qualificacao_do_responsavel": 10,
+"capital_social": 0,
+"porte": 5,
+"descricao_porte": "Demais",
+"opcao_pelo_simples": false,
+"data_opcao_pelo_simples": null,
+"data_exclusao_do_simples": null,
+"opcao_pelo_mei": false,
+"situacao_especial": null,
+"data_situacao_especial": null,
+"cnaes_secundarios": [
+{},
+{},
+{},
+{},
+{}
+],
+"qsa": [
+{}
+]
+}
+Corretoras
+Informações referentes a Corretoras ativas listadas na CVM
+
+Retorna as corretoras nos arquivos da CVM.
+Responses
+200 Success
+
+get
+/cvm/corretoras/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"bairro": "LEBLON",
+"cep": "22440032",
+"cnpj": "02332886000104",
+"codigo_cvm": "3247",
+"complemento": "SALA 201",
+"data_inicio_situacao": "1998-02-10",
+"data_patrimonio_liquido": "2021-12-31",
+"data_registro": "1997-12-05",
+"email": "juridico.regulatorio@xpi.com.br",
+"logradouro": "AVENIDA ATAULFO DE PAIVA 153",
+"municipio": "RIO DE JANEIRO",
+"nome_social": "XP INVESTIMENTOS CCTVM S.A.",
+"nome_comercial": "XP INVESTIMENTOS",
+"pais": "",
+"status": "EM FUNCIONAMENTO NORMAL",
+"telefone": "30272237",
+"type": "CORRETORAS",
+"uf": "RJ",
+"valor_patrimonio_liquido": "5514593491.29"
+}
+]
+Busca por corretoras nos arquivos da CVM.
+path Parameters
+cnpj
+required
+string
+O Cadastro Nacional da Pessoa Jurídica é um número único que identifica uma pessoa jurídica e outros tipos de arranjo jurídico sem personalidade jurídica junto à Receita Federal.
+
+Responses
+200 Success
+404 Não foi encontrado este CNPJ na listagem da CVM.
+
+get
+/cvm/corretoras/v1/{cnpj}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"bairro": "LEBLON",
+"cep": "22440032",
+"cnpj": "02332886000104",
+"codigo_cvm": "3247",
+"complemento": "SALA 201",
+"data_inicio_situacao": "1998-02-10",
+"data_patrimonio_liquido": "2021-12-31",
+"data_registro": "1997-12-05",
+"email": "juridico.regulatorio@xpi.com.br",
+"logradouro": "AVENIDA ATAULFO DE PAIVA 153",
+"municipio": "RIO DE JANEIRO",
+"nome_social": "XP INVESTIMENTOS CCTVM S.A.",
+"nome_comercial": "XP INVESTIMENTOS",
+"pais": "",
+"status": "EM FUNCIONAMENTO NORMAL",
+"telefone": "30272237",
+"type": "CORRETORAS",
+"uf": "RJ",
+"valor_patrimonio_liquido": "5514593491.29"
+}
+CPTEC
+Abstração e normalização de dados provenientes da CPTEC. Fonte oficial: CPTEC/INPE
+
+Listar localidades
+Retorna listagem com todas as cidades junto a seus respectivos códigos presentes nos serviços da CPTEC. O Código destas cidades será utilizado para os serviços de meteorologia e a ondas (previsão oceânica) fornecido pelo centro. Leve em consideração que o WebService do CPTEC as vezes é instável, então se não encontrar uma determinada cidade na listagem completa, tente buscando por parte de seu nome no endpoint de busca.
+
+Responses
+200
+
+get
+/cptec/v1/cidade
+Response samples
+200
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+[
+{
+"nome": "São Benedito",
+"estado": "CE",
+"id": 4750
+}
+]
+Buscar localidades
+Retorna listagem com todas as cidades correspondentes ao termo pesquisado junto a seus respectivos códigos presentes nos serviços da CPTEC. O Código destas cidades será utilizado para os serviços de meteorologia e a ondas (previsão oceânica) fornecido pelo centro.
+
+path Parameters
+cityName
+required
+string
+Example: Chiforímpola
+Nome ou parte do nome da cidade a ser buscada
+
+Responses
+200
+404 Not Found
+
+get
+/cptec/v1/cidade/{cityName}
+Response samples
+200404
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+[
+{
+"nome": "São Benedito",
+"estado": "CE",
+"id": 4750
+}
+]
+Condições atuais nas capitais
+Retorna condições meteorológicas atuais nas capitais do país, com base nas estações de solo de seu aeroporto.
+
+Responses
+200
+
+get
+/cptec/v1/clima/capital
+Response samples
+200
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+[
+{
+"codigo_icao": "SBAR",
+"atualizado_em": "2021-01-27T15:00:00.974Z",
+"pressao_atmosferica": "1014",
+"visibilidade": "9000",
+"vento": 29,
+"direcao_vento": 90,
+"umidade": 74,
+"condicao": "ps",
+"condicao_Desc": "Predomínio de Sol",
+"temp": 28
+}
+]
+Condições atuais no aeroporto (/cptec/v1/clima/aeroporto/:icaoCode)
+Retorna condições meteorológicas atuais no aeroporto solicitado. Este endpoint utiliza o código ICAO (4 dígitos) do aeroporto.
+
+path Parameters
+icaoCode
+required
+string
+Example: SBGR
+Código ICAO (4 dígitos) do aeroporto desejado
+
+Responses
+200
+404 Not Found
+
+get
+/cptec/v1/clima/aeroporto/{icaoCode}
+Response samples
+200404
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+{
+"codigo_icao": "SBAR",
+"atualizado_em": "2021-01-27T15:00:00.974Z",
+"pressao_atmosferica": "1014",
+"visibilidade": "9000",
+"vento": 29,
+"direcao_vento": 90,
+"umidade": 74,
+"condicao": "ps",
+"condicao_Desc": "Predomínio de Sol",
+"temp": 28
+}
+Previsão meteorológica para uma cidade
+Retorna Pervisão meteorológica para 1 dia na cidade informada.
+
+path Parameters
+cityCode
+required
+integer <int32>
+Example: 999
+Código da cidade fornecido pelo endpoint /cidade
+
+Responses
+200
+404 Not Found
+
+get
+/cptec/v1/clima/previsao/{cityCode}
+Response samples
+200404
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+{
+"cidade": "Brejo Alegre",
+"estado": "SP",
+"atualizado_em": "2020-12-27",
+"clima": [
+{},
+{}
+]
+}
+Previsão meteorológica para, até, 6 dias
+Retorna a previsão meteorológica para a cidade informada para um período de 1 até 6 dias. Devido a inconsistências encontradas nos retornos da CPTEC nossa API só consegue retornar com precisão o período máximo de 6 dias.
+
+path Parameters
+cityCode
+required
+integer <int32>
+Example: 999
+Código da cidade fornecido pelo endpoint /cidade
+
+days
+required
+integer <int32>
+Example: 5
+Quantidade de dias desejado para a previsão
+
+Responses
+200
+
+get
+/cptec/v1/clima/previsao/{cityCode}/{days}
+Response samples
+200
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+{
+"cidade": "Brejo Alegre",
+"estado": "SP",
+"atualizado_em": "2020-12-27",
+"clima": [
+{},
+{}
+]
+}
+Previsão oceânica
+Retorna a previsão oceânica para a cidade informada para 1 dia
+
+path Parameters
+cityCode
+required
+integer <int32>
+Example: 241
+Código da cidade fornecido pelo endpoint /cidade
+
+Responses
+200
+
+get
+/cptec/v1/ondas/{cityCode}
+Response samples
+200
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+{
+"cidade": "Rio de Janeiro",
+"estado": "RJ",
+"atualizado_em": "2020-12-27",
+"ondas": [
+{}
+]
+}
+Previsão oceânica para, até, 6 dias
+Retorna a previsão oceânica para a cidade informada para um período de, até, 6 dias.
+
+path Parameters
+cityCode
+required
+integer <int32>
+Example: 241
+Código da cidade fornecido pelo endpoint /cidade
+
+days
+required
+integer <int32>
+Example: 2
+Quantidade de dias desejada para a previsão
+
+Responses
+200
+400 Bad Request
+404 Not Found
+
+get
+/cptec/v1/ondas/{cityCode}/{days}
+Response samples
+200400404
+Content type
+application/json; charset=utf-8
+
+Copy
+Expand allCollapse all
+{
+"cidade": "Rio de Janeiro",
+"estado": "RJ",
+"atualizado_em": "2020-12-27",
+"ondas": [
+{}
+]
+}
+DDD
+Informações relacionadas a DDDs
+
+Retorna estado e lista de cidades por DDD
+path Parameters
+ddd
+required
+integer <int64>
+DDD significa Discagem Direta à Distância. É um sistema de ligação telefônica automática entre diferentes áreas urbanas nacionais. O DDD é um código constituído por 2 dígitos que identificam as principais cidades do país e devem ser adicionados ao nº de telefone, juntamente com o código da operadora.
+
+Responses
+200 Success
+404 DDD não encontrado
+500 Todos os serviços de DDD retornaram erro.
+
+get
+/ddd/v1/{ddd}
+Response samples
+200404500
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"state": "SP",
+"cities": [
+"EMBU",
+"VÁRZEA PAULISTA",
+"VARGEM GRANDE PAULISTA",
+"VARGEM",
+"TUIUTI",
+"TABOÃO DA SERRA",
+"SUZANO",
+"SÃO ROQUE",
+"SÃO PAULO"
+]
+}
+Feriados Nacionais
+Informações sobre feriados nacionais
+
+Lista os feriados nacionais de determinado ano.
+Calcula os feriados móveis baseados na Páscoa e adiciona os feriados fixos
+
+path Parameters
+ano
+required
+integer <int64>
+Ano para calcular os feriados.
+
+Responses
+200 Success
+404 Ano fora do intervalo suportado.
+500 Erro inesperado.
+
+get
+/feriados/v1/{ano}
+Response samples
+200404500
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"date": "2021-01-01",
+"name": "Confraternização mundial",
+"type": "national"
+}
+]
+FIPE
+Informações sobre Preço Médio de Veículos fornecido pela FIPE (Fundação Instituto de Pesquisas Econômicas)
+
+Lista as marcas de veículos referente ao tipo de veículo
+path Parameters
+tipoVeiculo	
+string <string>
+Os tipos suportados são caminhoes, carros e motos. Quando o tipo não é específicado são buscada as marcas de todos os tipos de veículos
+
+query Parameters
+tabela_referencia	
+integer <int64>
+Código da tabela fipe de referência. Por padrão é utilizado o código da tabela fipe atual.
+
+Responses
+200 Success
+400 Tabela de referência inválida
+
+get
+/fipe/marcas/v1/{tipoVeiculo}
+Response samples
+200400
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"nome": "AGRALE",
+"valor": "102"
+}
+]
+Consulta o preço do veículo segundo a tabela fipe.
+path Parameters
+codigoFipe
+required
+string <string>
+Código fipe do veículo.
+
+query Parameters
+tabela_referencia	
+integer <int64>
+Código da tabela fipe de referência. Por padrão é utilizado o código da tabela fipe atual.
+
+Responses
+200 Success
+400 Requisição inválida
+
+get
+/fipe/preco/v1/{codigoFipe}
+Response samples
+200400
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"valor": "R$ 6.022,00",
+"marca": "Fiat",
+"modelo": "Palio EX 1.0 mpi 2p",
+"anoModelo": 1998,
+"combustivel": "Álcool",
+"codigoFipe": "001004-9",
+"mesReferencia": "junho de 2021 ",
+"tipoVeiculo": 1,
+"siglaCombustivel": "Á",
+"dataConsulta": "segunda-feira, 7 de junho de 2021 23:05"
+}
+]
+Lista as tabelas de referência existentes.
+Responses
+200 Success
+
+get
+/fipe/tabelas/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"codigo": 271,
+"mes": "junho/2021 "
+}
+]
+IBGE
+Informações sobre estados Provenientes do IBGE
+
+Retorna os municípios da unidade federativa
+path Parameters
+siglaUF
+required
+string <string>
+Sigla da unidade federativa, por exemplo SP, RJ, SC, etc.
+
+query Parameters
+providers	
+string <string>
+Lista de provedores separados por vírgula.
+Provedores disponíveis:
+
+dados-abertos-br
+gov
+wikipedia
+Responses
+200 Successo
+404 Sigla inexistente ou inválida
+
+get
+/ibge/municipios/v1/{siglaUF}?providers=dados-abertos-br,gov,wikipedia
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"nome": "Tubarão",
+"codigo_ibge": "421870705"
+},
+{
+"nome": "Tunápolis",
+"codigo_ibge": "421875605"
+},
+{
+"nome": "Turvo",
+"codigo_ibge": "421880605"
+},
+{
+"nome": "Morro Chato",
+"codigo_ibge": "421880620"
+},
+{
+"nome": "União do Oeste",
+"codigo_ibge": "421885505"
+},
+{
+"nome": "Urubici",
+"codigo_ibge": "421890505"
+},
+{
+"nome": "Águas Brancas",
+"codigo_ibge": "421890510"
+},
+{
+"nome": "Santa Teresinha",
+"codigo_ibge": "421890520"
+},
+{
+"nome": "Urupema",
+"codigo_ibge": "421895405"
+},
+{
+"nome": "Urussanga",
+"codigo_ibge": "421900205"
+},
+{
+"nome": "Vargeão",
+"codigo_ibge": "421910105"
+},
+{
+"nome": "Vargem",
+"codigo_ibge": "421915005"
+},
+{
+"nome": "Vargem Bonita",
+"codigo_ibge": "421917605"
+},
+{
+"nome": "Vidal Ramos",
+"codigo_ibge": "421920005"
+},
+{
+"nome": "Videira",
+"codigo_ibge": "421930905"
+},
+{
+"nome": "Anta Gorda",
+"codigo_ibge": "421930910"
+},
+{
+"nome": "Lourdes",
+"codigo_ibge": "421930925"
+},
+{
+"nome": "Vitor Meireles",
+"codigo_ibge": "421935805"
+},
+{
+"nome": "Barra da Prata",
+"codigo_ibge": "421935810"
+},
+{
+"nome": "Witmarsum",
+"codigo_ibge": "421940805"
+},
+{
+"nome": "Xanxerê",
+"codigo_ibge": "421950705"
+},
+{
+"nome": "Cambuinzal",
+"codigo_ibge": "421950715"
+},
+{
+"nome": "Xavantina",
+"codigo_ibge": "421960605"
+},
+{
+"nome": "Linha das Palmeiras",
+"codigo_ibge": "421960610"
+},
+{
+"nome": "Xaxim",
+"codigo_ibge": "421970505"
+},
+{
+"nome": "Anita Garibaldi",
+"codigo_ibge": "421970511"
+},
+{
+"nome": "Diadema",
+"codigo_ibge": "421970516"
+},
+{
+"nome": "Zortéa",
+"codigo_ibge": "421985305"
+}
+]
+Retorna informações de todos estados do Brasil
+Responses
+200 Success
+
+get
+/ibge/uf/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"id": 35,
+"sigla": "SP",
+"nome": "São Paulo",
+"regiao": {}
+}
+]
+Busca as informações de um estado a partir da sigla ou código
+Responses
+200 Success
+404 O código / sigla do estado não foi encontrado
+
+get
+/ibge/uf/v1/{code}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"id": 35,
+"sigla": "SP",
+"nome": "São Paulo",
+"regiao": {
+"id": 3,
+"sigla": "SE",
+"nome": "Sudeste"
+}
+}
+ISBN
+Informações sobre livros publicados no Brasil (prefixo 65 ou 85) a partir do ISBN, um sistema internacional de identificação de livros que utiliza números para classificá-los por título, autor, país, editora e edição.
+
+Informações sobre o livro a partir do ISBN
+path Parameters
+isbn
+required
+string
+Example: 9788545702870
+O código informado pode conter traços (-) e ambos os formatos são aceitos, sendo eles o obsoleto de 10 dígitos e o atual de 13 dígitos.
+
+query Parameters
+providers	
+Array of strings
+Items Enum: "cbl" "mercado-editorial" "open-library" "google-books"
+Lista de provedores separados por vírgula. Se não especificado, será realizado uma busca em todos os provedores e o que retornar as informações mais rapidamente será o escolhido.
+
+Responses
+200 Sucesso
+400 ISBN inválido
+404 ISBN não encontrado
+500 Todos os serviços de ISBN retornaram erro
+
+get
+/isbn/v1/{isbn}
+Response samples
+200400404500
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"isbn": "9788545702870",
+"title": "Akira",
+"subtitle": null,
+"authors": [
+"KATSUHIRO OTOMO",
+"DRIK SADA",
+"CASSIUS MEDAUAR",
+"MARCELO DEL GRECO",
+"DENIS TAKATA"
+],
+"publisher": "Japorama Editora e Comunicação",
+"synopsis": "Um dos marcos da ficção científica oriental que revolucionou a chegada dos mangás e da cultura pop japonesa no Ocidente retorna em uma nova edição especial. Após atropelar uma criança de aparência estranha, Tetsuo Shima (o melhor amigo de Kaneda), começa a sentir algumas reações anormais. Isso acaba chamando a atenção do governo que está projetando diversas experiências secretas e acabam sequestrando Tetsuo. Nesta aventura cheia de ficção, Kaneda entra em cena para salvar o amigo, enquanto uma terrível e monstruosa entidade ameaça despertar.",
+"dimensions": {
+"width": 17.5,
+"height": 25.7,
+"unit": "CENTIMETER"
+},
+"year": 2017,
+"format": "PHYSICAL",
+"page_count": 364,
+"subjects": [
+"Cartoons; caricaturas e quadrinhos",
+"mangá",
+"motocicleta",
+"gangue",
+"Delinquência"
+],
+"location": "SÃO PAULO, SP",
+"retail_price": null,
+"cover_url": null,
+"provider": "cbl"
+}
+NCM
+Informações referentes a NCMs
+
+Retorna informações de todos os NCMs
+Responses
+200 Success
+
+get
+/ncm/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"codigo": "3305.10.00",
+"descricao": "- Xampus",
+"data_inicio": "2022-04-01",
+"data_fim": "9999-12-31",
+"tipo_ato": "Res Camex",
+"numero_ato": "000272",
+"ano_ato": "2021"
+}
+]
+Pesquisa por NCMs a partir de um código ou descrição.
+Responses
+200 Success
+
+get
+/ncm/v1?search={code}
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"codigo": "3305.10.00",
+"descricao": "- Xampus",
+"data_inicio": "2022-04-01",
+"data_fim": "9999-12-31",
+"tipo_ato": "Res Camex",
+"numero_ato": "000272",
+"ano_ato": "2021"
+}
+]
+Busca as informações de um NCM a partir de um código
+Responses
+200 Success
+404 O código do NCM não foi encontrado
+
+get
+/ncm/v1/{code}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"codigo": "3305.10.00",
+"descricao": "- Xampus",
+"data_inicio": "2022-04-01",
+"data_fim": "9999-12-31",
+"tipo_ato": "Res Camex",
+"numero_ato": "000272",
+"ano_ato": "2021"
+}
+PIX
+Informações referentes ao PIX
+
+Retorna informações de todos os participantes do PIX no dia atual ou anterior
+Responses
+200 Success
+500 Error
+
+get
+/pix/v1/participants
+Response samples
+200500
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"ispb": "360305",
+"nome": "CAIXA ECONOMICA FEDERAL",
+"nome_reduzido": "CAIXA ECONOMICA FEDERAL",
+"modalidade_participacao": "PDCT",
+"tipo_participacao": "DRCT",
+"inicio_operacao": "2020-11-03T09:30:00.000Z"
+}
+]
+REGISTRO BR
+Avalia um dominio no registro.br
+
+Avalia o status de um dominio .br
+path Parameters
+domain
+required
+string
+O domínio ou nome a ser avaliado
+
+Responses
+200 Success
+400 Bad Request
+
+get
+/registrobr/v1/{domain}
+Response samples
+200400
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"status_code": 2,
+"status": "REGISTERED",
+"fqdn": "brasilapi.com.br",
+"hosts": [
+"bob.ns.cloudflare.com",
+"lily.ns.cloudflare.com"
+],
+"publication-status": "published",
+"expires-at": "2022-09-23T00:00:00-03:00",
+"suggestions": [
+"agr.br",
+"app.br",
+"art.br",
+"blog.br",
+"dev.br",
+"eco.br",
+"esp.br",
+"etc.br",
+"far.br",
+"flog.br",
+"imb.br",
+"ind.br",
+"inf.br",
+"log.br",
+"net.br",
+"ong.br",
+"rec.br",
+"seg.br",
+"srv.br",
+"tec.br",
+"tmp.br",
+"tur.br",
+"tv.br",
+"vlog.br",
+"wiki.br"
+]
+}
+TAXAS
+Taxas de juros e índices oficiais
+
+Retorna as taxas de juros e alguns índices oficiais do Brasil
+Responses
+200 Success
+
+get
+/taxas/v1
+Response samples
+200
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+[
+{
+"nome": "CDI",
+"valor": 7.65
+}
+]
+Busca as informações de uma taxa a partir do seu nome/sigla
+Responses
+200 Success
+404 Taxa ou Índice não foi encontrada
+
+get
+/taxas/v1/{sigla}
+Response samples
+200404
+Content type
+application/json
+
+Copy
+Expand allCollapse all
+{
+"nome": "CDI",
+"valor": 7.65
+}
