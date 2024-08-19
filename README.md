@@ -102,18 +102,18 @@ Please update as you add and intergrate diffrent apis
 | Fun & Games      | Hyrule Compendium                | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | icanhazdadjoke                   | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | Imgflip                          | 0(scraped) | :x:        | TBD      |
-| Fun & Games      | isEven                           | 0          | :x:        | TBD      |
-| Fun & Games      | JokeAPI                          | 0          | :x:        | TBD      |
-| Fun & Games      | Magic: The Gathering             | 0          | :x:        | TBD      |
-| Fun & Games      | Official Joke                    | 0          | :x:        | TBD      |
-| Fun & Games      | Open Trivia DB                   | 0          | :x:        | TBD      |
-| Fun & Games      | PokéAPI                          | 0          | :x:        | TBD      |
+| Fun & Games      | isEven                           | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | JokeAPI                          | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | Magic: The Gathering             | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | Official Joke                    | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | Open Trivia DB                   | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | PokéAPI                          | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | Pokémon TCG                      | 0          | :x:        | TBD      |
-| Fun & Games      | RuneScape                        | 0          | :x:        | TBD      |
-| Fun & Games      | Scryfall                         | 0          | :x:        | TBD      |
-| Fun & Games      | TCGdex                           | 0          | :x:        | TBD      |
-| Fun & Games      | XIVAPI                           | 0          | :x:        | TBD      |
-| Fun & Games      | xkcd                             | 0          | :x:        | TBD      |
+| Fun & Games      | RuneScape                        | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | Scryfall                         | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | TCGdex                           | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | XIVAPI                           | 0(scraped) | :x:        | TBD      |
+| Fun & Games      | xkcd                             | 0(scraped) | :x:        | TBD      |
 | Fun & Games      | Yes or No?                       | 0          | :x:        | TBD      |
 | Geo              | Adresse                          | 0          | :x:        | TBD      |
 | Geo              | Country.is                       | 0          | :x:        | TBD      |

@@ -1,0 +1,3238 @@
+API Documentation
+Scryfall provides a REST-like API for ingesting our card data programatically. The API exposes information available on the regular site in easy-to-consume formats.
+
+Endpoint Details
+The API is available at https://api.scryfall.com
+
+API requests are only served over HTTPS, using TLS 1.2 or better. Requests will not be honored over plaintext HTTP.
+
+The API uses UTF-8 character encoding for all responses. Many fields will include characters that are not in the ASCII range.
+
+Required Headers
+All HTTP requests to api.scryfall.com must include a User-Agent header and an Accept header.
+
+Your User-Agent header must be accurate to your usage context. If you are running a script or app, the header should be the name of your application, such as MTGExampleApp/1.0 or the current relevant version. Do not allow HTTP libraries to choose the header for you.
+
+If you are accessing the API via on-page web browser JavaScript, keep the browser’s User-Agent intact.
+
+The Accept header must be present, but you can provide a generic preference. For example, both of these are okay: Accept: */* and Accept: application/json;q=0.9,*/*;q=0.8.
+
+Use of Scryfall Data and Images
+As part of the Wizards of the Coast Fan Content Policy, Scryfall provides our card data and image database free of charge for the primary purpose of creating additional Magic software, performing research, or creating community content (such as videos, streams, podcasts, etc.) about Magic and related products.
+
+When using Scryfall data, you must adhere to the following guidelines:
+
+You may not use Scryfall logos or use the Scryfall name in a way that implies Scryfall has endorsed you, your work, or your product.
+You may not “paywall” access to Scryfall data. You may not require anyone to make payments, take surveys, agree to subscriptions, rate your content, join chat servers, or follow channels in exchange for access to Scryfall data. If you have an account system, end-users should be able to access card data anonymously or with free accounts.
+You may not use Scryfall data to create new games, or to imply the information and images are from any other game besides Magic: The Gathering.
+You may not simply repackage, republish, or proxy Scryfall data. Your software must create additional value for end-users.
+When using images from Scryfall, you must adhere to the following guidelines:
+
+Do not cover, crop, or clip off the copyright or artist name on card images.
+Do not distort, skew, or stretch card images.
+Do not blur, sharpen, desaturate, or color-shift card images.
+Do not add your own watermarks, stamps, or logos to card images.
+Do not place card images in a way that implies someone other than Wizards of the Coast created the card or that it is from another game besides Magic: The Gathering.
+When using the art_crop, list the artist name and copyright elsewhere in the same interface presenting the art crop, or use the full card image elsewhere in the same interface. Users should be able to identify the artist and source of the image somehow.
+Repeated mishandling or misreprensation of data or images in your project may result in Scryfall restricting or blocking your API access.
+
+Rate Limits and Good Citizenship
+We kindly ask that you insert 50 – 100 milliseconds of delay between the requests you send to the server at api.scryfall.com. (i.e., 10 requests per second on average).
+
+Submitting excessive requests to the server may result in a HTTP 429 Too Many Requests status code. Overloading the API after this point may result in a temporary or permanent ban of your IP address. Applications that continously recieve rate limit warnings over a longer period may also be blocked.
+
+The file origins used by the API, located at *.scryfall.io do not have these rate limits.
+
+We encourage you to cache the data you download from Scryfall or process it locally in your own database, at least for 24 hours. Scryfall provides our entire database compressed for download in daily bulk data files.
+
+While we make incremental updates to card data daily, take note that:
+
+We only update prices for cards once per day. Fetching card data more frequently than 24 hours will not yield new prices.
+Updates to gameplay data (such as card names, Oracle text, mana costs, etc) are much less frequent. If you only need gameplay information, downloading card data once per week or right after set releases would most likely be sufficient.
+
+Request Formats
+Each Scryfall API method will return data as a JSON blob. Some methods support additional alternative formats. Each API method documents which formats it will support.
+
+Format	Default	Desc
+json
+
+✓
+
+Return data as a JSON blob
+
+csv
+
+Return data as a CSV table
+
+text
+
+Return a formatted plaintext snippet
+
+image
+
+Return an HTTP 302 redirect to an image file
+
+file
+
+Return an HTTP 302 redirect to a JSON file
+
+Image and File Requests
+The image and file formats will return an HTTP 302 redirect directly to an image file or another downloadable item. Ensure your HTTP library will accept this behavior if you use it.
+
+Image Requests: Version
+When requesting the image format, you may also provide a version parameter for the specific image version you would like returned. It can be small, normal, large, png, art_crop, or border_crop. The default is large.
+
+Image Requests: Back Face
+When requesting the image format, you may also provide a face parameter with the value back. If this card has two faces, a redirect to an image for the back face of the card will be returned. If this card does not have a back face, the method will return a 422 error.
+
+Multiple card types contain two images, which can all be browsed here.
+
+Text and Image Headers
+When you request the text or image format, the API will also set two additional HTTP headers:
+
+Header	Description
+X-Scryfall-Card
+
+A URI the Scryfall permapage for the returned card.
+
+X-Scryfall-Card-Image
+
+A URI to an image of the card returned
+
+CSV Format Headers
+When you request the csv format, the API will set these additional additional HTTP headers:
+
+Header	Description
+X-Scryfall-Has-More
+
+Will have the value true if there is another page of CSV data beyond this one
+
+X-Scryfall-Next-Page
+
+A URI to the next CSV page. You can submit an HTTP GET request to this URI to continue paginating.
+
+Colors and Costs
+While Magic cards can represent costs and colors using printed symbols, the Comprehensive Rules and Scryfall’s API use a text representation of these values.
+
+Color Arrays
+Whenever the API presents set of Magic colors, the field will be an array that uses the uppercase, single-character abbreviations for those colors. For example, ["W","U"] represents something that is both white and blue. Colorless sources are denoted with an empty array []
+
+Common places were you might see this kind of array are a Card object’s colors and color_identity. When a color field is null or missing, it implies that that information is not pertinent for the current object. It does not imply that the object is colorless.
+
+Color arrays are not guaranteed to be in a particular order.
+
+A list of color representations is provided below:
+
+Abbr.	Color	Basic Land	Mana Symbol	Examples
+W
+
+White
+
+Plains
+
+{W}	
+Example Cards
+
+U
+
+Blue
+
+Island
+
+{U}	
+Example Cards
+
+B
+
+Black
+
+Swamp
+
+{B}	
+Example Cards
+
+R
+
+Red
+
+Mountain
+
+{R}	
+Example Cards
+
+G
+
+Green
+
+Forest
+
+{G}	
+Example Cards
+
+Mana Costs and Other Symbology
+Whenever the API presents mana costs and other card symbols, it does so using the official plaintext notation for that symbol set forth in the Comprehensive Rules. For example, “{2/W}, {T}” is written as {2/W}, {T}.
+
+An exhaustive list of all symbology is provided below. You can also retrieve this information programmatically using the /symbology method.
+
+Note that some symbols use UTF-8 characters outside the ASCII range.
+
+Symbol	Printed	Mana?	Mana Value	Description	Examples
+{T}
+
+{T}	
+No
+
+Tap this permanent
+
+Example Cards
+
+{Q}
+
+{Q}	
+No
+
+Untap this permanent
+
+Example Cards
+
+{E}
+
+{E}	
+No
+
+An energy counter
+
+Example Cards
+
+{P}
+
+{P}	
+No
+
+Modal budget pawprint
+
+Example Cards
+
+{PW}
+
+{PW}	
+No
+
+Planeswalker
+
+Example Cards
+
+{CHAOS}
+
+{CHAOS}	
+No
+
+Chaos
+
+Example Cards
+
+{A}
+
+{A}	
+No
+
+An acorn counter
+
+Example Cards
+
+{TK}
+
+{TK}	
+No
+
+A ticket counter
+
+Example Cards
+
+{X}
+
+{X}	
+Yes
+
+0.0
+
+X generic mana
+
+Example Cards
+
+{Y}
+
+{Y}	
+Yes
+
+0.0
+
+Y generic mana
+
+Example Cards
+
+{Z}
+
+{Z}	
+Yes
+
+0.0
+
+Z generic mana
+
+Example Cards
+
+{0}
+
+{0}	
+Yes
+
+0.0
+
+Zero mana
+
+Example Cards
+
+{½}
+
+{½}	
+Yes
+
+0.5
+
+One-half generic mana
+
+Example Cards
+
+{1}
+
+{1}	
+Yes
+
+1.0
+
+One generic mana
+
+Example Cards
+
+{2}
+
+{2}	
+Yes
+
+2.0
+
+Two generic mana
+
+Example Cards
+
+{3}
+
+{3}	
+Yes
+
+3.0
+
+Three generic mana
+
+Example Cards
+
+{4}
+
+{4}	
+Yes
+
+4.0
+
+Four generic mana
+
+Example Cards
+
+{5}
+
+{5}	
+Yes
+
+5.0
+
+Five generic mana
+
+Example Cards
+
+{6}
+
+{6}	
+Yes
+
+6.0
+
+Six generic mana
+
+Example Cards
+
+{7}
+
+{7}	
+Yes
+
+7.0
+
+Seven generic mana
+
+Example Cards
+
+{8}
+
+{8}	
+Yes
+
+8.0
+
+Eight generic mana
+
+Example Cards
+
+{9}
+
+{9}	
+Yes
+
+9.0
+
+Nine generic mana
+
+Example Cards
+
+{10}
+
+{10}	
+Yes
+
+10.0
+
+Ten generic mana
+
+Example Cards
+
+{11}
+
+{11}	
+Yes
+
+11.0
+
+Eleven generic mana
+
+Example Cards
+
+{12}
+
+{12}	
+Yes
+
+12.0
+
+Twelve generic mana
+
+Example Cards
+
+{13}
+
+{13}	
+Yes
+
+13.0
+
+Thirteen generic mana
+
+Example Cards
+
+{14}
+
+{14}	
+Yes
+
+14.0
+
+Fourteen generic mana
+
+Example Cards
+
+{15}
+
+{15}	
+Yes
+
+15.0
+
+Fifteen generic mana
+
+Example Cards
+
+{16}
+
+{16}	
+Yes
+
+16.0
+
+Sixteen generic mana
+
+Example Cards
+
+{17}
+
+{17}	
+Yes
+
+17.0
+
+Seventeen generic mana
+
+Example Cards
+
+{18}
+
+{18}	
+Yes
+
+18.0
+
+Eighteen generic mana
+
+Example Cards
+
+{19}
+
+{19}	
+Yes
+
+19.0
+
+Nineteen generic mana
+
+Example Cards
+
+{20}
+
+{20}	
+Yes
+
+20.0
+
+Twenty generic mana
+
+Example Cards
+
+{100}
+
+{100}	
+Yes
+
+100.0
+
+One hundred generic mana
+
+Example Cards
+
+{1000000}
+
+{1000000}	
+Yes
+
+1000000.0
+
+One million generic mana
+
+Example Cards
+
+{∞}
+
+{∞}	
+Yes
+
+Infinity
+
+Infinite generic mana
+
+Example Cards
+
+{W/U}
+
+{W/U}	
+Yes
+
+1.0
+
+One white or blue mana
+
+Example Cards
+
+{W/B}
+
+{W/B}	
+Yes
+
+1.0
+
+One white or black mana
+
+Example Cards
+
+{B/R}
+
+{B/R}	
+Yes
+
+1.0
+
+One black or red mana
+
+Example Cards
+
+{B/G}
+
+{B/G}	
+Yes
+
+1.0
+
+One black or green mana
+
+Example Cards
+
+{U/B}
+
+{U/B}	
+Yes
+
+1.0
+
+One blue or black mana
+
+Example Cards
+
+{U/R}
+
+{U/R}	
+Yes
+
+1.0
+
+One blue or red mana
+
+Example Cards
+
+{R/G}
+
+{R/G}	
+Yes
+
+1.0
+
+One red or green mana
+
+Example Cards
+
+{R/W}
+
+{R/W}	
+Yes
+
+1.0
+
+One red or white mana
+
+Example Cards
+
+{G/W}
+
+{G/W}	
+Yes
+
+1.0
+
+One green or white mana
+
+Example Cards
+
+{G/U}
+
+{G/U}	
+Yes
+
+1.0
+
+One green or blue mana
+
+Example Cards
+
+{B/G/P}
+
+{B/G/P}	
+Yes
+
+1.0
+
+One black mana, one green mana, or 2 life
+
+Example Cards
+
+{B/R/P}
+
+{B/R/P}	
+Yes
+
+1.0
+
+One black mana, one red mana, or 2 life
+
+Example Cards
+
+{G/U/P}
+
+{G/U/P}	
+Yes
+
+1.0
+
+One green mana, one blue mana, or 2 life
+
+Example Cards
+
+{G/W/P}
+
+{G/W/P}	
+Yes
+
+1.0
+
+One green mana, one white mana, or 2 life
+
+Example Cards
+
+{R/G/P}
+
+{R/G/P}	
+Yes
+
+1.0
+
+One red mana, one green mana, or 2 life
+
+Example Cards
+
+{R/W/P}
+
+{R/W/P}	
+Yes
+
+1.0
+
+One red mana, one white mana, or 2 life
+
+Example Cards
+
+{U/B/P}
+
+{U/B/P}	
+Yes
+
+1.0
+
+One blue mana, one black mana, or 2 life
+
+Example Cards
+
+{U/R/P}
+
+{U/R/P}	
+Yes
+
+1.0
+
+One blue mana, one red mana, or 2 life
+
+Example Cards
+
+{W/B/P}
+
+{W/B/P}	
+Yes
+
+1.0
+
+One white mana, one black mana, or 2 life
+
+Example Cards
+
+{W/U/P}
+
+{W/U/P}	
+Yes
+
+1.0
+
+One white mana, one blue mana, or 2 life
+
+Example Cards
+
+{C/W}
+
+{C/W}	
+Yes
+
+1.0
+
+One colorless mana or one white mana
+
+Example Cards
+
+{C/U}
+
+{C/U}	
+Yes
+
+1.0
+
+One colorless mana or one blue mana
+
+Example Cards
+
+{C/B}
+
+{C/B}	
+Yes
+
+1.0
+
+One colorless mana or one black mana
+
+Example Cards
+
+{C/R}
+
+{C/R}	
+Yes
+
+1.0
+
+One colorless mana or one red mana
+
+Example Cards
+
+{C/G}
+
+{C/G}	
+Yes
+
+1.0
+
+One colorless mana or one green mana
+
+Example Cards
+
+{2/W}
+
+{2/W}	
+Yes
+
+2.0
+
+Two generic mana or one white mana
+
+Example Cards
+
+{2/U}
+
+{2/U}	
+Yes
+
+2.0
+
+Two generic mana or one blue mana
+
+Example Cards
+
+{2/B}
+
+{2/B}	
+Yes
+
+2.0
+
+Two generic mana or one black mana
+
+Example Cards
+
+{2/R}
+
+{2/R}	
+Yes
+
+2.0
+
+Two generic mana or one red mana
+
+Example Cards
+
+{2/G}
+
+{2/G}	
+Yes
+
+2.0
+
+Two generic mana or one green mana
+
+Example Cards
+
+{H}
+
+{H}	
+Yes
+
+1.0
+
+One colored mana or two life
+
+Example Cards
+
+{W/P}
+
+{W/P}	
+Yes
+
+1.0
+
+One white mana or two life
+
+Example Cards
+
+{U/P}
+
+{U/P}	
+Yes
+
+1.0
+
+One blue mana or two life
+
+Example Cards
+
+{B/P}
+
+{B/P}	
+Yes
+
+1.0
+
+One black mana or two life
+
+Example Cards
+
+{R/P}
+
+{R/P}	
+Yes
+
+1.0
+
+One red mana or two life
+
+Example Cards
+
+{G/P}
+
+{G/P}	
+Yes
+
+1.0
+
+One green mana or two life
+
+Example Cards
+
+{C/P}
+
+{C/P}	
+Yes
+
+1.0
+
+One colorless mana or two life
+
+Example Cards
+
+{HW}
+
+{HW}	
+Yes
+
+0.5
+
+One-half white mana
+
+Example Cards
+
+{HR}
+
+{HR}	
+Yes
+
+0.5
+
+One-half red mana
+
+Example Cards
+
+{W}
+
+{W}	
+Yes
+
+1.0
+
+One white mana
+
+Example Cards
+
+{U}
+
+{U}	
+Yes
+
+1.0
+
+One blue mana
+
+Example Cards
+
+{B}
+
+{B}	
+Yes
+
+1.0
+
+One black mana
+
+Example Cards
+
+{R}
+
+{R}	
+Yes
+
+1.0
+
+One red mana
+
+Example Cards
+
+{G}
+
+{G}	
+Yes
+
+1.0
+
+One green mana
+
+Example Cards
+
+{C}
+
+{C}	
+Yes
+
+1.0
+
+One colorless mana
+
+Example Cards
+
+{S}
+
+{S}	
+Yes
+
+1.0
+
+One snow mana
+
+Example Cards
+
+{L}
+
+{L}	
+Yes
+
+1.0
+
+One mana from a legendary source
+
+Example Cards
+
+{D}
+
+{D}	
+No
+
+One potential land drop
+
+Example Cards
+
+Layouts and Faces
+The layout property categorizes the arrangement of card parts, faces, and other bounded regions on cards. The layout can be used to programmatically determine which other properties on a card you can expect.
+
+Specifically:
+
+Cards with the layouts split, flip, transform, and double_faced_token will always have a card_faces property describing the distinct faces.
+Cards with the layout meld will always have an all_parts property pointing to the other meld parts.
+Layout	Description	Examples
+normal
+
+A standard Magic card with one face
+
+Example Cards
+
+split
+
+A split-faced card
+
+Example Cards
+
+flip
+
+Cards that invert vertically with the flip keyword
+
+Example Cards
+
+transform
+
+Double-sided cards that transform
+
+Example Cards
+
+modal_dfc
+
+Double-sided cards that can be played either-side
+
+Example Cards
+
+meld
+
+Cards with meld parts printed on the back
+
+Example Cards
+
+leveler
+
+Cards with Level Up
+
+Example Cards
+
+class
+
+Class-type enchantment cards
+
+Example Cards
+
+case
+
+Case-type enchantment cards
+
+Example Cards
+
+saga
+
+Saga-type cards
+
+Example Cards
+
+adventure
+
+Cards with an Adventure spell part
+
+Example Cards
+
+mutate
+
+Cards with Mutate
+
+Example Cards
+
+prototype
+
+Cards with Prototype
+
+Example Cards
+
+battle
+
+Battle-type cards
+
+Example Cards
+
+planar
+
+Plane and Phenomenon-type cards
+
+Example Cards
+
+scheme
+
+Scheme-type cards
+
+Example Cards
+
+vanguard
+
+Vanguard-type cards
+
+Example Cards
+
+token
+
+Token cards
+
+Example Cards
+
+double_faced_token
+
+Tokens with another token printed on the back
+
+Example Cards
+
+emblem
+
+Emblem cards
+
+Example Cards
+
+augment
+
+Cards with Augment
+
+Example Cards
+
+host
+
+Host-type cards
+
+Example Cards
+
+art_series
+
+Art Series collectable double-faced cards
+
+Example Cards
+
+reversible_card
+
+A Magic card with two sides that are unrelated
+
+Example Cards
+
+Card Faces
+Magic cards can include multiple faces on a single piece of card stock. Scryfall includes information about each of these card faces using the card_faces property on API objects. Please note the following types of multi-face cards and how Scryfall will describe them:
+
+Split cards (Comp. rules term) · Example split cards
+Split cards are sorceries or instant cards that include two faces and the caster can choose which face to cast. The back of a split card is the normal Magic back.
+
+GET https://api.scryfall.com/cards/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b
+HTTP 200 success
+Content-Type: application/json; charset=utf-8
+
+{
+  "object": "card",
+  "id": "0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b",
+  "oracle_id": "9842734c-1eac-4509-a731-4c22017ae586",
+  "multiverse_ids": [
+    500936
+  ],
+  "mtgo_id": 85730,
+  "tcgplayer_id": 227383,
+  "cardmarket_id": 514789,
+  "name": "Wear // Tear",
+  "lang": "en",
+  "released_at": "2020-11-20",
+  "uri": "https://api.scryfall.com/cards/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b",
+  "scryfall_uri": "https://scryfall.com/card/cmr/456/wear-tear?utm_source=api",
+  "layout": "split",
+  "highres_image": true,
+  "image_status": "highres_scan",
+  "image_uris": {
+    "small": "https://cards.scryfall.io/small/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.jpg?1608917739",
+    "normal": "https://cards.scryfall.io/normal/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.jpg?1608917739",
+    "large": "https://cards.scryfall.io/large/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.jpg?1608917739",
+    "png": "https://cards.scryfall.io/png/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.png?1608917739",
+    "art_crop": "https://cards.scryfall.io/art_crop/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.jpg?1608917739",
+    "border_crop": "https://cards.scryfall.io/border_crop/front/0/f/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b.jpg?1608917739"
+  },
+  "mana_cost": "{1}{R} // {W}",
+  "cmc": 3,
+  "type_line": "Instant // Instant",
+  "colors": [
+    "R",
+    "W"
+  ],
+  "color_identity": [
+    "R",
+    "W"
+  ],
+  "keywords": [
+    "Fuse"
+  ],
+  "card_faces": [
+    {
+      "object": "card_face",
+      "name": "Wear",
+      "mana_cost": "{1}{R}",
+      "type_line": "Instant",
+      "oracle_text": "Destroy target artifact.\nFuse (You may cast one or both halves of this card from your hand.)",
+      "artist": "Ryan Pancoast",
+      "artist_id": "89cc9475-dda2-4d13-bf88-54b92867a25c",
+      "illustration_id": "35dc8f1e-5c26-4f3f-98eb-62123968a04f"
+    },
+    {
+      "object": "card_face",
+      "name": "Tear",
+      "mana_cost": "{W}",
+      "type_line": "Instant",
+      "oracle_text": "Destroy target enchantment.\nFuse (You may cast one or both halves of this card from your hand.)",
+      "artist": "Ryan Pancoast",
+      "artist_id": "89cc9475-dda2-4d13-bf88-54b92867a25c"
+    }
+  ],
+  "legalities": {
+    "standard": "not_legal",
+    "future": "not_legal",
+    "historic": "not_legal",
+    "timeless": "not_legal",
+    "gladiator": "not_legal",
+    "pioneer": "legal",
+    "explorer": "not_legal",
+    "modern": "legal",
+    "legacy": "legal",
+    "pauper": "not_legal",
+    "vintage": "legal",
+    "penny": "not_legal",
+    "commander": "legal",
+    "oathbreaker": "legal",
+    "standardbrawl": "not_legal",
+    "brawl": "not_legal",
+    "alchemy": "not_legal",
+    "paupercommander": "not_legal",
+    "duel": "legal",
+    "oldschool": "not_legal",
+    "premodern": "not_legal",
+    "predh": "not_legal"
+  },
+  "games": [
+    "paper",
+    "mtgo"
+  ],
+  "reserved": false,
+  "foil": false,
+  "nonfoil": true,
+  "finishes": [
+    "nonfoil"
+  ],
+  "oversized": false,
+  "promo": false,
+  "reprint": true,
+  "variation": false,
+  "set_id": "39de6fbf-1f11-48d0-8f04-f0407f6a0732",
+  "set": "cmr",
+  "set_name": "Commander Legends",
+  "set_type": "draft_innovation",
+  "set_uri": "https://api.scryfall.com/sets/39de6fbf-1f11-48d0-8f04-f0407f6a0732",
+  "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Acmr&unique=prints",
+  "scryfall_set_uri": "https://scryfall.com/sets/cmr?utm_source=api",
+  "rulings_uri": "https://api.scryfall.com/cards/0f279560-7e9f-4a6d-9fd6-6c8c6bd94a1b/rulings",
+  "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3A9842734c-1eac-4509-a731-4c22017ae586&unique=prints",
+  "collector_number": "456",
+  "digital": false,
+  "rarity": "uncommon",
+  "card_back_id": "0aeebaf5-8c7d-4636-9e82-8c27447861f7",
+  "artist": "Ryan Pancoast",
+  "artist_ids": [
+    "89cc9475-dda2-4d13-bf88-54b92867a25c"
+  ],
+  "illustration_id": "35dc8f1e-5c26-4f3f-98eb-62123968a04f",
+  "border_color": "black",
+  "frame": "2015",
+  "full_art": false,
+  "textless": false,
+  "booster": false,
+  "story_spotlight": false,
+  "edhrec_rank": 766,
+  "prices": {
+    "usd": "1.08",
+    "usd_foil": null,
+    "usd_etched": null,
+    "eur": "1.30",
+    "eur_foil": null,
+    "tix": "2.38"
+  },
+  "related_uris": {
+    "gatherer": "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=500936&printed=false",
+    "tcgplayer_infinite_articles": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Darticle%26game%3Dmagic%26partner%3Dscryfall%26q%3DWear%2B%252F%252F%2BTear",
+    "tcgplayer_infinite_decks": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Ddeck%26game%3Dmagic%26partner%3Dscryfall%26q%3DWear%2B%252F%252F%2BTear",
+    "edhrec": "https://edhrec.com/route/?cc=Wear+%2F%2F+Tear"
+  },
+  "purchase_uris": {
+    "tcgplayer": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&u=https%3A%2F%2Fwww.tcgplayer.com%2Fproduct%2F227383%3Fpage%3D1",
+    "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Singles/Commander-Legends-Extras/Wear-Tear?referrer=scryfall&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+    "cardhoarder": "https://www.cardhoarder.com/cards/85730?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+  }
+}
+Flip cards (Comp. rules term) · Example flip cards
+Flip cards have two parts of a permanent printed vertically on one side of the card. During play, an ability on the card causes the permanent to flip (rotate 180°) to the other side. The back of a flip card is the normal Magic back.
+
+GET https://api.scryfall.com/cards/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8
+HTTP 200 success
+Content-Type: application/json; charset=utf-8
+
+{
+  "object": "card",
+  "id": "0b61d772-2d8b-4acf-9dd2-b2e8b03538c8",
+  "oracle_id": "d83bb32d-f409-421a-9d93-bd7ea3240b47",
+  "multiverse_ids": [
+    87599
+  ],
+  "mtgo_id": 22176,
+  "mtgo_foil_id": 22177,
+  "tcgplayer_id": 12430,
+  "cardmarket_id": 12658,
+  "name": "Erayo, Soratami Ascendant // Erayo's Essence",
+  "lang": "en",
+  "released_at": "2005-06-03",
+  "uri": "https://api.scryfall.com/cards/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8",
+  "scryfall_uri": "https://scryfall.com/card/sok/35/erayo-soratami-ascendant-erayos-essence?utm_source=api",
+  "layout": "flip",
+  "highres_image": true,
+  "image_status": "highres_scan",
+  "image_uris": {
+    "small": "https://cards.scryfall.io/small/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.jpg?1610664131",
+    "normal": "https://cards.scryfall.io/normal/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.jpg?1610664131",
+    "large": "https://cards.scryfall.io/large/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.jpg?1610664131",
+    "png": "https://cards.scryfall.io/png/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.png?1610664131",
+    "art_crop": "https://cards.scryfall.io/art_crop/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.jpg?1610664131",
+    "border_crop": "https://cards.scryfall.io/border_crop/front/0/b/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8.jpg?1610664131"
+  },
+  "mana_cost": "{1}{U}",
+  "cmc": 2,
+  "type_line": "Legendary Creature — Moonfolk Monk // Legendary Enchantment",
+  "power": "1",
+  "toughness": "1",
+  "colors": [
+    "U"
+  ],
+  "color_identity": [
+    "U"
+  ],
+  "keywords": [
+    "Flying"
+  ],
+  "card_faces": [
+    {
+      "object": "card_face",
+      "name": "Erayo, Soratami Ascendant",
+      "mana_cost": "{1}{U}",
+      "type_line": "Legendary Creature — Moonfolk Monk",
+      "oracle_text": "Flying\nWhenever the fourth spell of a turn is cast, flip Erayo, Soratami Ascendant.",
+      "power": "1",
+      "toughness": "1",
+      "artist": "Matt Cavotta",
+      "artist_id": "2e6a0611-9411-4ba4-98e3-c0e18cbf9f83",
+      "illustration_id": "99cab97a-9861-4a5a-8578-6c742d192183"
+    },
+    {
+      "object": "card_face",
+      "name": "Erayo's Essence",
+      "mana_cost": "",
+      "type_line": "Legendary Enchantment",
+      "oracle_text": "Whenever an opponent casts their first spell each turn, counter that spell.",
+      "artist": "Matt Cavotta",
+      "artist_id": "2e6a0611-9411-4ba4-98e3-c0e18cbf9f83"
+    }
+  ],
+  "legalities": {
+    "standard": "not_legal",
+    "future": "not_legal",
+    "historic": "not_legal",
+    "timeless": "not_legal",
+    "gladiator": "not_legal",
+    "pioneer": "not_legal",
+    "explorer": "not_legal",
+    "modern": "legal",
+    "legacy": "legal",
+    "pauper": "not_legal",
+    "vintage": "legal",
+    "penny": "legal",
+    "commander": "banned",
+    "oathbreaker": "legal",
+    "standardbrawl": "not_legal",
+    "brawl": "not_legal",
+    "alchemy": "not_legal",
+    "paupercommander": "not_legal",
+    "duel": "legal",
+    "oldschool": "not_legal",
+    "premodern": "not_legal",
+    "predh": "banned"
+  },
+  "games": [
+    "paper",
+    "mtgo"
+  ],
+  "reserved": false,
+  "foil": true,
+  "nonfoil": true,
+  "finishes": [
+    "nonfoil",
+    "foil"
+  ],
+  "oversized": false,
+  "promo": false,
+  "reprint": false,
+  "variation": false,
+  "set_id": "4db16ad3-2b95-442f-bb6b-e9aa7fe7f769",
+  "set": "sok",
+  "set_name": "Saviors of Kamigawa",
+  "set_type": "expansion",
+  "set_uri": "https://api.scryfall.com/sets/4db16ad3-2b95-442f-bb6b-e9aa7fe7f769",
+  "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Asok&unique=prints",
+  "scryfall_set_uri": "https://scryfall.com/sets/sok?utm_source=api",
+  "rulings_uri": "https://api.scryfall.com/cards/0b61d772-2d8b-4acf-9dd2-b2e8b03538c8/rulings",
+  "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3Ad83bb32d-f409-421a-9d93-bd7ea3240b47&unique=prints",
+  "collector_number": "35",
+  "digital": false,
+  "rarity": "rare",
+  "card_back_id": "0aeebaf5-8c7d-4636-9e82-8c27447861f7",
+  "artist": "Matt Cavotta",
+  "artist_ids": [
+    "2e6a0611-9411-4ba4-98e3-c0e18cbf9f83"
+  ],
+  "illustration_id": "99cab97a-9861-4a5a-8578-6c742d192183",
+  "border_color": "black",
+  "frame": "2003",
+  "full_art": false,
+  "textless": false,
+  "booster": true,
+  "story_spotlight": false,
+  "penny_rank": 3034,
+  "prices": {
+    "usd": "4.45",
+    "usd_foil": "10.53",
+    "usd_etched": null,
+    "eur": "2.90",
+    "eur_foil": "14.00",
+    "tix": "0.02"
+  },
+  "related_uris": {
+    "gatherer": "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=87599&printed=false",
+    "tcgplayer_infinite_articles": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Darticle%26game%3Dmagic%26partner%3Dscryfall%26q%3DErayo%252C%2BSoratami%2BAscendant%2B%252F%252F%2BErayo%2527s%2BEssence",
+    "tcgplayer_infinite_decks": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Ddeck%26game%3Dmagic%26partner%3Dscryfall%26q%3DErayo%252C%2BSoratami%2BAscendant%2B%252F%252F%2BErayo%2527s%2BEssence",
+    "edhrec": "https://edhrec.com/route/?cc=Erayo%2C+Soratami+Ascendant"
+  },
+  "purchase_uris": {
+    "tcgplayer": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&u=https%3A%2F%2Fwww.tcgplayer.com%2Fproduct%2F12430%3Fpage%3D1",
+    "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Singles/Saviors-of-Kamigawa/Erayo-Soratami-Ascendant?referrer=scryfall&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+    "cardhoarder": "https://www.cardhoarder.com/cards/22176?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+  }
+}
+Double-faced cards (Comp. rules term)
+These cards have two faces on different sides of the cardstock that are related to each other. The whole card is a single legal or deckbuilding object. Double-faced cards can either be transforming or modal.
+
+Transforming double-faced cards (Comp. rules term) · Example transforming DFCs
+These cards can either transform after entering the battlefield, or can be put onto the battlefield already transformed. Scryfall will use the card_faces object to describe the two different transformed modes of the card, while the root object will contain data that applies to both sides. These cards have their layout field set to "transform".
+
+GET https://api.scryfall.com/cards/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02
+HTTP 200 success
+Content-Type: application/json; charset=utf-8
+
+{
+  "object": "card",
+  "id": "b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02",
+  "oracle_id": "6bb7d0df-7a9f-4e17-8c31-7628c4b12356",
+  "multiverse_ids": [
+    410007,
+    410008
+  ],
+  "mtgo_id": 59762,
+  "mtgo_foil_id": 59763,
+  "tcgplayer_id": 115432,
+  "cardmarket_id": 288952,
+  "name": "Arlinn Kord // Arlinn, Embraced by the Moon",
+  "lang": "en",
+  "released_at": "2016-04-08",
+  "uri": "https://api.scryfall.com/cards/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02",
+  "scryfall_uri": "https://scryfall.com/card/soi/243/arlinn-kord-arlinn-embraced-by-the-moon?utm_source=api",
+  "layout": "transform",
+  "highres_image": true,
+  "image_status": "highres_scan",
+  "cmc": 4,
+  "type_line": "Legendary Planeswalker — Arlinn // Legendary Planeswalker — Arlinn",
+  "color_identity": [
+    "G",
+    "R"
+  ],
+  "keywords": [
+    "Transform"
+  ],
+  "card_faces": [
+    {
+      "object": "card_face",
+      "name": "Arlinn Kord",
+      "mana_cost": "{2}{R}{G}",
+      "type_line": "Legendary Planeswalker — Arlinn",
+      "oracle_text": "+1: Until end of turn, up to one target creature gets +2/+2 and gains vigilance and haste.\n0: Create a 2/2 green Wolf creature token. Transform Arlinn Kord.",
+      "colors": [
+        "G",
+        "R"
+      ],
+      "loyalty": "3",
+      "artist": "Winona Nelson",
+      "artist_id": "e45fe8d3-75d6-42c9-a2df-e945ad81ea27",
+      "illustration_id": "b943b0d6-5e7b-46da-92df-00fd6cf173e0",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "normal": "https://cards.scryfall.io/normal/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "large": "https://cards.scryfall.io/large/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "png": "https://cards.scryfall.io/png/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.png?1576385339",
+        "art_crop": "https://cards.scryfall.io/art_crop/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "border_crop": "https://cards.scryfall.io/border_crop/front/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339"
+      }
+    },
+    {
+      "object": "card_face",
+      "name": "Arlinn, Embraced by the Moon",
+      "mana_cost": "",
+      "type_line": "Legendary Planeswalker — Arlinn",
+      "oracle_text": "+1: Creatures you control get +1/+1 and gain trample until end of turn.\n−1: Arlinn, Embraced by the Moon deals 3 damage to any target. Transform Arlinn, Embraced by the Moon.\n−6: You get an emblem with \"Creatures you control have haste and '{T}: This creature deals damage equal to its power to any target.'\"",
+      "colors": [
+        "G",
+        "R"
+      ],
+      "color_indicator": [
+        "G",
+        "R"
+      ],
+      "artist": "Winona Nelson",
+      "artist_id": "e45fe8d3-75d6-42c9-a2df-e945ad81ea27",
+      "illustration_id": "025bdbd1-cb24-46b5-b19c-8bee24c3f3c0",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "normal": "https://cards.scryfall.io/normal/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "large": "https://cards.scryfall.io/large/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "png": "https://cards.scryfall.io/png/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.png?1576385339",
+        "art_crop": "https://cards.scryfall.io/art_crop/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339",
+        "border_crop": "https://cards.scryfall.io/border_crop/back/b/3/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02.jpg?1576385339"
+      }
+    }
+  ],
+  "all_parts": [
+    {
+      "object": "related_card",
+      "id": "b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02",
+      "component": "combo_piece",
+      "name": "Arlinn Kord // Arlinn, Embraced by the Moon",
+      "type_line": "Legendary Planeswalker — Arlinn // Legendary Planeswalker — Arlinn",
+      "uri": "https://api.scryfall.com/cards/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02"
+    },
+    {
+      "object": "related_card",
+      "id": "bb0686c3-a44a-449d-ab12-eeb9c0c25489",
+      "component": "combo_piece",
+      "name": "Arlinn Kord Emblem",
+      "type_line": "Emblem — Arlinn",
+      "uri": "https://api.scryfall.com/cards/bb0686c3-a44a-449d-ab12-eeb9c0c25489"
+    },
+    {
+      "object": "related_card",
+      "id": "0a5ac360-dc47-4bc5-a4cc-ff223abc3ffc",
+      "component": "token",
+      "name": "Wolf",
+      "type_line": "Token Creature — Wolf",
+      "uri": "https://api.scryfall.com/cards/0a5ac360-dc47-4bc5-a4cc-ff223abc3ffc"
+    },
+    {
+      "object": "related_card",
+      "id": "4825c59d-9e27-4a12-ba84-642b8540e573",
+      "component": "combo_piece",
+      "name": "Shadows Over Innistrad Checklist 2",
+      "type_line": "Card",
+      "uri": "https://api.scryfall.com/cards/4825c59d-9e27-4a12-ba84-642b8540e573"
+    }
+  ],
+  "legalities": {
+    "standard": "not_legal",
+    "future": "not_legal",
+    "historic": "legal",
+    "timeless": "legal",
+    "gladiator": "legal",
+    "pioneer": "legal",
+    "explorer": "legal",
+    "modern": "legal",
+    "legacy": "legal",
+    "pauper": "not_legal",
+    "vintage": "legal",
+    "penny": "legal",
+    "commander": "legal",
+    "oathbreaker": "legal",
+    "standardbrawl": "not_legal",
+    "brawl": "legal",
+    "alchemy": "not_legal",
+    "paupercommander": "not_legal",
+    "duel": "legal",
+    "oldschool": "not_legal",
+    "premodern": "not_legal",
+    "predh": "not_legal"
+  },
+  "games": [
+    "paper",
+    "mtgo"
+  ],
+  "reserved": false,
+  "foil": true,
+  "nonfoil": true,
+  "finishes": [
+    "nonfoil",
+    "foil"
+  ],
+  "oversized": false,
+  "promo": false,
+  "reprint": false,
+  "variation": false,
+  "set_id": "5e914d7e-c1e9-446c-a33d-d093c02b2743",
+  "set": "soi",
+  "set_name": "Shadows over Innistrad",
+  "set_type": "expansion",
+  "set_uri": "https://api.scryfall.com/sets/5e914d7e-c1e9-446c-a33d-d093c02b2743",
+  "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Asoi&unique=prints",
+  "scryfall_set_uri": "https://scryfall.com/sets/soi?utm_source=api",
+  "rulings_uri": "https://api.scryfall.com/cards/b37aa12c-a6b3-4cf8-b5a4-0a999ff12d02/rulings",
+  "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3A6bb7d0df-7a9f-4e17-8c31-7628c4b12356&unique=prints",
+  "collector_number": "243",
+  "digital": false,
+  "rarity": "mythic",
+  "artist": "Winona Nelson",
+  "artist_ids": [
+    "e45fe8d3-75d6-42c9-a2df-e945ad81ea27"
+  ],
+  "border_color": "black",
+  "frame": "2015",
+  "frame_effects": [
+    "sunmoondfc"
+  ],
+  "security_stamp": "oval",
+  "full_art": false,
+  "textless": false,
+  "booster": true,
+  "story_spotlight": false,
+  "edhrec_rank": 6480,
+  "penny_rank": 2772,
+  "prices": {
+    "usd": "2.59",
+    "usd_foil": "6.28",
+    "usd_etched": null,
+    "eur": "2.43",
+    "eur_foil": "6.10",
+    "tix": "0.02"
+  },
+  "related_uris": {
+    "gatherer": "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=410007&printed=false",
+    "tcgplayer_infinite_articles": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Darticle%26game%3Dmagic%26partner%3Dscryfall%26q%3DArlinn%2BKord%2B%252F%252F%2BArlinn%252C%2BEmbraced%2Bby%2Bthe%2BMoon",
+    "tcgplayer_infinite_decks": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Ddeck%26game%3Dmagic%26partner%3Dscryfall%26q%3DArlinn%2BKord%2B%252F%252F%2BArlinn%252C%2BEmbraced%2Bby%2Bthe%2BMoon",
+    "edhrec": "https://edhrec.com/route/?cc=Arlinn+Kord"
+  },
+  "purchase_uris": {
+    "tcgplayer": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&u=https%3A%2F%2Fwww.tcgplayer.com%2Fproduct%2F115432%3Fpage%3D1",
+    "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Singles/Shadows-over-Innistrad/Arlinn-Kord-Arlinn-Embraced-by-the-Moon?referrer=scryfall&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+    "cardhoarder": "https://www.cardhoarder.com/cards/59762?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+  }
+}
+Modal double-faced cards (Comp. rules term) · Example modal DFCs
+Modal DFCs be cast or played as either half of the card. Scryfall will use the card_faces object to describe the two different modes of the card, while the root object will contain data that applies to both sides (such as the color_identity). These cards have their layout field set to "modal_dfc".
+
+GET https://api.scryfall.com/cards/ba09360a-067e-48a5-bdc5-a19fd066a785
+HTTP 200 success
+Content-Type: application/json; charset=utf-8
+
+{
+  "object": "card",
+  "id": "ba09360a-067e-48a5-bdc5-a19fd066a785",
+  "oracle_id": "0b299983-9f0f-404a-acd1-8f142572b1f1",
+  "multiverse_ids": [
+    516912,
+    516913
+  ],
+  "mtgo_id": 88779,
+  "arena_id": 76544,
+  "tcgplayer_id": 235673,
+  "cardmarket_id": 557492,
+  "name": "Extus, Oriq Overlord // Awaken the Blood Avatar",
+  "lang": "en",
+  "released_at": "2021-04-23",
+  "uri": "https://api.scryfall.com/cards/ba09360a-067e-48a5-bdc5-a19fd066a785",
+  "scryfall_uri": "https://scryfall.com/card/stx/149/extus-oriq-overlord-awaken-the-blood-avatar?utm_source=api",
+  "layout": "modal_dfc",
+  "highres_image": true,
+  "image_status": "highres_scan",
+  "cmc": 4,
+  "type_line": "Legendary Creature — Human Warlock // Sorcery",
+  "color_identity": [
+    "B",
+    "R",
+    "W"
+  ],
+  "keywords": [
+    "Magecraft",
+    "Double strike"
+  ],
+  "card_faces": [
+    {
+      "object": "card_face",
+      "name": "Extus, Oriq Overlord",
+      "mana_cost": "{1}{W}{B}{B}",
+      "type_line": "Legendary Creature — Human Warlock",
+      "oracle_text": "Double strike\nMagecraft — Whenever you cast or copy an instant or sorcery spell, return target nonlegendary creature card from your graveyard to your hand.",
+      "colors": [
+        "B",
+        "W"
+      ],
+      "power": "2",
+      "toughness": "4",
+      "flavor_text": "\"Join me for the dawn of a new age.\"",
+      "artist": "Chase Stone",
+      "artist_id": "2d753f61-5f5b-468e-97ea-8e0fdd347340",
+      "illustration_id": "d4a80d40-02ec-4d4e-bbe5-2fb58bbb4a88",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "normal": "https://cards.scryfall.io/normal/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "large": "https://cards.scryfall.io/large/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "png": "https://cards.scryfall.io/png/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.png?1624593379",
+        "art_crop": "https://cards.scryfall.io/art_crop/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "border_crop": "https://cards.scryfall.io/border_crop/front/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379"
+      }
+    },
+    {
+      "object": "card_face",
+      "name": "Awaken the Blood Avatar",
+      "mana_cost": "{6}{B}{R}",
+      "type_line": "Sorcery",
+      "oracle_text": "As an additional cost to cast this spell, you may sacrifice any number of creatures. This spell costs {2} less to cast for each creature sacrificed this way.\nEach opponent sacrifices a creature. Create a 3/6 black and red Avatar creature token with haste and \"Whenever this creature attacks, it deals 3 damage to each opponent.\"",
+      "colors": [
+        "B",
+        "R"
+      ],
+      "artist": "Kekai Kotaki",
+      "artist_id": "4b771085-c049-4308-930d-ec9665f803a4",
+      "illustration_id": "ed8629b5-b79b-4b2a-a3dd-e230f0b8b3ea",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "normal": "https://cards.scryfall.io/normal/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "large": "https://cards.scryfall.io/large/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "png": "https://cards.scryfall.io/png/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.png?1624593379",
+        "art_crop": "https://cards.scryfall.io/art_crop/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379",
+        "border_crop": "https://cards.scryfall.io/border_crop/back/b/a/ba09360a-067e-48a5-bdc5-a19fd066a785.jpg?1624593379"
+      }
+    }
+  ],
+  "all_parts": [
+    {
+      "object": "related_card",
+      "id": "786156ce-544c-4aa4-8381-756042d0bcda",
+      "component": "combo_piece",
+      "name": "Extus, Oriq Overlord // Awaken the Blood Avatar",
+      "type_line": "Legendary Creature — Human Warlock // Sorcery",
+      "uri": "https://api.scryfall.com/cards/786156ce-544c-4aa4-8381-756042d0bcda"
+    },
+    {
+      "object": "related_card",
+      "id": "94a50acd-ac2d-47bf-b331-0bcf5edd9c75",
+      "component": "token",
+      "name": "Avatar",
+      "type_line": "Token Creature — Avatar",
+      "uri": "https://api.scryfall.com/cards/94a50acd-ac2d-47bf-b331-0bcf5edd9c75"
+    }
+  ],
+  "legalities": {
+    "standard": "not_legal",
+    "future": "not_legal",
+    "historic": "legal",
+    "timeless": "legal",
+    "gladiator": "legal",
+    "pioneer": "legal",
+    "explorer": "legal",
+    "modern": "legal",
+    "legacy": "legal",
+    "pauper": "not_legal",
+    "vintage": "legal",
+    "penny": "legal",
+    "commander": "legal",
+    "oathbreaker": "legal",
+    "standardbrawl": "not_legal",
+    "brawl": "legal",
+    "alchemy": "not_legal",
+    "paupercommander": "not_legal",
+    "duel": "legal",
+    "oldschool": "not_legal",
+    "premodern": "not_legal",
+    "predh": "not_legal"
+  },
+  "games": [
+    "arena",
+    "paper",
+    "mtgo"
+  ],
+  "reserved": false,
+  "foil": true,
+  "nonfoil": true,
+  "finishes": [
+    "nonfoil",
+    "foil"
+  ],
+  "oversized": false,
+  "promo": false,
+  "reprint": false,
+  "variation": false,
+  "set_id": "541c3c28-8747-40e5-a231-8e8f33234859",
+  "set": "stx",
+  "set_name": "Strixhaven: School of Mages",
+  "set_type": "expansion",
+  "set_uri": "https://api.scryfall.com/sets/541c3c28-8747-40e5-a231-8e8f33234859",
+  "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Astx&unique=prints",
+  "scryfall_set_uri": "https://scryfall.com/sets/stx?utm_source=api",
+  "rulings_uri": "https://api.scryfall.com/cards/ba09360a-067e-48a5-bdc5-a19fd066a785/rulings",
+  "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3A0b299983-9f0f-404a-acd1-8f142572b1f1&unique=prints",
+  "collector_number": "149",
+  "digital": false,
+  "rarity": "mythic",
+  "artist": "Chase Stone & Kekai Kotaki",
+  "artist_ids": [
+    "2d753f61-5f5b-468e-97ea-8e0fdd347340",
+    "4b771085-c049-4308-930d-ec9665f803a4"
+  ],
+  "border_color": "black",
+  "frame": "2015",
+  "frame_effects": [
+    "legendary"
+  ],
+  "security_stamp": "oval",
+  "full_art": false,
+  "textless": false,
+  "booster": true,
+  "story_spotlight": true,
+  "edhrec_rank": 8612,
+  "preview": {
+    "source": "PowrDragn",
+    "source_uri": "https://twitter.com/powrdragn/status/1376927296758509568",
+    "previewed_at": "2021-03-30"
+  },
+  "prices": {
+    "usd": "0.36",
+    "usd_foil": "0.64",
+    "usd_etched": null,
+    "eur": "0.92",
+    "eur_foil": "1.13",
+    "tix": "0.03"
+  },
+  "related_uris": {
+    "gatherer": "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=516912&printed=false",
+    "tcgplayer_infinite_articles": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Darticle%26game%3Dmagic%26partner%3Dscryfall%26q%3DExtus%252C%2BOriq%2BOverlord%2B%252F%252F%2BAwaken%2Bthe%2BBlood%2BAvatar",
+    "tcgplayer_infinite_decks": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Ddeck%26game%3Dmagic%26partner%3Dscryfall%26q%3DExtus%252C%2BOriq%2BOverlord%2B%252F%252F%2BAwaken%2Bthe%2BBlood%2BAvatar",
+    "edhrec": "https://edhrec.com/route/?cc=Extus%2C+Oriq+Overlord"
+  },
+  "purchase_uris": {
+    "tcgplayer": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&u=https%3A%2F%2Fwww.tcgplayer.com%2Fproduct%2F235673%3Fpage%3D1",
+    "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Singles/Strixhaven-School-of-Mages/Extus-Oriq-Overlord-Awaken-the-Blood-Avatar?referrer=scryfall&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+    "cardhoarder": "https://www.cardhoarder.com/cards/88779?affiliate_id=scryfall&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+  }
+}
+Reversible cards (casual term) · Example reversible cards
+This term is used by both Scryfall and WotC to describe a piece of cardstock with two distinct Magic cards or tokens printed on opposite sides. The two halves of the card are not related to each other in any way and are treated as two separate objects for gameplay or deckbuilding. The overall Card object will have its layout field set to "reversible_card", while the individual card_face objects will have their own layout fields describing the distinct printings on both sides. Many other fields for a reversible card move into the card_face objects to describe the distinct face.
+
+GET https://api.scryfall.com/cards/3e3f0bcd-0796-494d-bf51-94b33c1671e9
+HTTP 200 success
+Content-Type: application/json; charset=utf-8
+
+{
+  "object": "card",
+  "id": "3e3f0bcd-0796-494d-bf51-94b33c1671e9",
+  "multiverse_ids": [],
+  "tcgplayer_id": 259214,
+  "name": "Propaganda // Propaganda",
+  "lang": "en",
+  "released_at": "2022-04-22",
+  "uri": "https://api.scryfall.com/cards/3e3f0bcd-0796-494d-bf51-94b33c1671e9",
+  "scryfall_uri": "https://scryfall.com/card/sld/381/propaganda-propaganda?utm_source=api",
+  "layout": "reversible_card",
+  "highres_image": true,
+  "image_status": "highres_scan",
+  "color_identity": [
+    "U"
+  ],
+  "keywords": [],
+  "card_faces": [
+    {
+      "object": "card_face",
+      "oracle_id": "ea9709b6-4c37-4d5a-b04d-cd4c42e4f9dd",
+      "layout": "normal",
+      "name": "Propaganda",
+      "mana_cost": "{2}{U}",
+      "cmc": 3,
+      "type_line": "Enchantment",
+      "oracle_text": "Creatures can't attack you unless their controller pays {2} for each creature they control that's attacking you.",
+      "colors": [
+        "U"
+      ],
+      "flavor_text": "\"Obedience is the true path to happiness.\"\n—Dolorus, magister equitum",
+      "artist": "Scott Balmer",
+      "artist_id": "c26dd9c9-54f9-4a8c-9d54-caac6be0161d",
+      "illustration_id": "7af368fa-6036-462a-a480-02ccc589bea5",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "normal": "https://cards.scryfall.io/normal/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "large": "https://cards.scryfall.io/large/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "png": "https://cards.scryfall.io/png/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.png?1670031727",
+        "art_crop": "https://cards.scryfall.io/art_crop/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "border_crop": "https://cards.scryfall.io/border_crop/front/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727"
+      }
+    },
+    {
+      "object": "card_face",
+      "oracle_id": "ea9709b6-4c37-4d5a-b04d-cd4c42e4f9dd",
+      "layout": "normal",
+      "name": "Propaganda",
+      "mana_cost": "{2}{U}",
+      "cmc": 3,
+      "type_line": "Enchantment",
+      "oracle_text": "Creatures can't attack you unless their controller pays {2} for each creature they control that's attacking you.",
+      "colors": [
+        "U"
+      ],
+      "flavor_text": "\"Why rebel? The system can be changed from within.\"\n—Dolorus, magister equitum",
+      "artist": "Scott Balmer",
+      "artist_id": "c26dd9c9-54f9-4a8c-9d54-caac6be0161d",
+      "illustration_id": "fee742d4-3025-430f-9094-b67f249e54f5",
+      "image_uris": {
+        "small": "https://cards.scryfall.io/small/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "normal": "https://cards.scryfall.io/normal/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "large": "https://cards.scryfall.io/large/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "png": "https://cards.scryfall.io/png/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.png?1670031727",
+        "art_crop": "https://cards.scryfall.io/art_crop/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727",
+        "border_crop": "https://cards.scryfall.io/border_crop/back/3/e/3e3f0bcd-0796-494d-bf51-94b33c1671e9.jpg?1670031727"
+      }
+    }
+  ],
+  "legalities": {
+    "standard": "not_legal",
+    "future": "not_legal",
+    "historic": "not_legal",
+    "timeless": "not_legal",
+    "gladiator": "not_legal",
+    "pioneer": "not_legal",
+    "explorer": "not_legal",
+    "modern": "legal",
+    "legacy": "legal",
+    "pauper": "not_legal",
+    "vintage": "legal",
+    "penny": "not_legal",
+    "commander": "legal",
+    "oathbreaker": "legal",
+    "standardbrawl": "not_legal",
+    "brawl": "not_legal",
+    "alchemy": "not_legal",
+    "paupercommander": "not_legal",
+    "duel": "legal",
+    "oldschool": "not_legal",
+    "premodern": "legal",
+    "predh": "legal"
+  },
+  "games": [
+    "paper"
+  ],
+  "reserved": false,
+  "foil": true,
+  "nonfoil": false,
+  "finishes": [
+    "foil"
+  ],
+  "oversized": false,
+  "promo": false,
+  "reprint": true,
+  "variation": false,
+  "set_id": "4d92a8a7-ccb0-437d-abdc-9d70fc5ed672",
+  "set": "sld",
+  "set_name": "Secret Lair Drop",
+  "set_type": "box",
+  "set_uri": "https://api.scryfall.com/sets/4d92a8a7-ccb0-437d-abdc-9d70fc5ed672",
+  "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Asld&unique=prints",
+  "scryfall_set_uri": "https://scryfall.com/sets/sld?utm_source=api",
+  "rulings_uri": "https://api.scryfall.com/cards/3e3f0bcd-0796-494d-bf51-94b33c1671e9/rulings",
+  "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3Aea9709b6-4c37-4d5a-b04d-cd4c42e4f9dd&unique=prints",
+  "collector_number": "381",
+  "digital": false,
+  "rarity": "rare",
+  "artist": "Scott Balmer",
+  "artist_ids": [
+    "c26dd9c9-54f9-4a8c-9d54-caac6be0161d"
+  ],
+  "border_color": "borderless",
+  "frame": "2015",
+  "frame_effects": [
+    "inverted"
+  ],
+  "security_stamp": "oval",
+  "full_art": false,
+  "textless": false,
+  "booster": false,
+  "story_spotlight": false,
+  "edhrec_rank": 175,
+  "prices": {
+    "usd": null,
+    "usd_foil": "21.01",
+    "usd_etched": null,
+    "eur": null,
+    "eur_foil": null,
+    "tix": null
+  },
+  "related_uris": {
+    "tcgplayer_infinite_articles": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Darticle%26game%3Dmagic%26partner%3Dscryfall%26q%3DPropaganda%2B%252F%252F%2BPropaganda",
+    "tcgplayer_infinite_decks": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&trafcat=infinite&u=https%3A%2F%2Finfinite.tcgplayer.com%2Fsearch%3FcontentMode%3Ddeck%26game%3Dmagic%26partner%3Dscryfall%26q%3DPropaganda%2B%252F%252F%2BPropaganda",
+    "edhrec": "https://edhrec.com/route/?cc=Propaganda+%2F%2F+Propaganda"
+  },
+  "purchase_uris": {
+    "tcgplayer": "https://tcgplayer.pxf.io/c/4931599/1830156/21018?subId1=api&u=https%3A%2F%2Fwww.tcgplayer.com%2Fproduct%2F259214%3Fpage%3D1",
+    "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Propaganda+%2F%2F+Propaganda&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+    "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Propaganda+%2F%2F+Propaganda&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+  }
+}
+Multi-faced cards (casual term)
+This term has no rules meaning and is used by Scryfall to describe any object with the nested card_faces property.
+
+Double-sided cards (casual term)
+This term has no rules meaning and is used only casually to refer to any cards with gameplay information on both sides.
+
+Frames
+Scryfall tracks the appearance of card’s bounding frame programmatically with the frame and frame_effects fields.
+
+Frames
+The frame field tracks the edition of the card frame of used for the re/print in question. The overall Magic frame has gone though several major revisions in the game’s lifetime.
+
+Frame	Description	Examples
+1993
+
+The original Magic card frame, starting from Limited Edition Alpha.
+
+Example Cards
+
+1997
+
+The updated classic frame starting from Mirage block
+
+Example Cards
+
+2003
+
+The “modern” Magic card frame, introduced in Eighth Edition and Mirrodin block.
+
+Example Cards
+
+2015
+
+The holofoil-stamp Magic card frame, introduced in Magic 2015.
+
+Example Cards
+
+future
+
+The frame used on cards from the future
+
+Example Cards
+
+Frame Effects
+The frame_effects field tracks additional frame artwork applied over a particular frame. For example, there are both 2003 and 2015-frame cards with the Nyx-touched effect.
+
+Effect	Description	Examples
+legendary
+
+The cards have a legendary crown
+
+Example Cards
+
+miracle
+
+The miracle frame effect
+
+Example Cards
+
+nyxtouched
+
+The Nyx-touched frame effect
+
+Example Cards
+
+draft
+
+The draft-matters frame effect
+
+Example Cards
+
+devoid
+
+The Devoid frame effect
+
+Example Cards
+
+tombstone
+
+The Odyssey tombstone mark
+
+Example Cards
+
+colorshifted
+
+A colorshifted frame
+
+Example Cards
+
+inverted
+
+The FNM-style inverted frame
+
+Example Cards
+
+sunmoondfc
+
+The sun and moon transform marks
+
+Example Cards
+
+compasslanddfc
+
+The compass and land transform marks
+
+Example Cards
+
+originpwdfc
+
+The Origins and planeswalker transform marks
+
+Example Cards
+
+mooneldrazidfc
+
+The moon and Eldrazi transform marks
+
+Example Cards
+
+waxingandwaningmoondfc
+
+The waxing and waning crescent moon transform marks
+
+Example Cards
+
+showcase
+
+A custom Showcase frame
+
+Example Cards
+
+extendedart
+
+An extended art frame
+
+Example Cards
+
+companion
+
+The cards have a companion frame
+
+Example Cards
+
+etched
+
+The cards have an etched foil treatment
+
+Example Cards
+
+snow
+
+The cards have the snowy frame effect
+
+Example Cards
+
+lesson
+
+The cards have the Lesson frame effect
+
+Example Cards
+
+shatteredglass
+
+The cards have the Shattered Glass frame effect
+
+Example Cards
+
+convertdfc
+
+The cards have More Than Meets the Eye™ marks
+
+Example Cards
+
+fandfc
+
+The cards have fan transforming marks
+
+Example Cards
+
+upsidedowndfc
+
+The cards have the Upside Down transforming marks
+
+Example Cards
+
+spree
+
+The cards have Spree asterisks
+
+Example Cards
+
+
+Languages
+Scryfall archives Magic cards in 17 languages (including some unofficial languages).
+
+Each Card object indicates its language in the lang property using an ISO-like code. When available, cards may also include their printed text in printed_name, printed_type_line, and printed_text fields.
+
+Please note that Oracle text is always English, per game rules. Cards printed in non-English languages are a translation of the Oracle text at the time the card was printed, but these texts do not receive errata.
+
+Our support for multiple languages in older sets is limited. We are expanding this data slowly over time.
+
+The current languages are:
+
+Code	Printed Code	Language	Cards	Examples
+en
+
+en
+
+English
+
+96,779
+
+Example Cards
+
+es
+
+sp
+
+Spanish
+
+45,284
+
+Example Cards
+
+fr
+
+fr
+
+French
+
+49,297
+
+Example Cards
+
+de
+
+de
+
+German
+
+48,960
+
+Example Cards
+
+it
+
+it
+
+Italian
+
+44,866
+
+Example Cards
+
+pt
+
+pt
+
+Portuguese
+
+38,572
+
+Example Cards
+
+ja
+
+jp
+
+Japanese
+
+52,271
+
+Example Cards
+
+ko
+
+kr
+
+Korean
+
+15,297
+
+Example Cards
+
+ru
+
+ru
+
+Russian
+
+21,533
+
+Example Cards
+
+zhs
+
+cs
+
+Simplified Chinese
+
+40,467
+
+Example Cards
+
+zht
+
+ct
+
+Traditional Chinese
+
+23,424
+
+Example Cards
+
+he
+
+Hebrew
+
+1
+
+Example Cards
+
+la
+
+Latin
+
+1
+
+Example Cards
+
+grc
+
+Ancient Greek
+
+3
+
+Example Cards
+
+ar
+
+Arabic
+
+1
+
+Example Cards
+
+sa
+
+Sanskrit
+
+1
+
+Example Cards
+
+ph
+
+ph
+
+Phyrexian
+
+49
+
+Example Cards
+
+List Objects
+A List object represents a requested sequence of other objects (Cards, Sets, etc). List objects may be paginated, and also include information about issues raised when generating the list.
+
+Property	Type	Atn	Details
+object	String		A content type for this object, always list.
+data	Array		An array of the requested objects, in a specific order.
+has_more	Boolean		True if this List is paginated and there is a page beyond the current page.
+next_page	URI	
+Nullable
+If there is a page beyond the current page, this field will contain a full API URI to that page. You may submit a HTTP GET request to that URI to continue paginating forward on this List.
+total_cards	Integer	
+Nullable
+If this is a list of Card objects, this field will contain the total number of cards found across all pages.
+warnings	Array	
+Nullable
+An array of human-readable warnings issued when generating this list, as strings. Warnings are non-fatal issues that the API discovered with your input. In general, they indicate that the List will not contain the all of the information you requested. You should fix the warnings and re-submit your request.
+Example Request
+Find white cards with mana value 1
+
+GET https://api.scryfall.com/cards/search?q=c%3Awhite+mv%3D1
+
+Set Objects
+A Set object represents a group of related Magic cards. All Card objects on Scryfall belong to exactly one set.
+
+Due to Magic’s long and complicated history, Scryfall includes many un-official sets as a way to group promotional or outlier cards together. Such sets will likely have a code that begins with p or t, such as pcel or tori.
+
+Official sets always have a three-letter set code, such as zen.
+
+Property	Type	Atn	Details
+object	String		A content type for this object, always set.
+id	UUID		A unique ID for this set on Scryfall that will not change.
+code	String		The unique three to six-letter code for this set.
+mtgo_code	String	
+Nullable
+The unique code for this set on MTGO, which may differ from the regular code.
+arena_code	String	
+Nullable
+The unique code for this set on Arena, which may differ from the regular code.
+tcgplayer_id	Integer	
+Nullable
+This set’s ID on TCGplayer’s API, also known as the groupId.
+name	String		The English name of the set.
+set_type	String		A computer-readable classification for this set. See below.
+released_at	Date	
+Nullable
+The date the set was released or the first card was printed in the set (in GMT-8 Pacific time).
+block_code	String	
+Nullable
+The block code for this set, if any.
+block	String	
+Nullable
+The block or group name code for this set, if any.
+parent_set_code	String	
+Nullable
+The set code for the parent set, if any. promo and token sets often have a parent set.
+card_count	Integer		The number of cards in this set.
+printed_size	Integer	
+Nullable
+The denominator for the set’s printed collector numbers.
+digital	Boolean		True if this set was only released in a video game.
+foil_only	Boolean		True if this set contains only foil cards.
+nonfoil_only	Boolean		True if this set contains only nonfoil cards.
+scryfall_uri	URI		A link to this set’s permapage on Scryfall’s website.
+uri	URI		A link to this set object on Scryfall’s API.
+icon_svg_uri	URI		A URI to an SVG file for this set’s icon on Scryfall’s CDN. Hotlinking this image isn’t recommended, because it may change slightly over time. You should download it and use it locally for your particular user interface needs.
+search_uri	URI		A Scryfall API URI that you can request to begin paginating over the cards in this set.
+Set Types
+Scryfall provides an overall categorization for each Set in the set_type property. An exhaustive list of set_types is listed below:
+
+Type	Description
+core
+
+A yearly Magic core set (Tenth Edition, etc)
+
+expansion
+
+A rotational expansion set in a block (Zendikar, etc)
+
+masters
+
+A reprint set that contains no new cards (Modern Masters, etc)
+
+alchemy
+
+An Arena set designed for Alchemy
+
+masterpiece
+
+Masterpiece Series premium foil cards
+
+arsenal
+
+A Commander-oriented gift set
+
+from_the_vault
+
+From the Vault gift sets
+
+spellbook
+
+Spellbook series gift sets
+
+premium_deck
+
+Premium Deck Series decks
+
+duel_deck
+
+Duel Decks
+
+draft_innovation
+
+Special draft sets, like Conspiracy and Battlebond
+
+treasure_chest
+
+Magic Online treasure chest prize sets
+
+commander
+
+Commander preconstructed decks
+
+planechase
+
+Planechase sets
+
+archenemy
+
+Archenemy sets
+
+vanguard
+
+Vanguard card sets
+
+funny
+
+A funny un-set or set with funny promos (Unglued, Happy Holidays, etc)
+
+starter
+
+A starter/introductory set (Portal, etc)
+
+box
+
+A gift box set
+
+promo
+
+A set that contains purely promotional cards
+
+token
+
+A set made up of tokens and emblems.
+
+memorabilia
+
+A set made up of gold-bordered, oversize, or trophy cards that are not legal
+
+minigame
+
+A set that contains minigame card inserts from booster packs
+
+Example Request
+Retrieve the Aether Revolt set.
+
+GET https://api.scryfall.com/sets/aer
+
+GET /sets
+Supported formats: json
+
+Returns a List object of all Sets on Scryfall.
+
+Parameter	Type	Atn	Details
+format	String	
+Optional
+The data format to return. This method only supports json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Requests
+Retrieve all sets.
+
+GET https://api.scryfall.com/sets
+
+GET /sets/:code
+Supported formats: json
+
+Returns a Set with the given set code. The code can be either the code or the mtgo_code for the set.
+
+Parameter	Type	Atn	Details
+:code	String		The three to five-letter set code.
+format	String	
+Optional
+The data format to return. This method only supports json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Requests
+Retrieve the Mercadian Masques set.
+
+GET https://api.scryfall.com/sets/mmq
+
+GET /sets/tcgplayer/:id
+Supported formats: json
+
+Returns a Set with the given tcgplayer_id, also known as the groupId on TCGplayer’s API.
+
+Parameter	Type	Atn	Details
+:id	Integer		The tcgplayer_id or groupId.
+format	String	
+Optional
+The data format to return. This method only supports json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Requests
+Retrieve the Amonkhet Invocations set.
+
+GET https://api.scryfall.com/sets/tcgplayer/1909
+
+GET /sets/:id
+Supported formats: json
+
+Returns a Set with the given Scryfall id.
+
+Parameter	Type	Atn	Details
+:id	UUID		The Scryfall ID.
+format	String	
+Optional
+The data format to return. This method only supports json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Requests
+Retrieve the Ultimate Masters set.
+
+GET https://api.scryfall.com/sets/2ec77b94-6d47-4891-a480-5d0b4e5c9372
+
+Card Objects
+Card objects represent individual Magic: The Gathering cards that players could obtain and add to their collection (with a few minor exceptions).
+
+Cards are the API’s most complex object. You are encouraged to thoroughly read this document and also the article about layouts and images.
+
+Card Names
+Internally, Scryfall tracks the uniqueness of “Oracle names.” (i.e. names you can pick when an effect asks you to “choose a card name”). Each unique Oracle name is separately available in the card names catalog.
+
+Note that while most Oracle card names are unique, Scryfall also indexes other objects such as tokens and Unstable set variants which do not always have a unique name.
+
+Multiface Cards
+Magic cards can have multiple faces or multiple cards printed on one card stock. The faces could be shown divided on the front of the card as in split cards and flip cards, or the card can be double-faced as in transform cards and modal DFCs.
+
+Scryfall represents multi-face cards as a single object with a card_faces array describing the distinct faces.
+
+Core Card Fields
+Cards have the following core properties:
+
+Property	Type	Atn	Details
+arena_id	Integer	
+Nullable
+This card’s Arena ID, if any. A large percentage of cards are not available on Arena and do not have this ID.
+id	UUID		A unique ID for this card in Scryfall’s database.
+lang	String		A language code for this printing.
+mtgo_id	Integer	
+Nullable
+This card’s Magic Online ID (also known as the Catalog ID), if any. A large percentage of cards are not available on Magic Online and do not have this ID.
+mtgo_foil_id	Integer	
+Nullable
+This card’s foil Magic Online ID (also known as the Catalog ID), if any. A large percentage of cards are not available on Magic Online and do not have this ID.
+multiverse_ids	Array	
+Nullable
+This card’s multiverse IDs on Gatherer, if any, as an array of integers. Note that Scryfall includes many promo cards, tokens, and other esoteric objects that do not have these identifiers.
+tcgplayer_id	Integer	
+Nullable
+This card’s ID on TCGplayer’s API, also known as the productId.
+tcgplayer_etched_id	Integer	
+Nullable
+This card’s ID on TCGplayer’s API, for its etched version if that version is a separate product.
+cardmarket_id	Integer	
+Nullable
+This card’s ID on Cardmarket’s API, also known as the idProduct.
+object	String		A content type for this object, always card.
+layout	String		A code for this card’s layout.
+oracle_id	UUID	
+Nullable
+A unique ID for this card’s oracle identity. This value is consistent across reprinted card editions, and unique among different cards with the same name (tokens, Unstable variants, etc). Always present except for the reversible_card layout where it will be absent; oracle_id will be found on each face instead.
+prints_search_uri	URI		A link to where you can begin paginating all re/prints for this card on Scryfall’s API.
+rulings_uri	URI		A link to this card’s rulings list on Scryfall’s API.
+scryfall_uri	URI		A link to this card’s permapage on Scryfall’s website.
+uri	URI		A link to this card object on Scryfall’s API.
+Gameplay Fields
+Cards have the following properties relevant to the game rules:
+
+Property	Type	Atn	Details
+all_parts	Array	
+Nullable
+If this card is closely related to other cards, this property will be an array with Related Card Objects.
+card_faces	Array	
+Nullable
+An array of Card Face objects, if this card is multifaced.
+cmc	Decimal		The card’s mana value. Note that some funny cards have fractional mana costs.
+color_identity	Colors		This card’s color identity.
+color_indicator	Colors	
+Nullable
+The colors in this card’s color indicator, if any. A null value for this field indicates the card does not have one.
+colors	Colors	
+Nullable
+This card’s colors, if the overall card has colors defined by the rules. Otherwise the colors will be on the card_faces objects, see below.
+defense	String	
+Nullable
+This face’s defense, if any.
+edhrec_rank	Integer	
+Nullable
+This card’s overall rank/popularity on EDHREC. Not all cards are ranked.
+hand_modifier	String	
+Nullable
+This card’s hand modifier, if it is Vanguard card. This value will contain a delta, such as -1.
+keywords	Array		An array of keywords that this card uses, such as 'Flying' and 'Cumulative upkeep'.
+legalities	Object		An object describing the legality of this card across play formats. Possible legalities are legal, not_legal, restricted, and banned.
+life_modifier	String	
+Nullable
+This card’s life modifier, if it is Vanguard card. This value will contain a delta, such as +2.
+loyalty	String	
+Nullable
+This loyalty if any. Note that some cards have loyalties that are not numeric, such as X.
+mana_cost	String	
+Nullable
+The mana cost for this card. This value will be any empty string "" if the cost is absent. Remember that per the game rules, a missing mana cost and a mana cost of {0} are different values. Multi-faced cards will report this value in card faces.
+name	String		The name of this card. If this card has multiple faces, this field will contain both names separated by ␣//␣.
+oracle_text	String	
+Nullable
+The Oracle text for this card, if any.
+penny_rank	Integer	
+Nullable
+This card’s rank/popularity on Penny Dreadful. Not all cards are ranked.
+power	String	
+Nullable
+This card’s power, if any. Note that some cards have powers that are not numeric, such as *.
+produced_mana	Colors	
+Nullable
+Colors of mana that this card could produce.
+reserved	Boolean		True if this card is on the Reserved List.
+toughness	String	
+Nullable
+This card’s toughness, if any. Note that some cards have toughnesses that are not numeric, such as *.
+type_line	String		The type line of this card.
+Print Fields
+Cards have the following properties unique to their particular re/print:
+
+Property	Type	Atn	Details
+artist	String	
+Nullable
+The name of the illustrator of this card. Newly spoiled cards may not have this field yet.
+artist_ids	Array	
+Nullable
+The IDs of the artists that illustrated this card. Newly spoiled cards may not have this field yet.
+attraction_lights	Array	
+Nullable
+The lit Unfinity attractions lights on this card, if any.
+booster	Boolean		Whether this card is found in boosters.
+border_color	String		This card’s border color: black, white, borderless, silver, or gold.
+card_back_id	UUID		The Scryfall ID for the card back design present on this card.
+collector_number	String		This card’s collector number. Note that collector numbers can contain non-numeric characters, such as letters or ★.
+content_warning	Boolean	
+Nullable
+True if you should consider avoiding use of this print downstream.
+digital	Boolean		True if this card was only released in a video game.
+finishes	Array		An array of computer-readable flags that indicate if this card can come in foil, nonfoil, or etched finishes.
+flavor_name	String	
+Nullable
+The just-for-fun name printed on the card (such as for Godzilla series cards).
+flavor_text	String	
+Nullable
+The flavor text, if any.
+frame_effects	Array	
+Nullable
+This card’s frame effects, if any.
+frame	String		This card’s frame layout.
+full_art	Boolean		True if this card’s artwork is larger than normal.
+games	Array		A list of games that this card print is available in, paper, arena, and/or mtgo.
+highres_image	Boolean		True if this card’s imagery is high resolution.
+illustration_id	UUID	
+Nullable
+A unique identifier for the card artwork that remains consistent across reprints. Newly spoiled cards may not have this field yet.
+image_status	String		A computer-readable indicator for the state of this card’s image, one of missing, placeholder, lowres, or highres_scan.
+image_uris	Object	
+Nullable
+An object listing available imagery for this card. See the Card Imagery article for more information.
+oversized	Boolean		True if this card is oversized.
+prices	Object		An object containing daily price information for this card, including usd, usd_foil, usd_etched, eur, eur_foil, eur_etched, and tix prices, as strings.
+printed_name	String	
+Nullable
+The localized name printed on this card, if any.
+printed_text	String	
+Nullable
+The localized text printed on this card, if any.
+printed_type_line	String	
+Nullable
+The localized type line printed on this card, if any.
+promo	Boolean		True if this card is a promotional print.
+promo_types	Array	
+Nullable
+An array of strings describing what categories of promo cards this card falls into.
+purchase_uris	Object	
+Nullable
+An object providing URIs to this card’s listing on major marketplaces. Omitted if the card is unpurchaseable.
+rarity	String		This card’s rarity. One of common, uncommon, rare, special, mythic, or bonus.
+related_uris	Object		An object providing URIs to this card’s listing on other Magic: The Gathering online resources.
+released_at	Date		The date this card was first released.
+reprint	Boolean		True if this card is a reprint.
+scryfall_set_uri	URI		A link to this card’s set on Scryfall’s website.
+set_name	String		This card’s full set name.
+set_search_uri	URI		A link to where you can begin paginating this card’s set on the Scryfall API.
+set_type	String		The type of set this printing is in.
+set_uri	URI		A link to this card’s set object on Scryfall’s API.
+set	String		This card’s set code.
+set_id	UUID		This card’s Set object UUID.
+story_spotlight	Boolean		True if this card is a Story Spotlight.
+textless	Boolean		True if the card is printed without text.
+variation	Boolean		Whether this card is a variation of another printing.
+variation_of	UUID	
+Nullable
+The printing ID of the printing this card is a variation of.
+security_stamp	String	
+Nullable
+The security stamp on this card, if any. One of oval, triangle, acorn, circle, arena, or heart.
+watermark	String	
+Nullable
+This card’s watermark, if any.
+preview.previewed_at	Date	
+Nullable
+The date this card was previewed.
+preview.source_uri	URI	
+Nullable
+A link to the preview for this card.
+preview.source	String	
+Nullable
+The name of the source that previewed this card.
+Card Face Objects
+Multiface cards have a card_faces property containing at least two Card Face objects. Those objects have the following properties:
+
+Property	Type	Atn	Details
+artist	String	
+Nullable
+The name of the illustrator of this card face. Newly spoiled cards may not have this field yet.
+artist_id	UUID	
+Nullable
+The ID of the illustrator of this card face. Newly spoiled cards may not have this field yet.
+cmc	Decimal	
+Nullable
+The mana value of this particular face, if the card is reversible.
+color_indicator	Colors	
+Nullable
+The colors in this face’s color indicator, if any.
+colors	Colors	
+Nullable
+This face’s colors, if the game defines colors for the individual face of this card.
+defense	String	
+Nullable
+This face’s defense, if the game defines colors for the individual face of this card.
+flavor_text	String	
+Nullable
+The flavor text printed on this face, if any.
+illustration_id	UUID	
+Nullable
+A unique identifier for the card face artwork that remains consistent across reprints. Newly spoiled cards may not have this field yet.
+image_uris	Object	
+Nullable
+An object providing URIs to imagery for this face, if this is a double-sided card. If this card is not double-sided, then the image_uris property will be part of the parent object instead.
+layout	String	
+Nullable
+The layout of this card face, if the card is reversible.
+loyalty	String	
+Nullable
+This face’s loyalty, if any.
+mana_cost	String		The mana cost for this face. This value will be any empty string "" if the cost is absent. Remember that per the game rules, a missing mana cost and a mana cost of {0} are different values.
+name	String		The name of this particular face.
+object	String		A content type for this object, always card_face.
+oracle_id	UUID	
+Nullable
+The Oracle ID of this particular face, if the card is reversible.
+oracle_text	String	
+Nullable
+The Oracle text for this face, if any.
+power	String	
+Nullable
+This face’s power, if any. Note that some cards have powers that are not numeric, such as *.
+printed_name	String	
+Nullable
+The localized name printed on this face, if any.
+printed_text	String	
+Nullable
+The localized text printed on this face, if any.
+printed_type_line	String	
+Nullable
+The localized type line printed on this face, if any.
+toughness	String	
+Nullable
+This face’s toughness, if any.
+type_line	String	
+Nullable
+The type line of this particular face, if the card is reversible.
+watermark	String	
+Nullable
+The watermark on this particulary card face, if any.
+Related Card Objects
+Cards that are closely related to other cards (because they call them by name, or generate a token, or meld, etc) have a all_parts property that contains Related Card objects. Those objects have the following properties:
+
+Property	Type	Atn	Details
+id	UUID		An unique ID for this card in Scryfall’s database.
+object	String		A content type for this object, always related_card.
+component	String		A field explaining what role this card plays in this relationship, one of token, meld_part, meld_result, or combo_piece.
+name	String		The name of this particular related card.
+type_line	String		The type line of this card.
+uri	URI		A URI where you can retrieve a full object describing this card on Scryfall’s API.
+
+GET /cards/search
+Supported formats: json and csv
+
+Returns a List object containing Cards found using a fulltext search string. This string supports the same fulltext search system that the main site uses.
+
+This method is paginated, returning 175 cards at a time. Review the documentation for paginating the List type and and the Error type type to understand all of the possible output from this method.
+
+If only one card is found, this method will still return a List.
+
+Parameter	Type	Atn	Details
+q	String		A fulltext search query. Make sure that your parameter is properly encoded. Maximum length: 1000 Unicode characters.
+unique	String	
+Optional
+The strategy for omitting similar cards. See below.
+order	String	
+Optional
+The method to sort returned cards. See below.
+dir	String	
+Optional
+The direction to sort cards. See below.
+include_extras	Boolean	
+Optional
+If true, extra cards (tokens, planes, etc) will be included. Equivalent to adding include:extras to the fulltext search. Defaults to false.
+include_multilingual	Boolean	
+Optional
+If true, cards in every language supported by Scryfall will be included. Defaults to false.
+include_variations	Boolean	
+Optional
+If true, rare care variants will be included, like the Hairy Runesword. Defaults to false.
+page	Integer	
+Optional
+The page number to return, default 1.
+format	String	
+Optional
+The data format to return: json or csv. Defaults to json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Unique (Rollup) Modes
+The unique parameter specifies if Scryfall should remove “duplicate” results in your query. The options are:
+
+Unique	Default	Description
+cards
+
+✓
+
+Removes duplicate gameplay objects (cards that share a name and have the same functionality). For example, if your search matches more than one print of Pacifism, only one copy of Pacifism will be returned.
+
+art
+
+Returns only one copy of each unique artwork for matching cards. For example, if your search matches more than one print of Pacifism, one card with each different illustration for Pacifism will be returned, but any cards that duplicate artwork already in the results will be omitted.
+
+prints
+
+Returns all prints for all cards matched (disables rollup). For example, if your search matches more than one print of Pacifism, all matching prints will be returned.
+
+Sorting Cards
+The order parameter determines how Scryfall should sort the returned cards.
+
+Order	Default	Description
+name
+
+✓
+
+Sort cards by name, A → Z
+
+set
+
+Sort cards by their set and collector number: AAA/#1 → ZZZ/#999
+
+released
+
+Sort cards by their release date: Newest → Oldest
+
+rarity
+
+Sort cards by their rarity: Common → Mythic
+
+color
+
+Sort cards by their color and color identity: WUBRG → multicolor → colorless
+
+usd
+
+Sort cards by their lowest known U.S. Dollar price: 0.01 → highest, null last
+
+tix
+
+Sort cards by their lowest known TIX price: 0.01 → highest, null last
+
+eur
+
+Sort cards by their lowest known Euro price: 0.01 → highest, null last
+
+cmc
+
+Sort cards by their mana value: 0 → highest
+
+power
+
+Sort cards by their power: null → highest
+
+toughness
+
+Sort cards by their toughness: null → highest
+
+edhrec
+
+Sort cards by their EDHREC ranking: lowest → highest
+
+penny
+
+Sort cards by their Penny Dreadful ranking: lowest → highest
+
+artist
+
+Sort cards by their front-side artist name: A → Z
+
+review
+
+Sort cards how podcasts review sets, usually color & CMC, lowest → highest, with Booster Fun cards at the end
+
+Then you can optionally specify a dir parameter to choose which direction the sorting should occur:
+
+Dir	Default	Description
+auto
+
+✓
+
+Scryfall will automatically choose the most inuitive direction to sort
+
+asc
+
+Sort ascending (the direction of the arrows in the previous table)
+
+desc
+
+Sort descending (flip the direction of the arrows in the previous table)
+
+Missing Luxuries
+Please note that this search endpoint is more strict than the user-facing search system on Scryfall. In particular:
+
+On Scryfall’s website, if your search does not match any cards, the search system automatically retries with include:extras and again with lang:any. This API method does not automatically retry your search.
+On Scryfall’s website, if your search is only for a set (example: e:set), the system automatically redirects you to the custom gallery page we have for that set (which uses unique:prints). This API method does not provide redirects.
+On Scryfall’s website, certain searches trigger additional user interface elements that suggest expanding your search coverage (with o:changeling or unique:prints for example) or other searches may “swizzle” your results to show the cheapest prints when working with price search operators. This API method does not have this suggestion and swizzle behavior.
+This API method will not provide help with spelling errors.
+Example Requests
+Find red creatures with 3 power, sorted by converted mana cost
+
+GET https://api.scryfall.com/cards/search?order=cmc&q=c%3Ared+pow%3D3
+
+GET /cards/named
+Supported formats: json, text, image
+
+Returns a Card based on a name search string. This method is designed for building chat bots, forum bots, and other services that need card details quickly.
+
+If you provide the exact parameter, a card with that exact name is returned. Otherwise, a 404 Error is returned because no card matches.
+
+If you provide the fuzzy parameter and a card name matches that string, then that card is returned. If not, a fuzzy search is executed for your card name. The server allows misspellings and partial words to be provided. For example: jac bele will match Jace Beleren.
+
+When fuzzy searching, a card is returned if the server is confident that you unambiguously identified a unique name with your string. Otherwise, you will receive a 404 Error object describing the problem: either more than 1 one card matched your search, or zero cards matched.
+
+You may also provide a set code in the set parameter, in which case the name search and the returned card print will be limited to the specified set.
+
+For both exact and fuzzy, card names are case-insensitive and punctuation is optional (you can drop apostrophes and periods etc). For example: fIReBALL is the same as Fireball and smugglers copter is the same as Smuggler's Copter.
+
+Parameter	Type	Atn	Details
+exact	String		The exact card name to search for, case insenstive.
+fuzzy	String		A fuzzy card name to search for.
+set	String	
+Optional
+A set code to limit the search to one set.
+format	String	
+Optional
+The data format to return: json, text, or image. Defaults to json.
+face	String	
+Optional
+If using the image format and this parameter has the value back, the back face of the card will be returned. Will return a 422 if this card has no back face.
+version	String	
+Optional
+The image version to return when using the image format: small, normal, large, png, art_crop, or border_crop. Defaults to large.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Request
+Retrieve Austere Command using the string aust com
+
+GET https://api.scryfall.com/cards/named?fuzzy=aust+com
+
+GET /cards/autocomplete
+Supported formats: json
+
+Returns a Catalog object containing up to 20 full English card names that could be autocompletions of the given string parameter.
+
+This method is designed for creating assistive UI elements that allow users to free-type card names.
+
+The names are sorted with the nearest match first, highly favoring results that begin with your given string.
+
+Spaces, punctuation, and capitalization are ignored.
+
+If q is less than 2 characters long, or if no names match, the Catalog will contain 0 items (instead of returning any errors).
+
+Parameter	Type	Atn	Details
+q	String		The string to autocomplete.
+format	String	
+Optional
+The data format to return. This method only supports json.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+include_extras	Boolean	
+Optional
+If true, extra cards (tokens, planes, vanguards, etc) will be included. Defaults to false.
+Example Request
+Autocomplete the string thal
+
+GET https://api.scryfall.com/cards/autocomplete?q=thal
+
+GET /cards/random
+Supported formats: json, text, image
+
+Returns a single random Card object.
+
+The optional parameter q supports the same fulltext search system that the main site uses. Providing q will filter the pool of cards before returning a random entry.
+
+Parameter	Type	Atn	Details
+q	String	
+Optional
+An optional fulltext search query to filter the pool of random cards. Make sure that your parameter is properly encoded.
+format	String	
+Optional
+The data format to return: json, text, or image. Defaults to json.
+face	String	
+Optional
+If using the image format and this parameter has the value back, the back face of the card will be returned. Will return a 422 if this card has no back face.
+version	String	
+Optional
+The image version to return when using the image format: small, normal, large, png, art_crop, or border_crop. Defaults to large.
+pretty	Boolean	
+Optional
+If true, the returned JSON will be prettified. Avoid using for production code.
+Example Requests
+Retrieve a random card.
+
+GET https://api.scryfall.com/cards/random

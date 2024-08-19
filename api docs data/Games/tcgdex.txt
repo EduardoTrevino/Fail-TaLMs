@@ -1,0 +1,558 @@
+Getting a single card
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/cards/swsh3-136
+
+See how to prepare your URLs
+
+Response
+200 Response
+The request return a Card object
+
+{
+  "category": "Pokemon",
+  "id": "swsh3-136",
+  "illustrator": "tetsuya koizumi",
+  "image": "https://assets.tcgdex.net/en/swsh/swsh3/136",
+  "localId": "136",
+  "name": "Furret",
+  "rarity": "Uncommon",
+  "set": {
+    "cardCount": {
+      "official": 189,
+      "total": 201
+    },
+    "id": "swsh3",
+    "logo": "https://assets.tcgdex.net/en/swsh/swsh3/logo",
+    "name": "Darkness Ablaze",
+    "symbol": "https://assets.tcgdex.net/univ/swsh/swsh3/symbol"
+  },
+  "variants": {
+    "firstEdition": false,
+    "holo": false,
+    "normal": true,
+    "reverse": true,
+    "wPromo": false
+  },
+  "hp": 110,
+  "types": [
+    "Colorless"
+  ],
+  "evolveFrom": "Sentret",
+  "description": "It makes a nest to suit its long and skinny body. The nest is impossible for other Pokémon to enter.",
+  "stage": "Stage1",
+  "attacks": [
+    {
+    "cost": [
+      "Colorless"
+    ],
+    "name": "Feelin' Fine",
+    "effect": "Draw 3 cards."
+    },
+    {
+    "cost": [
+      "Colorless"
+    ],
+    "name": "Tail Smash",
+    "effect": "Flip a coin. If tails, this attack does nothing.",
+    "damage": 90
+    }
+  ],
+  "weaknesses": [
+    {
+      "type": "Fighting",
+      "value": "×2"
+    }
+  ],
+  "retreat": 1,
+  "regulationMark": "D",
+  "legal": {
+    "standard": true,
+    "expanded": true
+  }
+}
+
+404 Response
+The card was not found :( it will return a global error message (not translated)
+
+{
+  "error": "Endpoint or id not found"
+}
+
+Searching for cards
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/cards
+
+See how to prepare your URLs
+
+Filtering documentation
+
+Sample Response
+200 Response
+The request return an array of CardBrief objects
+
+[
+  {
+    "id": "base4-1",
+    "localId": "1",
+    "name": "Alakazam",
+    "image": "https://assets.tcgdex.net/en/base/base4/1"
+  },
+  // ...
+  {
+    "id": "xyp-XY99",
+    "localId": "XY99",
+    "name": "Aerodactyl Spirit Link",
+    "image": "https://assets.tcgdex.net/en/xy/xyp/XY99"
+  }
+]
+
+Getting a set
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/sets/swsh3
+
+See how to prepare your URLs
+
+Sample Response
+{
+  "cardCount": {
+    "firstEd": 0,
+    "holo": 64,
+    "normal": 137,
+    "official": 189,
+    "reverse": 155,
+    "total": 201
+  },
+  "cards": [
+    {
+      "id": "swsh3-1",
+      "image": "https://assets.tcgdex.net/en/swsh/swsh3/1",
+      "localId": "1",
+      "name": "Butterfree V"
+    },
+    // ...
+    {
+      "id": "swsh3-136",
+      "image": "https://assets.tcgdex.net/en/swsh/swsh3/136",
+      "localId": "136",
+      "name": "Furret"
+    },
+    // ...
+    {
+      "id": "swsh3-201",
+      "image": "https://assets.tcgdex.net/en/swsh/swsh3/201",
+      "localId": "201",
+      "name": "Capture Energy"
+    }
+  ],
+  "id": "swsh3",
+  "legal": {
+    "expanded": true,
+    "standard": false
+  },
+  "logo": "https://assets.tcgdex.net/en/swsh/swsh3/logo",
+  "name": "Darkness Ablaze",
+  "releaseDate": "2020-08-14",
+  "serie": {
+    "id": "swsh",
+    "name": "Sword & Shield"
+  },
+  "symbol": "https://assets.tcgdex.net/univ/swsh/swsh3/symbol"
+}
+
+Searching Sets
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/sets
+
+See how to prepare your URLs
+
+Filtering documentation
+
+Sample Response
+[
+  {
+    "id": "base1",
+    "name": "Base Set",
+    "logo": "https://assets.tcgdex.net/en/base/base1/logo",
+    "cardCount": {
+      "total": 102,
+      "official": 102
+    }
+  },
+  // ...
+  {
+    "id": "swsh3",
+    "name": "Darkness Ablaze",
+    "logo": "https://assets.tcgdex.net/en/swsh/swsh3/logo",
+    "symbol": "https://assets.tcgdex.net/univ/swsh/swsh3/symbol",
+    "cardCount": {
+      "total": 201,
+      "official": 189
+    }
+  },
+  // ...
+  {
+    "id": "sv06",
+    "name": "Twilight Masquerade",
+    "logo": "https://assets.tcgdex.net/en/sv/sv06/logo",
+    "symbol": "https://assets.tcgdex.net/univ/sv/sv06/symbol",
+    "cardCount": {
+      "total": 226,
+      "official": 167
+    }
+  }
+]
+
+Getting a Card with it's local ID and set ID
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/sets/swsh3/136
+
+See how to prepare your URLs
+
+Response
+200 Response
+The request return a Card object
+
+{
+  "category": "Pokemon",
+  "id": "swsh3-136",
+  "illustrator": "tetsuya koizumi",
+  "image": "https://assets.tcgdex.net/en/swsh/swsh3/136",
+  "localId": "136",
+  "name": "Furret",
+  "rarity": "Uncommon",
+  "set": {
+    "cardCount": {
+      "official": 189,
+      "total": 201
+    },
+    "id": "swsh3",
+    "logo": "https://assets.tcgdex.net/en/swsh/swsh3/logo",
+    "name": "Darkness Ablaze",
+    "symbol": "https://assets.tcgdex.net/univ/swsh/swsh3/symbol"
+  },
+  "variants": {
+    "firstEdition": false,
+    "holo": false,
+    "normal": true,
+    "reverse": true,
+    "wPromo": false
+  },
+  "hp": 110,
+  "types": [
+    "Colorless"
+  ],
+  "evolveFrom": "Sentret",
+  "description": "It makes a nest to suit its long and skinny body. The nest is impossible for other Pokémon to enter.",
+  "stage": "Stage1",
+  "attacks": [
+    {
+    "cost": [
+      "Colorless"
+    ],
+    "name": "Feelin' Fine",
+    "effect": "Draw 3 cards."
+    },
+    {
+    "cost": [
+      "Colorless"
+    ],
+    "name": "Tail Smash",
+    "effect": "Flip a coin. If tails, this attack does nothing.",
+    "damage": 90
+    }
+  ],
+  "weaknesses": [
+    {
+      "type": "Fighting",
+      "value": "×2"
+    }
+  ],
+  "retreat": 1,
+  "regulationMark": "D",
+  "legal": {
+    "standard": true,
+    "expanded": true
+  }
+}
+
+404 Response
+The card was not found :( it will return a global error message (not translated)
+
+{
+  "error": "Endpoint or id not found"
+}
+
+Getting a single Serie
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+https://api.tcgdex.net/v2/en/series/swsh
+
+See how to prepare your URLs
+
+Sample Response
+200 Response
+The request return a Serie object
+
+{
+  "id": "swsh",
+  "logo": "https://assets.tcgdex.net/en/swsh/swshp/logo",
+  "name": "Sword & Shield",
+  "sets": [
+    {
+      "cardCount": {
+        "official": 107,
+        "total": 166
+      },
+      "id": "swshp",
+      "logo": "https://assets.tcgdex.net/en/swsh/swshp/logo",
+      "name": "SWSH Black Star Promos",
+      "symbol": "https://assets.tcgdex.net/univ/swsh/swshp/symbol"
+    },
+    // ...
+    {
+      "cardCount": {
+        "official": 159,
+        "total": 230
+      },
+      "id": "swsh12.5",
+      "logo": "https://assets.tcgdex.net/en/swsh/swsh12.5/logo",
+      "name": "Crown Zenith"
+    }
+  ]
+}
+
+404 Response
+The serie was not found :( it will return a global error message (not translated)
+
+{
+  "error": "Endpoint or id not found"
+}
+
+Searching Series
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+$series = $tcgdex->fetchSeries();
+
+See how to setup the PHP SDK
+
+SDK currently does not support filtering
+
+Sample Response
+The request return an array of SerieBrief objects
+
+[
+  {
+    "id": "base",
+    "name": "Base",
+    "logo": "https://assets.tcgdex.net/en/base/base1/logo"
+  },
+  // ...
+  {
+    "id": "xy",
+    "name": "XY",
+    "logo": "https://assets.tcgdex.net/en/xy/xyp/logo"
+  }
+]
+
+Other endpoints
+the remaining Endpoints of the applications mainly for listing purpose.
+
+categories: The different Card categories that are available
+hps: The different HPs that are available
+illustrators: The different cards illustrators
+rarities: The different cards rarities
+retreats: The different pokemon retreat cost
+types: The different pokemon types
+Request
+PHP
+Javascript
+Typescript
+Java
+Kotlin
+cURL
+// List cards types
+https://api.tcgdex.net/v2/en/types
+// List cards retreat costs
+https://api.tcgdex.net/v2/en/retreats
+// List cards rarities
+https://api.tcgdex.net/v2/en/rarities
+// List cards illustrators
+https://api.tcgdex.net/v2/en/illustrators
+// List cards HPs
+https://api.tcgdex.net/v2/en/hps
+// List cards categories
+https://api.tcgdex.net/v2/en/categories
+// list the different pokedex ids are in the DB
+https://api.tcgdex.net/v2/en/dexids
+// list the different energy types
+https://api.tcgdex.net/v2/en/energytypes
+// list the different regulation marks
+https://api.tcgdex.net/v2/en/regulationmarks
+// list the different pokemon stages
+https://api.tcgdex.net/v2/en/stages
+// list the different suffixes
+https://api.tcgdex.net/v2/en/suffixes
+// list the different trainer types
+https://api.tcgdex.net/v2/en/trainertypes
+// list the different variants
+https://api.tcgdex.net/v2/en/variants
+
+See how to prepare your URLs
+
+Sample Response
+note: response for HPs
+
+[
+  10,
+  30,
+  40,
+  ...,
+  320,
+  330,
+  340
+]
+
+Filtering, Sorting & Pagination
+Most endpoints that return arrays can have filters, sorting, and paginations informations added in the query to help you buid on them
+
+Filtering
+You can add filtering to the request you are making it will check if the field you are checking contains the defined string element or number
+
+It is constructed like so : object.key=value ex: name=pikachu
+
+Example
+Request:
+
+https://api.tcgdex.net/v2/en/cards?name=pikachu
+
+Response:
+
+[
+  {
+    "id": "basep-1",
+    "localId": "1",
+    "name": "Pikachu",
+    "image": "https://assets.tcgdex.net/en/base/basep/1"
+  },
+  // ...
+  {
+    "id": "xyp-XY95",
+    "localId": "XY95",
+    "name": "Pikachu",
+    "image": "https://assets.tcgdex.net/en/xy/xyp/XY95"
+  }
+]
+
+Sorting
+Sorting is done by default in the API depending on the array returned releaseDate > localId > id
+
+You can override the default sorting algorithm by adding parameters to your request :
+
+query parameter	default value	possible values	description
+sort:field	releaseDate > localId > id	key of the object	change the field that is used to sort (MUST be the name of one of the field of the object)
+sort:order	ASC	ASC, DESC	change the ordering done on the field
+Example
+Request:
+
+https://api.tcgdex.net/v2/en/sets?sort:field=name&sort:order=DESC
+
+Response:
+
+[
+  {
+    "id": "sma",
+    "name": "Yellow A Alternate",
+    "symbol": "https://assets.tcgdex.net/univ/sm/sma/symbol",
+    "cardCount": {
+      "total": 94,
+      "official": 94
+    }
+  },
+  // ...
+  {
+    "id": "sv03.5",
+    "name": "151",
+    "logo": "https://assets.tcgdex.net/en/sv/sv03.5/logo",
+    "symbol": "https://assets.tcgdex.net/univ/sv/sv03.5/symbol",
+    "cardCount": {
+      "total": 207,
+      "official": 165
+    }
+  }
+]
+
+Pagination
+Pagination is not done automatically to speed requests on your end.
+
+you can still add it back by using the following query parameters:
+
+query parameter	default value	possible values	description
+pagination:page	1	Number	Indicate on which page you are at
+pagination:itemsPerPage	100 (when pagination:page is set)	Number	indicate the number of items displayed on each pages
+Example
+Request:
+
+https://api.tcgdex.net/v2/en/sets?pagination:page=3&pagination:itemsPerPage=2
+
+Response:
+
+[
+  {
+    "id": "base3",
+    "name": "Fossil",
+    "logo": "https://assets.tcgdex.net/en/base/base3/logo",
+    "symbol": "https://assets.tcgdex.net/univ/base/base3/symbol",
+    "cardCount": {
+      "total": 62,
+      "official": 62
+    }
+  },
+  {
+    "id": "jumbo",
+    "name": "Jumbo cards",
+    "cardCount": {
+      "total": 160,
+      "official": 160
+    }
+  }
+]

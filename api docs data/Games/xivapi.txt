@@ -1,0 +1,480 @@
+Welcome
+XIVAPI provides a massive amount of FINAL FANTASY XIV game data in a JSON format via a REST API. You can fetch information on all sorts of game content that has been discovered and mapped in the SaintCoinach Schema. It also provides Character, Free Company, Linkshell, and PVP Team information from the Lodestone!
+
+Discord
+Join our small group of passionate developers, talk about your ideas for building FFXIV apps! The XIVAPI discord is for dev talk, datamining and all things FFXIV.
+
+Jump into the discord: https://xivapi.com/discord
+
+Patreon Support!
+By contributing a small amount every month you support development on XIVAPI, recognition on discord and appreciation from the devs heart!
+
+
+
+API Environments
+Production	Staging	Local
+https://xivapi.com	https://staging.xivapi.com	http://xivapi.local
+Please always use https when accessing the API.
+
+
+
+Keeping up to date
+The API is driven directly from the game files. All the data found is 99% raw data, unmodified from the game source. Custom changes are very limited. It is important to remember that the structure or even the location of data can change anytime there is an FFXIV Patch
+
+It is your responsibility to maintain your usage of the API, including any data changes or updates to XIVAPI. Much care is taken to avoid breaking-changes however these can happen. Please ensure you're part of the Discord and following updates happening to the site, especially on FFXIV Patch Days.
+
+
+
+API Access
+The API can be fully accessed at anytime by hitting any of the desired endpoints. There are two methods of rate-limiting which are based on: Client IP or API key, for frontend applications it is recommended to not use an API key and your users will be rate limited individually. If you are using XIVAPI server side (thus have a static IP) you should use your API key with all requests.
+
+To get your key, login via Discord and access Dev Account at the top.
+
+The rate limit values are as follows:
+
+API Key	Client IP
+20 / req / sec (*)	20 / req / sec
+Lodestone endpoints are limited to 1/second. Lodestone has its own rate limit that is out of XIVAPI's control, you can read more about that on their relative documentation pages.
+* Accounts have individually set rate limits and may change based on usage or requirements.
+Due Diligence
+Just because you can hit the API for X requests a second every second of the day; does not mean that you should. The rate-limit is intended to provide a fair amount of burst requests to each user. The API is used by many fellow FFXIV developers and it is expected of you to be reasonable about your usage and consider how often you really need to hit the site as well as if it's possible to cache/preload data.
+
+Game Content is very static and real-time data (e.g. Characters) makes requests directly to the Lodestone. Be wise with regards to your usage.
+
+Automated Bans Notice
+XIVAPI will automatically ban request sources if they reach a high threshold. This lasts for 1 hour, this is very obvious to the creators of the API so if you hit this, know we're watching and we may perma ban either a request source or API key.
+
+Note: XIVAPI does not keep a record of IPs and usage of them are SHA1 hashed in memory.
+If you use an API key then the request IP is no longer factored into rate limit checks. You will also gain the benefit of Google Tracking and a higher rate limit. If your individual rate limit is not enough then hop onto the Discord and we can look into it! Before doing this have a consider what you're trying to achieve and if you can optimise your code.
+
+
+
+Using your key
+Provide your key to the query param: private_key
+
+https://xivapi.com/item/1675?columns=Name&private_key=[your_key]
+You can also pass it as a JSON payload
+
+{
+    columns: "Name",
+    private_key: "[your_key]"
+}
+
+Getting Started
+Basic curl request:
+
+curl https://xivapi.com/item/1675
+
+
+Community Driven Libraries
+Language	Github
+PHP	https://github.com/xivapi/xivapi-php
+Python	https://github.com/xivapi/xivapi.py
+JavaScript	https://github.com/xivapi/xivapi-js
+Angular Client	https://github.com/xivapi/angular-client
+Ruby	https://github.com/xivapi/xivapi-ruby
+Go	https://github.com/xivapi/xivapi-go
+
+Examples
+PHP
+<?php
+$json = file_get_contents("https://xivapi.com/Item/1675");
+$json = json_decode($json);
+
+// I.Lv 80 Curtana
+echo "I.Lv {$json->LevelItem} {$json->Name_en}";
+echo "<img src=\"https://xivapi.com/{$json->Icon}\">";
+
+
+Python
+import urllib2, json
+
+request = urllib2.Request("http://xivapi.com/Item/1675")
+request.add_header('User-Agent', '&lt;User-Agent&gt;')
+data = json.loads(urllib2.urlopen(request).read())
+
+# I.Lv 80 Curtana
+print "I.Lv %d %s" % (data['LevelItem'], data['Name_en'])
+
+
+Javascript
+// Stone II
+fetch("https://xivapi.com/Action/127", { mode: 'cors' })
+	.then(response => response.json())
+	.then(data => console.info(data.Name_en))
+
+
+JQuery
+// Stone II
+$.ajax({
+	url: "https://xivapi.com/Action/127",
+	dataType: "json",
+	success: function(data) {
+		console.info(data.Name_en)
+	}
+});
+
+
+C#
+using Flurl;
+using Flurl.Http;
+using System.Net.Http;
+
+HttpResponseMessage req = await "https://xivapi.com/Item/1675".GetAsync();
+dynamic item = JsonConvert.DeserializeObject(
+	req.Content.ReadAsStringAsync().Result
+);
+
+Console.Write($"I.Lv {item.LevelItem} {item.Name_en}");
+
+
+
+
+Open Source!
+All of XIVAPI is open source, go nuts!
+
+Github xivapi/xivapi.com
+
+
+
+Saint Coinach
+https://github.com/xivapi/SaintCoinach
+
+SaintCoinach is a tool that allows you to extract data from the FFXIV Game files, it can provide you with CSV data, Icons and Maps. It is very useful if you wish to build a FFXIV fan site or application!
+
+https://github.com/xivapi/SaintCoinach/blob/master/SaintCoinach/ex.json
+
+The schema is a huge JSON file that describes the EXD files found in the FFXIV game files. Many community members take time to datamine and understand the way the EXD files are mapped and this file helps describe it in a universal format.
+
+Search
+XIVAPI provides the ability to quickly search all game content via Elasticsearch. This search endpoint only searches game content and not: characters, free companies, linkshells or pvp teams. Those have their own dedicated search endpoints as they relay to Lodestone.
+
+/search #
+https://xivapi.com/search?string=aiming
+A string or filter is required to search.
+
+Search for something! The search is multi-content and contains combined data, this means your search request covers a vast amount of selected content (which you can further extend via filters) and results are combined based on best-case matching.
+
+Params
+Deprecation Notice:
+Search filters are now in maintenance mode. We won't be adding any additional filter abilities. If you want uncapped power for search, please considering using Elasticsearch queries, view the advanced section for more information. Note that the majority of users will not need this, and no support or additional docs are offered.
+
+Param	Description
+indexes	
+Search a specific series of indexes separated by commas.
+
+Accepts: Achievement, Title, Action, CraftAction, Trait, PvPAction, PvPTrait, Status, BNpcName, ENpcResident, Companion, Mount, Leve, Emote, InstanceContent, Item, Recipe, Fate, Quest, ContentFinderCondition, Balloon, BuddyEquip, Orchestrion, PlaceName, Weather, World, Map, lore_finder
+
+string	
+The string to search for. The results for this are affected by string_column and string_algo.
+
+string_algo	
+The search algorithm to use for string matching.
+
+Default: wildcard
+
+For more information, read:
+
+custom	wildcard + fuzzy
+custom	wildcard
+wildcard	Post wildcard, eg: Aim*
+wildcard_plus	Post & Prefix wildcard, eg: *Aim*
+fuzzy	Perform a fuzzy search. Fuzziness = 5
+term	Match whole words by keyword terms.
+prefix	Match a prefix, like a cheap auto-complete
+match	Perform a match query.
+match_phrase	Perform a match phrase query
+match_phrase_prefix	Perform a match phrase prefix query
+multi_match	Match against multiple string columns, separated by a comma.
+query_string	Perform a query string, this has lots of logic!
+string_column
+The column to use in string searches.
+
+page Set the search results page, this controls pagination in the response sort_field Sort results by a specific field, you will loose scoring. sort_order Order the sort_field by a specific direction, either: asc or desc. limit Limit the number of results to show. (from 1 to 100)
+Filters
+Filters can be performed in the following format:
+
+[FieldName][Operator][Value], eg: LevelItem>=150
+
+You can provide a comma separated list of filters as an "AND" exclusive query, eg:
+
+filters=LevelItem>35,LevelItem<=40,ClassJobCategory.ID=38
+eg: https://xivapi.com/search?filters=LevelItem>35,LevelItem<=40,ClassJobCategory.ID=38
+
+Accepted Operators:
+
+Operator	Information
+=	Performs a `match`, eg: LevelItem=50 means only items that are level 50.
+>	Performs a "Greater than" `range` query. (gt)
+>=	Performs a "Greater than or equal to" `range` query. (gte)
+<	Performs a "Less than" `range` query. (gt)
+<=	Performs a "Less than" `range` query. (gt)
+|=	Performs a "IN" `list` query.
+!	Performs a "must exist" query.
+!!	Performs a "must_not exist" query.
+/lore #
+https://xivapi.com/lore?string=legendary
+
+Search for lore! This is a special built search endpoint which searches a string through various lore specific content. The endpoint has all the same features as the /search endpoint including Advanced Elasticsearch Queries.
+
+The "Data" column provides more information about the source of the lore entry such as the content name and icon. You can access this using the "columns" query parameter, for example:
+
+columns=Data
+eg: https://xivapi.com/lore?string=legendary&columns=Text,Data
+
+The current content included in lore are:
+
+Cutscene Subtitles
+All Quest Dialogue and text data
+Item Descriptions
+Leve text data
+FATE text data
+NPC Yells
+NPC Balloon tooltips
+Instance Content and Public content text data
+Achievement Descriptions
+Default Talk entries
+Event Item Help text
+Mounts and Minion text
+Status descriptions
+Triple Triad Card text
+If you want more, just hop on discord!
+
+Advanced Elasticsearch Queries
+As search just uses the powerful Elasticsearch, you can infact just provide an Elasticsearch valid JSON query to the endpoint as the "body" param and it will be processed. This bypasses all of the normal GET attributes you see above
+(excluding: indexes)
+and allows you complete control over how you build the Elastic query. Be aware that we run ES 6.8, and so any reference documentation you search for should reflect that as ES changes query syntax across versions.
+
+You can learn more about Elasticsearch queries via the Query DSL Documentation
+
+How do I get this awesome power!?
+
+By simply sending a JSON payload with the Elasticsearch query in the "body" field, search will switch to advanced mode whenever it sees a query in the "body" field. You can test your DSL using the Search Playground.
+
+The payload is in the following format:
+
+{
+    "body": {
+        // The Elastic Search payload
+    },
+    "indexes": "comma,list,of,indexes",
+}
+Here is a full working example:
+
+{
+  "indexes": "item,achievement,instantcontent",
+  "body": {
+    "query": {
+      "bool": {
+        "must": [
+          {
+            "wildcard": {
+              "NameCombined_en": "*aiming*"
+            }
+          }
+        ],
+        "filter": [
+          {
+            "range": {
+              "ItemSearchCategory.ID": {
+                "gt": "1"
+              }
+            }
+          },
+          {
+            "range": {
+              "LevelItem": {
+                "gte": "100"
+              }
+            }
+          },
+          {
+            "range": {
+              "LevelItem": {
+                "lte": "125"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "from": 0,
+    "size": 10,
+    "sort": [
+      {
+        "LevelItem": "desc"
+      }
+    ]
+  }
+}
+
+Game Data
+Obtain game content data of Final Fantasy XIV.
+
+If you find anything odd and want to look at the raw CSV values, visit: CSV Files
+
+/content #
+https://xivapi.com/content
+View a list of available content that is accessible in the API. Content is added rapidly when discovered and mapped to the SaintCoincach Schema, with huge effort from the community there is a lot of information availble. Have fun hunting through!
+
+/[content-name] #
+https://xivapi.com/item
+Returns a paginated list of content for the specified Content Name
+
+Pagination
+{
+    "pagination": {
+        "page": 1,
+        "page_next": 2,
+        "page_prev": false,
+        "page_total": 94,
+        "results": 250,
+        "results_per_page": 250,
+        "results_total": 23500
+    }
+}
+Field	Details
+page	The current page you have queried
+page_next	The next page you can query, if `false` there is no next page and you're at the end
+page_prev	The previous page you can query, if `false` there is no previous page and you're at the start
+results	The total number of results in the current page
+results_per_page	Your current maximum results a page can have
+results_total	The total amount of results for the specified content
+Params
+Param	Description
+limit	
+Limit the number of items returned by the API.
+
+Default: 100
+Max: 3000
+ids	Filter the ids down if you want data for a specific series of items.
+/[content-name]/[id] #
+https://xivapi.com/item/1675
+Returns information about a specific object including extended information.
+
+I should write a bit more about this, it's kind of a big deal.
+/servers #
+https://xivapi.com/servers
+A list of official: North America, Japan and Europe
+
+/servers/dc #
+https://xivapi.com/servers/dc
+Another list of servers grouped by their data center.
+
+Character
+Search and retrieve character data from The Lodestone. Providing useful information such as character profile data, minions and mounts obtained, achievements obtained and their relative dates. Character friends, their free company, pvp team and much more!
+
+
+Lodestone Errors
+If you receive a HTTP error code response from any of these endpoints, it is very likely from Lodestone itself and not part of XIVAPI. Some common responses are: 404 Not Found / 429 Too Many Requests / 503 Maintenance
+
+
+/character/search #
+https://xivapi.com/character/search?name=[name]&server=[server]
+Params
+Param	Description
+name	
+The name to search for, you can use `+` for spaces or let the API handle it for you.
+
+Searching name will automatically add quotations, this is to ensure better matching against short/common named characters.
+
+server	
+*(optional)* The server to search against, this is case sensitive - You can obtain a list of valid servers via: Server List
+
+You can provide a data center here, eg: server=_dc_Chaos
+
+page	
+*(optional)* Search or move to a specific page.
+
+There is currently no way to change the amount of results back returned. It will always be 50 per page with a maximum of 20 pages. This is due to how Lodestone works.
+
+/character/[lodestone_id] #
+https://xivapi.com/character/730968
+Get Character data, this is parsed straight from Lodestone in real-time. The more data you request the slower the entire request will be. AC and FCM are done asynchronously.
+
+Params
+Param	Description
+extended	If set to 1, the API will return more data in the response by extending out the data IDs to useful objects.
+data	
+By default the `Character`, `ClassJobs`, `Minion` and `Mount` data will return, you can request more data using the `data` query.
+
+data
+https://xivapi.com/character/730968?data=AC,FR,FC,FCM,PVP
+Pass a long a comma separated list of codes that relate to specific data sets you would like to fetch, these are as follows:
+
+AC	Achievements
+FR	Friends List
+FC	Free Company
+FCM	Free Company Members
+MIMO	Mounts & Minions
+PVP	PVP Team
+
+Free Company
+Search and retrieve Free Company data from The Lodestone, provides useful information such as profile information and member lists.
+
+
+Lodestone Errors
+If you receive a HTTP error code response from any of these endpoints, it is very likely from Lodestone itself and not part of XIVAPI. Some common responses are: 404 Not Found / 429 Too Many Requests / 503 Maintenance
+
+
+/freecompany/search #
+https://xivapi.com/freecompany/search?name=[name]&server=[server]
+Params
+Param	Description
+Name	
+The name of the free company to search, you can use `+` for spaces or let the API handle it for you. If you search very short names you will get lots of responses. This is an issue with The Lodestone and not much XIVAPI can do about it at this time.
+
+Server	
+*(optional)* The server to search against, this is case sensitive - You can obtain a list of valid servers via: https://xivapi.com/servers
+
+Page	
+*(optional)* Search or move to a specific page.
+
+/freecompany/[lodestone_id] #
+https://xivapi.com/freecompany/9231253336202687179
+Params
+Param	Description
+extended	If set to 1, the API will return more data in the response by extending out the data IDs to useful objects.
+data	
+By default only the `FreeCompany` data will return, you can request more data using the `data` query.
+
+data
+https://xivapi.com/freecompany/9231253336202687179?data=FCM
+Pass a long a comma separated list of codes that relate to specific data sets you would like to fetch, these are as follows:
+
+Code	Meaning
+FCM	Free Company Members
+
+Linkshells
+Search and retrieve Linkshell data from The Lodestone.
+
+
+Lodestone Errors
+If you receive a HTTP error code response from any of these endpoints, it is very likely from Lodestone itself and not part of XIVAPI. Some common responses are: 404 Not Found / 429 Too Many Requests / 503 Maintenance
+
+
+/linkshell/search #
+https://xivapi.com/linkshell/search?name=[name]&server=[server]
+/linkshell/crossworld/search #
+https://xivapi.com/linkshell/crossworld/search?name=[name]
+Params
+Param	Description
+name	
+The name to search for, you can use `+` for spaces or let the API handle it for you.
+
+Searching name will automatically add quotations, this is to ensure better matching against short/common named characters.
+
+server	
+*(optional)* The server to search against, this is case sensitive - You can obtain a list of valid servers via: Server List
+
+You can provide a data center here, eg: server=_dc_Chaos
+
+page	
+*(optional)* Search or move to a specific page.
+
+There is currently no way to change the amount of results back returned. It will always be 50 per page with a maximum of 20 pages. This is due to how Lodestone works.
+
+/linkshell/[lodestone_id] #
+https://xivapi.com/linkshell/19984723346535274
+/linkshell/crossworld/[lodestone_id] #
+https://xivapi.com/linkshell/crossworld/6f6535dd4930828a64c5e0c663eebc5fc7feb2ba
