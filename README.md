@@ -156,9 +156,9 @@ Please update as you add and intergrate diffrent apis
 | Health           | NPPES                            | 0(scraped) | :x:        | TBD      |
 | Health           | openFDA                          | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Advice Slip                      | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Affirmations                     | 0          | :x:        | TBD      |
-| Inspiration      | Breaking Bad Quotes              | 0          | :x:        | TBD      |
-| Inspiration      | Dictum                           | 0          | :x:        | TBD      |
+| Inspiration      | Affirmations                     | 1          | :x:        | TBD      |
+| Inspiration      | Breaking Bad Quotes              | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Dictum                           | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Game of Thrones Quotes           | 0          | :x:        | TBD      |
 | Inspiration      | Kanye                            | 1          | 🟢         | TBD      |
 | Inspiration      | Quotable                         | 0          | :x:        | TBD      |

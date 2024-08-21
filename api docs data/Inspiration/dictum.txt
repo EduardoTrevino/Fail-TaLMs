@@ -1,0 +1,387 @@
+Dictum
+ v1 
+OAS 3.0
+/swagger/dictum-v1.yml
+API to get access to the collection of the most inspiring expressions of mankind
+
+Dmitry Fisenko - Website
+Send email to Dmitry Fisenko
+MIT
+
+Authorize
+default
+
+
+GET
+/v1/authors/{language}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+query
+string
+(query)
+query
+offset
+integer($int32)
+(query)
+offset
+limit
+integer($int32)
+(query)
+limit
+Responses
+Code	Description	Links
+200	
+searchAuthors 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": "string",
+    "name": "string"
+  }
+]
+No links
+
+GET
+/v1/authors/{language}/{authorId}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+authorId *
+string
+(path)
+authorId
+Responses
+Code	Description	Links
+200	
+getAuthor 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": "string",
+  "name": "string",
+  "bio": "string"
+}
+No links
+
+GET
+/v1/authors/{language}/{authorId}/quotes
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+authorId *
+string
+(path)
+authorId
+query
+string
+(query)
+query
+offset
+integer($int32)
+(query)
+offset
+limit
+integer($int32)
+(query)
+limit
+Responses
+Code	Description	Links
+200	
+searchAuthorQuotes 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": "string",
+    "text": "string",
+    "author": {
+      "id": "string",
+      "name": "string"
+    }
+  }
+]
+No links
+
+GET
+/v1/languages
+
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+getLanguages 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "code": "string",
+    "language": "string"
+  }
+]
+No links
+
+POST
+/v1/likes/{language}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "likeQuote": {
+    "quote-id": "string"
+  }
+}
+Responses
+Code	Description	Links
+200	
+likeQuote 200 response
+
+No links
+
+GET
+/v1/quotes/{language}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+query
+string
+(query)
+query
+offset
+integer($int32)
+(query)
+offset
+limit
+integer($int32)
+(query)
+limit
+Responses
+Code	Description	Links
+200	
+searchQuotes 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": "string",
+    "text": "string",
+    "author": {
+      "id": "string",
+      "name": "string"
+    }
+  }
+]
+No links
+
+POST
+/v1/quotes/{language}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "quote": {
+    "author-id": "string",
+    "text": "string"
+  }
+}
+Responses
+Code	Description	Links
+200	
+createQuote 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": "string",
+  "text": "string",
+  "author": {
+    "id": "string",
+    "name": "string"
+  }
+}
+No links
+
+GET
+/v1/quotes/{language}/random
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+Responses
+Code	Description	Links
+200	
+getRandomQuote 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": "string",
+  "text": "string",
+  "author": {
+    "id": "string",
+    "name": "string"
+  }
+}
+No links
+
+GET
+/v1/quotes/{language}/{quoteId}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+quoteId *
+string
+(path)
+quoteId
+Responses
+Code	Description	Links
+200	
+getQuote 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": "string",
+  "text": "string",
+  "author": {
+    "id": "string",
+    "name": "string"
+  }
+}
+No links
+
+GET
+/v1/statistics/{language}
+
+
+Parameters
+Try it out
+Name	Description
+language *
+string
+(path)
+language
+Responses
+Code	Description	Links
+200	
+searchQuotes_1 200 response
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "authors": 0,
+  "quotes": 0
+}
+No links
+
+Schemas
+AuthorDetail
+AuthorSummary
+CreateQuote
+LanguageSummary
+LikeQuote
+QuoteSummary
+StatisticsDetail
