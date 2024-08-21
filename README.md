@@ -159,7 +159,7 @@ Please update as you add and intergrate diffrent apis
 | Inspiration      | Affirmations                     | 1          | :x:        | TBD      |
 | Inspiration      | Breaking Bad Quotes              | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Dictum                           | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Game of Thrones Quotes           | 0          | :x:        | TBD      |
+| Inspiration      | Game of Thrones Quotes           | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Kanye                            | 1          | 🟢         | TBD      |
 | Inspiration      | Quotable                         | 0          | :x:        | TBD      |
 | Inspiration      | Quote Garden                     | 0          | :x:        | TBD      |
