@@ -1,0 +1,1033 @@
+About the openFDA API
+openFDA is an Elasticsearch-based API that serves public FDA data about nouns like drugs, devices, and foods.
+
+Each of these nouns has one or more categories, which serve unique data-such as data about recall enforcement reports, or about adverse events. Every query to the API must go through one endpoint for one kind of data.
+
+Not all data in openFDA has been validated for clinical or production use. And because openFDA only serves publicly available data, it does not contain data with Personally Identifiable Information about patients or other sensitive information.
+
+"API" is an acronym for Application Programming Interface. An API call is any request sent to the API. Requests are typically sent to the API in one of two ways: 1. Manually using a web browser (such as navigating to the URL https://api.fda.gov/drug/label.json) or 2. Programmatically sending the request via executing code that sends the API call and processes the response. Continue reading this documentation for more details on how to compose an API call for openFDA specifically.
+
+The API returns individual results as JSON by default. The JSON object has two sections:
+
+meta: Metadata about the query, including a disclaimer, link to data license, last-updated date, and total matching records, if applicable.
+
+results: An array of matching results, dependent on which endpoint was queried.
+
+Animal & Veterinary Adverse Events Overview
+The FDA encourages veterinarians and animal owners to report adverse drug experiences and product defects associated with animal drugs or animal devices. Adverse drug experiences can include side effects or other problems, such as the drug not appearing effective. The FDA recommends that an animal drug adverse event reporter include details on the following: names and amounts of all drugs, products marketed as supplements, or vitamins the animal has been given; current type and/or brand of pet food and treats; information about any recent surgeries; and as much medical information as possible. Medical information may include: veterinary examination findings; bloodwork, urinalysis, and fecal exam results; x-ray findings; other relevant information such as blood pressure; and neurologic test results. However, the details and information submitted in any report may vary and in some cases certain information may not be included in a given report.
+
+Animal & Veterinary Adverse Event Reports are not posted in real time. Updates to openFDA are made quarterly, but there may be a 3-6 month delay from the time FDA receives reports until they are posted.
+
+To read more about animal & veterinary adverse events and adverse event reporting, see Animal & Veterinary Safety & Health.
+
+Key Facts
+Source of the data:
+Animal Drug Adverse Events (ADAE)
+Changes to the source data:
+openFDA may change some field names and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+1987 to present
+Frequency of API updates:
+Quarterly
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service.
+
+Drug Adverse Event Overview
+The openFDA drug adverse event API returns data that has been collected from the FDA Adverse Event Reporting System (FAERS), a database that contains information on adverse event and medication error reports submitted to FDA.
+
+Search the fields
+Drug Adverse Events by Type of Seriousness
+View by:
+
+Each Drug Indication 
+as % of all Drug Adverse Events
+
+Display of Reports by Drug Indication for Hospitalization 
+Percentage
+by Class
+Hospitalization
+37%
+0.0
+500
+1.0k
+1.5k
+2.0k
+Number of Drug Reports
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Drug Indication to Compare
+Hypertension
+Rheumatoid Arthritis
+Diabetes Mellitus
+Pain
+Pulmonary Arterial Hypertension
+Osteoporosis
+Key Facts
+Source of the data:
+FDA Adverse Event Reporting System (FAERS)
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+Currently, this API includes publically releasable records submitted to the FDA through FAERS since 2004
+Frequency of API updates:
+Quarterly. However, please be advised that the data in this API may lag by 3 months or more at any given time, depending on when the quarterly FAERS data is released.
+About FAERS data
+An adverse event is submitted to the FDA to report any undesirable experience associated with the use of a medical product in a patient. For drugs, this includes serious drug side effects, product use errors, product quality problems, and therapeutic failures for prescription or over-the-counter medicines and medicines administered to hospital patients or at outpatient infusion centers.
+
+Reporting of adverse events by healthcare professionals and consumers is voluntary in the United States. FDA receives some adverse event reports directly from healthcare professionals (such as physicians, pharmacists, nurses and others) and consumers (such as patients, family members, lawyers and others). Healthcare professionals and consumers may also report adverse events to the products’ manufacturers. If a manufacturer receives an adverse event report, it is normally required to send the report to FDA.
+
+Learn more about FAERS here:
+
+Questions and Answers on FDA's Adverse Event Reporting System (FAERS)
+FDA Adverse Events Reporting System (FAERS) Public Dashboard
+How adverse events are collected
+Adverse events are collected through a series of safety reports. Each is identified by a 8-digit string (for instance, 6176304-1). The first 7 digits (before the hyphen) identify the individual report, and the last digit (after the hyphen) is a checksum. Rather than updating individual records in FAERS, subsequent updates are submitted in seperate reports.
+
+How adverse events are formatted and organized
+Adverse event reports use the ICH E2b/M2 version 2.1 standard.
+
+This highly simplified schematic illustrates the general nature of an adverse event report. A report may list several drug products, as well as several patient reactions. No individual drug is connected to any individual reaction. When a report lists multiple drugs and multiple reactions, there is no way to conclude from the data therein that a given drug is responsible for a given reaction.
+
+General InformationReport ID, receive date, etc.
+Patient or other informationAge, weight, sex, etc.
+Products
+Product A
+Product B
+Product C
+Product D
+Product E
+Patient reactions
+Reaction 1
+Reaction 2
+Reaction 3
+Any number of the drugs may be marked as suspect if thought to be responsible for one or more of the reactions, but that information is not validated. Concomitant drugs are those which are not suspected of causing one or more of the reactions. Many drug products appear frequently in adverse event reports simply because they are commonly taken by many people in the population, not because they are responsible for more adverse events.
+
+Reports contain varying levels of detail about the drug products involved, indications for use, route of administration, and dose.
+
+Responsible use of the data
+Adverse event reports submitted to FDA do not undergo extensive validation or verification. Therefore, a causal relationship cannot be established between product and reactions listed in a report. While a suspected relationship may exist, it is not medically validated and should not be the sole source of information for clinical decision making or other assumptions about the safety or efficacy of a product.
+
+Additionally, it is important to remember that adverse event reports represent a small percentage of total usage numbers of a product. Common products may have a higher number of adverse events due to the higher total number of people using the product. In recent years the FDA has undertaken efforts to increase collection of adverse events. Increases in the total number of adverse events is likely caused by improved reporting.
+
+Disclaimer
+FAERS data does have limitations. There is no certainty that the reported event (adverse event or medication error) was actually due to the product. FDA does not require that a causal relationship between a product and event be proven, and reports do not always contain enough detail to properly evaluate an event.
+
+Further, FDA does not receive reports for every adverse event or medication error that occurs with a product. Many factors can influence whether or not an event will be reported, such as the time a product has been marketed and publicity about an event.
+
+Submission of a safety report does not constitute an admission that medical personnel, user facility, importer, distributor, manufacturer or product caused or contributed to the event. The information in these reports has not been scientifically or otherwise verified as to a cause and effect relationship and cannot be used to estimate the incidence of these events.
+
+Drug Labeling Overview
+Drug manufacturers and distributors submit documentation about their products to FDA in the Structured Product Labeling (SPL) format. The openFDA drug product labeling API returns data from this dataset.
+
+The labeling is a 'living document' that changes over time to reflect increased knowledge about the safety and effectiveness of the drug.
+
+The openFDA drug product labels API returns data from these submissions for both prescription and over-the-counter (OTC) drugs. The labels are broken into sections, such as indications for use (prescription drugs) or purpose (OTC drugs), adverse reactions, and so forth. There is considerable variation between drug products in terms of these sections and their contents, since the information required for safe and effective use varies with the unique characteristics of each drug product.
+
+To read more about Structured Product Labeling, please visit the FDA’s SPL Resources page.
+
+Search the fields
+Drug Labels by Product Type, Administation Route
+View by:
+
+Each Product Type 
+as % of all Drug Labels
+
+Display of Labels by Route for OTC Product Type
+
+Percentage
+by Type
+OTC
+57%
+0.0
+500
+1.0k
+1.5k
+2.0k
+Number of Drug Labels
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Route to Compare
+Topical
+Oral
+Dental
+Sublingual
+Ophthalmic
+Nasal
+Cutaneous
+Rectal
+Vaginal
+Transdermal
+Key Facts
+Source of the data:
+FDA SPL files
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+The bulk of the data is from June 2009 (when labeling was first posted publicly in the SPL format) to the present. However, there are a small number of records from earlier than mid-2009.
+Frequency of API updates:
+Weekly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same drug in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+manufacturer_name
+unii
+product_type
+spl_set_id
+route
+generic_name
+brand_name
+product_ndc
+substance_name
+spl_id
+package_ndc
+application_number
+rxcui
+pharm_class_moa
+pharm_class_epc
+pharm_class_cs
+nui
+pharm_class_pe
+is_original_packager
+upc
+original_packager_product_ndc
+Loading...
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service.
+
+Disclaimer
+Please be aware of the following when using information from this API:
+
+The drug labels and other drug-specific information provided in this API represent the most recent drug listing information companies have submitted to the Food and Drug Administration (FDA). (See 21 CFR part 207.) The drug labeling and other information has been reformatted to make it easier to read but its content has neither been altered nor verified by FDA. The drug labeling provided in this API may not be the labeling on currently distributed products or identical to the labeling that is approved. Most OTC drugs are not reviewed and approved by FDA; however, they may be marketed if they comply with applicable regulations and policies described in monographs. Drugs marked 'OTC monograph final' or 'OTC monograph not final' are not checked for conformance to the monograph. Drugs marked 'unapproved medical gas', 'unapproved homeopathic' or 'unapproved drug other' have not been evaluated by FDA for safety and efficacy and their labeling has not been approved. In addition, FDA is not aware of scientific evidence to support homeopathy as effective.
+
+Drug NDC Overview
+The Drug Listing Act of 1972 requires registered drug establishments to provide the Food and Drug Administration (FDA) with a current list of all drugs manufactured, prepared, propagated, compounded, or processed by it for commercial distribution.
+
+The openFDA drug NDC Directory endpoint returns data from the NDC Directory, a database that contains information on the National Drug Code (NDC). FDA publishes the listed NDC numbers and the information submitted as part of the listing information in the NDC Directory which is updated daily.
+
+The information submitted as part of the listing process, the NDC number, and the NDC Directory are used in the implementation and enforcement of the Act.
+
+If you experience any issues accessing the data or issues related to data accuracy, please report your concerns via the CDER Contact form.
+
+Key Facts
+Source of the data:
+NDC Directory
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+Present
+Frequency of API updates:
+Daily
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same drug in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+manufacturer_name
+unii
+product_type
+spl_set_id
+route
+generic_name
+brand_name
+product_ndc
+substance_name
+spl_id
+package_ndc
+application_number
+rxcui
+pharm_class_moa
+pharm_class_epc
+pharm_class_cs
+nui
+pharm_class_pe
+is_original_packager
+upc
+original_packager_product_ndc
+Loading...
+Additional Information About Drug NDC Directory
+To read more about Drug NDC Directory, please visit:
+
+NDC Directory data definitions and download page
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Disclaimer
+Please be aware of the following when using information from this endpoint:
+
+The NDC Directory contains ONLY information on final marketed drugs submitted to FDA in SPL electronic listing files by labelers. (A labeler may be either a manufacturer, including a repackager or relabeler, or, for drugs subject to private labeling arrangements, the entity under whose own label or trade name the product will be distributed.) Inclusion of information in the NDC Directory does not indicate that FDA has verified the information provided. The content of each NDC Directory entry is the responsibility of the labeler submitting the SPL file.
+
+Assignment of an NDC number does not in any way denote FDA approval of the product. Any representation that creates an impression of official approval because of possession of an NDC number is misleading and constitutes misbranding. (21 CFR 207.37 (a)(2))
+
+Neither inclusion in the NDC Directory nor assignment of an NDC number is a determination that a product is a drug as defined by the FD&C Act, nor does either denote that a product is covered or eligible for reimbursement by Medicare, Medicaid or other payers. Assignment of NDC number to non-drug products is extremely prohibited.
+
+Drug Enforcement Overview
+The openFDA drug enforcement reports API returns data from the FDA Recall Enterprise System (RES), a database that contains information on recall event information submitted to FDA. Currently, this data covers publicly releasable records from 2004-present. The data is updated weekly.
+
+The procedures followed to input recall information into RES when FDA learns of a recall event are outlined in Chapter 7 of FDA’s Regulatory Procedure Manual The Regulatory Procedures Manual is a reference manual for FDA personnel. It provides FDA personnel with information on internal procedures to be used in processing domestic and import regulatory and enforcement matters.
+
+Search the fields
+Drug Enforcement Report by Classification
+View by:
+
+Each Classification 
+as % of all Drug Enforcement Reports
+
+Display of Reports by State for Class I Drugs
+
+Percentage
+by Class
+Class III
+10%
+0.0
+100
+200
+300
+400
+500
+Number of Drug Reports
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select State to Compare
+North Carolina
+California
+New Jersey
+Illinois
+New York
+Texas
+Florida
+Pennsylvania
+Michigan
+Ohio
+Nevada
+Tennessee
+Georgia
+Arkansas
+Massachusetts
+Arizona
+Missouri
+Utah
+Colorado
+Connecticut
+Kansas
+Oregon
+Maryland
+Mississippi
+Indiana
+Wisconsin
+Delaware
+Virginia
+Oklahoma
+Puerto Rico
+Washington
+Nebraska
+New Mexico
+South Dakota
+West Virginia
+Alabama
+Louisiana
+Minnesota
+New Hampshire
+Key Facts
+Source of the data:
+FDA Recall Enterprise System (RES)
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2004 to present
+Frequency of API updates:
+Weekly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same drug in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+manufacturer_name
+unii
+product_type
+spl_set_id
+route
+generic_name
+brand_name
+product_ndc
+substance_name
+spl_id
+package_ndc
+application_number
+rxcui
+pharm_class_moa
+pharm_class_epc
+pharm_class_cs
+nui
+pharm_class_pe
+is_original_packager
+upc
+original_packager_product_ndc
+Loading...
+Additional Information About Drug Recall Enforcement Reports
+When an FDA-regulated product is either defective or potentially harmful, recalling that product—removing it from the market or correcting the problem—is the most effective means for protecting the public.
+
+Recalls are almost always voluntary, meaning a company discovers a problem and recalls a product on its own. Other times a company recalls a product after FDA raises concerns. Only in rare cases will FDA request or order a recall. But in every case, FDA's role is to oversee a company's strategy, classify the recalled products according to the level of hazard involved, and assess the adequacy of the recall. Recall information is posted in the Enforcement Reports once the products are classified.
+
+Recalls are an appropriate alternative method for removing or correcting marketed consumer products, their labeling, and/or promotional literature that violate the laws administered by the Food and Drug Administration (FDA). Recalls afford equal consumer protection but generally are more efficient and timely than formal administrative or civil actions, especially when the product has been widely distributed.
+
+An enforcement report contains information on actions taken in connection with FDA regulatory activities. The data served by this API endpoint includes enforcement reports about drug product recalls.
+
+Whereas not all recalls are announced in the media or on FDA’s Recalls press release page, all recalls monitored by FDA are included in FDA’s weekly Enforcement Report once they are classified according to the level of hazard involved.
+
+Manufacturers and/or distributors may initiate a recall at any time to fulfill their responsibility to protect the public health from products that present a risk of injury or gross deception, or are otherwise defective. Firms may also initiate a recall following notification of a problem by FDA or a state agency, in response to a formal request by FDA, or as ordered by FDA.
+
+When necessary, the FDA will make corrections or changes to recall information previously disclosed in a past Enforcement Report for various reasons. For instance, the firm may discover that the initial recall should be expanded to include more batches or lots of the same recalled product than formerly reported.
+
+To read more about Drug Recall Enforcement Reporting, please visit:
+
+FDA 101: Product Recalls from First Alert to Effectiveness Checks
+FDA’s RES database
+FDA’s Recalls press release page
+FDA’s weekly Enforcement Report
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Disclaimer
+This data should not be used as a method to collect data to issue alerts to the public, nor should it be used to track the lifecycle of a recall. FDA seeks publicity about a recall only when it believes the public needs to be alerted to a serious hazard. FDA works with industry and our state partners to publish press releases and other public notices about recalls that may potentially present a significant or serious risk to the consumer or user of the product.
+
+Further, FDA does not update the status of a recall after the recall has been classified according to its level of hazard. As such, the status of a recall (open, completed, or terminated) will remain unchanged after published in the Enforcement Reports.
+
+Drugs@FDA Overview
+Drugs@FDA includes most of the drug products approved since 1939. The majority of patient information, labels, approval letters, reviews, and other information are available for drug products approved since 1998.
+
+Drugs@FDA contains information about the following FDA-approved products for human use:
+
+Prescription brand-name drug products, generic drug products, and many therapeutic biological products
+
+Over-the-counter brand-name and generic drugs
+
+Key Facts
+Source of the data:
+Drugs@FDA
+Changes to the source data:
+openFDA may change some field names and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+1939 to present
+Frequency of API updates:
+Weekly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same drug in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+manufacturer_name
+unii
+product_type
+spl_set_id
+route
+generic_name
+brand_name
+product_ndc
+substance_name
+spl_id
+package_ndc
+application_number
+rxcui
+pharm_class_moa
+pharm_class_epc
+pharm_class_cs
+nui
+pharm_class_pe
+is_original_packager
+upc
+original_packager_product_ndc
+Loading...
+Additional Information About Drugs@FDA
+To read more about Drugs@FDA, please visit:
+
+Drugs@FDA Frequently Asked Questions
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the Application Programming Interface in line with our Terms of Service
+
+Device 510(k) Overview
+A 510(k) is a premarket submission made to FDA to demonstrate that the device to be marketed is at least as safe and effective, that is, substantially equivalent, to a legally marketed device (21 CFR 807.92(a)(3)) that is not subject to PMA. Submitters must compare their device to one or more similar legally marketed devices and make and support their substantial equivalency claims. A legally marketed device, as described in 21 CFR 807.92(a)(3), is a device that was legally marketed prior to May 28, 1976 (preamendments device), for which a PMA is not required, or a device which has been reclassified from Class III to Class II or I, or a device which has been found substantially equivalent through the 510(k) process. The legally marketed device(s) to which equivalence is drawn is commonly known as the “predicate".
+
+The openFDA Device 510(k) Clearances API contains details about specific products and the original sponsors of premarket notification applications. It also contains administrative and tracking information about the applications and receipt and decision dates.
+
+For additional information, please visit the FDA's Premarket Notification 510(k) page.
+
+Search the fields
+Device 510(k) by Risk Class (Low, Moderate, High)
+View by:
+
+Each Device Class 
+as % of all Device 510(k)s
+
+Display of 510(k)s by Advisory Committee for Class II (moderate to high) Risk
+
+Percentage
+by Class
+Class II
+78%
+0.0
+20
+40
+60
+80
+Number of Device 510(k)
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Advisory Committee to Compare
+Cardiovascular
+Orthopedic
+Radiology
+Dental
+General Hospital
+Clinical Chemistry
+Anesthesiology
+Neurology
+Physical Medicine
+Immunology
+Key Facts
+Source of the data:
+510(k) Clearances
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+1976 to present
+Frequency of API updates:
+Monthly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same device in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+regulation_number
+fei_number
+device_name
+device_class
+medical_specialty_description
+registration_number
+k_number
+pma_number
+Loading...
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Device Classification Overview
+Most medical devices can be classified by finding the matching description of the device in Title 21 of the Code of Federal Regulations (CFR), Parts 862-892.
+
+The Food and Drug Administration (FDA) has established classifications for approximately 1,700 different generic types of devices and grouped them into 16 medical specialties referred to as panels. Each of these generic types of devices is assigned to one of three regulatory classes based on the level of control necessary to assure the safety and effectiveness of the device.
+
+The openFDA Device Classification API contains medical device names, their associated product codes, their medical specialty areas (panels) and their classification. The name and product code identify the generic category of a device for FDA. The product code assigned to a device is based upon the medical device product classification designated under 21 CFR Parts 862-892.
+
+For additional information, see here.
+
+Key Facts
+Source of the data:
+Product Classification Database
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+1976 to present
+Frequency of API updates:
+Monthly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same device in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+regulation_number
+fei_number
+device_name
+device_class
+medical_specialty_description
+registration_number
+k_number
+pma_number
+Loading...
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Disclaimer
+This data should not be used as a method to collect data to issue alerts to the public, nor should it be used to track the lifecycle of a recall. FDA seeks publicity about a recall only when it believes the public needs to be alerted to a serious hazard. FDA works with industry and our state partners to publish press releases and other public notices about recalls that may potentially present a significant or serious risk to the consumer or user of the product. Subscribe to this Recall/Safety Alert feed here.
+
+Further, FDA does not update the status of a recall after the recall has been classified according to its level of hazard. As such, the status of a recall (open, completed, or terminated) will remain unchanged after published in the Enforcement Reports.
+
+Device Enforcement Overview
+The openFDA device enforcement reports API returns data from the FDA Recall Enterprise System (RES), a database that contains information on recall event information submitted to FDA. Currently, this data covers publicly releasable records from 2004-present. The data is updated weekly.
+
+The procedures followed to input recall information into RES when FDA learns of a recall event are outlined in Chapter 7 of FDA’s Regulatory Procedure Manual. The Regulatory Procedures Manual is a reference manual for FDA personnel. It provides FDA personnel with information on internal procedures to be used in processing domestic and import regulatory and enforcement matters.
+
+Search the fields
+Device Recall Enforcement
+View by:
+
+Each Status 
+as % of all Device Recall Enforcement Reports
+
+Display of Reports by Recalling Firm for Ongoing Recalling Firm
+
+Percentage
+by Type
+Terminated
+73%
+0.0
+50
+100
+150
+Number of Device Reports
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Recalling Firm to Compare
+Boston Scientific Corporation
+Deroyal Industries Inc
+Philips North America Llc
+Baxter Healthcare Corporation
+Olympus Corporation Of The Americas
+Key Facts
+Source of the data:
+FDA Recall Enterprise System (RES)
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2004 to present
+Frequency of API updates:
+Weekly
+Additional Information About Medical Device Recall Enforcement Reports
+Recalls are an appropriate alternative method for removing or correcting marketed consumer products, their labeling, and/or promotional literature that violate the laws administered by the Food and Drug Administration (FDA). Recalls afford equal consumer protection but generally are more efficient and timely than formal administrative or civil actions, especially when the product has been widely distributed.
+
+Manufacturers and/or distributors may initiate a recall at any time to fulfill their responsibility to protect the public health from products that present a risk of injury or gross deception, or are otherwise defective. Firms may also initiate a recall following notification of a problem by FDA or a state agency, in response to a formal request by FDA, or as ordered by FDA.
+
+The procedures followed to input recall information into RES when FDA learns of a recall event are outlined in Chapter 7 of FDA’s Regulatory Procedure Manual. The Regulatory Procedures Manual is a reference manual for FDA personnel. It provides FDA personnel with information on internal procedures to be used in processing domestic and import regulatory and enforcement matters.
+
+An enforcement report contains information on actions taken in connection with FDA regulatory activities. Whereas not all recalls are announced in the media or on FDA’s Recalls press release page, all recalls monitored by FDA are included in FDA’s weekly Enforcement Report once they are classified according to the level of hazard involved.
+
+For more information about the Device Recall Enforcement Reporting, please visit:
+
+FDA 101: Product Recalls from First Alert to Effectiveness Checks
+FDA’s Recalls press release page
+FDA’s weekly Enforcement Report
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Disclaimer
+This data should not be used as a method to collect data to issue alerts to the public, nor should it be used to track the lifecycle of a recall. FDA seeks publicity about a recall only when it believes the public needs to be alerted to a serious hazard. FDA works with industry and our state partners to publish press releases and other public notices about recalls that may potentially present a significant or serious risk to the consumer or user of the product. Subscribe to this Recall/Safety Alert feed here.
+
+Further, FDA does not update the status of a recall after the recall has been classified according to its level of hazard. As such, the status of a recall (open, completed, or terminated) will remain unchanged after published in the Enforcement Reports.
+
+When necessary, the FDA will make corrections or changes to recall information previously disclosed in a past Enforcement Report for various reasons. For instance, the firm may discover that the initial recall should be expanded to include more batches or lots of the same recalled product than formerly reported.
+
+Device Adverse Event Overview
+The U.S. Food and Drug Administration (FDA) regulates medical devices in the United States. Medical devices range from simple tongue depressors and bedpans to complex programmable pacemakers and laser surgical devices. In addition, medical devices include in vitro diagnostic products, such as general purpose lab equipment, reagents, and test kits, which may include monoclonal antibody technology. Certain electronic radiation emitting products with medical application and claims meet the definition of medical device. Examples include diagnostic ultrasound products, x-ray machines, and medical lasers.
+
+An adverse event report is submitted to the FDA to report serious events or undesirable experiences associated with the use of a medical device.
+
+Important Update as of 10/20/22
+Two data elements have been added to the UDI endpoint in openFDA: UDI-DI and UDI-Public.
+
+UDI-Public is a redacted version of an identifier provided in MDR reports. Not all MDRs provide UDI data, and the current data is not validated.
+
+Search the fields
+Device Adverse Events by Event Type
+View by:
+
+Each Event Type 
+as % of all Device Adverse Events
+
+Display of Events by Amount of Usage for Malfunction Event
+
+Percentage
+by Type
+Malfunction
+63%
+0.0
+50k
+100k
+150k
+200k
+Number of Device Events
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Amount of Usage to Compare
+Initial use
+Unknown
+Reuse
+No
+Key Facts
+Source of the data:
+Manufacturer and User Facility Device Experience (MAUDE)
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2009 to present
+Frequency of API updates:
+Weekly
+About MAUDE data
+The openFDA device adverse event API returns data from Manufacturer and User Facility Device Experience (MAUDE), an FDA dataset that contains medical device adverse event reports submitted by mandatory reporters—manufacturers, importers and device user facilities—and voluntary reporters such as health care professionals, patients, and consumers. Currently, this data covers publically releasable records submitted to the FDA from about 1992 to the present. The data is updated weekly.
+
+Each year, the FDA receives several hundred thousand medical device reports (MDRs) of suspected device-associated deaths, serious injuries and malfunctions. The FDA uses MDRs to monitor device performance, detect potential device-related safety issues, and contribute to benefit-risk assessments of these products. The MAUDE database houses MDRs submitted to the FDA by mandatory reporters (manufacturers, importers and device user facilities) and by voluntary reporters (such as health care professionals, patients, and consumers).
+
+Although MDRs are a valuable source of information, this passive surveillance system has limitations, including the potential submission of incomplete, inaccurate, untimely, unverified, or biased data. In addition, the incidence or prevalence of an event cannot be determined from this reporting system alone due to potential under-reporting of events and lack of information about frequency of device use. Because of this, MDRs comprise only one of the FDA’s several important postmarket surveillance data sources.
+
+See the [MAUDE dataset page](/data/maude/) for more details.
+
+How adverse events are collected
+Adverse events are collected through a series of safety reports. Each is identified by a 8-digit string (for instance, 6176304-1). The first 7 digits (before the hyphen) identify the individual report, and the last digit (after the hyphen) is a checksum. Rather than updating individual records in FAERS, subsequent updates are submitted in seperate reports.
+
+How records are organized
+Device adverse event reports vary significantly, depending on who initially reported the event, what kind of event was reported, and whether there were follow-up reports. Some reports come directly from user facilities (like hospitals) or device importers (distributors), while others come directly from manufacturers. Some involve adverse reactions in patients, while others are reports of defects that did not result in such adverse reactions.
+
+Records served by the openFDA device adverse events endpoint loosely reflect field organization found in the forms used by manufacturers and members of the public to report these events. Since reports may come from manufacturers, user facilities, distributors, and voluntary sources (such as patients and physicians) who are subject to different reporting requirements, the collected data in the adverse event system may not always capture every field and should not be interpreted as incomplete.
+
+Responsible use of the data
+Adverse event reports submitted to FDA do not undergo extensive validation or verification. Therefore, a causal relationship cannot be established between product and reactions listed in a report. While a suspected relationship may exist, it is not medically validated and should not be the sole source of information for clinical decision making or other assumptions about the safety or efficacy of a product.
+
+Additionally, it is important to remember that adverse event reports represent a small percentage of total usage numbers of a product. Common products may have a higher number of adverse events due to the higher total number of people using the product. In recent years the FDA has undertaken efforts to increase collection of adverse events. Increases in the total number of adverse events is likely caused by improved reporting.
+
+Disclaimer
+Although MDRs are a valuable source of information, this passive surveillance system has limitations, including the potential submission of incomplete, inaccurate, untimely, unverified, or biased data. In addition, the incidence or prevalence of an event cannot be determined from this reporting system alone due to potential under-reporting of events and lack of information about frequency of device use. Because of this, MDRs comprise only one of the FDA's several important postmarket surveillance data sources.
+
+Device Pre-market Approval Overview
+PMA is any premarket approval application for a class III medical device, including all information submitted with or incorporated by reference. “PMA” includes a new drug application for a device under section 520(l) of the FD&C Act.
+
+The PMA dataset contains details about specific products and the sponsors of premarket approval applications and supplements. It also contains administrative and tracking information about the applications and receipt and decision dates. Premarket approval (PMA) is the FDA process of scientific and regulatory review to evaluate the safety and effectiveness of Class III medical devices. An approved PMA Application is, in effect, a private license granted to the applicant for marketing a particular medical device.
+
+Class III devices are those that support or sustain human life, are of substantial importance in preventing impairment of human health, or that present a potential, unreasonable risk of illness or injury. Due to the level of risk associated with Class III devices, FDA has determined that general and special controls alone are insufficient to assure the safety and effectiveness of class III devices.
+
+For additional information, please visit the FDA's Premarket Approval (PMA) page.
+
+Search the fields
+Device PMAs by FDA decision
+View by:
+
+Each FDA Decision 
+as % of all Device PMAs
+
+Display of PMAs by Applicant for Approved Status
+
+Percentage
+by Decision
+Approved
+51%
+0.0
+5.0
+10
+15
+20
+Number of Device PMAs
+1990
+1995
+2000
+2005
+2010
+2015
+2020
+2025
+Select Applicant to Compare
+Abbott Medical
+Medtronic Inc
+Boston Scientific Corp
+Medtronic Cardiac Rhythm Disease Management
+Boston Scientific
+Alcon Laboratories
+Medtronic Neuromodulation
+Key Facts
+Source of the data:
+Premarket Approval (PMA) decisions
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+1976 to present
+Frequency of API updates:
+Monthly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same device in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+regulation_number
+fei_number
+device_name
+device_class
+medical_specialty_description
+registration_number
+k_number
+pma_number
+Loading...
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Device Recall Overview
+A recall is an action taken to address a problem with a medical device that violates FDA law. Recalls occur when a medical device is defective, when it could be a risk to health, or when it is both defective and a risk to health.
+
+Recall as defined in 21 CFR 7.3(g) is “a firm’s removal or correction of a marketed product that the Food and Drug Administration considers to be in violation of the laws it administers and against which the agency would initiate legal action, e.g., seizure. Recall does not include a market withdrawal or a stock recovery.” If a firm conducts a recall to reduce a risk to health, the firm is required to submit a written report to the FDA with the information described in 21 CFR 806.10.
+
+For additional background information about medical device recalls, see here.
+
+Search the fields
+Device Recalls by Medical Speciality
+View by:
+
+Each Medical Speciality 
+as % of all Device Recalls
+
+Display of Recalls by Device Name for Orthopedic  Speciality
+
+Percentage
+by Speciality
+Cardiovascular
+12%
+0.0
+10
+20
+30
+40
+Number of Device Recalls
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Device Name to Compare
+Orthopedic Manual Surgical Instrument
+Thoracolumbosacral Pedicle Screw System
+Arthroscope
+Template
+Reamer
+Spinal Vertebral Body Replacement Device
+Screwdriver
+Bone Cement
+Awl
+Impactor
+Key Facts
+Source of the data:
+Medical Device Recalls
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2002 to present
+Frequency of API updates:
+Weekly
+Fields Harmonization
+Different datasets use different unique identifiers, which can make it difficult to find the same device in each dataset.
+
+openFDA features harmonization on specific identifiers to make it easier to both search for and understand the drug products returned by API queries. These additional fields are attached to records in all categories, if applicable.
+
+Review the chart below to better understand which fields are harmonized.
+
+Device
+Drug
+regulation_number
+fei_number
+device_name
+device_class
+medical_specialty_description
+registration_number
+k_number
+pma_number
+Loading...
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Disclaimer
+This data should not be used as a method to collect data to issue alerts to the public, nor should it be used to track the lifecycle of a recall. FDA seeks publicity about a recall only when it believes the public needs to be alerted to a serious hazard. FDA works with industry and our state partners to publish press releases and other public notices about recalls that may potentially present a significant or serious risk to the consumer or user of the product. Subscribe to this Recall/Safety Alert feed here.
+
+Further, FDA does not update the status of a recall after the recall has been classified according to its level of hazard. As such, the status of a recall (open, completed, or terminated) will remain unchanged after published in the Enforcement Reports.
+
+When necessary, the FDA will make corrections or changes to recall information previously disclosed in a past Enforcement Report for various reasons. For instance, the firm may discover that the initial recall should be expanded to include more batches or lots of the same recalled product than formerly reported.
+
+Device Registrations & Listings Overview
+The openFDA registration and listing API contains the location of medical device establishments and the devices manufactured at those establishments. Owners or operators of places of business (also called establishments or facilities) that are involved in the production and distribution of medical devices intended for use in the United States are required to register annually with the FDA. This process is known as establishment registration. Most foreign and domestic establishments that are required to register with the FDA are also required to list the devices that are made there for commercial distribution.
+
+For additional information, please visit the FDA's Device Registrations and Listings page.
+
+Key Facts
+Source of the data:
+Registration and Listing
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2007 to present
+Frequency of API updates:
+Monthly
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+
+Unique Device Identifier Overview
+The openFDA unique device identifier API returns data from the Global Unique Device Identification Database (GUDID), which contains information submitted to the FDA about medical devices that have Unique Device Identifiers (UDI).
+
+UDIs are unique numeric or alphanumeric codes that consist of two parts—a device identifier (DI) and a production identifier (PI). UDIs are intended to increase electronic tracking abilities for devices involved in adverse events. Submission to the GUDID database is required for manufacturers of medical devices. The FDA is establishing the unique device identification system to adequately identify devices sold in the U.S.- from manufacturing through distribution to patient use.
+
+To learn more about UDIs, see the FDA's General information about UDI page.
+
+Search the fields
+Device UDIs By Distribution Status
+View by:
+
+Each Distribution Status 
+as % of all Device UDIs
+
+Display of UDIs by Product Codes for In Distribution
+
+Percentage
+of Distribution
+In
+94%
+0.0
+5.0k
+10k
+15k
+20k
+25k
+30k
+Number of Device UDI
+35k
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+Select Product Codes to Compare
+Thoracolumbosacral Pedicle Screw System
+Appliance, Fixation, Spinal Interlaminal
+Orthosis, Spinal Pedicle Fixation
+Orthosis, Spondylolisthesis Spinal Fixation
+Appliance, Fixation, Spinal Intervertebral Body
+Intervertebral Fusion Device With Bone Graft, Lumbar
+Lro
+Key Facts
+Source of the data:
+Global Unique Device Identification Database (GUDID)
+Changes to the source data:
+openFDA annotates the original records with special fields and converts the data into JSON, which is a widely used machine readable format.
+Time period covered in this API:
+2013 to present
+Frequency of API updates:
+Weekly
+Responsible use of the data
+Do not rely on openFDA to make decisions regarding medical care. Always speak to your health provider about the risks and benefits of FDA-regulated products. We may limit or otherwise restrict your access to the API in line with our Terms of Service
+

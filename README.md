@@ -151,9 +151,9 @@ Please update as you add and intergrate diffrent apis
 | Government       | USAspending                      | 0(scraped) | :x:        | TBD      |
 | Government       | USPTO                            | 0          | :x:        | TBD      |
 | Government       | World Bank                       | 0(scraped) | :x:        | TBD      |
-| Health           | HealthCare.gov                   | 0          | :x:        | TBD      |
-| Health           | Makeup                           | 0          | :x:        | TBD      |
-| Health           | NPPES                            | 0          | :x:        | TBD      |
+| Health           | HealthCare.gov                   | 0(scraped) | :x:        | TBD      |
+| Health           | Makeup                           | 0(scraped) | :x:        | TBD      |
+| Health           | NPPES                            | 0(scraped) | :x:        | TBD      |
 | Health           | openFDA                          | 0          | :x:        | TBD      |
 | Inspiration      | Advice Slip                      | 0          | :x:        | TBD      |
 | Inspiration      | Affirmations                     | 0          | :x:        | TBD      |
