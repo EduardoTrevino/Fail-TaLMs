@@ -1,0 +1,61 @@
+NPPES API Help
+Home
+NPPES API Help
+
+Application Programming Interface (API) | Read-Only
+The API is a new, faster alternative to the downloadable NPPES data files. It allows systems to access NPPES public data in real-time, rather than through batched uploads. The API retrieves data from NPPES daily.
+
+Please Note: Issuance of an NPI does not ensure or validate that the Health Care Provider is Licensed or Credentialed. For more information please refer to NPI: What You Need to Know
+
+
+NPPES Read API Interactive Test Application
+API Versions 1.0 and 2.0 are NOW retired, please switch your application to use API Version 2.1 if you have not already done so. The old links https://npiregistry.cms.hhs.gov/api?version=1.0 , https://npiregistry.cms.hhs.gov/api?version=2.0 , and https://npiregistry.cms.hhs.gov/api (without the version flag) will no longer work. Please contact NPIFiles@cms.hhs.gov if you have further questions.
+
+System administrators can use the interactive demo to experiment with generating queries.
+
+API Version	Interactive Demo	Planned Phase Out Date	API Link
+Version 2.1	Demo	TBD	https://npiregistry.cms.hhs.gov/api/?version=2.1
+An API query will return a maximum of 200 results per request. The Skip field in the API will let you skip up to 1000 records. By using these two fields with your search criteria, you can get up to a maximum of 1,200 records over six requests.
+
+Descriptions of the fields that may be entered as criteria:
+
+version: Identifies the version of the API to use ("2.1").
+number: The NPI Number is the unique 10-digit National Provider Identifier assigned to the provider.
+enumeration_type: The Read API can be refined to retrieve only Individual Providers or Organizational Providers. When it is not specified, both Type 1 and Type 2 NPIs will be returned. When using the Enumeration Type, it cannot be the only criteria entered. Additional criteria must also be entered as well. Valid values are:
+NPI-1: Individual Providers (Type 1) NPIs
+NPI-2: Organizational Providers (Type 2) NPIs
+taxonomy_description: Search for providers by their taxonomy by entering the taxonomy description.
+name_purpose: Refers to whether the name information entered pertains to an Authorized Official's name or a Provider's name. When not specified, the results will search against a provider's first and last name. AO will only search against Authorized Official name. While PROVIDER will only search against Provider name.
+Valid values are:
+AO
+Provider
+first_name: This field only applies to Individual Providers. Trailing wildcard entries are permitted requiring at least two characters to be entered (e.g. "jo*" ). This field allows the following special characters: ampersand, apostrophe, colon, comma, forward slash, hyphen, left and right parentheses, period, pound sign, quotation mark, and semi-colon.
+use_first_name_alias: This field applies to Authorized Officials and Individual Providers when not doing a wildcard search. When set to "True", the search results will include Providers with similar First Names. E.g., first_name=Robert, will also return Authorized Officials and Providers with the first name of Rob, Bob, Robbie, Bobby, etc. Valid Values are:
+True: Will include alias/similar names.
+False: Will only look for exact matches.
+Default Value is True
+
+last_name: This field only applies to Individual Providers. Trailing wildcard entries are permitted requiring at least two characters to be entered. This field allows the following special characters: ampersand, apostrophe, colon, comma, forward slash, hyphen, left and right parentheses, period, pound sign, quotation mark, and semi-colon.
+organization_name: This field only applies to Organizational Providers. Trailing wildcard entries are permitted requiring at least two characters to be entered. This field allows the following special characters: ampersand, apostrophe, "at" sign, colon, comma, forward slash, hyphen, left and right parentheses, period, pound sign, quotation mark, and semi-colon. All types of Organization Names (LBN, DBA, Former LBN, Other Name) associated with an NPI are examined for matching contents, therefore, the results might contain an organization name different from the one entered in the Organization Name criterion.
+address_purpose: Refers to whether the address information entered pertains to the provider's Mailing Address or the provider's Practice Location Address. When not specified, the results will contain the providers where either the Mailing Address or any of Practice Location Addresses match the entered address information. PRIMARY will only search against Primary Location Address. While Secondary will only search against Secondary Location Addresses. Valid values are:
+LOCATION
+MAILING
+PRIMARY
+SECONDARY
+city: The City associated with the provider's address identified in Address Purpose. To search for a Military Address enter either APO or FPO into the City field. This field allows the following special characters: ampersand, apostrophe, colon, comma, forward slash, hyphen, left and right parentheses, period, pound sign, quotation mark, and semi-colon.
+state: The State abbreviation associated with the provider's address identified in Address Purpose. This field cannot be used as the only input criterion. If this field is used, at least one other field, besides the Enumeration Type and Country, must be populated. Valid values for states.
+postal_code: The Postal Code associated with the provider's address identified in Address Purpose. If you enter a 5 digit postal code, it will match any appropriate 9 digit (zip+4) codes in the data. Trailing wildcard entries are permitted requiring at least two characters to be entered (e.g., "21*").
+country_code: The Country associated with the provider's address identified in Address Purpose. This field can be used as the only input criterion as long as the value selected is not US (United States). Valid values for countries.
+limit: Limit the results returned. The default value is 10; however, the value can be set to any value from 1 to 200.
+skip: The first N (value entered) results meeting the entered criteria will be bypassed and will not be included in the output.
+pretty: When checked, the response will be displayed in an easy to read format.
+NPPES Read API Output JSON Document
+The Output of the Read API is a JSON document and it is made up of several data objects, some of which are either nested or contain arrays.
+
+The Addresses array has two occurrences. The first address in the array will always be the Primary Practice Location and the second address in the array will always be the Mailing Address.
+The Other Identifiers array contains up to 50 occurrences.
+The Taxonomies array contains up to 15 occurrences.
+The Other Names array may contain multiple Other Name occurrences.
+The Endpoints will display in an array.
+The Practice Locations array will contain all Practice Location Addresses except for the Primary Practice Location Address.
+For users familiar with the NPPES Data Dissemination CSV file, the following table shows the conversion field map of the NPPES Data Dissemination CSV file to a JSON document. Information about the NPPES Data Dissemination CSV file can be found on the CMS NPI Data Dissemination page.

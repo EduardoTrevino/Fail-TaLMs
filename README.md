@@ -154,8 +154,8 @@ Please update as you add and intergrate diffrent apis
 | Health           | HealthCare.gov                   | 0(scraped) | :x:        | TBD      |
 | Health           | Makeup                           | 0(scraped) | :x:        | TBD      |
 | Health           | NPPES                            | 0(scraped) | :x:        | TBD      |
-| Health           | openFDA                          | 0          | :x:        | TBD      |
-| Inspiration      | Advice Slip                      | 0          | :x:        | TBD      |
+| Health           | openFDA                          | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Advice Slip                      | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Affirmations                     | 0          | :x:        | TBD      |
 | Inspiration      | Breaking Bad Quotes              | 0          | :x:        | TBD      |
 | Inspiration      | Dictum                           | 0          | :x:        | TBD      |
