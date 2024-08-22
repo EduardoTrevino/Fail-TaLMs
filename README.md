@@ -161,10 +161,10 @@ Please update as you add and intergrate diffrent apis
 | Inspiration      | Dictum                           | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Game of Thrones Quotes           | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Kanye                            | 1          | 🟢         | TBD      |
-| Inspiration      | Quotable                         | 0          | :x:        | TBD      |
-| Inspiration      | Quote Garden                     | 0          | :x:        | TBD      |
-| Inspiration      | Quotes on Design                 | 0          | :x:        | TBD      |
-| Inspiration      | Ron Swanson Quotes               | 0          | :x:        | TBD      |
+| Inspiration      | Quotable                         | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Quote Garden                     | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Quotes on Design                 | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Ron Swanson Quotes               | 0(scraped) | :x:        | TBD      |
 | Jobs             | Jobicy                           | 1          | 🟢         | TBD      |
 | Language         | Chinese Character Web            | 0          | :x:        | TBD      |
 | Language         | Chinese Text Project             | 2          | 🟢         | TBD      |
