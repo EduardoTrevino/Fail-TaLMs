@@ -1,0 +1,311 @@
+Chinese Character Web API
+Posted 2011-12-17. Last updated 2018-06-21.
+
+What is it?
+The Chinese Character Web API provides a programmatic way to get information about Chinese characters through a live interface on the Web. The data is from the Unihan Database as provided by The Unicode Consortium.
+
+ 
+
+It's intended to be simple. It doesn't use SOAP or XML. It's very much inspired by REST and uses JSON for data. Responses have Cross-Origin Resource Sharing (CORS) enabled, allowing unfettered access from any browser that supports CORS (almost all do).
+
+ 
+
+I did this with a leaning towards Mandarin Chinese (my language of interest), though the database includes information about Cantonese, Japanese, Korean, and Vietnamese.
+
+No REST for the nitpickèd
+If the API is not RESTful, then it is at least RESTlike. One apparent disqualifier is that the API is not hypertext-driven, whatever that means. And the data are read-only, meaning that only GET is supported (POST is supported, but only as a synonym for GET); PUT and DELETE are not supported.
+
+Database notes
+The Unihan Database covers the following ranges of characters, but I found only the one bolded range to be useful:
+
+ 
+
+U+3400 through U+4DFF (6,656): CJK Unified Ideographs Extension A
+U+4E00 through U+9FFF (20,992): CJK Unified Ideographs
+U+F900 through U+FAFF (512): CJK Compatibility Ideographs
+U+20000 through U+2F7FF (63,488): CJK Unified Ideographs Extension B
+U+2F800 through U+2FFFF (2,048): CJK Compatibility Ideographs Supplement
+ 
+
+Actual counts are a bit smaller because of holes, but the grand total is upwards of 93,696 characters. The Web service I created only offers the 20,902 characters in the one range I found to be useful (CJK Unified Ideographs). Any tool geared towards characters people know, use, and have font support for will only need to support at most 9,000 of those.
+
+Implementation notes
+I deployed this on a LAMP server (Linux Apache MySQL PHP). Essentially, the Unihan Database was imported into a MySQL database, and then I wrote the APIs in PHP.
+
+
+In order to have a single PHP file answer to RESTlike URLs, I used URL rewriting. My primary development environment is Windows, and I found a very handy page in Zend Framework's Programmer's Reference Guide that described exactly how to do URL rewriting on Apache and Microsoft IIS, equivalently.
+
+Why create it?
+Having this Web API enables building tools that can expose the Chinese characters in interesting, useful, and didactic ways. The first tool I've created is here: Chinese Character Browser.
+
+I intend to create some charts, graphs, histograms, and lists. I have a clunky test page that does all those things already. My first public offering is here: Comparing Traditional and Simplified Chinese.
+API overview (example)
+A request will generally consist of a URL and parameters. The URL specifies the resource, and the parameters specify (e.g.) the database fields and the filtering you'd like. For example, if you wanted all characters that use Kangxi radical 85, the basic URL is:
+
+http://ccdb.hemiola.com/characters/radicals/85
+
+If you were interested in GB2312 characters in the above collection, you'd simply tack on a filter=gb parameter:
+http://ccdb.hemiola.com/characters/radicals/85?filter=gb
+
+If you wanted the definition and Pīnyīn for each character, you'd add a fields=kDefinition,kMandarin parameter:
+http://ccdb.hemiola.com/characters/radicals/85?filter=gb&fields=kDefinition,kMandarin
+
+If all you wanted to do was count the characters, rather than return them, just use the count parameter. Examples:
+http://ccdb.hemiola.com/characters/radicals/85?filter=gb&count
+
+http://ccdb.hemiola.com/characters/radicals/85?count
+
+http://ccdb.hemiola.com/characters?count
+
+By the way, CCDB stands for Chinese Character Database.
+API details: filter
+The filtering available is what seemed practical and useful to me. It's by no means exhaustive. Still, it's a little complicated because of supporting AND, OR, and NOT.
+
+Basic filtering
+A basic filter is added to the URL as a parameter. For example: filter=gb. Note that if you leave off the filter, you get all 20,902 of the CJK Unified Ideographs.
+
+
+The filter names are:
+
+gb
+big5, big5a, big5b
+sjis
+simplified, simplifiable
+
+Some notes:
+
+gb is GB2312 (6,763 characters)
+
+
+Why focus on a character set devised in 1980, when there are newer ones? The newer ones, GBK and GB18030 (the two being almost identical), include the full set of 20,902 CJK Unified Ideographs, plus a few more. Examining GB2312 provides insight into the language that bigger character sets do not. Sticking with GB2312 helps avoid overload when trying to get a handle on the language.
+
+big5 (13,061 characters) = big5a (5,401 characters) + big5b (7,660 characters)
+
+
+Big5 is split into two parts, though this does not seem to be readily acknowledged. Each part makes a complete pass through "the" dictionary. The first pass has 5,401 characters; the second pass has 7,660 characters. The first set of characters (what I call big5a) seems to be the only useful part of Big5, at least for a learner of Chinese. I'm skeptical that even a language native has much use for, or knowledge of, the second set of characters.
+
+sjis is Shift JIS (6,356 characters)
+
+
+I threw this in because it was easy, though I know very little about the Japanese language.
+
+simplified (2,549 characters)
+simplifiable (2,621 characters)
+
+
+Characters that are simplified have a traditional variant. Characters that are simplifiable have a simplified variant.
+
+
+You might wonder where the filter for traditional is. traditional is !simplified (i.e., not simplified; see below for more on this syntax). Here's a bit more detail:
+
+simplified. Simplified characters. Simple enough.
+simplifiable. Traditional characters that have simplified variants (i.e., this excludes traditional characters that have no simplified variants).
+!simplified. Characters that are not simplified. This is, in fact, the set of traditional characters (i.e., they may or may not have simplified variants, but they don't have traditional variants).
+!simplifiable. Characters that are not simplifiable, which includes simplified characters and also traditional characters that don't have simplified variants.
+
+Here's the filter for traditional characters that don't have simplified variants: !simplified+!simplifiable.
+simplified[] (77 characters)
+
+simplifiable[] (6 characters)
+
+
+These are special filters that reveal interesting information and are not intended to be combined with the others.
+
+simplified[]. Characters with multiple simplified variants.
+simplifiable[]. Characters with multiple traditional variants.
+Complex filtering
+Filters can be combined using ANDs, ORs, and NOTs. Here are a few examples:
+
+filter=gb+big5a (characters that are both gb and big5a)
+filter=gb|big5a (characters that are either gb or big5a, or both)
+filter=gb+simplified (gb characters that are simplified)
+filter=gb+!simplified (gb characters that are not simplified)
+filter=gb|simplified (characters that are either gb or simplified, or both)
+Notes
+
+The AND operator is the '+' character. I realize an unencoded '+' character has special meaning in a URL and gets converted to a space. Don't worry about it; these are all treated the same: gb+big5a, gb%20big5a, and gb%2Bbig5a.
+The OR operator is the '|' character.
+The NOT operator is the '!' character and can be applied to any filter name.
+Per normal Boolean logic, the order of precedence is NOT, AND, OR.
+Two filters do not support NOT: simplified[] and simplifiable[].
+
+Here's an example of precedence. Let's say you wanted this filter:
+gb + (simplified | simplifiable)
+The wrong way to do it is: gb+simplified|simplifiable. You need to use a little Boolean arithmetic to arrive at this:
+
+gb+simplified|gb+simplifiable
+API details: fields
+Fields come from the Unihan Database, with a few extra ones.
+
+Unihan fields
+I've been using the Unihan Database for over 15 years, and I tend to assume familiarity with its field names. The Unihan field names are of key importance to accessing information. They are documented here: http://www.unicode.org/reports/tr38/. All fields begin with a 'k'. Example of some common fields are kDefinition, kMandarin, kRSKangXi, and kRSUnicode.
+Special fields
+I added a few fields:
+
+uvalue
+
+
+This is the Unicode value of the character, in the U+4E00 style.
+string
+
+
+This is the character as a display string. In JSON, this ends up being a Unicode escape code, such as \u4e00.
+altMandarin
+
+altDefinition
+
+
+These are alternatives for the kMandarin and kDefinition fields just for the radicals. I wanted a way to display single, unambiguous Pīnyīn and a very short definition (often a single word) for the radicals. I built these fields from http://en.wikipedia.org/wiki/Kangxi_radicals.
+JSON fields
+When requesting character counts or stroke count information, a few fields are used for the information: radical, strokes, count. Recommendation: Examine the JSON and see how the data are named.
+Defaults
+If you request characters but don't specify any fields, you'll get one field: the string field.
+API details: other parameters
+Use the count parameter to return a character count rather than the characters themselves.
+
+By default, all radical and stroke information comes from the kRSKangXi field. To instruct the backend to instead use the kRSUnicode field, use the kRSUnicode parameter.
+
+
+Of the 20,902 characters, kRSKangXi and kRSUnicode differ for 333 of them (1.6%). Of the 6,763 GB2312 characters, there are 154 differences (2.3%). Of the 5,401 big5a characters, there are 47 differences (0.9%).
+
+API details: the resources
+Here's a list of what's available. In the cases that show radical 85, one example is being used to demonstrate a pattern. Details follow.
+/version
+
+/fields
+
+/characters
+/characters/mandarin
+/characters/cantonese
+/characters/japanese
+/characters/definition
+/characters/strokes
+/characters/string
+/characters/radicals
+/characters/radicals/singles
+/characters/radicals/usage
+/characters/radicals/unused
+/characters/radicals/mismatches
+/characters/radicals/85
+/characters/radicals/85?strokes=10
+/strokes
+/strokes/radicals
+/strokes/radicals/combined
+/strokes/radicals/85
+/sounds/mandarin
+/sounds/mandarin/with-pitch
+/sounds/cantonese
+/sounds/cantonese/with-pitch
+/sounds/japanese-on
+/sounds/japanese-kun
+Miscellaneous
+/version
+
+Returns date information about the CCDB service, the Unicode version/date the data came from, as well as the PHP and MySQL versions running.
+/fields
+
+Returns a list of all field names in the database. These come directly from the SQL schema.
+Characters
+In general, using a filter applies to the rest of the URLs (/characters, /strokes, and /sounds), but it only makes sense to request fields for the /characters URL.
+/characters
+
+Returns all characters.
+/characters/mandarin/value
+
+Pitch is optional. Example values: peng, peng2.
+/characters/cantonese/value
+
+Pitch is optional. Example values: paang, paang4
+/characters/japanese/value
+
+I don't know if this is useful, but this searches both the kJapaneseOn and kJapaneseKun fields.
+/characters/definition/value
+
+This does a case-insensitive grep-like search on kDefinition.
+/characters/strokes/value
+
+Match on kTotalStrokes.
+/characters/string/value
+
+This looks up each character provided (passed in the URL as UTF-8).
+
+Warning: This is prohibitively slow, taking 100ms per character.
+/characters/radicals
+
+Returns all radicals. There are 214 Kangxi radicals; because of radical variants, such as simplified radicals, there are 303 characters that are radicals.
+/characters/radicals/singles
+
+Returns at most one Kangxi radical per radical index (1-214), with a count (one or more) of the number of variations of each radical.
+/characters/radicals/usage
+
+For each radical encountered, returns a count of the number of characters that use that radical. Sorted by Kangxi radical number.
+
+Optional parameters
+sort-by-count will sort the results by count (high-to-low).
+reverse will change the sort order to low-to-high.
+/characters/radicals/unused
+
+Returns a list of Kangxi radicals not found among the resultant characters.
+/characters/radicals/mismatches
+
+Returns characters for which the kRSKangXi and kRSUnicode values don't match.
+/characters/radicals/85
+
+Returns characters that use Kangxi radical n, where 1 <= n <= 214, and n is 85 in this example.
+/characters/radicals/85?strokes=10
+
+Further filters the above to return characters that have additional strokes of the given number.
+Strokes
+/strokes
+
+Returns a list of valid total strokes (kTotalStrokes) and a count of the characters with each number of total strokes. Sorted by the number of total strokes.
+
+Optional parameters
+sort-by-count will sort the results by count (high-to-low)
+reverse will change the sort order to low-to-high.
+/strokes/radicals
+
+Returns a list of all valid radical/stroke combinations.
+/strokes/radicals/combined
+
+Returns a list of all radicals (by index) and a space-separated list of all valid strokes for each radical.
+/strokes/radicals/85
+
+Returns a list of total strokes (kTotalStrokes) for the given Kangxi radical, along with the additional strokes. Because the different radical forms may have different stroke counts, the same additional strokes may result in a different stroke total. Sorted by the number of total strokes.
+
+Optional parameters
+sort-by-additional will sort the results by additional strokes.
+group-by-additional will return just the additional stroke values, sorted.
+Sounds
+Notes
+I might have preferred the word pronunciation over the word sound, but I went with the shorter word.
+All /sounds URLs return a list of sounds and a count of occurrences of that sound.
+By default, results are sorted by sound.
+All of the /sounds APIs support the same optional parameters:
+sort-by-count will sort the results by count (high-to-low).
+reverse will change the sort order to low-to-high.
+Many characters have multiple sounds. Multiple sounds are split and counted. For example, two characters each with two sounds will result in a list of four sounds.
+/sounds/mandarin
+
+Returns a list of sounds (kMandarin) with the tone stripped off.
+/sounds/mandarin/with-pitch
+
+Returns a list of sounds (kMandarin) with the tone left on.
+/sounds/cantonese
+
+Returns a list of sounds (kCantonese) with the tone stripped off.
+/sounds/cantonese/with-pitch
+
+Returns a list of sounds (kCantonese) with the tone left on.
+/sounds/japanese-on
+
+Returns a list of sounds (kJapaneseOn).
+/sounds/japanese-kun
+
+Returns a list of sounds (kJapaneseKun).
+JavaScript utilities
+I've created a JavaScript library of utility functions, mainly for help dealing with Unihan data, such as parsing and comparing radical/stroke information, and converting ASCII Mandarin and Cantonese pronunciations to use the writing rules and diacritics of Pīnyīn and the Yale system, respectively.
+
+http://ccdb.hemiola.com/js/CcdbUtil.js
+Comments?
+You can leave comments or questions on my blog.

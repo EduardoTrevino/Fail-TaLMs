@@ -1,0 +1,81 @@
+What is PurgoMalum?
+PurgoMalum is a simple, free, RESTful web service for filtering and removing content of profanity, obscenity and other unwanted text. PurgoMalum's interface accepts several parameters for customization and can return results in plain text, XML and JSON.
+
+PurgoMalum is designed to remove words from input text, based on an internal profanity list (you may optionally add your own words to the profanity list through a request parameter (see Request Parameters below). It is designed to recognize character alternates often used in place of standard alphabetic characters, e.g. "@" will be recognized as an "a", "$" will be recognized as an "s", and so forth.
+
+PurgoMalum also utilizes a list of "safe words", i.e. innocuous words which contain words from the profanity list ("class" for example). These safe words are excluded from the filter.
+
+If you discover any bugs or have any concerns, please contact me, and I will do my best to address them.
+
+Usage
+Calling the Web Service
+Calling the web service involves a simple HTTP GET request. The only two requirements for using PurgoMalum are the "text" parameter on the query string and the request-type name as part of the path in the request. Here is a basic example of a request call to PurgoMalum, which will return the result as XML:
+
+https://www.purgomalum.com/service/xml?text=this is some test input
+Note the return type within the request URL - "xml" - and the required parameter "text".
+
+Please take a look here for a great Python client provided by Kevin Dious.
+
+Request Parameters
+This is a current list of available parameters which can be used in the request query string:
+
+Parameter	Required?	Description
+text	Required	Input text to be processed.
+add	Optional	A comma separated list of words to be added to the profanity list. Accepts letters, numbers, underscores (_) and commas (,). Accepts up to 10 words (or 200 maximum characters in length). The PurgoMalum filter is case-insensitive, so the case of your entry is not important.
+fill_text	Optional	Text used to replace any words matching the profanity list. Accepts letters, numbers, underscores (_) tildes (~), exclamation points (!), dashes/hyphens (-), equal signs (=), pipes (|), single quotes ('), double quotes ("), asterisks (*), open and closed curly brackets ({ }), square brackets ([ ]) and parentheses (). Maximum length of 20 characters. When not used, the default is an asterisk (*) fill.
+fill_char	Optional	Single character used to replace any words matching the profanity list. Fills designated character to length of word replaced. Accepts underscore (_) tilde (~), dash/hyphen (-), equal sign (=), pipe (|) and asterisk (*). When not used, the default is an asterisk (*) fill.
+Response Types
+This is a current list of methods provided by the web service and their corresponding return type:
+
+Method Name	Response Type	Description
+containsprofanity	Plain Text	Returns "true" if input text contains words matching profanity list. If no matches are found, returns "false".
+xml	XML	Returns processed input text as XML.
+json	JSON	Returns processed input text as JSON.
+plain	Plain Text	Returns processed input text as plain text.
+Examples
+Here are some examples of PurgoMalum implementations. Note that the method name follows the "/service/" section in the path.
+
+XML Request
+https://www.purgomalum.com/service/xml?text=this is some test input
+XML Response
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PurgoMalum xmlns="http://www.purgomalum.com">
+<result>this is some test input</result>
+</PurgoMalum>
+JSON Request
+https://www.purgomalum.com/service/json?text=this is some test input
+JSON Response
+{"result":"this is some test input"}
+Plain Text Request
+https://www.purgomalum.com/service/plain?text=this is some test input
+Plain Text Response
+this is some test input
+Contains Profanity Request
+https://www.purgomalum.com/service/containsprofanity?text=this is some test input
+Contains Profanity Plain Text Response
+false
+Advanced Examples
+Here are some examples of PurgoMalum implementations using the various optional parameters:
+
+XML Request
+https://www.purgomalum.com/service/xml?text=this is some test input&add=this, some&fill_text=[replaced]
+XMLResponse
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PurgoMalum xmlns="http://www.purgomalum.com">
+<result>[replaced] is [replaced] test input</result>
+</PurgoMalum>
+JSON Request
+https://www.purgomalum.com/service/json?text=this is some test input&add=input&fill_char=_
+JSON Response
+{"result":"this is some test _____"}
+Error Handling
+When an error occurs - caused by either invalid user input or generated within the application - PurgoMalum will not return the "results" element, but instead will return the "error" element with an associated error message.
+
+Here is an example of a request using an invalid parameter, causing an error response:
+
+Request
+https://www.purgomalum.com/service/xml?text=this is some test input&fill_text=this is curiously long replacement text
+Response
+<PurgoMalum xmlns="http://www.purgomalum.com">
+<error>User Replacement Text Exceeds Limit of 20 Characters.</error>
+</PurgoMalum>
