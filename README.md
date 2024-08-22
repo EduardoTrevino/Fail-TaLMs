@@ -171,9 +171,9 @@ Please update as you add and intergrate diffrent apis
 | Language         | Datamuse                         | 0(scraped) | :x:        | TBD      |
 | Language         | Free Dictionary                  | 0(scraped) | :x:        | TBD      |
 | Language         | PurgoMalum                       | 0(scraped) | :x:        | TBD      |
-| Music            | Binary Jazz                      | 0          | :x:        | TBD      |
+| Music            | Binary Jazz                      | 0(scraped) | :x:        | TBD      |
 | Music            | iTunes Search                    | 0          | :x:        | TBD      |
-| Music            | MusicBrainz                      | 0          | :x:        | TBD      |
+| Music            | MusicBrainz                      | 0(scraped) | :x:        | TBD      |
 | Music            | Openwhyd                         | 2          | 🟢         | TBD      |
 | Open Data        | Archive.org                      | 0          | :x:        | TBD      |
 | Open Data        | Carbon Intensity                 | 0          | :x:        | TBD      |
