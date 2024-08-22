@@ -1,0 +1,1395 @@
+Police API Documentation
+The API provides a rich data source for information, including:
+
+Neighbourhood team members
+Upcoming events
+Street-level crime and outcome data
+Nearest police stations
+The API is implemented as a standard JSON web service using HTTP GET and POST requests. Full request and response examples are provided in the documentation.
+
+Authentication
+API call limits
+Methods
+Availability
+Force related
+Forces
+Specific force
+Force senior officers
+Crime related
+Street level crimes
+Street level outcomes
+Crimes at location
+Crimes with no location
+Crime categories
+Last updated
+Outcomes for a specific crime
+Neighbourhood related
+Neighbourhoods
+Specific neighbourhood
+Neighbourhood boundary
+Neighbourhood team
+Neighbourhood events
+Neighbourhood priorities
+Locate neighbourhood
+Stop and search related
+Stop and searches by area
+Stop and searches by location
+Stop and searches with no location
+Stop and searches by force
+
+Availability
+Return a list of available data sets.
+Example request
+https://data.police.uk/api/crimes-street-dates
+
+Example response
+[
+    {
+       "date" : "2015-06",
+       "stop-and-search" : [
+          "bedfordshire",
+          "cleveland",
+          "durham",
+          ...
+       ]
+    },
+    {
+       "date" : "2015-05",
+       "stop-and-search" : [
+          "bedfordshire",
+          "city-of-london",
+          "cleveland",
+          ...
+       ]
+    },
+    ...
+]
+Response description
+Tag	Description
+date	Year and month of all available street level crime data in ISO format.
+stop-and-search	A list of force IDs for forces that have provided stop and search data for this month
+
+List of forces
+A list of all the police forces available via the API except the British Transport Police, which is excluded from the list returned. Unique force identifiers obtained here are used in requests for force-specific data via other methods.
+Example request
+https://data.police.uk/api/forces
+
+Example response
+[
+    {
+        "id": "avon-and-somerset",
+        "name": "Avon and Somerset Constabulary"
+    },
+    {
+        "id": "bedfordshire",
+        "name": "Bedfordshire Police"
+    },
+    {
+        "id": "cambridgeshire",
+        "name": "Cambridgeshire Constabulary"
+    },
+    ...
+]
+Response description
+Tag	Description
+id	Unique force identifier
+name	Force name
+
+Specific force
+Example request
+https://data.police.uk/api/forces/leicestershire
+
+Example response
+{
+    "description": "h2.A police service for everyone\n\t\n\tLeicestershire Constabulary provides a policing service to the people of Leicester, Leicestershire and Rutland 24-hours a day, 365-days of the year.\n\nThe area we are responsible for covers over 2,500 square kilometres (over 965 square miles) and has a population of nearly one million. There is a rich diversity of communities all with their own policing needs.\n\nMany steps have been taken to bring policing back into the very heart of local communities. This has included the replacement of older, larger or out-of-town police buildings with modern, self-contained local policing units in the very centre of local communities.\n\nEach of the 15 local policing units is headed by an inspector whose responsibility is to ensure that their area receives a 24-hour policing service.\n\nTo help them provide this service they are supported by specialist departments such as the dog section, the scientific support department and the East Midlands air support unit.\n\nRather than waiting for crimes to be committed, we are working more and more to plan operations and target criminals. Many of these operations, which are aimed at tackling specific problems, involve working in partnership with local residents and other agencies and have proved to be very successful.\n\nOver the years we have forged close working relationships with local communities, other organisations and agencies and we continue to develop and strengthen these partnerships, working together to fight crime and improve the quality of life for everyone.",
+    "url": "http://www.leics.police.uk/",
+    "engagement_methods": [
+        {
+            "url": "http://www.facebook.com/pages/Leicester/Leicestershire-Police/76807881169",
+            "description": "Become friends with Leicestershire Constabulary",
+            "title": "Facebook"
+        },
+        {
+            "url": "http://www.twitter.com/leicspolice",
+            "description": "Keep up to date with Leicestershire Constabulary on Twitter",
+            "title": "Twitter"
+        },
+        {
+            "url": "http://www.youtube.com/leicspolice",
+            "description": "See Leicestershire Constabulary's latest videos on YouTube",
+            "title": "YouTube"
+        },
+        {
+            "url": "http://www.leics.police.uk/rss/",
+            "description": "Keep informed with Leicestershire Constabulary's RSS feed",
+            "title": "RSS"
+        }
+    ],
+    "telephone": "0116 222 2222",
+    "id": "leicestershire",
+    "name": "Leicestershire Constabulary"
+}
+Response description
+Tag	Description
+description	Description
+url	Force website URL
+engagement-methods	Ways to keep informed
+url	Method website URL
+description	Method description
+title	Method title
+telephone	Force telephone number
+id	Unique force identifier
+name	Force name
+
+Senior officers
+Example request
+https://data.police.uk/api/forces/leicestershire/people
+
+Example response
+[
+    {
+        "bio": "Roger joined Lincolnshire Police in 1988 having attended Queen Elizabeth Grammar School in Gainsborough and then working in retail management in London. He progressed through the ranks both in uniformed operations and criminal investigation roles, particularly enjoying his experience as a detective. He has a degree in Policing Studies.\nRoger describes his two proudest career moments as being commended as a Detective Sergeant for detecting a knife-point stranger kidnap and sex attack on a young schoolgirl and then ten years later, as the Head of CID, being commended over a four-year long global child protection investigation.\nIn October 2010 Roger took up the role as temporary Assistant Chief Constable (Protective Services) in Lincolnshire Police and in March 2012 graduated from the Strategic Command Course.\nHe was appointed as Leicestershire Police’s Assistant Chief Constable (Crime) in June 2013.\nRoger is married and has six year old twin boys. His many hobbies include mountaineering (which has included trips to Scotland, the Alps and the Himalayas) skiing, running and open water swimming.",
+        "contact_details": {
+            "twitter": "http://www.twitter.com/ACCCLeicsPolice"
+        },
+        "name": "Roger Bannister",
+        "rank": "Assistant Chief Officer (Crime)"
+    },
+    ...
+]
+Response description
+Tag	Description
+bio	Senior officer biography (if available)
+contact_details	Contact details for the senior officer
+email	Email address
+telephone	Telephone number
+mobile	Mobile number
+fax	Fax number
+web	Website address
+address	Street address
+facebook	Facebook profile URL
+twitter	Twitter profile URL
+youtube	YouTube profile URL
+myspace	Myspace profile URL
+bebo	Bebo profile URL
+flickr	Flickr profile URL
+google-plus	Google+ profile URL
+forum	Forum URL
+e-messaging	E-messaging URL
+blog	Blog URL
+rss	RSS URL
+name	Name of the person
+rank	Force rank
+
+Street-level crimes
+Crimes at street-level; either within a 1 mile radius of a single point, or within a custom area.
+
+The street-level crimes returned in the API are only an approximation of where the actual crimes occurred, they are not the exact locations. See the about page for more information about location anonymisation.
+
+If you're allowing users to search for locations in Scotland, please make it clear that, since only the British Transport Police provide data for Scotland, crime levels may appear much lower than they really are.
+
+Request parameters
+Specific point
+lat	Latitude of the requested crime area
+lng	Longitude of the requested crime area
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+Custom area
+poly	The lat/lng pairs which define the boundary of the custom area
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+If a custom area contains more than 10,000 crimes, the API will return a 503 status code.
+
+The poly parameter is formatted in lat/lng pairs, separated by colons:
+
+[lat],[lng]:[lat],[lng]:[lat],[lng]
+The first and last coordinates need not be the same — they will be joined by a straight line once the request is made.
+
+The API will return a 400 status code in response to a GET request longer than 4094 characters. For submitting particularly complex poly parameters, consider using POST instead.
+
+Crime category
+You can provide any crime category as part of the request URL. In the examples below, we use all-crime.
+
+Example request
+Specific point
+https://data.police.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2017-01
+
+Custom area
+https://data.police.uk/api/crimes-street/all-crime?poly=52.268,0.543:52.794,0.238:52.130,0.478&date=2017-01
+
+Example response
+[
+    {
+        "category": "anti-social-behaviour",
+        "location_type": "Force",
+        "location": {
+            "latitude": "52.640961",
+            "street": {
+                "id": 884343,
+                "name": "On or near Wharf Street North"
+            },
+            "longitude": "-1.126371"
+        },
+        "context": "",
+        "outcome_status": null,
+        "persistent_id": "",
+        "id": 54164419,
+        "location_subtype": "",
+        "month": "2017-01"
+    },
+    {
+        "category": "anti-social-behaviour",
+        "location_type": "Force",
+        "location": {
+            "latitude": "52.633888",
+            "street": {
+                "id": 883425,
+                "name": "On or near Peacock Lane"
+            },
+            "longitude": "-1.138924"
+        },
+        "context": "",
+        "outcome_status": null,
+        "persistent_id": "",
+        "id": 54165316,
+        "location_subtype": "",
+        "month": "2017-01"
+    },
+    ...
+]
+Response description
+Tag	Description
+category	Category of the crime
+persistent_id	64-character unique identifier for that crime. (This is different to the existing 'id' attribute, which is not guaranteed to always stay the same for each crime.)
+month	Month of the crime
+location	Approximate location of the incident
+latitude	Latitude
+street	The approximate street the crime occurred
+id	Unique identifier for the street
+name	Name of the location.
+This is only an approximation of where the crime happened
+longitude	Longitude
+context	Extra information about the crime (if applicable)
+id	ID of the crime.
+This ID only relates to the API, it is NOT a police identifier
+location_type	The type of the location. Either Force or BTP: Force indicates a normal police force location; BTP indicates a British Transport Police location. BTP locations fall within normal police force boundaries.
+location_subtype	For BTP locations, the type of location at which this crime was recorded.
+outcome_status	The category and date of the latest recorded outcome for the crime
+category	Category of the outcome
+The full category name is returned
+IMPORTANT NOTE: This element may not be present for all crimes
+
+Code	Name
+awaiting-court-result	Awaiting court outcome
+court-result-unavailable	Court result unavailable
+unable-to-proceed	Court case unable to proceed
+local-resolution	Local resolution
+no-further-action	Investigation complete; no suspect identified
+deprived-of-property	Offender deprived of property
+fined	Offender fined
+absolute-discharge	Offender given absolute discharge
+cautioned	Offender given a caution
+drugs-possession-warning	Offender given a drugs possession warning
+penalty-notice-issued	Offender given a penalty notice
+community-penalty	Offender given community sentence
+conditional-discharge	Offender given conditional discharge
+suspended-sentence	Offender given suspended prison sentence
+imprisoned	Offender sent to prison
+other-court-disposal	Offender otherwise dealt with
+compensation	Offender ordered to pay compensation
+sentenced-in-another-case	Suspect charged as part of another case
+charged	Suspect charged
+not-guilty	Defendant found not guilty
+sent-to-crown-court	Defendant sent to Crown Court
+unable-to-prosecute	Unable to prosecute suspect
+formal-action-not-in-public-interest	Formal action is not in the public interest
+action-taken-by-another-organisation	Action to be taken by another organisation
+further-investigation-not-in-public-interest	Further investigation is not in the public interest
+further-action-not-in-public-interest	Further action is not in the public interest
+under-investigation	Under investigation
+status-update-unavailable	Status update unavailable
+date	Date of the outcome
+
+Street-level outcomes
+Outcomes at street-level; either at a specific location, within a 1 mile radius of a single point, or within a custom area.
+
+Note: Outcomes are not available for the Police Service of Northern Ireland.
+
+Request parameters
+Specific location ID
+Parameter	Description
+date	YYYY-MM
+location_id	Crimes and outcomes are mapped to specific locations on the map. Valid IDs are returned by other methods which return location information.
+Latitude/longitude
+Parameter	Description
+date	YYYY-MM
+lat	Latitude of the requested crime area
+lng	Longitude of the requested crime area
+Custom area
+poly	The lat/lng pairs which define the boundary of the custom area
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+When querying for crime within a custom area, the following restrictions apply:
+
+The area must contain no more than 10,000 outcomes. Otherwise, the API will return a 503 status code.
+The poly parameter is formatted in lat/lng pairs, separated by colons:
+
+[lat],[lng]:[lat],[lng]:[lat],[lng]
+The first and last coordinates need not be the same - they will be joined by a straight line once the request is made.
+
+Example request
+Specific location ID
+https://data.police.uk/api/outcomes-at-location?date=2017-01&location_id=883498
+
+Latitude/longitude
+https://data.police.uk/api/outcomes-at-location?date=2017-01&lat=52.629729&lng=-1.131592
+
+Custom area
+https://data.police.uk/api/outcomes-at-location?date=2017-01&poly=52.268,0.543:52.794,0.238:52.130,0.478
+
+Example response
+[
+    {
+        "category": {
+            "code": "unable-to-prosecute",
+            "name": "Unable to prosecute suspect"
+        },
+        "date": "2017-01",
+        "person_id": null,
+        "crime": {
+            "category": "theft-from-the-person",
+            "location_type": "Force",
+            "location": {
+                "latitude": "52.634474",
+                "street": {
+                    "id": 883498,
+                    "name": "On or near Kate Street"
+                },
+                "longitude": "-1.149197"
+            },
+            "context": "",
+            "persistent_id": "a5a98275facee535b959b236130f5ec05205869fb3d0804c9b14296fcd0bce46",
+            "id": 53566126,
+            "location_subtype": "ROAD",
+            "month": "2016-12"
+        }
+    }
+]
+Response description
+Tag	Description
+category	Category of the outcome
+
+Code	Name
+awaiting-court-result	Awaiting court outcome
+court-result-unavailable	Court result unavailable
+unable-to-proceed	Court case unable to proceed
+local-resolution	Local resolution
+no-further-action	Investigation complete; no suspect identified
+deprived-of-property	Offender deprived of property
+fined	Offender fined
+absolute-discharge	Offender given absolute discharge
+cautioned	Offender given a caution
+drugs-possession-warning	Offender given a drugs possession warning
+penalty-notice-issued	Offender given a penalty notice
+community-penalty	Offender given community sentence
+conditional-discharge	Offender given conditional discharge
+suspended-sentence	Offender given suspended prison sentence
+imprisoned	Offender sent to prison
+other-court-disposal	Offender otherwise dealt with
+compensation	Offender ordered to pay compensation
+sentenced-in-another-case	Suspect charged as part of another case
+charged	Suspect charged
+not-guilty	Defendant found not guilty
+sent-to-crown-court	Defendant sent to Crown Court
+unable-to-prosecute	Unable to prosecute suspect
+formal-action-not-in-public-interest	Formal action is not in the public interest
+action-taken-by-another-organisation	Action to be taken by another organisation
+further-investigation-not-in-public-interest	Further investigation is not in the public interest
+further-action-not-in-public-interest	Further action is not in the public interest
+under-investigation	Under investigation
+status-update-unavailable	Status update unavailable
+code	Internal code
+name	Human-readable name
+date	Date of the outcome
+person_id	An identifier for the suspect/offender, where available.
+crime	Crime information
+category	Category of the crime
+location_type	The type of the location. Either Force or BTP: Force indicates a normal police force location; BTP indicates a British Transport Police location. BTP locations fall within normal police force boundaries.
+location_subtype	For BTP locations, the type of location at which this crime was recorded.
+persistent_id	64-character unique identifier for that crime. (This is different to the existing 'id' attribute, which is not guaranteed to always stay the same for each crime.)
+month	Month of the crime
+location	Approximate location of the incident
+latitude	Latitude
+street	The approximate street the crime occurred
+id	Unique identifier for the street
+name	Name of the location.
+This is only an approximation of where the crime happened
+longitude	Longitude
+context	Extra information about the crime (if applicable)
+id	ID of the crime.
+This ID only relates to the API, it is NOT a police identifier
+
+Crimes at a location
+Returns just the crimes which occurred at the specified location, rather than those within a radius. If given latitude and longitude, finds the nearest pre-defined location and returns the crimes which occurred there.
+
+If you're allowing users to search for locations in Scotland, please make it clear that, since only the British Transport Police provide data for Scotland, crime levels may appear much lower than they really are.
+
+Request parameters
+Specific location ID
+Parameter	Description
+date	YYYY-MM
+location_id	Crimes and outcomes are mapped to specific locations on the map.
+Valid IDs are returned by other methods (new and existing) which return location information.
+Latitude/longitude
+Parameter	Description
+date	YYYY-MM
+lat	Latitude of the requested crime area
+lng	Longitude of the requested crime area
+Example request
+Specific location ID
+https://data.police.uk/api/crimes-at-location?date=2017-02&location_id=884227
+
+Latitude/longitude
+https://data.police.uk/api/crimes-at-location?date=2017-02&lat=52.629729&lng=-1.131592
+
+Example response
+[
+    {
+        "category": "violent-crime",
+        "location_type": "Force",
+        "location": {
+            "latitude": "52.643950",
+            "street": {
+                "id": 884227,
+                "name": "On or near Abbey Gate"
+            },
+            "longitude": "-1.143042"
+        },
+        "context": "",
+        "outcome_status": {
+            "category": "Unable to prosecute suspect",
+            "date": "2017-02"
+        },
+        "persistent_id": "4d83433f3117b3a4d2c80510c69ea188a145bd7e94f3e98924109e70333ff735",
+        "id": 54726925,
+        "location_subtype": "",
+        "month": "2017-02"
+    }
+]
+Response description
+Tag	Description
+category	Category of the crime
+location_type	The type of the location. Either Force or BTP: Force indicates a normal police force location; BTP indicates a British Transport Police location. BTP locations fall within normal police force boundaries.
+location_subtype	For BTP locations, the type of location at which this crime was recorded.
+persistent_id	64-character unique identifier for that crime. (This is different to the existing 'id' attribute, which is not guaranteed to always stay the same for each crime.)
+month	Month of the crime
+location	Approximate location of the incident
+latitude	Latitude
+street	The approximate street the crime occurred
+id	Unique identifier for the street
+name	Name of the location.
+This is only an approximation of where the crime happened
+longitude	Longitude
+context	Extra information about the crime (if applicable)
+id	ID of the crime.
+This ID only relates to the API, it is NOT a police identifier
+outcome_status	The category and date of the latest recorded outcome for the crime
+category	Category of the outcome
+The full category name is returned
+
+Code	Name
+awaiting-court-result	Awaiting court outcome
+court-result-unavailable	Court result unavailable
+unable-to-proceed	Court case unable to proceed
+local-resolution	Local resolution
+no-further-action	Investigation complete; no suspect identified
+deprived-of-property	Offender deprived of property
+fined	Offender fined
+absolute-discharge	Offender given absolute discharge
+cautioned	Offender given a caution
+drugs-possession-warning	Offender given a drugs possession warning
+penalty-notice-issued	Offender given a penalty notice
+community-penalty	Offender given community sentence
+conditional-discharge	Offender given conditional discharge
+suspended-sentence	Offender given suspended prison sentence
+imprisoned	Offender sent to prison
+other-court-disposal	Offender otherwise dealt with
+compensation	Offender ordered to pay compensation
+sentenced-in-another-case	Suspect charged as part of another case
+charged	Suspect charged
+not-guilty	Defendant found not guilty
+sent-to-crown-court	Defendant sent to Crown Court
+unable-to-prosecute	Unable to prosecute suspect
+formal-action-not-in-public-interest	Formal action is not in the public interest
+action-taken-by-another-organisation	Action to be taken by another organisation
+further-investigation-not-in-public-interest	Further investigation is not in the public interest
+further-action-not-in-public-interest	Further action is not in the public interest
+under-investigation	Under investigation
+status-update-unavailable	Status update unavailable
+date	Date of the outcome
+
+Crimes with no location
+Returns a list of crimes that could not be mapped to a location.
+Request parameters
+Parameter	Description
+category	The category of the crimes
+force	Specific police force
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+Example request
+https://data.police.uk/api/crimes-no-location?category=all-crime&force=leicestershire&date=2017-03
+
+Example response
+[
+    {
+        "category": "burglary", 
+        "persistent_id": "4ea1d4da29bd8b9e362af35cbabb6157149f62b65d37486dffd185a18e1aaadd", 
+        "location_subtype": "", 
+        "id": 56862854, 
+        "location": null, 
+        "context": "", 
+        "month": "2017-03", 
+        "location_type": null, 
+        "outcome_status": {
+            "category": "Investigation complete; no suspect identified", 
+            "date": "2017-03"
+        }
+    }, 
+    {
+        "category": "criminal-damage-arson", 
+        "persistent_id": "979f2338f25f62196268b52c8405ca8ff431fd2fb02ab11b2192c479816547e5", 
+        "location_subtype": "", 
+        "id": 56866806, 
+        "location": null, 
+        "context": "", 
+        "month": "2017-03", 
+        "location_type": null, 
+        "outcome_status": {
+            "category": "Under investigation", 
+            "date": "2017-03"
+        }
+    }, 
+    ...
+]
+Response description
+Tag	Description
+category	Category of the crime
+location_type	Always null for this method.
+location_subtype	Always an empty string for this method.
+persistent_id	64-character unique identifier for that crime. (This is different to the existing 'id' attribute, which is not guaranteed to always stay the same for each crime.)
+month	Month of the crime
+location	Always null for this method.
+context	Extra information about the crime (if applicable)
+id	ID of the crime.
+This ID only relates to the API, it is NOT a police identifier
+outcome_status	The category and date of the latest recorded outcome for the crime
+category	Category of the outcome
+The full category name is returned
+
+Code	Name
+awaiting-court-result	Awaiting court outcome
+court-result-unavailable	Court result unavailable
+unable-to-proceed	Court case unable to proceed
+local-resolution	Local resolution
+no-further-action	Investigation complete; no suspect identified
+deprived-of-property	Offender deprived of property
+fined	Offender fined
+absolute-discharge	Offender given absolute discharge
+cautioned	Offender given a caution
+drugs-possession-warning	Offender given a drugs possession warning
+penalty-notice-issued	Offender given a penalty notice
+community-penalty	Offender given community sentence
+conditional-discharge	Offender given conditional discharge
+suspended-sentence	Offender given suspended prison sentence
+imprisoned	Offender sent to prison
+other-court-disposal	Offender otherwise dealt with
+compensation	Offender ordered to pay compensation
+sentenced-in-another-case	Suspect charged as part of another case
+charged	Suspect charged
+not-guilty	Defendant found not guilty
+sent-to-crown-court	Defendant sent to Crown Court
+unable-to-prosecute	Unable to prosecute suspect
+formal-action-not-in-public-interest	Formal action is not in the public interest
+action-taken-by-another-organisation	Action to be taken by another organisation
+further-investigation-not-in-public-interest	Further investigation is not in the public interest
+further-action-not-in-public-interest	Further action is not in the public interest
+under-investigation	Under investigation
+status-update-unavailable	Status update unavailable
+date	Date of the outcome
+
+Crime categories
+Returns a list of valid categories for a given data set date.
+Example request
+https://data.police.uk/api/crime-categories?date=2011-08
+
+Example response
+[
+    {
+        "url": "all-crime",
+        "name": "All crime and ASB"
+    },
+    {
+        "url": "burglary",
+        "name": "Burglary"
+    },
+    {
+        "url": "anti-social-behaviour",
+        "name": "Anti-social behaviour"
+    },
+    ...
+]
+Response description
+Tag	Description
+url	Unique identifier
+name	Name of the crime category
+
+Last updated
+Crime data in the API is updated once a month. Find out when it was last updated.
+Example request
+https://data.police.uk/api/crime-last-updated
+
+Example response
+{
+    "date": "2011-09-01"
+}
+Response description
+Tag	Description
+date	Month of latest crime data in ISO format.
+The day is irrelevant and is only there to keep a standard formatted date.
+
+Outcomes for a specific crime
+Returns the outcomes (case history) for the specified crime. Crime ID is 64-character identifier, as returned by other API methods.
+
+Note: Outcomes are not available for the Police Service of Northern Ireland.
+
+Example request
+https://data.police.uk/api/outcomes-for-crime/590d68b69228a9ff95b675bb4af591b38de561aa03129dc09a03ef34f537588c
+
+Example response
+{
+    "crime": {
+        "category": "violent-crime", 
+        "persistent_id": "590d68b69228a9ff95b675bb4af591b38de561aa03129dc09a03ef34f537588c", 
+        "location_subtype": "", 
+        "location_type": "Force", 
+        "location": {
+            "latitude": "52.639814", 
+            "street": {
+                "id": 883235, 
+                "name": "On or near Sanvey Gate"
+            }, 
+            "longitude": "-1.139118"
+        }, 
+        "context": "", 
+        "month": "2017-05", 
+        "id": 56880258
+    }, 
+    "outcomes": [
+        {
+            "category": {
+                "code": "under-investigation", 
+                "name": "Under investigation"
+            }, 
+            "date": "2017-05", 
+            "person_id": null
+        }, 
+        {
+            "category": {
+                "code": "formal-action-not-in-public-interest", 
+                "name": "Formal action is not in the public interest"
+            }, 
+            "date": "2017-06", 
+            "person_id": null
+        }
+    ]
+}
+Response description
+Tag	Description
+outcomes	A list of categories and dates of each outcome.
+
+Code	Name
+awaiting-court-result	Awaiting court outcome
+court-result-unavailable	Court result unavailable
+unable-to-proceed	Court case unable to proceed
+local-resolution	Local resolution
+no-further-action	Investigation complete; no suspect identified
+deprived-of-property	Offender deprived of property
+fined	Offender fined
+absolute-discharge	Offender given absolute discharge
+cautioned	Offender given a caution
+drugs-possession-warning	Offender given a drugs possession warning
+penalty-notice-issued	Offender given a penalty notice
+community-penalty	Offender given community sentence
+conditional-discharge	Offender given conditional discharge
+suspended-sentence	Offender given suspended prison sentence
+imprisoned	Offender sent to prison
+other-court-disposal	Offender otherwise dealt with
+compensation	Offender ordered to pay compensation
+sentenced-in-another-case	Suspect charged as part of another case
+charged	Suspect charged
+not-guilty	Defendant found not guilty
+sent-to-crown-court	Defendant sent to Crown Court
+unable-to-prosecute	Unable to prosecute suspect
+formal-action-not-in-public-interest	Formal action is not in the public interest
+action-taken-by-another-organisation	Action to be taken by another organisation
+further-investigation-not-in-public-interest	Further investigation is not in the public interest
+further-action-not-in-public-interest	Further action is not in the public interest
+under-investigation	Under investigation
+status-update-unavailable	Status update unavailable
+category	Category of the outcome
+code	Internal code
+name	Human-readable name
+date	Date of the outcome
+person_id	An identifier for the suspect/offender, where available.
+crime	Crime information
+category	Category of the crime
+location_type	The type of the location. Either Force or BTP: Force indicates a normal police force location; BTP indicates a British Transport Police location. BTP locations fall within normal police force boundaries.
+persistent_id	64-character unique identifier for that crime. (This is different to the existing 'id' attribute, which is not guaranteed to always stay the same for each crime.)
+month	Month of the crime
+location	Approximate location of the incident
+latitude	Latitude
+street	The approximate street the crime occurred
+id	Unique identifier for the street
+name	Name of the location.
+This is only an approximation of where the crime happened
+longitude	Longitude
+context	Extra information about the crime (if applicable)
+id	ID of the crime.
+This ID only relates to the API, it is NOT a police identifier
+
+List of neighbourhoods for a force
+Example request
+https://data.police.uk/api/leicestershire/neighbourhoods
+
+Example response
+[
+    {
+        "id": "NC04",
+        "name": "City Centre
+    },
+    {
+        "id": "NC66",
+        "name": "Cultural Quarter"
+    },
+    {
+        "id": "NC67",
+        "name": "Riverside"
+    },
+    ...
+]
+Response description
+Tag	Description
+id	Police force specific team identifier.
+Note: this identifier is not unique and may also be used by a different force
+name	Name for the neighbourhood
+
+Specific neighbourhood
+Example request
+https://data.police.uk/api/leicestershire/NC04
+
+Example response
+{
+    "url_force": "http://www.leics.police.uk/local-policing/city-centre",
+    "contact_details": {
+        "twitter": "http://www.twitter.com/centralleicsNPA",
+        "facebook": "http://www.facebook.com/leicspolice",
+        "telephone": "101",
+        "email": "centralleicester.npa@leicestershire.pnn.police.uk"
+    },
+    "name": "City Centre",
+    "links": [
+        {
+            "url": "http://www.leicester.gov.uk/",
+            "description": null,
+            "title": "Leicester City Council"
+        }
+    ],
+    "centre": {
+        "latitude": "52.6389",
+        "longitude": "-1.13619"
+    },
+    "locations": [
+        {
+            "name": "Mansfield House",
+            "longitude": null,
+            "postcode": "LE1 3GG",
+            "address": "74 Belgrave Gate\n, Leicester",
+            "latitude": null,
+            "type": "station",
+            "description": null
+        }
+    ],
+    "description": "<p>The Castle neighbourhood is a diverse covering all of the City Centre. In addition it covers De Montfort University, the University of Leicester, Leicester Royal Infirmary, the Leicester Tigers rugby ground and the Clarendon Park and Riverside communities.</p>\n<p>The Highcross and Haymarket shopping centres and Leicester's famous Market are all covered by this neighbourhood.</p>",
+    "id": "NC04",
+    "population": "0"
+}
+Response description
+Tag	Description
+url_force	URL for the neighbourhood on the Force's website
+contact_details	Ways to get in touch with the neighbourhood officers
+email	Email address
+telephone	Telephone number
+mobile	Mobile number
+fax	Fax number
+web	Website address
+address	Street address
+facebook	Facebook profile URL
+twitter	Twitter profile URL
+youtube	YouTube profile URL
+myspace	Myspace profile URL
+bebo	Bebo profile URL
+flickr	Flickr profile URL
+google-plus	Google+ profile URL
+forum	Forum URL
+e-messaging	E-messaging URL
+blog	Blog URL
+rss	RSS URL
+name	Name of the neighbourhood
+welcome_message	An introduction message for the neighbourhood
+links	
+url	URL
+description	Description of the link (if available)
+title	Title of the link
+centre	Centre point locator for the neighbourhood.
+Note: This may not be exactly in the centre of the neighbourhood
+latitude	Centre point latitude
+longitude	Centre point longitude
+locations	Any associated locations with the neighbourhood, e.g. police stations
+name	Name (if available)
+longitude	Location longitude
+latitude	Location latitude
+postcode	Postcode
+address	Location address
+telephone	Telephone number
+type	Type of location, e.g. 'station' (police station)
+description	Description
+population	Population of the neighbourhood
+id	Police force specific team identifier.
+Note: this identifier is not unique and may also be used by a different force
+description	Description (if available)
+
+Neighbourhood boundary
+A list of latitude/longitude pairs that make up the boundary of a neighbourhood.
+
+Example request
+https://data.police.uk/api/leicestershire/NC04/boundary
+
+Example response
+[
+    {
+        "latitude": "52.6394052587",
+        "longitude": "-1.1458618876"
+    },
+    {
+        "latitude": "52.6389452755",
+        "longitude": "-1.1457057759"
+    },
+    ...
+    {
+        "latitude": "52.6383706746",
+        "longitude": "-1.1455755443"
+    }
+]
+Response description
+Tag	Description
+latitude	Latitude
+longitude	Longitude
+
+Neighbourhood team
+Example request
+https://data.police.uk/api/leicestershire/NC04/people
+
+Example response
+[
+    {
+        "bio": "<p>I joined Leicestershire Police in 1997 and have enjoyed a variety of roles across the County.<br />\n</p>\n<p>I have worked as a Sergeant in the City Centre for the last 6 years in Response and Neighbourhood Policing roles.</p>\n<p>I am now Deputy NPA Commander and am privileged to work with a great team of committed and enthusiastic people.</p>\n<p>We always try and listen to concerns then support and protect the City communities with a problem solving approach.  Please don?t hesitate to contact us with any issues or problems you may have.</p>",
+        "contact_details": {},
+        "name": "Andy Cooper",
+        "rank": "Sgt"
+    },
+    {
+        "bio":"<p>I am the Safer Neighbourhood Sergeant for the Cultural Quarter and recently joined the Neighbourhood Team at Mansfield House.</p>\n<p>I have been a police officer for 27 years and was promoted to Sergeant 14 years ago. Since then I have worked in a variety of roles in both the County and City my last role being at Euston Street managing resources and demand for the Response units based there. </p>\n<p>I am looking forward to policing the City Centre and will be responsible, along with my team for the Cultural Quarter so please contact myself with any issues that I can help with.<br />\n</p>",
+        "contact_details": {},
+        "name": "Andy Price",
+        "rank": "Sgt"
+    },
+    ...
+]
+Response description
+Tag	Description
+bio	Team member biography (if available)
+contact_details	Contact details for the team member
+email	Email address
+telephone	Telephone number
+mobile	Mobile number
+fax	Fax number
+web	Website address
+address	Street address
+facebook	Facebook profile URL
+twitter	Twitter profile URL
+youtube	YouTube profile URL
+myspace	Myspace profile URL
+bebo	Bebo profile URL
+flickr	Flickr profile URL
+google-plus	Google+ profile URL
+forum	Forum URL
+e-messaging	E-messaging URL
+blog	Blog URL
+rss	RSS URL
+name	Name of the person
+rank	Force rank
+
+Neighbourhood events
+Example request
+https://data.police.uk/api/leicestershire/NC04/events
+
+Example response
+[
+    {
+        "contact_details": {},
+        "description": null,
+        "title": "Drop In Beat Surgery",
+        "address": "Nagarjuna Buddhist Centre, 17 Guildhall Lane",
+        "type": "meeting",
+        "start_date": "2016-09-17T12:00:00",
+        "end_date": "2016-09-17T14:00:00"
+    },
+    {
+        "contact_details": {},
+        "description": null,
+        "title": "Drop In Beat Surgery",
+        "address": "Nagarjuna Buddhist Centre, 17 Guildhall Lane",
+        "type": "meeting",
+        "start_date": "2016-12-03T12:00:00",
+        "end_date": "2016-12-03T14:00:00"
+    },
+    ...
+]
+Response description
+Tag	Description
+contact_details	Contact details for the event (if available)
+email	Email address
+telephone	Telephone number
+mobile	Mobile number
+fax	Fax number
+web	Website address
+address	Street address
+facebook	Facebook profile URL
+twitter	Twitter profile URL
+youtube	YouTube profile URL
+myspace	Myspace profile URL
+bebo	Bebo profile URL
+flickr	Flickr profile URL
+google-plus	Google+ profile URL
+forum	Forum URL
+e-messaging	E-messaging URL
+blog	Blog URL
+rss	RSS URL
+description	Description of the event
+title	Title of the event
+address	Address of the event
+type	Type of event
+start_date	Start of the event in ISO date format
+end_date	End of the event in ISO date format
+
+Neighbourhood priorities
+Example request
+https://data.police.uk/api/leicestershire/NC04/priorities
+
+Example response
+[
+    {
+        "action": null,
+        "issue-date": "2016-04-14T00:00:00",
+        "action-date": null,
+        "issue": "<p>To reduce the amount of Anti-Social Behaviour Humberstone Gate, Leicester.</p>"
+    },
+    {
+        "action": "<p>Following the closure of a property on West Street, the number of incidents of Anti-Social behaviour reported to the Leicestershire Police has dramatically reduced; we are therefore closing this priority. Local residents and businesses have been informed of this decision. The local Dedicated Neighbourhood team will remain vigilant and will re-evaluate the problem should it return.</p>",
+        "issue-date": "2015-10-08T00:00:00",
+        "action-date": "2015-12-22T00:00:00",
+        "issue": "<p>To reduce street drinking and drug use in and around Museum Square, Leicester.</p>"
+    },
+    ...
+]
+Response description
+Tag	Description
+issue	An issue raised with the police
+issue-date	When the priority was agreed upon
+action	Action taken to address the priority
+action-date	When action was last taken
+
+Locate a neighbourhood
+Find the neighbourhood policing team responsible for a particular area.
+Request parameters
+Parameter	Description
+q	A Latitude & Longitude, e.g. 51.500617,-0.124629
+Example request
+https://data.police.uk/api/locate-neighbourhood?q=51.500617,-0.124629
+
+Example response
+{
+    "force": "metropolitan",
+    "neighbourhood": "00BKX6"
+}
+Response description
+Tag	Description
+force	Unique force identifier
+neighbourhood	Force specific team identifier
+
+Stop and searches by area
+Stop and searches at street-level; either within a 1 mile radius of a single point, or within a custom area.
+
+The stop and searches returned in the API, like the crimes, are only an approximation of where the actual stop and searches occurred, they are not the exact locations. See the about page for more information about location anonymisation.
+
+Request parameters
+Specific point
+lat	Latitude of the centre of the desired area
+lng	Longitude of the centre of the desired area
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+Custom area
+poly	The lat/lng pairs which define the boundary of the custom area
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default
+The poly parameter is formatted in lat/lng pairs, separated by colons:
+
+[lat],[lng]:[lat],[lng]:[lat],[lng]
+The first and last coordinates need not be the same — they will be joined by a straight line once the request is made.
+
+The API will return a 400 status code in response to a GET request longer than 4094 characters. For submitting particularly complex poly parameters, consider using POST instead.
+
+Example request
+Specific point
+https://data.police.uk/api/stops-street?lat=52.629729&lng=-1.131592&date=2018-06
+
+Custom area
+https://data.police.uk/api/stops-street?poly=52.2,0.5:52.8,0.2:52.1,0.88&date=2018-06
+
+Example response
+[
+    {
+        "age_range": "18-24",
+        "outcome": "Summons \/ charged by post",
+        "involved_person": true,
+        "self_defined_ethnicity": "White - English\/Welsh\/Scottish\/Northern Irish\/British",
+        "gender": "Male",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "outcome_linked_to_object_of_search": true,
+        "datetime": "2018-06-06T12:20:00+00:00",
+        "removal_of_more_than_outer_clothing": false,
+        "outcome_object": {
+            "id": "bu-summons",
+            "name": "Summons \/ charged by post"
+        },
+        "location": {
+            "latitude": "52.631569",
+            "street": {
+                "id": 1489803,
+                "name": "Leicester (Station)"
+            },
+            "longitude": "-1.124283"
+        },
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "type": "Person search",
+        "operation_name": null,
+        "object_of_search": "Controlled drugs"
+    },
+    {
+        "age_range": "over 34",
+        "outcome": "A no further action disposal",
+        "involved_person": true,
+        "self_defined_ethnicity": "White - English\/Welsh\/Scottish\/Northern Irish\/British",
+        "gender": "Male",
+        "legislation": "Police and Criminal Evidence Act 1984 (section 1)",
+        "outcome_linked_to_object_of_search": true,
+        "datetime": "2018-06-28T10:00:00+00:00",
+        "removal_of_more_than_outer_clothing": false,
+        "outcome_object": {
+            "id": "bu-no-further-action",
+            "name": "A no further action disposal"
+        },
+        "location": {
+            "latitude": "52.631569",
+            "street": {
+                "id": 1489803,
+                "name": "Leicester (Station)"
+            },
+            "longitude": "-1.124283"
+        },
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "type": "Person search",
+        "operation_name": null,
+        "object_of_search": "Stolen goods"
+    },
+    ...
+]
+Response description
+Tag	Description
+type	Whether this was a 'Person search', a 'Vehicle search', or a 'Person and Vehicle search'
+involved_person	Whether a person was searched in this incident (derived from type; true if anything but 'Vehicle search')
+datetime	When the stop and search took place. Note that some forces only provide dates for their stop and searches, so you might see a disproportionate number of incidents occuring at midnight.
+operation	Whether this stop and search was part of a policing operation
+operation_name	The name of the operation this stop and search was part of
+location	Approximate location of the incident
+latitude	Latitude
+longitude	Longitude
+street	The approximate location of the incident
+id	Unique identifier for the location
+name	Human-readable summary of the location
+gender	Human-readable gender of the person stopped, if applicable and provided
+age_range	The age range of the person stopped at the time the stop occurred
+self_defined_ethnicity	The self-defined ethnicity of the person stopped
+officer_defined_ethnicity	The officer-defined ethnicity of the person stopped
+legislation	The power used to carry out the stop and search
+object_of_search	The reason the stop and search was carried out
+outcome	The outcome of the stop. false if nothing was found, an empty string if no outcome was provided.
+outcome_linked_to_object_of_search	Whether the outcome was related to the reason the stop and search was carried out, as a boolean value (or null if not provided)
+removal_of_more_than_outer_clothing	Whether the person searched had more than their outer clothing removed, as a boolean value (or null if not provided)
+
+Stop and searches by location
+Stop and searches at a particular location.
+
+The stop and searches returned in the API, like the crimes, are only an approximation of where the actual stop and searches occurred, they are not the exact locations. See the about page for more information about location anonymisation.
+
+Request parameters
+location_id	The ID of the location to get stop and searches for
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default.
+Example request
+https://data.police.uk/api/stops-at-location?location_id=883407&date=2017-01
+
+Example response
+[
+    {
+        "age_range": "10-17",
+        "self_defined_ethnicity": "White - White British (W1)",
+        "outcome_linked_to_object_of_search": true,
+        "datetime": "2017-01-14T20:50:00+00:00",
+        "removal_of_more_than_outer_clothing": null,
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "object_of_search": "Controlled drugs",
+        "involved_person": true,
+        "gender": "Female",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "location": {
+            "latitude": "52.634407",
+            "street": {
+                "id": 883407,
+                "name": "On or near Shopping Area"
+            },
+            "longitude": "-1.133653"
+        },
+        "outcome": "Local resolution",
+        "type": "Person search",
+        "operation_name": null
+    },
+    {
+        "age_range": "10-17",
+        "self_defined_ethnicity": "White - White British (W1)",
+        "outcome_linked_to_object_of_search": false,
+        "datetime": "2017-01-14T21:00:00+00:00",
+        "removal_of_more_than_outer_clothing": null,
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "object_of_search": "Controlled drugs",
+        "involved_person": true,
+        "gender": "Female",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "location": {
+            "latitude": "52.634407",
+            "street": {
+                "id": 883407,
+                "name": "On or near Shopping Area"
+            },
+            "longitude": "-1.133653"
+        },
+        "outcome": "Local resolution",
+        "type": "Person search",
+        "operation_name": null
+    },
+    ...
+]
+Response description
+Tag	Description
+type	Whether this was a 'Person search', a 'Vehicle search', or a 'Person and Vehicle search'
+involved_person	Whether a person was searched in this incident (derived from type; true if anything but 'Vehicle search')
+datetime	When the stop and search took place. Note that some forces only provide dates for their stop and searches, so you might see a disproportionate number of incidents occuring at midnight.
+operation	Whether this stop and search was part of a policing operation
+operation_name	The name of the operation this stop and search was part of
+location	Approximate location of the incident
+latitude	Latitude
+longitude	Longitude
+street	The approximate location of the incident
+id	Unique identifier for the location
+name	Human-readable summary of the location
+gender	Human-readable gender of the person stopped, if applicable and provided
+age_range	The age range of the person stopped at the time the stop occurred
+self_defined_ethnicity	The self-defined ethnicity of the person stopped
+officer_defined_ethnicity	The officer-defined ethnicity of the person stopped
+legislation	The power used to carry out the stop and search
+object_of_search	The reason the stop and search was carried out
+outcome	The outcome of the stop. false if nothing was found, an empty string if no outcome was provided.
+outcome_linked_to_object_of_search	Whether the outcome was related to the reason the stop and search was carried out, as a boolean value (or null if not provided)
+removal_of_more_than_outer_clothing	Whether the person searched had more than their outer clothing removed, as a boolean value (or null if not provided)
+
+Stop and searches with no location
+Stop and searches that could not be mapped to a location.
+
+Request parameters
+force	The force that carried out the stop and searches
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default.
+Example request
+https://data.police.uk/api/stops-no-location?force=cleveland&date=2017-01
+
+Example response
+[
+    {
+        "age_range": "over 34",
+        "self_defined_ethnicity": "White - White British (W1)",
+        "outcome_linked_to_object_of_search": null,
+        "datetime": "2017-01-24T01:50:00+00:00",
+        "removal_of_more_than_outer_clothing": null,
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "object_of_search": "Controlled drugs",
+        "involved_person": true,
+        "gender": "Male",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "location": null,
+        "outcome": false,
+        "type": "Person search",
+        "operation_name": null
+    },
+    {
+        "age_range": "25-34",
+        "self_defined_ethnicity": "White - White British (W1)",
+        "outcome_linked_to_object_of_search": null,
+        "datetime": "2017-01-22T19:40:00+00:00",
+        "removal_of_more_than_outer_clothing": null,
+        "operation": null,
+        "officer_defined_ethnicity": "White",
+        "object_of_search": "Controlled drugs",
+        "involved_person": true,
+        "gender": "Male",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "location": null,
+        "outcome": false,
+        "type": "Person and Vehicle search",
+        "operation_name": null
+    },
+    ...
+]
+Response description
+Tag	Description
+type	Whether this was a 'Person search', a 'Vehicle search', or a 'Person and Vehicle search'
+involved_person	Whether a person was searched in this incident (derived from type; true if anything but 'Vehicle search')
+datetime	When the stop and search took place. Note that some forces only provide dates for their stop and searches, so you might see a disproportionate number of incidents occuring at midnight.
+operation	Whether this stop and search was part of a policing operation
+operation_name	The name of the operation this stop and search was part of
+location	Approximate location of the incident
+latitude	Latitude
+longitude	Longitude
+street	The approximate location of the incident
+id	Unique identifier for the location
+name	Human-readable summary of the location
+gender	Human-readable gender of the person stopped, if applicable and provided
+age_range	The age range of the person stopped at the time the stop occurred
+self_defined_ethnicity	The self-defined ethnicity of the person stopped
+officer_defined_ethnicity	The officer-defined ethnicity of the person stopped
+legislation	The power used to carry out the stop and search
+object_of_search	The reason the stop and search was carried out
+outcome	The outcome of the stop. false if nothing was found, an empty string if no outcome was provided.
+outcome_linked_to_object_of_search	Whether the outcome was related to the reason the stop and search was carried out, as a boolean value (or null if not provided)
+removal_of_more_than_outer_clothing	Whether the person searched had more than their outer clothing removed, as a boolean value (or null if not provided)
+
+Stop and searches by force
+Stop and searches reported by a particular force.
+
+The stop and searches returned in the API, like the crimes, are only an approximation of where the actual stop and searches occurred, they are not the exact locations. See the about page for more information about location anonymisation.
+
+Request parameters
+force	The force ID of the force to get stop and searches for
+date	Optional. (YYYY-MM) Limit results to a specific month.
+The latest month will be shown by default, even if no data is available for that force in that month; use the availability API method to pick a date if this is significant for you
+Example request
+https://data.police.uk/api/stops-force?force=avon-and-somerset&date=2017-01
+
+Example response
+[
+    {
+        "age_range": "18-24",
+        "self_defined_ethnicity": "Mixed - Any other Mixed ethnic background (M9)",
+        "outcome_linked_to_object_of_search": null,
+        "datetime": "2017-01-01T02:24:09+00:00",
+        "removal_of_more_than_outer_clothing": false,
+        "operation": false,
+        "officer_defined_ethnicity": "Other",
+        "object_of_search": "Controlled drugs",
+        "involved_person": true,
+        "gender": "Male",
+        "legislation": "Misuse of Drugs Act 1971 (section 23)",
+        "location": {
+            "latitude": "51.127234",
+            "street": {
+                "id": 532290,
+                "name": "On or near Nightclub"
+            },
+            "longitude": "-3.008284"
+        },
+        "outcome": false,
+        "type": "Person search",
+        "operation_name": null
+    },
+    {
+        "age_range": "18-24",
+        "self_defined_ethnicity": "White - White British (W1)",
+        "outcome_linked_to_object_of_search": null,
+        "datetime": "2017-01-01T04:03:36+00:00",
+        "removal_of_more_than_outer_clothing": false,
+        "operation": false,
+        "officer_defined_ethnicity": "White",
+        "object_of_search": "Offensive weapons",
+        "involved_person": true,
+        "gender": "Male",
+        "legislation": "Police and Criminal Evidence Act 1984 (section 1)",
+        "location": {
+            "latitude": "51.528031",
+            "street": {
+                "id": 548506,
+                "name": "On or near Frome View"
+            },
+            "longitude": "-2.482884"
+        },
+        "outcome": false,
+        "type": "Person search",
+        "operation_name": null
+    },
+    ...
+]
+Response description
+Tag	Description
+type	Whether this was a 'Person search', a 'Vehicle search', or a 'Person and Vehicle search'
+involved_person	Whether a person was searched in this incident (derived from type; true if anything but 'Vehicle search')
+datetime	When the stop and search took place. Note that some forces only provide dates for their stop and searches, so you might see a disproportionate number of incidents occuring at midnight.
+operation	Whether this stop and search was part of a policing operation
+operation_name	The name of the operation this stop and search was part of
+location	Approximate location of the incident
+latitude	Latitude
+longitude	Longitude
+street	The approximate location of the incident
+id	Unique identifier for the location
+name	Human-readable summary of the location
+gender	Human-readable gender of the person stopped, if applicable and provided
+age_range	The age range of the person stopped at the time the stop occurred
+self_defined_ethnicity	The self-defined ethnicity of the person stopped
+officer_defined_ethnicity	The officer-defined ethnicity of the person stopped
+legislation	The power used to carry out the stop and search
+object_of_search	The reason the stop and search was carried out
+outcome	The outcome of the stop. false if nothing was found, an empty string if no outcome was provided.
+outcome_linked_to_object_of_search	Whether the outcome was related to the reason the stop and search was carried out, as a boolean value (or null if not provided)
+removal_of_more_than_outer_clothing	Whether the person searched had more than their outer clothing removed, as a boolean value (or null if not provided)

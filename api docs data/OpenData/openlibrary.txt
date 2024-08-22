@@ -1,0 +1,1741 @@
+Developer Center / APIs
+Developer Center (Home) | Web API | Client Library | Data Dumps | Source Code | Report an Issue | Licensing
+
+Open Library offers a suite of APIs to help developers get up and running with our data. This includes RESTful APIs, which make Open Library data availabile in JSON, YAML and RDF/XML formats. There's also an earlier, now deprecated JSON API which is preserved for backward compatibility.
+
+Try out our interactive OpenAPI sandbox!
+
+Identifying your Application
+If your application will make regular, frequent use of Open Library's APIs (e.g. multiple calls per minute), please add a HEADER that specifies a User-Agent string with (a) the name of your application and (b) your contact email or phone number, so we may contact you when we notice high request volume. Failing to include these headers may result in your application being blocked.
+
+For help adding user-agent headers to your API calls, please refer to this javascript and python example.
+
+Index of APIs
+Book Search API - Search results for books, authors, and more
+Work & Edition APIs - Retrieve a specific work or edition by identifier
+My Books API - Retrieve books on a patron's public reading log
+Authors API - Retrieve an author and their works by author identifier
+Subjects API - Fetch books by subject name
+Search inside API - Search for matching text within millions of books
+Partner API -- Formerly the "Read" API, fetch one or more books by library identifiers (ISBNs, OCLC, LCCNs)
+Covers API - Fetch book covers by ISBN or Open Library identifier
+Recent Changes API - Programatic access to changes across Open Library
+Lists API - Reading, modifying, or creating user lists
+Bulk Access
+Please do not use our APIs for bulk download of Open Library data because this affects our ability to serve patrons. We make our data publicly available each month for partners. If you want a dump of complete data, please read about our Bulk Download options, or email us at openlibrary@archive.org.
+
+More APIs
+Did you know, nearly every page on Open Library is or has an API. You can return structured bibliographic data for any page by adding a .rdf/.json/.yml extension to the end of any Open Library identifier. For instance: https://openlibrary.org/works/OL15626917W.json or https://openlibrary.org/authors/OL33421A.json. Many pages, such as the Books, Authors, and Lists, will include links to their RDF and JSON formats.
+
+Questions
+We encourage developers to ask questions by opening issues on GitHub and on our gitter chat channel.
+
+
+
+Friends using Open Library APIs
+Several developers are creating amazing things with the Open Library APIs:
+
+Trove by the National Library of Australia
+Trove is a new discovery experience focused on Australia and Australians. It supplements what search engines provide with reliable information from Australia's memory institutions. The system hits Open Library when public domain books turn up in searches, and displays links to Open Library.
+ 
+Koha
+Koha is an open source library system for public libraries that includes catalog searches and member organizing. It uses Open Library covers, displays OL related subjects, and lendable eBooks using the Read API.
+ 
+Evergreen
+Evergreen is highly-scalable software for libraries that helps library patrons find library materials, and helps libraries manage, catalog, and circulate those materials. It uses Open Library for covers, tables of contents, with plans to expand into other areas.
+ 
+read.gov by the Library of Congress
+OK, this isn't exactly Open Library, but it's still awesome! The Library of Congress have modified the Internet Archive's Book Reader to sit perfectly within their Rare Books Collection site.
+ 
+OpenBook WordPress Plug-in by John Miedema
+OpenBook is useful for anyone who wants to add book covers and other book data on a WordPress website. OpenBook links to detailed book information in Open Library, the main data source, as well as other book sites. Users have complete control over the display through templates. OpenBook can link to library records by configuring an OpenURL resolver or through a WorldCat link. OpenBook inserts COinS so that other applications like Zotero can pick up the book data.
+ 
+Umlaut by Jason Ronallo
+Umlaut is a middle-tier OpenURL link resolver that adds functions and services to commercial link resolving software.
+ 
+Virtual Shelf by Jonathan Breitbart and Devin Blong (UC Berkeley School of Information)
+The Virtual Shelf is a visualization created by two students at the UC Berkeley School of Information. The project includes the student's master thesis, with research into the searching and browsing patterns of library patrons. The Open Library RESTful API was utilized during the project as a source of metadata for the user interface.
+ 
+RDC UI Toolkit by Rural Design Collective
+This group created a suite of tools that facilitates the creation of localized user interfaces for public domain books. The RDC used the Open Library Covers API and the Internet Archive Book Reader in their online demonstration customized for the OLPC XO.
+ 
+Dreambooks.club by Bernat Fortet
+Dreambooks is a portal and community where parents and children can discover new books to read together. Think of it as the online equivalent of your library's children's corner. All the book data is powered by OpenLibary's API.
+ 
+MyBooks.Life by Mark Webster
+MyBooks.Life is an android app and website designed primarily to manage TBR (to-be-read) lists. You can keep track of your reading progress, make notes, manage your wishlist, and rate your books. MyBooks.Life uses Open Library data to power its search. 
+BookmindBookmind is now available at https://apps.apple.com/app/bookmind/id6593662584. It uses open library’s api exclusively for book data. You can even see the rough prototype source at https://github.com/dave-ruest/Bookmind.
+ 
+Are you using the Open Library APIs? We'd love to hear about it! Please email us at openlibrary@archive.org.
+
+Open Library Search API
+The Open Library Search API is one of the most convenient and complete ways to retrieve book data on Open Library. The API:
+
+Is able to return data for multiple books in a single request/response
+Returns both Work level information about the book (like author info, first publish year, etc), as well as Edition level information (like title, identifiers, covers, etc)
+Author IDs are returned which you can use to fetch the author's image, if available
+Options are available to return Book Availability along with the response.
+Powerful sorting options are available, such as star ratings, publication date, and number of editions.
+Examples
+The URL format for API is simple. Take the search URL and add .json to the end. Eg:
+
+https://openlibrary.org/search.json?q=the+lord+of+the+rings
+https://openlibrary.org/search.json?title=the+lord+of+the+rings
+https://openlibrary.org/search.json?author=tolkien&sort=new
+https://openlibrary.org/search.json?q=the+lord+of+the+rings&page=2
+https://openlibrary.org/search/authors.json?q=twain
+Using Thing IDs to get Images
+You can use the olid (Open Library ID) for authors and books to fetch covers by olid, e.g.:
+https://covers.openlibrary.org/a/olid/OL23919A-M.jpg
+
+URL Parameters
+Parameter	Description
+q	The solr query. See Search HowTo for sample queries
+fields	The fields to get back from solr. Use the special value * to get all fields (although be prepared for a very large response!).
+To fetch availability data from archive.org, add the special value, availability. Example: /search.json?q=harry%20potter&fields=*,availability&limit=1. This will fetch the availability data of the first item in the `ia` field.
+sort	You can sort the results by various facets such as new, old, random, or key (which sorts as a string, not as the number stored in the string). For a complete list of sorts facets look here (this link goes to a specific commit, be sure to look at the latest one for changes). The default is to sort by relevance.
+lang	The users language as a two letter (ISO 639-1) language code. This influences but doesn't exclude search results. For example setting this to fr will prefer/display the French edition of a given work, but will still match works that don't have French editions. Adding language:fre on the other hand to the search query will exclude results that don't have a French edition.
+offset / limit	Use for pagination.
+page / limit	Use for pagination, with limit corresponding to the page size. Note page starts at 1.
+Response Format
+The response with be of the following format.
+
+{
+    "start": 0,
+    "num_found": 629,
+    "docs": [
+        {...},
+        {...},
+        ...
+        {...}]
+}
+Each document specified listed in "docs" will be of the following format:
+
+{
+    "cover_i": 258027,
+    "has_fulltext": true,
+    "edition_count": 120,
+    "title": "The Lord of the Rings",
+    "author_name": [
+        "J. R. R. Tolkien"
+    ],
+    "first_publish_year": 1954,
+    "key": "OL27448W",
+    "ia": [
+        "returnofking00tolk_1",
+        "lordofrings00tolk_1",
+        "lordofrings00tolk_0",
+    ],
+    "author_key": [
+        "OL26320A"
+    ],
+    "public_scan_b": true
+}
+The fields in the doc are described by Solr schema which can be found here:
+https://github.com/internetarchive/openlibrary/blob/b4afa14b0981ae1785c26c71908af99b879fa975/openlibrary/plugins/worksearch/schemes/works.py#L38-L91
+
+The schema is not guaranteed to be stable, but most common fields (e.g. title, IA ids, etc) should be safe to depend on.
+
+Getting edition information
+By default, the search endpoint returns works instead of editions. A work is a collection of editions; for example there is only one work for The Wonderful Wizard of Oz (OL18417W), but there are 1029 editions, over many languages! Sometimes you might want to fetch data about editions as well as works. That is what the editions field is for:
+
+https://openlibrary.org/search.json?q=crime+and+punishment&fields=key,title,author_name,editions
+
+{
+    "numFound": 2421,
+    "start": 0,
+    "numFoundExact": true,
+    "docs": [
+        {
+            "key": "/works/OL166894W",
+            "title": "Преступление и наказание",
+            "author_name": ["Фёдор Михайлович Достоевский"],
+            "editions": {
+                "numFound": 290,
+                "start": 0,
+                "numFoundExact": true,
+                "docs": [
+                    {
+                        "key": "/books/OL37239326M",
+                        "title": "Crime and Punishment"
+                    }
+                ]
+            }
+        },
+    ...
+The editions sub-object contains the editions of this work that match the user's query (here, "crime and punishment"), sorted so the best (i.e. most relevant) is at the top. Matching editions are first selected by forwarding any search fields in the query that apply to editions (e.g. publisher, language, ebook_access, has_fulltext, etc). Any un-fielded search terms (e.g. "crime and punishment", above) are also applied, but are not require to all match.
+
+From these, relevance is further determined by boosting books that (1) match the user's language, (2) are readable, (3) have a cover.
+
+You can see this in action in the search UI as well. Consider the following searches:
+
+"sherlock holmes" - The first work is OL262463W, with the edition displayed Memoirs of Sherlock Holmes (OL7058607M). This edition was selected because it matched the user's query, and it matched the user's language (my language is English), and because it was readable.
+"sherlock holmes language:fre" - The same work is displayed as above, but now the displayed edition is Souvenirs sur Sherlock Holmes (OL8887270M), selected because the user's query requires a book in French.
+"sherlock holmes" for a French user - By setting lang=fr in the URL, we can simulate the website as it would appear for a French user. This information is used to influence the results again, and the displayed edition is Souvenirs sur Sherlock Holmes (OL8887270M) since this matches the user's language.
+"souvenirs sur sherlock holmes" - Here as an English user, I search by the French title. So again I will see the same work as always, but the displayed edition will now also be Souvenirs sur Sherlock Holmes (OL8887270M) since this best matches the user's query.
+In the API, you can also fetch fields from editions separately from those on the work, like so:
+
+https://openlibrary.org/search.json?q=crime+and+punishment&fields=key,title,author_name,editions,editions.key,editions.title,editions.ebook_access,editions.language
+
+{
+    "numFound": 2421,
+    "start": 0,
+    "numFoundExact": true,
+    "docs": [
+        {
+            "key": "/works/OL166894W",
+            "title": "Преступление и наказание",
+            "author_name": ["Фёдор Михайлович Достоевский"],
+            "editions": {
+                "numFound": 290,
+                "start": 0,
+                "numFoundExact": true,
+                "docs": [
+                    {
+                        "key": "/books/OL37239326M",
+                        "title": "Crime and Punishment",
+                        "language": [
+                            "eng"
+                        ],
+                        "ebook_access": "public"
+                    }
+                ]
+            }
+        },
+    ...
+Notes:
+- Currently only one edition is displayed ; we are planning to add support for pagination so you can specify editions.row or editions.start.
+- You can add &editions.sort to override the default relevance logic and instead sort by a specific field.
+- You can see the exact boosting logic in the code here: https://github.com/internetarchive/openlibrary/blob/dc49fddb78a3cb25138922790ddd6a5dd2b5741c/openlibrary/plugins/worksearch/schemes/works.py#L439-L448
+
+Developer Center / APIs / Books API
+The Open Library Books API provides a programmatic client-side method for querying information of books using Javascript.
+
+APIs
+Open Library has several APIs for accessing Book data.
+
+The Search API
+The Works API (by Work ID)
+The Editions API (by Edition ID)
+The ISBN API (by ISBN)
+The Books API (generic)
+The Book Search API
+If you are looking for a single API to meet all of your book needs, it's likely the Book Search API.
+
+Learnings about Works v Editions
+When we refer to books on Open Library, we're often referring to a specific work and possibly a specific edition of this work.
+
+A Work is a logical collection of similar Editions. "Fantastic Mr. Fox" could be a Work which contains a Spanish translation edition, or perhaps a 2nd edition which has an additional chapter or corrections. Work metadata will include general umbrella information about a book, whereas an Edition will have a publisher, an ISBN, a book-jacket, and other specific information.
+
+Both Work and Edition pages on Open Library (i.e. the pages you navigate to) may also be returned as json or yml (in addition to HTML) by modifying the page URL.
+
+Learn more about the fields that belong to works and editions.
+
+Works API
+Work pages on Open Library begin with the URL prefix "/works".
+
+Here is an example:
+https://openlibrary.org/works/OL45804W/Fantastic_Mr._FOX
+
+In this example, if we remove the /Title from the URL (e.g. https://openlibrary.org/works/OL45804W) and then add a suffix of ".json" or ".yml" to the end, the page will return a data representation instead of HTML, e.g.:
+
+https://openlibrary.org/works/OL45804W.json
+
+Fetching a Work's Editions
+You can fetch a work's editions by adding /editions.json after the work ID:
+
+https://openlibrary.org/works/OL45804W/editions.json
+
+Ratings and Bookshelves
+Can be accessed by the following APIs:
+https://openlibrary.org/works/OL18020194W/bookshelves.json
+https://openlibrary.org/works/OL18020194W/ratings.json
+
+Editions API
+Edition pages on Open Library begin with the prefix "/books".
+
+Here is an example:
+https://openlibrary.org/books/OL7353617M/Fantastic_Mr._Fox
+
+In this example, if we remove the /Title from the URL (e.g. https://openlibrary.org/works/OL45804W) and then add a suffix of ".json" or ".yml" to the end, the page will return a data representation instead of HTML, e.g.:
+
+https://openlibrary.org/books/OL7353617M.json
+
+ISBN API
+The ISBN API is a special case and alternative approach to arriving at an Editions page. Instead of "/books", a path of "/isbn" is used, followed by a valid ISBN 10 or 13.
+
+Here is an example:
+https://openlibrary.org/isbn/9780140328721
+
+In this example, entering this URL will result in a redirect to the appropriate Editions page: https://openlibrary.org/books/OL7353617M
+
+Just like an Edition or Work page, we may add ".json" to the end of the URL to request the response in json instead of as HTML, e.g.:
+
+https://openlibrary.org/isbn/9780140328721.json
+
+Legacy Book API
+Please consider using the Book Search API above; this is a legacy endpoint and may be phased out in the future.
+
+The Book API is a generic, flexible, configurable endpoint which allows requesting information on one or more books using ISBNs, OCLC Numbers, LCCNs and OLIDs (Open Library IDs). It is inspired by the Google Books Dynamic links API and is compatible with it.
+At the core of the API is a URL format that allows developers to construct URLs requesting information on one or more books and send the requests to the Open Library using the <script> tag.
+
+<script src="https://openlibrary.org/api/books?bibkeys=ISBN:0451526538&callback=mycallback"></script>
+Request Format
+The API supports the following query parameters.
+
+bibkeys
+
+List of IDs to request the information. The API supports ISBNs, LCCNs, OCLC numbers and OLIDs (Open Library IDs).
+
+ISBN
+
+Ex. &bibkeys=ISBN:0451526538 (The API supports both ISBN 10 and 13.)
+OCLC
+
+&bibkeys=OCLC:#########
+LCCN
+
+&bibkeys=LCCN:#########
+OLID
+
+&bibkeys=OLID:OL123M
+format
+
+Optional parameter which specifies the response format. Possible values are json and javascript. The default format is javascript.
+
+callback
+
+Optional parameter which specifies the name of the JavaScript function to call with the result. This is considered only when the format is javascript.
+
+jscmd
+
+Optional parameter to decide what information to provide for each matched bib_key. Possible values are viewapi and data. The default value is viewapi.
+
+The Response Format
+The response of the API contains a JSON object for each matched bib_key. The contents of the JSON object are decided by the jscmd parameter.
+
+By default, the API returns the response as Javascript.
+
+$ curl 'http://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405'
+var _OLBookInfo = {
+    "ISBN:0201558025": {
+        ...
+    },
+    "LCCN:93005405": {
+        ...
+    }
+};
+When optional callback parameter is passed, the response is wrapped in a Javascript function call.
+
+$ curl 'https://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405&callback=processBooks'
+processBooks({
+    "ISBN:0201558025": {
+        ...
+    },
+    "LCCN:93005405": {
+        ...
+    }
+});
+When format=json parameter is passed, the API returns the response as JSON instead of Javascript. This is useful when accessing the API at the server-side.
+
+$ curl 'https://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405&format=json'
+{
+    "ISBN:0201558025": {
+        ...
+    },
+    "LCCN:93005405": {
+        ...
+    }
+}
+The Data Format
+The contents of each JSON object will be decided by the jscmd parameter.
+
+jscmd=viewapi
+When jscmd is not specified or when jscmd=viewapi, each JSON object will contain the following:
+
+bib_key
+
+Identifier used to query this book.
+
+info_url
+
+A URL to the book page in the Open Library.
+
+preview
+
+Preview state - either "noview" or "full".
+
+preview_url
+
+A URL to the preview of the book.
+
+This links to the archive.org page when a readable version of the book is available, otherwise it links to the book page on openlibrary.org.
+
+Please note that the preview_url is always provided even if there is no readable version available. The preview property should be used to test if a book is readable.
+
+thumbnail_url
+
+A URL to a thumbnail of the cover of the book. This is provided only when thumbnail is available.
+
+For example:
+
+$ curl 'https://openlibrary.org/api/books?bibkeys=ISBN:0385472579,LCCN:62019420&format=json'
+{
+    "ISBN:0385472579": {
+        "bib_key": "ISBN:0385472579",
+        "preview": "noview",
+        "thumbnail_url": "https://covers.openlibrary.org/b/id/240726-S.jpg",
+        "preview_url": "https://openlibrary.org/books/OL1397864M/Zen_speaks",
+        "info_url": "https://openlibrary.org/books/OL1397864M/Zen_speaks"
+    },
+    "LCCN:62019420": {
+        "bib_key": "LCCN:62019420",
+        "preview": "full",
+        "thumbnail_url": "https://covers.openlibrary.org/b/id/6121771-S.jpg",
+        "preview_url": "https://archive.org/details/adventurestomsa00twaigoog",
+        "info_url": "https://openlibrary.org/books/OL23377687M/adventures_of_Tom_Sawyer"
+    }
+}
+jscmd=data
+When the jscmd=data, data about each matching book is returned. It includes the following:
+
+url
+
+URL of the book
+
+title and subtitle
+
+Title and subtitle of the book.
+
+authors
+
+List of authors. Each entry will be in the following format:
+
+{
+    "name": "...",
+    "url": "https://openlibrary.org/authors/..."
+}
+identifiers
+
+All identifiers of the book in the following format:
+
+{
+    "isbn_10": [...],
+    "isbn_13": [...],
+    "lccn": [...],
+    "oclc": [...],
+    "goodreads": [...]
+}
+classifications
+
+All classifications of the book in the following format.
+
+{
+    "lc_classifications": [...],
+    "dewey_decimal_class": [...]
+}
+subjects, subject_places, subject_people and subject_times
+
+List of subjects, places, people and times of the book. Each entry will be in the following format:
+
+{
+    "url": "https://openlibrary.org/subjects/history",
+    "name": "History"
+}
+publishers
+
+List of publishers. Each publisher will be in the following format:
+
+{
+    "name": "..."
+}
+publish_places
+
+List of publish places. Each entry will be in the following format:
+
+{
+    "name": "..."
+}
+publish_date
+
+Published date as a string.
+
+excerpts
+
+List of excerpts to that book. Each entry will be in the following format:
+
+{
+    "comment": "...",
+    "text": "..."
+}
+links
+
+List of links to the book. Each link will be in the following format:
+
+{
+    "url": "https://...",
+    "title": "..."
+}
+cover
+
+URLs to small, medium and large covers.
+
+{
+    "small": "https://covers.openlibrary.org/b/id/1-S.jpg",
+    "medium": "https://covers.openlibrary.org/b/id/1-M.jpg",
+    "large": "https://covers.openlibrary.org/b/id/1-L.jpg",
+}
+ebooks
+
+List of ebooks. Each entry will be in the following format:
+
+{
+    "preview_url": "https://archive.org/details/..."
+}
+number_of_pages
+
+Number of pages in that book.
+
+weight
+
+Weight of the book.
+
+For example, here is a sample request.
+
+$ curl 'https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=data&format=json'
+{
+    "ISBN:9780980200447": {
+        "publishers": [
+            {
+                "name": "Litwin Books"
+            }
+        ],
+        "identifiers": {
+            "google": [
+                "4LQU1YwhY6kC"
+            ],
+            "lccn": [
+                "2008054742"
+            ],
+            "isbn_13": [
+                "9780980200447"
+            ],
+            "amazon": [
+                "098020044X"
+            ],
+            "isbn_10": [
+                "1234567890"
+            ],
+            "oclc": [
+                "297222669"
+            ],
+            "librarything": [
+                "8071257"
+            ],
+            "project_gutenberg": [
+                "14916"
+            ],
+            "goodreads": [
+                "6383507"
+            ]
+        },
+        "classifications": {
+            "dewey_decimal_class": [
+                "028/.9"
+            ],
+            "lc_classifications": [
+                "Z1003 .M58 2009"
+            ]
+        },
+        "links": [
+            {
+                "url": "http://johnmiedema.ca",
+                "title": "Author's Website"
+            }
+        ],
+        "weight": "1 grams",
+        "title": "Slow reading",
+        "url": "https://openlibrary.org/books/OL22853304M/Slow_reading",
+        "number_of_pages": 80,
+        "cover": {
+            "small": "https://covers.openlibrary.org/b/id/5546156-S.jpg",
+            "large": "https://covers.openlibrary.org/b/id/5546156-L.jpg",
+            "medium": "https://covers.openlibrary.org/b/id/5546156-M.jpg"
+        },
+        "subjects": [
+            {
+                "url": "https://openlibrary.org/subjects/books_and_reading",
+                "name": "Books and reading"
+            },
+            {
+                "url": "https://openlibrary.org/subjects/reading",
+                "name": "Reading"
+            }
+        ],
+        "publish_date": "2009",
+        "authors": [
+            {
+                "url": "https://openlibrary.org/authors/OL6548935A/John_Miedema",
+                "name": "John Miedema"
+            }
+        ],
+        "excerpts": [
+            {
+                "comment": "test purposes",
+                "text": "test first page"
+            }
+        ],
+        "publish_places": [
+            {
+                "name": "Duluth, Minn"
+            }
+        ]
+    }
+}
+jscmd=details
+When jscmd=details is passed, additional details are provided in addition to the info provided by viewapi. The provided details are same as the data provided by the RESTful API.
+
+It is advised to use jscmd=data instead of this as that is more stable format.
+
+$ curl 'https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=details&format=json'
+{
+    "ISBN:9780980200447": {
+        "info_url": "https://openlibrary.org/books/OL22853304M/Slow_reading",
+        "bib_key": "ISBN:9780980200447",
+        "preview_url": "https://openlibrary.org/books/OL22853304M/Slow_reading",
+        "thumbnail_url": "https://covers.openlibrary.org/b/id/5546156-S.jpg",
+        "preview": "noview",
+        "details": {
+            "number_of_pages": 80,
+            "table_of_contents": [
+                {
+                    "title": "The personal nature of slow reading",
+                    "type": {
+                        "key": "/type/toc_item"
+                    },
+                    "level": 0
+                },
+                {
+                    "title": "Slow reading in an information ecology",
+                    "type": {
+                        "key": "/type/toc_item"
+                    },
+                    "level": 0
+                },
+                {
+                    "title": "The slow movement and slow reading",
+                    "type": {
+                        "key": "/type/toc_item"
+                    },
+                    "level": 0
+                },
+                {
+                    "title": "The psychology of slow reading",
+                    "type": {
+                        "key": "/type/toc_item"
+                    },
+                    "level": 0
+                },
+                {
+                    "title": "The practice of slow reading.",
+                    "type": {
+                        "key": "/type/toc_item"
+                    },
+                    "level": 0
+                }
+            ],
+            "weight": "1 grams",
+            "covers": [
+                5546156
+            ],
+            "lc_classifications": [
+                "Z1003 .M58 2009"
+            ],
+            "latest_revision": 14,
+            "source_records": [
+                "marc:marc_loc_updates/v37.i01.records.utf8:4714764:907",
+                "marc:marc_loc_updates/v37.i24.records.utf8:7913973:914",
+                "marc:marc_loc_updates/v37.i30.records.utf8:11406606:914"
+            ],
+            "title": "Slow reading",
+            "languages": [
+                {
+                    "key": "/languages/eng"
+                }
+            ],
+            "subjects": [
+                "Books and reading",
+                "Reading"
+            ],
+            "publish_country": "mnu",
+            "by_statement": "by John Miedema.",
+            "oclc_numbers": [
+                "297222669"
+            ],
+            "type": {
+                "key": "/type/edition"
+            },
+            "physical_dimensions": "1 x 1 x 1 inches",
+            "revision": 14,
+            "publishers": [
+                "Litwin Books"
+            ],
+            "description": "\"A study of voluntary slow reading from diverse angles\"--Provided by publisher.",
+            "physical_format": "Paperback",
+            "last_modified": {
+                "type": "/type/datetime",
+                "value": "2010-08-07T19:35:52.482887"
+            },
+            "key": "/books/OL22853304M",
+            "authors": [
+                {
+                    "name": "John Miedema",
+                    "key": "/authors/OL6548935A"
+                }
+            ],
+            "publish_places": [
+                "Duluth, Minn"
+            ],
+            "pagination": "80p.",
+            "classifications": {},
+            "created": {
+                "type": "/type/datetime",
+                "value": "2009-01-07T22:16:11.381678"
+            },
+            "lccn": [
+                "2008054742"
+            ],
+            "notes": "Includes bibliographical references and index.",
+            "identifiers": {
+                "amazon": [
+                    "098020044X"
+                ],
+                "google": [
+                    "4LQU1YwhY6kC"
+                ],
+                "project_gutenberg": [
+                    "14916"
+                ],
+                "goodreads": [
+                    "6383507"
+                ],
+                "librarything": [
+                    "8071257"
+                ]
+            },
+            "isbn_13": [
+                "9780980200447"
+            ],
+            "dewey_decimal_class": [
+                "028/.9"
+            ],
+            "isbn_10": [
+                "1234567890"
+            ],
+            "publish_date": "2009",
+            "works": [
+                {
+                    "key": "/works/OL13694821W"
+                }
+            ]
+        }
+    }
+}
+Earlier these details were provided when details=true parameter is passed. It is equivalent to jscmd=details and it is retained only for backward-compataibilty.
+
+My Books API
+If a patron is authenticated or if their account is set to public, one should be able to get their public reading log data through the following APIs:
+
+https://openlibrary.org/people/mekBot/books/want-to-read.json
+https://openlibrary.org/people/mekBot/books/currently-reading.json
+https://openlibrary.org/people/mekBot/books/already-read.json
+
+
+Developer Center / APIs / Authors API
+Searching for Authors
+You can search for authors using the https://openlibrary.org/search/authors.json search API which accepts q as a query parameter:
+
+https://openlibrary.org/search/authors.json?q=j%20k%20rowling
+
+{
+  numFound: 1,
+  start: 0,
+  numFoundExact: true,
+  docs: [
+    {
+      key: "OL23919A",
+      text: [...],
+      type: "author",
+      name: "J. K. Rowling",
+      alternate_names: [...],
+      birth_date: "31 July 1965",
+      top_work: "Harry Potter and the Philosopher's Stone",
+      work_count: 162,
+      top_subjects: [...],
+      _version_: 1702166143068799000
+    },
+  ]
+}
+Data on Individual Authors
+Once you have the identifier key of an author of interest, e.g. /authors/OL23919A, you can fetch their complete data by visiting their Author page as .json, .rdf, .yml:
+
+e.g. https://openlibrary.org/authors/OL23919A.json
+
+Works by an Author
+https://openlibrary.org/authors/OL23919A/works.json
+
+The above URL will return 50 works by an author.
+
+You can append ?limit=1000 to return the first 1000 works by an author like so:
+https://openlibrary.org/authors/OL1394244A/works.json?limit=100
+
+If you want to paginate, you can set offset like so:
+https://openlibrary.org/authors/OL1394244A/works.json?offset=50
+
+Gotchas
+Note that by default, navigating to https://openlibrary.org/authors/OL23919A will redirect to https://openlibrary.org/authors/OL23919A/J._K._Rowling (appending the human readable slug "J._K._Rowling"). Adding .json to the end of the slug (e.g. https://openlibrary.org/authors/OL23919A/J._K._Rowling.json) will not work. You must first remove the human readable slug and append .json directly to the end of the author's key, e.g. https://openlibrary.org/authors/OL23919A.json.
+
+Subjects API
+This API is experimental. Please be aware that this may change in future.
+Get works of a subject
+Sample Request:
+
+GET /subjects/love.json
+Sample Response:
+
+{
+    "key": "/subjects/love",
+    "name": "love"
+    "subject_type": "subject",
+    "work_count": 4918,
+    "works": [
+        {
+            "key": "/works/OL66534W",
+            "title": "Pride and prejudice",
+            "edition_count": 752,
+            "authors": [
+                {
+                    "name": "Jane Austen",
+                    "key": "/authors/OL21594A"
+                }
+            ],
+            "has_fulltext": true,
+            "ia": "mansfieldparknov03aust",
+            ...
+        },
+        ...
+    ]
+}
+All details of a subject
+When query parameter details=true is passed, related subjects, prominent publishers, prolific authors and publishing_history are also included in the response.
+
+Sample Request:
+
+GET /subjects/love.json?details=true
+Sample Response:
+
+{
+    "key": "/subjects/love",
+    "name": "Love",
+    "subject_type": "subject",
+    "work_count": 4918,
+    "ebook_count": 497,
+    "works": [
+        {
+            "key": "/works/OL66534W",
+            "title": "Pride and prejudice",
+            "edition_count": 752,
+            "authors": [
+                {
+                    "name": "Jane Austen",
+                    "key": "/authors/OL21594A"
+                }
+            ],
+            "has_fulltext": true,
+            "ia": "mansfieldparknov03aust",
+            ...
+        },
+        ...
+    ],
+    "authors": [
+        {
+            "count": 28,
+            "name": "Plato",
+            "key": "/authors/OL12823A"
+        },
+        {
+            "count": 21,
+            "name": "Ruoquan Wu",
+            "key": "/authors/OL5638565A"
+        },
+        ...
+    ],
+    "publishers": [
+        {
+            "count": 54,
+            "name": "Sine nomine"
+        },
+        {
+            "count": 44,
+            "name": "Bantam Books"
+        },
+        ...
+    ],
+    "subjects": [
+        {
+            "count": 914,
+            "name": "Religious aspects of Love",
+            "key": "/subjects/religious_aspects_of_love"
+        },
+        {
+            "count": 887,
+            "name": "Christianity",
+            "key": "/subjects/christianity"
+        },
+        ...
+    ],
+    "people": [
+        {
+            "count": 44,
+            "name": "Jesus Christ",
+            "key": "/subjects/person:jesus_christ"
+        },
+        {
+            "count": 42,
+            "name": "Plato",
+            "key": "/subjects/person:plato"
+        },
+        ...
+    ],
+    "places": [
+        {
+            "count": 80,
+            "name": "United States",
+            "key": "/subjects/place:united_states"
+        },
+        {
+            "count": 36,
+            "name": "France",
+            "key": "/subjects/place:france"
+        },
+        ...
+    ],
+    "times": [
+        {
+            "count": 54,
+            "name": "20th century",
+            "key": "/subjects/time:20th_century"
+        },
+        ...
+    ]
+    "publishing_history": [
+        [1492, 2],
+        [1494, 1],
+        ...,
+        [2009, 119],
+        [2010, 56]
+    ]
+}
+Supported Query Parameters
+details: When details=true is passed, related subjects, prominent publishers, prolific authors and publishing_history is also included in the response.
+
+ebooks: When ebooks=true is passed, only the works which have an e-book are included in the response.
+
+published_in: Support for filter on published year range. For example:
+
+http://openlibrary.org/subjects/love.json?published_in=1500-1600
+limit: Number of works to include in the response.
+
+offset: starting offset in the total works. Used for pagination.
+
+Search inside individual book API
+WARNING: This is an experimental API and can change in future.
+
+Here is an example of searching inside a book using the searching within a book using the API.
+
+This API is based on changing datanode hosts (i.e. an archive.org item's files live on data hosts which can change). To find the data node host of an item, go to archive.org/metadata/{identifier} and change the prefix ia800204 to the value of d1 or d2 accordingly. The path variable in the url may also have to change to dir value within the metadata:
+
+https://ia800204.us.archive.org/fulltext/inside.php?item_id=designevaluation25clin&doc=designevaluation25clin&path=/27/items/designevaluation25clin&q=%22library%20science%22
+
+Information you need to search inside a book, with an example from the above search:
+
+hostname: ia800204.us.archive.org (host where the book is stored)
+item_id: designevaluation25clin (archive.org item ID)
+doc: designevaluation25clin (most times this is the same as the item_id)
+path: /27/items/designevaluation25clin (path of the book on this host)
+q: "library science" (phrase to search for)
+callback: reply (optional callback for JSONP)
+You can find the hostname and path using the archive.org locator service.
+
+Example of output from API call:
+
+reply( {
+    "ia": "designevaluation25clin",
+    "q": "\"library science\"",
+    "page_count": 224,
+    "body_length": 475677,
+    "leaf0_missing": true,
+    "matches": [
+       ...
+    ]
+} )
+The reply includes page count, this is the number of pages that were passed to the OCR.
+
+Example of a match:
+
+{
+    "text": "The first Clinic on Library Applications of Data Processing was held at the Illini Union on the Urbana-Champaign campus of the University of Illinois, April 28 - May 1, 1963 under the sponsorship of the University of Illinois Graduate School of {{{Library}}} {{{Science}}}. Writing in the Foreword to the Clinic proceedings, Herbert Goldhor (1964) provides the rationale for sponsoring such a Clinic:",
+    "par": [
+        {
+            "page": 14, "page_width": 2134, "page_height": 3328,
+            "b": 1090, "t": 700, "r": 2024, "l": 192,
+            "boxes": [
+                { "r": 1560, "b": 957, "t": 899, "l": 1378 },
+                { "r": 1767, "b": 957, "t": 899, "l": 1587 }
+            ]
+        }
+    ]
+}
+Each match contains a 'text' field. This is usually a complete paragraph. The matched words are surrounded by three braces either side, like {{{this}}}.
+
+The other field is called par, it contains details of every page that is part of this match. Paragraphs can cross pages. Each par object provides a page number, page width, height, and coordinates for the paragraph on the page. The boxes field field lists the coordinates to draw around each word or part of word in the match.
+
+Hyphenation means words can break across lines and across pages.
+
+Open Library Read API
+The Open Library Read API is intended to make it easy to turn book identifier information (ISBN, LCCN etc.) into direct links to Open Library's online-readable or borrowable books.
+
+The Read API is inspired by the Hathi Trust Bibliographic API and is intended to be compatible with it. The Read API results extend the Hathi API in several ways:
+
+The results may offer links to borrowable books, available through the Open Library lending program.
+Returned items may include readable matches for different editions of the same work.
+Results also include information from the Data API - everything Open Library knows about a book!
+Demo and Simple Sample Code
+Here's a simple demo page. This page demonstrates adding (hidden) 'book' links with ID information, then turning them into links to Open Library books by including a script that automates calling the Read API.
+
+There are two parts to this:
+
+a page-level JS link that calls readapi_automator.js:
+
+<script src="readapi_automator.js"></script>
+One (empty) <div> tag per book, like this:
+
+<div class="ol_readapi_book" isbn="039471752X" lccn="75009828"><div>
+See the demo page code for how it works!
+
+API
+The API is used to request information on one or more books using library identifiers: ISBNs, OCLC Numbers, LCCNs and OLIDs (Open Library Identifiers). Requests can be made in two formats: single and multiple.
+
+The single-request format
+To request information about readable versions of a single book edition, GET a URL in the following format:
+
+
+      http://openlibrary.org/api/volumes/brief/<id-type>/<id-value>.json
+
+   
+
+<id-type> can be 'isbn', 'lccn', 'oclc' or 'olid' (Open Library Identifier).
+<id-value> is the actual library identifier.
+
+For example:
+
+    http://openlibrary.org/api/volumes/brief/isbn/0596156715.json
+... will return a JSON hash:
+
+{'items':
+  [{'match': 'exact',
+    'status': 'full access'}],
+    'itemURL': 'http://www.archive.org/stream/TheArtOfCommunity',
+    'cover': {'large': 'http://covers.openlibrary.org/b/id/6223071-L.jpg',
+              'medium': 'http://covers.openlibrary.org/b/id/6223071-M.jpg',
+              'small': 'http://covers.openlibrary.org/b/id/6223071-S.jpg'},
+    'fromRecord': '/books/OL23747519M',
+    'ol-edition-id': 'OL23747519M',
+    'ol-work-id': 'OL15328717W'}],
+ 'records':
+   {'/books/OL23747519M':
+     {'data': { ... }
+      'isbns': ['0596156715',
+                '9780596156718'],
+      'publishDates': ['August 2009'],
+      'recordURL': 'http://openlibrary.org/books/OL23747519M'}}}
+The hash contains two fields:
+
+items
+This is a list of any matching or similar online-readable books that Open Library knows about, including links to cover images and read or borrow urls. Thw list may be empty if nothing's available.
+
+Items are sorted first by match ('exact', 'similar') then by availability ('freely available', 'lendable' etc.) then by edition date. The first returned item is usually the best choice to display to the user.
+
+item fields:
+'match'
+This may be 'exact' or 'similar'. 'exact' indicates that this scan is of the edition specified by the library ID. 'similar' indicates that it's a scan of another edition of the same work.
+
+'status'
+'full access', 'lendable', 'checked out' or 'restricted.'
+
+'itemURL'
+Link to an online-readable scan of the book, or to a borrow page.
+
+'cover'
+Links to small, medium and large versions of the cover.
+
+'fromRecord'
+The entry in 'records' that refers to this item. See below; there's almost always just one record.
+
+'publishDate'
+Date of publication of this particular returned item; note that it may be different from the looked-up record, if 'match' is 'similar'.
+
+'ol-edition-id'
+The Open Library Edition identifier for this item
+
+'ol-work-id'
+The Open Library Work identifier for this item.
+
+records
+Bibliographic information about the match. This portion of the result can potentially contain information on more than one match (as, for instance, two books may have the same isbn) - but in almost all cases will just contain one.
+
+Record fields:
+isbns, lccns, oclcs, olids
+Each of these fields contains a list of any known library attributes for this record.
+
+publishDates
+A list of publish dates for this edition
+
+recordURL
+URL for the Open Library page for this book.
+
+data
+Results of the Data API for this book.
+
+The multi-request format
+This format allows multiple requests to be issued in same call. Also, each request can contain multiple keys, to increase the chances of a match.
+
+The URL format is
+
+http://openlibrary.org/api/volumes/brief/json/<request-list>;
+<request-list> is a list of <request>s, separated by '|'.
+
+A <request> is a list of one or more <library-ids>, separated by ';'.
+
+A <library-id> is an <id-type> and an <id-value>, separated by a ':'.
+
+<id-type> and <id-value> are as the single-request format.
+
+The return value is a hash, with each successful <request> as keys. The hash values are the same as the single-request format. If a request doesn't match, it won't appear as a result in the hash.
+
+If a <request> starts with 'id:<key>;', then <key> is used instead of the full <request> string as the key for that hash value.
+
+For example:
+
+http://openlibrary.org/api/volumes/brief/json/id:1;lccn:50006784|olid:OL6179000M;lccn:55011330
+... will return a hash with two keys:
+
+{
+    '1': ...
+    'olid:OL6179000M;lccn:55011330': ...
+}
+... where the key values are similar to those from the single-request format.
+
+JSONP Requests
+The Read API supports JSONP. Just add ?callback=my_callback to the request, and the result will be wrapped in my_callback().
+
+Using the API
+Request IP Address
+The Read API checks the requesting IP address when looking for borrowable matching books. If the requesting IP address is one by the In Library lending program, many more borrowable books will be returned. If you're with a participating library, it may make sense to use EZProxy to make sure that webpage access to the Read API appears to come from an In Library IP.
+
+Open Library Covers API
+Our Covers API provides a programmatic method to access the book covers and author photos available in the Open Library Covers Repository.
+
+Guidelines for Cover Use
+Please, do not crawl our cover API. If you do, we may decide to block your crawl. Our covers are available for download in bulk on archive.org (example), but, it's a bit of a jungle in there, and is updated regularly.
+If you want to display covers on public-facing pages, please use a src URL that points to covers.openlibrary.org. For example, if you'd like to call a cover using an ISBN, you can do it like this:
+<img src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg" />
+A courtesy link back to Open Library is appreciated, whether it be on each individual book's page (where you can link back to the book's page on Open Library, for example, using the same ISBN https://openlibrary.org/isbn/9780385533225), or on your About page or in your footer.
+Thanks!
+
+How To
+Book covers can be accessed using Cover ID (internal cover ID), OLID (Open Library ID), ISBN, OCLC, and LCCN.
+
+The covers are available in 3 sizes:
+
+S: Small, suitable for use as a thumbnail on a lists section of a work on Open Library,
+M: Medium, suitable for display on a details page on Open Library and,
+L: Large
+The URL pattern to access book covers is:
+
+https://covers.openlibrary.org/b/$key/$value-$size.jpg
+
+Where:
+
+key can be any one of ISBN, OCLC, LCCN, OLID and ID (case-insensitive)
+value is the value of the chosen key
+size can be one of S, M and L for small, medium and large respectively.
+By default it returns a blank image if the cover cannot be found. If you append ?default=false to the end of the URL, then it returns a 404 instead.
+
+The following example returns small sized cover image for book with ISBN 0385472579.
+
+https://covers.openlibrary.org/b/isbn/0385472579-S.jpg
+
+The same cover can be accessed in multiple ways using different keys:
+
+
+https://covers.openlibrary.org/b/id/240727-S.jpg
+https://covers.openlibrary.org/b/olid/OL7440033M-S.jpg
+https://covers.openlibrary.org/b/isbn/0385472579-S.jpg
+https://covers.openlibrary.org/b/isbn/9780385472579-S.jpg
+https://covers.openlibrary.org/b/lccn/93005405-S.jpg
+https://covers.openlibrary.org/b/oclc/28419896-S.jpg
+Author Photos
+Author photos can be accessed using OLID and ID.
+
+The URL Pattern for accessing author photos is:
+
+https://covers.openlibrary.org/a/$key/$value-$size.jpg
+
+For example the following is the photograph of Donald E. Knuth from the Open Library.
+
+
+https://covers.openlibrary.org/a/olid/OL229501A-S.jpg
+ 
+
+Cover Size & API Access
+You can add .json to end end of cover urls to return API information about the cover, e.g. https://covers.openlibrary.org/b/id/12547191.json.
+
+One can fetch the image off-screen and use it's width/height:
+
+async function fetchImage(url) {
+    const img = new Image();
+    return new Promise((res, rej) => {
+        img.onload = () => res(img);
+        img.onerror = e => rej(e);
+        img.src = url;
+    });
+}
+const img = await fetchImage('https://covers.openlibrary.org/b/id/12547191-L.jpg');
+const w = img.width;
+const h = img.height;
+This one way one won't need to make two separate requests per image! The browser won't make a second request for the image if you set the src of your visible <img> element after fetching it in this way.
+
+Rate Limiting
+The cover access by ids other than CoverID and OLID are rate-limited. Currently only 100 requests/IP are allowed for every 5 minutes.
+
+If any IP tries to access more that the allowed limit, the service will return "403 Forbidden" status.
+
+ 
+
+Bulk Access
+The covers API is intended for displaying covers on public facing websites and not for bulk download.
+
+If you are interested to download the covers in bulk, please download them from:
+
+Small Covers:
+
+https://www.archive.org/details/s_covers_0000
+...
+https://www.archive.org/details/s_covers_0006
+Medium Covers:
+
+https://www.archive.org/details/m_covers_0000
+...
+https://www.archive.org/details/m_covers_0006
+Large Covers:
+
+https://www.archive.org/details/l_covers_0000
+...
+https://www.archive.org/details/l_covers_0006
+Original Covers:
+
+https://www.archive.org/details/covers_0000
+...
+https://www.archive.org/details/covers_0005
+Each of these archive.org items have 100 tar files, each containing 10K images in each. The names of these files are based on the cover ids. For example, s_covers_0005_32.tar file contains images for CoverIDs from 5320000 to 5329999.
+
+The mapping from various IDs to CoverIDs is available at:
+
+https://www.archive.org/download/ol_dump_2011-03-31/ol_dump_coverids_2011-03-31.txt.gz
+
+It has 4 columns ID-Name, ID-Value, OL-KEY and CoverID.
+
+RecentChanges API
+The RecentChanges API provides a way to access the recent changes to documents in Open Library.
+
+This API is experimental. Please be aware that this may change in future.
+Request Format
+Open Library supports HTTP content-negotiation. The URLs for serving html pages can serve content in other formats if appropriate Accept header is provided in the HTTP request. The same can be achieved by adding appropriate extension to the regular URL.
+
+To get list of most recentchanges in JSON format:
+
+http://openlibrary.org/recentchanges.json
+To get the most recent changes for a given date:
+
+http://openlibrary.org/recentchanges/YYYY.json
+http://openlibrary.org/recentchanges/YYYY/MM.json
+http://openlibrary.org/recentchanges/YYYY/MM/DD.json
+To get the most recent changes of a particular kind:
+
+http://openlibrary.org/recentchanges/KIND.json
+KIND can be anything which can appear as a transaction type, including add-cover, add-book, edit-book, merge-authors, update, revert, new-account, register and lists. More kinds of changes may be added in the future.
+
+It is even possible to combine both date and kind in the same URL. For example:
+
+http://openlibrary.org/recentchanges/2010/08/merge-authors.json
+TODO: URLs for accessing changes by any user and changes to any page.
+
+All the above mentioned URLs accept the following query parameters.
+
+limit: Maximum number of entries in the response. The default value is 100 and the allowed maximum limit is 1000 for performance reasons.
+
+offset: Number of entries to skip in the response. The default value is 0 and the allowed maximum is 10000 for performance reasons.
+
+bot: Useful to query for changes by humans or bots. Use value true to get only bot changes and use value false to get only human changes.
+
+Response Format
+The response is always a list of changesets, sorted in the descending order of timestamp.
+
+[
+    {...},
+    {...},
+    {...},
+    {...}
+]
+Each changeset is a JSON object that represents one save operation, involving one ore more documents.
+
+Here is a sample changeset.
+
+{
+    "id": "...",
+    "kind": "merge-authors",
+    "author": null,
+    "ip": "1.2.3.4",
+    "timestamp": "2010-09-01T23:24:34.237641",
+    "comment": "merge authors",
+    "data": {
+        "master": "/authors/OL123A",
+        "duplicates": [
+            "/authors/OL1235A",
+            "/authors/OL1236A",
+        ]
+    },
+    "changes": [
+        {"key": "/author/OL123A", "revision": 4},
+        {"key": "/author/OL1235A", "revision": 4},
+        {"key": "/author/OL1236A", "revision": 4},
+        {"key": "/works/OL123W", "revision": 4},
+        ...
+    ]
+}
+Sample Queries
+10 most recent changes
+
+https://openlibrary.org/recentchanges.json?limit=10
+
+10 most recent changes by people
+
+https://openlibrary.org/recentchanges.json?limit=10&bot=false
+
+changes in a given day
+
+https://openlibrary.org/recentchanges/2010/08/31.json
+
+recent author merges
+
+https://openlibrary.org/recentchanges/merge-authors.json
+
+author merges on a given day
+
+https://openlibrary.org/recentchanges/2010/08/31/merge-authors.json
+
+Bulk Access
+This API should not be used for bulk download. Dumps of all changes are regularly provided.
+
+See http://openlibrary.org/data#bulk_download for more details
+
+
+Lists API
+Create a list
+Add/delete a seed from a list
+Delete a list
+Update a list -- not implemented
+Get a user's lists
+Get lists containing a seed
+Get seeds of a list
+Get editions of a list (for works use the seeds API above)
+Get subjects of a list
+Search lists
+ 
+Get a user's lists
+Request:
+
+GET http://openlibrary.org/people/george08/lists.json
+Response:
+
+{
+    "links": {
+        "self": "/people/george08/lists.json",
+        "next": "/people/george08/lists.json?limit=5&offset=5"
+    },
+    "size": 12,
+    "entries": [
+        {
+            "url": "/people/george08/lists/OL13L",
+            "full_url": "/people/george08/lists/OL13L/Various_Seeds_for_Testing",
+            "name": "Various Seeds for Testing",
+            "last_update": "2010-12-21T00:46:17.712513",
+            "seed_count": 13,
+            "edition_count": 13181
+        },
+        {
+            "url": "/people/george08/lists/OL97L",
+            "full_url": "/people/george08/lists/OL97L/Time_Travel",
+            "name": "Time Travel",
+            "last_update": "2010-12-17T18:27:14.781336",
+            "seed_count": 5,
+            "edition_count": 838
+        },
+        ...
+    ]
+}
+ 
+Get lists containing a seed
+URL Format:
+
+http://openlibrary.org/books/OL1M/lists.json
+http://openlibrary.org/works/OL1W/lists.json
+http://openlibrary.org/authors/OL1A/lists.json
+http://openlibrary.org/subjects/place:san_francisco/lists.json
+Sample Request:
+
+GET http://openlibrary.org/works/OL8721462W/lists.json
+Response:
+
+{
+    "size": 1,
+    "links": {
+        "self": "/works/OL8721462W/lists.json"
+    },
+    "entries": [
+        {
+            "url": "/people/george08/lists/OL43L",
+            "full_url": "/people/george08/lists/OL43L/Top_100_Works_in_World_Literature_(in_progress)",
+            "name": "Top 100 Works in World Literature (in progress)",
+            "last_update": "2010-12-21T04:17:33.140325",
+            "seed_count": 28,
+            "edition_count": 2105
+        }
+    ]
+}
+ 
+Search lists
+limited to 100 results for performance reasons
+Request:
+
+GET http://openlibrary.org/search/lists.json?q=book&limit=20&offset=0
+Response:
+
+{
+    "start": 0,
+    "docs": [
+        {
+        "seed_count": 1,
+        "edition_count": 0,
+        "url": "/people/rosey1234/lists/OL68457L",
+        "last_update": "2019-10-12T17:05:09.130806",
+        "full_url": "/people/rosey1234/lists/OL68457L/book",
+        "name": "book"
+        },
+        {
+        "seed_count": 1,
+        "edition_count": 0,
+        "url": "/people/alebuitrago/lists/OL69449L",
+        "last_update": "2019-10-12T17:05:09.130806",
+        "full_url": "/people/alebuitrago/lists/OL69449L/book",
+        "name": "book"
+        },
+        ...
+    ]
+}
+ 
+Create a list
+create an empty list (no book seed)
+Request:
+
+POST /people/anand/lists HTTP/1.1
+Content-Type: application/json
+{
+    "name": "Empty List",
+    "description": "This is an empty list with no books added yet.",
+}
+Response:
+
+HTTP/1.1 201 Created
+Location: http://openlibrary.org/user/anand/lists/OL1L
+create a list with book seed(s)
+Request:
+
+POST /people/anand/lists HTTP/1.1
+Content-Type: application/json
+{
+    "name": "18th Century Architecture",
+    "description": "Studies of architectural practice, mainly English works",
+    "tags": ["Architecture", "18th Century", "Drawings", "Buildings"],
+    "seeds": [
+        "/books/OL1M",
+        "/subjects/gothic_architecture"
+    ]
+}
+Response:
+
+HTTP/1.1 201 Created
+Location: http://openlibrary.org/user/anand/lists/OL1L
+ 
+Read a list
+Request:
+
+GET http://openlibrary.org/people/george08/lists/OL97L.json
+Response:
+
+{
+    "links": {
+        "editions": "/people/george08/lists/OL97L/editions",
+        "self": "/people/george08/lists/OL97L",
+        "seeds": "/people/george08/lists/OL97L/seeds",
+        "subjects": "/people/george08/lists/OL97L/subjects"
+    },
+    "meta": {
+        "last_modified": "2010-12-17T18:54:58.115370",
+        "revision": 5,
+        "created": "2010-12-17T18:50:35.064318"
+    },
+    "name": "Time Travel",
+    "description": "Happy to lose myself in reading about that.",
+    "seed_count": 5,
+    "edition_count": 838
+}
+ 
+Delete a list
+Request:
+
+POST /people/anand/list/OL1L/delete.json
+Content-Type: application/json
+ 
+Update a list
+This is not yet implemented!
+Request:
+
+PUT /people/anand/list/OL1L HTTP/1.1
+Content-Type: application/json
+{
+    "name": "18th Century Architecture",
+    "description": "Studies of architectural practice, mainly English works",
+    "tags": ["Architecture", "18th Century", "Drawings", "Buildings"],
+    "seeds": [
+        "subject:gothic_architecture"
+    ]
+}
+Response:
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+{"key": "/people/anand/list/OL1L", "revision": 3}
+ 
+Get seeds of a list
+Request:
+
+GET http://openlibrary.org/people/george08/lists/OL97L/seeds.json
+Response:
+
+{
+    "size": 5,
+    "links": {
+        "self": "/people/george08/lists/OL97L/seeds",
+        "list": "/people/george08/lists/OL97L"
+    },
+    "entries": [
+        {
+            "url": "/books/OL24331810M",
+            "full_url": "/books/OL24331810M/The_Time_Machine",
+            "type": "edition",
+            "title": "The Time Machine",
+            "last_update": "2010-12-17T18:27:14.781336",
+            "work_count": 1,
+            "edition_count": 1,
+            "ebook_count": 1,
+            "picture": {
+                "url": "http://covers.openlibrary.org/b/id/6570017-S.jpg"
+            }
+        },
+        {
+            "url": "/books/OL22864669M",
+            "full_url": "/books/OL22864669M/A_Connecticut_Yankee_in_King_Arthur's_Court",
+            "type": "edition",
+            "title": "A Connecticut Yankee in King Arthur's Court",
+            "last_update": "2010-09-06T02:05:15.820687",
+            "work_count": 1,
+            "edition_count": 1,
+            "ebook_count": 7,
+            "picture": {
+                "url": "http://covers.openlibrary.org/b/id/6031475-S.jpg"
+            }
+        },
+        ...
+    ]
+}
+ 
+Add/delete a seed from a list
+Add seed(s) to a list
+Request:
+
+POST /people/anand/list/OL1L/seeds HTTP/1.1
+Content-Type: application/json
+{
+    "add": [
+        {key: "/books/OL25083437M"},
+        {key: "/books/OL24375501M"}
+    ]
+}
+Response:
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+{"key": "/people/anand/list/OL1L", "revision": 3}
+Delete seed(s) from a list
+Request:
+
+POST /people/anand/lists/OL1L/seeds HTTP/1.1
+Content-Type: application/json
+{
+    "add": [
+        "/subjects/gothic_architecture"
+    ],
+    "remove": [
+        "/works/OL1958650W"
+    ]
+}
+Response:
+
+200 OK HTTP/1.1
+Content-Type: application/json
+{"ok": "true"}
+ 
+Get editions of a list
+Request:
+
+GET http://openlibrary.org/people/george08/lists/OL97L/editions.json?limit=2
+Response:
+
+{
+    "links": {
+        "self": "/people/george08/lists/OL97L/editions.json?limit=2",
+        "next": "/people/george08/lists/OL97L/editions.json?limit=2&offset=2",
+        "list": "/people/george08/lists/OL97L"
+    },
+    "size": 838,
+    "entries": [
+        {
+            "number_of_pages": 216,
+            "table_of_contents": [...],
+            "series": ["Buckram series"],
+            "covers": [6570017],
+            "lc_classifications": ["PZ3.W465 Ti"],
+            "latest_revision": 6,
+            "ocaid": "timemachineinven00well",
+            "subtitle": "an invention",
+            "source_records": ["ia:timemachineinven00well"],
+            "title": "The Time Machine",
+            "languages": [
+                {
+                    "key": "/languages/eng"
+                }
+            ],
+            "publish_country": "nyu",
+            "by_statement": "by H. G. Wells",
+            "oclc_numbers": [
+                "002345875"
+            ],
+            "type": {
+                "key": "/type/edition"
+            },
+            "revision": 6,
+            "publishers": [
+                "H. Holt and Company"
+            ],
+            "last_modified": {
+                "type": "/type/datetime",
+                "value": "2010-12-17T18:27:14.781336"
+            },
+            "key": "/books/OL24331810M",
+            "authors": [
+                {
+                    "key": "/authors/OL13066A"
+                }
+            ],
+            "publish_places": [
+                "New York"
+            ],
+            "pagination": "vii, 216 p.",
+            "classifications": {},
+            "created": {
+                "type": "/type/datetime",
+                "value": "2010-08-12T15:25:20.784688"
+            },
+            "lccn": [
+                "08036642"
+            ],
+            "identifiers": {},
+            "publish_date": "1895",
+            "works": [
+                {
+                    "key": "/works/OL52267W"
+                }
+            ]
+        },
+        {
+            ...
+        }
+    ]
+}
+ 
+Get subjects of a list
+Request:
+
+GET http://openlibrary.org/people/george08/lists/OL97L/subjects.json?limit=5
+Response:
+
+{
+    "links": {
+        "self": "/people/george08/lists/OL97L/subjects",
+        "list": "/people/george08/lists/OL97L"
+    },
+    "subjects": [
+        {
+            "count": 256,
+            "url": "/subjects/general_relativity_(physics)",
+            "name": "General relativity (Physics)"
+        },
+        ...
+    ],
+    "places": [
+        {
+            "count": 1,
+            "url": "/subjects/place:great_britain",
+            "name": "Great Britain"
+        },
+        ...
+    ],
+    "people": [
+        {
+            "count": 1,
+            "url": "/subjects/person:mark_twain_(1835-1910)",
+            "name": "Mark Twain (1835-1910)"
+        },
+        ...
+    ],
+    "times": [
+        {
+            "count": 1,
+            "url": "/subjects/time:19th_century",
+            "name": "19th century"
+        }
+    ]
+}
+ 

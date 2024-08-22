@@ -1,0 +1,147 @@
+FIPE HTTP REST API
+You can use the PHP library developed to consume the API https://github.com/deividfortuna/fipe .
+
+The API has been online since 2015 and is completely free . How about buying me a beer? 🍺
+
+PayPal - The easy and secure way to send payments online! 
+The API makes its search data available in JSON format. Check out the base URL for accessing the API:
+
+https://parallelum.com.br/fipe/api/v1
+
+The Fipe Table expresses average vehicle prices in the national market, serving only as a parameter for negotiations or evaluations. The prices actually charged vary according to the region, condition, color, accessories or any other factor that may influence the supply and demand conditions for a specific vehicle.
+This Fipe API uses its own database, where all requests happen internally, without overloading the Fipe Web Service, thus avoiding blockages due to multiple accesses.
+
+Brands
+
+First list the brands of the type of vehicle you want, using the brands action and without any parameters:
+
+Request
+GET: https://parallelum.com.br/fipe/api/v1/carros/marcas
+
+You can change the url "carros"to "motos"or "caminhoes"according to your need.
+
+Response
+ Array [ 5 ]
+ 0 : Object
+code : "1"
+name : "Acura"
+ 1 : Object
+code : "2"
+name : "Agrale"
+ 2 : Object
+code : "3"
+name : "Alfa Romeo"
+ 3 : Object
+code : "4"
+name : "AM Gen"
+ 4 : Object
+code : "5"
+name : "Asia Motors"
+Models
+
+Next, you can obtain a list of vehicles of a specific brand, with the code of the desired brand. For example, the brand VW - VolksWagen (59) :
+
+Request
+GET: https://parallelum.com.br/fipe/api/v1/carros/marcas/59/modelos
+
+Response
+ Object
+ years : Array [ 5 ]
+ 0 : Object
+code : "32000-1"
+name : "32000 Gasoline"
+ 1 : Object
+code : "32000-3"
+name : "32000 Diesel"
+ 2 : Object
+code : "2025-1"
+name : "2025 Gasoline"
+ 3 : Object
+code : "2025-3"
+name : "2025 Diesel"
+ 4 : Object
+code : "2024-1"
+name : "2024 Gasoline"
+ models : Array [ 5 ]
+ 0 : Object
+code : 5585
+name : "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x2 Die"
+ 1 : Object
+code : 5586
+name : "AMAROK CD2.0 16V/S CD2.0 16V TDI 4x4 Die"
+ 2 : Object
+code : 9895
+name : "AMAROK Comfor. 3.0 V6 TDI 4x4 Dies. Aut."
+ 3 : Object
+code : 8531
+name : "AMAROK Comfor. CD 2.0 TDI 4x4 Dies. Aut."
+ 4 : Object
+code : 5748
+name : "AMAROK CS2.0 16V/S2.0 16V TDI 4x2 Diesel"
+Years
+
+After choosing the desired vehicle, you can check the models and years available for future price consultation. For example AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut :
+
+Request
+GET: https://parallelum.com.br/fipe/api/v1/carros/marcas/59/modelos/5940/anos
+
+Response
+ Array [ 12 ]
+ 0 : Object
+code : "2022-3"
+name : "2022 Diesel"
+ 1 : Object
+code : "2021-3"
+name : "2021 Diesel"
+ 2 : Object
+code : "2020-3"
+name : "2020 Diesel"
+ 3 : Object
+code : "2019-3"
+name : "2019 Diesel"
+ 4 : Object
+code : "2018-3"
+name : "2018 Diesel"
+ 5 : Object
+code : "2017-3"
+name : "2017 Diesel"
+ 6 : Object
+code : "2016-3"
+name : "2016 Diesel"
+ 7 : Object
+code : "2015-3"
+name : "2015 Diesel"
+ 8 : Object
+code : "2014-3"
+name : "2014 Diesel"
+ 9 : Object
+code : "2013-3"
+name : "2013 Diesel"
+ 10 : Object
+code : "2012-3"
+name : "2012 Diesel"
+ 11 : Object
+code : "2011-3"
+name : "2011 Diesel"
+Value
+
+Finally, by adding one more parameter, it will be possible to view the current price of the FIPE Table for this vehicle/model/year. Continuing with the example above, to obtain the value of a 2014 Gasoline vehicle, we will use the id 2014-3 :
+
+Request
+GET: https://parallelum.com.br/fipe/api/v1/carros/marcas/59/modelos/5940/anos/2014-3
+
+Response
+ Object
+Vehicle Type : 1
+Value : "R$ 100,306.00"
+Brand : "VW - VolksWagen"
+Model : "AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut"
+Model Year : 2014
+Fuel : "Diesel"
+Fipe Code : "005340-6"
+Reference Month : "August 2024"
+Fuel Acronym : "D"
+With this we discover the details of the vehicle AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut year 2014 Diesel .
+
+Problems & Suggestions
+https://github.com/deividfortuna/fipe/issues

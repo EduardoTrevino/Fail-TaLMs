@@ -1,0 +1,242 @@
+Overview of Services
+This describes the resources that make up the official Archive.org API v1.
+
+The Internet Archive (the “Archive”) is a 501(c)(3) nonprofit organization committed to Universal Access of Knowledge. The Archive runs several services including the Archive.org search engine, OpenLibrary, and the Wayback Machine. In alignment with its mission, the Archive encourages developers to add media to archive.org, as well as to consume and re-purpose media and its metadata, for the great good of our community and beyond.
+
+Archive.org
+Archive.org, the flagship service of the Internet Archive, is a public digital archive which makes tens of millions of items (texts and books, public domain movies, television shows, live concerts, and more) accessible to the public, free of charge.
+
+Archive.org has a variety of official APIs and experimental Labs APIs for accessing item metadata, downloading and uploading content, and performing item search and fulltext search.
+
+Wayback Machine
+The Wayback Machine is a web service which crawls the world wide web and saves webpages at different points in time so their contents can be referenced in the future. This is especially important since approximately 1 out of every 3 websites doesn't survive past 2 years. The Wayback Machine offers a website (https://web.archive.org) which allows users to explore the histories of the websites and pages it captures.
+
+The Internet Archive Wayback Machine supports a number of different APIs to make it easier for developers to retrieve information about Wayback capture data.
+
+Archive-It.org
+Archive-It is a subscription web archiving service from the Internet Archive that helps organizations to harvest, build, and preserve collections of digital content. Through our user friendly web application Archive-It partners can collect, catalog, and manage their collections of archived content with 24/7 access and full text search available for their use as well as their patrons. Content is hosted and stored at the Internet Archive data centers.
+
+Books: OpenLibrary, Book Reader, Lending, IIIF & APIs
+Books are central to the Internet Archive's goal of preserving the world's knowledge and making it universally accessible. The Internet Archive and Open Library offers over 10,000,000 fully accessible books and texts. There is also a collection of 300,000 modern eBooks that may be borrowed or downloaded by the print-disabled at OpenLibrary.org.
+
+Both Archive.org and OpenLibrary.org provide APIs for accessing book metadata, fulltext, and more (where available) which you can learn about under this Books section.
+
+Support
+You can view the documentation for each service using the navigation sidebar to the left.
+
+Join our Developer Mailing List to keep up to date on API releases.
+
+How Archive.org items are structured
+Posted on March 31, 2011 by Alexis Rossi
+What is an item?
+
+An item is a logical “thing” that we present on one web page on archive.org. An item may be one video file along with scans of the DVD cover, one book, one audio file, or a set of audio files that represent a CD , etc.
+
+How do you know whether your files should be in one item or separate items?  You get one metadata file per item.  If the same metadata describes ALL of the files (like a CD), then that’s one item.  If the files are too different to have the same metadata (title, creator, description, etc.), they should be in different items.
+
+How Items Are Structured
+
+All archive.org items have this format URL:
+http://archive.org/details/[identifier]
+(where [identifier] is unique within our system).
+
+Example: For this item
+http://www.archive.org/details/popeye_taxi-turvey
+the identifier is popeye_taxi-turvey
+
+An item is just a directory or folder of files that includes the originally uploaded content file(s) – audio, video, text, etc. – along with any derivative files we create from the originals and the metadata that describes the item.  To see all files in an item, click the HTTP link in the upper left box on the item page (circled in red below).
+
+
+
+That link takes you to a directory listing showing all original, derived, and metadata files for the item.
+
+
+
+You can view information about every file in this directory by viewing the file ending in _files.xml (in this example, popeye_taxi-turvey_files.xml). Each file in the item is listed here, along with whether the source is “original” (uploaded by the user), “derivative” (derived by archive.org), or “metadata” file.  You will also find a format designation, various checksums, and sometimes titles for the files.
+
+
+
+To see all of the metadata for the item, view the file ending in _meta.xml (in this example, popeye_taxi-turvey_meta.xml). This file should list all of the pertinent information about the item, such as title, creator, description, etc.  IA’s metadata schema is based on Dublin Core, but it is extremely flexible.  You can add any key=value pair to this file and we will store it and make it searchable in the IA search engine.  (However, it may not automatically show up on the item page.)
+
+
+
+Reviews, if there are any, are contained in the _reviews.xml file.
+
+One thing to note: Many “display” characteristics on archive.org, among other things, work better if your item’s identifier matches your file name.  So if you’re uploading a file called popeye_taxi-turvey.mpg, it’s best to use the identifier popeye_taxi-turvey (just remove the file extension).  If you’re using the upload button on archive.org, put your desired identifier in the Title field of the upload form.  We turn that into the identifier automatically, and then after upload you can go back into the item and change the title to something more readable.
+
+Archival URLs
+
+An item’s “details” page will always be available at
+http://archive.org/details/[identifier]
+
+The item directory is always available at
+http://archive.org/download/[identifier]
+
+A particular file can always be downloaded from
+http://archive.org/download/[identifier]/[filename]
+
+Please Note: Archival URLs may redirect to an actual server that contains the content.  For example
+http://www.archive.org/download/popeye_taxi-turvey
+currently redirects to
+http://ia600204.us.archive.org/14/items/popeye_taxi-turvey/
+DO NOT LINK to any archive.org URL that begins with numbers like this.  This refers to the particular machine that we’re serving the file from right now, but we move items to new servers all the time.  If you link to this sort of URL, instead of the archival URL, your link WILL break at some point.
+
+Posted in Technical | 7 Replies
+Post navigation← The Real Mad Men
+
+Item Metadata API
+get
+https://archive.org/metadata/{id}
+Retrieve metadata for an Archive.org item
+
+Log in to see full request history
+time	status	user agent	
+Make a request to see history.
+
+For more on the Metadata API, see: https://blog.archive.org/2013/07/04/metadata-api/
+
+Path Params
+id
+string
+required
+The identifier for the Archive.org item for which you want metadata
+
+Responses
+
+200
+200
+
+
+400
+400
+
+Item Creation
+How do you know whether your files should be in one item or separate items? You get one metadata file per item. If the same metadata describes ALL of the files (like a CD), then that’s one item. If the files are too different to have the same metadata (title, creator, description, etc.), they should be in different items.
+
+Item Bulk Upload
+Most archive.org users upload items through the web interface. This option isn't ideal for supporting users who need to upload many items or files at a time. The Internet Archive provides 2 mechanisms for uploading items in bulk.
+
+IAS3 (Experts)
+The first option is to use the ias3 service directly. IAS3 is the Internet Archive's implementation of Amazon's AWS S3 (Simple Storage Service). You can read more about it here . IAS3 provides an API for creating and uploading archive.org items programatically but it requires a high level of technical proficiency to use.
+
+See common examples at: https://github.com/vmbrasseur/IAS3API/blob/master/examples/README.md
+
+upload
+
+curl --location --header 'x-amz-auto-make-bucket:1' \
+     --header 'x-archive-meta01-collection:opensource' \
+     --header 'x-archive-meta-mediatype:texts' \
+     --header 'x-archive-meta-sponsor:Andrew W. Mellon Foundation' \
+     --header 'x-archive-meta-language:eng' \
+     --header "authorization: LOW $accesskey:$secret" \
+     --upload-file /home/samuel/public_html/intro-to-k.pdf \
+     http://s3.us.archive.org/sam-s3-test-08/demo-intro-to-k.pdf
+The internetarchive Client Library (Everyone)
+Another option is to use the internetarchive Python client library. This library includes a command line utility called the "ia" tool which wraps IAS3 and makes it easy for anyone to upload in bulk.
+
+The easiest way to get started, is to use a binary. The only requirements for using a binary are that you have Python 2 or 3 installed in a unix-like environment.
+
+Once you have downloaded a binary of ia and configured it with your archive.org credentials, take some time to familiarize yourself with what an archive.org item is and what limitations items have. Then follow these instructions for bulk uploading: http://internetarchive.readthedocs.io/en/latest/cli.html#bulk-uploading.
+
+Please see http://internetarchive.readthedocs.io/en/latest/metadata.html for more information on item metadata.
+
+Internet Archive S3 API: Documentation
+This document covers the technical details of using Internet Archive's S3-like server API, aka "IAS3." The intended audience is a technical user, ideally one who is comfortable in the Linux/UNIX command line environment.
+
+This document is an independent work and is not written or supported by Internet Archive. Please use it in conjunction with the official IAS3 documentation. See the support page for more information about receiving support for this document and IAS3.
+
+Contents
+Introduction
+Summary of API Functionality and FAQs
+Getting Support for This Documentation
+Quick Start pending
+System Requirements
+Compatibility with Amazon S3
+Passing Authorization Credentials to IAS3
+Identifiers
+Anatomy of an IAS3 Request pending
+Headers
+Metadata
+Setting Metadata Values via Files
+Special Files
+A note on downloading
+Troubleshooting
+Code Examples
+Appendices
+Terminology
+An intro to Internet Archive item structure pending
+IAS3 HTTP Return Codes
+IAS3 Error Messages
+Default metadata values
+Example IDENTIFIER_marc.xml file
+Example IDENTIFIER_meta.mrc file
+Other Internet Archive tools
+
+
+Archive.org About Search
+Introduction
+The Internet Archive is pleased to provide API endpoints for search access to items in the archive; in particular, by searching against the metadata stored for items.
+
+advancedsearch.php
+The traditional method for API access for search is the Advanced Search API. The advanced search page describes the formats provided, and the query language for searching.
+
+We limit the number of sorted paged results returnable to 10,000. Paged sorted results are supported only until the 10,000th result. For example, the search:
+
+https://archive.org/advancedsearch.php?q=subject:palm+pilot+software&output=json&rows=100&page=5
+
+should be fine, but requesting page=10000 is rejected.
+
+Scraping API
+To provide the ability to page deeply into the items at the Archive, we are now providing a scraping API. The scraping API uses a cursor approach. One makes a scraping API call, which will return a list of results and a cursor. The cursor can then be used to search again with the search continuing where the cursor left off.
+
+The following pseudo-code (it's really Python) shows a yield loop that loops through all of the results of a search by using a cursor:
+
+def yield_results(basic_params):
+        result = requests.get(endpoint, params=basic_params)
+        while True:
+            if (result.status_code != 200):
+                yield (None, result.json())
+                break
+            else:
+                result_obj = result.json()
+                yield (result_obj, None)
+                cursor = result_obj.get('cursor', None)
+                if cursor is None:
+                    break
+                else:
+                    params = basic_params.copy()
+                    params['cursor'] = cursor
+                    result = requests.get(endpoint, params=params)
+The scraping API can be found at: https://archive.org/services/search/v1/scrape.
+
+Its parameters are:
+
+q: the query (using the same query Lucene-like queries supported by Internet Archive Advanced Search.
+fields: Metadata fields to return, comma delimited
+sorts: Fields to sort on, comma delimited (if identifier is specified, it must be last)
+count: Number of results to return (minimum of 100)
+cursor: A cursor, if any (otherwise, search starts at the beginning)
+total_only: if this is set to true, then only the number of results is returned.
+A description of these fields (in Swagger/OpenAPI format format) can be found at htttps://archive.org/services/search/v1.
+
+Example
+Here is an example CURL session scraping for items in the NASA collection: https://archive.org/services/search/v1/scrape?fields=title&q=collection%3Anasa
+
+
+    > curl "https://archive.org/services/search/v1/scrape?fields=title&q=collection%3Anasa"
+    {"items":[{"title":"International Space Station exhibit","identifier":"00-042-154"} ... ],
+    "total":198879,"count":100,"cursor":"W3siaWRlbnRpZmllciI6IjE5NjEtTC0wNTkxNCJ9XQ=="}
+    > curl "https://archive.org/services/search/v1/scrape?fields=title&q=collection%3Anasa&cursor=W3siaWRlbnRpZmllciI6IjE5NjEtTC0wNTkxNCJ9XQ=="
+    
+Note that there is no absolute guarantee that every item will be returned, or that every item returned will remain in the Archive. Additions and deletions happen all the time, and it's possible that an item could be added or deleted during the scraping loop. The total value returned is the number of items that match the search criteria (including the count). If a cursor is provided, the total refers, not to the total of all items, but the total of all items from the point of the cursor.
+
+Internet command-line tool
+The Internet Archive command line tool, named ia, is available for using Archive.org from the command-line. It also installs the internetarchive Python module for programatic access to archive.org. Version 1.0.0 and above use the scraping API transparently. Older versions must be upgraded for search operations to work properly.
+
+The Internet Archive Python Library
+Release v1.8.1. (Installation)
+
+
+The documentation for the internetarchive Python library and ia command-line tool have moved to https://archive.org/services/docs/api/internetarchive.
+
+You will be redirected to https://archive.org/services/docs/api/internetarchive in 5 seconds.

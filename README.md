@@ -175,13 +175,13 @@ Please update as you add and intergrate diffrent apis
 | Music            | iTunes Search                    | 0          | :x:        | TBD      |
 | Music            | MusicBrainz                      | 0(scraped) | :x:        | TBD      |
 | Music            | Openwhyd                         | 2          | 🟢         | TBD      |
-| Open Data        | Archive.org                      | 0          | :x:        | TBD      |
-| Open Data        | Carbon Intensity                 | 0          | :x:        | TBD      |
-| Open Data        | Data.Police.UK                   | 0          | :x:        | TBD      |
-| Open Data        | Fipe                             | 0          | :x:        | TBD      |
-| Open Data        | House Stock Watcher              | 0          | :x:        | TBD      |
+| Open Data        | Archive.org                      | 0(scraped) | :x:        | TBD      |
+| Open Data        | Carbon Intensity                 | 0(scraped) | :x:        | TBD      |
+| Open Data        | Data.Police.UK                   | 0(scraped) | :x:        | TBD      |
+| Open Data        | Fipe                             | 0(scraped) | :x:        | TBD      |
+| Open Data        | House Stock Watcher              | 0(scraped) | :x:        | TBD      |
 | Open Data        | Leadsbox                         | 0          | :x:        | TBD      |
-| Open Data        | Open Library                     | 0          | :x:        | TBD      |
+| Open Data        | Open Library                     | 0(scraped) | :x:        | TBD      |
 | Open Data        | PM2.5                            | 0          | :x:        | TBD      |
 | Open Data        | Universities List                | 0          | :x:        | TBD      |
 | Open Data        | Vehicles                         | 0          | :x:        | TBD      |
