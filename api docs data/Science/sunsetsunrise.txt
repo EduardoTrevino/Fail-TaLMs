@@ -1,0 +1,84 @@
+Sunset and Sunrise Times API
+Accurate Sunrise & Sunset Times for Developers
+SunriseSunset.io offers a free API for retrieving sunrise and sunset times for a specific longitude and latitude.
+
+Parameters
+lat (Required): Latitude of the location in decimal degrees. Example: 38.907192
+lng (Required): Longitude of the location in decimal degrees. Example: -77.036873
+date (Optional): Date in YYYY-MM-DD format, you can also specify relative formats such as “today” and “tomorrow”. If not set it’ll default to today.
+timezone (Optional): Set a timezone of the returned times (timezone list). By default the API will return the times in the location’s timezone. If SunriseSunset cannot validate a timezone it’ll fallback to the default which is the location’s timezone. Example: UTC
+date_start (Optional): Date in YYYY-MM-DD format to specify a range, date_start will be used as a start date.
+date_end (Optional): Date in YYYY-MM-DD format used to specify the end of a date range. If this is left empty and date_start is set it’ll default to the current day.
+time_format (Optional): Format that all the times are displayed in. Default is a 12-hour clock but acceptable values include “24” for a 24-hour clock, “military” for military time, and “unix” for unix timestamps. Note that unix timestamps are only returned in UTC.
+
+About
+The free SunriseSunset.io API is perfect for displaying sunset and sunrise times in your applications or websites using JSON. Currently we serve millions of requests a month to developers and their apps.
+
+Requests are sent using GET parameters and returned data is in JSON format. Returned information from our database includes sunrise, sunset, first light, last light, dawn, dusk, solar noon, golden hour, day length, UTC offset, and timezone displayed. No login or authentication is required to use our free API.
+
+You can also query up to 365 days of sunrise and sunset times with one request using the date_start and date_end parameters.
+
+Example Requests
+Standard request:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873
+
+Specific date and setting timezone request: 
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&timezone=UTC&date=1990-05-22
+
+Date range request:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&date_start=1990-05-01&date_end=1990-07-01
+
+Returning 24-hour timestamps:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&timezone=UTC&date=1990-05-22&time_format=24
+Example returned JSON data:
+
+{
+    "results": {
+        "date": "2023-11-29",
+        "sunrise": "7:06:58 AM",
+        "sunset": "4:48:45 PM",
+        "first_light": "5:32:42 AM",
+        "last_light": "6:23:02 PM",
+        "dawn": "6:37:39 AM",
+        "dusk": "5:18:04 PM",
+        "solar_noon": "11:57:52 AM",
+        "golden_hour": "4:07:57 PM",
+        "day_length": "9:41:47",
+        "timezone": "America/New_York",
+        "utc_offset": -300
+    },
+    "status": "OK"
+}
+
+Example Requests
+Standard request:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873
+
+Specific date and setting timezone request: 
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&timezone=UTC&date=1990-05-22
+
+Date range request:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&date_start=1990-05-01&date_end=1990-07-01
+
+Returning 24-hour timestamps:
+https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873&timezone=UTC&date=1990-05-22&time_format=24
+Example returned JSON data:
+
+{
+    "results": {
+        "date": "2023-11-29",
+        "sunrise": "7:06:58 AM",
+        "sunset": "4:48:45 PM",
+        "first_light": "5:32:42 AM",
+        "last_light": "6:23:02 PM",
+        "dawn": "6:37:39 AM",
+        "dusk": "5:18:04 PM",
+        "solar_noon": "11:57:52 AM",
+        "golden_hour": "4:07:57 PM",
+        "day_length": "9:41:47",
+        "timezone": "America/New_York",
+        "utc_offset": -300
+    },
+    "status": "OK"
+}
+You’ll also notice API URLs for each location are listed at the bottom of location pages (example: NYC). This makes it easy to get an API call URL for a specific city or point of interest. A location like the north pole won’t always have a sunrise/sunset time. If one of the sun events doesn’t exist in that location the API will return null instead of the time for the specific event.

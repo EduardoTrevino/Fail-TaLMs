@@ -1,0 +1,148 @@
+API Examples
+Current ISS Location
+The International Space Station is moving at close to 28,000 km/h so its location changes really fast! Where is it right now?
+
+Documentation: ISS Location Now
+
+Using leaflet and jquery one can write a script to show the current location of the ISS and update it every 5 seconds:
+
+function moveISS () {
+    $.getJSON('http://api.open-notify.org/iss-now.json?callback=?', function(data) {
+        var lat = data['iss_position']['latitude'];
+        var lon = data['iss_position']['longitude'];
+
+        // See leaflet docs for setting up icons and map layers
+        // The update to the map is done here:
+        iss.setLatLng([lat, lon]);
+        isscirc.setLatLng([lat, lon]);
+        map.panTo([lat, lon], animate=true);
+    });
+    setTimeout(moveISS, 5000); 
+}
+
+International Space Station Current Location
+The International Space Station is moving at close to 28,000 km/h so its location changes really fast! Where is it right now?
+
+Overview
+This is a simple api to return the current location of the ISS. It returns the current latitude and longitude of the space station with a unix timestamp for the time the location was valid. This API takes no inputs.
+
+Output
+JSON
+http://api.open-notify.org/iss-now.json
+
+{
+  "message": "success", 
+  "timestamp": UNIX_TIME_STAMP, 
+  "iss_position": {
+    "latitude": CURRENT_LATITUDE, 
+    "longitude": CURRENT_LONGITUDE
+  }
+}
+The data payload has a timestamp and an iss_position object with the latitude and longitude.
+
+JSONP
+Appending a callback request to the query string will return JSONP:
+
+http://api.open-notify.org/iss-now.json?callback=CALLBACK
+
+CALLBACK({
+  "message": "success", 
+  "timestamp": UNIX_TIME_STAMP,
+  "iss_position": {
+    "latitude": CURRENT_LATITUDE, 
+    "longitude": CURRENT_LONGITUDE
+  }
+})
+Poll Rate
+Please note that there is an inherent uncertainty in the ISS position models that is usually larger than one second. In addition the position is only calculated once per second (the maximum resolution of an integer unix time stamp). So polling more than 1 Hz would be useless except to add unnessisary strain to the servers.
+
+A single client should try and keep polling to about once every 5 seconds.
+
+Examples
+Here is an example reading the API in python:
+
+import urllib2
+import json
+
+req = urllib2.Request("http://api.open-notify.org/iss-now.json")
+response = urllib2.urlopen(req)
+
+obj = json.loads(response.read())
+
+print obj['timestamp']
+print obj['iss_position']['latitude'], obj['data']['iss_position']['latitude']
+
+# Example prints:
+#   1364795862
+#   -47.36999493 151.738540034
+Data Source
+The ISS is tracked by several agencys. Both NORAD and NASA periodically publish data about the station. I scrape this page for this API:
+
+http://spaceflight.nasa.gov/realdata/sightings/SSapplications/Post/JavaSSOP/orbit/ISS/SVPOST.html
+Another popular site for tacking data is celstrak which published NORAD TLE’s:
+
+http://www.celestrak.com/NORAD/elements/stations.txt
+In both cases a “Two Line Element” is used, which contains enough infomation about an orbit to calculate an objects postition at any time within a useful window of accuracy centered around the TLE’s publish date. I try to update the TLE at least once a day.
+
+Number of People In Space
+How many people are in space right now?
+
+Documentation: Number of People In Space
+
+Example:
+There are currently ? humans in space. They are:
+
+Using jquery:
+
+$.getJSON('http://api.open-notify.org/astros.json?callback=?', function(data) {
+    var number = data['number'];
+    $('#spacepeeps').html(number);
+
+    data['people'].forEach(function (d) {
+         $('#astronames').append('<li>' + d['name'] + '</li>');
+    });
+});
+
+How Many People Are In Space Right Now
+http://api.open-notify.org/astros.json
+
+How many humans are in space right now?
+
+Overview
+This API returns the current number of people in space. When known it also returns the names and spacecraft those people are on. This API takes no inputs.
+
+Output
+JSON
+http://api.open-notify.org/astros.json
+
+{
+  "message": "success",
+  "number": NUMBER_OF_PEOPLE_IN_SPACE,
+  "people": [
+    {"name": NAME, "craft": SPACECRAFT_NAME},
+    ...
+  ]
+}
+JSONP
+Appending a callback request to the query string will return JSONP:
+
+http://api.open-notify.org/astros.json?callback=CALLBACK
+
+CALLBACK({
+  "message": "success",
+  "number": %NUMBER_OF_PEOPLE_IN_SPACE%,
+  "people": [
+    {"name": %NAME%, "craft": %SPACECRAFT_NAME%},
+    ...
+  ]
+})
+Examples
+Here is an example using jquery:
+
+$.getJSON('http://api.open-notify.org/astros.json', function(data) {
+  console.log(data['number'])
+});
+This should log the number of people in space to the console.
+
+Data Source
+I gather and update this data personally as launches and landing occur. There is no official source of data for this kind of thing.

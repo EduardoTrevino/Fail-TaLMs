@@ -1,0 +1,81 @@
+ityBikes API Documentation
+Welcome to the CityBikes API documentation page. This is a brief explanation on how to use CityBikes data.
+
+API End points
+http://api.citybik.es/v2/networks
+{
+  "networks": [
+    {
+        "company": "JCDecaux", 
+        "href": "/v2/networks/velib", <--- network API endpoint
+        "location": {
+          "latitude": 48.856612, 
+          "city": "Paris", 
+          "longitude": 2.352233, 
+          "country": "FRA"
+        }, 
+        "name": "Vélib'", 
+        "id": "velib"
+    },
+    {...}
+  ]
+}
+http://api.citybik.es/v2/networks/network_id
+{
+  "network": {
+    "name": "Vélib'", 
+    "stations": [
+      {
+          "name": "00903 - QUAI MAURIAC  / PONT DE BERCY",   /   UTC Zulu timestamp of the last time
+          "timestamp": "2014-04-14T12:10:17.622Z",  <-------/ the station was updated on our systems
+          "longitude": 2.374340554605615,                       
+          "free_bikes": 1,   <-------------------------- Available bikes
+          "latitude": 48.83713368945151, 
+          "empty_slots": 19,  <------------------------- Empty spaces
+          "id": "f5a551a87eec15155d6409fe9d0ff8e2" <---- Unique id for this station
+      },
+      {...}
+    ], 
+    "company": "JCDecaux",           |
+    "href": "/v2/networks/velib",       |        Redundant Information
+    "location": {                    |
+      "latitude": 48.856612,         |    Just so you know where you are
+      "city": "Paris",               |---      with less requests
+      "longitude": 2.352233,         | 
+      "country": "FRA"               |    This can be filtered by passing
+    },                               |      ?fields=stations to the URI
+    "id": "velib"                    |
+  }
+}
+
+Syntax
+Field filtering
+Fields can be filtered by adding a ?fields=list,of,fields parameter to any request. Field visibility gets only into the first document for now, but we plan on supporting lucene type parameters to allow filterings like location.city,station.*
+
+For example http://api.citybik.es/v2/networks?fields=id,name,href will render just the name, id and API endpoint of each network
+
+{
+  "networks": [
+    {
+        "href": "/v2/networks/velib", 
+        "id": "velib", 
+        "name": "V\u00e9lib'"
+    }, 
+    {
+        "href": "/v2/networks/valenbisi", 
+        "id": "valenbisi", 
+        "name": "Valenbisi"
+    }, 
+    {
+        "href": "/v2/networks/ecobici", 
+        "id": "ecobici", 
+        "name": "EcoBici"
+    },
+    {...}
+  ]
+}
+
+Format
+The system currently supports only JSON.
+
+More formats may be implemented, and will be requested by setting the appropiate MIME type on the Content-Type field of the header's request.
