@@ -1,0 +1,126 @@
+{
+    "tool_name": "healthcare",
+    "tool_description": "API to access educational content about the Health Insurance Marketplace®.",
+    "title": "HealthCare.gov API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.healthcare.gov/developers",
+    "host": "www.healthcare.gov",
+    "api_list": [
+        {
+            "name": "get_content_object",
+            "url": "https://www.healthcare.gov/:post-title.json",
+            "description": "Get the JSON object for a specific post by its title.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "post_title",
+                    "type": "STRING",
+                    "description": "The title of the post.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.healthcare.gov/:post-title.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "url": "str",
+                "title": "str",
+                "content": "str",
+                "author": "str",
+                "date": "str",
+                "lang": "str",
+                "categories": "list",
+                "tags": "list",
+                "topics": "list",
+                "layout": "str",
+                "order": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_content_collection",
+            "url": "https://www.healthcare.gov/api/:content-type.json",
+            "description": "Get a collection of posts by content type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "content_type",
+                    "type": "STRING",
+                    "description": "The type of content such as articles, blog, questions, glossary, etc.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.healthcare.gov/api/:content-type.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "content_type": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "content_type": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_content_index",
+            "url": "https://www.healthcare.gov/api/index.json",
+            "description": "Get an index of all posts and their metadata.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.healthcare.gov/api/index.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "tags": "list",
+                "categories": "list",
+                "topics": "list",
+                "title": "str",
+                "es-title": "str",
+                "url": "str",
+                "bite": "str",
+                "es-bite": "str",
+                "audience": "list",
+                "segment": "list",
+                "insurance-status": "list",
+                "state": "list",
+                "condition": "list"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                }
+            }
+        }
+    ]
+}

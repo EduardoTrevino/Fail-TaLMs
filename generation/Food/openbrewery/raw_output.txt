@@ -1,0 +1,463 @@
+Sure! Below are the Python functions for the "openbrewery" API, the accompanying test cases, and the metadata JSON file.
+
+### `api.py`
+```python
+import requests
+from typing import Optional, List
+
+def single_brewery(obdb_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a single brewery by ID.
+    Parameters:
+     - obdb_id [Required]: string [The ID of the brewery]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries/{obdb_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_breweries(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a list of breweries.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def random_brewery(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a random brewery.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/random"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_breweries(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search breweries by a search term.
+    Parameters:
+     - query [Required]: string [The search term]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries/search?query={query}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def autocomplete(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Return a list of names and ids of breweries based on a search term.
+    Parameters:
+     - query [Required]: string [The search term]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries/autocomplete?query={query}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_city(city: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by city.
+    Parameters:
+     - city [Required]: string [The city to filter by]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_city={city}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_state(state: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by state (full state name).
+    Parameters:
+     - state [Required]: string [The state to filter by]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_state={state}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_postal(postal: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by postal code.
+    Parameters:
+     - postal [Required]: string [The postal code to filter by]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_postal={postal}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_type(brewery_type: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by type.
+    Parameters:
+     - brewery_type [Required]: string [The type of brewery to filter by]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_type={brewery_type}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_name(name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by name.
+    Parameters:
+     - name [Required]: string [The name to filter by]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_name={name}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_dist(lat: float, lon: float, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Sort the results by distance from an origin point, denoted by latitude and longitude.
+    Parameters:
+     - lat [Required]: float [The latitude]
+     - lon [Required]: float [The longitude]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_dist={lat},{lon}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_by_ids(ids: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter breweries by a comma-separated list of brewery IDs.
+    Parameters:
+     - ids [Required]: string [Comma-separated list of brewery IDs]
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries?by_ids={ids}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def breweries_metadata(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get breweries metadata.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/meta"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### `api_test.py`
+```python
+import unittest
+import api
+
+class TestOpenBreweryAPI(unittest.TestCase):
+
+    def test_single_brewery(self):
+        result = api.single_brewery('madtree-brewing-cincinnati')
+        self.assertIn('id', result)
+        self.assertEqual(result['id'], 'madtree-brewing-cincinnati')
+
+    def test_list_breweries(self):
+        result = api.list_breweries()
+        self.assertIsInstance(result, list)
+
+    def test_random_brewery(self):
+        result = api.random_brewery()
+        self.assertIn('id', result)
+
+    def test_search_breweries(self):
+        result = api.search_breweries('dog')
+        self.assertIsInstance(result, list)
+
+    def test_autocomplete(self):
+        result = api.autocomplete('dog')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_city(self):
+        result = api.breweries_by_city('San Diego')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_state(self):
+        result = api.breweries_by_state('California')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_postal(self):
+        result = api.breweries_by_postal('44113')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_type(self):
+        result = api.breweries_by_type('micro')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_name(self):
+        result = api.breweries_by_name('dog')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_dist(self):
+        result = api.breweries_by_dist(39.7589478, -84.1916069) # Example coordinates
+        self.assertIsInstance(result, list)
+
+    def test_breweries_by_ids(self):
+        result = api.breweries_by_ids('madtree-brewing-cincinnati,dogtown-brewing-cincinnati')
+        self.assertIsInstance(result, list)
+
+    def test_breweries_metadata(self):
+        result = api.breweries_metadata()
+        self.assertIsInstance(result, dict)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### `openbrewery.json`
+```json
+{
+    "tool_name": "openbrewery",
+    "tool_description": "API to access a wealth of data about breweries in the Open Brewery DB.",
+    "title": "Open Brewery DB API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.openbrewerydb.org/documentation",
+    "host": "api.openbrewerydb.org",
+    "api_list": [
+        {
+            "name": "single_brewery",
+            "url": "https://api.openbrewerydb.org/v1/breweries/{obdb-id}",
+            "description": "Get a single brewery by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "obdb_id",
+                    "type": "STRING",
+                    "description": "The ID of the brewery",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": {
+                "id": "madtree-brewing-cincinnati",
+                "name": "MadTree Brewing",
+                "brewery_type": "micro",
+                "street": "5164 Kennedy Ave",
+                "city": "Cincinnati",
+                "state": "Ohio",
+                "postal_code": "45213-2611",
+                "country": "United States",
+                "longitude": "-84.4239715",
+                "latitude": "39.1625098",
+                "phone": "5138368733",
+                "website_url": "http://www.madtreebrewing.com",
+                "updated_at": "2018-08-23T23:24:11.758Z",
+                "tag_list": []
+            }
+        },
+        {
+            "name": "list_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries",
+            "description": "Retrieve a list of breweries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [
+                {
+                    "id": "madtree-brewing-cincinnati",
+                    "name": "MadTree Brewing",
+                    "brewery_type": "micro",
+                    "street": "5164 Kennedy Ave",
+                    "city": "Cincinnati",
+                    "state": "Ohio",
+                    "postal_code": "45213-2611",
+                    "country": "United States",
+                    "longitude": "-84.4239715",
+                    "latitude": "39.1625098",
+                    "phone": "5138368733",
+                    "website_url": "http://www.madtreebrewing.com",
+                    "updated_at": "2018-08-23T23:24:11.758Z",
+                    "tag_list": []
+                }
+            ]
+        },
+        {
+            "name": "random_brewery",
+            "url": "https://api.openbrewerydb.org/v1/breweries/random",
+            "description": "Get a random brewery.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": {
+                "id": "madtree-brewing-cincinnati",
+                "name": "MadTree Brewing",
+                "brewery_type": "micro",
+                "street": "5164 Kennedy Ave",
+                "city": "Cincinnati",
+                "state": "Ohio",
+                "postal_code": "45213-2611",
+                "country": "United States",
+                "longitude": "-84.4239715",
+                "latitude": "39.1625098",
+                "phone": "5138368733",
+                "website_url": "http://www.madtreebrewing.com",
+                "updated_at": "2018-08-23T23:24:11.758Z",
+                "tag_list": []
+            }
+        },
+        {
+            "name": "search_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries/search?query={search}",
+            "description": "Search breweries by a search term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search term",
+                    "default": "dog"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [
+                {
+                    "id": "dogtown-brewing-cincinnati",
+                    "name": "Dogtown Brewing",
+                    "brewery_type": "micro",
+                    "street": "101 Main St",
+                    "city": "Cincinnati",
+                    "state": "Ohio",
+                    "postal_code": "45202",
+                    "country": "United States",
+                    "longitude": "-84.5124608",
+                    "latitude": "39.1031182",
+                    "phone": "5135551234",
+                    "website_url": "http://www.dogtownbrewing.com",
+                    "updated_at": "2018-08-23T22:24:11.758Z",
+                    "tag_list": []
+                }
+            ]
+        },
+        {
+            "name": "autocomplete",
+            "url": "https://api.openbrewerydb.org/v1/breweries/autocomplete?query={search}",
+            "description": "Return a list of names and ids of breweries based on a search term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search term",
+                    "default": "dog"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [
+                {
+                    "id": "dogtown-brewing-cincinnati",
+                    "name": "Dogtown Brewing"
+                }
+            ]
+        },
+        {
+            "name": "breweries_by_city",
+            "url": "https://api.openbrewerydb.org/v1/breweries?by_city={city}",
+            "description": "Filter breweries by city.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "city",
+                    "type": "STRING",
+                    "description": "The city to filter by",
+                    "default": "San Diego"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [
+                {
+                    "id": "san-diego-brewing-san-diego",
+                    "name": "San Diego Brewing",
+                    "brewery_type": "micro",
+                    "street": "123 Main St",
+                    "city": "San Diego",
+                    "state": "California",
+                    "postal_code": "92093",
+                    "country": "United States",
+                    "longitude": "-117.1610838",
+                    "latitude": "32.7157",
+                    "phone": "6195551234",
+                    "website_url": "http://www.sandiegobrewing.com",
+                    "updated_at": "2018-08-23T21:24:11.758Z",
+                    "tag_list": []
+                }
+            ]
+        },
+        {
+            "name": "breweries_by_state",
+            "url": "https://api.openbrewerydb.org/v1/breweries?by_state={state}",
+            "description": "Filter breweries by state (full state name).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "state",
+                    "type": "STRING",
+                    "description": "The state to filter by",
+                    "default": "California"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [
+                {
+                    "id": "california-brewing-california",
+                    "name": "California Brewing",
+                    "brewery_type": "micro",
+                    "street": "456 Maple St",
+                    "city": "Los Angeles",
+                    "state": "California",
+                    "postal_code": "90001",
+                    "country": "United States",
+                    "longitude": "-118.2437",
+                    "latitude": "34.0522",
+                    "phone": "2135556789",
+                    "website_url": "http://www.californiabrewing.com",
+                    "updated_at": "2018-08-23T20:24:11.758Z",
+                    "tag_list": []
+                }
+            ]
+        },
+        {
+            "name":

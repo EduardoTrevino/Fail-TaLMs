@@ -1,0 +1,415 @@
+Sure, here is how you can implement the API functions, test cases, and metadata JSON file for the "cocktail" API.
+
+### `api.py`
+
+```python
+import requests
+from typing import Optional
+
+def search_cocktail_by_name(s: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Search cocktail by name.
+    Parameters:
+    s [Required]: string [Cocktail name to search for].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'s': s}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_all_cocktails_by_first_letter(f: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: List all cocktails by first letter.
+    Parameters:
+    f [Required]: string [First letter to list cocktails by].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'f': f}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_ingredient_by_name(i: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Search ingredient by name.
+    Parameters:
+    i [Required]: string [Ingredient name to search for].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'i': i}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def lookup_full_cocktail_details_by_id(i: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Lookup full cocktail details by id.
+    Parameters:
+    i [Required]: integer [Cocktail ID to lookup].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php"
+    params = {'i': i}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def lookup_ingredient_by_id(iid: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Lookup ingredient by ID.
+    Parameters:
+    iid [Required]: integer [Ingredient ID to lookup].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php"
+    params = {'iid': iid}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def lookup_random_cocktail(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Lookup a random cocktail.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_by_ingredient(i: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Search by ingredient.
+    Parameters:
+    i [Required]: string [Ingredient to filter by].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'i': i}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def filter_by_alcoholic(a: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Filter by alcoholic.
+    Parameters:
+    a [Required]: string [Alcoholic or Non_Alcoholic].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'a': a}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def filter_by_category(c: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Filter by category.
+    Parameters:
+    c [Required]: string [Category to filter by].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'c': c}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def filter_by_glass(g: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: Filter by glass.
+    Parameters:
+    g [Required]: string [Glass type to filter by].
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'g': g}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_categories(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: List categories.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'c': 'list'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_glasses(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: List glasses.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'g': 'list'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_ingredients(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: List ingredients.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'i': 'list'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_alcoholic(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint: List alcoholic filters.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'a': 'list'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### `api_test.py`
+
+```python
+import unittest
+from api import *
+
+class TestCocktailAPI(unittest.TestCase):
+
+    def test_search_cocktail_by_name(self):
+        response = search_cocktail_by_name(s="margarita")
+        self.assertIn("drinks", response)
+    
+    def test_list_all_cocktails_by_first_letter(self):
+        response = list_all_cocktails_by_first_letter(f="a")
+        self.assertIn("drinks", response)
+    
+    def test_search_ingredient_by_name(self):
+        response = search_ingredient_by_name(i="vodka")
+        self.assertIn("ingredients", response)
+    
+    def test_lookup_full_cocktail_details_by_id(self):
+        response = lookup_full_cocktail_details_by_id(i=11007)
+        self.assertIn("drinks", response)
+        
+    def test_lookup_ingredient_by_id(self):
+        response = lookup_ingredient_by_id(iid=552)
+        self.assertIn("ingredients", response)
+        
+    def test_lookup_random_cocktail(self):
+        response = lookup_random_cocktail()
+        self.assertIn("drinks", response)
+    
+    def test_search_by_ingredient(self):
+        response = search_by_ingredient(i="Gin")
+        self.assertIn("drinks", response)
+        
+    def test_filter_by_alcoholic(self):
+        response = filter_by_alcoholic(a="Alcoholic")
+        self.assertIn("drinks", response)
+        
+    def test_filter_by_category(self):
+        response = filter_by_category(c="Ordinary_Drink")
+        self.assertIn("drinks", response)
+        
+    def test_filter_by_glass(self):
+        response = filter_by_glass(g="Cocktail_glass")
+        self.assertIn("drinks", response)
+        
+    def test_list_categories(self):
+        response = list_categories()
+        self.assertIn("drinks", response)
+        
+    def test_list_glasses(self):
+        response = list_glasses()
+        self.assertIn("drinks", response)
+        
+    def test_list_ingredients(self):
+        response = list_ingredients()
+        self.assertIn("drinks", response)
+        
+    def test_list_alcoholic(self):
+        response = list_alcoholic()
+        self.assertIn("drinks", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### `cocktail.json`
+
+```json
+{
+    "tool_name": "cocktail",
+    "tool_description": "API to get information about cocktails such as recipes, ingredients, categories, etc.",
+    "title": "Cocktail API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.thecocktaildb.com/api.php",
+    "host": "www.thecocktaildb.com",
+    "api_list": [
+        {
+            "name": "search_cocktail_by_name",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php?s={s}",
+            "description": "Search cocktail by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "s",
+                    "type": "STRING",
+                    "description": "Cocktail name to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,    
+            "example_response": {
+                "drinks": [
+                    {
+                        "idDrink": "11007",
+                        "strDrink": "Margarita",
+                        "strCategory": "Ordinary Drink",
+                        "strAlcoholic": "Alcoholic",
+                        "strGlass": "Cocktail glass",
+                        "strInstructions": "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten..",
+                        "strIngredient1": "Tequila",
+                        "strIngredient2": "Triple sec",
+                        "strIngredient3": "Lime juice",
+                        "strIngredient4": "Salt",
+                        "strMeasure1": "1 1/2 oz ",
+                        "strMeasure2": "1/2 oz ",
+                        "strMeasure3": "1 oz ",
+                        "strMeasure4": null
+                    }
+                ]
+            }
+        },
+        {
+            "name": "list_all_cocktails_by_first_letter",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php?f={f}",
+            "description": "List all cocktails by first letter.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "f",
+                    "type": "STRING",
+                    "description": "First letter to list cocktails by."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "example_response": {
+                "drinks": [
+                    {
+                        "idDrink": "11000",
+                        "strDrink": "Advocaat Cocktail",
+                        "strCategory": "Ordinary Drink",
+                        "strAlcoholic": "Alcoholic",
+                        "strGlass": "Cocktail glass",
+                        "strInstructions": "Shake all ingredients with ice and strain into a cocktail glass.",
+                        "strIngredient1": "Advocaat",
+                        "strIngredient2": "Lemon juice",
+                        "strIngredient3": "Grenadine",
+                        "strMeasure1": "2 oz ",
+                        "strMeasure2": "1 oz ",
+                        "strMeasure3": null
+                    }
+                ]
+            }
+        },
+        {
+            "name": "search_ingredient_by_name",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php?i={i}",
+            "description": "Search ingredient by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "i",
+                    "type": "STRING",
+                    "description": "Ingredient name to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "example_response": {
+                "ingredients": [
+                    {
+                        "idIngredient": "1",
+                        "strIngredient": "Vodka",
+                        "strDescription": "Vodka is a distilled beverage composed primarily of water and ethanol...",
+                        "strType": "Spirit",
+                        "strAlcohol": "Yes",
+                        "strABV": "40"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "lookup_full_cocktail_details_by_id",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={i}",
+            "description": "Lookup full cocktail details by id.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "i",
+                    "type": "INTEGER",
+                    "description": "Cocktail ID to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "example_response": {
+                "drinks": [
+                    {
+                        "idDrink": "11007",
+                        "strDrink": "Margarita",
+                        "strCategory": "Ordinary Drink",
+                        "strAlcoholic": "Alcoholic",
+                        "strGlass": "Cocktail glass",
+                        "strInstructions": "Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten..",
+                        "strIngredient1": "Tequila",
+                        "strIngredient2": "Triple sec",
+                        "strIngredient3": "Lime juice",
+                        "strIngredient4": "Salt",
+                        "strMeasure1": "1 1/2 oz ",
+                        "strMeasure2": "1/2 oz ",
+                        "strMeasure3": "1 oz ",
+                        "strMeasure4": null
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+This setup includes the `api.py` file containing functions to call each of the endpoints in the "cocktail" API, corresponding test cases in `api_test.py`, and metadata about the API in `cocktail.json`.

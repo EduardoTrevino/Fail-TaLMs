@@ -1,0 +1,69 @@
+{
+    "tool_name": "makeup",
+    "tool_description": "API to search and filter makeup products by brand, price, category, tags, and other parameters.",
+    "title": "Makeup API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://makeup-api.herokuapp.com/",
+    "host": "makeup-api.herokuapp.com",
+    "api_list": [
+        {
+            "name": "search_makeup_products",
+            "url": "http://makeup-api.herokuapp.com/api/v1/products.json",
+            "description": "Search makeup products with optional filters such as brand, product type, category, tags, price range, and rating range.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "brand",
+                    "type": "STRING",
+                    "description": "Brand of the product. Will return all products for each brand."
+                },
+                {
+                    "name": "product_type",
+                    "type": "STRING",
+                    "description": "The type of makeup being searched for (e.g., lipstick, eyeliner)."
+                },
+                {
+                    "name": "product_category",
+                    "type": "STRING",
+                    "description": "Sub-category for each makeup-type (e.g., lip gloss is a category of lipstick)."
+                },
+                {
+                    "name": "product_tags",
+                    "type": "STRING",
+                    "description": "Tags each product could be tagged with (e.g., vegan). Multiple tags can be separated by commas."
+                },
+                {
+                    "name": "price_greater_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with price greater than the indicated number (exclusive)."
+                },
+                {
+                    "name": "price_less_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with price less than the indicated number (exclusive)."
+                },
+                {
+                    "name": "rating_greater_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with a rating more than the indicated number (exclusive)."
+                },
+                {
+                    "name": "rating_less_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with a rating less than the indicated number (exclusive)."
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://makeup-api.herokuapp.com/api/v1/products.json'\nparams = {...}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {}
+        }
+    ]
+}

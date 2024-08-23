@@ -1,0 +1,491 @@
+Below is the specification for the iDigBio Search API, also known as the iDigBio API v2. It uses technology and patterns common in other parts of iDigBio to build a wrapper around the full Elasticsearch API, exposing a minimal subset. The code in this repository implements all of the documented functionality, although it may not be bug free or optimal.
+
+There are several things not covered here, such as this API's relation to the v2 Access API. This is one of several APIs available, please review the iDigBio API Overview for more information about additional ways to access iDigBio data.
+
+Overview
+The public API supports HTTP GET and POST requests for data read operations only. The iDigBio API is a RESTful web service that delivers data primarily as JSON documents.
+
+GET requests
+A query submitted as a GET request must be URL-encoded.
+
+POST requests
+A query submitted as a POST request must be supplied as JSON in the content body and specify the "Content-Type: application/json" request header.
+
+Contents
+Attribution Block
+View
+Basic Access
+Search
+Basic Search
+Media
+Searching for Media Record objects
+Mapping
+Create Map
+Retrieve Map Definition
+Tiled GeoJSON
+Tiled UTF-8 Grid
+Tiled PNG
+Map Points
+Summary
+Top-N Records
+Top-N Media Records
+Record Count
+Media Record Count
+Recordset Count
+Record Modified
+Media Record Modified
+Date Histogram
+Stats
+Metadata
+Fields
+Attribution block
+Each request will also return a top level attribution block containing recordset information for recordsets covered by the request, potentially including counts.
+
+View
+Basic Access
+GET /v2/view/{uuid}
+GET /v2/view/{type}/{uuid}
+Returns idigbio record format (legacy api), equivalent to the current legacy api.
+
+{type} is one of: records, mediarecords, recordsets, publishers
+
+Search
+Basic searching
+GET /v2/search/{type}/?{parameters}
+{type} is one of: records, mediarecords, recordsets
+
+{parameters} : type-specific query string and parameters
+
+Records
+Searching for record objects
+GET, POST /v2/search/records/
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+sort	field to sort on, pick from Record Query Fields
+fields	a list of fields to return, specified using the fieldName parameter from Fields with type records
+fields_exclude	a list of fields to exclude, specified using the fieldName parameter from Fields with type records
+limit	max results
+offset	skip results
+no_attribution	disable the attribution block when set
+Returns idigbio record format (legacy api), plus additional top level keys with parsed index terms.
+
+Media
+Searching for mediarecord objects
+GET, POST /v2/search/media/
+Parameter	Description
+mq	Search Query in iDigBio Query Format, using Media Query Fields
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+sort	field to sort on, pick from Media Query Fields
+fields	a list of fields to return, specified using the fieldName parameter from Fields with type mediarecords
+fields_exclude	a list of fields to exclude, specified using the fieldName parameter from Fields with type records
+limit	max results
+offset	skip results
+no_attribution	disable the attribution block when set
+Returns idigbio record format (legacy api), plus additional top level keys with parsed index terms.
+
+Recordsets
+Searching for recordset objects
+GET, POST /v2/search/recordsets/
+Parameter	Description
+rsq	Search Query in iDigBio Query Format, using Record Query Fields
+sort	field to sort on, pick from Record Query Fields
+fields	a list of fields to return, specified using the fieldName parameter from Fields with type records
+fields_exclude	a list of fields to exclude, specified using the fieldName parameter from Fields with type records
+limit	max results
+offset	skip results
+Returns idigbio record format (legacy api), plus additional top level keys with parsed index terms.
+
+Mapping
+Create Map
+GET, POST /v2/mapping/
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+style	Style is a JSON dictionary that describes how the map is rendered. For most users, the defaults will work without any modification.
+type	'geohash' or 'points'
+Returns the map definition and attribution information. Also returns the map short code, and URLs to tile endpoints.
+
+For everything below this, the parameter {s} is the map short code, which is returned in the JSON response of the map creation. Think of this short code like a url shortener for your whole map query.
+
+Retrieve Map Definition
+GET /v2/mapping/{s}
+Returns the map definition and attribution information. Also returns the map short code, and URLs to tile endpoints.
+
+{s} is a map short code
+
+Tiled GeoJSON
+GET, POST /v2/mapping/{s}/{z}/{x}/{y.json}
+Returns a GeoJSON representation of the map point or geohash data.
+
+Tiled UTF-8 grid
+GET, POST /v2/mapping/{s}/{z}/{x}/{y.grid.json}
+Returns a utf8grid representation of the map point or geohash data.
+
+Tiled PNG
+GET, POST /v2/mapping/{s}/{z}/{x}/{y.png}
+Returns a PNG representation of the map point or geohash data.
+
+Map Points
+GET, POST /v2/mapping/{s}/points
+Parameter	Description
+lat	Latitude of the map click
+lon	Longitude of the map click
+zoom	current zoom level of the map
+sort	Field to sort on, pick from Record Query Fields
+limit	max results
+offset	skip results
+Returns points "near" a click location on a map. Primarily useful for retrieving data for a map popup on click event. Returns a data format identical to basic searching.
+
+Summary
+Top-N Records
+GET, POST /v2/summary/top/records/
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+top_fields	a list of fields to return, specified using the fieldName parameter from Fields with type records
+count	The number of top value to return
+Returns a custom JSON format containing the top-N (where n is specified with count) values for a given field. Scientificname is the default field. When multiple fields are supplied, the values will be nested inside each-other. This allows you to build field heirarchies. For example:
+
+/v2/summary/top/records/?top_fields=["kingdom","phylum"]&count=10
+Will return the top 10 kingdoms for all records, and the top 10 phylums for each kingdom.
+
+Top-N Mediarecords
+GET, POST /v2/summary/top/media/
+Parameter	Description
+mq	Search Query in iDigBio Query Format, using Media Query Fields
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+top_fields	a list of fields to return, specified using the fieldName parameter from Fields with type mediarecords
+count	The number of top value to return
+As in Top-N-Records, but supporting media queries, and fields from the mediarecord type. Flags is the default summary field.
+
+Record Count
+GET, POST /v2/summary/count/records/
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+Returns the number of records that match a search.
+
+Media Count
+GET, POST /v2/summary/count/media/
+Parameter	Description
+mq	Search Query in iDigBio Query Format, using Media Query Fields
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+Returns the number of media records that match a search.
+
+Recordset Count
+GET, POST /v2/summary/count/recordsets/
+Parameter	Description
+rsq	Search Query in iDigBio Query Format, using Recordset Query Fields
+Returns the number of recordsets that match a search.
+
+Record Modified
+GET, POST /v2/summary/modified/records/
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+Returns the last time a record was modified in idigbio that matches the search.
+
+Media Modified
+GET, POST /v2/summary/modified/media/
+Parameter	Description
+mq	Search Query in iDigBio Query Format, using Media Query Fields
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+Returns the last time a mediarecord was modified in idigbio that matches the search.
+
+Date Histogram
+GET, POST /v2/summary/datehist
+Parameter	Description
+rq	Search Query in iDigBio Query Format, using Record Query Fields
+top_fields	a list of fields to return as sub fields of the histogram, specified using the fieldName parameter from Fields with type records
+count	The number of top value to return
+date_field (or dateField)	the index date field to compute the histogram on (datecollected by default)
+min_date (or minDate)	the minimum date to display, supports raw dates, and date math (see: Date Math)
+max_date (or maxDate)	the maximum date to display, same formats as minDate
+date_interval (or dateInterval)	The interval of the histogram, supports year, month, week, day (year by default)
+Display data bucketed by date fields, useful for building charts or histograms. Supports the same parameters as the Top-N Records endpoint for nesting data inside the histogram buckets.
+
+Stats
+GET, POST /v2/summary/stats/{t}
+Parameter	Description
+t	Stat type, one of: api, digest, search
+recordset	Limit the display to a single recordset (by uuid).
+min_date (or minDate)	the minimum date to display, supports raw dates, and date math (see: Date Math)
+max_date (or maxDate)	the maximum date to display, same formats as minDate
+date_interval (or dateInterval)	The interval of the histogram, supports year, month, week, day (year by default)
+Display stats data bucketed by date fields, useful for building charts or histograms. Stats returned depend on type:
+
+API: Returns the Count of Records and Mediarecords per Recordset from our API stats for the date range
+Digest: Returns the Count of Records and Mediarecords per Recordset from our Digest stats for the date range
+Search: Returns the usage stats for our system for the date range
+Search: Count of records per recordset matching search queries
+Seen: Count of records per recordset displayed to users (or returned with data from the API)
+Download: Count of records per recordset download via the download system
+Metadata
+Fields
+GET, POST /v2/meta/fields/{type}
+Returns a dictionary of fields and subfields, their types, and fully qualified field names.
+
+{type} is one of: records, mediarecords, recordsets, publishers
+
+Example: https://search.idigbio.org/v2/search/records/?rq={"data.dwc:dynamicProperties":"nsf_tcn"}&limit=1
+
+Response:
+{
+  "itemCount": 128321,
+  "lastModified": "2024-05-14T21:56:15.656Z",
+  "items": [
+    {
+      "uuid": "c5e7b8fe-7f33-404e-96cc-35a201a4b1d9",
+      "type": "records",
+      "etag": "374cae88e1fee11ccee37aff63f7d55fab012235",
+      "data": {
+        "dwc:specificEpithet": "mantispinoformis",
+        "dwc:kingdom": "Animalia",
+        "dwc:recordedBy": "Jim Barkley",
+        "dwc:georeferencedDate": "2012",
+        "dwc:order": "Neuroptera",
+        "dcterms:references": "http://collections.peabody.yale.edu/search/Record/YPM-IP-586369",
+        "dwc:individualCount": "1",
+        "dwc:georeferenceRemarks": "handheld Garmin GPS unit",
+        "dwc:occurrenceID": "urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1",
+        "dwc:dateIdentified": "2018",
+        "dwc:verbatimElevation": "2179 m",
+        "dwc:scientificNameAuthorship": "Makarkin, 2019",
+        "id": "urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1",
+        "dwc:minimumElevationInMeters": "2179",
+        "dwc:stateProvince": "Colorado",
+        "dcterms:bibliographicCitation": "Protonolima mantispinoformis (YPM IP 586369)",
+        "dwc:eventDate": "2012/2020",
+        "dwc:institutionCode": "YPM",
+        "dwc:country": "USA",
+        "dwc:typeStatus": "holotype",
+        "dwc:collectionCode": "IP",
+        "dcterms:rightsHolder": "Yale Peabody Museum",
+        "dwc:county": "Rio Blanco County",
+        "dwc:decimalLatitude": "39.729294",
+        "dwc:occurrenceRemarks": "IP number 586369; lot count 1; original nature=part/counterpart; accn=YPM.11753; associatedwith=on same slab: IP.586370,on same slab: IP.586371,on same slab: IP.586372",
+        "dwc:basisOfRecord": "FossilSpecimen",
+        "dwc:genus": "Protonolima",
+        "dwc:continent": "North America",
+        "dwc:family": "Mantispidae",
+        "dwc:identifiedBy": "Vladimir Makarkin",
+        "dwc:dynamicProperties": "{ \"irn\": \"1626031\", \"media\": \"458830:82f338bf-7d81-436b-acbc-0c38d92ac4aa 1066330:8b0f07b9-cdb6-49f8-91b1-3a2999d633c1\", \"mm_repository_id\": \"458830\", \"solr_long_lat\": \"-107.978086,39.729294\", \"related_record_types\": \"\", \"related_record_links\": \"YPM-IP-586370|YPM-IP-586371|YPM-IP-586372\", \"NSF_TCN\": \"FIC\" }",
+        "dwc:georeferenceSources": "Google Earth",
+        "dwc:disposition": "in collection",
+        "dwc:previousIdentifications": "Protonolima mantispinoformis|Mantispidae",
+        "dcterms:license": "http://creativecommons.org/publicdomain/zero/1.0/",
+        "dwc:ownerInstitutionCode": "YPM",
+        "dwc:vernacularName": "mantidflies; ant lions; winged insects; insects; hexapods; arthropods; animals",
+        "dwc:coordinateUncertaintyInMeters": "500",
+        "dwc:associatedReferences": "HOLOTYPE. Det. by: Vladimir Makarkin 2018|Det. by: Daniel P. Cole",
+        "dwc:higherClassification": "Animalia; Arthropoda; Hexapoda; Insecta; Pterygota; Endopterygota; Neuroptera; Mantispidae",
+        "dwc:phylum": "Arthropoda",
+        "dwc:locality": "Gus' pit; 2 mi W of Rio Blanco store",
+        "dwc:associatedMedia": "https://images.collections.yale.edu/iiif/2/ypm:82f338bf-7d81-436b-acbc-0c38d92ac4aa/full/!1920,1920/0/default.jpg",
+        "dwc:geodeticDatum": "WGS84",
+        "dwc:taxonRank": "Species",
+        "dwc:formation": "Green River Fm",
+        "dwc:class": "Insecta",
+        "dwc:catalogNumber": "YPM IP 586369",
+        "dwc:nomenclaturalCode": "ICZN",
+        "dwc:taxonRemarks": "Fossils, Rocks and Minerals: Fossils - Invertebrates",
+        "dwc:higherGeography": "North America; USA; Colorado; Rio Blanco County",
+        "dcterms:accessRights": "Open Access, http://creativecommons.org/publicdomain/zero/1.0/; see Yale Peabody policies at: http://hdl.handle.net/10079/8931zqj",
+        "dwc:member": "Parachute Creek Mbr",
+        "dwc:scientificName": "Protonolima mantispinoformis",
+        "dwc:datasetName": "FIC",
+        "dwc:earliestAgeOrLowestStage": "Ypresian",
+        "dwc:georeferencedBy": "Jim Barkley",
+        "dwc:earliestEpochOrLowestSeries": "Early Eocene",
+        "dwc:decimalLongitude": "-107.978086",
+        "dwc:georeferenceProtocol": "digital resource",
+        "dcterms:modified": "2024-03-08T14:57:55.000Z",
+        "dwc:associatedTaxa": "on same slab: IP.586370|on same slab: IP.586371|on same slab: IP.586372",
+        "dwc:datasetID": "1",
+        "dwc:year": "2012"
+      },
+      "indexTerms": {
+        "individualcount": 1,
+        "geopoint": {
+          "lat": 39.729294,
+          "lon": -107.978086
+        },
+        "family": "mantispidae",
+        "recordset": "137ed4cd-5172-45a5-acdb-8e1de9a64e32",
+        "dqs": 0.507246376811594,
+        "stateprovince": "colorado",
+        "institutioncode": "ypm",
+        "county": "rio blanco county",
+        "phylum": "arthropoda",
+        "catalognumber": "ypm ip 586369",
+        "startdayofyear": 138,
+        "taxonrank": "species",
+        "specificepithet": "mantispinoformis",
+        "continent": "north america",
+        "earliestepochorlowestseries": "early eocene",
+        "member": "parachute creek mbr",
+        "uuid": "c5e7b8fe-7f33-404e-96cc-35a201a4b1d9",
+        "countrycode": "usa",
+        "basisofrecord": "fossilspecimen",
+        "collector": "jim barkley",
+        "commonnames": [
+          "mantidflies; ant lions; winged insects; insects; hexapods; arthropods; animals"
+        ],
+        "mediarecords": [
+          "36f3d6a4-d46b-4cbc-9165-0efad5ea179f",
+          "44c79329-ae27-4ec5-ae81-0a90e1ef9248"
+        ],
+        "datemodified": "2024-05-14T21:56:15.656648+00:00",
+        "datecollected": "2012-05-17",
+        "etag": "374cae88e1fee11ccee37aff63f7d55fab012235",
+        "typestatus": "holotype",
+        "hasMedia": true,
+        "minelevation": 2179,
+        "hasImage": true,
+        "kingdom": "animalia",
+        "highertaxon": "animalia; arthropoda; hexapoda; insecta; pterygota; endopterygota; neuroptera; mantispidae",
+        "commonname": "mantidflies; ant lions; winged insects; insects; hexapods; arthropods; animals",
+        "scientificname": "protonolima mantispinoformis",
+        "indexData": {
+          "flag_dwc_country_replaced": true,
+          "dwc:georeferenceProtocol": "digital resource",
+          "dwc:specificEpithet": "mantispinoformis",
+          "dwc:kingdom": "Animalia",
+          "dwc:recordedBy": "Jim Barkley",
+          "idigbio:uuid": "c5e7b8fe-7f33-404e-96cc-35a201a4b1d9",
+          "dwc:georeferencedDate": "2012",
+          "dwc:order": "Neuroptera",
+          "dcterms:references": "http://collections.peabody.yale.edu/search/Record/YPM-IP-586369",
+          "dwc:scientificNameAuthorship": "Makarkin, 2019",
+          "dwc:locality": "Gus' pit; 2 mi W of Rio Blanco store",
+          "idigbio:recordIds": [
+            "137ed4cd-5172-45a5-acdb-8e1de9a64e32\\urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1"
+          ],
+          "dwc:occurrenceID": "urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1",
+          "dwc:dateIdentified": "2018",
+          "idigbio:etag": "374cae88e1fee11ccee37aff63f7d55fab012235",
+          "dwc:verbatimElevation": "2179 m",
+          "dwc:decimalLatitude": "39.729294",
+          "dcterms:rightsHolder": "Yale Peabody Museum",
+          "idigbio:parent": "137ed4cd-5172-45a5-acdb-8e1de9a64e32",
+          "dwc:stateProvince": "Colorado",
+          "dwc:taxonRank": "Species",
+          "dwc:eventDate": "2012/2020",
+          "dwc:country": "united states",
+          "dwc:typeStatus": "holotype",
+          "dwc:collectionCode": "IP",
+          "id": "urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1",
+          "dwc:county": "Rio Blanco County",
+          "dwc:georeferenceRemarks": "handheld Garmin GPS unit",
+          "dwc:occurrenceRemarks": "IP number 586369; lot count 1; original nature=part/counterpart; accn=YPM.11753; associatedwith=on same slab: IP.586370,on same slab: IP.586371,on same slab: IP.586372",
+          "dwc:basisOfRecord": "FossilSpecimen",
+          "dcterms:accessRights": "Open Access, http://creativecommons.org/publicdomain/zero/1.0/; see Yale Peabody policies at: http://hdl.handle.net/10079/8931zqj",
+          "dwc:genus": "Protonolima",
+          "dwc:continent": "North America",
+          "dwc:family": "Mantispidae",
+          "dwc:identifiedBy": "Vladimir Makarkin",
+          "dwc:dynamicProperties": "{ \"irn\": \"1626031\", \"media\": \"458830:82f338bf-7d81-436b-acbc-0c38d92ac4aa 1066330:8b0f07b9-cdb6-49f8-91b1-3a2999d633c1\", \"mm_repository_id\": \"458830\", \"solr_long_lat\": \"-107.978086,39.729294\", \"related_record_types\": \"\", \"related_record_links\": \"YPM-IP-586370|YPM-IP-586371|YPM-IP-586372\", \"NSF_TCN\": \"FIC\" }",
+          "dwc:class": "Insecta",
+          "dwc:associatedTaxa": "on same slab: IP.586370|on same slab: IP.586371|on same slab: IP.586372",
+          "dwc:disposition": "in collection",
+          "dwc:previousIdentifications": "Protonolima mantispinoformis|Mantispidae",
+          "dcterms:license": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "idigbio:siblings": {
+            "mediarecord": [
+              "36f3d6a4-d46b-4cbc-9165-0efad5ea179f",
+              "44c79329-ae27-4ec5-ae81-0a90e1ef9248"
+            ]
+          },
+          "dwc:ownerInstitutionCode": "YPM",
+          "dwc:vernacularName": "mantidflies; ant lions; winged insects; insects; hexapods; arthropods; animals",
+          "flag_idigbio_isocountrycode_added": true,
+          "dwc:associatedReferences": "HOLOTYPE. Det. by: Vladimir Makarkin 2018|Det. by: Daniel P. Cole",
+          "dwc:phylum": "Arthropoda",
+          "idigbio:dateModified": "2024-05-14T21:56:15.656648",
+          "dwc:georeferenceSources": "Google Earth",
+          "dwc:associatedMedia": "https://images.collections.yale.edu/iiif/2/ypm:82f338bf-7d81-436b-acbc-0c38d92ac4aa/full/!1920,1920/0/default.jpg",
+          "dwc:institutionCode": "YPM",
+          "dcterms:bibliographicCitation": "Protonolima mantispinoformis (YPM IP 586369)",
+          "dwc:formation": "Green River Fm",
+          "dwc:higherClassification": "Animalia; Arthropoda; Hexapoda; Insecta; Pterygota; Endopterygota; Neuroptera; Mantispidae",
+          "dwc:catalogNumber": "YPM IP 586369",
+          "dwc:nomenclaturalCode": "ICZN",
+          "dwc:taxonRemarks": "Fossils, Rocks and Minerals: Fossils - Invertebrates",
+          "dwc:higherGeography": "North America; USA; Colorado; Rio Blanco County",
+          "dwc:individualCount": "1",
+          "dwc:member": "Parachute Creek Mbr",
+          "dwc:scientificName": "Protonolima mantispinoformis",
+          "dwc:datasetName": "FIC",
+          "dwc:earliestAgeOrLowestStage": "Ypresian",
+          "dwc:georeferencedBy": "Jim Barkley",
+          "dwc:earliestEpochOrLowestSeries": "Early Eocene",
+          "dwc:decimalLongitude": "-107.978086",
+          "idigbio:isocountrycode": "usa",
+          "dwc:geodeticDatum": "WGS84",
+          "dwc:minimumElevationInMeters": "2179",
+          "dcterms:modified": "2024-03-08T14:57:55.000Z",
+          "dwc:coordinateUncertaintyInMeters": "500",
+          "dwc:datasetID": "1",
+          "dwc:year": "2012"
+        },
+        "coordinateuncertainty": 500,
+        "class": "insecta",
+        "occurrenceid": "urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1",
+        "earliestageorloweststage": "ypresian",
+        "country": "united states",
+        "locality": "gus' pit; 2 mi w of rio blanco store",
+        "collectioncode": "ip",
+        "eventdate": "2012/2020",
+        "flags": [
+          "dwc_country_replaced",
+          "idigbio_isocountrycode_added"
+        ],
+        "formation": "green river fm",
+        "recordids": [
+          "137ed4cd-5172-45a5-acdb-8e1de9a64e32\\urn:uuid:6c7c37d2-f9e4-4011-85ae-3a76f4df85f1"
+        ],
+        "genus": "protonolima",
+        "order": "neuroptera",
+        "datasetid": "1"
+      }
+    }
+  ],
+  "attribution": [
+    {
+      "uuid": "137ed4cd-5172-45a5-acdb-8e1de9a64e32",
+      "itemCount": 128321,
+      "name": "Invertebrate Paleontology Division, Yale Peabody Museum",
+      "description": "The Yale Peabody Museum's collection of invertebrate fossils is one of largest in the United States, in volume and in geographic, stratigraphic and taxonomic representation. The holdings of the Division of Invertebrate Paleontology represent more than 350,000 specimen lots, approximately 4 million individuals. A total of 35,000 are type specimens; about 4,500 are the basis of new species descriptions. Over 300,000 specimen lots are available in the online specimen index; all known type specimens are included.",
+      "logo": "http://ipt.peabody.yale.edu/ipt/logo.do?r=ipt_ip",
+      "url": "",
+      "emllink": "http://ipt.peabody.yale.edu/ipt/eml.do?r=ipt_ip",
+      "archivelink": "http://ipt.peabody.yale.edu/ipt/archive.do?r=ipt_ip",
+      "contacts": [
+        {
+          "first_name": "Larry",
+          "last_name": "Gall",
+          "role": "Head, Computer Systems Office",
+          "email": "lawrence.gall@yale.edu"
+        },
+        {
+          "first_name": "Larry",
+          "last_name": "Gall",
+          "role": "Head, Computer Systems Office",
+          "email": "lawrence.gall@yale.edu"
+        },
+        {
+          "first_name": "Larry",
+          "last_name": "Gall",
+          "role": "Head, Computer Systems Office",
+          "email": "lawrence.gall@yale.edu"
+        },
+        {
+          "first_name": "Susan",
+          "last_name": "Butts",
+          "role": "Division of Invertebrate Paleontology",
+          "email": "susan.butts@yale.edu"
+        }
+      ],
+      "data_rights": "CC0",
+      "publisher": "0bdd6e08-91e3-4ef0-a14f-7a987f9e9362",
+      "totalCount": 554993,
+      "hitRatio": 0.231211925195453
+    }
+  ]
+}

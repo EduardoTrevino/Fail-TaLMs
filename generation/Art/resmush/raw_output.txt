@@ -1,0 +1,169 @@
+Let's start by creating the `api.py` file with the necessary functions to interact with the reSmush.it API.
+
+**api.py**:
+```python
+import requests
+from typing import Optional, Dict, Any, Tuple
+
+TOOLBENCH_RAPIDAPI_KEY = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+def resmush_get(img: str, qlty: Optional[int] = 92, exif: Optional[bool] = False, toolbench_rapidapi_key: str = TOOLBENCH_RAPIDAPI_KEY) -> Dict[str, Any]:
+    """
+    Compress an image using GET method.
+    
+    Parameters:
+    img (str): URL of the image to be compressed.
+    qlty (int, optional): Quality level for JPG compression (0-100), default is 92.
+    exif (bool, optional): Whether to retain EXIF data, default is False.
+    """
+    url = "http://api.resmush.it/ws.php"
+    params = {
+        'img': img,
+        'qlty': qlty
+    }
+    if exif:
+        params['exif'] = 'true'
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def resmush_post(file_path: str, qlty: Optional[int] = 92, toolbench_rapidapi_key: str = TOOLBENCH_RAPIDAPI_KEY) -> Dict[str, Any]:
+    """
+    Compress an image using POST method by sending the file directly.
+    
+    Parameters:
+    file_path (str): Path to the image file to be compressed.
+    qlty (int, optional): Quality level for JPG compression (0-100), default is 92.
+    """
+    url = f"http://api.resmush.it/?qlty={qlty}"
+    with open(file_path, 'rb') as file:
+        files = {'files': (file_path, file)}
+        response = requests.post(url, files=files)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+Now, let's create the test cases in another file named `api_test.py`.
+
+**api_test.py**:
+```python
+import unittest
+from api import resmush_get, resmush_post
+
+class TestResmushAPI(unittest.TestCase):
+    
+    def test_resmush_get(self):
+        # Use an example image URL for testing
+        img_url = "https://resmush.it/wp-content/uploads/2024/02/testimage.jpg"
+        response = resmush_get(img_url, qlty=95, exif=True)
+        self.assertIn("dest", response)
+        self.assertIn("src_size", response)
+        self.assertIn("dest_size", response)
+
+    def test_resmush_post(self):
+        # Use an example image file for testing
+        file_path = "testimage.jpg"
+        response = resmush_post(file_path, qlty=95)
+        self.assertIn("dest", response)
+        self.assertIn("src_size", response)
+        self.assertIn("dest_size", response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+Finally, let's create a JSON metadata file named `resmush.json`.
+
+**resmush.json**:
+```json
+{
+    "tool_name": "resmush",
+    "tool_description": "Free Image Compressor API",
+    "title": "reSmush.it API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.2,
+        "__typename": "Score"
+    },
+    "home_url": "https://resmush.it/",
+    "host": "api.resmush.it",
+    "api_list": [
+        {
+            "name": "resmush_get",
+            "url": "http://api.resmush.it/ws.php",
+            "description": "Compress an image using GET method.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "img",
+                    "type": "STRING",
+                    "description": "URL of the image to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "Quality level for JPG compression (0-100), default is 92.",
+                    "default": 92
+                },
+                {
+                    "name": "exif",
+                    "type": "BOOLEAN",
+                    "description": "Whether to retain EXIF data, default is False.",
+                    "default": false
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://api.resmush.it/ws.php'\nparams = {'img': img, 'qlty': qlty}\nif exif:\n    params['exif'] = 'true'\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            }
+        },
+        {
+            "name": "resmush_post",
+            "url": "http://api.resmush.it/",
+            "description": "Compress an image using POST method by sending the file directly.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "file_path",
+                    "type": "STRING",
+                    "description": "Path to the image file to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "Quality level for JPG compression (0-100), default is 92.",
+                    "default": 92
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://api.resmush.it/?qlty=' + str(qlty)\nwith open(file_path, 'rb') as file:\n    files = {'files': (file_path, file)}\n    response = requests.post(url, files=files)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            }
+        }
+    ]
+}
+```
+
+These files will enable you to interact with the reSmush.it API using GET and POST methods and provide testing and metadata information as required.

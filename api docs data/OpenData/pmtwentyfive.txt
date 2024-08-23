@@ -1,0 +1,1306 @@
+PM25 Open Data API
+ 1.0.0 
+OAS 3.0
+This Open Data API provides data access to the LASS PM2.5 project, which is a participatory sensing project for large-scale PM2.5 monitoring. The project engages citizens to participate in the PM2.5 sensing project and empowers participants to make low-cost PM2.5 sensing devices on their own. Moreover, it enables PM2.5 monitoring at a finer spatio-temporal granularity and enriches environmental data analysis by making all measurement data freely available for everyone. By 2020, the project has deployed more than 15,000 low-cost PM2.5 sensors in 58 countries, and the network is still fast growing. For more details, please visit PM2.5 Open Data Portal.
+
+Servers
+
+https://pm25.lass-net.org/API-1.0.0/ - Powered by [Location Aware Sensing System (LASS)](https://www.facebook.com/groups/LASSnet) and [IIS-NRL, Academia Sinica](https://sites.google.com/site/cclljj/research)
+Device
+
+
+GET
+/device/{device_id}/latest/
+
+returns the latest measurement (within 2 hours) of the device
+
+Parameters
+Name	Description
+device_id *
+string
+(path)
+device ID (usually the MAC address)
+
+08BEAC0A08AE
+format
+string
+(query)
+output data format
+
+Available values : CSV, JSON
+
+Default value : JSON
+
+
+JSON
+Responses
+Code	Description	Links
+200	
+The latest measurement (within 2 hours) of the device
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "last by IIS-NRL",
+  "device_id": "08BEAC0A08AE",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "feeds": {
+    "Proj_Name": {
+      "device_id": "08BEAC0A08AE",
+      "s_t0": 25,
+      "s_h0": 50,
+      "s_d0": 20,
+      "gps_lat": 24.251,
+      "gps_lon": 120.539,
+      "timestamp": "2020-07-01T13:30:50Z"
+    }
+  }
+}
+No links
+
+GET
+/device/{device_id}/history/
+
+returns the last 7-day measurement of the device
+
+Parameters
+Name	Description
+device_id *
+string
+(path)
+device ID (usually the MAC address)
+
+08BEAC0A08AE
+format
+string
+(query)
+output data format
+
+Available values : CSV, JSON
+
+Default value : JSON
+
+
+JSON
+Responses
+Code	Description	Links
+200	
+The last 7-day measurement of the device
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "history by IIS-NRL",
+  "device_id": "08BEAC0A08AE",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "feeds": {
+    "Proj_Name": [
+      {
+        "Timestamp_value": {
+          "device_id": "08BEAC0A08AE",
+          "s_t0": 25,
+          "s_h0": 50,
+          "s_d0": 20,
+          "gps_lat": 24.251,
+          "gps_lon": 120.539,
+          "timestamp": "2020-07-01T13:30:50Z"
+        }
+      }
+    ]
+  }
+}
+No links
+
+GET
+/device/{device_id}/date/{yyyy-mm-dd}/
+
+returns the measurement of the device on the specified date
+
+Parameters
+Name	Description
+device_id *
+string
+(path)
+device ID (usually the MAC address)
+
+08BEAC0A08AE
+yyyy-mm-dd *
+string
+(path)
+the date
+
+2020-07-01
+format
+string
+(query)
+output data format
+
+Available values : CSV, JSON
+
+Default value : JSON
+
+
+JSON
+Responses
+Code	Description	Links
+200	
+The measurement of the device on the specified date
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "history by IIS-NRL",
+  "device_id": "08BEAC0A08AE",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "feeds": {
+    "Proj_Name": [
+      {
+        "Timestamp_value": {
+          "device_id": "08BEAC0A08AE",
+          "s_t0": 25,
+          "s_h0": 50,
+          "s_d0": 20,
+          "gps_lat": 24.251,
+          "gps_lon": 120.539,
+          "timestamp": "2020-07-01T13:30:50Z"
+        }
+      }
+    ]
+  }
+}
+No links
+
+GET
+/device/nearest/lat/{lat}/lon/{lon}/
+
+returns the 3 nearest devices to the specific GPS coordinates
+
+Parameters
+Name	Description
+lat *
+number
+(path)
+GPS latitude
+
+25.04
+lon *
+number
+(path)
+GPS longitude
+
+121.614
+Responses
+Code	Description	Links
+200	
+The 3 nearest devices to the specific GPS coordinates
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "gps_last by IIS-NRL",
+  "descriptions": {
+    "timestamp": "timezone is UTC+0",
+    "s_do": "PM2.5 (ug/m3)"
+  },
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 3,
+  "feeds": [
+    {
+      "device_id_value": {
+        "device_id": "08BEAC0A08AE",
+        "s_d0": 20,
+        "gps_lat": 24.251,
+        "gps_lon": 120.539,
+        "distance": 1.5,
+        "timestamp": "2020-07-01T13:30:50Z"
+      }
+    }
+  ]
+}
+No links
+Project
+
+
+GET
+/project/all/
+
+returns the list of the projects
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The list of the projects
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+string
+No links
+
+GET
+/project/{project}/latest/
+
+returns the latest measurement (within 2 hours) of the devices in the specified project
+
+Parameters
+Name	Description
+project *
+string
+(path)
+project name
+
+airbox
+Responses
+Code	Description	Links
+200	
+The latest measurement (within 2 hours) of the devices in the specified project
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "last-all-airbox by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "descriptions": {
+    "URL": "https://pm25.lass-net.org/data/description.json"
+  },
+  "feeds": [
+    {
+      "device_id": "08BEAC0A08AE",
+      "s_t0": 25,
+      "s_h0": 50,
+      "s_d0": 20,
+      "gps_lat": 24.251,
+      "gps_lon": 120.539,
+      "timestamp": "2020-07-01T13:30:50Z"
+    }
+  ]
+}
+No links
+Analysis
+
+
+GET
+/analysis/ADF/emission/
+
+returns the list of devices that are probably located near emission sources detected by ADF (updated daily)
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The list of devices that are probably located near emission sources detected by ADF (updated daily)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_emission by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "rate": 0.8,
+      "device_id": "08BEAC0A08AE"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/ADF/indoor/
+
+returns the suspicious indoor devices detected by ADF (updated daily)
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The suspicious indoor devices detected by ADF (updated daily)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_indoor by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "rate": 0.8,
+      "device_id": "08BEAC0A08AE"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/ADF/pollution/
+
+returns the list of devices with suspicious pollution ongoing in their nearby areas detected by ADF (updated hourly)
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The list of devices with suspicious pollution ongoing in their nearby areas detected by ADF (updated hourly)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_pollution by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "pollution_type": "Local Pollution",
+      "device_id": "08BEAC0A08AE",
+      "timestamp": "2020-07-01T15:30:50Z"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/ADF/ranking/
+
+returns the ranking scores of all online devices (updated hourly)
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The ranking scores of all online devices (updated hourly)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_pollution by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "source": "airbox",
+      "ranking": 0.8,
+      "device_id": "08BEAC0A08AE",
+      "timestamp": "2020-07-01T15:30:50Z"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/ADF/ranking/device/{device_id}/
+
+returns the ranking scores of all online devices of the specified device (updated hourly)
+
+Parameters
+Name	Description
+device_id *
+string
+(path)
+device ID (usually the MAC address)
+
+08BEAC0A08AE
+Responses
+Code	Description	Links
+200	
+The ranking scores of all online devices of the specified device (updated hourly)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_pollution by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "source": "airbox",
+      "ranking": 0.8,
+      "device_id": "08BEAC0A08AE",
+      "timestamp": "2020-07-01T15:30:50Z"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/ADF/ranking/project/{project}/
+
+returns the ranking scores of all online devices of the specified project (updated hourly)
+
+Parameters
+Name	Description
+project *
+string
+(path)
+project name
+
+airbox
+Responses
+Code	Description	Links
+200	
+The ranking scores of all online devices of the specified project (updated hourly)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "device_pollution by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "feeds": [
+    {
+      "source": "airbox",
+      "ranking": 0.8,
+      "device_id": "08BEAC0A08AE",
+      "timestamp": "2020-07-01T15:30:50Z"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/DCF/latest/
+
+returns the latest version calibration models made by DCF (updated daily)
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The latest version calibration models made by DCF (updated daily)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "site": "chiayi",
+    "Date": "2020-09-17",
+    "Method": "GAM",
+    "Feature": "PHR",
+    "Data_Length": 21,
+    "Latitude": 23.463,
+    "Longtitude": 120.441,
+    "consistency": 0.999,
+    "Valid_MAE": 2.053,
+    "Original_MAE": 13.12,
+    "Model": "https://pm25.lass-net.org/DCF/model/latest-PMS5003-chiayi.joblib",
+    "Config": "https://pm25.lass-net.org/DCF/model/latest-PMS5003-chiayi.json",
+    "Version": "2020-09-17 00:14:05"
+  }
+]
+No links
+
+GET
+/analysis/DCF/nearest/lat/{lat}/lon/{lon}/
+
+returns the nearest reference site with DCF model to the specified GPS coordinates and sensor type. If calling without GPS coordinates, returns all available sites with DCF model to the specified sensor type.
+
+Parameters
+Name	Description
+lat *
+number
+(path)
+GPS latitude
+
+25.04
+lon *
+number
+(path)
+GPS longitude
+
+121.614
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The configuration of the nearest calibration models made by DCF to the specified GPS coordinates
+
+Media type
+
+applicatoin/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "DCF by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "sensor": "PMS5003",
+  "feeds": [
+    {
+      "gps_lat": 23.467,
+      "gps_lon": 120.248,
+      "SiteName": "puzi",
+      "distance": 0.805,
+      "sensor": "PMS5003"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/DCF/all/{sensor}/
+
+returns all available sites with DCF model to the specified sensor type.
+
+Parameters
+Name	Description
+sensor *
+string
+(path)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The configuration of the all calibration models made by DCF to the specified GPS coordinates
+
+Media type
+
+applicatoin/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "source": "DCF by IIS-NRL",
+  "version": "2020-07-01T13:30:50Z",
+  "num_of_records": 1,
+  "sensor": "PMS5003",
+  "feeds": [
+    {
+      "gps_lat": 23.467,
+      "gps_lon": 120.248,
+      "SiteName": "puzi",
+      "distance": 0.805,
+      "sensor": "PMS5003"
+    }
+  ]
+}
+No links
+
+GET
+/analysis/DCF/config/{site}/
+
+returns the configuration of the latest version calibration model of the specified site made by DCF (updated daily)
+
+Parameters
+Name	Description
+site *
+string
+(path)
+site name
+
+nantou
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The configuration of the latest version calibration models of the specified site made by DCF (updated daily)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "site": "chiayi",
+  "Latitude": 23.463,
+  "Longtitude": 120.441,
+  "Data_Length": 21,
+  "Feature": "PHR",
+  "Method": "GAM",
+  "Date": "2020-09-17",
+  "Version": "2020-09-17 00:14:05",
+  "Valid_MAE": 2.053
+}
+No links
+
+GET
+/analysis/DCF/model/{site}/
+
+returns the latest version calibration model of the specified site made by DCF (updated daily)
+
+Parameters
+Name	Description
+site *
+string
+(path)
+site name
+
+nantou
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The latest version calibration model of the specified site made by DCF (updated daily), ref joblib documant
+
+No links
+
+GET
+/analysis/DCF/date/{yyyy}/{mm}/{dd}/
+
+returns the configurations of the calibration models made by DCF for the specified sensor (starting on 2020/05/31, updated daily)
+
+Parameters
+Name	Description
+yyyy *
+string
+(path)
+year
+
+2020
+mm *
+string
+(path)
+month
+
+7
+dd *
+string
+(path)
+day
+
+1
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The configurations of the calibration models made by DCF for the specified sensor (updated daily)
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "site": "chiayi",
+    "Date": "2020-09-17",
+    "Method": "GAM",
+    "Feature": "PHR",
+    "Data_Length": 21,
+    "Latitude": 23.463,
+    "Longtitude": 120.441,
+    "consistency": 0.999,
+    "Valid_MAE": 2.053,
+    "Original_MAE": 13.12,
+    "Model": "https://github.com/IISNRL/DCF-PM2.5/blob/master/2020/20200917/20200917-PMS5003-chiayi.joblib",
+    "Config": "https://github.com/IISNRL/DCF-PM2.5/blob/master/2020/20200917/20200917-PMS5003-chiayi.json",
+    "Version": "2020-09-17 00:14:05",
+    "Config_FileName": "20200917-PMS5003-chiayi.json",
+    "Model_FileName": "20200917-PMS5003-chiayi.joblib"
+  }
+]
+No links
+
+GET
+/analysis/DCF/date/{yyyy}/{mm}/{dd}/config/{site}/
+
+returns the configurations of the calibration models made by DCF for the specified site and sensor on the specified date (starting on 2020/05/31)
+
+Parameters
+Name	Description
+yyyy *
+string
+(path)
+year
+
+2020
+mm *
+string
+(path)
+month
+
+7
+dd *
+string
+(path)
+day
+
+1
+site *
+string
+(path)
+site name
+
+nantou
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The configurations of the calibration models made by DCF for the specified site and sensor on the specified date
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "site": "chiayi",
+  "Latitude": 23.463,
+  "Longtitude": 120.441,
+  "Data_Length": 21,
+  "Feature": "PHR",
+  "Method": "GAM",
+  "Date": "2020-09-17",
+  "Version": "2020-09-17 00:14:05",
+  "Valid_MAE": 2.053
+}
+No links
+
+GET
+/analysis/DCF/date/{yyyy}/{mm}/{dd}/model/{site}/
+
+returns the calibration model made by DCF for the specified site and sensor on the specified date (starting on 2020/05/31)
+
+Parameters
+Name	Description
+yyyy *
+string
+(path)
+year
+
+2020
+mm *
+string
+(path)
+month
+
+7
+dd *
+string
+(path)
+day
+
+1
+site *
+string
+(path)
+site name
+
+nantou
+sensor
+string
+(query)
+PM2.5 sensor model
+
+Available values : PMS5003
+
+Default value : PMS5003
+
+
+PMS5003
+Responses
+Code	Description	Links
+200	
+The calibration models made by DCF for the specified site and sensor on the specified date, ref joblib documant
+
+No links
+Citation
+
+
+GET
+/citation/
+
+returns the bibtex to cite this project
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The bibtex to cite this project
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+{}
+No links
+
+GET
+/citation/ADF/
+
+returns the bibtex to cite the ADF work
+
+Parameters
+No parameters
+
+Responses
+Code	Description	Links
+200	
+The bibtex to cite the ADF work
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+{}
+No links
+
+Schemas
+Device_Record{
+device_id	string
+example: 08BEAC0A08AE
+s_t0	number
+example: 25
+Temperature (C)
+
+s_h0	number
+example: 50
+Relative humidity (%)
+
+s_d0	number
+example: 20
+PM2.5 (ug/m3)
+
+gps_lat	number
+example: 24.251
+gps_lon	number
+example: 120.539
+timestamp	string
+example: 2020-07-01T13:30:50Z
+ 
+}
+Device_Latest{
+source	string
+example: last by IIS-NRL
+device_id	string
+example: 08BEAC0A08AE
+version	string
+example: 2020-07-01T13:30:50Z
+num_of_records	integer
+example: 1
+feeds	{
+Proj_Name	Device_Record{
+device_id	string
+example: 08BEAC0A08AE
+s_t0	number
+example: 25
+Temperature (C)
+
+s_h0	number
+example: 50
+Relative humidity (%)
+
+s_d0	number
+example: 20
+PM2.5 (ug/m3)
+
+gps_lat	number
+example: 24.251
+gps_lon	number
+example: 120.539
+timestamp	string
+example: 2020-07-01T13:30:50Z
+ 
+}
+ 
+}
+ 
+}
+Device_History{
+source	string
+example: history by IIS-NRL
+device_id	string
+example: 08BEAC0A08AE
+version	string
+example: 2020-07-01T13:30:50Z
+num_of_records	integer
+example: 1
+feeds	{
+Proj_Name	[{
+Timestamp_value	Device_Record{
+device_id	[...]
+s_t0	number
+example: 25
+Temperature (C)
+
+s_h0	number
+example: 50
+Relative humidity (%)
+
+s_d0	number
+example: 20
+PM2.5 (ug/m3)
+
+gps_lat	number
+example: 24.251
+gps_lon	number
+example: 120.539
+timestamp	string
+example: 2020-07-01T13:30:50Z
+ 
+}
+ 
+}]
+ 
+}
+ 
+}
+Device_GPS{
+source	string
+example: gps_last by IIS-NRL
+descriptions	{
+timestamp	string
+example: timezone is UTC+0
+s_do	string
+example: PM2.5 (ug/m3)
+ 
+}
+version	string
+example: 2020-07-01T13:30:50Z
+num_of_records	integer
+example: 3
+feeds	[{
+device_id_value	{
+device_id	string
+example: 08BEAC0A08AE
+s_d0	number
+example: 20
+PM2.5 (ug/m3)
+
+gps_lat	number
+example: 24.251
+gps_lon	number
+example: 120.539
+distance	number
+example: 1.5
+timestamp	string
+example: 2020-07-01T13:30:50Z
+ 
+}
+ 
+}]
+ 
+}
+Project_Latest{
+source	string
+example: last-all-airbox by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+num_of_records	integer
+example: 1
+descriptions	{
+URL	string
+example: https://pm25.lass-net.org/data/description.json
+ 
+}
+feeds	[Device_Record{
+device_id	string
+example: 08BEAC0A08AE
+s_t0	number
+example: 25
+Temperature (C)
+
+s_h0	number
+example: 50
+Relative humidity (%)
+
+s_d0	number
+example: 20
+PM2.5 (ug/m3)
+
+gps_lat	number
+example: 24.251
+gps_lon	number
+example: 120.539
+timestamp	string
+example: 2020-07-01T13:30:50Z
+ 
+}]
+ 
+}
+Analysis_ADF_Emission{
+source	string
+example: device_emission by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+feeds	[{
+rate	number
+example: 0.8
+device_id	string
+example: 08BEAC0A08AE
+ 
+}]
+ 
+}
+Analysis_ADF_Indoor{
+source	string
+example: device_indoor by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+feeds	[{
+rate	number
+example: 0.8
+device_id	string
+example: 08BEAC0A08AE
+ 
+}]
+ 
+}
+Analysis_ADF_Pollution{
+source	string
+example: device_pollution by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+feeds	[{
+pollution_type	string
+example: Local Pollution
+device_id	string
+example: 08BEAC0A08AE
+timestamp	string
+example: 2020-07-01T15:30:50Z
+ 
+}]
+ 
+}
+Analysis_ADF_Ranking{
+source	string
+example: device_pollution by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+feeds	[{
+source	string
+example: airbox
+ranking	number
+example: 0.8
+device_id	string
+example: 08BEAC0A08AE
+timestamp	string
+example: 2020-07-01T15:30:50Z
+ 
+}]
+ 
+}
+Analysis_DCF_Nearest{
+source	string
+example: DCF by IIS-NRL
+version	string
+example: 2020-07-01T13:30:50Z
+num_of_records	integer
+example: 1
+sensor	string
+example: PMS5003
+feeds	[{
+gps_lat	number
+example: 23.467
+gps_lon	number
+example: 120.248
+SiteName	string
+example: puzi
+distance	number
+example: 0.805
+sensor	string
+example: PMS5003
+ 
+}]
+ 
+}
+Analysis_DCF_Records[Analysis_DCF_Records{
+site	string
+example: chiayi
+Date	string
+example: 2020-09-17
+Method	string
+example: GAM
+Feature	string
+example: PHR
+Data_Length	number
+example: 21
+Latitude	number
+example: 23.463
+Longtitude	number
+example: 120.441
+consistency	number
+example: 0.999
+Valid_MAE	number
+example: 2.053
+Original_MAE	number
+example: 13.12
+Model	string
+example: https://pm25.lass-net.org/DCF/model/latest-PMS5003-chiayi.joblib
+Config	string
+example: https://pm25.lass-net.org/DCF/model/latest-PMS5003-chiayi.json
+Version	string
+example: 2020-09-17 00:14:05
+ 
+}]
+Analysis_DCF_History_Records[Analysis_DCF_History_Records{
+site	string
+example: chiayi
+Date	string
+example: 2020-09-17
+Method	string
+example: GAM
+Feature	string
+example: PHR
+Data_Length	number
+example: 21
+Latitude	number
+example: 23.463
+Longtitude	number
+example: 120.441
+consistency	number
+example: 0.999
+Valid_MAE	number
+example: 2.053
+Original_MAE	number
+example: 13.12
+Model	string
+example: https://github.com/IISNRL/DCF-PM2.5/blob/master/2020/20200917/20200917-PMS5003-chiayi.joblib
+Config	string
+example: https://github.com/IISNRL/DCF-PM2.5/blob/master/2020/20200917/20200917-PMS5003-chiayi.json
+Version	string
+example: 2020-09-17 00:14:05
+Config_FileName	string
+example: 20200917-PMS5003-chiayi.json
+Model_FileName	string
+example: 20200917-PMS5003-chiayi.joblib
+ 
+}]
+Analysis_DCF_Config_Record{
+site	string
+example: chiayi
+Latitude	number
+example: 23.463
+Longtitude	number
+example: 120.441
+Data_Length	number
+example: 21
+Feature	string
+example: PHR
+Method	string
+example: GAM
+Date	string
+example: 2020-09-17
+Version	string
+example: 2020-09-17 00:14:05
+Valid_MAE	number
+example: 2.053
+ 
+}

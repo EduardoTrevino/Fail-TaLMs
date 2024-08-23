@@ -1,0 +1,172 @@
+Sure! Below is the implementation of the `api.py` file, the corresponding `api_test.py` for testing the API endpoints, and the `makeup.json` metadata file.
+
+### `api.py`
+
+```python
+import requests
+from typing import Optional, List
+
+def search_makeup_products(
+    brand: Optional[str] = None,
+    product_type: Optional[str] = None,
+    product_category: Optional[str] = None,
+    product_tags: Optional[str] = None,
+    price_greater_than: Optional[float] = None,
+    price_less_than: Optional[float] = None,
+    rating_greater_than: Optional[float] = None,
+    rating_less_than: Optional[float] = None,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Search makeup products with the given parameters.
+
+    Parameters:
+    - brand: string (optional)
+    - product_type: string (optional)
+    - product_category: string (optional)
+    - product_tags: string, list separated by commas (optional)
+    - price_greater_than: number (optional)
+    - price_less_than: number (optional)
+    - rating_greater_than: number (optional)
+    - rating_less_than: number (optional)
+    """
+    url = "http://makeup-api.herokuapp.com/api/v1/products.json"
+    params = {}
+
+    if brand:
+        params['brand'] = brand
+    if product_type:
+        params['product_type'] = product_type
+    if product_category:
+        params['product_category'] = product_category
+    if product_tags:
+        params['product_tags'] = product_tags
+    if price_greater_than is not None:
+        params['price_greater_than'] = price_greater_than
+    if price_less_than is not None:
+        params['price_less_than'] = price_less_than
+    if rating_greater_than is not None:
+        params['rating_greater_than'] = rating_greater_than
+    if rating_less_than is not None:
+        params['rating_less_than'] = rating_less_than
+    
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### `api_test.py`
+
+```python
+import unittest
+from api import search_makeup_products
+
+class TestMakeupAPI(unittest.TestCase):
+    def test_search_makeup_products_without_params(self):
+        response = search_makeup_products()
+        self.assertIsInstance(response, list, "Expected response to be a list")
+
+    def test_search_makeup_products_with_brand(self):
+        response = search_makeup_products(brand="maybelline")
+        self.assertIsInstance(response, list, "Expected response to be a list")
+        for product in response:
+            if "brand" in product:
+                self.assertEqual(product['brand'], "maybelline")
+
+    def test_search_makeup_products_with_product_type(self):
+        response = search_makeup_products(product_type="lipstick")
+        self.assertIsInstance(response, list, "Expected response to be a list")
+        for product in response:
+            if "product_type" in product:
+                self.assertEqual(product['product_type'], "lipstick")
+
+    def test_search_makeup_products_with_brand_and_product_type(self):
+        response = search_makeup_products(brand="covergirl", product_type="lipstick")
+        self.assertIsInstance(response, list, "Expected response to be a list")
+        for product in response:
+            if "brand" in product:
+                self.assertEqual(product['brand'], "covergirl")
+            if "product_type" in product:
+                self.assertEqual(product['product_type'], "lipstick")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### `makeup.json`
+
+```json
+{
+    "tool_name": "makeup",
+    "tool_description": "API to search and filter makeup products by brand, price, category, tags, and other parameters.",
+    "title": "Makeup API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://makeup-api.herokuapp.com/",
+    "host": "makeup-api.herokuapp.com",
+    "api_list": [
+        {
+            "name": "search_makeup_products",
+            "url": "http://makeup-api.herokuapp.com/api/v1/products.json",
+            "description": "Search makeup products with optional filters such as brand, product type, category, tags, price range, and rating range.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "brand",
+                    "type": "STRING",
+                    "description": "Brand of the product. Will return all products for each brand."
+                },
+                {
+                    "name": "product_type",
+                    "type": "STRING",
+                    "description": "The type of makeup being searched for (e.g., lipstick, eyeliner)."
+                },
+                {
+                    "name": "product_category",
+                    "type": "STRING",
+                    "description": "Sub-category for each makeup-type (e.g., lip gloss is a category of lipstick)."
+                },
+                {
+                    "name": "product_tags",
+                    "type": "STRING",
+                    "description": "Tags each product could be tagged with (e.g., vegan). Multiple tags can be separated by commas."
+                },
+                {
+                    "name": "price_greater_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with price greater than the indicated number (exclusive)."
+                },
+                {
+                    "name": "price_less_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with price less than the indicated number (exclusive)."
+                },
+                {
+                    "name": "rating_greater_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with a rating more than the indicated number (exclusive)."
+                },
+                {
+                    "name": "rating_less_than",
+                    "type": "NUMBER",
+                    "description": "Will return a list of products with a rating less than the indicated number (exclusive)."
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://makeup-api.herokuapp.com/api/v1/products.json'\nparams = {...}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {}
+        }
+    ]
+}
+```
+
+This setup includes the `api.py` file with the `search_makeup_products` function, corresponding unit tests in `api_test.py`, and a metadata JSON in `makeup.json`.

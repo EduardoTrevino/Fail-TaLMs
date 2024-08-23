@@ -1,0 +1,328 @@
+Sure! Let's start with the Python file `api.py` for interacting with The Met Museum's API. We'll cover all the endpoints mentioned in the documentation. We'll provide detailed docstrings for each function, making sure to support the default values as per the documentation.
+
+Here's the `api.py`:
+
+```python
+import requests
+from typing import Optional
+
+def objects(metadata_date: Optional[str] = None, department_ids: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a listing of all valid Object IDs available to use.
+    Parameters:
+        metadata_date (Optional): If provided, returns objects with updated data after this date.
+        department_ids (Optional): If provided, returns objects in specific departments.
+    """
+    url = "https://collectionapi.metmuseum.org/public/collection/v1/objects"
+    params = {}
+    if metadata_date:
+        params['metadataDate'] = metadata_date
+    if department_ids:
+        params['departmentIds'] = department_ids
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {'error': str(e), 'response': response.text}
+
+def object(object_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a record for an object, containing all open access data about that object.
+    Parameters:
+        object_id (Required): The unique Object ID for an object.
+    """
+    url = f'https://collectionapi.metmuseum.org/public/collection/v1/objects/{object_id}'
+
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {'error': str(e), 'response': response.text}
+
+def departments(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a listing of all departments.
+    """
+    url = "https://collectionapi.metmuseum.org/public/collection/v1/departments"
+
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {'error': str(e), 'response': response.text}
+
+def search(q: str, is_highlight: Optional[bool] = None, title: Optional[bool] = None, tags: Optional[bool] = None,
+           department_id: Optional[int] = None, is_on_view: Optional[bool] = None, 
+           artist_or_culture: Optional[bool] = None, medium: Optional[str] = None, 
+           has_images: Optional[bool] = None, geo_location: Optional[str] = None, 
+           date_begin: Optional[int] = None, date_end: Optional[int] = None, 
+           toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a listing of all Object IDs for objects that contain the search query within the object's data.
+    Parameters:
+        q (Required): Search term.
+        is_highlight (Optional): Filter by highlight status.
+        title (Optional): Filter by title field.
+        tags (Optional): Filter by subject keyword tags.
+        department_id (Optional): Filter by department ID.
+        is_on_view (Optional): Filter by on view status.
+        artist_or_culture (Optional): Filter by artist name or culture field.
+        medium (Optional): Filter by medium or object type.
+        has_images (Optional): Filter by availability of images.
+        geo_location (Optional): Filter by geographic location.
+        date_begin (Optional): Start date for filtering by creation date.
+        date_end (Optional): End date for filtering by creation date.
+    """
+    url = "https://collectionapi.metmuseum.org/public/collection/v1/search"
+    params = {'q': q}
+    if is_highlight is not None:
+        params['isHighlight'] = str(is_highlight).lower()
+    if title is not None:
+        params['title'] = str(title).lower()
+    if tags is not None:
+        params['tags'] = str(tags).lower()
+    if department_id is not None:
+        params['departmentId'] = department_id
+    if is_on_view is not None:
+        params['isOnView'] = str(is_on_view).lower()
+    if artist_or_culture is not None:
+        params['artistOrCulture'] = str(artist_or_culture).lower()
+    if medium is not None:
+        params['medium'] = medium
+    if has_images is not None:
+        params['hasImages'] = str(has_images).lower()
+    if geo_location is not None:
+        params['geoLocation'] = geo_location
+    if date_begin is not None:
+        params['dateBegin'] = date_begin
+    if date_end is not None:
+        params['dateEnd'] = date_end
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {'error': str(e), 'response': response.text}
+```
+
+Next, let's create a test file `api_test.py` to verify the API endpoints:
+
+```python
+import unittest
+from api import objects, object, departments, search
+
+class TestMetMuseumAPI(unittest.TestCase):
+
+    def test_objects(self):
+        result = objects()
+        self.assertIn('total', result)
+        self.assertIn('objectIDs', result)
+    
+    def test_objects_with_params(self):
+        result = objects(metadata_date="2022-01-01", department_ids="1|3|12")
+        self.assertIn('total', result)
+        self.assertIn('objectIDs', result)
+    
+    def test_object(self):
+        result = object(object_id=1)
+        self.assertIn('objectID', result)
+        self.assertIn('isPublicDomain', result)
+    
+    def test_departments(self):
+        result = departments()
+        self.assertIn('departments', result)
+        
+    def test_search(self):
+        result = search(q="sunflowers")
+        self.assertIn('total', result)
+        self.assertIn('objectIDs', result)
+        
+    def test_search_with_params(self):
+        result = search(q="sunflowers", is_highlight=True)
+        self.assertIn('total', result)
+        self.assertIn('objectIDs', result)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+Finally, let's create a metadata JSON file `metmuseum.json`:
+
+```json
+{
+    "tool_name": "metmuseum",
+    "tool_description": "API to access the Metropolitan Museum of Art's collection data, including artworks, departments, and search functionalities.",
+    "title": "Metropolitan Museum of Art API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 100,
+        "avgLatency": 200,
+        "avgSuccessRate": 100,
+        "popularityScore": 10.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://collectionapi.metmuseum.org/",
+    "host": "collectionapi.metmuseum.org",
+    "api_list": [
+        {
+            "name": "objects",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects",
+            "description": "A listing of all valid Object IDs available for access.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "metadata_date",
+                    "type": "DATETIME",
+                    "description": "Returns any objects with updated data after this date.",
+                    "default": ""
+                },
+                {
+                    "name": "department_ids",
+                    "type": "STRING",
+                    "description": "Returns any objects in a specific department.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects'\nparams = {'metadataDate': metadata_date, 'departmentIds': department_ids}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "objectIDs": ["int"]
+            }
+        },
+        {
+            "name": "object",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/{objectID}",
+            "description": "A record for an object, containing all open access data about that object.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "object_id",
+                    "type": "INTEGER",
+                    "description": "The unique Object ID for an object.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/{objectID}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "objectID": "int",
+                "isPublicDomain": "boolean",
+                "primaryImage": "string",
+                "title": "string"
+            }
+        },
+        {
+            "name": "departments",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/departments",
+            "description": "A listing of all departments.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://collectionapi.metmuseum.org/public/collection/v1/departments'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "departments": [
+                    {
+                        "departmentId": "int",
+                        "displayName": "string"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "search",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/search",
+            "description": "Returns a listing of all Object IDs for objects that contain the search query within the object’s data.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "Search term.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "is_highlight",
+                    "type": "BOOLEAN",
+                    "description": "Filter by highlight status.",
+                    "default": ""
+                },
+                {
+                    "name": "title",
+                    "type": "BOOLEAN",
+                    "description": "Filter by title field.",
+                    "default": ""
+                },
+                {
+                    "name": "tags",
+                    "type": "BOOLEAN",
+                    "description": "Filter by subject keyword tags.",
+                    "default": ""
+                },
+                {
+                    "name": "department_id",
+                    "type": "INTEGER",
+                    "description": "Filter by department ID.",
+                    "default": ""
+                },
+                {
+                    "name": "is_on_view",
+                    "type": "BOOLEAN",
+                    "description": "Filter by on view status.",
+                    "default": ""
+                },
+                {
+                    "name": "artist_or_culture",
+                    "type": "BOOLEAN",
+                    "description": "Filter by artist name or culture field.",
+                    "default": ""
+                },
+                {
+                    "name": "medium",
+                    "type": "STRING",
+                    "description": "Filter by medium or object type.",
+                    "default": ""
+                },
+                {
+                    "name": "has_images",
+                    "type": "BOOLEAN",
+                    "description": "Filter by availability of images.",
+                    "default": ""
+                },
+                {
+                    "name": "geo_location",
+                    "type": "STRING",
+                    "description": "Filter by geographic location.",
+                    "default": ""
+                },
+                {
+                    "name": "date_begin",
+                    "type": "INTEGER",
+                    "description": "Start date for filtering by creation date.",
+                    "default": ""
+                },
+                {
+                    "name": "date_end",
+                    "type": "INTEGER",
+                    "description": "End date for filtering by creation date.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://collectionapi.metmuseum.org/public/collection/v1/search'\nparams = {'q': q, 'isHighlight': is_highlight, 'title': title, 'tags': tags, 'departmentId': department_id, 'isOnView': is_on_view, 'artistOrCulture': artist_or_culture, 'medium': medium, 'hasImages': has_images, 'geoLocation': geo_location, 'dateBegin': date_begin, 'dateEnd': date_end}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "objectIDs": ["int"]
+            }
+        }
+    ]
+}
+```
+
+With these three files (`api.py`, `api_test.py`, and `metmuseum.json`), you should be able to interact with The Met Museum's API, run tests to verify the endpoints, and understand the API's metadata easily.
