@@ -1,0 +1,1215 @@
+Data API
+This service facilitates machine-to-machine access to aviation weather information. The interface below can be used to learn more about available data, configure specific queries, and try them out. The weather database currently allows access to the previous 15 days of data.
+
+Please keep requests limited in scope and frequency. Maximum results per query apply as well as rate limiting against frequent requests. For larger queries, consider using the cache files.
+
+Data
+Decoded weather and navigational information
+
+
+
+GET
+/api/data/metar
+METARs
+Decoded aviation weather observations
+
+Parameters
+Name	Description
+ids
+string
+(query)
+Station ID(s)
+
+Examples: 
+-
+ids
+format
+string
+(query)
+Format
+
+Available values : raw, json, geojson, xml, html
+
+
+--
+taf
+boolean
+(query)
+Include TAF
+
+
+--
+hours
+number
+(query)
+Hours back to search
+
+hours
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+bbox
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Curl
+
+curl -X 'GET' \
+  'https://aviationweather.gov/api/data/metar' \
+  -H 'accept: */*'
+Request URL
+https://aviationweather.gov/api/data/metar
+Server response
+Code	Details
+200	
+Response headers
+ accept-ranges: bytes 
+ cache-control: max-age=180 
+ content-length: 0 
+ content-security-policy: frame-ancestors 'self' *.weather.gov 
+ content-type: text/plain; charset=UTF-8 
+ date: Fri,23 Aug 2024 23:03:45 GMT 
+ expires: Fri,23 Aug 2024 23:06:45 +0000 
+ strict-transport-security: max-age=63072000; includeSubDomains 
+ x-azure-ref: 20240823T230345Z-179f6cc58c6pmjch574ywgbe3s000000090000000000cdra 
+ x-cache: TCP_MISS 
+ x-fd-int-roxy-purgeid: 66958868 
+ x-frame-options: SAMEORIGIN 
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/taf
+TAFs
+Decoded Terminal Aerodrome Forecast products
+
+Parameters
+Name	Description
+ids
+string
+(query)
+Station ID(s)
+
+Examples: 
+-
+ids
+format
+string
+(query)
+Format
+
+
+--
+metar
+boolean
+(query)
+Include METAR
+
+
+--
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+bbox
+time
+string
+(query)
+Process time by valid (default) or issuance time
+
+
+--
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Curl
+
+curl -X 'GET' \
+  'https://aviationweather.gov/api/data/taf' \
+  -H 'accept: */*'
+Request URL
+https://aviationweather.gov/api/data/taf
+Server response
+Code	Details
+200	
+Response body
+Download
+error retrieving data
+Response headers
+ cache-control: max-age=180 
+ content-security-policy: frame-ancestors 'self' *.weather.gov 
+ content-type: text/plain; charset=UTF-8 
+ date: Fri,23 Aug 2024 23:04:02 GMT 
+ expires: Fri,23 Aug 2024 23:07:02 +0000 
+ strict-transport-security: max-age=63072000; includeSubDomains 
+ x-azure-ref: 20240823T230402Z-179f6cc58c6pmjch574ywgbe3s000000090000000000ce02 
+ x-cache: TCP_MISS 
+ x-fd-int-roxy-purgeid: 66958868 
+ x-frame-options: SAMEORIGIN 
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/pirep
+Pilot Reports
+Pilot reports issued in PIREP or AIREP format
+
+Parameters
+Name	Description
+id
+string
+(query)
+Station ID
+
+id
+format
+string
+(query)
+Format
+
+Available values : raw
+
+
+--
+age
+number
+(query)
+Hours Back
+
+age
+distance
+number
+(query)
+Distance
+
+distance
+level
+number
+(query)
+Level +-3000' to search
+
+level
+inten
+string
+(query)
+Minimum intensity
+
+Available values : lgt, mod, sev
+
+
+--
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Curl
+
+curl -X 'GET' \
+  'https://aviationweather.gov/api/data/pirep' \
+  -H 'accept: */*'
+Request URL
+https://aviationweather.gov/api/data/pirep
+Server response
+Code	Details
+200	
+Response body
+Download
+ARP CFG2416 5347N05058W 2303 F400 NEEKO 2330 5052N05915W MS54 226/37 KT DANRP QXS YAY 232303 J82A 
+ARP ACA840 4701N05144W 2303 F380 4659N05000W 2311 4859N04000W MS53 227/91 KT CGEFA DDL YYT 232303 J50A 
+ARP IBE6400 4537N05412W 2303 F390 RELIC 2313 4630N05000W MS53 226/91 KT ECNBE DDL YYT 232303 J29A 
+ARP UPS224 5820N03727W 2302 F340 5800N04000W 2313 5700N05000W MS50 301/87 KT N575UP QXT AOE 232302 F75A 
+... many more
+Response headers
+ cache-control: max-age=180 
+ content-security-policy: frame-ancestors 'self' *.weather.gov 
+ content-type: text/plain; charset=UTF-8 
+ date: Fri,23 Aug 2024 23:04:09 GMT 
+ expires: Fri,23 Aug 2024 23:07:09 +0000 
+ strict-transport-security: max-age=63072000; includeSubDomains 
+ x-azure-ref: 20240823T230408Z-179f6cc58c6pmjch574ywgbe3s000000090000000000ce4x 
+ x-cache: TCP_MISS 
+ x-fd-int-roxy-purgeid: 66958868 
+ x-frame-options: SAMEORIGIN 
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/airsigmet
+Domestic AIRMETs/SIGMETs
+Domestic SIGMETs and AIRMETs for the United States. Does not include SIGMETs issued by the US in international format.
+
+Parameters
+Name	Description
+format
+string
+(query)
+Format
+
+
+--
+type
+string
+(query)
+Product type
+
+
+--
+hazard
+string
+(query)
+Hazard
+
+
+--
+level
+number
+(query)
+The level +-3000' to search
+
+level
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Curl
+
+curl -X 'GET' \
+  'https://aviationweather.gov/api/data/airsigmet' \
+  -H 'accept: */*'
+Request URL
+https://aviationweather.gov/api/data/airsigmet
+Server response
+Code	Details
+200	
+Response body
+Download
+Type: SIGMET Hazard: CONVECTIVE
+WSUS32 KKCI 232255 
+SIGC  
+CONVECTIVE SIGMET 72C 
+VALID UNTIL 0055Z 
+TX 
+FROM 20ESE TTT-60WNW LFK-40WSW IAH-40W PSX-10ESE SAT-20ESE TTT 
+AREA TS MOV FROM 04015KT. TOPS ABV FL450. 
+ 
+OUTLOOK VALID 240055-240455 
+AREA 1...FROM 50NNW GGW-70NE GGW-70SW DIK-ANW-50WNW SLN-50S 
+MMB-LBB-40WSW ELP-50NNW GGW 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS. 
+ 
+AREA 2...FROM ADM-EIC-HRV-70SSW CEW-150ESE LEV-70SW LEV-50SE 
+LCH-60WSW LCH-CRP-JCT-MAF-50S CDS-ADM 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS.
+----------------------
+Type: SIGMET Hazard: CONVECTIVE
+WSUS32 KKCI 232255
+SIGC  
+CONVECTIVE SIGMET 73C 
+VALID UNTIL 0055Z 
+TX 
+FROM 30WSW SPS-70ENE ABI-10SSE SJT-70SE LBB-30WSW SPS 
+AREA TS MOV LTL. TOPS ABV FL450. 
+ 
+OUTLOOK VALID 240055-240455 
+AREA 1...FROM 50NNW GGW-70NE GGW-70SW DIK-ANW-50WNW SLN-50S 
+MMB-LBB-40WSW ELP-50NNW GGW 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS. 
+ 
+AREA 2...FROM ADM-EIC-HRV-70SSW CEW-150ESE LEV-70SW LEV-50SE 
+LCH-60WSW LCH-CRP-JCT-MAF-50S CDS-ADM 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS.
+----------------------
+Type: SIGMET Hazard: CONVECTIVE
+WSUS32 KKCI 232255 
+SIGC  
+CONVECTIVE SIGMET 74C 
+VALID UNTIL 0055Z 
+NM AZ 
+FROM 60NW CME-30NE ELP-50S SSO-30NNE SSO-60NW CME 
+AREA TS MOV FROM 20015KT. TOPS ABV FL450. 
+ 
+OUTLOOK VALID 240055-240455 
+AREA 1...FROM 50NNW GGW-70NE GGW-70SW DIK-ANW-50WNW SLN-50S 
+MMB-LBB-40WSW ELP-50NNW GGW 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS. 
+ 
+AREA 2...FROM ADM-EIC-HRV-70SSW CEW-150ESE LEV-70SW LEV-50SE 
+LCH-60WSW LCH-CRP-JCT-MAF-50S CDS-ADM 
+WST ISSUANCES EXPD. REFER TO MOST RECENT ACUS01 KWNS FROM STORM 
+PREDICTION CENTER FOR SYNOPSIS AND METEOROLOGICAL DETAILS.
+----------------------
+
+Response headers
+ cache-control: max-age=180 
+ content-security-policy: frame-ancestors 'self' *.weather.gov 
+ content-type: text/plain; charset=UTF-8 
+ date: Fri,23 Aug 2024 23:04:27 GMT 
+ expires: Fri,23 Aug 2024 23:07:27 +0000 
+ strict-transport-security: max-age=63072000; includeSubDomains 
+ x-azure-ref: 20240823T230427Z-179f6cc58c6pmjch574ywgbe3s000000090000000000cedr 
+ x-cache: TCP_MISS 
+ x-fd-int-roxy-purgeid: 66958868 
+ x-frame-options: SAMEORIGIN 
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/isigmet
+International SIGMETs
+Decoded international SIGMETs. This does not include SIGMETs from the United States in domestic format.
+
+Parameters
+Name	Description
+format
+string
+(query)
+Format
+
+Available values : raw, json, xml
+
+
+--
+hazard
+string
+(query)
+Hazard
+
+Available values : turb, ice
+
+
+--
+level
+number
+(query)
+Level +-3000' to search
+
+level
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/gairmet
+US Graphical AIRMETs
+Decoded G-AIRMETs for the contiguous United States
+
+Parameters
+Name	Description
+type
+string
+(query)
+Product type
+
+Available values : sierra, tango, zulu
+
+
+--
+hazard
+string
+(query)
+Hazard
+
+Available values : turb-hi, turb-lo, llws, sfc_wind, ifr, mtn_obs, ice, fzlvl
+
+
+--
+date
+string
+(query)
+Date (yyyymmdd_hhmm)
+
+Examples: 
+-
+date
+Responses
+Code	Description	Links
+200	
+successful operation
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+string
+No links
+
+GET
+/api/data/cwa
+CWSU Center Advisories
+Center Weather Advisories issued by NWS Center Weather Service Units (CWSUs)
+
+Parameters
+Name	Description
+hazard
+string
+(query)
+Hazard
+
+Available values : ts, turb, ice, ifr, pcpn, unk
+
+
+--
+date
+string
+(query)
+Date
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+date
+Responses
+Code	Description	Links
+200	
+successful operation
+
+Media type
+
+text/plain
+Controls Accept header.
+Example Value
+Schema
+string
+No links
+
+GET
+/api/data/windtemp
+Wind/Temp Point Data
+Wind and temperature information from the legacy FD winds
+
+Parameters
+Name	Description
+region
+string
+(query)
+Region:
+
+all - All sites
+bos - Northeast
+mia - Southeast
+chi - North central
+dfw - South central
+slc - Rocky Mountain
+sfo - Pacific Coast
+alaska - Alaska
+hawaii - Hawaii
+other_pac - Western Pacific
+Available values : us, bos, mia, chi, dfw, slc, sfo, alaska, hawaii, other_pac
+
+
+--
+level
+string
+(query)
+Level
+
+Available values : low, high
+
+
+--
+fcst
+string
+(query)
+Forecast cycle
+
+Available values : 06, 12, 24
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/areafcst
+US Area Forecasts
+Text Area Forecasts for the United States outside the contiguous states
+
+Parameters
+Name	Description
+region *
+string
+(query)
+Date
+
+gulf - Gulf of Mexico
+hawaii - Hawaii
+aknorth - Northern half of Alaska
+akcentral - Interior Alaska
+aksouth - Southcentral Alaska
+aksouthwest - Alaska Penninsula
+aksoutheast - Eastern Gulf of Alaska
+akpanhandle - Alaska
+Available values : gulf, hawaii, aknorth, akcentral, akaleutian, aksouth, aksouthwest, aksoutheast, akpanhandle
+
+
+gulf
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/fcstdisc
+US Forecast Discussions
+Aviation Forecast Discussions issued by NWS Weather Forecast Offices
+
+Parameters
+Name	Description
+cwa
+string
+(query)
+County Warning Area (WFO)
+
+Examples: 
+-
+cwa
+type
+string
+(query)
+Type of output:
+
+afd - aviation discussion
+af - full discussion
+Available values : afd, af
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/mis
+Meteorological Information Statement
+Meteorological Information Statements issued by NWS Center Weather Service Units (CWSU)
+
+Parameters
+Name	Description
+loc
+string
+(query)
+CWSU
+
+Examples: 
+-
+loc
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/stationinfo
+Station info
+Station observation location information
+
+Parameters
+Name	Description
+ids
+string
+(query)
+Station ID(s)
+
+Examples: 
+-
+ids
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+A box around Chicago
+35,-90,45,-80
+format
+string
+(query)
+Format
+
+Available values : raw, json, geojson, xml
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/airport
+Airport info
+Information about airports
+
+Parameters
+Name	Description
+ids
+string
+(query)
+Station ID(s)
+
+Examples: 
+A single ICAO Id
+KMCI
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+bbox
+format
+string
+(query)
+Format
+
+Available values : decoded, json, geojson
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/navaid
+Navigational aid info
+
+GET
+/api/data/fix
+Naviagtional fix info
+
+GET
+/api/data/feature
+Feature info
+Additional geographic features
+
+Parameters
+Name	Description
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+bbox
+format
+string
+(query)
+Format
+
+Available values : raw, json, geojson
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+
+GET
+/api/data/obstacle
+Obstacle info
+Aviation obstacle information
+
+Parameters
+Name	Description
+bbox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+bbox
+format
+string
+(query)
+Format
+
+Available values : raw, json, geojson
+
+
+--
+Responses
+Code	Description	Links
+200	
+successful operation
+
+No links
+Dataserver
+Aviation weather information using an interface designed for maximum compatibility with the previous Text Data Server
+
+
+
+GET
+/api/data/dataserver?requestType=retrieve&dataSource=metars
+Dataserver for METARs
+METAR reports
+
+Parameters
+Name	Description
+stationString
+string
+(query)
+Station ID(s) Note: must specify stationString or bounding box (minLat, ...)
+
+Examples: 
+Not specified
+stationString
+startTime
+string
+(query)
+Start time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+startTime
+endTime
+string
+(query)
+End time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+endTime
+hoursBeforeNow
+number
+(query)
+Number of hours before now to search
+
+hoursBeforeNow
+format
+string
+(query)
+Output format
+
+Available values : xml, csv
+
+Default value : xml
+
+
+xml
+mostRecent
+boolean
+(query)
+Single most recent METAR
+
+
+--
+mostRecentForEachStation
+string
+(query)
+Most recent METAR per station
+
+Available values : constraint, postfilter
+
+
+--
+boundingBox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+boundingBox
+Responses
+Code	Description	Links
+200	
+Successful operation
+
+No links
+
+GET
+/api/data/dataserver?requestType=retrieve&dataSource=tafs
+Dataserver for TAFs
+Return TAF data
+
+Parameters
+Name	Description
+stationString
+string
+(query)
+Station ID(s) Note: must specify stationString or bounding box (minLat, ...)
+
+Examples: 
+-
+stationString
+startTime
+string
+(query)
+Start time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+startTime
+endTime
+string
+(query)
+End time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+endTime
+hoursBeforeNow
+number
+(query)
+Number of hours before now to search
+
+hoursBeforeNow
+format
+string
+(query)
+Output format
+
+Available values : xml, csv
+
+Default value : xml
+
+
+xml
+mostRecent
+boolean
+(query)
+Single most recent TAF
+
+
+--
+mostRecentForEachStation
+string
+(query)
+Most recent TAF per station
+
+Available values : constraint, postfilter
+
+
+--
+boundingBox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+boundingBox
+Responses
+Code	Description	Links
+200	
+Successful operation
+
+No links
+
+GET
+/api/data/dataserver?requestType=retrieve&dataSource=aircraftreports
+Dataserver for AIREPs and PIREPs
+Return aircraft data
+
+Parameters
+Name	Description
+startTime
+string
+(query)
+Start time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+startTime
+endTime
+string
+(query)
+End time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+endTime
+hoursBeforeNow
+number
+(query)
+Number of hours before now to search
+
+hoursBeforeNow
+format
+string
+(query)
+Output format
+
+Available values : xml, csv
+
+Default value : xml
+
+
+xml
+boundingBox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+boundingBox
+radialDistance
+string
+(query)
+Circular bounds defined by latitude, longitude and radial distance in statute miles"
+
+Examples: 
+-
+radialDistance
+Responses
+Code	Description	Links
+200	
+Successful operation
+
+No links
+
+GET
+/api/data/dataserver?requestType=retrieve&dataSource=airsigmets
+Dataserver for AIRMETs and SIGMETs
+Return AIRMETs and SIGMETs
+
+Parameters
+Name	Description
+startTime
+string
+(query)
+Start time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+startTime
+endTime
+string
+(query)
+End time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+endTime
+hoursBeforeNow
+number
+(query)
+Number of hours before now to search
+
+hoursBeforeNow
+format
+string
+(query)
+Output format
+
+Available values : xml, csv
+
+Default value : xml
+
+
+xml
+boundingBox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+boundingBox
+Responses
+Code	Description	Links
+200	
+Successful operation
+
+No links
+
+GET
+/api/data/dataserver?requestType=retrieve&dataSource=gairmets
+Dataserver for G-AIRMETs
+Return G-AIRMETs
+
+Parameters
+Name	Description
+startTime
+string
+(query)
+Start time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+startTime
+endTime
+string
+(query)
+End time
+
+yyyymmdd_hhmm
+yyyy-mm-ddThh:mm:ssZ
+Examples: 
+-
+endTime
+hoursBeforeNow
+number
+(query)
+Number of hours before now to search
+
+hoursBeforeNow
+format
+string
+(query)
+Output format
+
+Available values : xml, csv
+
+Default value : xml
+
+
+xml
+boundingBox
+string
+(query)
+Geographic bounding box (lat0, lon0, lat1, lon1)
+
+Examples: 
+-
+boundingBox
+Responses
+Code	Description	Links
+200	
+Successful operation
+
+No links
+
+Example: https://aviationweather.gov/api/data/airport?ids=KMCI
+
+Response example:AIRPORT INFO for 9354
+  Name: KANSAS CITY/KANSAS CITY INTL 
+  IATA: MCI
+  FAA: MCI
+  Type: ARP
+  Latitude: 39.2976
+  Longitude: -94.7139
+  Elevation: 313
+  Source: FAA
+  State: MO
+  Country: US
+  Mag Declination: 02E
+  Use: P
+  Services: S
+  Tower: T
+  Beacon: B
+  Passengers: 9860
+  Runways
+     Number: 3
+     Length: L
+     Type: C
+     Runway: 01L/19R Dimension: 10801x150 Surface: A Align: 13
+     Runway: 01R/19L Dimension: 9500x150 Surface: C Align: 13
+     Runway: 09/27 Dimension: 9501x150 Surface: A Align: 96
+
