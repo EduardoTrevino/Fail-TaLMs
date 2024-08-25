@@ -1,0 +1,102 @@
+### api.py
+```python
+import requests
+
+def get_ip_address_text(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Returns your IP address in text format.
+    Parameters: None
+    """
+    url = "https://api.aruljohn.com/ip"
+    response = requests.get(url)
+    return response.text.strip()
+
+def get_ip_address_json(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Returns your IP address in JSON format.
+    Parameters: None
+    """
+    url = "https://api.aruljohn.com/ip/json"
+    response = requests.get(url)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_ip_address_text, get_ip_address_json
+
+class TestArulAPI(unittest.TestCase):
+
+    def test_get_ip_address_text(self):
+        result = get_ip_address_text()
+        self.assertIsInstance(result, str)
+        self.assertRegex(result, r'^(\d{1,3}\.){3}\d{1,3}$')  # Matches IPv4 format
+
+    def test_get_ip_address_json(self):
+        result = get_ip_address_json()
+        self.assertIsInstance(result, dict)
+        self.assertIn('ip', result)
+        self.assertRegex(result['ip'], r'^(\d{1,3}\.){3}\d{1,3}$')  # Matches IPv4 format
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### arul.json
+```json
+{
+    "tool_name": "arul",
+    "tool_description": "Arul's Public APIs provide free web services to return your IP address in text or JSON format.",
+    "title": "Arul's Public APIs",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 100,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 7.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://aruljohn.com/",
+    "host": "api.aruljohn.com",
+    "api_list": [
+        {
+            "name": "get_ip_address_text",
+            "url": "https://api.aruljohn.com/ip",
+            "description": "Returns your IP address in text format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.aruljohn.com/ip'\nresponse = requests.get(url)\nprint(response.text.strip())",
+            "statuscode": 200,
+            "body": "199.199.199.199",
+            "headers": {},
+            "schema": {
+                "type": "string"
+            }
+        },
+        {
+            "name": "get_ip_address_json",
+            "url": "https://api.aruljohn.com/ip/json",
+            "description": "Returns your IP address in JSON format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.aruljohn.com/ip/json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "199.199.199.199"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

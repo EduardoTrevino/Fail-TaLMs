@@ -1,0 +1,73 @@
+{
+    "tool_name": "nationalize",
+    "tool_description": "API to estimate the nationality of a name based on statistical probabilities.",
+    "title": "Nationalize API",
+    "pricing": "FREE up to 100 names/day",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://nationalize.io",
+    "host": "api.nationalize.io",
+    "api_list": [
+        {
+            "name": "predict_nationality",
+            "url": "https://api.nationalize.io/?name={name}",
+            "description": "Estimates the nationality of a person based on the name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING or LIST of STRINGS",
+                    "description": "The name or list of names to predict the nationality for.",
+                    "default": "johnson"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.nationalize.io/?name=johnson'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "int",
+                "name": "str",
+                "country": [
+                    {
+                        "country_id": "str",
+                        "probability": "float"
+                    }
+                ]
+            },
+            "headers": {
+                "X-Rate-Limit-Limit": "int",
+                "X-Rate-Limit-Remaining": "int",
+                "X-Rate-Limit-Reset": "int"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "country_id": {
+                                    "type": "string"
+                                },
+                                "probability": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

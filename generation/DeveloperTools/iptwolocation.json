@@ -1,0 +1,129 @@
+{
+    "tool_name": "iptwolocation",
+    "tool_description": "API providing IP geolocation and domain WHOIS data.",
+    "title": "IP2Location and IP2WHOIS API",
+    "pricing": "FREE for limited queries",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.2,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.ip2location.com/web-service/ip2location",
+    "host": "api.ip2location.io",
+    "api_list": [
+        {
+            "name": "ip_geolocation",
+            "url": "https://api.ip2location.io/",
+            "description": "Get geolocation information for a given IP address.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "IP address to lookup.",
+                    "default": null
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format, valid values: json | xml.",
+                    "default": "json"
+                },
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Translation language in ISO639-1, applicable for certain plans.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "ip": "str",
+                "country_code": "str",
+                "country_name": "str",
+                "region_name": "str",
+                "city_name": "str",
+                "latitude": "float",
+                "longitude": "float",
+                "zip_code": "str",
+                "time_zone": "str",
+                "asn": "str",
+                "is_proxy": "bool"
+            }
+        },
+        {
+            "name": "domain_whois",
+            "url": "https://api.ip2whois.com/v2",
+            "description": "Get WHOIS data for a given domain name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "Domain name for the WHOIS lookup."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format, valid values: json | xml.",
+                    "default": "json"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "domain": "str",
+                "create_date": "str",
+                "update_date": "str",
+                "expire_date": "str",
+                "domain_age": "int"
+            }
+        },
+        {
+            "name": "bulk_ip_geolocation",
+            "url": "https://bulk.ip2location.io/",
+            "description": "Get geolocation information for multiple IP addresses in bulk.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "ips",
+                    "type": "LIST",
+                    "description": "List of IP addresses to lookup."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format, valid values: json | csv.",
+                    "default": "json"
+                },
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Custom fields to return, separated by commas.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "ip": {
+                    "country_code": "str",
+                    "country_name": "str",
+                    "region_name": "str",
+                    "city_name": "str",
+                    "latitude": "float",
+                    "longitude": "float",
+                    "zip_code": "str",
+                    "time_zone": "str",
+                    "asn": "str",
+                    "is_proxy": "bool"
+                }
+            }
+        }
+    ]
+}

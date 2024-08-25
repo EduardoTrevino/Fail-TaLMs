@@ -1,0 +1,67 @@
+{
+    "tool_name": "isgd",
+    "tool_description": "An API for URL shortening service, providing multiple format outputs and optional custom short URLs.",
+    "title": "is.gd URL Shortener API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://is.gd/",
+    "host": "is.gd",
+    "api_list": [
+        {
+            "name": "shorten_url",
+            "url": "https://is.gd/create.php",
+            "description": "Shortens a given URL using the is.gd service.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL you want to shorten."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format of the response ('web', 'simple', 'xml', 'json').",
+                    "default": "simple"
+                },
+                {
+                    "name": "shorturl",
+                    "type": "STRING",
+                    "description": "Custom shortened URL you would like to use (5 to 30 characters)."
+                },
+                {
+                    "name": "callback",
+                    "type": "STRING",
+                    "description": "Used only with format 'json' to specify a callback function."
+                },
+                {
+                    "name": "logstats",
+                    "type": "INTEGER",
+                    "description": "If 1, enables logging of detailed statistics."
+                }
+            ],
+            "code": "import requests\n\nparams = {'format': format, 'url': url, 'shorturl': shorturl, 'logstats': logstats, 'callback': callback}\nresponse = requests.get('https://is.gd/create.php?', params=params)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "shorturl": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "shorturl": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,129 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict
+
+def get_user_agent_info(ua: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve parsed information about a user agent string using the GET method.
+
+    Parameters:
+    ua (str): The user agent string URL encoded.
+
+    Returns:
+    dict: A dictionary containing the parsed information of the user agent.
+    """
+    url = "https://api.apicagent.com"
+    params = {'ua': ua}
+    
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_user_agent_info
+
+class TestApicAgentAPI(unittest.TestCase):
+
+    def test_get_user_agent_info(self):
+        ua_string = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+        response = get_user_agent_info(ua_string)
+        
+        # Check if the response has expected keys
+        self.assertIn("browser_family", response)
+        self.assertIn("client", response)
+        self.assertIn("device", response)
+        self.assertIn("os", response)
+        self.assertIn("os_family", response)
+
+        # Check if "browser_family" is as expected
+        self.assertEqual(response.get("browser_family"), "Chrome")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### apicagent.json
+```json
+{
+    "tool_name": "apicagent",
+    "tool_description": "API to parse User-Agent strings and retrieve detailed information about the browser, device, and operating system.",
+    "title": "ApicAgent User-Agent Parsing API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.apicagent.com/docs/",
+    "host": "api.apicagent.com",
+    "api_list": [
+        {
+            "name": "get_user_agent_info",
+            "url": "https://api.apicagent.com",
+            "description": "Retrieve parsed information about a user agent string using the GET method.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ua",
+                    "type": "STRING",
+                    "description": "The user agent string URL encoded.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.apicagent.com'\nparams = {'ua': ua}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "browser_family": "str",
+                "client": {
+                    "engine": "str",
+                    "engine_version": "str",
+                    "name": "str",
+                    "type": "str",
+                    "version": "str"
+                },
+                "device": {
+                    "brand": "str",
+                    "model": "str",
+                    "type": "str"
+                },
+                "os": {
+                    "name": "str",
+                    "platform": "str",
+                    "version": "str"
+                },
+                "os_family": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "browser_family": {
+                        "type": "string"
+                    },
+                    "client": {
+                        "type": "object"
+                    },
+                    "device": {
+                        "type": "object"
+                    },
+                    "os": {
+                        "type": "object"
+                    },
+                    "os_family": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

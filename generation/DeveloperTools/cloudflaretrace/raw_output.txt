@@ -1,0 +1,141 @@
+**api.py**
+
+```python
+import requests
+from typing import Dict
+
+def cloudflaretrace(endpoint: str = "https://one.one.one.one/cdn-cgi/trace", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve trace information from Cloudflare including IP Address, Timestamp, User Agent, Country Code, and more.
+    
+    Parameters:
+    endpoint [Optional]: str - The endpoint URL to query Cloudflare trace information.
+    
+    Returns:
+    A dictionary with trace information.
+    
+    Note: This function accesses public endpoints and provides no additional authentication or use of the API key.
+    """
+    response = requests.get(endpoint)
+    try:
+        # Convert response text to dictionary
+        data = {}
+        for line in response.text.strip().split('\n'):
+            key, value = line.split('=')
+            data[key] = value
+        return data
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import cloudflaretrace
+
+class TestCloudflareTraceAPI(unittest.TestCase):
+    
+    def test_cloudflaretrace_default_endpoint(self):
+        """Test the cloudflaretrace API with the default endpoint."""
+        response = cloudflaretrace()
+        self.assertIsInstance(response, dict)
+        self.assertIn("ip", response)
+        self.assertIn("ts", response)
+        self.assertIn("uag", response)
+    
+    def test_cloudflaretrace_specific_endpoint(self):
+        """Test the cloudflaretrace API with a specific endpoint."""
+        response = cloudflaretrace(endpoint="https://1.0.0.1/cdn-cgi/trace")
+        self.assertIsInstance(response, dict)
+        self.assertIn("ip", response)
+        self.assertIn("ts", response)
+        self.assertIn("uag", response)
+    
+    def test_invalid_endpoint(self):
+        """Test with an invalid endpoint."""
+        response = cloudflaretrace(endpoint="https://invalid.endpoint.com/trace")
+        self.assertIn("error", response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**cloudflaretrace.json**
+
+```json
+{
+    "tool_name": "cloudflaretrace",
+    "tool_description": "Get IP Address, TimeStamp, User Agent, Country Code, IATA, HTTP Version, TLS/SSL Version & more by Cloudflare.",
+    "title": "Cloudflare Trace API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://cloudflare.com",
+    "host": "cloudflare.com",
+    "api_list": [
+        {
+            "name": "cloudflaretrace",
+            "url": "https://one.one.one.one/cdn-cgi/trace",
+            "description": "Retrieve trace information from Cloudflare including IP Address, Timestamp, User Agent, Country Code, and more.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "endpoint",
+                    "type": "STRING",
+                    "description": "The endpoint URL to query Cloudflare trace information.",
+                    "default": "https://one.one.one.one/cdn-cgi/trace"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://one.one.one.one/cdn-cgi/trace'\nresponse = requests.get(url)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "fl": "str",
+                "h": "str",
+                "ip": "str",
+                "ts": "float",
+                "visit_scheme": "str",
+                "uag": "str",
+                "colo": "str",
+                "sliver": "str",
+                "http": "str",
+                "loc": "str",
+                "tls": "str",
+                "sni": "str",
+                "warp": "str",
+                "gateway": "str",
+                "rbi": "str",
+                "kex": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "fl": {"type": "string"},
+                    "h": {"type": "string"},
+                    "ip": {"type": "string"},
+                    "ts": {"type": "number"},
+                    "visit_scheme": {"type": "string"},
+                    "uag": {"type": "string"},
+                    "colo": {"type": "string"},
+                    "sliver": {"type": "string"},
+                    "http": {"type": "string"},
+                    "loc": {"type": "string"},
+                    "tls": {"type": "string"},
+                    "sni": {"type": "string"},
+                    "warp": {"type": "string"},
+                    "gateway": {"type": "string"},
+                    "rbi": {"type": "string"},
+                    "kex": {"type": "string"}
+                }
+            }
+        }
+    ]
+}
+```

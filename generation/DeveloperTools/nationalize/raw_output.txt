@@ -1,0 +1,140 @@
+### api.py
+```python
+import requests
+from typing import List, Optional, Union
+
+def predict_nationality(name: Union[str, List[str]], toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Estimates the nationality of a person or multiple people based on a name or names.
+    
+    Parameters:
+    name [Required]: string or list of strings [Description: A single name or a list of names for which to predict nationality.]
+    """
+    url = "https://api.nationalize.io/"
+    
+    # Prepare the parameters
+    if isinstance(name, list):
+        name_param = [(f'name[]={n}') for n in name]  # Batch processing
+        params = "&".join(name_param)
+    else:
+        params = f'name={name}'
+
+    full_url = f"{url}?{params}"
+    
+    # Make the request
+    response = requests.get(full_url)
+    
+    # Return the response as JSON or an error message
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import predict_nationality
+
+class TestNationalizeAPI(unittest.TestCase):
+    
+    def test_single_name_prediction(self):
+        response = predict_nationality(name="johnson")
+        self.assertIn("name", response)
+        self.assertEqual(response["name"], "johnson")
+        self.assertIn("country", response)
+        self.assertIsInstance(response["country"], list)
+
+    def test_batch_name_prediction(self):
+        names = ["johnson", "bakshi"]
+        response = predict_nationality(names)
+        self.assertIsInstance(response, list)
+        self.assertEqual(len(response), 2)
+        for res in response:
+            self.assertIn("name", res)
+            self.assertIn("country", res)
+
+    def test_missing_name_parameter(self):
+        response = predict_nationality(name="")
+        self.assertIn("error", response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### nationalize.json
+```json
+{
+    "tool_name": "nationalize",
+    "tool_description": "API to estimate the nationality of a name based on statistical probabilities.",
+    "title": "Nationalize API",
+    "pricing": "FREE up to 100 names/day",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://nationalize.io",
+    "host": "api.nationalize.io",
+    "api_list": [
+        {
+            "name": "predict_nationality",
+            "url": "https://api.nationalize.io/?name={name}",
+            "description": "Estimates the nationality of a person based on the name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING or LIST of STRINGS",
+                    "description": "The name or list of names to predict the nationality for.",
+                    "default": "johnson"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.nationalize.io/?name=johnson'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "int",
+                "name": "str",
+                "country": [
+                    {
+                        "country_id": "str",
+                        "probability": "float"
+                    }
+                ]
+            },
+            "headers": {
+                "X-Rate-Limit-Limit": "int",
+                "X-Rate-Limit-Remaining": "int",
+                "X-Rate-Limit-Reset": "int"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "country_id": {
+                                    "type": "string"
+                                },
+                                "probability": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

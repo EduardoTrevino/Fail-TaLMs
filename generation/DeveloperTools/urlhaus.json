@@ -1,0 +1,143 @@
+{
+    "tool_name": "urlhaus",
+    "tool_description": "API to query and interact with URLhaus for recent URLs, payloads, and detailed information on URLs, hosts, payloads, tags, and signatures associated with malware.",
+    "title": "URLhaus API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://urlhaus-api.abuse.ch/docs/",
+    "host": "urlhaus-api.abuse.ch",
+    "api_list": [
+        {
+            "name": "query_recent_urls",
+            "url": "https://urlhaus-api.abuse.ch/v1/urls/recent/",
+            "description": "Get a list of recent URLs added to URLhaus.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned (max 1000).",
+                    "default": "1000"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_recent_payloads",
+            "url": "https://urlhaus-api.abuse.ch/v1/payloads/recent/",
+            "description": "Get a list of recent payloads seen by URLhaus.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned (max 1000).",
+                    "default": "1000"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_url_info",
+            "url": "https://urlhaus-api.abuse.ch/v1/url/",
+            "description": "Get information on a specific URL by URL or ID.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL to query."
+                },
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the URL to query."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_host_info",
+            "url": "https://urlhaus-api.abuse.ch/v1/host/",
+            "description": "Get information about a specific host.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "host",
+                    "type": "STRING",
+                    "description": "The host to query (IPv4 address, hostname, or domain name)."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_payload_info",
+            "url": "https://urlhaus-api.abuse.ch/v1/payload/",
+            "description": "Get information about a specific payload.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "md5_hash",
+                    "type": "STRING",
+                    "description": "The MD5 hash of the payload."
+                },
+                {
+                    "name": "sha256_hash",
+                    "type": "STRING",
+                    "description": "The SHA256 hash of the payload."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_tag_info",
+            "url": "https://urlhaus-api.abuse.ch/v1/tag/",
+            "description": "Get information about a specific tag.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "tag",
+                    "type": "STRING",
+                    "description": "The tag to query."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "query_signature_info",
+            "url": "https://urlhaus-api.abuse.ch/v1/signature/",
+            "description": "Get information about a specific malware signature.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "signature",
+                    "type": "STRING",
+                    "description": "The signature to query."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "download_malware_sample",
+            "url": "https://urlhaus-api.abuse.ch/v1/download/<sha256>",
+            "description": "Download a malware sample by its SHA256 hash.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "sha256",
+                    "type": "STRING",
+                    "description": "The SHA256 hash of the payload to download."
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

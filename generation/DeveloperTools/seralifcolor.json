@@ -1,0 +1,54 @@
+{
+    "tool_name": "seralifcolor",
+    "tool_description": "An API to get a requested color, its complementary, and its grayscale in different formats along with suitable text colors.",
+    "title": "Serialif Color API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://color.serialif.com/",
+    "host": "color.serialif.com",
+    "api_list": [
+        {
+            "name": "get_color_info",
+            "url": "https://color.serialif.com/{color}",
+            "description": "Get information about a color in various formats and its contrasting text colors.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "color",
+                    "type": "STRING",
+                    "description": "The color in Keyword, HEX, RGB, RGBA, HSL, or HSLA format.",
+                    "default": "aquamarine"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://color.serialif.com/{color}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "base": {
+                    "hex": "str",
+                    "rgb": "str",
+                    "hsl": "str"
+                },
+                "base_without_alpha": {
+                    "hex": "str",
+                    "rgb": "str",
+                    "hsl": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "base": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}

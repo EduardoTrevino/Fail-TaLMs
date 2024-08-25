@@ -1,0 +1,117 @@
+### api.py 
+```python
+import requests
+from typing import Optional
+
+
+def get_color_info(color: str = 'aquamarine', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the requested color, its complementary, and its grayscale in different formats and the black or white text corresponding to each color according to its brightness.
+    
+    Parameters:
+    color [Required]: string (e.g., keyword, HEX, RGB, RGBA, HSL, or HSLA formats)
+    
+    Returns:
+    JSON object containing the details of the requested color.
+    """
+    url = f"https://color.serialif.com/{color}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py 
+```python
+import unittest
+from api import get_color_info
+
+
+class TestSeralifColorAPI(unittest.TestCase):
+
+    def test_get_color_info_keyword(self):
+        """Test get_color_info with a keyword."""
+        result = get_color_info(color='aquamarine')
+        self.assertEqual(result['status'], 'success')
+        self.assertIn('base', result)
+
+    def test_get_color_info_hex(self):
+        """Test get_color_info with a HEX code."""
+        result = get_color_info(color='556677')
+        self.assertEqual(result['status'], 'success')
+        self.assertIn('base', result)
+
+    def test_get_color_info_rgb(self):
+        """Test get_color_info with an RGB input."""
+        result = get_color_info(color='85,102,119')
+        self.assertEqual(result['status'], 'success')
+        self.assertIn('base', result)
+
+    def test_get_color_info_invalid(self):
+        """Test get_color_info with an invalid color format."""
+        result = get_color_info(color='yellou')
+        self.assertEqual(result['status'], 'error')
+        self.assertIn('error', result)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### seralifcolor.json 
+```json
+{
+    "tool_name": "seralifcolor",
+    "tool_description": "An API to get a requested color, its complementary, and its grayscale in different formats along with suitable text colors.",
+    "title": "Serialif Color API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://color.serialif.com/",
+    "host": "color.serialif.com",
+    "api_list": [
+        {
+            "name": "get_color_info",
+            "url": "https://color.serialif.com/{color}",
+            "description": "Get information about a color in various formats and its contrasting text colors.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "color",
+                    "type": "STRING",
+                    "description": "The color in Keyword, HEX, RGB, RGBA, HSL, or HSLA format.",
+                    "default": "aquamarine"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://color.serialif.com/{color}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "base": {
+                    "hex": "str",
+                    "rgb": "str",
+                    "hsl": "str"
+                },
+                "base_without_alpha": {
+                    "hex": "str",
+                    "rgb": "str",
+                    "hsl": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "base": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

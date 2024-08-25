@@ -1,0 +1,131 @@
+**api.py** 
+```python
+import requests
+from typing import Optional
+
+def unshorten_url(short_url: str, authorization_token: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> dict:
+    """
+    Unshorten a given short URL using the Unshorten.me API.
+
+    Parameters:
+    short_url (str): The shortened URL you want to unshorten.
+    authorization_token (str, optional): The authorization token found on your Unshorten.me profile page.
+    toolbench_rapidapi_key (str): Public rapidapi key.
+
+    Returns:
+    dict: Response from the API containing the unshortened URL and success status.
+    """
+    url = f"https://unshorten.me/api/v2/unshorten?url={short_url}"
+    headers = {}
+    
+    if authorization_token:
+        headers['Authorization'] = f"Token {authorization_token}"
+    
+    response = requests.get(url, headers=headers)
+    
+    try:
+        return response.json()  # Convert response text to JSON
+    except Exception as e:
+        return {"error": str(e), "response_code": response.status_code, "response_text": response.text}
+```
+
+**api_test.py**
+```python
+import unittest
+from api import unshorten_url
+
+class TestUnshortenAPI(unittest.TestCase):
+
+    def test_unshorten_url_success(self):
+        short_url = "https://bit.ly/3DKWm5t"
+        authorization_token = "your_valid_token_here"  # Replace with a valid token
+        response = unshorten_url(short_url, authorization_token)
+        
+        self.assertIn('success', response)
+        self.assertTrue(response['success'])
+        self.assertIn('unshortened_url', response)
+        self.assertEqual(response['shortened_url'], short_url)
+
+    def test_unshorten_url_invalid_token(self):
+        short_url = "https://bit.ly/3DKWm5t"
+        authorization_token = "invalid_token"  # Intentionally invalid token
+        response = unshorten_url(short_url, authorization_token)
+        
+        self.assertIn('error', response)
+
+    def test_unshorten_url_missing_token(self):
+        short_url = "https://bit.ly/3DKWm5t"
+        response = unshorten_url(short_url)
+        
+        self.assertIn('error', response)
+
+if __name__ == '__main__':
+    unittest.main()
+
+```
+
+**unshorten.json**
+```json
+{
+    "tool_name": "unshorten",
+    "tool_description": "Unshorten.me API provides an easy method to unshorten a wide range of shortened URLs.",
+    "title": "Unshorten.me API",
+    "pricing": "FREE with Rate Limits",
+    "score": {
+        "avgServiceLevel": 92,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://unshorten.me",
+    "host": "unshorten.me",
+    "api_list": [
+        {
+            "name": "unshorten_url",
+            "url": "https://unshorten.me/api/v2/unshorten?url={short_url}",
+            "description": "Unshorten a given short URL.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "short_url",
+                    "type": "STRING",
+                    "description": "The shortened URL you want to unshorten."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "authorization_token",
+                    "type": "STRING",
+                    "description": "The authorization token found on your Unshorten.me profile page.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://unshorten.me/api/v2/unshorten?url={short_url}'\nheaders = {'Authorization': 'Token {authorization_token}'}\nresponse = requests.get(url, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "unshortened_url": "str",
+                "shortened_url": "str",
+                "success": "bool"
+            },
+            "headers": {
+                "Authorization": "Token {your_token}"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "unshortened_url": {
+                        "type": "string"
+                    },
+                    "shortened_url": {
+                        "type": "string"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

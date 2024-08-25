@@ -1,0 +1,269 @@
+{
+    "tool_name": "digitaloceanstatus",
+    "tool_description": "API to access the DigitalOcean status page for information on current statuses, incidents, and maintenances.",
+    "title": "DigitalOcean Status API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://status.digitalocean.com/",
+    "host": "status.digitalocean.com",
+    "api_list": [
+        {
+            "name": "get_summary",
+            "url": "https://status.digitalocean.com/api/v2/summary.json",
+            "description": "Get a summary of the status page, including component statuses and incidents.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/summary.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "status": {
+                    "indicator": "str",
+                    "description": "str"
+                },
+                "components": [
+                    {
+                        "id": "str",
+                        "name": "str",
+                        "status": "str"
+                    }
+                ],
+                "incidents": [],
+                "scheduled_maintenances": []
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "object"
+                    },
+                    "components": {
+                        "type": "array"
+                    },
+                    "incidents": {
+                        "type": "array"
+                    },
+                    "scheduled_maintenances": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_status",
+            "url": "https://status.digitalocean.com/api/v2/status.json",
+            "description": "Get the status rollup for the whole page.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/status.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "indicator": "str",
+                "description": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "indicator": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_components",
+            "url": "https://status.digitalocean.com/api/v2/components.json",
+            "description": "Get the components for the page.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/components.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "components": [
+                    {
+                        "id": "str",
+                        "name": "str",
+                        "status": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "components": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_unresolved_incidents",
+            "url": "https://status.digitalocean.com/api/v2/incidents/unresolved.json",
+            "description": "Get a list of any unresolved incidents.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/incidents/unresolved.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "incidents": [
+                    {
+                        "id": "str",
+                        "status": "str",
+                        "impact": "str",
+                        "name": "str",
+                        "created_at": "str",
+                        "updated_at": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "incidents": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_all_incidents",
+            "url": "https://status.digitalocean.com/api/v2/incidents.json",
+            "description": "Get a list of the 50 most recent incidents.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/incidents.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "incidents": [
+                    {
+                        "id": "str",
+                        "status": "str",
+                        "impact": "str",
+                        "name": "str",
+                        "created_at": "str",
+                        "updated_at": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "incidents": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_upcoming_maintenances",
+            "url": "https://status.digitalocean.com/api/v2/scheduled-maintenances/upcoming.json",
+            "description": "Get a list of any upcoming scheduled maintenances.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/scheduled-maintenances/upcoming.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "scheduled_maintenances": [
+                    {
+                        "id": "str",
+                        "status": "str",
+                        "impact": "str",
+                        "name": "str",
+                        "created_at": "str",
+                        "updated_at": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "scheduled_maintenances": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_active_maintenances",
+            "url": "https://status.digitalocean.com/api/v2/scheduled-maintenances/active.json",
+            "description": "Get a list of any active scheduled maintenances.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/scheduled-maintenances/active.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "scheduled_maintenances": [
+                    {
+                        "id": "str",
+                        "status": "str",
+                        "impact": "str",
+                        "name": "str",
+                        "created_at": "str",
+                        "updated_at": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "scheduled_maintenances": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_all_maintenances",
+            "url": "https://status.digitalocean.com/api/v2/scheduled-maintenances.json",
+            "description": "Get a list of the 50 most recent scheduled maintenances.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://status.digitalocean.com/api/v2/scheduled-maintenances.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "scheduled_maintenances": [
+                    {
+                        "id": "str",
+                        "status": "str",
+                        "impact": "str",
+                        "name": "str",
+                        "created_at": "str",
+                        "updated_at": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "scheduled_maintenances": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,76 @@
+{
+    "tool_name": "apicagent",
+    "tool_description": "API to parse User-Agent strings and retrieve detailed information about the browser, device, and operating system.",
+    "title": "ApicAgent User-Agent Parsing API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.apicagent.com/docs/",
+    "host": "api.apicagent.com",
+    "api_list": [
+        {
+            "name": "get_user_agent_info",
+            "url": "https://api.apicagent.com",
+            "description": "Retrieve parsed information about a user agent string using the GET method.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ua",
+                    "type": "STRING",
+                    "description": "The user agent string URL encoded.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.apicagent.com'\nparams = {'ua': ua}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "browser_family": "str",
+                "client": {
+                    "engine": "str",
+                    "engine_version": "str",
+                    "name": "str",
+                    "type": "str",
+                    "version": "str"
+                },
+                "device": {
+                    "brand": "str",
+                    "model": "str",
+                    "type": "str"
+                },
+                "os": {
+                    "name": "str",
+                    "platform": "str",
+                    "version": "str"
+                },
+                "os_family": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "browser_family": {
+                        "type": "string"
+                    },
+                    "client": {
+                        "type": "object"
+                    },
+                    "device": {
+                        "type": "object"
+                    },
+                    "os": {
+                        "type": "object"
+                    },
+                    "os_family": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

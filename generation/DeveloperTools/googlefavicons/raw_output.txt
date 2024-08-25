@@ -1,0 +1,116 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+
+def get_favicon(domain: str, sz: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the favicon for a specified domain. Optionally, specify the size of the favicon image.
+
+    Parameters:
+    - domain [Required]: string - The domain to retrieve the favicon from.
+    - sz [Optional]: integer - A size hint for the favicon (e.g., 128, 256). Defaults to None, which returns the default size (usually 16x16).
+    """
+    url = "https://www.google.com/s2/favicons"
+    params = {
+        'domain': domain
+    }
+    if sz:
+        params['sz'] = sz
+
+    response = requests.get(url, params=params)
+    try:
+        # Returns the content directly (typically PNG binary data)
+        return response.content
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_favicon
+
+
+class TestGoogleFaviconsAPI(unittest.TestCase):
+
+    def test_get_favicon_default_size(self):
+        # Test the retrieval of a favicon with the default size
+        result = get_favicon(domain="dev.to")
+        self.assertTrue(len(result) > 0)  # Assert that data is returned
+
+    def test_get_favicon_specific_size(self):
+        # Test the retrieval of a favicon with a specific size
+        result = get_favicon(domain="dev.to", sz=128)
+        self.assertTrue(len(result) > 0)  # Assert that data is returned
+
+    def test_get_favicon_invalid_domain(self):
+        # Test with an invalid domain, expecting fallback/favicon not found
+        result = get_favicon(domain="invalid_domain_abc")
+        self.assertTrue(len(result) > 0)  # Fallback icon data should be returned
+
+    def test_get_favicon_invalid_size(self):
+        # Test with an invalid size, expecting default size
+        result = get_favicon(domain="dev.to", sz=512)
+        self.assertTrue(len(result) > 0)  # Default size icon data should be returned
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### googlefavicons.json
+```json
+{
+    "tool_name": "googlefavicons",
+    "tool_description": "Get favicons from any domain using a hidden Google API.",
+    "title": "Google Favicons API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.google.com/s2/favicons",
+    "host": "www.google.com",
+    "api_list": [
+        {
+            "name": "get_favicon",
+            "url": "https://www.google.com/s2/favicons",
+            "description": "Retrieve the favicon for a specified domain. Optionally, specify the size of the favicon image.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "The domain to retrieve the favicon from.",
+                    "default": "dev.to"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "sz",
+                    "type": "INTEGER",
+                    "description": "A size hint for the favicon (e.g., 128, 256). Defaults to None, which returns the default size (usually 16x16).",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.google.com/s2/favicons'\nparams = {'domain': domain, 'sz': sz}\nresponse = requests.get(url, params=params)\nprint(response.content)",
+            "statuscode": 200,
+            "body": {
+                "type": "binary",
+                "description": "Favicon data in PNG format."
+            },
+            "headers": {
+                "Content-Type": "image/png"
+            },
+            "schema": {
+                "type": "binary"
+            }
+        }
+    ]
+}
+```

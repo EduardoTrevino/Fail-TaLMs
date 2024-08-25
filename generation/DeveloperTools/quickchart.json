@@ -1,0 +1,97 @@
+{
+    "tool_name": "quickchart",
+    "tool_description": "QuickChart is a web service that generates chart images on-the-fly using Chart.js configurations, suitable for embedding in various formats.",
+    "title": "QuickChart API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://quickchart.io/",
+    "host": "quickchart.io",
+    "api_list": [
+        {
+            "name": "generate_chart",
+            "url": "https://quickchart.io/chart",
+            "description": "Generates a chart image from a given Chart.js configuration.",
+            "method": "GET or POST",
+            "required_parameters": [
+                {
+                    "name": "chart_config",
+                    "type": "STRING",
+                    "description": "The Chart.js configuration object in Javascript or JSON format."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "width",
+                    "type": "INTEGER",
+                    "description": "Width of image in pixels.",
+                    "default": "500"
+                },
+                {
+                    "name": "height",
+                    "type": "INTEGER",
+                    "description": "Height of image in pixels.",
+                    "default": "300"
+                },
+                {
+                    "name": "device_pixel_ratio",
+                    "type": "INTEGER",
+                    "description": "Device pixel ratio, 1 for normal resolution, 2 for retina.",
+                    "default": "2"
+                },
+                {
+                    "name": "background_color",
+                    "type": "STRING",
+                    "description": "Background color of the chart.",
+                    "default": "transparent"
+                },
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "Chart.js version to use.",
+                    "default": "2"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Output format for the chart.",
+                    "default": "png"
+                },
+                {
+                    "name": "encoding",
+                    "type": "STRING",
+                    "description": "Output encoding, url or base64.",
+                    "default": "url"
+                },
+                {
+                    "name": "method",
+                    "type": "STRING",
+                    "description": "HTTP method to use, 'GET' or 'POST'.",
+                    "default": "GET"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://quickchart.io/chart'\nparams = {\n    'c': chart_config,\n    'w': width,\n    'h': height,\n    'devicePixelRatio': device_pixel_ratio,\n    'bkg': background_color,\n    'v': version,\n    'format': format,\n    'encoding': encoding\n}\nresponse = requests.get(url, params=params)\n",
+            "statuscode": 200,
+            "body": "An image in bytes or base64 string.",
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "c": "Chart.js configuration",
+                    "w": "Width",
+                    "h": "Height",
+                    "devicePixelRatio": "Device pixel ratio",
+                    "bkg": "Background color",
+                    "v": "Chart.js version",
+                    "format": "Format of the image",
+                    "encoding": "Encoding type"
+                }
+            }
+        }
+    ]
+}

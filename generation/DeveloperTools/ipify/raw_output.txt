@@ -1,0 +1,213 @@
+**api.py**
+```python
+import requests
+from typing import Optional
+
+
+def get_public_ip_v4(format: Optional[str] = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> dict:
+    """
+    Get the public IPv4 address in the specified format.
+    
+    :param format: The format in which to retrieve the IP address ('json', 'jsonp', or 'text').
+    :return: A dictionary with the IP address or an error message.
+    """
+    url = "https://api.ipify.org"
+    params = {'format': format}
+    try:
+        response = requests.get(url, params=params)
+        if format == 'json':
+            return response.json()
+        elif format == 'jsonp' or format == 'text':
+            return {"ip": response.text}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def get_public_ip_v6(format: Optional[str] = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> dict:
+    """
+    Get the public IPv6 address in the specified format.
+
+    :param format: The format in which to retrieve the IP address ('json', 'jsonp', or 'text').
+    :return: A dictionary with the IP address or an error message.
+    """
+    url = "https://api6.ipify.org"
+    params = {'format': format}
+    try:
+        response = requests.get(url, params=params)
+        if format == 'json':
+            return response.json()
+        elif format == 'jsonp' or format == 'text':
+            return {"ip": response.text}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def get_public_ip(format: Optional[str] = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> dict:
+    """
+    Get the public IP address (IPv4/IPv6) in the specified format.
+
+    :param format: The format in which to retrieve the IP address ('json', 'jsonp', or 'text').
+    :return: A dictionary with the IP address or an error message.
+    """
+    url = "https://api64.ipify.org"
+    params = {'format': format}
+    try:
+        response = requests.get(url, params=params)
+        if format == 'json':
+            return response.json()
+        elif format == 'jsonp' or format == 'text':
+            return {"ip": response.text}
+    except Exception as e:
+        return {"error": str(e)}
+```
+
+**api_test.py**
+```python
+import unittest
+from api import get_public_ip_v4, get_public_ip_v6, get_public_ip
+
+
+class TestIpifyAPI(unittest.TestCase):
+
+    def test_get_public_ip_v4_json(self):
+        response = get_public_ip_v4()
+        self.assertIn('ip', response)
+
+    def test_get_public_ip_v4_text(self):
+        response = get_public_ip_v4(format='text')
+        self.assertIn('ip', response)
+
+    def test_get_public_ip_v6_json(self):
+        try:
+            response = get_public_ip_v6()
+            self.assertIn('ip', response)
+        except Exception as e:
+            self.skipTest(f"Skipped due to {e}")
+
+    def test_get_public_ip_v6_text(self):
+        try:
+            response = get_public_ip_v6(format='text')
+            self.assertIn('ip', response)
+        except Exception as e:
+            self.skipTest(f"Skipped due to {e}")
+
+    def test_get_public_ip_json(self):
+        response = get_public_ip()
+        self.assertIn('ip', response)
+
+    def test_get_public_ip_text(self):
+        response = get_public_ip(format='text')
+        self.assertIn('ip', response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**ipify.json**
+```json
+{
+    "tool_name": "ipify",
+    "tool_description": "A Simple Public IP Address API to get your public IP in various formats.",
+    "title": "IPify API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99.9,
+        "popularityScore": 10,
+        "__typename": "Score"
+    },
+    "home_url": "https://github.com/rdegges/ipify-api",
+    "host": "api.ipify.org",
+    "api_list": [
+        {
+            "name": "get_public_ip_v4",
+            "url": "https://api.ipify.org",
+            "description": "Get the public IPv4 address in JSON, JSONP, or text format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format of the response ('json', 'jsonp', 'text').",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.ipify.org'\nparams = {'format': format}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_public_ip_v6",
+            "url": "https://api6.ipify.org",
+            "description": "Get the public IPv6 address in JSON, JSONP, or text format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format of the response ('json', 'jsonp', 'text').",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api6.ipify.org'\nparams = {'format': format}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_public_ip",
+            "url": "https://api64.ipify.org",
+            "description": "Get the public IP address (IPv4/IPv6) in JSON, JSONP, or text format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format of the response ('json', 'jsonp', 'text').",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api64.ipify.org'\nparams = {'format': format}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

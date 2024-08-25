@@ -1,0 +1,118 @@
+{
+    "tool_name": "agify",
+    "tool_description": "API to estimate the age of a person based on their first name.",
+    "title": "Agify API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://agify.io/",
+    "host": "api.agify.io",
+    "api_list": [
+        {
+            "name": "estimate_age",
+            "url": "https://api.agify.io",
+            "description": "Estimate the age of a person based on their first name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The first name to estimate age for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "country_id",
+                    "type": "STRING",
+                    "description": "The country code to improve estimation accuracy."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.agify.io'\nparams = {'name': name, 'country_id': country_id}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "int",
+                "name": "str",
+                "age": "int",
+                "country_id": "str"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "country_id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "count",
+                    "name",
+                    "age"
+                ]
+            }
+        },
+        {
+            "name": "estimate_age_batch",
+            "url": "https://api.agify.io",
+            "description": "Estimate the age for a batch of names.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "names",
+                    "type": "ARRAY",
+                    "description": "A list of first names (up to 10) to estimate ages for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "country_id",
+                    "type": "STRING",
+                    "description": "The country code to improve estimation accuracy across all names."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.agify.io'\nparams = [('name[]', name) for name in names]\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "count": "int",
+                    "name": "str",
+                    "age": "int"
+                }
+            ],
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "count": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "age": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "count",
+                        "name",
+                        "age"
+                    ]
+                }
+            }
+        }
+    ]
+}

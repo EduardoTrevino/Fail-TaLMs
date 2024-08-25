@@ -1,0 +1,54 @@
+{
+    "tool_name": "microlink",
+    "tool_description": "Microlink API provides a powerful API for automating any browser action.",
+    "title": "Microlink API",
+    "pricing": "FREE endpoint available with daily rate limit, PRO endpoint requires authentication.",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://microlink.io",
+    "host": "api.microlink.io",
+    "api_list": [
+        {
+            "name": "retrieve_metadata",
+            "url": "https://api.microlink.io",
+            "description": "Retrieve metadata from any link.",
+            "method": "GET",
+            "required_parameters": ["url"],
+            "optional_parameters": [
+                {"name": "adblock", "type": "BOOLEAN", "default": "true"},
+                {"name": "animations", "type": "BOOLEAN", "default": "false"},
+                {"name": "audio", "type": "BOOLEAN", "default": "false"},
+                {"name": "colors", "type": "BOOLEAN", "default": "true"}
+            ],
+            "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://github.com'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "take_screenshot",
+            "url": "https://api.microlink.io",
+            "description": "Take a screenshot of the target website.",
+            "method": "GET",
+            "required_parameters": ["url"],
+            "optional_parameters": [
+                {"name": "screenshot", "type": "BOOLEAN", "default": "true"}
+            ],
+            "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://github.com', 'screenshot': True}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "filter_data",
+            "url": "https://api.microlink.io",
+            "description": "Filter specific data fields from response payload.",
+            "method": "GET",
+            "required_parameters": ["url", "filter"],
+            "optional_parameters": [],
+            "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://news.ycombinator.com', 'filter': 'url,title'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        }
+    ]
+}
