@@ -1,0 +1,359 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_random_quote(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch a random quote from the Game of Thrones API.
+    """
+    url = "https://api.gameofthronesquotes.xyz/v1/random"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_random_quotes(number: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch multiple random quotes from the Game of Thrones API.
+    
+    Parameters:
+    number [Optional]: Number of random quotes to return. Defaults to 1.
+    """
+    url = f"https://api.gameofthronesquotes.xyz/v1/random/{number}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_quotes_by_character(character_slug: str, number: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch quotes for a specific character.
+    
+    Parameters:
+    character_slug [Required]: Slug of the character.
+    number [Optional]: Number of quotes to return. If None, all quotes are returned.
+    """
+    url = f"https://api.gameofthronesquotes.xyz/v1/author/{character_slug}"
+    if number is not None:
+        url += f"/{number}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_houses(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch the list of houses from the Game of Thrones API.
+    """
+    url = "https://api.gameofthronesquotes.xyz/v1/houses"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_house_details(house_slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch details of a specific house.
+    
+    Parameters:
+    house_slug [Required]: Slug of the house.
+    """
+    url = f"https://api.gameofthronesquotes.xyz/v1/house/{house_slug}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_characters(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch the list of characters with their quotes from the Game of Thrones API.
+    """
+    url = "https://api.gameofthronesquotes.xyz/v1/characters"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_character_details(character_slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch details of a specific character.
+    
+    Parameters:
+    character_slug [Required]: Slug of the character.
+    """
+    url = f"https://api.gameofthronesquotes.xyz/v1/character/{character_slug}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    get_random_quote,
+    get_random_quotes,
+    get_quotes_by_character,
+    get_houses,
+    get_house_details,
+    get_characters,
+    get_character_details
+)
+
+class TestGameOfThronesAPI(unittest.TestCase):
+
+    def test_get_random_quote(self):
+        result = get_random_quote()
+        self.assertIn('sentence', result)
+        self.assertIn('character', result)
+
+    def test_get_random_quotes(self):
+        result = get_random_quotes(3)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 3)
+
+    def test_get_quotes_by_character(self):
+        result = get_quotes_by_character('tyrion', 2)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 2)
+    
+    def test_get_houses(self):
+        result = get_houses()
+        self.assertIsInstance(result, list)
+
+    def test_get_house_details(self):
+        result = get_house_details('lannister')
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_get_characters(self):
+        result = get_characters()
+        self.assertIsInstance(result, list)
+
+    def test_get_character_details(self):
+        result = get_character_details('jon')
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### gameofthrones.json
+```json
+{
+    "tool_name": "gameofthrones",
+    "tool_description": "API to access quotes and information about Game of Thrones characters and houses.",
+    "title": "Game of Thrones Quotes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://gameofthronesquotes.xyz/",
+    "host": "api.gameofthronesquotes.xyz",
+    "api_list": [
+        {
+            "name": "get_random_quote",
+            "url": "https://api.gameofthronesquotes.xyz/v1/random",
+            "description": "Get a random quote from Game of Thrones.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/random'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "sentence": "If I fall, don't bring me back.",
+                "character": {
+                    "name": "Jon Snow",
+                    "slug": "jon",
+                    "house": {
+                        "name": "House Stark of Winterfell",
+                        "slug": "stark"
+                    }
+                }
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_random_quotes",
+            "url": "https://api.gameofthronesquotes.xyz/v1/random/{number}",
+            "description": "Get multiple random quotes from Game of Thrones.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "Number of random quotes to return.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/random/3'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "sentence": "If I fall, don't bring me back.",
+                    "character": {
+                        "name": "Jon Snow",
+                        "slug": "jon",
+                        "house": {
+                            "name": "House Stark of Winterfell",
+                            "slug": "stark"
+                        }
+                    }
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_quotes_by_character",
+            "url": "https://api.gameofthronesquotes.xyz/v1/author/{character}/{number}",
+            "description": "Get quotes for a specific Game of Thrones character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "character_slug",
+                    "type": "STRING",
+                    "description": "Slug of the character."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "Number of quotes to return.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/author/tyrion/2'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "sentence": "It's not easy being drunk all the time. Everyone would do it, if it were easy.",
+                    "character": {
+                        "name": "Tyrion Lannister",
+                        "slug": "tyrion",
+                        "house": {
+                            "name": "House Lannister of Casterly Rock",
+                            "slug": "lannister"
+                        }
+                    }
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_houses",
+            "url": "https://api.gameofthronesquotes.xyz/v1/houses",
+            "description": "Get the list of Game of Thrones houses.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/houses'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "slug": "stark",
+                    "name": "House Stark of Winterfell",
+                    "members": [
+                        {"name": "Jon Snow", "slug": "jon"}
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_house_details",
+            "url": "https://api.gameofthronesquotes.xyz/v1/house/{name}",
+            "description": "Get details of a specific Game of Thrones house.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "house_slug",
+                    "type": "STRING",
+                    "description": "Slug of the house."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/house/stark'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "slug": "stark",
+                    "name": "House Stark of Winterfell",
+                    "members": [
+                        {"name": "Jon Snow", "slug": "jon"}
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_characters",
+            "url": "https://api.gameofthronesquotes.xyz/v1/characters",
+            "description": "Get the list of Game of Thrones characters with their quotes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/characters'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "name": "Jon Snow",
+                    "slug": "jon",
+                    "house": {
+                        "slug": "stark",
+                        "name": "House Stark of Winterfell"
+                    },
+                    "quotes": [
+                        "If I fall, don't bring me back."
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_character_details",
+            "url": "https://api.gameofthronesquotes.xyz/v1/character/{name}",
+            "description": "Get details of a specific Game of Thrones character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "character_slug",
+                    "type": "STRING",
+                    "description": "Slug of the character."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/character/jon'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "name": "Jon Snow",
+                    "house": {
+                        "slug": "stark",
+                        "name": "House Stark of Winterfell"
+                    },
+                    "quotes": [
+                        "If I fall, don't bring me back."
+                    ]
+                }
+            ],
+            "headers": {}
+        }
+    ]
+}
+```

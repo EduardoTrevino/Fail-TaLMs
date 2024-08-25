@@ -1,0 +1,68 @@
+{
+    "tool_name": "quotesondesign",
+    "tool_description": "API to access random quotes from the Quotes on Design repository.",
+    "title": "Quotes on Design API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://quotesondesign.com",
+    "host": "quotesondesign.com",
+    "api_list": [
+        {
+            "name": "get_random_quotes",
+            "url": "https://quotesondesign.com/wp-json/wp/v2/posts/",
+            "description": "Retrieve quotes from the Quotes on Design API randomly.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "orderby",
+                    "type": "STRING",
+                    "description": "The order in which to sort the quotes. Use 'rand' for a random order.",
+                    "default": "rand"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://quotesondesign.com/wp-json/wp/v2/posts/'\nparams = {'orderby': 'rand'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "int",
+                "title": {
+                    "rendered": "str"
+                },
+                "content": {
+                    "rendered": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "rendered": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "content": {
+                        "type": "object",
+                        "properties": {
+                            "rendered": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,74 @@
+### api.py
+```python
+import requests
+
+def get_random_kanye_quote(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Fetches a random Kanye West quote.
+    Documentation: A free REST API for random Kanye West quotes (Kanye as a Service).
+    """
+    url = "https://api.kanye.rest/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_random_kanye_quote
+
+class TestKanyeAPI(unittest.TestCase):
+    def test_get_random_kanye_quote(self):
+        response = get_random_kanye_quote()
+        self.assertIn('quote', response, "Response should contain a 'quote' key.")
+        self.assertIsInstance(response['quote'], str, "The 'quote' value should be a string.")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### kanye.json
+```json
+{
+    "tool_name": "kanye",
+    "tool_description": "A free REST API for random Kanye West quotes.",
+    "title": "Kanye as a Service API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 100,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.kanye.rest",
+    "host": "api.kanye.rest",
+    "api_list": [
+        {
+            "name": "get_random_kanye_quote",
+            "url": "https://api.kanye.rest/",
+            "description": "Fetches a random Kanye West quote.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.kanye.rest/'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "quote": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "quote": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

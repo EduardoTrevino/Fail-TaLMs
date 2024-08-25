@@ -1,0 +1,77 @@
+### api.py
+```python
+import requests
+
+def get_random_affirmation(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch a random affirmation.
+    """
+    url = "https://www.affirmations.dev/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_random_affirmation
+
+class TestAffirmationsAPI(unittest.TestCase):
+
+    def test_get_random_affirmation(self):
+        result = get_random_affirmation()
+        self.assertIn("affirmation", result)
+        self.assertIsInstance(result["affirmation"], str)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### affirmations.json
+```json
+{
+    "tool_name": "affirmations",
+    "tool_description": "API to generate random affirmations that can provide motivation or positive reinforcement.",
+    "title": "Affirmations API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 100,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.affirmations.dev/",
+    "host": "affirmations.dev",
+    "api_list": [
+        {
+            "name": "get_random_affirmation",
+            "url": "https://www.affirmations.dev/",
+            "description": "Fetch a random affirmation.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.affirmations.dev/'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "affirmation": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "affirmation": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,332 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional
+
+
+def get_random_quote(max_length: Optional[int] = None, min_length: Optional[int] = None, tags: Optional[str] = None, author: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a single random quote with optional filters.
+    """
+    url = "https://api.quotable.io/random"
+    params = {
+        'maxLength': max_length,
+        'minLength': min_length,
+        'tags': tags,
+        'author': author,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_random_quotes(limit: int = 1, max_length: Optional[int] = None, min_length: Optional[int] = None, tags: Optional[str] = None, author: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve one or more random quotes with optional filters.
+    """
+    url = "https://api.quotable.io/quotes/random"
+    params = {
+        'limit': limit,
+        'maxLength': max_length,
+        'minLength': min_length,
+        'tags': tags,
+        'author': author,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_quotes(max_length: Optional[int] = None, min_length: Optional[int] = None, tags: Optional[str] = None, author: Optional[str] = None, sort_by: Optional[str] = 'dateAdded', order: Optional[str] = None, limit: Optional[int] = 20, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all quotes matching a given query with pagination and sorting options.
+    """
+    url = "https://api.quotable.io/quotes"
+    params = {
+        'maxLength': max_length,
+        'minLength': min_length,
+        'tags': tags,
+        'author': author,
+        'sortBy': sort_by,
+        'order': order,
+        'limit': limit,
+        'page': page,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_quote_by_id(quote_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a quote by its ID.
+    """
+    url = f"https://api.quotable.io/quotes/{quote_id}"
+    response = requests.get(url)
+    return response.json()
+
+
+def list_authors(slug: Optional[str] = None, sort_by: Optional[str] = 'name', order: Optional[str] = None, limit: Optional[int] = 20, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all authors matching the given query, with several options for sorting and filtering.
+    """
+    url = "https://api.quotable.io/authors"
+    params = {
+        'slug': slug,
+        'sortBy': sort_by,
+        'order': order,
+        'limit': limit,
+        'page': page,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_quotes(query: str, fields: str = 'content,author,tags', fuzzy_max_edits: Optional[int] = 0, fuzzy_max_expansions: Optional[int] = 50, limit: Optional[int] = 20, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for quotes by keywords, content, and/or author name.
+    """
+    url = "https://api.quotable.io/search/quotes"
+    params = {
+        'query': query,
+        'fields': fields,
+        'fuzzyMaxEdits': fuzzy_max_edits,
+        'fuzzyMaxExpansions': fuzzy_max_expansions,
+        'limit': limit,
+        'page': page,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_authors(query: str, autocomplete: Optional[bool] = True, match_threshold: Optional[int] = 2, limit: Optional[int] = 20, page: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for authors by name with autocomplete.
+    """
+    url = "https://api.quotable.io/search/authors"
+    params = {
+        'query': query,
+        'autocomplete': autocomplete,
+        'matchThreshold': match_threshold,
+        'limit': limit,
+        'page': page,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_author_by_slug(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a single Author by slug.
+    """
+    url = f"https://api.quotable.io/authors/{slug}"
+    response = requests.get(url)
+    return response.json()
+
+
+def list_tags(sort_by: Optional[str] = 'name', order: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all tags with sorting options.
+    """
+    url = "https://api.quotable.io/tags"
+    params = {
+        'sortBy': sort_by,
+        'order': order,
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import get_random_quote, get_random_quotes, list_quotes, get_quote_by_id, list_authors, search_quotes, search_authors, get_author_by_slug, list_tags
+
+class TestQuotableAPI(unittest.TestCase):
+
+    def test_get_random_quote(self):
+        response = get_random_quote()
+        self.assertIn('content', response)
+        self.assertIn('author', response)
+
+    def test_get_random_quotes(self):
+        response = get_random_quotes(limit=3)
+        self.assertEqual(len(response), 3)
+        for quote in response:
+            self.assertIn('content', quote)
+            self.assertIn('author', quote)
+
+    def test_list_quotes(self):
+        response = list_quotes(limit=5, page=1)
+        self.assertIn('results', response)
+        self.assertEqual(len(response['results']), 5)
+
+    def test_get_quote_by_id(self):
+        quote_id = "5d91b45d99d0d60001d72745"  # Example ID, replace with a valid ID if needed
+        response = get_quote_by_id(quote_id)
+        self.assertIn('content', response)
+        self.assertIn('author', response)
+
+    def test_list_authors(self):
+        response = list_authors(limit=3, page=1)
+        self.assertIn('results', response)
+        self.assertEqual(len(response['results']), 3)
+
+    def test_search_quotes(self):
+        response = search_quotes(query="life")
+        self.assertIn('results', response)
+
+    def test_search_authors(self):
+        response = search_authors(query="Einstein")
+        self.assertIn('results', response)
+
+    def test_get_author_by_slug(self):
+        author_slug = "albert-einstein"  # Example slug
+        response = get_author_by_slug(author_slug)
+        self.assertIn('name', response)
+
+    def test_list_tags(self):
+        response = list_tags()
+        self.assertIn('results', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### quotable.json**  
+```json
+{
+    "tool_name": "quotable",
+    "tool_description": "Quotable is a free, open source quotations API.",
+    "title": "Quotable API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.quotable.io",
+    "host": "api.quotable.io",
+    "api_list": [
+        {
+            "name": "get_random_quote",
+            "url": "https://api.quotable.io/random",
+            "description": "Retrieve a single random quote with optional filters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"}
+            ]
+        },
+        {
+            "name": "get_random_quotes",
+            "url": "https://api.quotable.io/quotes/random",
+            "description": "Retrieve one or more random quotes with optional filters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "limit", "type": "INT", "default": "1"},
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"}
+            ]
+        },
+        {
+            "name": "list_quotes",
+            "url": "https://api.quotable.io/quotes",
+            "description": "Get all quotes matching a given query with pagination and sorting options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"},
+                {"name": "sortBy", "type": "ENUM", "default": "dateAdded"},
+                {"name": "order", "type": "ENUM"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "get_quote_by_id",
+            "url": "https://api.quotable.io/quotes/:id",
+            "description": "Retrieve a quote by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "quote_id", "type": "STRING"}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_authors",
+            "url": "https://api.quotable.io/authors",
+            "description": "Get all authors matching the given query, with several options for sorting and filtering.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "slug", "type": "STRING"},
+                {"name": "sortBy", "type": "ENUM", "default": "name"},
+                {"name": "order", "type": "ENUM"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "search_quotes",
+            "url": "https://api.quotable.io/search/quotes",
+            "description": "Search for quotes by keywords, content, and/or author name.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "query", "type": "STRING"}
+            ],
+            "optional_parameters": [
+                {"name": "fields", "type": "STRING", "default": "content,author,tags"},
+                {"name": "fuzzyMaxEdits", "type": "INT", "default": "0"},
+                {"name": "fuzzyMaxExpansions", "type": "INT", "default": "50"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "search_authors",
+            "url": "https://api.quotable.io/search/authors",
+            "description": "Search for authors by name with autocomplete.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "query", "type": "STRING"}
+            ],
+            "optional_parameters": [
+                {"name": "autocomplete", "type": "BOOLEAN", "default": "true"},
+                {"name": "matchThreshold", "type": "INT", "default": "2"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "get_author_by_slug",
+            "url": "https://api.quotable.io/authors/:slug",
+            "description": "Retrieve a single Author by slug.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "slug", "type": "STRING"}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_tags",
+            "url": "https://api.quotable.io/tags",
+            "description": "Get a list of all tags with sorting options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "sortBy", "type": "ENUM", "default": "name"},
+                {"name": "order", "type": "ENUM"}
+            ]
+        }
+    ]
+}
+```

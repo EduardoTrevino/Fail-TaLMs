@@ -1,0 +1,115 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+
+def get_random_quotes(orderby: str = "rand", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve quotes from the Quotes on Design API randomly.
+    Parameters:
+    orderby [Optional]: string [Description: The order in which to sort the quotes. Default is 'rand' for random.]
+    """
+    url = "https://quotesondesign.com/wp-json/wp/v2/posts/"
+    params = {
+        'orderby': orderby
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_random_quotes
+
+
+class TestQuotesOnDesignAPI(unittest.TestCase):
+    
+    def test_get_random_quotes(self):
+        # Test the default random quotes retrieval
+        response = get_random_quotes()
+        self.assertIsInstance(response, list, "Expected response to be a list")
+        for quote in response:
+            self.assertIn('content', quote, "Expected 'content' in quote")
+            self.assertIn('title', quote, "Expected 'title' in quote")
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### quotesondesign.json
+```json
+{
+    "tool_name": "quotesondesign",
+    "tool_description": "API to access random quotes from the Quotes on Design repository.",
+    "title": "Quotes on Design API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://quotesondesign.com",
+    "host": "quotesondesign.com",
+    "api_list": [
+        {
+            "name": "get_random_quotes",
+            "url": "https://quotesondesign.com/wp-json/wp/v2/posts/",
+            "description": "Retrieve quotes from the Quotes on Design API randomly.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "orderby",
+                    "type": "STRING",
+                    "description": "The order in which to sort the quotes. Use 'rand' for a random order.",
+                    "default": "rand"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://quotesondesign.com/wp-json/wp/v2/posts/'\nparams = {'orderby': 'rand'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "int",
+                "title": {
+                    "rendered": "str"
+                },
+                "content": {
+                    "rendered": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "object",
+                        "properties": {
+                            "rendered": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "content": {
+                        "type": "object",
+                        "properties": {
+                            "rendered": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

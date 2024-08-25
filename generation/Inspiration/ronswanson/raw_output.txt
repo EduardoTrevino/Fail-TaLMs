@@ -1,0 +1,171 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+def get_quote(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[str]:
+    """
+    Fetches a single random Ron Swanson quote.
+    """
+    url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_quotes(count: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[str]:
+    """
+    Fetches a specified number of random Ron Swanson quotes.
+    
+    Parameters:
+    - count: Integer specifying the number of quotes to return.
+    """
+    url = f"https://ron-swanson-quotes.herokuapp.com/v2/quotes/{count}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_quotes(term: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[str]:
+    """
+    Searches for Ron Swanson quotes that match a given term.
+    
+    Parameters:
+    - term: String with the term to search for in the quotes.
+    """
+    url = f"https://ron-swanson-quotes.herokuapp.com/v2/quotes/search/{term}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_quote, get_quotes, search_quotes
+
+class TestRonSwansonAPI(unittest.TestCase):
+    
+    def test_get_quote(self):
+        response = get_quote()
+        self.assertIsInstance(response, list)
+        self.assertEqual(len(response), 1)
+        self.assertIsInstance(response[0], str)
+
+    def test_get_quotes(self):
+        count = 3
+        response = get_quotes(count)
+        self.assertIsInstance(response, list)
+        self.assertEqual(len(response), count)
+        for quote in response:
+            self.assertIsInstance(quote, str)
+
+    def test_search_quotes(self):
+        term = "hate"
+        response = search_quotes(term)
+        self.assertIsInstance(response, list)
+        for quote in response:
+            self.assertIsInstance(quote, str)
+            self.assertIn(term.lower(), quote.lower())
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### ronswanson.json
+```json
+{
+    "tool_name": "Ronswanson",
+    "tool_description": "API to fetch quotes from Ron Swanson, known for his humorous and insightful quotes.",
+    "title": "Ron Swanson Quotes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0
+    },
+    "home_url": "https://ron-swanson-quotes.herokuapp.com/",
+    "host": "ron-swanson-quotes.herokuapp.com",
+    "api_list": [
+        {
+            "name": "get_quote",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes",
+            "description": "Fetches a single random Ron Swanson quote.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "response = requests.get('https://ron-swanson-quotes.herokuapp.com/v2/quotes')",
+            "statuscode": 200,
+            "body": [
+                "str"
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_quotes",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes/<count>",
+            "description": "Fetches a specified number of random Ron Swanson quotes.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of quotes to fetch.",
+                    "default": "1"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "response = requests.get('https://ron-swanson-quotes.herokuapp.com/v2/quotes/{count}')",
+            "statuscode": 200,
+            "body": [
+                "str"
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "search_quotes",
+            "url": "https://ron-swanson-quotes.herokuapp.com/v2/quotes/search/<term>",
+            "description": "Searches for Ron Swanson quotes that match a given term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "term",
+                    "type": "STRING",
+                    "description": "Term to search within quotes.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "response = requests.get('https://ron-swanson-quotes.herokuapp.com/v2/quotes/search/{term}')",
+            "statuscode": 200,
+            "body": [
+                "str"
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}
+```

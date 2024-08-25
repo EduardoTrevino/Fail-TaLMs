@@ -1,0 +1,86 @@
+{
+    "tool_name": "breakingbad",
+    "tool_description": "API to access and retrieve quotes from Breaking Bad.",
+    "title": "Breaking Bad Quotes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://breakingbadquotes.xyz/",
+    "host": "api.breakingbadquotes.xyz",
+    "api_list": [
+        {
+            "name": "get_random_quote",
+            "url": "https://api.breakingbadquotes.xyz/v1/quotes",
+            "description": "Retrieve a random quote from Breaking Bad.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.breakingbadquotes.xyz/v1/quotes'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "quote": "str",
+                    "author": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "quote": {
+                            "type": "string"
+                        },
+                        "author": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_multiple_quotes",
+            "url": "https://api.breakingbadquotes.xyz/v1/quotes/{number}",
+            "description": "Retrieve a specified number of quotes from Breaking Bad.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "The number of quotes to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = f'https://api.breakingbadquotes.xyz/v1/quotes/{number}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "quote": "str",
+                    "author": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "quote": {
+                            "type": "string"
+                        },
+                        "author": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

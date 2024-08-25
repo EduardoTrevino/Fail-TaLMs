@@ -1,0 +1,206 @@
+{
+    "tool_name": "gameofthrones",
+    "tool_description": "API to access quotes and information about Game of Thrones characters and houses.",
+    "title": "Game of Thrones Quotes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://gameofthronesquotes.xyz/",
+    "host": "api.gameofthronesquotes.xyz",
+    "api_list": [
+        {
+            "name": "get_random_quote",
+            "url": "https://api.gameofthronesquotes.xyz/v1/random",
+            "description": "Get a random quote from Game of Thrones.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/random'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "sentence": "If I fall, don't bring me back.",
+                "character": {
+                    "name": "Jon Snow",
+                    "slug": "jon",
+                    "house": {
+                        "name": "House Stark of Winterfell",
+                        "slug": "stark"
+                    }
+                }
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_random_quotes",
+            "url": "https://api.gameofthronesquotes.xyz/v1/random/{number}",
+            "description": "Get multiple random quotes from Game of Thrones.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "Number of random quotes to return.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/random/3'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "sentence": "If I fall, don't bring me back.",
+                    "character": {
+                        "name": "Jon Snow",
+                        "slug": "jon",
+                        "house": {
+                            "name": "House Stark of Winterfell",
+                            "slug": "stark"
+                        }
+                    }
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_quotes_by_character",
+            "url": "https://api.gameofthronesquotes.xyz/v1/author/{character}/{number}",
+            "description": "Get quotes for a specific Game of Thrones character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "character_slug",
+                    "type": "STRING",
+                    "description": "Slug of the character."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "Number of quotes to return.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/author/tyrion/2'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "sentence": "It's not easy being drunk all the time. Everyone would do it, if it were easy.",
+                    "character": {
+                        "name": "Tyrion Lannister",
+                        "slug": "tyrion",
+                        "house": {
+                            "name": "House Lannister of Casterly Rock",
+                            "slug": "lannister"
+                        }
+                    }
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_houses",
+            "url": "https://api.gameofthronesquotes.xyz/v1/houses",
+            "description": "Get the list of Game of Thrones houses.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/houses'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "slug": "stark",
+                    "name": "House Stark of Winterfell",
+                    "members": [
+                        {"name": "Jon Snow", "slug": "jon"}
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_house_details",
+            "url": "https://api.gameofthronesquotes.xyz/v1/house/{name}",
+            "description": "Get details of a specific Game of Thrones house.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "house_slug",
+                    "type": "STRING",
+                    "description": "Slug of the house."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/house/stark'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "slug": "stark",
+                    "name": "House Stark of Winterfell",
+                    "members": [
+                        {"name": "Jon Snow", "slug": "jon"}
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_characters",
+            "url": "https://api.gameofthronesquotes.xyz/v1/characters",
+            "description": "Get the list of Game of Thrones characters with their quotes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/characters'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "name": "Jon Snow",
+                    "slug": "jon",
+                    "house": {
+                        "slug": "stark",
+                        "name": "House Stark of Winterfell"
+                    },
+                    "quotes": [
+                        "If I fall, don't bring me back."
+                    ]
+                }
+            ],
+            "headers": {}
+        },
+        {
+            "name": "get_character_details",
+            "url": "https://api.gameofthronesquotes.xyz/v1/character/{name}",
+            "description": "Get details of a specific Game of Thrones character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "character_slug",
+                    "type": "STRING",
+                    "description": "Slug of the character."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.gameofthronesquotes.xyz/v1/character/jon'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "name": "Jon Snow",
+                    "house": {
+                        "slug": "stark",
+                        "name": "House Stark of Winterfell"
+                    },
+                    "quotes": [
+                        "If I fall, don't bring me back."
+                    ]
+                }
+            ],
+            "headers": {}
+        }
+    ]
+}

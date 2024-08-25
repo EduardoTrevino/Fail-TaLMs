@@ -1,0 +1,239 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def get_random_advice(callback: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a random advice slip as a slip object.
+    Parameters:
+    callback [Optional]: string To define your own callback function name and return the JSON in a function wrapper (as JSONP).
+    """
+    url = "https://api.adviceslip.com/advice"
+    params = {}
+    if callback:
+        params['callback'] = callback
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_advice_by_id(slip_id: int, callback: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    If an advice slip is found with the corresponding slip_id, a slip object is returned.
+    Parameters:
+    slip_id [Required]: integer The ID of the advice slip.
+    callback [Optional]: string To define your own callback function name and return the JSON in a function wrapper (as JSONP).
+    """
+    url = f"https://api.adviceslip.com/advice/{slip_id}"
+    params = {}
+    if callback:
+        params['callback'] = callback
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_advice(query: str, callback: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    If an advice slip is found, containing the corresponding search term in query, an array of slip objects is returned inside a search object.
+    Parameters:
+    query [Required]: string The search query term for advice slips.
+    callback [Optional]: string To define your own callback function name and return the JSON in a function wrapper (as JSONP).
+    """
+    url = f"https://api.adviceslip.com/advice/search/{query}"
+    params = {}
+    if callback:
+        params['callback'] = callback
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import get_random_advice, get_advice_by_id, search_advice
+
+
+class TestAdviceSlipAPI(unittest.TestCase):
+
+    def test_get_random_advice(self):
+        # Test getting a random advice slip
+        response = get_random_advice()
+        self.assertIn('slip', response)
+        self.assertIn('advice', response['slip'])
+
+    def test_get_advice_by_id(self):
+        # Test getting advice by a specific ID
+        known_id = 1  # Example known slip ID; this ID should exist in their system
+        response = get_advice_by_id(known_id)
+        self.assertIn('slip', response)
+        self.assertEqual(response['slip']['slip_id'], known_id)
+
+    def test_search_advice(self):
+        # Test searching advice by a query
+        query = "life"
+        response = search_advice(query)
+        self.assertIn('total_results', response)
+        self.assertIn('slips', response)
+        self.assertIsInstance(response['slips'], list)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**adviceslip.json**
+
+```json
+{
+    "tool_name": "adviceslip",
+    "tool_description": "The Advice Slip JSON API provides random advice slips and allows searching and retrieval by ID.",
+    "title": "Advice Slip JSON API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.adviceslip.com/",
+    "host": "api.adviceslip.com",
+    "api_list": [
+        {
+            "name": "get_random_advice",
+            "url": "https://api.adviceslip.com/advice",
+            "description": "Returns a random advice slip as a slip object.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "callback",
+                    "type": "STRING",
+                    "description": "Define your own callback function name for JSONP.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "slip": {
+                    "slip_id": "int",
+                    "advice": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "slip": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_advice_by_id",
+            "url": "https://api.adviceslip.com/advice/{slip_id}",
+            "description": "Returns a specific advice slip by slip_id.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "slip_id",
+                    "type": "INTEGER",
+                    "description": "The unique ID of the advice slip.",
+                    "default": null
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "callback",
+                    "type": "STRING",
+                    "description": "Define your own callback function name for JSONP.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice/{slip_id}'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "slip": {
+                    "slip_id": "int",
+                    "advice": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "slip": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_advice",
+            "url": "https://api.adviceslip.com/advice/search/{query}",
+            "description": "Search for advice slips containing the given query term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query for advice slips.",
+                    "default": null
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "callback",
+                    "type": "STRING",
+                    "description": "Define your own callback function name for JSONP.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice/search/{query}'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total_results": "int",
+                "query": "str",
+                "slips": [
+                    {
+                        "slip_id": "int",
+                        "advice": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_results": {
+                        "type": "integer"
+                    },
+                    "query": {
+                        "type": "string"
+                    },
+                    "slips": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

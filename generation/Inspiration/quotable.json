@@ -1,0 +1,137 @@
+{
+    "tool_name": "quotable",
+    "tool_description": "Quotable is a free, open source quotations API.",
+    "title": "Quotable API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.quotable.io",
+    "host": "api.quotable.io",
+    "api_list": [
+        {
+            "name": "get_random_quote",
+            "url": "https://api.quotable.io/random",
+            "description": "Retrieve a single random quote with optional filters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"}
+            ]
+        },
+        {
+            "name": "get_random_quotes",
+            "url": "https://api.quotable.io/quotes/random",
+            "description": "Retrieve one or more random quotes with optional filters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "limit", "type": "INT", "default": "1"},
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"}
+            ]
+        },
+        {
+            "name": "list_quotes",
+            "url": "https://api.quotable.io/quotes",
+            "description": "Get all quotes matching a given query with pagination and sorting options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "maxLength", "type": "INT"},
+                {"name": "minLength", "type": "INT"},
+                {"name": "tags", "type": "STRING"},
+                {"name": "author", "type": "STRING"},
+                {"name": "sortBy", "type": "ENUM", "default": "dateAdded"},
+                {"name": "order", "type": "ENUM"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "get_quote_by_id",
+            "url": "https://api.quotable.io/quotes/:id",
+            "description": "Retrieve a quote by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "quote_id", "type": "STRING"}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_authors",
+            "url": "https://api.quotable.io/authors",
+            "description": "Get all authors matching the given query, with several options for sorting and filtering.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "slug", "type": "STRING"},
+                {"name": "sortBy", "type": "ENUM", "default": "name"},
+                {"name": "order", "type": "ENUM"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "search_quotes",
+            "url": "https://api.quotable.io/search/quotes",
+            "description": "Search for quotes by keywords, content, and/or author name.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "query", "type": "STRING"}
+            ],
+            "optional_parameters": [
+                {"name": "fields", "type": "STRING", "default": "content,author,tags"},
+                {"name": "fuzzyMaxEdits", "type": "INT", "default": "0"},
+                {"name": "fuzzyMaxExpansions", "type": "INT", "default": "50"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "search_authors",
+            "url": "https://api.quotable.io/search/authors",
+            "description": "Search for authors by name with autocomplete.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "query", "type": "STRING"}
+            ],
+            "optional_parameters": [
+                {"name": "autocomplete", "type": "BOOLEAN", "default": "true"},
+                {"name": "matchThreshold", "type": "INT", "default": "2"},
+                {"name": "limit", "type": "INT", "default": "20"},
+                {"name": "page", "type": "INT", "default": "1"}
+            ]
+        },
+        {
+            "name": "get_author_by_slug",
+            "url": "https://api.quotable.io/authors/:slug",
+            "description": "Retrieve a single Author by slug.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "slug", "type": "STRING"}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_tags",
+            "url": "https://api.quotable.io/tags",
+            "description": "Get a list of all tags with sorting options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "sortBy", "type": "ENUM", "default": "name"},
+                {"name": "order", "type": "ENUM"}
+            ]
+        }
+    ]
+}

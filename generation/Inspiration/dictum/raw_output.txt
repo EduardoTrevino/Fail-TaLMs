@@ -1,0 +1,361 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, Dict, Any, List
+
+def get_authors(language: str, query: Optional[str] = None, offset: Optional[int] = 0, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict[str, Any]]:
+    url = f"https://api.dictum.com/v1/authors/{language}"
+    params = {
+        'query': query,
+        'offset': offset,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_author(language: str, author_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/authors/{language}/{author_id}"
+    response = requests.get(url)
+    return response.json()
+
+def search_author_quotes(language: str, author_id: str, query: Optional[str] = None, offset: Optional[int] = 0, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict[str, Any]]:
+    url = f"https://api.dictum.com/v1/authors/{language}/{author_id}/quotes"
+    params = {
+        'query': query,
+        'offset': offset,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_languages(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict[str, Any]]:
+    url = "https://api.dictum.com/v1/languages"
+    response = requests.get(url)
+    return response.json()
+
+def like_quote(language: str, quote_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/likes/{language}"
+    data = {'likeQuote': {'quote-id': quote_id}}
+    response = requests.post(url, json=data)
+    return response.json()
+
+def search_quotes(language: str, query: Optional[str] = None, offset: Optional[int] = 0, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict[str, Any]]:
+    url = f"https://api.dictum.com/v1/quotes/{language}"
+    params = {
+        'query': query,
+        'offset': offset,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def create_quote(language: str, author_id: str, text: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/quotes/{language}"
+    data = {'quote': {'author-id': author_id, 'text': text}}
+    response = requests.post(url, json=data)
+    return response.json()
+
+def get_random_quote(language: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/quotes/{language}/random"
+    response = requests.get(url)
+    return response.json()
+
+def get_quote(language: str, quote_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/quotes/{language}/{quote_id}"
+    response = requests.get(url)
+    return response.json()
+
+def get_statistics(language: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    url = f"https://api.dictum.com/v1/statistics/{language}"
+    response = requests.get(url)
+    return response.json()
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import (
+    get_authors,
+    get_author,
+    search_author_quotes,
+    get_languages,
+    like_quote,
+    search_quotes,
+    create_quote,
+    get_random_quote,
+    get_quote,
+    get_statistics
+)
+
+class TestDictumAPI(unittest.TestCase):
+    
+    def setUp(self):
+        self.language = "en"
+        self.author_id = "some-author-id"
+        self.quote_id = "some-quote-id"
+        self.text = "An inspiring quote"
+        self.toolbench_rapidapi_key = "088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff"
+
+    def test_get_authors(self):
+        response = get_authors(self.language)
+        self.assertIsInstance(response, list)
+
+    def test_get_author(self):
+        response = get_author(self.language, self.author_id)
+        self.assertIsInstance(response, dict)
+
+    def test_search_author_quotes(self):
+        response = search_author_quotes(self.language, self.author_id)
+        self.assertIsInstance(response, list)
+
+    def test_get_languages(self):
+        response = get_languages()
+        self.assertIsInstance(response, list)
+
+    def test_like_quote(self):
+        response = like_quote(self.language, self.quote_id)
+        self.assertIsInstance(response, dict)
+
+    def test_search_quotes(self):
+        response = search_quotes(self.language)
+        self.assertIsInstance(response, list)
+
+    def test_create_quote(self):
+        response = create_quote(self.language, self.author_id, self.text)
+        self.assertIsInstance(response, dict)
+
+    def test_get_random_quote(self):
+        response = get_random_quote(self.language)
+        self.assertIsInstance(response, dict)
+
+    def test_get_quote(self):
+        response = get_quote(self.language, self.quote_id)
+        self.assertIsInstance(response, dict)
+
+    def test_get_statistics(self):
+        response = get_statistics(self.language)
+        self.assertIsInstance(response, dict)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### dictum.json**
+
+```json
+{
+    "tool_name": "dictum",
+    "tool_description": "API to get access to the collection of the most inspiring expressions of mankind.",
+    "title": "Dictum API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.dictum.com/docs/",
+    "host": "api.dictum.com",
+    "api_list": [
+        {
+            "name": "get_authors",
+            "url": "https://api.dictum.com/v1/authors/{language}",
+            "description": "Retrieve a list of authors by language.",
+            "method": "GET",
+            "required_parameters": ["language"],
+            "optional_parameters": ["query", "offset", "limit"],
+            "statuscode": 200,
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_author",
+            "url": "https://api.dictum.com/v1/authors/{language}/{authorId}",
+            "description": "Get details of a specific author by their ID.",
+            "method": "GET",
+            "required_parameters": ["language", "authorId"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "bio": { "type": "string" }
+                }
+            }
+        },
+        {
+            "name": "search_author_quotes",
+            "url": "https://api.dictum.com/v1/authors/{language}/{authorId}/quotes",
+            "description": "Fetch quotes from a specific author.",
+            "method": "GET",
+            "required_parameters": ["language", "authorId"],
+            "optional_parameters": ["query", "offset", "limit"],
+            "statuscode": 200,
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "text": { "type": "string" },
+                        "author": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "name": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_languages",
+            "url": "https://api.dictum.com/v1/languages",
+            "description": "Get list of available languages.",
+            "method": "GET",
+            "statuscode": 200,
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "code": { "type": "string" },
+                        "language": { "type": "string" }
+                    }
+                }
+            }
+        },
+        {
+            "name": "like_quote",
+            "url": "https://api.dictum.com/v1/likes/{language}",
+            "description": "Like a quote by ID.",
+            "method": "POST",
+            "required_parameters": ["language", "quote_id"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "search_quotes",
+            "url": "https://api.dictum.com/v1/quotes/{language}",
+            "description": "Search for quotes in a specific language.",
+            "method": "GET",
+            "required_parameters": ["language"],
+            "optional_parameters": ["query", "offset", "limit"],
+            "statuscode": 200,
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "text": { "type": "string" },
+                        "author": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "name": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "create_quote",
+            "url": "https://api.dictum.com/v1/quotes/{language}",
+            "description": "Create a new quote.",
+            "method": "POST",
+            "required_parameters": ["language", "author_id", "text"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "text": { "type": "string" },
+                    "author": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "name": { "type": "string" }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_random_quote",
+            "url": "https://api.dictum.com/v1/quotes/{language}/random",
+            "description": "Get a random quote in the specified language.",
+            "method": "GET",
+            "required_parameters": ["language"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "text": { "type": "string" },
+                    "author": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "name": { "type": "string" }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_quote",
+            "url": "https://api.dictum.com/v1/quotes/{language}/{quoteId}",
+            "description": "Get detailed information of a specific quote.",
+            "method": "GET",
+            "required_parameters": ["language", "quoteId"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "text": { "type": "string" },
+                    "author": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "name": { "type": "string" }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_statistics",
+            "url": "https://api.dictum.com/v1/statistics/{language}",
+            "description": "Get statistics of quotes and authors.",
+            "method": "GET",
+            "required_parameters": ["language"],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "authors": { "type": "integer" },
+                    "quotes": { "type": "integer" }
+                }
+            }
+        }
+    ]
+}
+```
