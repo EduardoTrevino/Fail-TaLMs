@@ -1,0 +1,251 @@
+Running tests for API 'remush'...
+..EE
+======================================================================
+ERROR: test_compress_image_post_method_file_not_found (__main__.TestRemushAPI.test_compress_image_post_method_file_not_found)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/remush/api_test.py", line 29, in test_compress_image_post_method_file_not_found
+    response = compress_image_post_method(file_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/remush/api.py", line 35, in compress_image_post_method
+    mime_type = requests.utils.guess_mime_type(file_path) or mime_type
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'requests.utils' has no attribute 'guess_mime_type'
+
+======================================================================
+ERROR: test_compress_image_post_method_success (__main__.TestRemushAPI.test_compress_image_post_method_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/remush/api_test.py", line 22, in test_compress_image_post_method_success
+    response = compress_image_post_method(file_path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/remush/api.py", line 35, in compress_image_post_method
+    mime_type = requests.utils.guess_mime_type(file_path) or mime_type
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'requests.utils' has no attribute 'guess_mime_type'
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.918s
+
+FAILED (errors=2)
+Tests completed for API 'remush'
+
+==================================================
+
+Running tests for API 'robohash'...
+Tests completed for API 'robohash'
+
+==================================================
+
+python3: can't open file '/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/robohash/api_test.py': [Errno 2] No such file or directory
+Running tests for API 'colourlovers'...
+EE.EEEEEEE
+======================================================================
+ERROR: test_color (__main__.TestColourLoversAPI.test_color)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 13, in test_color
+    response = color(hex_value)
+               ^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 40, in color
+    return request_colorlovers_api(method="GET", endpoint=f"/color/{hex_value}", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/color/6B4106?format=json
+
+======================================================================
+ERROR: test_colors (__main__.TestColourLoversAPI.test_colors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 8, in test_colors
+    response = colors()
+               ^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 32, in colors
+    return request_colorlovers_api(method="GET", endpoint="/colors", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/colors?keywordExact=0&sortBy=ASC&numResults=20&resultOffset=0&format=json
+
+======================================================================
+ERROR: test_lover (__main__.TestColourLoversAPI.test_lover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 40, in test_lover
+    response = lover(username)
+               ^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 121, in lover
+    return request_colorlovers_api(method="GET", endpoint=f"/lover/{username}", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/lover/COLOURlover?comments=0&format=json
+
+======================================================================
+ERROR: test_lovers (__main__.TestColourLoversAPI.test_lovers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 35, in test_lovers
+    response = lovers()
+               ^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 112, in lovers
+    return request_colorlovers_api(method="GET", endpoint="/lovers", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/lovers?sortBy=ASC&numResults=20&resultOffset=0&format=json
+
+======================================================================
+ERROR: test_palette (__main__.TestColourLoversAPI.test_palette)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 22, in test_palette
+    response = palette(palette_id)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 71, in palette
+    return request_colorlovers_api(method="GET", endpoint=f"/palette/{palette_id}", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/palette/113451?format=json&showPaletteWidths=0
+
+======================================================================
+ERROR: test_palettes (__main__.TestColourLoversAPI.test_palettes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 17, in test_palettes
+    response = palettes()
+               ^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 62, in palettes
+    return request_colorlovers_api(method="GET", endpoint="/palettes", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/palettes?hex_logic=AND&keywordExact=0&sortBy=ASC&numResults=20&resultOffset=0&format=json&showPaletteWidths=0
+
+======================================================================
+ERROR: test_pattern (__main__.TestColourLoversAPI.test_pattern)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 31, in test_pattern
+    response = pattern(pattern_id)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 99, in pattern
+    return request_colorlovers_api(method="GET", endpoint=f"/pattern/{pattern_id}", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/pattern/1451?format=json
+
+======================================================================
+ERROR: test_patterns (__main__.TestColourLoversAPI.test_patterns)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 26, in test_patterns
+    response = patterns()
+               ^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 91, in patterns
+    return request_colorlovers_api(method="GET", endpoint="/patterns", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/patterns?hex_logic=AND&keywordExact=0&sortBy=ASC&numResults=20&resultOffset=0&format=json
+
+======================================================================
+ERROR: test_stats_colors (__main__.TestColourLoversAPI.test_stats_colors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api_test.py", line 44, in test_stats_colors
+    response = stats("colors")
+               ^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 133, in stats
+    return request_colorlovers_api(method="GET", endpoint=f"/stats/{resource}", params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/colourlovers/api.py", line 12, in request_colorlovers_api
+    response.raise_for_status()  # Raise an error for bad status codes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://www.colourlovers.com/api/stats/colors?format=json
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.782s
+
+FAILED (errors=9)
+Tests completed for API 'colourlovers'
+
+==================================================
+
+Running tests for API 'metmuseum'...
+......
+----------------------------------------------------------------------
+Ran 6 tests in 13.012s
+
+OK
+Tests completed for API 'metmuseum'
+
+==================================================
+
+Running tests for API 'dogs'...
+..........
+----------------------------------------------------------------------
+Ran 10 tests in 3.835s
+
+OK
+Tests completed for API 'dogs'
+
+==================================================
+
+Running tests for API 'dicebear'...
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 7.749s
+
+OK
+Tests completed for API 'dicebear'
+
+==================================================
+
+Running tests for API 'artchicago'...
+.......F.Tests completed for API 'artchicago'
+
+==================================================
+
+.
+======================================================================
+FAIL: test_place_by_id (__main__.TestArtChicagoAPI.test_place_by_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Art/artchicago/api_test.py", line 43, in test_place_by_id
+    self.assertIn('data', response)
+AssertionError: 'data' not found in {'status': 404, 'error': 'Not found', 'detail': 'The item you requested cannot be found.'}
+
+----------------------------------------------------------------------
+Ran 10 tests in 6.569s
+
+FAILED (failures=1)

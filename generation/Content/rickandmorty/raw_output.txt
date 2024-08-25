@@ -1,0 +1,259 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List, Union, Dict
+
+def get_characters(page: Optional[int] = 1, name: Optional[str] = None, status: Optional[str] = None, species: Optional[str] = None, gender: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get all characters or filter them.
+    
+    Parameters:
+    - page: Optional; the page of results to retrieve (default is 1).
+    - name: Optional; filter by the given character name.
+    - status: Optional; filter by the character's status ('alive', 'dead', or 'unknown').
+    - species: Optional; filter by the character's species.
+    - gender: Optional; filter by the character's gender ('female', 'male', 'genderless', or 'unknown').
+    
+    Returns: JSON response from the API containing characters data.
+    """
+    url = "https://rickandmortyapi.com/api/character"
+    params = {
+        "page": page,
+        "name": name,
+        "status": status,
+        "species": species,
+        "gender": gender
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_character_by_id(character_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get a single character by id.
+    
+    Parameters:
+    - character_id: Required; ID of the character to be retrieved.
+
+    Returns: JSON response from the API containing character data.
+    """
+    url = f"https://rickandmortyapi.com/api/character/{character_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_locations(page: Optional[int] = 1, name: Optional[str] = None, type: Optional[str] = None, dimension: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get all locations or filter them.
+    
+    Parameters:
+    - page: Optional; the page of results to retrieve (default is 1).
+    - name: Optional; filter by the given location name.
+    - type: Optional; filter by the location type.
+    - dimension: Optional; filter by the dimension.
+    
+    Returns: JSON response from the API containing locations data.
+    """
+    url = "https://rickandmortyapi.com/api/location"
+    params = {
+        "page": page,
+        "name": name,
+        "type": type,
+        "dimension": dimension
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_location_by_id(location_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get a single location by id.
+    
+    Parameters:
+    - location_id: Required; ID of the location to be retrieved.
+
+    Returns: JSON response from the API containing location data.
+    """
+    url = f"https://rickandmortyapi.com/api/location/{location_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_episodes(page: Optional[int] = 1, name: Optional[str] = None, episode: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get all episodes or filter them.
+    
+    Parameters:
+    - page: Optional; the page of results to retrieve (default is 1).
+    - name: Optional; filter by the given episode name.
+    - episode: Optional; filter by the episode code.
+    
+    Returns: JSON response from the API containing episodes data.
+    """
+    url = "https://rickandmortyapi.com/api/episode"
+    params = {
+        "page": page,
+        "name": name,
+        "episode": episode
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_episode_by_id(episode_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Endpoint to get a single episode by id.
+    
+    Parameters:
+    - episode_id: Required; ID of the episode to be retrieved.
+
+    Returns: JSON response from the API containing episode data.
+    """
+    url = f"https://rickandmortyapi.com/api/episode/{episode_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_characters, get_character_by_id, get_locations, get_location_by_id, get_episodes, get_episode_by_id
+
+class TestRickAndMortyAPI(unittest.TestCase):
+
+    def test_get_characters(self):
+        response = get_characters()
+        self.assertIn('info', response)
+        self.assertIn('results', response)
+
+    def test_get_character_by_id(self):
+        response = get_character_by_id(1)  # Rick Sanchez
+        self.assertEqual(response['name'], "Rick Sanchez")
+
+    def test_get_locations(self):
+        response = get_locations()
+        self.assertIn('info', response)
+        self.assertIn('results', response)
+
+    def test_get_location_by_id(self):
+        response = get_location_by_id(1)  # Earth
+        self.assertEqual(response['name'], "Earth")
+
+    def test_get_episodes(self):
+        response = get_episodes()
+        self.assertIn('info', response)
+        self.assertIn('results', response)
+
+    def test_get_episode_by_id(self):
+        response = get_episode_by_id(1)  # Pilot
+        self.assertEqual(response['name'], "Pilot")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### rickandmorty.json**
+
+```json
+{
+    "tool_name": "rickandmorty",
+    "tool_description": "API to explore and interact with characters, locations and episodes from the Rick and Morty universe.",
+    "title": "Rick and Morty API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://rickandmortyapi.com/documentation",
+    "host": "rickandmortyapi.com",
+    "api_list": [
+        {
+            "name": "get_characters",
+            "url": "https://rickandmortyapi.com/api/character",
+            "description": "Fetches all characters, with filtering options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                { "name": "page", "type": "INTEGER", "description": "The page of characters to retrieve.", "default": "1" },
+                { "name": "name", "type": "STRING", "description": "Filter for names containing this string." },
+                { "name": "status", "type": "STRING", "description": "Filter by status (alive, dead, unknown)." },
+                { "name": "species", "type": "STRING", "description": "Filter by species." },
+                { "name": "gender", "type": "STRING", "description": "Filter by gender (female, male, genderless, unknown)." }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_character_by_id",
+            "url": "https://rickandmortyapi.com/api/character/{id}",
+            "description": "Fetches a single character by ID.",
+            "method": "GET",
+            "required_parameters": [{ "name": "character_id", "type": "INTEGER", "description": "ID of the character." }],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_locations",
+            "url": "https://rickandmortyapi.com/api/location",
+            "description": "Fetches all locations, with filtering options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                { "name": "page", "type": "INTEGER", "description": "The page of locations to retrieve.", "default": "1" },
+                { "name": "name", "type": "STRING", "description": "Filter for names containing this string." },
+                { "name": "type", "type": "STRING", "description": "Filter by type." },
+                { "name": "dimension", "type": "STRING", "description": "Filter by dimension." }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_location_by_id",
+            "url": "https://rickandmortyapi.com/api/location/{id}",
+            "description": "Fetches a single location by ID.",
+            "method": "GET",
+            "required_parameters": [{ "name": "location_id", "type": "INTEGER", "description": "ID of the location." }],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_episodes",
+            "url": "https://rickandmortyapi.com/api/episode",
+            "description": "Fetches all episodes, with filtering options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                { "name": "page", "type": "INTEGER", "description": "The page of episodes to retrieve.", "default": "1" },
+                { "name": "name", "type": "STRING", "description": "Filter for names containing this string." },
+                { "name": "episode", "type": "STRING", "description": "Filter by episode code." }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_episode_by_id",
+            "url": "https://rickandmortyapi.com/api/episode/{id}",
+            "description": "Fetches a single episode by ID.",
+            "method": "GET",
+            "required_parameters": [{ "name": "episode_id", "type": "INTEGER", "description": "ID of the episode." }],
+            "optional_parameters": [],
+            "statuscode": 200
+        }
+    ]
+}
+```

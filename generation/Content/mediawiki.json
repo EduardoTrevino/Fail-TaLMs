@@ -1,0 +1,123 @@
+{
+    "tool_name": "mediawiki",
+    "tool_description": "API to access and perform operations on Wikimedia wikis, enabling page parsing, search, and site information retrieval.",
+    "title": "MediaWiki API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.mediawiki.org/wiki/API:Main_page",
+    "host": "mediawiki.org",
+    "api_list": [
+        {
+            "name": "parse_page",
+            "url": "https://en.wikipedia.org/w/api.php?action=parse",
+            "description": "Parses a wiki page and returns its HTML content.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "page",
+                    "type": "STRING",
+                    "description": "Title of the page to parse."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "wiki",
+                    "type": "STRING",
+                    "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+                    "default": "https://en.wikipedia.org/w/api.php"
+                }
+            ],
+            "code": "parse_page(page='Pet_door')",
+            "statuscode": 200,
+            "body": {
+                "parse": {
+                    "title": "str",
+                    "pageid": "int",
+                    "text": {
+                        "*": "str"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "parse": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_open_search",
+            "url": "https://en.wikipedia.org/w/api.php?action=opensearch",
+            "description": "Search the wiki using the OpenSearch protocol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of search results to return.",
+                    "default": "10"
+                }
+            ],
+            "code": "search_open_search(query='Wikipedia')",
+            "statuscode": 200,
+            "body": [
+                "str",
+                [
+                    "str"
+                ],
+                [
+                    "str"
+                ],
+                [
+                    "str"
+                ]
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_sitematrix",
+            "url": "https://www.mediawiki.org/w/api.php?action=sitematrix",
+            "description": "Retrieve the list of Wikimedia sites and related information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "get_sitematrix()",
+            "statuscode": 200,
+            "body": {
+                "sitematrix": {
+                    "count": "int",
+                    "specials": [
+                        {
+                            "code": "str",
+                            "name": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}

@@ -1,0 +1,331 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+BASE_URL = "https://finalspaceapi.com/api/v0/"
+
+def get_all_characters(sort: Optional[str] = None, limit: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves all characters, with options to sort and limit the results.
+    
+    Parameters:
+    sort [Optional]: string - Sort the list in 'asc' (ascending) or 'desc' (descending) order.
+    limit [Optional]: integer - Limits the number of characters returned.
+    
+    Returns:
+    JSON response with characters details.
+    """
+    url = f"{BASE_URL}character"
+    params = {}
+    if sort:
+        params['sort'] = sort
+    if limit:
+        params['limit'] = limit
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_character_by_id(character_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves a character by its ID.
+    
+    Parameters:
+    character_id [Required]: integer - The ID of the character to retrieve.
+    
+    Returns:
+    JSON response with character details for the specified ID.
+    """
+    url = f"{BASE_URL}character/{character_id}"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_episodes(sort: Optional[str] = None, limit: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves all episodes, with options to sort and limit the results.
+    
+    Parameters:
+    sort [Optional]: string - Sort the list in 'asc' (ascending) or 'desc' (descending) order.
+    limit [Optional]: integer - Limits the number of episodes returned.
+    
+    Returns:
+    JSON response with episodes details.
+    """
+    url = f"{BASE_URL}episode"
+    params = {}
+    if sort:
+        params['sort'] = sort
+    if limit:
+        params['limit'] = limit
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_episode_by_id(episode_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves an episode by its ID.
+    
+    Parameters:
+    episode_id [Required]: integer - The ID of the episode to retrieve.
+    
+    Returns:
+    JSON response with episode details for the specified ID.
+    """
+    url = f"{BASE_URL}episode/{episode_id}"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_locations(sort: Optional[str] = None, limit: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves all locations, with options to sort and limit the results.
+    
+    Parameters:
+    sort [Optional]: string - Sort the list in 'asc' (ascending) or 'desc' (descending) order.
+    limit [Optional]: integer - Limits the number of locations returned.
+    
+    Returns:
+    JSON response with locations details.
+    """
+    url = f"{BASE_URL}location"
+    params = {}
+    if sort:
+        params['sort'] = sort
+    if limit:
+        params['limit'] = limit
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_location_by_id(location_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves a location by its ID.
+    
+    Parameters:
+    location_id [Required]: integer - The ID of the location to retrieve.
+    
+    Returns:
+    JSON response with location details for the specified ID.
+    """
+    url = f"{BASE_URL}location/{location_id}"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_quotes(sort: Optional[str] = None, limit: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves all quotes, with options to sort and limit the results.
+    
+    Parameters:
+    sort [Optional]: string - Sort the list in 'asc' (ascending) or 'desc' (descending) order.
+    limit [Optional]: integer - Limits the number of quotes returned.
+    
+    Returns:
+    JSON response with quotes details.
+    """
+    url = f"{BASE_URL}quote"
+    params = {}
+    if sort:
+        params['sort'] = sort
+    if limit:
+        params['limit'] = limit
+    
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+### api_test.py
+```python
+from api import (
+    get_all_characters, get_character_by_id,
+    get_all_episodes, get_episode_by_id,
+    get_all_locations, get_location_by_id,
+    get_all_quotes
+)
+
+def test_get_all_characters():
+    response = get_all_characters()
+    assert isinstance(response, list) and len(response) > 0
+
+def test_get_character_by_id():
+    response = get_character_by_id(1)
+    assert isinstance(response, dict) and response['id'] == 1
+
+def test_get_all_episodes():
+    response = get_all_episodes()
+    assert isinstance(response, list) and len(response) > 0
+
+def test_get_episode_by_id():
+    response = get_episode_by_id(1)
+    assert isinstance(response, dict) and response['id'] == 1
+
+def test_get_all_locations():
+    response = get_all_locations()
+    assert isinstance(response, list) and len(response) > 0
+
+def test_get_location_by_id():
+    response = get_location_by_id(1)
+    assert isinstance(response, dict) and response['id'] == 1
+
+def test_get_all_quotes():
+    response = get_all_quotes()
+    assert isinstance(response, list) and len(response) > 0
+
+if __name__ == "__main__":
+    test_get_all_characters()
+    test_get_character_by_id()
+    test_get_all_episodes()
+    test_get_episode_by_id()
+    test_get_all_locations()
+    test_get_location_by_id()
+    test_get_all_quotes()
+    print("All tests passed!")
+```
+
+### finalspace.json
+```json
+{
+    "tool_name": "finalspace",
+    "tool_description": "API providing data on characters, episodes, locations, and quotes from the Final Space animated television show.",
+    "title": "Final Space API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://finalspaceapi.com/docs/",
+    "host": "finalspaceapi.com",
+    "api_list": [
+        {
+            "name": "get_all_characters",
+            "url": "https://finalspaceapi.com/api/v0/character",
+            "description": "Retrieves all characters with options to sort and limit results.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort in 'asc' or 'desc' order.",
+                    "default": ""
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_character_by_id",
+            "url": "https://finalspaceapi.com/api/v0/character/<id>",
+            "description": "Retrieves a character by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "character_id",
+                    "type": "INTEGER",
+                    "description": "The character ID.",
+                    "default": null
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_episodes",
+            "url": "https://finalspaceapi.com/api/v0/episode",
+            "description": "Retrieves all episodes with options to sort and limit results.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort in 'asc' or 'desc' order.",
+                    "default": ""
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_episode_by_id",
+            "url": "https://finalspaceapi.com/api/v0/episode/<id>",
+            "description": "Retrieves an episode by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "episode_id",
+                    "type": "INTEGER",
+                    "description": "The episode ID.",
+                    "default": null
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_locations",
+            "url": "https://finalspaceapi.com/api/v0/location",
+            "description": "Retrieves all locations with options to sort and limit results.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort in 'asc' or 'desc' order.",
+                    "default": ""
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_location_by_id",
+            "url": "https://finalspaceapi.com/api/v0/location/<id>",
+            "description": "Retrieves a location by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "location_id",
+                    "type": "INTEGER",
+                    "description": "The location ID.",
+                    "default": null
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_quotes",
+            "url": "https://finalspaceapi.com/api/v0/quote",
+            "description": "Retrieves all quotes with options to sort and limit results.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort in 'asc' or 'desc' order.",
+                    "default": ""
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results returned.",
+                    "default": null
+                }
+            ]
+        }
+    ]
+}
+```

@@ -1,0 +1,292 @@
+**### api.py**
+
+```python
+import requests
+
+def public_holidays(year: int, country_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the public holidays for a given year and country.
+    
+    :param year: The year to retrieve public holidays for.
+    :param country_code: The ISO 3166-1 alpha-2 country code.
+    """
+    url = f"https://date.nager.at/api/v3/publicholidays/{year}/{country_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def country_info(country_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get country info for the given country.
+    
+    :param country_code: The ISO 3166-1 alpha-2 country code.
+    """
+    url = f"https://date.nager.at/api/v3/CountryInfo/{country_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def available_countries(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all available countries.
+    """
+    url = "https://date.nager.at/api/v3/AvailableCountries"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def long_weekends(year: int, country_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get long weekends for a given year and country.
+    
+    :param year: The year to check for long weekends.
+    :param country_code: The ISO 3166-1 alpha-2 country code.
+    """
+    url = f"https://date.nager.at/api/v3/LongWeekend/{year}/{country_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def is_today_public_holiday(country_code: str, county_code: str = None, offset: int = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Check if today is a public holiday.
+    
+    :param country_code: The ISO 3166-1 alpha-2 country code.
+    :param county_code: Optional federal state code.
+    :param offset: UTC timezone offset.
+    """
+    url = f"https://date.nager.at/api/v3/IsTodayPublicHoliday/{country_code}"
+    params = {'countyCode': county_code, 'offset': offset}
+    response = requests.get(url, params=params)
+    
+    # Return HTTP status code for specific holiday check responses
+    return response.status_code == 200
+
+def next_public_holidays(country_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the upcoming public holidays for the next 365 days for the given country.
+    
+    :param country_code: The ISO 3166-1 alpha-2 country code.
+    """
+    url = f"https://date.nager.at/api/v3/NextPublicHolidays/{country_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def next_public_holidays_worldwide(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the upcoming public holidays worldwide for the next 7 days.
+    """
+    url = "https://date.nager.at/api/v3/NextPublicHolidaysWorldwide"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the version of the used Nager.Date library.
+    """
+    url = "https://date.nager.at/api/v3/Version"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import *
+
+class TestNagerdateAPI(unittest.TestCase):
+
+    def test_public_holidays(self):
+        response = public_holidays(2024, 'AT')
+        self.assertIsInstance(response, list)
+
+    def test_country_info(self):
+        response = country_info('AT')
+        self.assertIsInstance(response, dict)
+        self.assertIn("commonName", response)
+
+    def test_available_countries(self):
+        response = available_countries()
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+    def test_long_weekends(self):
+        response = long_weekends(2024, 'AT')
+        self.assertIsInstance(response, list)
+
+    def test_is_today_public_holiday(self):
+        response = is_today_public_holiday('AT')
+        self.assertIsInstance(response, bool)
+
+    def test_next_public_holidays(self):
+        response = next_public_holidays('AT')
+        self.assertIsInstance(response, list)
+
+    def test_next_public_holidays_worldwide(self):
+        response = next_public_holidays_worldwide()
+        self.assertIsInstance(response, list)
+
+    def test_version(self):
+        response = version()
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+        self.assertIn("version", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### nagerdate.json**
+
+```json
+{
+    "tool_name": "nagerdate",
+    "tool_description": "The Nager.Date API provides access to public holiday information for over 100 countries, including services for querying holidays, long weekends, and country information.",
+    "title": "Nager.Date API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://date.nager.at",
+    "host": "date.nager.at",
+    "api_list": [
+        {
+            "name": "public_holidays",
+            "url": "https://date.nager.at/api/v3/publicholidays/{year}/{countryCode}",
+            "description": "Retrieve public holidays for a given year and country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "The year to retrieve public holidays for."
+                },
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "country_info",
+            "url": "https://date.nager.at/api/v3/CountryInfo/{countryCode}",
+            "description": "Get information about a country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "available_countries",
+            "url": "https://date.nager.at/api/v3/AvailableCountries",
+            "description": "Get all available countries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "long_weekends",
+            "url": "https://date.nager.at/api/v3/LongWeekend/{year}/{countryCode}",
+            "description": "Retrieve long weekends for a given year and country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "The year to check for long weekends."
+                },
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "is_today_public_holiday",
+            "url": "https://date.nager.at/api/v3/IsTodayPublicHoliday/{countryCode}",
+            "description": "Check if today is a public holiday.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "county_code",
+                    "type": "STRING",
+                    "description": "Optional federal state code."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "UTC timezone offset."
+                }
+            ]
+        },
+        {
+            "name": "next_public_holidays",
+            "url": "https://date.nager.at/api/v3/NextPublicHolidays/{countryCode}",
+            "description": "Retrieve the upcoming public holidays for the next 365 days for a country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "next_public_holidays_worldwide",
+            "url": "https://date.nager.at/api/v3/NextPublicHolidaysWorldwide",
+            "description": "Retrieve the upcoming public holidays worldwide for the next 7 days.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "version",
+            "url": "https://date.nager.at/api/v3/Version",
+            "description": "Retrieve the version information of the Nager.Date library.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        }
+    ]
+}
+```

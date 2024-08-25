@@ -1,0 +1,220 @@
+{
+    "tool_name": "metmuseum",
+    "tool_description": "API to access the Metropolitan Museum of Art's collection, including data on artworks, artists, and departments.",
+    "title": "The Met Metropolitan Museum of Art API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://collectionapi.metmuseum.org/",
+    "host": "collectionapi.metmuseum.org",
+    "api_list": [
+        {
+            "name": "get_objects",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects",
+            "description": "Returns a list of valid Object IDs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "metadataDate",
+                    "type": "STRING",
+                    "description": "Return objects with updated data after this date."
+                },
+                {
+                    "name": "departmentIds",
+                    "type": "LIST[INTEGER]",
+                    "description": "Return objects in specified departments."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "objectIDs": "array[int]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "objectIDs": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_object_details",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/[objectID]",
+            "description": "Returns detailed information of an object.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "objectID",
+                    "type": "INTEGER",
+                    "description": "The unique Object ID for the object."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "objectID": "int",
+                "isHighlight": "boolean",
+                "accessionNumber": "string",
+                "accessionYear": "string",
+                "isPublicDomain": "boolean",
+                "primaryImage": "string",
+                "primaryImageSmall": "string",
+                "additionalImages": "array[string]",
+                "constituents": "array[object]",
+                "department": "string",
+                "objectName": "string",
+                "title": "string",
+                "culture": "string",
+                "metadataDate": "string",
+                "repository": "string",
+                "objectURL": "string",
+                "tags": "array[object]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "objectID": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_departments",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/departments",
+            "description": "Returns a list of all departments.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "departments": "array[object]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "departments": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "departmentId": {
+                                    "type": "integer"
+                                },
+                                "displayName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_objects",
+            "url": "https://collectionapi.metmuseum.org/public/collection/v1/search",
+            "description": "Searches for objects that match the query.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The search term."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "isHighlight",
+                    "type": "BOOLEAN",
+                    "description": "Returns highlighted objects."
+                },
+                {
+                    "name": "title",
+                    "type": "BOOLEAN",
+                    "description": "Search against title field."
+                },
+                {
+                    "name": "tags",
+                    "type": "BOOLEAN",
+                    "description": "Search against tags field."
+                },
+                {
+                    "name": "departmentId",
+                    "type": "INTEGER",
+                    "description": "Filter by department."
+                },
+                {
+                    "name": "isOnView",
+                    "type": "BOOLEAN",
+                    "description": "Returns objects on view."
+                },
+                {
+                    "name": "artistOrCulture",
+                    "type": "BOOLEAN",
+                    "description": "Search against artist name or culture."
+                },
+                {
+                    "name": "medium",
+                    "type": "STRING",
+                    "description": "Filter by medium."
+                },
+                {
+                    "name": "hasImages",
+                    "type": "BOOLEAN",
+                    "description": "Filter objects that have images."
+                },
+                {
+                    "name": "geoLocation",
+                    "type": "STRING",
+                    "description": "Filter by geographic location."
+                },
+                {
+                    "name": "dateBegin",
+                    "type": "INTEGER",
+                    "description": "Objects created after date."
+                },
+                {
+                    "name": "dateEnd",
+                    "type": "INTEGER",
+                    "description": "Objects created before date."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "objectIDs": "array[int]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "objectIDs": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

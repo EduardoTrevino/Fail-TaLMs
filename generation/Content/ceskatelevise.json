@@ -1,0 +1,68 @@
+{
+    "tool_name": "ceskatelevise",
+    "tool_description": "API to access TV schedules and programme details for Czech Television channels.",
+    "title": "Česká Televize API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.ceskatelevize.cz/",
+    "host": "www.ceskatelevize.cz",
+    "api_list": [
+        {
+            "name": "get_tv_schedule",
+            "url": "https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php",
+            "description": "Get the TV schedule for a specific date and channel.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "user",
+                    "type": "STRING",
+                    "description": "The username required to access the API.",
+                    "default": ""
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                    "default": "04.08.2024"
+                },
+                {
+                    "name": "channel",
+                    "type": "STRING",
+                    "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                    "default": "ct1"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "regiony",
+                    "type": "INTEGER",
+                    "description": "Set to 1 to include regional broadcasts.",
+                    "default": null
+                },
+                {
+                    "name": "json_format",
+                    "type": "INTEGER",
+                    "description": "Set to 1 to retrieve data in JSON format.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.ceskatelevize.cz/services-old/programme/xml/schedule.php'\nparams = {'user': user, 'date': date, 'channel': channel, 'regiony': regiony, 'json': json_format}\nresponse = requests.get(url, params=params)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "type": "text/xml | application/json",
+                "description": "Returns the schedule data in XML or JSON format based on the request parameters."
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {}
+            }
+        }
+    ]
+}

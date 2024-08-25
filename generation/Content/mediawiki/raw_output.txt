@@ -1,0 +1,219 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional
+
+
+def parse_page(page: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff', wiki: str = "https://en.wikipedia.org/w/api.php"):
+    """
+    Parses a given page from the specified wiki and returns its content in JSON format.
+    Parameters:
+    page [Required]: The title of the page to parse.
+    wiki [Optional]: The wiki endpoint to use. Defaults to English Wikipedia.
+    """
+    url = wiki
+    params = {
+        'action': 'parse',
+        'page': page,
+        'format': 'json'
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_open_search(query: str, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff', wiki: str = "https://en.wikipedia.org/w/api.php"):
+    """
+    Uses the OpenSearch protocol to search for the given query in the specified wiki.
+    Parameters:
+    query [Required]: The search query.
+    limit [Optional]: The number of results to return. Defaults to 10.
+    wiki [Optional]: The wiki endpoint to use. Defaults to English Wikipedia.
+    """
+    url = wiki
+    params = {
+        'action': 'opensearch',
+        'search': query,
+        'limit': limit,
+        'format': 'json'
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_sitematrix(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a list of all Wikimedia sites.
+    """
+    url = "https://www.mediawiki.org/w/api.php"
+    params = {
+        'action': 'sitematrix',
+        'format': 'json'
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import parse_page, search_open_search, get_sitematrix
+
+
+class TestMediaWikiAPI(unittest.TestCase):
+    
+    def test_parse_page(self):
+        response = parse_page("Pet_door")
+        self.assertIn('parse', response)
+        self.assertIn('title', response['parse'])
+        self.assertEqual(response['parse']['title'], "Pet door")
+
+    def test_search_open_search(self):
+        response = search_open_search("Pet door")
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response[1]), 0)  # Check that search results are returned
+    
+    def test_get_sitematrix(self):
+        response = get_sitematrix()
+        self.assertIn('sitematrix', response)
+        self.assertTrue(len(response['sitematrix']) > 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### mediawiki.json**  
+```json
+{
+    "tool_name": "mediawiki",
+    "tool_description": "API to access and perform operations on Wikimedia wikis, enabling page parsing, search, and site information retrieval.",
+    "title": "MediaWiki API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.mediawiki.org/wiki/API:Main_page",
+    "host": "mediawiki.org",
+    "api_list": [
+        {
+            "name": "parse_page",
+            "url": "https://en.wikipedia.org/w/api.php?action=parse",
+            "description": "Parses a wiki page and returns its HTML content.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "page",
+                    "type": "STRING",
+                    "description": "Title of the page to parse."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "wiki",
+                    "type": "STRING",
+                    "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+                    "default": "https://en.wikipedia.org/w/api.php"
+                }
+            ],
+            "code": "parse_page(page='Pet_door')",
+            "statuscode": 200,
+            "body": {
+                "parse": {
+                    "title": "str",
+                    "pageid": "int",
+                    "text": {
+                        "*": "str"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "parse": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_open_search",
+            "url": "https://en.wikipedia.org/w/api.php?action=opensearch",
+            "description": "Search the wiki using the OpenSearch protocol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of search results to return.",
+                    "default": "10"
+                }
+            ],
+            "code": "search_open_search(query='Wikipedia')",
+            "statuscode": 200,
+            "body": [
+                "str",
+                [
+                    "str"
+                ],
+                [
+                    "str"
+                ],
+                [
+                    "str"
+                ]
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_sitematrix",
+            "url": "https://www.mediawiki.org/w/api.php?action=sitematrix",
+            "description": "Retrieve the list of Wikimedia sites and related information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "get_sitematrix()",
+            "statuscode": 200,
+            "body": {
+                "sitematrix": {
+                    "count": "int",
+                    "specials": [
+                        {
+                            "code": "str",
+                            "name": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}
+```

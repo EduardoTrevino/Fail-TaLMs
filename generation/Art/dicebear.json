@@ -1,0 +1,58 @@
+{
+    "tool_name": "dicebear",
+    "tool_description": "API to generate avatars using various styles with options like seed, hair style, flip, and file format.",
+    "title": "Dicebear Avatar API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://dicebear.com/docs",
+    "host": "api.dicebear.com",
+    "api_list": [
+        {
+            "name": "generate_avatar",
+            "url": "https://api.dicebear.com/9.x/<styleName>/<format>",
+            "description": "Generates an avatar of a specified style with options like seed, hair, flip, and format.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "style_name",
+                    "type": "STRING",
+                    "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "seed",
+                    "type": "STRING",
+                    "description": "Seed value for generating a repeatable avatar.",
+                    "default": ""
+                },
+                {
+                    "name": "hair",
+                    "type": "LIST",
+                    "description": "List of hair styles.",
+                    "default": []
+                },
+                {
+                    "name": "flip",
+                    "type": "BOOLEAN",
+                    "description": "Boolean to flip the avatar.",
+                    "default": false
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                    "default": "svg"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.dicebear.com/9.x/<styleName>/<format>'\nparams = {'seed': seed, 'hair': ','.join(hair), 'flip': str(flip).lower()}\nresponse = requests.get(url, params=params)\nprint(response.content)"
+        }
+    ]
+}

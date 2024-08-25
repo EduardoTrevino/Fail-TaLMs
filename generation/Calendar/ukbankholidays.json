@@ -1,0 +1,70 @@
+{
+    "tool_name": "ukbankholidays",
+    "tool_description": "API to access data about when bank holidays occur in different regions of the UK.",
+    "title": "UK Bank Holidays API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.gov.uk/bank-holidays",
+    "host": "www.gov.uk",
+    "api_list": [
+        {
+            "name": "get_bank_holidays",
+            "url": "https://www.gov.uk/bank-holidays.json",
+            "description": "Retrieve bank holidays for different regions in the UK.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "division",
+                    "type": "STRING",
+                    "description": "The division for which to fetch the bank holidays.",
+                    "default": "england-and-wales"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.gov.uk/bank-holidays.json'\nresponse = requests.get(url)\ndata = response.json()\nprint(data['divisions']['england-and-wales'])",
+            "statuscode": 200,
+            "body": {
+                "title": "str",
+                "events": [
+                    {
+                        "title": "str",
+                        "date": "str",
+                        "notes": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "events": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "date": {
+                                    "type": "string"
+                                },
+                                "notes": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

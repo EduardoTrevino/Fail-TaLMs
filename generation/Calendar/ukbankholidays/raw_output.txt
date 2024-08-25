@@ -1,0 +1,136 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+
+def get_bank_holidays(division: Optional[str] = 'england-and-wales', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve bank holidays for different regions in the UK.
+
+    Parameters:
+    division [Optional]: string [Description: The division for which to fetch the bank holidays. Default is 'england-and-wales'.]
+    """
+    url = "https://www.gov.uk/bank-holidays.json"
+    
+    response = requests.get(url)
+    
+    try:
+        data = response.json()
+        if division in data.get('divisions', {}):
+            return data['divisions'][division]
+        else:
+            return {"error": "Division not found"}
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_bank_holidays
+
+
+class TestUKBankHolidaysAPI(unittest.TestCase):
+
+    def test_get_bank_holidays_default(self):
+        # Test the default call to get_bank_holidays
+        response = get_bank_holidays()
+        self.assertIn('title', response)
+        self.assertIn('events', response)
+
+    def test_get_bank_holidays_england_and_wales(self):
+        # Test a specific division: England and Wales
+        response = get_bank_holidays('england-and-wales')
+        self.assertIn('title', response)
+        self.assertIn('events', response)
+        
+    def test_get_bank_holidays_scotland(self):
+        # Test a specific division: Scotland
+        response = get_bank_holidays('scotland')
+        self.assertIn('title', response)
+        self.assertIn('events', response)
+    
+    def test_invalid_division(self):
+        # Test with an invalid division
+        response = get_bank_holidays('invalid-division')
+        self.assertEqual(response.get('error'), 'Division not found')
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### ukbankholidays.json
+```json
+{
+    "tool_name": "ukbankholidays",
+    "tool_description": "API to access data about when bank holidays occur in different regions of the UK.",
+    "title": "UK Bank Holidays API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.gov.uk/bank-holidays",
+    "host": "www.gov.uk",
+    "api_list": [
+        {
+            "name": "get_bank_holidays",
+            "url": "https://www.gov.uk/bank-holidays.json",
+            "description": "Retrieve bank holidays for different regions in the UK.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "division",
+                    "type": "STRING",
+                    "description": "The division for which to fetch the bank holidays.",
+                    "default": "england-and-wales"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.gov.uk/bank-holidays.json'\nresponse = requests.get(url)\ndata = response.json()\nprint(data['divisions']['england-and-wales'])",
+            "statuscode": 200,
+            "body": {
+                "title": "str",
+                "events": [
+                    {
+                        "title": "str",
+                        "date": "str",
+                        "notes": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "events": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "type": "string"
+                                },
+                                "date": {
+                                    "type": "string"
+                                },
+                                "notes": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,434 @@
+### api.py
+```python
+import requests
+from typing import Optional, List, Dict
+
+BASE_URL = "http://www.colourlovers.com/api"
+
+def request_colorlovers_api(method: str, endpoint: str, params: Dict = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Helper function to request Colourlovers API.
+    """
+    url = f"{BASE_URL}{endpoint}"
+    response = requests.get(url, params=params)
+    response.raise_for_status()  # Raise an error for bad status codes
+    return response.json() if 'json' in params.get("format", "xml") else response.text
+
+def colors(lover: Optional[str] = None, hueRange: Optional[str] = None, briRange: Optional[str] = None,
+           keywords: Optional[str] = None, keywordExact: int = 0, orderCol: Optional[str] = None,
+           sortBy: str = "ASC", numResults: int = 20, resultOffset: int = 0, format: str = "json", 
+           jsonCallback: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "lover": lover,
+        "hueRange": hueRange,
+        "briRange": briRange,
+        "keywords": keywords,
+        "keywordExact": keywordExact,
+        "orderCol": orderCol,
+        "sortBy": sortBy,
+        "numResults": numResults,
+        "resultOffset": resultOffset,
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint="/colors", params=params)
+
+def color(hex_value: str, format: str = "json", jsonCallback: Optional[str] = None, 
+          toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint=f"/color/{hex_value}", params=params)
+
+def palettes(lover: Optional[str] = None, hueOption: Optional[str] = None, hex: Optional[str] = None,
+             hex_logic: str = "AND", keywords: Optional[str] = None, keywordExact: int = 0, orderCol: Optional[str] = None, 
+             sortBy: str = "ASC", numResults: int = 20, resultOffset: int = 0, format: str = "json",
+             jsonCallback: Optional[str] = None, showPaletteWidths: int = 0, 
+             toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "lover": lover,
+        "hueOption": hueOption,
+        "hex": hex,
+        "hex_logic": hex_logic,
+        "keywords": keywords,
+        "keywordExact": keywordExact,
+        "orderCol": orderCol,
+        "sortBy": sortBy,
+        "numResults": numResults,
+        "resultOffset": resultOffset,
+        "format": format,
+        "jsonCallback": jsonCallback,
+        "showPaletteWidths": showPaletteWidths
+    }
+    return request_colorlovers_api(method="GET", endpoint="/palettes", params=params)
+
+def palette(palette_id: int, format: str = "json", jsonCallback: Optional[str] = None, 
+            showPaletteWidths: int = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "format": format,
+        "jsonCallback": jsonCallback,
+        "showPaletteWidths": showPaletteWidths
+    }
+    return request_colorlovers_api(method="GET", endpoint=f"/palette/{palette_id}", params=params)
+
+def patterns(lover: Optional[str] = None, hueOption: Optional[str] = None, hex: Optional[str] = None,
+             hex_logic: str = "AND", keywords: Optional[str] = None, keywordExact: int = 0, orderCol: Optional[str] = None,
+             sortBy: str = "ASC", numResults: int = 20, resultOffset: int = 0, format: str = "json",
+             jsonCallback: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "lover": lover,
+        "hueOption": hueOption,
+        "hex": hex,
+        "hex_logic": hex_logic,
+        "keywords": keywords,
+        "keywordExact": keywordExact,
+        "orderCol": orderCol,
+        "sortBy": sortBy,
+        "numResults": numResults,
+        "resultOffset": resultOffset,
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint="/patterns", params=params)
+
+def pattern(pattern_id: int, format: str = "json", jsonCallback: Optional[str] = None, 
+            toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint=f"/pattern/{pattern_id}", params=params)
+
+def lovers(orderCol: Optional[str] = None, sortBy: str = "ASC", numResults: int = 20, 
+           resultOffset: int = 0, format: str = "json", jsonCallback: Optional[str] = None,
+           toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "orderCol": orderCol,
+        "sortBy": sortBy,
+        "numResults": numResults,
+        "resultOffset": resultOffset,
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint="/lovers", params=params)
+
+def lover(username: str, comments: int = 0, format: str = "json", jsonCallback: Optional[str] = None, 
+          toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    params = {
+        "comments": comments,
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint=f"/lover/{username}", params=params)
+
+def stats(resource: str, format: str = "json", jsonCallback: Optional[str] = None,
+          toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    # Ensure resource is valid
+    if resource not in ['colors', 'palettes', 'patterns', 'lovers']:
+        raise ValueError("Invalid resource type. Must be 'colors', 'palettes', 'patterns', or 'lovers'.")
+    
+    params = {
+        "format": format,
+        "jsonCallback": jsonCallback
+    }
+    return request_colorlovers_api(method="GET", endpoint=f"/stats/{resource}", params=params)
+```
+
+### api_test.py
+```python
+import unittest
+import json
+from api import colors, color, palettes, palette, patterns, pattern, lovers, lover, stats
+
+class TestColourLoversAPI(unittest.TestCase):
+
+    def test_colors(self):
+        response = colors()
+        self.assertIsInstance(response, (dict, str))  # Depending on format, it can be a dict (JSON) or str (XML)
+
+    def test_color(self):
+        hex_value = "6B4106"
+        response = color(hex_value)
+        self.assertIsInstance(response, (dict, str))
+
+    def test_palettes(self):
+        response = palettes()
+        self.assertIsInstance(response, (dict, str))
+
+    def test_palette(self):
+        palette_id = 113451
+        response = palette(palette_id)
+        self.assertIsInstance(response, (dict, str))
+
+    def test_patterns(self):
+        response = patterns()
+        self.assertIsInstance(response, (dict, str))
+
+    def test_pattern(self):
+        pattern_id = 1451
+        response = pattern(pattern_id)
+        self.assertIsInstance(response, (dict, str))
+
+    def test_lovers(self):
+        response = lovers()
+        self.assertIsInstance(response, (dict, str))
+
+    def test_lover(self):
+        username = "COLOURlover"
+        response = lover(username)
+        self.assertIsInstance(response, (dict, str))
+    
+    def test_stats_colors(self):
+        response = stats("colors")
+        self.assertIsInstance(response, (dict, str))
+
+    def test_invalid_stat_resource(self):
+        with self.assertRaises(ValueError):
+            stats("invalid_resource")
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### colourlovers.json
+```json
+{
+    "tool_name": "colourlovers",
+    "tool_description": "API to access a wealth of data on colors, palettes, patterns, lovers, and stats from the COLOURlovers community.",
+    "title": "COLOURlovers API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://www.colourlovers.com/api",
+    "host": "www.colourlovers.com",
+    "api_list": [
+        {
+            "name": "colors",
+            "url": "http://www.colourlovers.com/api/colors",
+            "description": "Retrieve colors with various parameters like hue, brightness, and keywords.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "lover", "type": "STRING", "description": "Username who loved the color."},
+                {"name": "hueRange", "type": "STRING", "description": "Range of hues for color search."},
+                {"name": "briRange", "type": "STRING", "description": "Brightness range for color search."},
+                {"name": "keywords", "type": "STRING", "description": "Keywords for search."},
+                {"name": "keywordExact", "type": "INTEGER", "description": "Exact keyword match; default is 0."},
+                {"name": "orderCol", "type": "STRING", "description": "Column to order the results by."},
+                {"name": "sortBy", "type": "STRING", "description": "Sorting order; ASC or DESC."},
+                {"name": "numResults", "type": "INTEGER", "description": "Number of results; max 100."},
+                {"name": "resultOffset", "type": "INTEGER", "description": "Offset for pagination."},
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "colors": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "color",
+            "url": "http://www.colourlovers.com/api/color/{hex}",
+            "description": "Retrieve a single color by hex value.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "hex_value", "type": "STRING", "description": "Hex code of the color to retrieve."}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "color": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "palettes",
+            "url": "http://www.colourlovers.com/api/palettes",
+            "description": "Retrieve palettes with various parameters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "lover", "type": "STRING", "description": "Username who loved the palette."},
+                {"name": "hueOption", "type": "STRING", "description": "Hue options for palette search."},
+                {"name": "keywords", "type": "STRING", "description": "Keywords for search."},
+                {"name": "showPaletteWidths", "type": "INTEGER", "description": "Show color widths; 0 or 1."},
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "palettes": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "palette",
+            "url": "http://www.colourlovers.com/api/palette/{id}",
+            "description": "Retrieve a single palette by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "palette_id", "type": "INTEGER", "description": "ID of the palette to retrieve."}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "palette": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "patterns",
+            "url": "http://www.colourlovers.com/api/patterns",
+            "description": "Retrieve patterns with various parameters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "lover", "type": "STRING", "description": "Username who loved the pattern."},
+                {"name": "hueOption", "type": "STRING", "description": "Hue options for pattern search."},
+                {"name": "keywords", "type": "STRING", "description": "Keywords for search."},
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "patterns": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "pattern",
+            "url": "http://www.colourlovers.com/api/pattern/{id}",
+            "description": "Retrieve a single pattern by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pattern_id", "type": "INTEGER", "description": "ID of the pattern to retrieve."}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "pattern": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lovers",
+            "url": "http://www.colourlovers.com/api/lovers",
+            "description": "Retrieve lovers with various parameters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "orderCol", "type": "STRING", "description": "Column to order the results by."},
+                {"name": "sortBy", "type": "STRING", "description": "Sorting order; ASC or DESC."},
+                {"name": "numResults", "type": "INTEGER", "description": "Number of results; max 100."},
+                {"name": "resultOffset", "type": "INTEGER", "description": "Offset for pagination."},
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "lovers": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lover",
+            "url": "http://www.colourlovers.com/api/lover/{username}",
+            "description": "Retrieve a single lover by username.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "username", "type": "STRING", "description": "Username of the lover to retrieve."}
+            ],
+            "optional_parameters": [
+                {"name": "comments", "type": "INTEGER", "description": "Show last 10 comments; 0 or 1."},
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "lover": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "stats",
+            "url": "http://www.colourlovers.com/api/stats/{resource}",
+            "description": "Retrieve statistics on colors, palettes, patterns or lovers.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "resource", "type": "STRING", "description": "Resource name: colors, palettes, patterns, or lovers."}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format; json or xml."},
+                {"name": "jsonCallback", "type": "STRING", "description": "Callback function for JSONP."}
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "stats": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

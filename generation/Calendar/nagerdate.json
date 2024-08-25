@@ -1,0 +1,132 @@
+{
+    "tool_name": "nagerdate",
+    "tool_description": "The Nager.Date API provides access to public holiday information for over 100 countries, including services for querying holidays, long weekends, and country information.",
+    "title": "Nager.Date API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://date.nager.at",
+    "host": "date.nager.at",
+    "api_list": [
+        {
+            "name": "public_holidays",
+            "url": "https://date.nager.at/api/v3/publicholidays/{year}/{countryCode}",
+            "description": "Retrieve public holidays for a given year and country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "The year to retrieve public holidays for."
+                },
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "country_info",
+            "url": "https://date.nager.at/api/v3/CountryInfo/{countryCode}",
+            "description": "Get information about a country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "available_countries",
+            "url": "https://date.nager.at/api/v3/AvailableCountries",
+            "description": "Get all available countries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "long_weekends",
+            "url": "https://date.nager.at/api/v3/LongWeekend/{year}/{countryCode}",
+            "description": "Retrieve long weekends for a given year and country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "The year to check for long weekends."
+                },
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "is_today_public_holiday",
+            "url": "https://date.nager.at/api/v3/IsTodayPublicHoliday/{countryCode}",
+            "description": "Check if today is a public holiday.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "county_code",
+                    "type": "STRING",
+                    "description": "Optional federal state code."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "UTC timezone offset."
+                }
+            ]
+        },
+        {
+            "name": "next_public_holidays",
+            "url": "https://date.nager.at/api/v3/NextPublicHolidays/{countryCode}",
+            "description": "Retrieve the upcoming public holidays for the next 365 days for a country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "The ISO 3166-1 alpha-2 country code."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "next_public_holidays_worldwide",
+            "url": "https://date.nager.at/api/v3/NextPublicHolidaysWorldwide",
+            "description": "Retrieve the upcoming public holidays worldwide for the next 7 days.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "version",
+            "url": "https://date.nager.at/api/v3/Version",
+            "description": "Retrieve the version information of the Nager.Date library.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        }
+    ]
+}

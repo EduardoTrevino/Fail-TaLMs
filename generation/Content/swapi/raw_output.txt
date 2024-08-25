@@ -1,0 +1,273 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+BASE_URL = "https://swapi.dev/api/"
+
+def fetch_resource(resource: str, resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generic function to fetch a resource from the SWAPI.
+
+    Parameters:
+    resource (str): The type of resource to fetch ('people', 'films', 'starships', 'vehicles', 'species', 'planets').
+    resource_id (Optional[int]): The specific ID of the resource.
+    search (Optional[str]): Search query to filter resources.
+    """
+    url = BASE_URL + resource + '/' + (str(resource_id) + '/' if resource_id else '')
+    params = {}
+    if search:
+        params['search'] = search
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_people(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch people resources or a specific person.
+    """
+    return fetch_resource('people', resource_id, search, toolbench_rapidapi_key)
+
+def get_films(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch film resources or a specific film.
+    """
+    return fetch_resource('films', resource_id, search, toolbench_rapidapi_key)
+
+def get_starships(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch starship resources or a specific starship.
+    """
+    return fetch_resource('starships', resource_id, search, toolbench_rapidapi_key)
+
+def get_vehicles(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch vehicle resources or a specific vehicle.
+    """
+    return fetch_resource('vehicles', resource_id, search, toolbench_rapidapi_key)
+
+def get_species(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch species resources or a specific species.
+    """
+    return fetch_resource('species', resource_id, search, toolbench_rapidapi_key)
+
+def get_planets(resource_id: Optional[int] = None, search: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch planets resources or a specific planet.
+    """
+    return fetch_resource('planets', resource_id, search, toolbench_rapidapi_key)
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_people, get_films, get_starships, get_vehicles, get_species, get_planets
+
+class TestSWAPI(unittest.TestCase):
+
+    def test_get_people(self):
+        response = get_people()
+        self.assertIn('results', response)
+
+    def test_get_person(self):
+        response = get_people(1)
+        self.assertEqual(response['name'], 'Luke Skywalker')
+
+    def test_search_people(self):
+        response = get_people(search='skywalker')
+        self.assertIn('results', response)
+        self.assertTrue(any('Skywalker' in person['name'] for person in response['results']))
+
+    def test_get_films(self):
+        response = get_films()
+        self.assertIn('results', response)
+
+    def test_get_single_film(self):
+        response = get_films(1)
+        self.assertEqual(response['title'], 'A New Hope')
+
+    def test_get_starships(self):
+        response = get_starships()
+        self.assertIn('results', response)
+
+    def test_get_starship(self):
+        response = get_starships(9)
+        self.assertEqual(response['name'], 'Death Star')
+
+    def test_get_vehicles(self):
+        response = get_vehicles()
+        self.assertIn('results', response)
+
+    def test_get_vehicle(self):
+        response = get_vehicles(4)
+        self.assertEqual(response['name'], 'Sand Crawler')
+
+    def test_get_species(self):
+        response = get_species()
+        self.assertIn('results', response)
+
+    def test_get_specific_species(self):
+        response = get_species(3)
+        self.assertEqual(response['name'], 'Wookie')
+
+    def test_get_planets(self):
+        response = get_planets()
+        self.assertIn('results', response)
+
+    def test_get_specific_planet(self):
+        response = get_planets(1)
+        self.assertEqual(response['name'], 'Tatooine')
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### swapi.json
+```json
+{
+    "tool_name": "swapi",
+    "tool_description": "API to access data from the Star Wars universe, including people, planets, films, species, starships, and vehicles.",
+    "title": "Star Wars API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://swapi.dev/",
+    "host": "swapi.dev",
+    "api_list": [
+        {
+            "name": "get_people",
+            "url": "https://swapi.dev/api/people/",
+            "description": "Fetch people resources or a specific person.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the person resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter people resources.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_films",
+            "url": "https://swapi.dev/api/films/",
+            "description": "Fetch film resources or a specific film.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the film resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter film resources.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_starships",
+            "url": "https://swapi.dev/api/starships/",
+            "description": "Fetch starship resources or a specific starship.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the starship resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter starship resources.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_vehicles",
+            "url": "https://swapi.dev/api/vehicles/",
+            "description": "Fetch vehicle resources or a specific vehicle.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the vehicle resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter vehicle resources.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_species",
+            "url": "https://swapi.dev/api/species/",
+            "description": "Fetch species resources or a specific species.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the species resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter species resources.",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_planets",
+            "url": "https://swapi.dev/api/planets/",
+            "description": "Fetch planet resources or a specific planet.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "resource_id",
+                    "type": "INTEGER",
+                    "description": "The specific ID of the planet resource.",
+                    "default": null
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Search query to filter planet resources.",
+                    "default": null
+                }
+            ]
+        }
+    ]
+}
+```

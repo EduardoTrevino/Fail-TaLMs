@@ -1,0 +1,144 @@
+{
+    "tool_name": "hackernews",
+    "tool_description": "Hacker News API provides access to the public Hacker News data in near real-time via Firebase.",
+    "title": "Hacker News API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://github.com/HackerNews/API",
+    "host": "hacker-news.firebaseio.com",
+    "api_list": [
+        {
+            "name": "get_item",
+            "url": "https://hacker-news.firebaseio.com/v0/item/<id>.json",
+            "description": "Retrieve a specific item by its unique ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "INTEGER",
+                    "description": "The item's unique ID."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": {
+                "id": 8863,
+                "by": "dhouston",
+                "title": "My YC app: Dropbox - Throw away your USB drive",
+                "text": null,
+                "type": "story",
+                "url": "http://www.getdropbox.com/u/2/screencast.html"
+            }
+        },
+        {
+            "name": "get_user",
+            "url": "https://hacker-news.firebaseio.com/v0/user/<id>.json",
+            "description": "Retrieve a specific user by their unique username.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "user_id",
+                    "type": "STRING",
+                    "description": "The user's unique username (case-sensitive)."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": {
+                "id": "jl",
+                "created": 1173923446,
+                "karma": 2937,
+                "about": "This is a test"
+            }
+        },
+        {
+            "name": "get_max_item",
+            "url": "https://hacker-news.firebaseio.com/v0/maxitem.json",
+            "description": "Get the current largest item ID.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": 9130260
+        },
+        {
+            "name": "get_top_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+            "description": "Fetch up to 500 top stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9129911, 9129199, 9127761]
+        },
+        {
+            "name": "get_new_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/newstories.json",
+            "description": "Fetch up to 500 new stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9129911, 9129199, 9127761]
+        },
+        {
+            "name": "get_best_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/beststories.json",
+            "description": "Fetch up to 500 best stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9129911, 9129199, 9127761]
+        },
+        {
+            "name": "get_ask_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/askstories.json",
+            "description": "Fetch up to 200 Ask HN stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9127232, 9128437, 9130049]
+        },
+        {
+            "name": "get_show_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/showstories.json",
+            "description": "Fetch up to 200 Show HN stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9127232, 9128437, 9130049]
+        },
+        {
+            "name": "get_job_stories",
+            "url": "https://hacker-news.firebaseio.com/v0/jobstories.json",
+            "description": "Fetch up to 200 Job stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": [9127232, 9128437, 9130049]
+        },
+        {
+            "name": "get_updates",
+            "url": "https://hacker-news.firebaseio.com/v0/updates.json",
+            "description": "Get recent changes in items and profiles.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "response_example": {
+                "items": [8423305, 8420805],
+                "profiles": ["thefox", "mdda"]
+            }
+        }
+    ]
+}

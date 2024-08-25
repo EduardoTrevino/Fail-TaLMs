@@ -1,0 +1,197 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def compress_image_get_method(img_url: str, qlty: Optional[int] = 92, exif: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Compresses an image specified by a URL using the GET method.
+    Parameters:
+     - img_url [Required]: string [Description: The URL of the image to be compressed]
+     - qlty [Optional]: integer [Description: The quality level for JPG compression (0-100), default is 92]
+     - exif [Optional]: boolean [Description: Retain the EXIF data (default is false)]
+    """
+    url = "https://api.resmush.it/ws.php"
+    params = {
+        'img': img_url,
+        'qlty': qlty,
+        'exif': 'true' if exif else 'false'
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def compress_image_post_method(file_path: str, qlty: Optional[int] = 92, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Compresses an image by sending the file using the POST method.
+    Parameters:
+     - file_path [Required]: string [Description: The local file path of the image to be compressed]
+     - qlty [Optional]: integer [Description: The quality level for JPG compression (0-100), default is 92]
+    """
+    url = f"http://api.resmush.it/?qlty={qlty}"
+    mime_type = 'image/jpeg'  # Default mime type
+    output = None
+    try:
+        mime_type = requests.utils.guess_mime_type(file_path) or mime_type
+        output = ('files', (file_path, open(file_path, 'rb'), mime_type))
+    except FileNotFoundError:
+        return {"error": "File not found", "response": None}
+
+    data = {'files': output}
+
+    response = requests.post(url, files=data)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import compress_image_get_method, compress_image_post_method
+
+class TestRemushAPI(unittest.TestCase):
+    
+    def test_compress_image_get_method_success(self):
+        # Test with a valid image URL
+        img_url = "https://resmush.it/wp-content/uploads/2024/02/testimage.jpg"
+        response = compress_image_get_method(img_url)
+        self.assertIn('dest', response)
+        self.assertNotIn('error', response)
+
+    def test_compress_image_get_method_invalid_url(self):
+        # Test with an invalid image URL
+        img_url = "http://invalid-url/image.jpg"
+        response = compress_image_get_method(img_url)
+        self.assertIn('error', response)
+
+    def test_compress_image_post_method_success(self):
+        # Assuming there is a valid test image path
+        file_path = "test_image.jpg"
+        response = compress_image_post_method(file_path)
+        self.assertIn('dest', response)
+        self.assertNotIn('error', response)
+        
+    def test_compress_image_post_method_file_not_found(self):
+        # Test with a non-existing file path
+        file_path = "nonexistent.jpg"
+        response = compress_image_post_method(file_path)
+        self.assertIn('error', response)
+        self.assertEqual(response['error'], "File not found")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### remush.json**
+
+```json
+{
+    "tool_name": "remush",
+    "tool_description": "API for compressing and optimizing images using the reSmush.it service.",
+    "title": "reSmush.it API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://resmush.it",
+    "host": "api.resmush.it",
+    "api_list": [
+        {
+            "name": "compress_image_get_method",
+            "url": "https://api.resmush.it/ws.php",
+            "description": "Compresses an image specified by its URL using the GET method.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "img_url",
+                    "type": "STRING",
+                    "description": "The URL of the image to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "The quality level for JPG compression (0-100).",
+                    "default": "92"
+                },
+                {
+                    "name": "exif",
+                    "type": "BOOLEAN",
+                    "description": "Retain the EXIF data.",
+                    "default": "false"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.resmush.it/ws.php'\nparams = {'img': img_url, 'qlty': qlty, 'exif': 'true' if exif else 'false'}\nresponse = requests.get(url, params=params)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "dest": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "compress_image_post_method",
+            "url": "http://api.resmush.it/",
+            "description": "Compresses an image by sending the file using the POST method.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "file_path",
+                    "type": "STRING",
+                    "description": "The local file path of the image to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "The quality level for JPG compression (0-100).",
+                    "default": "92"
+                }
+            ],
+            "code": "import requests\n\nurl = f'http://api.resmush.it/?qlty={qlty}'\nmime_type = requests.utils.guess_mime_type(file_path) or 'image/jpeg'\noutput = ('files', (file_path, open(file_path, 'rb'), mime_type))\ndata = {'files': output}\nresponse = requests.post(url, files=data)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "dest": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

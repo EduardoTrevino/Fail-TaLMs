@@ -1,0 +1,252 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+BASE_URL = "https://api.artic.edu/api/v1"
+
+def artworks(ids: Optional[str] = None, limit: Optional[int] = 2, page: Optional[int] = 1, fields: Optional[str] = None, include: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/artworks"
+    params = {
+        'ids': ids,
+        'limit': limit,
+        'page': page,
+        'fields': fields,
+        'include': include
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def artworks_search(q: str, query: Optional[str] = None, sort: Optional[str] = None, from_: Optional[int] = 0, size: Optional[int] = 10, facets: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/artworks/search"
+    params = {
+        'q': q,
+        'query': query,
+        'sort': sort,
+        'from': from_,
+        'size': size,
+        'facets': facets
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def artwork_by_id(artwork_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/artworks/{artwork_id}"
+    response = requests.get(url)
+    return response.json()
+
+def artwork_manifest(artwork_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/artworks/{artwork_id}/manifest.json"
+    response = requests.get(url)
+    return response.json()
+
+def agents(ids: Optional[str] = None, limit: Optional[int] = 2, page: Optional[int] = 1, fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/agents"
+    params = {
+        'ids': ids,
+        'limit': limit,
+        'page': page,
+        'fields': fields
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def agents_search(q: str, query: Optional[str] = None, sort: Optional[str] = None, from_: Optional[int] = 0, size: Optional[int] = 10, facets: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/agents/search"
+    params = {
+        'q': q,
+        'query': query,
+        'sort': sort,
+        'from': from_,
+        'size': size,
+        'facets': facets
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def agent_by_id(agent_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/agents/{agent_id}"
+    response = requests.get(url)
+    return response.json()
+
+def places(ids: Optional[str] = None, limit: Optional[int] = 2, page: Optional[int] = 1, fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/places"
+    params = {
+        'ids': ids,
+        'limit': limit,
+        'page': page,
+        'fields': fields
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def places_search(q: str, query: Optional[str] = None, sort: Optional[str] = None, from_: Optional[int] = 0, size: Optional[int] = 10, facets: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/places/search"
+    params = {
+        'q': q,
+        'query': query,
+        'sort': sort,
+        'from': from_,
+        'size': size,
+        'facets': facets
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def place_by_id(place_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"{BASE_URL}/places/{place_id}"
+    response = requests.get(url)
+    return response.json()
+
+# More functions for other endpoints should follow the same pattern
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class TestArtChicagoAPI(unittest.TestCase):
+    def test_artworks(self):
+        response = artworks()
+        self.assertIn('data', response)
+
+    def test_artworks_search(self):
+        response = artworks_search(q="monet")
+        self.assertIn('data', response)
+        
+    def test_artwork_by_id(self):
+        response = artwork_by_id(4)
+        self.assertIn('data', response)
+        
+    def test_artwork_manifest(self):
+        response = artwork_manifest(4)
+        self.assertIn('sequences', response)
+
+    def test_agents(self):
+        response = agents()
+        self.assertIn('data', response)
+
+    def test_agents_search(self):
+        response = agents_search(q="john")
+        self.assertIn('data', response)
+        
+    def test_agent_by_id(self):
+        response = agent_by_id(2)
+        self.assertIn('data', response)
+        
+    def test_places(self):
+        response = places()
+        self.assertIn('data', response)
+
+    def test_places_search(self):
+        response = places_search(q="chicago")
+        self.assertIn('data', response)
+        
+    def test_place_by_id(self):
+        response = place_by_id(1)
+        self.assertIn('data', response)
+
+# More test functions for other endpoints should follow the same pattern
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### artchicago.json
+```json
+{
+    "tool_name": "artchicago",
+    "tool_description": "API to access data about the collection at the Art Institute of Chicago.",
+    "title": "Art Institute of Chicago API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.artic.edu/docs/",
+    "host": "api.artic.edu",
+    "api_list": [
+        {
+            "name": "artworks",
+            "url": "https://api.artic.edu/api/v1/artworks",
+            "description": "Retrieve artworks data.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Comma-separated list of ids.", "default": null},
+                {"name": "limit", "type": "INTEGER", "default": 2},
+                {"name": "page", "type": "INTEGER", "default": 1},
+                {"name": "fields", "type": "STRING", "default": null},
+                {"name": "include", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "artworks_search",
+            "url": "https://api.artic.edu/api/v1/artworks/search",
+            "description": "Search artworks.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "default": "monet"}
+            ],
+            "optional_parameters": [
+                {"name": "query", "type": "STRING", "default": null},
+                {"name": "sort", "type": "STRING", "default": null},
+                {"name": "from", "type": "INTEGER", "default": 0},
+                {"name": "size", "type": "INTEGER", "default": 10},
+                {"name": "facets", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "artwork_by_id",
+            "url": "https://api.artic.edu/api/v1/artworks/{id}",
+            "description": "Retrieve artwork by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "default": 4}
+            ]
+        },
+        {
+            "name": "artwork_manifest",
+            "url": "https://api.artic.edu/api/v1/artworks/{id}/manifest.json",
+            "description": "Retrieve artwork manifest in IIIF format.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "default": 4}
+            ]
+        },
+        {
+            "name": "agents",
+            "url": "https://api.artic.edu/api/v1/agents",
+            "description": "Retrieve agents data.",
+            "method": "GET",
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "default": null},
+                {"name": "limit", "type": "INTEGER", "default": 2},
+                {"name": "page", "type": "INTEGER", "default": 1},
+                {"name": "fields", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "agents_search",
+            "url": "https://api.artic.edu/api/v1/agents/search",
+            "description": "Search agents.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "default": "john"}
+            ],
+            "optional_parameters": [
+                {"name": "query", "type": "STRING", "default": null},
+                {"name": "sort", "type": "STRING", "default": null},
+                {"name": "from", "type": "INTEGER", "default": 0},
+                {"name": "size", "type": "INTEGER", "default": 10},
+                {"name": "facets", "type": "STRING", "default": null}
+            ]
+        }
+        // More endpoints can be added similarly following the same structure
+    ]
+}
+```

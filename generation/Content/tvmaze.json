@@ -1,0 +1,255 @@
+{
+    "tool_name": "tvmaze",
+    "tool_description": "API to fetch television shows, episodes, cast, and more.",
+    "title": "TVmaze API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.tvmaze.com/api",
+    "host": "api.tvmaze.com",
+    "api_list": [
+        {
+            "name": "search_shows",
+            "url": "https://api.tvmaze.com/search/shows",
+            "description": "Search for shows by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/search/shows'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_single_search",
+            "url": "https://api.tvmaze.com/singlesearch/shows",
+            "description": "Perform a single search for a specific show by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/singlesearch/shows'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_lookup",
+            "url": "https://api.tvmaze.com/lookup/shows",
+            "description": "Lookup a show by its thetvdb or IMDB ID.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "the_tvdb_id",
+                    "type": "INTEGER",
+                    "description": "The TVDB ID of the show."
+                },
+                {
+                    "name": "imdb_id",
+                    "type": "STRING",
+                    "description": "The IMDB ID of the show."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/lookup/shows'\nparams = {'thetvdb': the_tvdb_id} if the_tvdb_id else {'imdb': imdb_id}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "search_people",
+            "url": "https://api.tvmaze.com/search/people",
+            "description": "Search for people by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the person to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/search/people'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "schedule",
+            "url": "https://api.tvmaze.com/schedule",
+            "description": "Retrieve the schedule for a given country and date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "An ISO 3166-1 code of the country.",
+                    "default": "US"
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO 8601 formatted date.",
+                    "default": "current day"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/schedule'\nparams = {'country': country, 'date': date}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "web_schedule",
+            "url": "https://api.tvmaze.com/schedule/web",
+            "description": "Retrieve the web/streaming schedule for a given country and date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "An ISO 3166-1 code of the country."
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO 8601 formatted date.",
+                    "default": "current day"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/schedule/web'\nparams = {'country': country, 'date': date}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_main_information",
+            "url": "https://api.tvmaze.com/shows/{id}",
+            "description": "Retrieve all primary information for a given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "show_episode_list",
+            "url": "https://api.tvmaze.com/shows/{id}/episodes",
+            "description": "Retrieve a complete list of episodes for the given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "specials",
+                    "type": "INTEGER",
+                    "description": "Include specials in the list.",
+                    "default": "0"
+                }
+            ],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}/episodes'\nparams = {'specials': specials}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_seasons",
+            "url": "https://api.tvmaze.com/shows/{id}/seasons",
+            "description": "Retrieve a complete list of seasons for the given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}/seasons'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "season_episodes",
+            "url": "https://api.tvmaze.com/seasons/{id}/episodes",
+            "description": "Retrieve a list of episodes for a specific season.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "season_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the season."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/seasons/{season_id}/episodes'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_main_information",
+            "url": "https://api.tvmaze.com/people/{id}",
+            "description": "Retrieve all primary information for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_cast_credits",
+            "url": "https://api.tvmaze.com/people/{id}/castcredits",
+            "description": "Retrieve all cast credits for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}/castcredits'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_crew_credits",
+            "url": "https://api.tvmaze.com/people/{id}/crewcredits",
+            "description": "Retrieve all crew credits for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}/crewcredits'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "updates_shows",
+            "url": "https://api.tvmaze.com/updates/shows",
+            "description": "Retrieve updates on all shows in the TVmaze database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/updates/shows'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "updates_people",
+            "url": "https://api.tvmaze.com/updates/people",
+            "description": "Retrieve updates on all people in the TVmaze database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/updates/people'\nresponse = requests.get(url)\nprint(response.json())"
+        }
+    ]
+}

@@ -1,0 +1,175 @@
+**api.py**
+```python
+import requests
+from typing import Optional
+
+
+def get_robohash_image(text: str, fmt: Optional[str] = 'png', size: Optional[str] = None, 
+                       set: Optional[str] = None, bgset: Optional[str] = None, gravatar: Optional[str] = None, 
+                       ignoreext: Optional[bool] = True, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Generate a unique image from any text. Customize the image by using different sets, backgrounds, sizes, etc.
+    
+    Parameters:
+    text [Required]: Text input for generating the image.
+    fmt [Optional]: Output format of the image (e.g., 'png', 'jpg', 'bmp'). Defaults to 'png'.
+    size [Optional]: Size of the generated image (e.g., '200x200').
+    set [Optional]: The set to generate the image from (e.g., 'set1', 'set2', 'set3', 'set4', 'set5').
+    bgset [Optional]: The background set to use (e.g., 'bg1', 'bg2').
+    gravatar [Optional]: Set to 'yes' to use a gravatar image if available.
+    ignoreext [Optional]: Boolean to determine whether to ignore the extension in the hash. Defaults to True.
+    """
+    base_url = f"https://robohash.org/{text}"
+    
+    params = {
+        'ignoreext': str(ignoreext).lower()
+    }
+    
+    if size:
+        params['size'] = size
+    if set:
+        params['set'] = set
+    if bgset:
+        params['bgset'] = bgset
+    if gravatar:
+        params['gravatar'] = gravatar
+    
+    response = requests.get(f"{base_url}.{fmt}", params=params)
+    
+    if response.status_code != 200:
+        return {"error": "Failed to retrieve image", "status_code": response.status_code}
+    
+    return response.content
+```
+
+**api_test.py**
+```python
+import unittest
+from api import get_robohash_image
+
+
+class TestRobohashAPI(unittest.TestCase):
+
+    def test_default_image(self):
+        # Test with only the required text parameter
+        response = get_robohash_image(text="example")
+        self.assertTrue(response, "Image should be returned")
+
+    def test_custom_format(self):
+        # Test with custom format
+        response = get_robohash_image(text="example", fmt="jpg")
+        self.assertTrue(response, "Image should be returned as jpg")
+
+    def test_with_size(self):
+        # Test with custom size
+        response = get_robohash_image(text="example", size="300x300")
+        self.assertTrue(response, "Image should be returned with specified size")
+
+    def test_with_set(self):
+        # Test with specific set
+        response = get_robohash_image(text="example", set="set4")
+        self.assertTrue(response, "Image should be returned from specified set")
+
+    def test_with_bgset(self):
+        # Test with background set
+        response = get_robohash_image(text="example", bgset="bg1")
+        self.assertTrue(response, "Image should be returned with specified background")
+
+    def test_with_gravatar(self):
+        # Test with gravatar option
+        response = get_robohash_image(text="example", gravatar="yes")
+        self.assertTrue(response, "Image should be gravatar if available")
+
+    def test_ignoreext_false(self):
+        # Test with ignoreext set to False
+        response = get_robohash_image(text="example", ignoreext=False)
+        self.assertTrue(response, "Image should be returned with the extension considered in the hash")
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**robohash.json**
+```json
+{
+    "tool_name": "robohash",
+    "tool_description": "API generates unique images from any text, offering customizable robots, monsters, and more.",
+    "title": "Robohash API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://robohash.org/",
+    "host": "robohash.org",
+    "api_list": [
+        {
+            "name": "get_robohash_image",
+            "url": "https://robohash.org/{text}.{fmt}",
+            "description": "Generate a unique image from any text. Customize the image by using different sets, backgrounds, sizes, etc.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "description": "Text input for generating the image.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fmt",
+                    "type": "STRING",
+                    "description": "Output format of the image.",
+                    "default": "png"
+                },
+                {
+                    "name": "size",
+                    "type": "STRING",
+                    "description": "Size of the generated image.",
+                    "default": null
+                },
+                {
+                    "name": "set",
+                    "type": "STRING",
+                    "description": "The set to generate the image from.",
+                    "default": null
+                },
+                {
+                    "name": "bgset",
+                    "type": "STRING",
+                    "description": "The background set to use.",
+                    "default": null
+                },
+                {
+                    "name": "gravatar",
+                    "type": "STRING",
+                    "description": "Use a gravatar image if available.",
+                    "default": null
+                },
+                {
+                    "name": "ignoreext",
+                    "type": "BOOLEAN",
+                    "description": "Whether to ignore the extension in the hash.",
+                    "default": true
+                }
+            ],
+            "code": "import requests\n\nbase_url = 'https://robohash.org/{text}'\nparams = {'ignoreext': str(ignoreext).lower()}\nresponse = requests.get(f'{base_url}.{fmt}', params=params)\nprint(response.content)",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "type": "binary"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

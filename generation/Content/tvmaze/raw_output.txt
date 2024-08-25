@@ -1,0 +1,586 @@
+Sure, let's create the necessary components for the TVmaze API interaction. Below are the `api.py`, `api_test.py`, and the metadata `tvmaze.json` file.
+
+### api.py
+```python
+import requests
+from typing import Optional
+
+def search_shows(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for shows by name. A fuzzy search is used to find the shows matching the given query.
+
+    Parameters:
+    - query: The name of the show to search for.
+
+    Returns:
+    JSON response containing a list of shows matching the query.
+    """
+    url = "https://api.tvmaze.com/search/shows"
+    params = {
+        'q': query
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def show_single_search(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Perform a single search for a specific show by name.
+
+    Parameters:
+    - query: The name of the show.
+
+    Returns:
+    JSON response with the single show's details, or no result if not found.
+    """
+    url = "https://api.tvmaze.com/singlesearch/shows"
+    params = {
+        'q': query
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def show_lookup(the_tvdb_id: Optional[int] = None, imdb_id: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Lookup a show by its thetvdb or IMDB ID.
+
+    Parameters:
+    - the_tvdb_id: The TVDB ID of the show.
+    - imdb_id: The IMDB ID of the show.
+
+    Returns:
+    JSON response with the show's details, or a 404 if not found.
+    """
+    if the_tvdb_id:
+        url = f"https://api.tvmaze.com/lookup/shows?thetvdb={the_tvdb_id}"
+    elif imdb_id:
+        url = f"https://api.tvmaze.com/lookup/shows?imdb={imdb_id}"
+    else:
+        raise ValueError("Either the_tvdb_id or imdb_id must be provided.")
+
+    response = requests.get(url)
+    return response.json()
+
+def search_people(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for people by name.
+
+    Parameters:
+    - query: The name of the person to search for.
+
+    Returns:
+    JSON response containing a list of people matching the query.
+    """
+    url = "https://api.tvmaze.com/search/people"
+    params = {
+        'q': query
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def schedule(country: Optional[str] = 'US', date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the schedule for a given country and date.
+
+    Parameters:
+    - country: An ISO 3166-1 code of the country; defaults to 'US'
+    - date: An ISO 8601 formatted date; defaults to the current day
+
+    Returns:
+    JSON response with the schedule information.
+    """
+    url = "https://api.tvmaze.com/schedule"
+    params = {
+        'country': country,
+        'date': date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def web_schedule(country: Optional[str] = None, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the web/streaming schedule for a given country and date.
+
+    Parameters:
+    - country: An ISO 3166-1 code of the country
+    - date: An ISO 8601 formatted date; defaults to the current day
+
+    Returns:
+    JSON response with the web schedule information.
+    """
+    url = "https://api.tvmaze.com/schedule/web"
+    params = {
+        'country': country,
+        'date': date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def show_main_information(show_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve all primary information for a given show.
+
+    Parameters:
+    - show_id: The TVmaze ID of the show.
+
+    Returns:
+    JSON response with the show's main information.
+    """
+    url = f"https://api.tvmaze.com/shows/{show_id}"
+    response = requests.get(url)
+    return response.json()
+
+def show_episode_list(show_id: int, specials: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a complete list of episodes for the given show.
+
+    Parameters:
+    - show_id: The TVmaze ID of the show.
+    - specials: Include specials in the list.
+
+    Returns:
+    JSON response containing a list of episodes.
+    """
+    url = f"https://api.tvmaze.com/shows/{show_id}/episodes"
+    params = {
+        'specials': specials
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def show_seasons(show_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a complete list of seasons for the given show.
+
+    Parameters:
+    - show_id: The TVmaze ID of the show.
+
+    Returns:
+    JSON response containing a list of seasons.
+    """
+    url = f"https://api.tvmaze.com/shows/{show_id}/seasons"
+    response = requests.get(url)
+    return response.json()
+
+def season_episodes(season_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a list of episodes for a specific season.
+
+    Parameters:
+    - season_id: The TVmaze ID of the season.
+
+    Returns:
+    JSON response containing a list of episodes in the season.
+    """
+    url = f"https://api.tvmaze.com/seasons/{season_id}/episodes"
+    response = requests.get(url)
+    return response.json()
+
+def person_main_information(person_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve all primary information for a given person.
+
+    Parameters:
+    - person_id: The TVmaze ID of the person.
+
+    Returns:
+    JSON response containing the person's information.
+    """
+    url = f"https://api.tvmaze.com/people/{person_id}"
+    response = requests.get(url)
+    return response.json()
+
+def person_cast_credits(person_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve all cast credits for a given person.
+
+    Parameters:
+    - person_id: The TVmaze ID of the person.
+
+    Returns:
+    JSON response containing the person's cast credits.
+    """
+    url = f"https://api.tvmaze.com/people/{person_id}/castcredits"
+    response = requests.get(url)
+    return response.json()
+
+def person_crew_credits(person_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve all crew credits for a given person.
+
+    Parameters:
+    - person_id: The TVmaze ID of the person.
+
+    Returns:
+    JSON response containing the person's crew credits.
+    """
+    url = f"https://api.tvmaze.com/people/{person_id}/crewcredits"
+    response = requests.get(url)
+    return response.json()
+
+def updates_shows(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve updates on all shows in the TVmaze database.
+
+    Returns:
+    JSON response containing updates on all shows.
+    """
+    url = "https://api.tvmaze.com/updates/shows"
+    response = requests.get(url)
+    return response.json()
+
+def updates_people(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve updates on all people in the TVmaze database.
+
+    Returns:
+    JSON response containing updates on all people.
+    """
+    url = "https://api.tvmaze.com/updates/people"
+    response = requests.get(url)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class TestTvMazeAPI(unittest.TestCase):
+
+    def test_search_shows(self):
+        result = search_shows(query='girls')
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_show_single_search(self):
+        result = show_single_search(query='girls')
+        self.assertIsInstance(result, dict)
+        self.assertIn('name', result)
+
+    def test_show_lookup(self):
+        result = show_lookup(imdb_id='tt0944947')
+        self.assertIsInstance(result, dict)
+        self.assertIn('id', result)
+
+    def test_search_people(self):
+        result = search_people(query='lauren')
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_schedule(self):
+        result = schedule()
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_web_schedule(self):
+        result = web_schedule()
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_show_main_information(self):
+        result = show_main_information(show_id=1)
+        self.assertIsInstance(result, dict)
+        self.assertIn('name', result)
+
+    def test_show_episode_list(self):
+        result = show_episode_list(show_id=1)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_show_seasons(self):
+        result = show_seasons(show_id=1)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_season_episodes(self):
+        result = season_episodes(season_id=1)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_person_main_information(self):
+        result = person_main_information(person_id=1)
+        self.assertIsInstance(result, dict)
+        self.assertIn('id', result)
+
+    def test_person_cast_credits(self):
+        result = person_cast_credits(person_id=1)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_person_crew_credits(self):
+        result = person_crew_credits(person_id=1)
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+
+    def test_updates_shows(self):
+        result = updates_shows()
+        self.assertIsInstance(result, dict)
+
+    def test_updates_people(self):
+        result = updates_people()
+        self.assertIsInstance(result, dict)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### tvmaze.json
+```json
+{
+    "tool_name": "tvmaze",
+    "tool_description": "API to fetch television shows, episodes, cast, and more.",
+    "title": "TVmaze API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.tvmaze.com/api",
+    "host": "api.tvmaze.com",
+    "api_list": [
+        {
+            "name": "search_shows",
+            "url": "https://api.tvmaze.com/search/shows",
+            "description": "Search for shows by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/search/shows'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_single_search",
+            "url": "https://api.tvmaze.com/singlesearch/shows",
+            "description": "Perform a single search for a specific show by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/singlesearch/shows'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_lookup",
+            "url": "https://api.tvmaze.com/lookup/shows",
+            "description": "Lookup a show by its thetvdb or IMDB ID.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "the_tvdb_id",
+                    "type": "INTEGER",
+                    "description": "The TVDB ID of the show."
+                },
+                {
+                    "name": "imdb_id",
+                    "type": "STRING",
+                    "description": "The IMDB ID of the show."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/lookup/shows'\nparams = {'thetvdb': the_tvdb_id} if the_tvdb_id else {'imdb': imdb_id}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "search_people",
+            "url": "https://api.tvmaze.com/search/people",
+            "description": "Search for people by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the person to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/search/people'\nparams = {'q': query}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "schedule",
+            "url": "https://api.tvmaze.com/schedule",
+            "description": "Retrieve the schedule for a given country and date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "An ISO 3166-1 code of the country.",
+                    "default": "US"
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO 8601 formatted date.",
+                    "default": "current day"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/schedule'\nparams = {'country': country, 'date': date}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "web_schedule",
+            "url": "https://api.tvmaze.com/schedule/web",
+            "description": "Retrieve the web/streaming schedule for a given country and date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "An ISO 3166-1 code of the country."
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO 8601 formatted date.",
+                    "default": "current day"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/schedule/web'\nparams = {'country': country, 'date': date}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_main_information",
+            "url": "https://api.tvmaze.com/shows/{id}",
+            "description": "Retrieve all primary information for a given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "show_episode_list",
+            "url": "https://api.tvmaze.com/shows/{id}/episodes",
+            "description": "Retrieve a complete list of episodes for the given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "specials",
+                    "type": "INTEGER",
+                    "description": "Include specials in the list.",
+                    "default": "0"
+                }
+            ],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}/episodes'\nparams = {'specials': specials}\nresponse = requests.get(url, params=params)\nprint(response.json())"
+        },
+        {
+            "name": "show_seasons",
+            "url": "https://api.tvmaze.com/shows/{id}/seasons",
+            "description": "Retrieve a complete list of seasons for the given show.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "show_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/shows/{show_id}/seasons'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "season_episodes",
+            "url": "https://api.tvmaze.com/seasons/{id}/episodes",
+            "description": "Retrieve a list of episodes for a specific season.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "season_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the season."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/seasons/{season_id}/episodes'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_main_information",
+            "url": "https://api.tvmaze.com/people/{id}",
+            "description": "Retrieve all primary information for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_cast_credits",
+            "url": "https://api.tvmaze.com/people/{id}/castcredits",
+            "description": "Retrieve all cast credits for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}/castcredits'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "person_crew_credits",
+            "url": "https://api.tvmaze.com/people/{id}/crewcredits",
+            "description": "Retrieve all crew credits for a given person.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "person_id",
+                    "type": "INTEGER",
+                    "description": "The TVmaze ID of the person."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.tvmaze.com/people/{person_id}/crewcredits'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "updates_shows",
+            "url": "https://api.tvmaze.com/updates/shows",
+            "description": "Retrieve updates on all shows in the TVmaze database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/updates/shows'\nresponse = requests.get(url)\nprint(response.json())"
+        },
+        {
+            "name": "updates_people",
+            "url": "https://api.tvmaze.com/updates/people",
+            "description": "Retrieve updates on all people in the TVmaze database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.tvmaze.com/updates/people'\nresponse = requests.get(url)\nprint(response.json())"
+        }
+    ]
+}
+```
+
+These implementations provide the basis for the TVmaze API client in Python, along with a set of tests and a JSON metadata file reflecting the API structure and usage.

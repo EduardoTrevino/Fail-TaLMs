@@ -1,0 +1,103 @@
+{
+    "tool_name": "remush",
+    "tool_description": "API for compressing and optimizing images using the reSmush.it service.",
+    "title": "reSmush.it API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://resmush.it",
+    "host": "api.resmush.it",
+    "api_list": [
+        {
+            "name": "compress_image_get_method",
+            "url": "https://api.resmush.it/ws.php",
+            "description": "Compresses an image specified by its URL using the GET method.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "img_url",
+                    "type": "STRING",
+                    "description": "The URL of the image to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "The quality level for JPG compression (0-100).",
+                    "default": "92"
+                },
+                {
+                    "name": "exif",
+                    "type": "BOOLEAN",
+                    "description": "Retain the EXIF data.",
+                    "default": "false"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.resmush.it/ws.php'\nparams = {'img': img_url, 'qlty': qlty, 'exif': 'true' if exif else 'false'}\nresponse = requests.get(url, params=params)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "dest": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "compress_image_post_method",
+            "url": "http://api.resmush.it/",
+            "description": "Compresses an image by sending the file using the POST method.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "file_path",
+                    "type": "STRING",
+                    "description": "The local file path of the image to be compressed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "qlty",
+                    "type": "INTEGER",
+                    "description": "The quality level for JPG compression (0-100).",
+                    "default": "92"
+                }
+            ],
+            "code": "import requests\n\nurl = f'http://api.resmush.it/?qlty={qlty}'\nmime_type = requests.utils.guess_mime_type(file_path) or 'image/jpeg'\noutput = ('files', (file_path, open(file_path, 'rb'), mime_type))\ndata = {'files': output}\nresponse = requests.post(url, files=data)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "dest": "str",
+                "src": "str",
+                "src_size": "int",
+                "dest_size": "int",
+                "percent": "float",
+                "expires": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "dest": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

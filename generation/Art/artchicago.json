@@ -1,0 +1,94 @@
+{
+    "tool_name": "artchicago",
+    "tool_description": "API to access data about the collection at the Art Institute of Chicago.",
+    "title": "Art Institute of Chicago API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.artic.edu/docs/",
+    "host": "api.artic.edu",
+    "api_list": [
+        {
+            "name": "artworks",
+            "url": "https://api.artic.edu/api/v1/artworks",
+            "description": "Retrieve artworks data.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Comma-separated list of ids.", "default": null},
+                {"name": "limit", "type": "INTEGER", "default": 2},
+                {"name": "page", "type": "INTEGER", "default": 1},
+                {"name": "fields", "type": "STRING", "default": null},
+                {"name": "include", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "artworks_search",
+            "url": "https://api.artic.edu/api/v1/artworks/search",
+            "description": "Search artworks.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "default": "monet"}
+            ],
+            "optional_parameters": [
+                {"name": "query", "type": "STRING", "default": null},
+                {"name": "sort", "type": "STRING", "default": null},
+                {"name": "from", "type": "INTEGER", "default": 0},
+                {"name": "size", "type": "INTEGER", "default": 10},
+                {"name": "facets", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "artwork_by_id",
+            "url": "https://api.artic.edu/api/v1/artworks/{id}",
+            "description": "Retrieve artwork by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "default": 4}
+            ]
+        },
+        {
+            "name": "artwork_manifest",
+            "url": "https://api.artic.edu/api/v1/artworks/{id}/manifest.json",
+            "description": "Retrieve artwork manifest in IIIF format.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "default": 4}
+            ]
+        },
+        {
+            "name": "agents",
+            "url": "https://api.artic.edu/api/v1/agents",
+            "description": "Retrieve agents data.",
+            "method": "GET",
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "default": null},
+                {"name": "limit", "type": "INTEGER", "default": 2},
+                {"name": "page", "type": "INTEGER", "default": 1},
+                {"name": "fields", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "agents_search",
+            "url": "https://api.artic.edu/api/v1/agents/search",
+            "description": "Search agents.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "default": "john"}
+            ],
+            "optional_parameters": [
+                {"name": "query", "type": "STRING", "default": null},
+                {"name": "sort", "type": "STRING", "default": null},
+                {"name": "from", "type": "INTEGER", "default": 0},
+                {"name": "size", "type": "INTEGER", "default": 10},
+                {"name": "facets", "type": "STRING", "default": null}
+            ]
+        }
+        // More endpoints can be added similarly following the same structure
+    ]
+}

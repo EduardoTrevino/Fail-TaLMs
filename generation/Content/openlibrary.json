@@ -1,0 +1,162 @@
+{
+    "tool_name": "openlibrary",
+    "tool_description": "API to access a wealth of data about books, authors, works, and more from the Open Library.",
+    "title": "Open Library API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://openlibrary.org/developers",
+    "host": "openlibrary.org",
+    "api_list": [
+        {
+            "name": "openlibrary_search",
+            "url": "https://openlibrary.org/search.json",
+            "description": "Search for books by title, author, and other criteria.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The query term for the search.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Fields to include in the response, use '*' to include all.",
+                    "default": "*"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sorting order (e.g., 'new', 'old', 'random').",
+                    "default": ""
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for results pagination.",
+                    "default": 1
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": 10
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "works_by_id",
+            "url": "https://openlibrary.org/works",
+            "description": "Retrieve information about a work using its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "work_id",
+                    "type": "STRING",
+                    "description": "The ID of the work.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "editions_by_work",
+            "url": "https://openlibrary.org/works/{work_id}/editions.json",
+            "description": "Fetch editions of a work using its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "work_id",
+                    "type": "STRING",
+                    "description": "The ID of the work.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "author_search",
+            "url": "https://openlibrary.org/search/authors.json",
+            "description": "Search for authors by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The query term to search for authors.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "author_data",
+            "url": "https://openlibrary.org/authors/{author_id}.json",
+            "description": "Retrieve data about an author using their ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "author_id",
+                    "type": "STRING",
+                    "description": "The ID of the author.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "author_works",
+            "url": "https://openlibrary.org/authors/{author_id}/works.json",
+            "description": "Fetch works by a specific author using their ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "author_id",
+                    "type": "STRING",
+                    "description": "The ID of the author.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of works to return.",
+                    "default": 50
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "The starting offset in the collection of works.",
+                    "default": 0
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "book_by_isbn",
+            "url": "https://openlibrary.org/isbn/{isbn}.json",
+            "description": "Retrieve book information using its ISBN.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "isbn",
+                    "type": "STRING",
+                    "description": "The ISBN of the book.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

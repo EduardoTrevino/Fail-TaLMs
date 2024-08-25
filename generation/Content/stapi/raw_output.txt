@@ -1,0 +1,412 @@
+### api.py
+```python
+import requests
+from typing import Optional, List, Dict, Any
+
+BASE_URL = "https://stapi.co/api"
+
+
+def get_animal(uid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Retrieve a single animal.
+    
+    Parameters:
+    - uid: str - Animal unique ID
+    """
+    url = f"{BASE_URL}/v1/rest/animal"
+    params = {'uid': uid}
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_animals(page_number: Optional[int] = 0, page_size: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Pagination over animals.
+    
+    Parameters:
+    - page_number: int (optional) - Zero-based page number
+    - page_size: int (optional) - Page size
+    """
+    url = f"{BASE_URL}/v1/rest/animal/search"
+    params = {
+        'pageNumber': page_number,
+        'pageSize': page_size
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_astronomical_objects(page_number: Optional[int] = 0, page_size: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Pagination over astronomical objects (V2).
+    
+    Parameters:
+    - page_number: int (optional) - Zero-based page number
+    - page_size: int (optional) - Page size
+    """
+    url = f"{BASE_URL}/v2/rest/astronomicalObject/search"
+    params = {
+        'pageNumber': page_number,
+        'pageSize': page_size
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_book(uid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Retrieve a single book (V2).
+
+    Parameters:
+    - uid: str - Book unique ID
+    """
+    url = f"{BASE_URL}/v2/rest/book"
+    params = {'uid': uid}
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_books(page_number: Optional[int] = 0, page_size: Optional[int] = 10, sort: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Pagination over books (V2).
+
+    Parameters:
+    - page_number: int (optional) - Zero-based page number
+    - page_size: int (optional) - Page size
+    - sort: str (optional) - Sorting format like 'fieldName,ASC;anotherFieldName,DESC'
+    """
+    url = f"{BASE_URL}/v2/rest/book/search"
+    params = {'pageNumber': page_number, 'pageSize': page_size}
+    
+    if sort:
+        params['sort'] = sort
+
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_character(uid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Retrieve a single character.
+    
+    Parameters:
+    - uid: str - Character unique ID
+    """
+    url = f"{BASE_URL}/v1/rest/character"
+    params = {'uid': uid}
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_characters(page_number: Optional[int] = 0, page_size: Optional[int] = 10, sort: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Pagination over characters.
+
+    Parameters:
+    - page_number: int (optional) - Zero-based page number
+    - page_size: int (optional) - Page size
+    - sort: str (optional) - Sorting format like 'fieldName,ASC;anotherFieldName,DESC'
+    """
+    url = f"{BASE_URL}/v1/rest/character/search"
+    params = {'pageNumber': page_number, 'pageSize': page_size}
+    
+    if sort:
+        params['sort'] = sort
+
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def get_data_version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Retrieve the data version of the STAPI instance.
+    """
+    url = f"{BASE_URL}/v1/rest/common/dataVersion"
+    
+    response = requests.get(url)
+    return response.json()
+
+
+def get_episode(uid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Retrieve a single episode.
+    
+    Parameters:
+    - uid: str - Episode unique ID
+    """
+    url = f"{BASE_URL}/v1/rest/episode"
+    params = {'uid': uid}
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_episodes(page_number: Optional[int] = 0, page_size: Optional[int] = 10, sort: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Pagination over episodes.
+
+    Parameters:
+    - page_number: int (optional) - Zero-based page number
+    - page_size: int (optional) - Page size
+    - sort: str (optional) - Sorting format like 'fieldName,ASC;anotherFieldName,DESC'
+    """
+    url = f"{BASE_URL}/v1/rest/episode/search"
+    params = {'pageNumber': page_number, 'pageSize': page_size}
+    
+    if sort:
+        params['sort'] = sort
+
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    get_animal, search_animals,
+    get_book, search_books,
+    get_character, search_characters,
+    get_data_version,
+    get_episode, search_episodes
+)
+
+
+class TestStapiEndpoints(unittest.TestCase):
+
+    def test_get_animal(self):
+        uid = "example_uid"
+        response = get_animal(uid)
+        self.assertIn("animal", response)
+
+    def test_search_animals(self):
+        response = search_animals()
+        self.assertIn("animals", response)
+
+    def test_get_book(self):
+        uid = "example_uid"
+        response = get_book(uid)
+        self.assertIn("book", response)
+
+    def test_search_books(self):
+        response = search_books()
+        self.assertIn("books", response)
+
+    def test_get_character(self):
+        uid = "example_uid"
+        response = get_character(uid)
+        self.assertIn("character", response)
+
+    def test_search_characters(self):
+        response = search_characters()
+        self.assertIn("characters", response)
+
+    def test_get_data_version(self):
+        response = get_data_version()
+        self.assertIn("dataVersion", response)
+
+    def test_get_episode(self):
+        uid = "example_uid"
+        response = get_episode(uid)
+        self.assertIn("episode", response)
+
+    def test_search_episodes(self):
+        response = search_episodes()
+        self.assertIn("episodes", response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### stapi.json
+```json
+{
+    "tool_name": "stapi",
+    "tool_description": "STAPI, a Star Trek API that provides access to data about Star Trek universe including characters, episodes, species, and more.",
+    "title": "Star Trek API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://stapi.co/",
+    "host": "stapi.co",
+    "api_list": [
+        {
+            "name": "get_animal",
+            "url": "https://stapi.co/api/v1/rest/animal",
+            "description": "Retrieval of a single animal.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uid",
+                    "type": "STRING",
+                    "description": "Animal unique ID"
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "search_animals",
+            "url": "https://stapi.co/api/v1/rest/animal/search",
+            "description": "Pagination over animals.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pageNumber",
+                    "type": "INTEGER",
+                    "description": "Zero-based page number",
+                    "default": "0"
+                },
+                {
+                    "name": "pageSize",
+                    "type": "INTEGER",
+                    "description": "Page size",
+                    "default": "10"
+                }
+            ]
+        },
+        {
+            "name": "get_book",
+            "url": "https://stapi.co/api/v2/rest/book",
+            "description": "Retrieval of a single book.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uid",
+                    "type": "STRING",
+                    "description": "Book unique ID"
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "search_books",
+            "url": "https://stapi.co/api/v2/rest/book/search",
+            "description": "Pagination over books.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pageNumber",
+                    "type": "INTEGER",
+                    "description": "Zero-based page number",
+                    "default": "0"
+                },
+                {
+                    "name": "pageSize",
+                    "type": "INTEGER",
+                    "description": "Page size",
+                    "default": "10"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_character",
+            "url": "https://stapi.co/api/v1/rest/character",
+            "description": "Retrieval of a single character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uid",
+                    "type": "STRING",
+                    "description": "Character unique ID"
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "search_characters",
+            "url": "https://stapi.co/api/v1/rest/character/search",
+            "description": "Pagination over characters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pageNumber",
+                    "type": "INTEGER",
+                    "description": "Zero-based page number",
+                    "default": "0"
+                },
+                {
+                    "name": "pageSize",
+                    "type": "INTEGER",
+                    "description": "Page size",
+                    "default": "10"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                    "default": null
+                }
+            ]
+        },
+        {
+            "name": "get_data_version",
+            "url": "https://stapi.co/api/v1/rest/common/dataVersion",
+            "description": "Retrieve the data version of the STAPI instance.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_episode",
+            "url": "https://stapi.co/api/v1/rest/episode",
+            "description": "Retrieval of a single episode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uid",
+                    "type": "STRING",
+                    "description": "Episode unique ID"
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "search_episodes",
+            "url": "https://stapi.co/api/v1/rest/episode/search",
+            "description": "Pagination over episodes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pageNumber",
+                    "type": "INTEGER",
+                    "description": "Zero-based page number",
+                    "default": "0"
+                },
+                {
+                    "name": "pageSize",
+                    "type": "INTEGER",
+                    "description": "Page size",
+                    "default": "10"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                    "default": null
+                }
+            ]
+        }
+    ]
+}
+```

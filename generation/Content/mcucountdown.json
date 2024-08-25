@@ -1,0 +1,64 @@
+{
+    "tool_name": "mcucountdown",
+    "tool_description": "API to get countdown details for the next MCU (Marvel Cinematic Universe) production.",
+    "title": "MCU Countdown API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.mcucountdown.com/docs",
+    "host": "api.mcucountdown.com",
+    "api_list": [
+        {
+            "name": "get_next_mcu_production",
+            "url": "https://api.mcucountdown.com/api",
+            "description": "Returns details of the next MCU production.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO formatted date to get the next MCU production starting from this date.",
+                    "default": "today's date"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.mcucountdown.com/api'\nparams = {'date': date} if date else {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "days_until": "int",
+                "overview": "str",
+                "poster_url": "str",
+                "release_date": "str",
+                "title": "str",
+                "type": "str",
+                "following_production": {
+                    "days_until": "int",
+                    "id": "int",
+                    "overview": "str",
+                    "poster_url": "str",
+                    "release_date": "str",
+                    "title": "str",
+                    "type": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "days_until": { "type": "integer" },
+                    "overview": { "type": "string" },
+                    "poster_url": { "type": "string" },
+                    "release_date": { "type": "string" },
+                    "title": { "type": "string" },
+                    "type": { "type": "string" },
+                    "following_production": { "type": "object" }
+                }
+            }
+        }
+    ]
+}

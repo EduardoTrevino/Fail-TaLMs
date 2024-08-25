@@ -1,0 +1,265 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def search_titles(terms: str, format: Optional[str] = 'html', page: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search the newspaper directory using OpenSearch.
+    
+    :param terms: The search query term.
+    :param format: Format of response. 'html' (default), 'json', or 'atom'.
+    :param page: Page number for paging results.
+    :return: Response from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/search/titles/results/"
+    params = {
+        'terms': terms,
+        'format': format
+    }
+    if page:
+        params['page'] = page
+
+    response = requests.get(url, params=params)
+    return response.json() if format == 'json' else response.text
+
+
+def search_pages(andtext: str, format: Optional[str] = 'html', page: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search newspaper pages using OpenSearch.
+    
+    :param andtext: The search query text.
+    :param format: Format of response. 'html' (default), 'json', or 'atom'.
+    :param page: Page number for paging results.
+    :return: Response from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/search/pages/results/"
+    params = {
+        'andtext': andtext,
+        'format': format
+    }
+    if page:
+        params['page'] = page
+
+    response = requests.get(url, params=params)
+    return response.json() if format == 'json' else response.text
+
+
+def suggest_titles(q: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Auto Suggest API for looking up newspaper titles.
+    
+    :param q: Query string for title suggestions.
+    :return: JSON response of suggestions from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/suggest/titles/"
+    params = {
+        'q': q
+    }
+
+    response = requests.get(url, params=params)
+    return response.json()  # response should be application/x-suggestions+json
+
+
+def get_newspapers_json(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all newspaper titles for which there is digital content.
+    
+    :return: JSON response from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/newspapers.json"
+    response = requests.get(url)
+    return response.json()
+
+
+def get_all_batches_json(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all batches of content that have been loaded.
+    
+    :return: JSON response from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/batches.json"
+    response = requests.get(url)
+    return response.json()
+
+
+def get_specific_batch_json(batch_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get detailed information about a specific batch.
+    
+    :param batch_id: Identifier of the batch.
+    :return: JSON response from Chronicling America API.
+    """
+    url = f"https://chroniclingamerica.loc.gov/batches/{batch_id}.json"
+    response = requests.get(url)
+    return response.json()
+
+
+def get_awardees_json(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all NDNP Awardees as JSON.
+    
+    :return: JSON response from Chronicling America API.
+    """
+    url = "https://chroniclingamerica.loc.gov/awardees.json"
+    response = requests.get(url)
+    return response.json()
+
+
+def get_specific_awardee_json(awardee_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get detailed information about a specific awardee.
+    
+    :param awardee_id: Identifier of the awardee.
+    :return: JSON response from Chronicling America API.
+    """
+    url = f"https://chroniclingamerica.loc.gov/awardees/{awardee_id}.json"
+    response = requests.get(url)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    search_titles,
+    search_pages,
+    suggest_titles,
+    get_newspapers_json,
+    get_all_batches_json,
+    get_specific_batch_json,
+    get_awardees_json,
+    get_specific_awardee_json
+)
+
+class TestChroniclingAmericaAPI(unittest.TestCase):
+    def test_search_titles(self):
+        response = search_titles('michigan', format='json', page=1)
+        assert 'results' in response
+
+    def test_search_pages(self):
+        response = search_pages('thomas', format='json', page=1)
+        assert 'results' in response
+
+    def test_suggest_titles(self):
+        response = suggest_titles('Florida')
+        assert isinstance(response, list)
+
+    def test_get_newspapers_json(self):
+        response = get_newspapers_json()
+        assert isinstance(response, dict)
+
+    def test_get_all_batches_json(self):
+        response = get_all_batches_json()
+        assert isinstance(response, dict)
+
+    def test_get_specific_batch_json(self):
+        response = get_specific_batch_json('dlc_jamaica_ver01')
+        assert 'name' in response and 'pages' in response
+
+    def test_get_awardees_json(self):
+        response = get_awardees_json()
+        assert isinstance(response, dict)
+
+    def test_get_specific_awardee_json(self):
+        response = get_specific_awardee_json('dlc')
+        assert 'name' in response and 'url' in response
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### chroniclingamerica.json
+```json
+{
+    "tool_name": "chroniclingamerica",
+    "tool_description": "API to access historic newspapers and select digitized newspaper pages from the Chronicling America database.",
+    "title": "Chronicling America API",
+    "pricing": "FREE",
+    "home_url": "https://chroniclingamerica.loc.gov/",
+    "api_list": [
+        {
+            "name": "search_titles",
+            "url": "https://chroniclingamerica.loc.gov/search/titles/results/",
+            "description": "Search the newspaper directory using OpenSearch protocol.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "terms", "type": "STRING", "description": "Search query"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "html"},
+                {"name": "page", "type": "INTEGER", "description": "Page number for results"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "search_pages",
+            "url": "https://chroniclingamerica.loc.gov/search/pages/results/",
+            "description": "Search digitized newspaper pages using OpenSearch protocol.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "andtext", "type": "STRING", "description": "Search query text"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "html"},
+                {"name": "page", "type": "INTEGER", "description": "Page number for results"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "suggest_titles",
+            "url": "https://chroniclingamerica.loc.gov/suggest/titles/",
+            "description": "Auto Suggest API for looking up newspaper titles.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "description": "Title query"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_newspapers_json",
+            "url": "https://chroniclingamerica.loc.gov/newspapers.json",
+            "description": "Retrieve a list of all newspaper titles with digital content.",
+            "method": "GET",
+            "required_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_all_batches_json",
+            "url": "https://chroniclingamerica.loc.gov/batches.json",
+            "description": "Retrieve a list of all batches of content.",
+            "method": "GET",
+            "required_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_specific_batch_json",
+            "url": "https://chroniclingamerica.loc.gov/batches/{batch_id}.json",
+            "description": "Retrieve detailed information about a specific batch.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "batch_id", "type": "STRING", "description": "Batch identifier"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_awardees_json",
+            "url": "https://chroniclingamerica.loc.gov/awardees.json",
+            "description": "Retrieve a list of all NDNP Awardees as JSON.",
+            "method": "GET",
+            "required_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_specific_awardee_json",
+            "url": "https://chroniclingamerica.loc.gov/awardees/{awardee_id}.json",
+            "description": "Retrieve detailed information about a specific awardee.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "awardee_id", "type": "STRING", "description": "Awardee identifier"}
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

@@ -1,0 +1,342 @@
+## Softmax Prompt: Create `api.py` for WordPress REST API
+
+```python
+import requests
+from typing import Optional, Dict, Any
+
+def list_posts(
+    context: Optional[str] = 'view',
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 10,
+    search: Optional[str] = None,
+    author: Optional[int] = None,
+    categories: Optional[int] = None,
+    tags: Optional[int] = None,
+    orderby: Optional[str] = 'date',
+    order: Optional[str] = 'desc',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a collection of posts.
+    """
+    url = "https://example.com/wp-json/wp/v2/posts"
+    params = {
+        'context': context,
+        'page': page,
+        'per_page': per_page,
+        'search': search,
+        'author': author,
+        'categories': categories,
+        'tags': tags,
+        'orderby': orderby,
+        'order': order
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def create_post(
+    title: str,
+    content: str,
+    status: Optional[str] = 'draft',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Create a new post.
+    """
+    url = "https://example.com/wp-json/wp/v2/posts"
+    headers = {'Authorization': f'Bearer {toolbench_rapidapi_key}'}
+    data = {
+        'title': title,
+        'content': content,
+        'status': status
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+def list_categories(
+    context: Optional[str] = 'view',
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 10,
+    orderby: Optional[str] = 'name',
+    order: Optional[str] = 'asc',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a collection of categories.
+    """
+    url = "https://example.com/wp-json/wp/v2/categories"
+    params = {
+        'context': context,
+        'page': page,
+        'per_page': per_page,
+        'orderby': orderby,
+        'order': order
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def retrieve_category(
+    category_id: int,
+    context: Optional[str] = 'view',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a specific category.
+    """
+    url = f"https://example.com/wp-json/wp/v2/categories/{category_id}"
+    params = {'context': context}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def list_tags(
+    context: Optional[str] = 'view',
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 10,
+    orderby: Optional[str] = 'name',
+    order: Optional[str] = 'asc',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a collection of tags.
+    """
+    url = "https://example.com/wp-json/wp/v2/tags"
+    params = {
+        'context': context,
+        'page': page,
+        'per_page': per_page,
+        'orderby': orderby,
+        'order': order
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def list_users(
+    context: Optional[str] = 'view',
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 10,
+    orderby: Optional[str] = 'name',
+    order: Optional[str] = 'asc',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a collection of users.
+    """
+    url = "https://example.com/wp-json/wp/v2/users"
+    params = {
+        'context': context,
+        'page': page,
+        'per_page': per_page,
+        'orderby': orderby,
+        'order': order
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def retrieve_user(
+    user_id: int,
+    context: Optional[str] = 'view',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a specific user.
+    """
+    url = f"https://example.com/wp-json/wp/v2/users/{user_id}"
+    params = {'context': context}
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+## Softmax Prompt: Create `api_test.py` for WordPress REST API
+
+```python
+import unittest
+from api import (
+    list_posts,
+    create_post,
+    list_categories,
+    retrieve_category,
+    list_tags,
+    list_users,
+    retrieve_user
+)
+
+class TestWordPressApi(unittest.TestCase):
+
+    def setUp(self):
+        self.api_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+    def test_list_posts(self):
+        response = list_posts(toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('data', response)
+
+    def test_create_post(self):
+        response = create_post(
+            title="Test Post",
+            content="This is a test post.",
+            toolbench_rapidapi_key=self.api_key
+        )
+        self.assertIsInstance(response, dict)
+        self.assertIn('id', response)
+
+    def test_list_categories(self):
+        response = list_categories(toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('data', response)
+
+    def test_retrieve_category(self):
+        response = retrieve_category(category_id=1, toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('id', response)
+
+    def test_list_tags(self):
+        response = list_tags(toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('data', response)
+
+    def test_list_users(self):
+        response = list_users(toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('data', response)
+
+    def test_retrieve_user(self):
+        response = retrieve_user(user_id=1, toolbench_rapidapi_key=self.api_key)
+        self.assertIsInstance(response, dict)
+        self.assertIn('id', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## Softmax Prompt: Create `wordpress.json` for WordPress REST API
+
+```json
+{
+    "tool_name": "wordpress",
+    "tool_description": "The WordPress REST API is organized around REST, offering predictable, resource-oriented URLs for public and private data.",
+    "title": "WordPress REST API",
+    "pricing": "Depends on the host provider",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.2,
+        "__typename": "Score"
+    },
+    "home_url": "https://developer.wordpress.org/rest-api/",
+    "host": "example.com",
+    "api_list": [
+        {
+            "name": "list_posts",
+            "url": "https://example.com/wp-json/wp/v2/posts",
+            "description": "Retrieve a collection of posts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "context", "default": "view"},
+                {"name": "page", "default": 1},
+                {"name": "per_page", "default": 10},
+                {"name": "search"},
+                {"name": "author"},
+                {"name": "categories"},
+                {"name": "tags"},
+                {"name": "orderby", "default": "date"},
+                {"name": "order", "default": "desc"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "create_post",
+            "url": "https://example.com/wp-json/wp/v2/posts",
+            "description": "Create a new post.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "title"},
+                {"name": "content"}
+            ],
+            "optional_parameters": [
+                {"name": "status", "default": "draft"}
+            ],
+            "statuscode": 201,
+            "headers": {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
+        },
+        {
+            "name": "list_categories",
+            "url": "https://example.com/wp-json/wp/v2/categories",
+            "description": "Retrieve a collection of categories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "context", "default": "view"},
+                {"name": "page", "default": 1},
+                {"name": "per_page", "default": 10},
+                {"name": "orderby", "default": "name"},
+                {"name": "order", "default": "asc"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "retrieve_category",
+            "url": "https://example.com/wp-json/wp/v2/categories/<id>",
+            "description": "Retrieve a specific category.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "category_id"}
+            ],
+            "optional_parameters": [
+                {"name": "context", "default": "view"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "list_tags",
+            "url": "https://example.com/wp-json/wp/v2/tags",
+            "description": "Retrieve a collection of tags.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "context", "default": "view"},
+                {"name": "page", "default": 1},
+                {"name": "per_page", "default": 10},
+                {"name": "orderby", "default": "name"},
+                {"name": "order", "default": "asc"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "list_users",
+            "url": "https://example.com/wp-json/wp/v2/users",
+            "description": "Retrieve a collection of users.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "context", "default": "view"},
+                {"name": "page", "default": 1},
+                {"name": "per_page", "default": 10},
+                {"name": "orderby", "default": "name"},
+                {"name": "order", "default": "asc"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "retrieve_user",
+            "url": "https://example.com/wp-json/wp/v2/users/<id>",
+            "description": "Retrieve a specific user.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "user_id"}
+            ],
+            "optional_parameters": [
+                {"name": "context", "default": "view"}
+            ],
+            "statuscode": 200,
+            "headers": {}
+        }
+    ]
+}
+```
