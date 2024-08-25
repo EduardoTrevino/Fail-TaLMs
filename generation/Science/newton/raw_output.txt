@@ -1,0 +1,152 @@
+### api.py
+```python
+import requests
+
+def newton_calculate(operation: str, expression: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Sends a GET request to the newton API to perform a mathematical operation on the provided expression.
+    
+    Parameters:
+    operation [Required]: string - The mathematical operation to perform.
+    expression [Required]: string - The URL-encoded mathematical expression.
+
+    Returns:
+    A JSON object with the operation, the expression, and the result.
+    """
+    base_url = "https://newton.now.sh/api/v2"
+    url = f"{base_url}/{operation}/{expression}"
+    
+    response = requests.get(url)
+    
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import newton_calculate
+
+class TestNewtonAPI(unittest.TestCase):
+
+    def test_simplify(self):
+        response = newton_calculate("simplify", "2%5E2%2B2%282%29")
+        self.assertEqual(response.get("result"), "8", "Test simplify failed.")
+
+    def test_factor(self):
+        response = newton_calculate("factor", "x%5E2%2B2x")
+        self.assertEqual(response.get("result"), "x (x + 2)", "Test factor failed.")
+
+    def test_derive(self):
+        response = newton_calculate("derive", "x%5E2%2B2x")
+        self.assertEqual(response.get("result"), "2 x + 2", "Test derive failed.")
+
+    def test_integrate(self):
+        response = newton_calculate("integrate", "x%5E2%2B2x")
+        self.assertIn("1/3 x^3 + x^2 + C", response.get("result"), "Test integrate failed.")
+
+    def test_zeroes(self):
+        response = newton_calculate("zeroes", "x%5E2%2B2x")
+        self.assertEqual(response.get("result"), [-2, 0], "Test zeroes failed.")
+
+    def test_tangent(self):
+        response = newton_calculate("tangent", "2%7C4lx%5E3")
+        self.assertEqual(response.get("result"), "12 x + -16", "Test tangent failed.")
+
+    def test_area(self):
+        response = newton_calculate("area", "2%3A4%7Cx%5E3")
+        self.assertEqual(response.get("result"), "60", "Test area failed.")
+
+    def test_cosine(self):
+        response = newton_calculate("cos", "pi")
+        self.assertEqual(response.get("result"), "-1", "Test cosine failed.")
+
+    def test_sine(self):
+        response = newton_calculate("sin", "0")
+        self.assertEqual(response.get("result"), "0", "Test sine failed.")
+
+    def test_tangent_angle(self):
+        response = newton_calculate("tan", "0")
+        self.assertEqual(response.get("result"), "0", "Test tangent failed.")
+
+    def test_arccos(self):
+        response = newton_calculate("arccos", "1")
+        self.assertEqual(response.get("result"), "0", "Test arccos failed.")
+
+    def test_arcsin(self):
+        response = newton_calculate("arcsin", "0")
+        self.assertEqual(response.get("result"), "0", "Test arcsin failed.")
+
+    def test_arctan(self):
+        response = newton_calculate("arctan", "0")
+        self.assertEqual(response.get("result"), "0", "Test arctan failed.")
+
+    def test_absolute(self):
+        response = newton_calculate("abs", "-1")
+        self.assertEqual(response.get("result"), "1", "Test absolute value failed.")
+
+    def test_logarithm(self):
+        response = newton_calculate("log", "2%7C8")
+        self.assertEqual(response.get("result"), "3", "Test logarithm failed.")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### newton.json
+```json
+{
+    "tool_name": "newton",
+    "tool_description": "A micro-service for performing advanced math operations including numerical calculations and symbolic math parsing.",
+    "title": "Newton API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://newton.now.sh/",
+    "host": "newton.now.sh",
+    "api_list": [
+        {
+            "name": "newton_calculate",
+            "url": "https://newton.now.sh/api/v2/:operation/:expression",
+            "description": "Performs a specified mathematical operation on a provided expression and returns the result.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "operation",
+                    "type": "STRING",
+                    "description": "The math operation to perform."
+                },
+                {
+                    "name": "expression",
+                    "type": "STRING",
+                    "description": "The URL-encoded math expression to calculate."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nbase_url = \"https://newton.now.sh/api/v2\"\noperation = \"simplify\"\nexpression = \"2%5E2%2B2%282%29\"\nurl = f\"{base_url}/{operation}/{expression}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "operation": "string",
+                "expression": "string",
+                "result": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "operation": { "type": "string" },
+                    "expression": { "type": "string" },
+                    "result": { "type": "string" }
+                }
+            }
+        }
+    ]
+}
+```

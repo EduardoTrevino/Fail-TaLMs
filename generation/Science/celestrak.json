@@ -1,0 +1,147 @@
+{
+    "tool_name": "celestrak",
+    "tool_description": "API to query GP data from Celestrak for satellite tracking using various formats like TLE, XML, JSON, etc.",
+    "title": "Celestrak General Perturbations (GP) Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://celestrak.org/",
+    "host": "celestrak.org",
+    "api_list": [
+        {
+            "name": "query_by_catnr",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using Catalog Number (CATNR).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "CATNR",
+                    "type": "STRING",
+                    "description": "Catalog number for the satellite."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_intdes",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using International Designator (INTDES).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "INTDES",
+                    "type": "STRING",
+                    "description": "International Designator for the launch."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_group",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using groups of satellites.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "GROUP",
+                    "type": "STRING",
+                    "description": "Group name for the satellites."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_name",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using satellite name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "NAME",
+                    "type": "STRING",
+                    "description": "Satellite Name."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_special",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using special datasets.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "SPECIAL",
+                    "type": "STRING",
+                    "description": "Special dataset identifier."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        }
+    ]
+}

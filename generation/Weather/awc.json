@@ -1,0 +1,122 @@
+{
+    "tool_name": "awc",
+    "tool_description": "API that provides machine-to-machine access to aviation weather information, supporting real-time aviation safety decision-making.",
+    "title": "Aviation Weather Center Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://aviationweather.gov",
+    "host": "aviationweather.gov",
+    "api_list": [
+        {
+            "name": "get_metar",
+            "url": "https://aviationweather.gov/api/data/metar",
+            "description": "Fetches decoded aviation weather observations (METAR).",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Station ID(s).", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "taf", "type": "BOOLEAN", "description": "Include TAF information with the METAR.", "default": false},
+                {"name": "hours", "type": "NUMBER", "description": "Hours back to search.", "default": 1},
+                {"name": "bbox", "type": "STRING", "description": "Geographic bounding box.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specific date to fetch records for.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_taf",
+            "url": "https://aviationweather.gov/api/data/taf",
+            "description": "Retrieves Terminal Aerodrome Forecast products (TAF).",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Station ID(s).", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "metar", "type": "BOOLEAN", "description": "Include METAR with the TAF.", "default": false},
+                {"name": "bbox", "type": "STRING", "description": "Geographic bounding box.", "default": null},
+                {"name": "time", "type": "STRING", "description": "Process time by valid (default) or issuance time.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Fetch records for a specific date.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_pirep",
+            "url": "https://aviationweather.gov/api/data/pirep",
+            "description": "Gets Pilot Reports issued in PIREP or AIREP format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "id", "type": "STRING", "description": "Station ID.", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format. Available value: raw", "default": "raw"},
+                {"name": "age", "type": "NUMBER", "description": "Hours back to search.", "default": 1},
+                {"name": "distance", "type": "NUMBER", "description": "Distance", "default": 0},
+                {"name": "level", "type": "NUMBER", "description": "Level +-3000' to search", "default": 0},
+                {"name": "inten", "type": "STRING", "description": "Minimum intensity.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specify the date.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_airsigmet",
+            "url": "https://aviationweather.gov/api/data/airsigmet",
+            "description": "Fetches AIRMETs and SIGMETs in decoded format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "type", "type": "STRING", "description": "Product type", "default": null},
+                {"name": "hazard", "type": "STRING", "description": "Hazard type", "default": null},
+                {"name": "level", "type": "NUMBER", "description": "The level +-3000' to search", "default": 0},
+                {"name": "date", "type": "STRING", "description": "Specify the date", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        }
+        // Other entries omitted for brevity
+    ]
+}

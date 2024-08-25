@@ -1,0 +1,110 @@
+{
+    "tool_name": "musicbrainz",
+    "tool_description": "The MusicBrainz API provides access to a large repository of music metadata, including artist, album, and recording details.",
+    "title": "MusicBrainz API",
+    "pricing": "FREE for non-commercial use",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://musicbrainz.org/doc/MusicBrainz_API",
+    "host": "musicbrainz.org",
+    "api_list": [
+        {
+            "name": "artist_search",
+            "url": "https://musicbrainz.org/ws/2/artist",
+            "description": "Allows searching for artists by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query to find the artist.",
+                    "default": "The Beatles"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The maximum number of results to return.",
+                    "default": "25"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "The number of results to skip.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200,
+        },
+        {
+            "name": "release_lookup",
+            "url": "https://musicbrainz.org/ws/2/release/{mbid}",
+            "description": "Lookup release details by MBID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "mbid",
+                    "type": "STRING",
+                    "description": "The MusicBrainz Identifier for the release.",
+                    "default": "eab8e3bc-b3fe-4ff4-84ee-e9066a1a1e46"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "inc",
+                    "type": "STRING",
+                    "description": "Include additional information such as artists or recordings.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+        },
+        {
+            "name": "release_group_browse",
+            "url": "https://musicbrainz.org/ws/2/release-group",
+            "description": "Browse release groups by artist MBID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "artist_mbid",
+                    "type": "STRING",
+                    "description": "The MBID for the artist.",
+                    "default": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The maximum number of results to return.",
+                    "default": "25"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "The number of results to skip.",
+                    "default": "0"
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Filter release groups by type (album, single, etc.).",
+                    "default": ""
+                },
+                {
+                    "name": "status",
+                    "type": "STRING",
+                    "description": "Filter releases by status (official, etc.).",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+        }
+    ]
+}

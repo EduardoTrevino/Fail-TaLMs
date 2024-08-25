@@ -1,0 +1,97 @@
+{
+    "tool_name": "itis",
+    "tool_description": "The Integrated Taxonomic Information System provides taxonomic and nomenclatural data.",
+    "title": "Integrated Taxonomic Information System API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 85,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.9,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.itis.gov",
+    "host": "www.itis.gov",
+    "api_list": [
+        {
+            "name": "search_for_any_match",
+            "url": "http://www.itis.gov/ITISWebService/services/ITISService/searchForAnyMatch",
+            "description": "Returns matches by comparing the search key to ITIS names and TSNs.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "srchKey",
+                    "type": "STRING",
+                    "description": "The search key for matching."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_for_any_match_paged",
+            "url": "http://www.itis.gov/ITISWebService/services/ITISService/searchForAnyMatchPaged",
+            "description": "Returns paginated matches by comparing the search key to ITIS names and TSNs.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "srchKey",
+                    "type": "STRING",
+                    "description": "The search key for matching."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "pageSize",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "100"
+                },
+                {
+                    "name": "pageNum",
+                    "type": "INTEGER",
+                    "description": "Page number to retrieve.",
+                    "default": "1"
+                },
+                {
+                    "name": "ascend",
+                    "type": "BOOLEAN",
+                    "description": "Sort order.",
+                    "default": "true"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_any_match_count",
+            "url": "http://www.itis.gov/ITISWebService/services/ITISService/getAnyMatchCount",
+            "description": "Returns a count of the matches for the search key from ITIS names and TSNs.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "srchKey",
+                    "type": "STRING",
+                    "description": "The search key for counting."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_by_common_name",
+            "url": "http://www.itis.gov/ITISWebService/services/ITISService/searchByCommonName",
+            "description": "Finds matches by comparing the search key to the ITIS common names.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "srchKey",
+                    "type": "STRING",
+                    "description": "The common name to search."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        }
+        // Further endpoints can be documented in a similar manner once implemented.
+    ]
+}

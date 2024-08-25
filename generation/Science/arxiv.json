@@ -1,0 +1,84 @@
+{
+    "tool_name": "arxiv",
+    "tool_description": "The arXiv API allows programmatic access to e-prints hosted on arXiv.org.",
+    "title": "arXiv API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 200,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.3,
+        "__typename": "Score"
+    },
+    "home_url": "http://arxiv.org",
+    "host": "export.arxiv.org",
+    "api_list": [
+        {
+            "name": "query_arxiv",
+            "url": "http://export.arxiv.org/api/query",
+            "description": "Query interface for searching arXiv articles.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "search_query",
+                    "type": "STRING",
+                    "description": "Search terms used for the query.",
+                    "default": null
+                },
+                {
+                    "name": "id_list",
+                    "type": "LIST",
+                    "description": "List of arXiv article IDs for the query.",
+                    "default": null
+                },
+                {
+                    "name": "start",
+                    "type": "INTEGER",
+                    "description": "Index of the first returned result.",
+                    "default": "0"
+                },
+                {
+                    "name": "max_results",
+                    "type": "INTEGER",
+                    "description": "Maximum number of results to return.",
+                    "default": "10"
+                },
+                {
+                    "name": "sort_by",
+                    "type": "STRING",
+                    "description": "Sorting criteria for results.",
+                    "default": null
+                },
+                {
+                    "name": "sort_order",
+                    "type": "STRING",
+                    "description": "Sorting order (ascending/descending).",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://export.arxiv.org/api/query'\nparams = {'search_query': search_query, 'id_list': ','.join(id_list), 'start': start, 'max_results': max_results, 'sortBy': sort_by, 'sortOrder': sort_order}\nresponse = requests.get(url, params=params)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "feed": {
+                    "title": "str",
+                    "id": "str",
+                    "updated": "str",
+                    "opensearch:totalResults": "int",
+                    "opensearch:startIndex": "int",
+                    "opensearch:itemsPerPage": "int",
+                    "entry": {
+                        "id": "str",
+                        "updated": "str",
+                        "published": "str",
+                        "summary": "str",
+                        "author": "dict",
+                        "category": "list",
+                        "arxiv:primary_category": "dict"
+                    }
+                }
+            },
+            "headers": {}
+        }
+    ]
+}

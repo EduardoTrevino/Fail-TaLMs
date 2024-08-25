@@ -1,0 +1,380 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List, Dict, Any
+
+def view_basic_access(uuid: str, view_type: Optional[str] = 'records', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Returns iDigBio record format from legacy API.
+    Parameters:
+    uuid [Required]: string [Description: The unique identifier for the record.]
+    view_type [Optional]: string [Description: The type of object to view. Default is 'records'.]
+    """
+    url = f"https://search.idigbio.org/v2/view/{view_type}/{uuid}"
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_records(rq: Optional[Dict] = None, sort: Optional[str] = None, fields: Optional[List[str]] = None, 
+                   fields_exclude: Optional[List[str]] = None, limit: Optional[int] = 10, offset: Optional[int] = 0,
+                   no_attribution: Optional[bool] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Searches for record objects.
+    Parameters:
+    rq [Optional]: dict [Description: Search Query in iDigBio Query Format.]
+    sort [Optional]: string [Description: Field to sort on.]
+    fields [Optional]: List of string [Description: List of fields to return.]
+    fields_exclude [Optional]: List of string [Description: List of fields to exclude.]
+    limit [Optional]: integer [Description: Max results.]
+    offset [Optional]: integer [Description: Skip results.]
+    no_attribution [Optional]: boolean [Description: Disable the attribution block.]
+    """
+    url = "https://search.idigbio.org/v2/search/records/"
+    params = {
+        'rq': rq, 
+        'sort': sort, 
+        'fields': fields, 
+        'fields_exclude': fields_exclude, 
+        'limit': limit, 
+        'offset': offset, 
+        'no_attribution': no_attribution
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers={'Content-Type': 'application/json'})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_media(mq: Optional[Dict] = None, rq: Optional[Dict] = None, sort: Optional[str] = None, fields: Optional[List[str]] = None, 
+                 fields_exclude: Optional[List[str]] = None, limit: Optional[int] = 10, offset: Optional[int] = 0,
+                 no_attribution: Optional[bool] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Searches for mediarecord objects.
+    Parameters:
+    mq [Optional]: dict [Description: Media Query in iDigBio Query Format.]
+    rq [Optional]: dict [Description: Record Query in iDigBio Query Format.]
+    sort [Optional]: string [Description: Field to sort on.]
+    fields [Optional]: List of string [Description: List of fields to return.]
+    fields_exclude [Optional]: List of string [Description: List of fields to exclude.]
+    limit [Optional]: integer [Description: Max results.]
+    offset [Optional]: integer [Description: Skip results.]
+    no_attribution [Optional]: boolean [Description: Disable the attribution block.]
+    """
+    url = "https://search.idigbio.org/v2/search/media/"
+    params = {
+        'mq': mq, 
+        'rq': rq, 
+        'sort': sort, 
+        'fields': fields, 
+        'fields_exclude': fields_exclude, 
+        'limit': limit, 
+        'offset': offset, 
+        'no_attribution': no_attribution
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers={'Content-Type': 'application/json'})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_recordsets(rsq: Optional[Dict] = None, sort: Optional[str] = None, fields: Optional[List[str]] = None, 
+                      fields_exclude: Optional[List[str]] = None, limit: Optional[int] = 10, offset: Optional[int] = 0,
+                      toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Searches for recordset objects.
+    Parameters:
+    rsq [Optional]: dict [Description: Recordset Query in iDigBio Query Format.]
+    sort [Optional]: string [Description: Field to sort on.]
+    fields [Optional]: List of string [Description: List of fields to return.]
+    fields_exclude [Optional]: List of string [Description: List of fields to exclude.]
+    limit [Optional]: integer [Description: Max results.]
+    offset [Optional]: integer [Description: Skip results.]
+    """
+    url = "https://search.idigbio.org/v2/search/recordsets/"
+    params = {
+        'rsq': rsq, 
+        'sort': sort, 
+        'fields': fields, 
+        'fields_exclude': fields_exclude, 
+        'limit': limit, 
+        'offset': offset
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers={'Content-Type': 'application/json'})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def create_map(rq: Optional[Dict] = None, style: Optional[Dict] = None, map_type: Optional[str] = 'geohash',
+               toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Creates a map with iDigBio data.
+    Parameters:
+    rq [Optional]: dict [Description: Record Query in iDigBio Query Format.]
+    style [Optional]: dict [Description: JSON dictionary describing map style.]
+    map_type [Optional]: string [Description: 'geohash' or 'points'. Default is 'geohash'.]
+    """
+    url = "https://search.idigbio.org/v2/mapping/"
+    data = {
+        'rq': rq, 
+        'style': style, 
+        'type': map_type
+    }
+    response = requests.post(url, json={k: v for k, v in data.items() if v is not None}, headers={'Content-Type': 'application/json'})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import view_basic_access, search_records, search_media, search_recordsets, create_map
+
+class TestIdigibioAPI(unittest.TestCase):
+
+    def test_view_basic_access(self):
+        response = view_basic_access(uuid='c5e7b8fe-7f33-404e-96cc-35a201a4b1d9')
+        self.assertIn('uuid', response)
+    
+    def test_search_records(self):
+        response = search_records(rq={"data.dwc:kingdom": "Animalia"}, limit=1)
+        self.assertEqual(response['itemCount'], 1)
+    
+    def test_search_media(self):
+        response = search_media(mq={"data.dwc:kingdom": "Animalia"}, limit=1)
+        self.assertEqual(response['itemCount'], 1)
+    
+    def test_search_recordsets(self):
+        response = search_recordsets(rsq={"uuid": "137ed4cd-5172-45a5-acdb-8e1de9a64e32"}, limit=1)
+        self.assertEqual(response['itemCount'], 1)
+    
+    def test_create_map(self):
+        response = create_map(rq={"data.dwc:kingdom": "Animalia"})
+        self.assertIn('mapShortCode', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### idigibio.json**
+
+```json
+{
+    "tool_name": "idigibio",
+    "tool_description": "API to access iDigBio data, including records and media related to biodiversity.",
+    "title": "iDigBio API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.idigbio.org/docs/",
+    "host": "search.idigbio.org",
+    "api_list": [
+        {
+            "name": "view_basic_access",
+            "url": "https://search.idigbio.org/v2/view/{type}/{uuid}",
+            "description": "Returns iDigBio record format from legacy API.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uuid",
+                    "type": "STRING",
+                    "description": "The unique identifier for the record."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "view_type",
+                    "type": "STRING",
+                    "description": "The type of object to view.",
+                    "default": "records"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "search_records",
+            "url": "https://search.idigbio.org/v2/search/records/",
+            "description": "Searches for record objects.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "rq",
+                    "type": "DICT",
+                    "description": "Search Query in iDigBio Query Format."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field to sort on."
+                },
+                {
+                    "name": "fields",
+                    "type": "LIST",
+                    "description": "List of fields to return."
+                },
+                {
+                    "name": "fields_exclude",
+                    "type": "LIST",
+                    "description": "List of fields to exclude."
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Max results.",
+                    "default": 10
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Skip results.",
+                    "default": 0
+                },
+                {
+                    "name": "no_attribution",
+                    "type": "BOOLEAN",
+                    "description": "Disable the attribution block."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "search_media",
+            "url": "https://search.idigbio.org/v2/search/media/",
+            "description": "Searches for mediarecord objects.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "mq",
+                    "type": "DICT",
+                    "description": "Media Query in iDigBio Query Format."
+                },
+                {
+                    "name": "rq",
+                    "type": "DICT",
+                    "description": "Record Query in iDigBio Query Format."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field to sort on."
+                },
+                {
+                    "name": "fields",
+                    "type": "LIST",
+                    "description": "List of fields to return."
+                },
+                {
+                    "name": "fields_exclude",
+                    "type": "LIST",
+                    "description": "List of fields to exclude."
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Max results.",
+                    "default": 10
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Skip results.",
+                    "default": 0
+                },
+                {
+                    "name": "no_attribution",
+                    "type": "BOOLEAN",
+                    "description": "Disable the attribution block."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "search_recordsets",
+            "url": "https://search.idigbio.org/v2/search/recordsets/",
+            "description": "Searches for recordset objects.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "rsq",
+                    "type": "DICT",
+                    "description": "Recordset Query in iDigBio Query Format."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field to sort on."
+                },
+                {
+                    "name": "fields",
+                    "type": "LIST",
+                    "description": "List of fields to return."
+                },
+                {
+                    "name": "fields_exclude",
+                    "type": "LIST",
+                    "description": "List of fields to exclude."
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Max results.",
+                    "default": 10
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Skip results.",
+                    "default": 0
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "create_map",
+            "url": "https://search.idigbio.org/v2/mapping/",
+            "description": "Creates a map with iDigBio data.",
+            "method": "POST",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "rq",
+                    "type": "DICT",
+                    "description": "Record Query in iDigBio Query Format."
+                },
+                {
+                    "name": "style",
+                    "type": "DICT",
+                    "description": "JSON dictionary describing map style."
+                },
+                {
+                    "name": "map_type",
+                    "type": "STRING",
+                    "description": "'geohash' or 'points'",
+                    "default": "geohash"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

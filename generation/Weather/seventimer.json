@@ -1,0 +1,110 @@
+{
+    "tool_name": "seventimer",
+    "tool_description": "7Timer! provides a series of meteorological forecast products including graphical and machine-readable APIs for various user needs such as civil, astronomy, and meteorology.",
+    "title": "7Timer! Weather Forecast API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "http://www.7timer.info/",
+    "host": "www.7timer.info",
+    "api_list": [
+        {
+            "name": "get_graphical_forecast",
+            "url": "http://www.7timer.info/bin/astro.php",
+            "description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location"
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "ac",
+                    "type": "INTEGER",
+                    "description": "Altitude Correction, applicable in ASTRO",
+                    "default": "0"
+                },
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Language",
+                    "default": "en"
+                },
+                {
+                    "name": "unit",
+                    "type": "STRING",
+                    "description": "Unit system, either 'metric' or 'british'",
+                    "default": "metric"
+                },
+                {
+                    "name": "output",
+                    "type": "STRING",
+                    "description": "Output format, 'internal' for graphical",
+                    "default": "internal"
+                },
+                {
+                    "name": "tzshift",
+                    "type": "INTEGER",
+                    "description": "Timezone adjustment",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200,
+            "body": "Binary content of a PNG image",
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_machine_readable_forecast",
+            "url": "http://www.7timer.info/bin/api.pl",
+            "description": "Retrieves machine-readable weather forecast data for a specified location.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location"
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "product",
+                    "type": "STRING",
+                    "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                    "default": "astro"
+                },
+                {
+                    "name": "output",
+                    "type": "STRING",
+                    "description": "Output format ('xml' or 'json')",
+                    "default": "json"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "format": "json or xml",
+                "content": "Weather forecast data"
+            },
+            "headers": {},
+            "schema": {}
+        }
+    ]
+}

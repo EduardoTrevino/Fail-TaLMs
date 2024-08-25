@@ -1,0 +1,63 @@
+{
+    "tool_name": "mbta",
+    "tool_description": "API to access MBTA schedules, alerts, facilities and real-time information.",
+    "title": "MBTA V3 API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api-v3.mbta.com",
+    "host": "api-v3.mbta.com",
+    "api_list": [
+        {
+            "name": "get_alerts",
+            "url": "https://api-v3.mbta.com/alerts",
+            "description": "List active and upcoming system alerts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_activity",
+                    "type": "STRING",
+                    "description": "Filter to alerts for only those activities matching. Special value 'ALL' to return all alerts."
+                },
+                {
+                    "name": "filter_route",
+                    "type": "STRING",
+                    "description": "Filter by route id."
+                }
+                ...
+            ],
+            "statuscode": 200,
+            "body": {
+                "links": {
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string",
+                    "last": "string",
+                    "first": "string"
+                },
+                "data": [
+                    {
+                        "type": "alert",
+                        "id": "string",
+                        "attributes": {
+                            "effect": "string",
+                            "header": "string",
+                            "description": "string",
+                            "severity": 1
+                        }
+                    }
+                ]
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        }
+        // Additional endpoint metadata here
+    ]
+}

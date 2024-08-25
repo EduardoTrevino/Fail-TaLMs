@@ -1,0 +1,203 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_graphical_forecast(lon: float, lat: float, ac: int = 0, lang: str = 'en', unit: str = 'metric', output: str = 'internal', tzshift: int = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves an image-based weather forecast for a specified location using the graphical API.
+    
+    Parameters:
+    - lon: Longitude of the location (float, required)
+    - lat: Latitude of the location (float, required)
+    - ac: Altitude Correction, applicable in ASTRO (int, optional, default 0)
+    - lang: Language (str, optional, default 'en')
+    - unit: Unit system, either 'metric' or 'british' (str, optional, default 'metric')
+    - output: Output format, either 'internal' for graphical (str, optional, default 'internal')
+    - tzshift: Timezone adjustment (int, optional, default 0)
+
+    Returns:
+    - Binary content of the PNG image
+    """
+    url = "http://www.7timer.info/bin/astro.php"
+    params = {
+        'lon': lon,
+        'lat': lat,
+        'ac': ac,
+        'lang': lang,
+        'unit': unit,
+        'output': output,
+        'tzshift': tzshift
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+def get_machine_readable_forecast(lon: float, lat: float, product: str = 'astro', output: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves machine-readable weather forecast data for a specified location.
+    
+    Parameters:
+    - lon: Longitude of the location (float, required)
+    - lat: Latitude of the location (float, required)
+    - product: Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two') (str, optional, default 'astro')
+    - output: Output format ('xml' or 'json') (str, optional, default 'json')
+
+    Returns:
+    - JSON or XML formatted weather data
+    """
+    url = "http://www.7timer.info/bin/api.pl"
+    params = {
+        'lon': lon,
+        'lat': lat,
+        'product': product,
+        'output': output
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json() if output == 'json' else response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_graphical_forecast, get_machine_readable_forecast
+
+class TestSevenTimerAPI(unittest.TestCase):
+
+    def test_get_graphical_forecast(self):
+        # Test with a known location for graphical forecast
+        response = get_graphical_forecast(lon=113.17, lat=23.09)
+        self.assertEqual(response[:8], b'\x89PNG\r\n\x1a\n')  # PNG files start with this signature
+
+    def test_get_machine_readable_forecast_json(self):
+        # Test with a known location for machine-readable forecast in JSON
+        response = get_machine_readable_forecast(lon=113.17, lat=23.09, output='json')
+        self.assertIn('dataseries', response)  # Expecting 'dataseries' key in JSON response
+
+    def test_get_machine_readable_forecast_xml(self):
+        # Test with a known location for machine-readable forecast in XML
+        response = get_machine_readable_forecast(lon=113.17, lat=23.09, output='xml')
+        self.assertTrue(response.startswith('<?xml'))
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### seventimer.json**
+
+```json
+{
+    "tool_name": "seventimer",
+    "tool_description": "7Timer! provides a series of meteorological forecast products including graphical and machine-readable APIs for various user needs such as civil, astronomy, and meteorology.",
+    "title": "7Timer! Weather Forecast API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "http://www.7timer.info/",
+    "host": "www.7timer.info",
+    "api_list": [
+        {
+            "name": "get_graphical_forecast",
+            "url": "http://www.7timer.info/bin/astro.php",
+            "description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location"
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "ac",
+                    "type": "INTEGER",
+                    "description": "Altitude Correction, applicable in ASTRO",
+                    "default": "0"
+                },
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Language",
+                    "default": "en"
+                },
+                {
+                    "name": "unit",
+                    "type": "STRING",
+                    "description": "Unit system, either 'metric' or 'british'",
+                    "default": "metric"
+                },
+                {
+                    "name": "output",
+                    "type": "STRING",
+                    "description": "Output format, 'internal' for graphical",
+                    "default": "internal"
+                },
+                {
+                    "name": "tzshift",
+                    "type": "INTEGER",
+                    "description": "Timezone adjustment",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200,
+            "body": "Binary content of a PNG image",
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_machine_readable_forecast",
+            "url": "http://www.7timer.info/bin/api.pl",
+            "description": "Retrieves machine-readable weather forecast data for a specified location.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location"
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "product",
+                    "type": "STRING",
+                    "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                    "default": "astro"
+                },
+                {
+                    "name": "output",
+                    "type": "STRING",
+                    "description": "Output format ('xml' or 'json')",
+                    "default": "json"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "format": "json or xml",
+                "content": "Weather forecast data"
+            },
+            "headers": {},
+            "schema": {}
+        }
+    ]
+}
+```

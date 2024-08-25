@@ -1,0 +1,288 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+BASE_URL = "https://celestrak.org/NORAD/elements/gp.php"
+
+def query_by_catnr(catnr: str, format: Optional[str] = 'TLE', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Query the Celestrak GP Data using the Catalog Number (CATNR).
+
+    Parameters:
+    - catnr (str): Catalog number. Allows return of data for a single catalog number.
+    - format (Optional[str]): Format of data. Defaults to 'TLE'. Options: 'TLE', '3LE', '2LE', 'XML', 'KVN', 'JSON', 'JSON-PRETTY', 'CSV'.
+    """
+    url = BASE_URL
+    params = {
+        'CATNR': catnr,
+        'FORMAT': format
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def query_by_intdes(intdes: str, format: Optional[str] = 'TLE', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Query the Celestrak GP Data using International Designator (INTDES).
+
+    Parameters:
+    - intdes (str): International Designator (yyyy-nnn). Allows return of data for all objects associated with a particular launch.
+    - format (Optional[str]): Format of data. Defaults to 'TLE'. Options: 'TLE', '3LE', '2LE', 'XML', 'KVN', 'JSON', 'JSON-PRETTY', 'CSV'.
+    """
+    url = BASE_URL
+    params = {
+        'INTDES': intdes,
+        'FORMAT': format
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def query_by_group(group: str, format: Optional[str] = 'TLE', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Query the Celestrak GP Data using Groups of Satellites.
+
+    Parameters:
+    - group (str): Groups of satellites provided on the CelesTrak Current Data page.
+    - format (Optional[str]): Format of data. Defaults to 'TLE'. Options: 'TLE', '3LE', '2LE', 'XML', 'KVN', 'JSON', 'JSON-PRETTY', 'CSV'.
+    """
+    url = BASE_URL
+    params = {
+        'GROUP': group,
+        'FORMAT': format
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def query_by_name(name: str, format: Optional[str] = 'TLE', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Query the Celestrak GP Data using Satellite Name.
+
+    Parameters:
+    - name (str): Satellite Name. Allows searching for satellites by parts of their name.
+    - format (Optional[str]): Format of data. Defaults to 'TLE'. Options: 'TLE', '3LE', '2LE', 'XML', 'KVN', 'JSON', 'JSON-PRETTY', 'CSV'.
+    """
+    url = BASE_URL
+    params = {
+        'NAME': name,
+        'FORMAT': format
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def query_by_special(special: str, format: Optional[str] = 'TLE', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Query the Celestrak GP Data using Special datasets.
+
+    Parameters:
+    - special (str): Special data sets for the GEO Protected Zone (GPZ) or GPZ Plus.
+    - format (Optional[str]): Format of data. Defaults to 'TLE'. Options: 'TLE', '3LE', '2LE', 'XML', 'KVN', 'JSON', 'JSON-PRETTY', 'CSV'.
+    """
+    url = BASE_URL
+    params = {
+        'SPECIAL': special,
+        'FORMAT': format
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import query_by_catnr, query_by_intdes, query_by_group, query_by_name, query_by_special
+
+class TestCelestrakAPI(unittest.TestCase):
+
+    def test_query_by_catnr(self):
+        result = query_by_catnr(catnr="25544", format="JSON")
+        self.assertIsInstance(result, dict)
+
+    def test_query_by_intdes(self):
+        result = query_by_intdes(intdes="2020-025", format="JSON")
+        self.assertIsInstance(result, dict)
+
+    def test_query_by_group(self):
+        result = query_by_group(group="STATIONS", format="XML")
+        self.assertIsInstance(result, str)
+        self.assertTrue(result.startswith('<?xml'))
+
+    def test_query_by_name(self):
+        result = query_by_name(name="MICROSAT-R", format="JSON")
+        self.assertIsInstance(result, dict)
+
+    def test_query_by_special(self):
+        result = query_by_special(special="gpz", format="CSV")
+        self.assertIsInstance(result, str)
+        self.assertTrue(result.startswith('OMM,OBJECT_NAME'))
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### celestrak.json
+```json
+{
+    "tool_name": "celestrak",
+    "tool_description": "API to query GP data from Celestrak for satellite tracking using various formats like TLE, XML, JSON, etc.",
+    "title": "Celestrak General Perturbations (GP) Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://celestrak.org/",
+    "host": "celestrak.org",
+    "api_list": [
+        {
+            "name": "query_by_catnr",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using Catalog Number (CATNR).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "CATNR",
+                    "type": "STRING",
+                    "description": "Catalog number for the satellite."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_intdes",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using International Designator (INTDES).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "INTDES",
+                    "type": "STRING",
+                    "description": "International Designator for the launch."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_group",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using groups of satellites.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "GROUP",
+                    "type": "STRING",
+                    "description": "Group name for the satellites."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_name",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using satellite name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "NAME",
+                    "type": "STRING",
+                    "description": "Satellite Name."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        },
+        {
+            "name": "query_by_special",
+            "url": "https://celestrak.org/NORAD/elements/gp.php",
+            "description": "Query GP data using special datasets.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "SPECIAL",
+                    "type": "STRING",
+                    "description": "Special dataset identifier."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "FORMAT",
+                    "type": "STRING",
+                    "description": "Format of data. Defaults to 'TLE'.",
+                    "default": "TLE"
+                }
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "string or object",
+                "description": "Responds with requested data in the specified format."
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,113 @@
+{
+    "tool_name": "irail",
+    "tool_description": "API to access railway time schedules in Belgium, including stations, liveboards, connections, vehicles, disturbances, and more.",
+    "title": "iRail API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.irail.be",
+    "host": "api.irail.be",
+    "api_list": [
+        {
+            "name": "stations",
+            "url": "https://api.irail.be/stations/",
+            "description": "Retrieve a list of all stations.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "liveboard",
+            "url": "https://api.irail.be/liveboard/",
+            "description": "Retrieve liveboard for a station including arrivals and departures.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "station", "type": "STRING", "description": "Station name"}
+            ],
+            "optional_parameters": [
+                {"name": "id", "type": "STRING", "description": "Station ID"},
+                {"name": "date", "type": "STRING", "description": "Date for query"},
+                {"name": "time", "type": "STRING", "description": "Time for query"},
+                {"name": "arrdep", "type": "STRING", "description": "Arrivals or departures", "default": "departure"},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"},
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "alerts", "type": "BOOLEAN", "description": "Include alerts", "default": "false"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "connections",
+            "url": "https://api.irail.be/connections/",
+            "description": "Get routes between two stations.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "from", "type": "STRING", "description": "Departure station"},
+                {"name": "to", "type": "STRING", "description": "Destination station"}
+            ],
+            "optional_parameters": [
+                {"name": "date", "type": "STRING", "description": "Date for query"},
+                {"name": "time", "type": "STRING", "description": "Time for query"},
+                {"name": "timesel", "type": "STRING", "description": "Arrivals or departures", "default": "departure"},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"},
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "typeOfTransport", "type": "STRING", "description": "Type of transport", "default": "automatic"},
+                {"name": "alerts", "type": "BOOLEAN", "description": "Include alerts", "default": "false"},
+                {"name": "results", "type": "INTEGER", "description": "Number of results", "default": 6}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "vehicle",
+            "url": "https://api.irail.be/vehicle/",
+            "description": "Retrieve information about a vehicle.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "STRING", "description": "Vehicle ID"}
+            ],
+            "optional_parameters": [
+                {"name": "date", "type": "STRING", "description": "Date for query"},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"},
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "alerts", "type": "BOOLEAN", "description": "Include alerts", "default": "false"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "composition",
+            "url": "https://api.irail.be/composition/",
+            "description": "Retrieve the composition of a train.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "STRING", "description": "Train ID"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "data", "type": "STRING", "description": "Raw or filtered data", "default": ""},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"}
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "disturbances",
+            "url": "https://api.irail.be/disturbances/",
+            "description": "Retrieve information about current disturbances.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lineBreakCharacter", "type": "STRING", "description": "Line break character", "default": ""},
+                {"name": "lang", "type": "STRING", "description": "Language of response", "default": "en"}
+            ],
+            "statuscode": 200
+        }
+    ]
+}

@@ -1,0 +1,266 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict
+
+
+BASE_URL = "https://api-v3.mbta.com"
+
+
+def get_alerts(
+    filter_activity: Optional[str] = None,
+    filter_route_type: Optional[str] = None,
+    filter_direction_id: Optional[str] = None,
+    filter_route: Optional[str] = None,
+    filter_stop: Optional[str] = None,
+    filter_trip: Optional[str] = None,
+    filter_facility: Optional[str] = None,
+    filter_id: Optional[str] = None,
+    filter_banner: Optional[str] = None,
+    filter_datetime: Optional[str] = None,
+    filter_lifecycle: Optional[str] = None,
+    filter_severity: Optional[str] = None,
+    page_offset: Optional[int] = None,
+    page_limit: Optional[int] = None,
+    sort: Optional[str] = None,
+    fields_alert: Optional[str] = None,
+    include: Optional[str] = None,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict:
+    url = f"{BASE_URL}/alerts"
+    params = {
+        "filter[activity]": filter_activity,
+        "filter[route_type]": filter_route_type,
+        "filter[direction_id]": filter_direction_id,
+        "filter[route]": filter_route,
+        "filter[stop]": filter_stop,
+        "filter[trip]": filter_trip,
+        "filter[facility]": filter_facility,
+        "filter[id]": filter_id,
+        "filter[banner]": filter_banner,
+        "filter[datetime]": filter_datetime,
+        "filter[lifecycle]": filter_lifecycle,
+        "filter[severity]": filter_severity,
+        "page[offset]": page_offset,
+        "page[limit]": page_limit,
+        "sort": sort,
+        "fields[alert]": fields_alert,
+        "include": include
+    }
+    headers = {
+        'x-api-key': toolbench_rapidapi_key  # Assumes the API requires this key
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_alert_detail(alert_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Get details of a specific alert by ID.
+    """
+    url = f"{BASE_URL}/alerts/{alert_id}"
+    headers = {
+        'x-api-key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_facilities(
+    filter_type: Optional[str] = None,
+    filter_stop: Optional[str] = None,
+    page_offset: Optional[int] = None,
+    page_limit: Optional[int] = None,
+    sort: Optional[str] = None,
+    fields_facility: Optional[str] = None,
+    include: Optional[str] = None,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict:
+    url = f"{BASE_URL}/facilities"
+    params = {
+        "filter[type]": filter_type,
+        "filter[stop]": filter_stop,
+        "page[offset]": page_offset,
+        "page[limit]": page_limit,
+        "sort": sort,
+        "fields[facility]": fields_facility,
+        "include": include
+    }
+    headers = {
+        'x-api-key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_facility_detail(facility_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Get details of a specific facility by ID.
+    """
+    url = f"{BASE_URL}/facilities/{facility_id}"
+    headers = {
+        'x-api-key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_lines(
+    filter_id: Optional[str] = None,
+    page_offset: Optional[int] = None,
+    page_limit: Optional[int] = None,
+    sort: Optional[str] = None,
+    fields_line: Optional[str] = None,
+    include: Optional[str] = None,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict:
+    url = f"{BASE_URL}/lines"
+    params = {
+        "filter[id]": filter_id,
+        "page[offset]": page_offset,
+        "page[limit]": page_limit,
+        "sort": sort,
+        "fields[line]": fields_line,
+        "include": include
+    }
+    headers = {
+        'x-api-key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_line_detail(line_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Get details of a specific line by ID.
+    """
+    url = f"{BASE_URL}/lines/{line_id}"
+    headers = {
+        'x-api-key': toolbench_rapidapi_key
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+# Additional functions for other endpoints can be added here following the same structure
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_alerts, get_alert_detail, get_facilities, get_facility_detail, get_lines, get_line_detail
+
+class TestMBTAApi(unittest.TestCase):
+    
+    def test_get_alerts(self):
+        response = get_alerts()
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+
+    def test_get_alert_detail(self):
+        response = get_alert_detail("valid_alert_id")  # Use a valid alert ID for actual testing
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+    
+    def test_get_facilities(self):
+        response = get_facilities()
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+    
+    def test_get_facility_detail(self):
+        response = get_facility_detail("valid_facility_id")  # Use a valid facility ID for actual testing
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+    
+    def test_get_lines(self):
+        response = get_lines()
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+    
+    def test_get_line_detail(self):
+        response = get_line_detail("valid_line_id")  # Use a valid line ID for actual testing
+        self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
+
+# The unittest.main() entry point is typically used to run all tests
+# if __name__ == '__main__':
+#     unittest.main()
+```
+
+### mbta.json
+```json
+{
+    "tool_name": "mbta",
+    "tool_description": "API to access MBTA schedules, alerts, facilities and real-time information.",
+    "title": "MBTA V3 API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api-v3.mbta.com",
+    "host": "api-v3.mbta.com",
+    "api_list": [
+        {
+            "name": "get_alerts",
+            "url": "https://api-v3.mbta.com/alerts",
+            "description": "List active and upcoming system alerts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_activity",
+                    "type": "STRING",
+                    "description": "Filter to alerts for only those activities matching. Special value 'ALL' to return all alerts."
+                },
+                {
+                    "name": "filter_route",
+                    "type": "STRING",
+                    "description": "Filter by route id."
+                }
+                ...
+            ],
+            "statuscode": 200,
+            "body": {
+                "links": {
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string",
+                    "last": "string",
+                    "first": "string"
+                },
+                "data": [
+                    {
+                        "type": "alert",
+                        "id": "string",
+                        "attributes": {
+                            "effect": "string",
+                            "header": "string",
+                            "description": "string",
+                            "severity": 1
+                        }
+                    }
+                ]
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        }
+        // Additional endpoint metadata here
+    ]
+}
+```

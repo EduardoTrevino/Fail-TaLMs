@@ -1,0 +1,162 @@
+{
+    "tool_name": "carbonintensity",
+    "tool_description": "Official Carbon Intensity API for Great Britain provided by National Grid. Get access to forecast and estimated carbon intensity data, fuel generation mixes, and regional data.",
+    "title": "Carbon Intensity API for Great Britain",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://carbonintensity.org.uk/",
+    "host": "api.carbonintensity.org.uk",
+    "api_list": [
+        {
+            "name": "get_current_intensity",
+            "url": "https://api.carbonintensity.org.uk/intensity",
+            "description": "Get Carbon Intensity data for the current half hour.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/intensity\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "forecast": "number",
+                        "actual": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_intensity_by_date",
+            "url": "https://api.carbonintensity.org.uk/intensity/date/{date}",
+            "description": "Get Carbon Intensity data for a specific date.",
+            "method": "GET",
+            "required_parameters": [{"name": "date", "type": "STRING", "description": "Date in YYYY-MM-DD format"}],
+            "optional_parameters": [],
+            "code": "import requests\n\ndate = '2023-01-01'\nurl = f\"https://api.carbonintensity.org.uk/intensity/date/{date}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "forecast": "number",
+                        "actual": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_intensity_factors",
+            "url": "https://api.carbonintensity.org.uk/intensity/factors",
+            "description": "Get Carbon Intensity factors for each fuel type.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/intensity/factors\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "Biomass": "number",
+                    "Coal": "number",
+                    "Dutch Imports": "number",
+                    "French Imports": "number",
+                    "Gas (Combined Cycle)": "number",
+                    "Gas (Open Cycle)": "number",
+                    "Hydro": "number",
+                    "Irish Imports": "number",
+                    "Nuclear": "number",
+                    "Oil": "number",
+                    "Other": "number",
+                    "Pumped Storage": "number",
+                    "Solar": "number",
+                    "Wind": "number"
+                }
+            }
+        },
+        {
+            "name": "get_intensity_statistics",
+            "url": "https://api.carbonintensity.org.uk/intensity/stats/{from}/{to}",
+            "description": "Get Carbon Intensity statistics (average, max, min) between specified datetimes.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "from", "type": "STRING", "description": "Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ"},
+                {"name": "to", "type": "STRING", "description": "End datetime in ISO8601 format YYYY-MM-DDThh:mmZ"}
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nfrom_time = '2023-01-01T00:00Z'\nto_time = '2023-01-02T00:00Z'\nurl = f\"https://api.carbonintensity.org.uk/intensity/stats/{from_time}/{to_time}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "max": "number",
+                        "average": "number",
+                        "min": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_generation_mix_current",
+            "url": "https://api.carbonintensity.org.uk/generation",
+            "description": "Get generation mix for the current half hour.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/generation\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "generationmix": [
+                        {"fuel": "string", "perc": "number"}
+                    ]
+                }
+            }
+        },
+        {
+            "name": "get_regional_intensity",
+            "url": "https://api.carbonintensity.org.uk/regional",
+            "description": "Get Carbon Intensity data for current half hour for GB regions.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/regional\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "regions": [
+                        {
+                            "regionid": "number",
+                            "dnoregion": "string",
+                            "shortname": "string",
+                            "intensity": {"forecast": "number", "index": "string"},
+                            "generationmix": [{"fuel": "string", "perc": "number"}]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,159 @@
+### api.py
+```python
+import requests
+from typing import Optional, List, Dict
+
+# Define the API key as a parameter
+toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+def search_universities(name: str, country: Optional[str] = None, limit: Optional[int] = None, offset: Optional[int] = None) -> List[Dict]:
+    """
+    Search for universities by name and optionally filter by country.
+    Supports pagination with limit and offset.
+
+    Parameters:
+    - name (str): The name or part of the name of the university to search for.
+    - country (Optional[str]): The country to filter results by.
+    - limit (Optional[int]): A limit on the number of results to return.
+    - offset (Optional[int]): The number of results to skip.
+
+    Returns:
+    List[Dict]: A list of dictionaries containing university data.
+    """
+    url = "http://universities.hipolabs.com/search"
+    params = {
+        'name': name
+    }
+    if country:
+        params['country'] = country
+    if limit is not None:
+        params['limit'] = limit
+    if offset is not None:
+        params['offset'] = offset
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import search_universities
+
+class TestUniversitySearchAPI(unittest.TestCase):
+
+    def test_search_universities_by_name(self):
+        result = search_universities(name="Middle")
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+        self.assertIn("Middle", result[0]['name'])
+
+    def test_search_universities_by_name_and_country(self):
+        result = search_universities(name="Middle", country="Turkey")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['country'], "Turkey")
+        self.assertIn("Middle", result[0]['name'])
+
+    def test_search_universities_with_limit(self):
+        result = search_universities(name="Middle", limit=1)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 1)
+
+    def test_search_universities_with_offset(self):
+        initial_result = search_universities(name="Middle", limit=1)
+        offset_result = search_universities(name="Middle", offset=1, limit=1)
+        self.assertIsInstance(offset_result, list)
+        self.assertEqual(len(offset_result), 1)
+        self.assertNotEqual(initial_result[0]['name'], offset_result[0]['name'])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### universitysearch.json
+```json
+{
+    "tool_name": "universitysearch",
+    "tool_description": "API to access a list of university domains, names, and countries across the world.",
+    "title": "University Domains and Names API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://universities.hipolabs.com",
+    "host": "universities.hipolabs.com",
+    "api_list": [
+        {
+            "name": "search_universities",
+            "url": "http://universities.hipolabs.com/search",
+            "description": "Search for universities by name and filter by country with pagination capabilities.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The name or part of the name of the university to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "The country to filter results by."
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit on the number of results to return."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Number of results to skip for pagination."
+                }
+            ],
+            "response": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "web_pages": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "domains": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "country": {
+                            "type": "string"
+                        },
+                        "alpha_two_code": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        }
+    ]
+}
+```

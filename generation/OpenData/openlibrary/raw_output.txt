@@ -1,0 +1,292 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional, List, Dict
+
+def search_books(q: str, fields: Optional[str] = "*", sort: Optional[str] = None, lang: Optional[str] = None, page: Optional[int] = 1, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for books using Open Library Search API.
+    Parameters:
+    - q: Query string.
+    - fields: Fields to return. Default is all fields.
+    - sort: Sort the results by various facets.
+    - lang: Language code. Influences the result preference.
+    - page: Page number for pagination.
+    - limit: Number of results per page (page size).
+    """
+    url = "https://openlibrary.org/search.json"
+    params = {
+        'q': q,
+        'fields': fields,
+        'sort': sort,
+        'lang': lang,
+        'page': page,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_work_by_id(work_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a specific work by its Open Library work ID.
+    Parameters:
+    - work_id: Open Library Work ID.
+    """
+    url = f"https://openlibrary.org/works/{work_id}.json"
+    response = requests.get(url)
+    return response.json()
+
+def get_edition_by_id(edition_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a specific edition by its Open Library edition ID.
+    Parameters:
+    - edition_id: Open Library Edition ID.
+    """
+    url = f"https://openlibrary.org/books/{edition_id}.json"
+    response = requests.get(url)
+    return response.json()
+
+def get_author_by_id(author_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve author details and their works by author identifier.
+    Parameters:
+    - author_id: Open Library Author ID.
+    """
+    url = f"https://openlibrary.org/authors/{author_id}.json"
+    response = requests.get(url)
+    return response.json()
+
+def search_authors(q: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for authors using Open Library Authors API.
+    Parameters:
+    - q: Query string for author's name.
+    """
+    url = f"https://openlibrary.org/search/authors.json"
+    params = {'q': q}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_subject_works(subject_name: str, details: Optional[bool] = False, limit: Optional[int] = 10, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch works under a specific subject.
+    Parameters:
+    - subject_name: Name of the subject.
+    - details: Whether to fetch detailed information.
+    - limit: Number of works to include in the response.
+    - offset: Starting offset for pagination.
+    """
+    url = f"https://openlibrary.org/subjects/{subject_name}.json"
+    params = {
+        'details': 'true' if details else 'false',
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_book_cover(key: str, value: str, size: str = "M", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch book covers by ISBN or Open Library identifier
+    Parameters:
+    - key: The type of identifier used (ISBN, OLID, etc.)
+    - value: The value of the chosen key
+    - size: Size of the cover ('S', 'M', 'L')
+    """
+    url = f"https://covers.openlibrary.org/b/{key}/{value}-{size}.jpg"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return None
+    return url
+
+def recent_changes(limit: Optional[int] = 10, offset: Optional[int] = 0, kind: Optional[str] = None, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get recent changes across Open Library.
+    Parameters:
+    - limit: Maximum number of entries in the response.
+    - offset: Number of entries to skip.
+    - kind: Type of change.
+    - date: Specific date for changes in the format YYYY/MM/DD.
+    """
+    url = "https://openlibrary.org/recentchanges.json"
+    if date:
+        url = f"https://openlibrary.org/recentchanges/{date}.json"
+    if kind:
+        url = f"https://openlibrary.org/recentchanges/{kind}.json"
+    
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import *
+
+class TestOpenLibraryAPI(unittest.TestCase):
+    
+    def test_search_books(self):
+        response = search_books(q="harry potter")
+        self.assertIn('docs', response)
+        self.assertGreater(len(response['docs']), 0)
+
+    def test_get_work_by_id(self):
+        response = get_work_by_id(work_id="OL45804W")
+        self.assertIn('title', response)
+        self.assertEqual(response['key'], "/works/OL45804W")
+
+    def test_get_edition_by_id(self):
+        response = get_edition_by_id(edition_id="OL7353617M")
+        self.assertIn('title', response)
+        self.assertEqual(response['key'], "/books/OL7353617M")
+
+    def test_get_author_by_id(self):
+        response = get_author_by_id(author_id="OL23919A")
+        self.assertIn('name', response)
+        self.assertEqual(response['key'], "/authors/OL23919A")
+
+    def test_search_authors(self):
+        response = search_authors(q="j.k. rowling")
+        self.assertIn('docs', response)
+        self.assertGreater(len(response['docs']), 0)
+
+    def test_get_subject_works(self):
+        response = get_subject_works(subject_name="love")
+        self.assertIn('works', response)
+        self.assertGreater(len(response['works']), 0)
+
+    def test_get_book_cover(self):
+        url = get_book_cover(key="isbn", value="0385472579", size="S")
+        self.assertIsNotNone(url)
+        self.assertTrue(url.startswith("https://covers.openlibrary.org/"))
+
+    def test_recent_changes(self):
+        response = recent_changes(limit=5)
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**openlibrary.json**
+
+```json
+{
+    "tool_name": "openlibrary",
+    "tool_description": "Open Library offers a suite of APIs to help developers get up and running with our data. This includes RESTful APIs providing access to book, author, and subject data in JSON format.",
+    "title": "Open Library API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 200,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.7
+    },
+    "home_url": "https://openlibrary.org/developers/api",
+    "host": "openlibrary.org",
+    "api_list": [
+        {
+            "name": "search_books",
+            "url": "https://openlibrary.org/search.json",
+            "description": "Search for books using the Open Library Search API.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "description": "Query string to search for."}
+            ],
+            "optional_parameters": [
+                {"name": "fields", "type": "STRING", "description": "Fields to return."},
+                {"name": "sort", "type": "STRING", "description": "Sort order."},
+                {"name": "lang", "type": "STRING", "description": "Language preference."},
+                {"name": "page", "type": "INTEGER", "description": "Page number for pagination."},
+                {"name": "limit", "type": "INTEGER", "description": "Number of results per page."}
+            ]
+        },
+        {
+            "name": "get_work_by_id",
+            "url": "https://openlibrary.org/works/{work_id}.json",
+            "description": "Retrieve a specific work by its Open Library work ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "work_id", "type": "STRING", "description": "The work's Open Library ID."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_edition_by_id",
+            "url": "https://openlibrary.org/books/{edition_id}.json",
+            "description": "Retrieve a specific edition by its Open Library edition ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "edition_id", "type": "STRING", "description": "The edition's Open Library ID."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_author_by_id",
+            "url": "https://openlibrary.org/authors/{author_id}.json",
+            "description": "Retrieve details of an author by their Open Library author ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "author_id", "type": "STRING", "description": "The author's Open Library ID."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "search_authors",
+            "url": "https://openlibrary.org/search/authors.json",
+            "description": "Search for authors using the Open Library Authors API.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "description": "Query string for author's name."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_subject_works",
+            "url": "https://openlibrary.org/subjects/{subject_name}.json",
+            "description": "Fetch works under a specific subject from the Open Library.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "subject_name", "type": "STRING", "description": "The name of the subject."}
+            ],
+            "optional_parameters": [
+                {"name": "details", "type": "BOOLEAN", "description": "Fetch detailed info."},
+                {"name": "limit", "type": "INTEGER", "description": "Limit number of responses."},
+                {"name": "offset", "type": "INTEGER", "description": "Offset for pagination."}
+            ]
+        },
+        {
+            "name": "get_book_cover",
+            "url": "https://covers.openlibrary.org/b/{key}/{value}-{size}.jpg",
+            "description": "Fetch book covers by ISBN or Open Library identifier.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "key", "type": "STRING", "description": "Identifier type (e.g., ISBN, OLID)."},
+                {"name": "value", "type": "STRING", "description": "The identifier value."},
+                {"name": "size", "type": "STRING", "description": "Size of the cover (S, M, L)."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "recent_changes",
+            "url": "https://openlibrary.org/recentchanges.json",
+            "description": "Get recent changes across Open Library.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "limit", "type": "INTEGER", "description": "Maximum number of entries."},
+                {"name": "offset", "type": "INTEGER", "description": "Skip number of entries."},
+                {"name": "kind", "type": "STRING", "description": "Type of change."},
+                {"name": "date", "type": "STRING", "description": "Specific date for changes in YYYY/MM/DD format."}
+            ]
+        }
+    ]
+}
+```

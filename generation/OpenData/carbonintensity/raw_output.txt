@@ -1,0 +1,429 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def get_current_intensity(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for the current half hour.
+    """
+    url = "https://api.carbonintensity.org.uk/intensity"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_by_date(date: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for a specific date.
+    :param date: Date in YYYY-MM-DD format.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/date/{date}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_by_date_period(date: str, period: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for a specific date and half hour settlement period.
+    :param date: Date in YYYY-MM-DD format.
+    :param period: Half hour settlement period between 1-48.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/date/{date}/{period}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_factors(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity factors for each fuel type.
+    """
+    url = "https://api.carbonintensity.org.uk/intensity/factors"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_specific_period(from_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for a specific half-hour period.
+    :param from_time: Datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/{from_time}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_24h_forward(from_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data 24hrs forward from a specific datetime.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/{from_time}/fw24h"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_48h_forward(from_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data 48hrs forward from a specific datetime.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/{from_time}/fw48h"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_24h_past(from_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data 24hrs in the past from a specific datetime.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/{from_time}/pt24h"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_between(from_time: str, to_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data between specified datetimes.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    :param to_time: End datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/{from_time}/{to_time}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_intensity_statistics(from_time: str, to_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity statistics (average, max, min) between specified datetimes.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    :param to_time: End datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/intensity/stats/{from_time}/{to_time}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_generation_mix_current(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get generation mix for the current half hour.
+    """
+    url = "https://api.carbonintensity.org.uk/generation"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_generation_mix_24h_past(from_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get generation mix for the past 24 hours.
+    :param from_time: Datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/generation/{from_time}/pt24h"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_generation_mix_between(from_time: str, to_time: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get generation mix between specified datetimes.
+    :param from_time: Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    :param to_time: End datetime in ISO8601 format YYYY-MM-DDThh:mmZ.
+    """
+    url = f"https://api.carbonintensity.org.uk/generation/{from_time}/{to_time}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_regional_intensity(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for current half hour for GB regions.
+    """
+    url = "https://api.carbonintensity.org.uk/regional"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_regional_intensity_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for current half hour for specified postcode.
+    :param postcode: Outward postcode i.e. RG41 or SW1 or TF8.
+    """
+    url = f"https://api.carbonintensity.org.uk/regional/postcode/{postcode}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_regional_intensity_regionid(regionid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Carbon Intensity data for current half hour for specified region.
+    :param regionid: Region ID of GB region.
+    """
+    url = f"https://api.carbonintensity.org.uk/regional/regionid/{regionid}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import (
+    get_current_intensity,
+    get_intensity_by_date,
+    get_intensity_factors,
+    get_intensity_statistics,
+    get_generation_mix_current,
+    get_regional_intensity
+)
+
+
+class TestCarbonIntensityAPI(unittest.TestCase):
+
+    def setUp(self):
+        self.api_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+    def test_get_current_intensity(self):
+        response = get_current_intensity(self.api_key)
+        self.assertIn('data', response)
+
+    def test_get_intensity_by_date(self):
+        response = get_intensity_by_date('2018-01-20', self.api_key)
+        self.assertIn('data', response)
+
+    def test_get_intensity_factors(self):
+        response = get_intensity_factors(self.api_key)
+        self.assertIn('data', response)
+
+    def test_get_intensity_statistics(self):
+        response = get_intensity_statistics('2018-01-20T12:00Z', '2018-01-21T12:00Z', self.api_key)
+        self.assertIn('data', response)
+
+    def test_get_generation_mix_current(self):
+        response = get_generation_mix_current(self.api_key)
+        self.assertIn('data', response)
+
+    def test_get_regional_intensity(self):
+        response = get_regional_intensity(self.api_key)
+        self.assertIn('data', response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### carbonintensity.json**
+
+```json
+{
+    "tool_name": "carbonintensity",
+    "tool_description": "Official Carbon Intensity API for Great Britain provided by National Grid. Get access to forecast and estimated carbon intensity data, fuel generation mixes, and regional data.",
+    "title": "Carbon Intensity API for Great Britain",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://carbonintensity.org.uk/",
+    "host": "api.carbonintensity.org.uk",
+    "api_list": [
+        {
+            "name": "get_current_intensity",
+            "url": "https://api.carbonintensity.org.uk/intensity",
+            "description": "Get Carbon Intensity data for the current half hour.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/intensity\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "forecast": "number",
+                        "actual": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_intensity_by_date",
+            "url": "https://api.carbonintensity.org.uk/intensity/date/{date}",
+            "description": "Get Carbon Intensity data for a specific date.",
+            "method": "GET",
+            "required_parameters": [{"name": "date", "type": "STRING", "description": "Date in YYYY-MM-DD format"}],
+            "optional_parameters": [],
+            "code": "import requests\n\ndate = '2023-01-01'\nurl = f\"https://api.carbonintensity.org.uk/intensity/date/{date}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "forecast": "number",
+                        "actual": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_intensity_factors",
+            "url": "https://api.carbonintensity.org.uk/intensity/factors",
+            "description": "Get Carbon Intensity factors for each fuel type.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/intensity/factors\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "Biomass": "number",
+                    "Coal": "number",
+                    "Dutch Imports": "number",
+                    "French Imports": "number",
+                    "Gas (Combined Cycle)": "number",
+                    "Gas (Open Cycle)": "number",
+                    "Hydro": "number",
+                    "Irish Imports": "number",
+                    "Nuclear": "number",
+                    "Oil": "number",
+                    "Other": "number",
+                    "Pumped Storage": "number",
+                    "Solar": "number",
+                    "Wind": "number"
+                }
+            }
+        },
+        {
+            "name": "get_intensity_statistics",
+            "url": "https://api.carbonintensity.org.uk/intensity/stats/{from}/{to}",
+            "description": "Get Carbon Intensity statistics (average, max, min) between specified datetimes.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "from", "type": "STRING", "description": "Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ"},
+                {"name": "to", "type": "STRING", "description": "End datetime in ISO8601 format YYYY-MM-DDThh:mmZ"}
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nfrom_time = '2023-01-01T00:00Z'\nto_time = '2023-01-02T00:00Z'\nurl = f\"https://api.carbonintensity.org.uk/intensity/stats/{from_time}/{to_time}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "intensity": {
+                        "max": "number",
+                        "average": "number",
+                        "min": "number",
+                        "index": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_generation_mix_current",
+            "url": "https://api.carbonintensity.org.uk/generation",
+            "description": "Get generation mix for the current half hour.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/generation\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "generationmix": [
+                        {"fuel": "string", "perc": "number"}
+                    ]
+                }
+            }
+        },
+        {
+            "name": "get_regional_intensity",
+            "url": "https://api.carbonintensity.org.uk/regional",
+            "description": "Get Carbon Intensity data for current half hour for GB regions.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = \"https://api.carbonintensity.org.uk/regional\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "body": {
+                "data": {
+                    "from": "string",
+                    "to": "string",
+                    "regions": [
+                        {
+                            "regionid": "number",
+                            "dnoregion": "string",
+                            "shortname": "string",
+                            "intensity": {"forecast": "number", "index": "string"},
+                            "generationmix": [{"fuel": "string", "perc": "number"}]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
+```

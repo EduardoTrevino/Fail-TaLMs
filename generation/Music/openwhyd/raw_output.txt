@@ -1,0 +1,265 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional, List, Dict, Union
+
+BASE_URL = "https://openwhyd.org"
+
+
+def get_user_tracks(uHandle: str, playlistId: Optional[int] = None, format: str = "json", 
+                    limit: Optional[int] = 20, after: Optional[str] = None, 
+                    before: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch the list of tracks posted by a user.
+    """
+    path = f"/{uHandle}/playlist/{playlistId}" if playlistId else f"/{uHandle}"
+    params = {
+        "format": format,
+        "limit": limit,
+        "after": after,
+        "before": before
+    }
+    response = requests.get(f"{BASE_URL}{path}", params=params)
+    return response.json()
+
+
+def get_hot_tracks(format: str = "json", limit: Optional[int] = 20, skip: Optional[int] = 0, 
+                   toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch the list of hot tracks.
+    """
+    params = {
+        "format": format,
+        "limit": limit,
+        "skip": skip
+    }
+    response = requests.get(f"{BASE_URL}/hot", params=params)
+    return response.json()
+
+
+def search_tracks(q: str, context: str = "quick", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for tracks posted by the logged in user and other users.
+    """
+    params = {
+        "q": q,
+        "context": context
+    }
+    response = requests.get(f"{BASE_URL}/search", params=params)
+    return response.json()
+
+
+def get_user_data(id: Optional[str] = None, isSubscr: Optional[bool] = False, 
+                  countPosts: Optional[bool] = False, countLikes: Optional[bool] = False, 
+                  includeSubscr: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve user data.
+    """
+    params = {
+        "id": id,
+        "isSubscr": isSubscr,
+        "countPosts": countPosts,
+        "countLikes": countLikes,
+        "includeSubscr": includeSubscr
+    }
+    response = requests.get(f"{BASE_URL}/api/user", params=params)
+    return response.json()
+
+
+def get_playlist_data(id: Union[str, List[str]], toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve playlist data.
+    """
+    if isinstance(id, list):
+        id = "&id=".join(id)
+    response = requests.get(f"{BASE_URL}/api/playlist", params={"id": id})
+    return response.json()
+
+
+def list_followers(id: str, skip: Optional[int] = 0, limit: Optional[int] = 50, 
+                   isSubscr: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the list of subscribers of a user.
+    """
+    params = {
+        "skip": skip,
+        "limit": limit,
+        "isSubscr": isSubscr
+    }
+    response = requests.get(f"{BASE_URL}/api/follow/fetchFollowers/{id}", params=params)
+    return response.json()
+
+
+def list_following(id: str, skip: Optional[int] = 0, limit: Optional[int] = 50, 
+                   isSubscr: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the list of users a user subscribes to.
+    """
+    params = {
+        "skip": skip,
+        "limit": limit,
+        "isSubscr": isSubscr
+    }
+    response = requests.get(f"{BASE_URL}/api/follow/fetchFollowing/{id}", params=params)
+    return response.json()
+```
+
+**api_test.py**
+
+```python
+import pytest
+from api import *
+
+def test_get_user_tracks():
+    response = get_user_tracks(uHandle="adrien", format="json", limit=5)
+    assert isinstance(response, list)
+    assert len(response) <= 5
+
+def test_get_hot_tracks():
+    response = get_hot_tracks(format="json", limit=5)
+    assert isinstance(response, list)
+    assert len(response) <= 5
+
+def test_search_tracks():
+    response = search_tracks(q="coco", context="quick")
+    assert 'q' in response and response['q'] == "coco"
+
+def test_get_user_data():
+    response = get_user_data(id="4d94501d1f78ac091dbc9b4d")
+    assert isinstance(response, dict)
+    assert '_id' in response
+
+def test_get_playlist_data():
+    response = get_playlist_data(id="4d94501d1f78ac091dbc9b4d_0")
+    assert isinstance(response, list)
+
+def test_list_followers():
+    response = list_followers(id="4d94501d1f78ac091dbc9b4d")
+    assert isinstance(response, list)
+
+def test_list_following():
+    response = list_following(id="4d94501d1f78ac091dbc9b4d")
+    assert isinstance(response, list)
+
+if __name__ == "__main__":
+    pytest.main()
+```
+
+**openwhyd.json**
+
+```json
+{
+  "tool_name": "openwhyd",
+  "tool_description": "Openwhyd is a music curation service that allows users to create playlists from various streaming platforms.",
+  "title": "Openwhyd API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 98,
+    "avgLatency": 100,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://openwhyd.org",
+  "host": "openwhyd.org",
+  "api_list": [
+    {
+      "name": "get_user_tracks",
+      "url": "https://openwhyd.org/:uHandle/[playlist/:playlistId]",
+      "description": "Fetch the list of tracks posted by a user.",
+      "method": "GET",
+      "required_parameters": ["uHandle"],
+      "optional_parameters": [
+        { "name": "playlistId", "type": "INTEGER", "description": "The ID of the playlist." },
+        { "name": "format", "type": "STRING", "description": "Response format." },
+        { "name": "limit", "type": "INTEGER", "description": "Number of tracks to return." }
+      ],
+      "code": "response = get_user_tracks(uHandle='adrien', format='json')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "get_hot_tracks",
+      "url": "https://openwhyd.org/hot",
+      "description": "Fetch the list of hot tracks.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        { "name": "format", "type": "STRING", "description": "Response format." },
+        { "name": "limit", "type": "INTEGER", "description": "Number of tracks to return." }
+      ],
+      "code": "response = get_hot_tracks(format='json')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "search_tracks",
+      "url": "https://openwhyd.org/search",
+      "description": "Search for tracks posted by users.",
+      "method": "GET",
+      "required_parameters": ["q"],
+      "optional_parameters": [
+        { "name": "context", "type": "STRING", "description": "Context of search." }
+      ],
+      "code": "response = search_tracks(q='coco')",
+      "statuscode": 200,
+      "schema": { "type": "object" }
+    },
+    {
+      "name": "get_user_data",
+      "url": "https://openwhyd.org/api/user",
+      "description": "Retrieve user data.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        { "name": "id", "type": "STRING", "description": "User ID." },
+        { "name": "isSubscr", "type": "BOOLEAN", "description": "Include subscription status flag." },
+        { "name": "countPosts", "type": "BOOLEAN", "description": "Include post count." }
+      ],
+      "code": "response = get_user_data(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "object" }
+    },
+    {
+      "name": "get_playlist_data",
+      "url": "https://openwhyd.org/api/playlist",
+      "description": "Retrieve playlist data.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [],
+      "code": "response = get_playlist_data(id='4d94501d1f78ac091dbc9b4d_0')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "list_followers",
+      "url": "https://openwhyd.org/api/follow/fetchFollowers/:id",
+      "description": "Get the list of subscribers of a user.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [
+        { "name": "skip", "type": "INTEGER", "description": "Number of records to skip." },
+        { "name": "limit", "type": "INTEGER", "description": "Number of records to return." }
+      ],
+      "code": "response = list_followers(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "list_following",
+      "url": "https://openwhyd.org/api/follow/fetchFollowing/:id",
+      "description": "Get the list of users a user subscribes to.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [
+        { "name": "skip", "type": "INTEGER", "description": "Number of records to skip." },
+        { "name": "limit", "type": "INTEGER", "description": "Number of records to return." }
+      ],
+      "code": "response = list_following(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    }
+  ]
+}
+```

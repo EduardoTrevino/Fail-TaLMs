@@ -1,0 +1,52 @@
+{
+    "tool_name": "newton",
+    "tool_description": "A micro-service for performing advanced math operations including numerical calculations and symbolic math parsing.",
+    "title": "Newton API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://newton.now.sh/",
+    "host": "newton.now.sh",
+    "api_list": [
+        {
+            "name": "newton_calculate",
+            "url": "https://newton.now.sh/api/v2/:operation/:expression",
+            "description": "Performs a specified mathematical operation on a provided expression and returns the result.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "operation",
+                    "type": "STRING",
+                    "description": "The math operation to perform."
+                },
+                {
+                    "name": "expression",
+                    "type": "STRING",
+                    "description": "The URL-encoded math expression to calculate."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nbase_url = \"https://newton.now.sh/api/v2\"\noperation = \"simplify\"\nexpression = \"2%5E2%2B2%282%29\"\nurl = f\"{base_url}/{operation}/{expression}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "operation": "string",
+                "expression": "string",
+                "result": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "operation": { "type": "string" },
+                    "expression": { "type": "string" },
+                    "result": { "type": "string" }
+                }
+            }
+        }
+    ]
+}

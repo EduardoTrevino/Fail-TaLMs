@@ -1,0 +1,111 @@
+{
+    "tool_name": "housestockwatcher",
+    "tool_description": "API to access daily disclosures of stock transactions by members of the U.S. House of Representatives.",
+    "title": "House Stock Watcher API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/",
+    "host": "house-stock-watcher-data.s3-us-west-2.amazonaws.com",
+    "api_list": [
+        {
+            "name": "get_all_transactions",
+            "url": "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json",
+            "description": "Retrieves all transcribed stock transactions in JSON format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "transactions": [
+                    {
+                        "transaction_date": "date",
+                        "owner": "str",
+                        "ticker": "str",
+                        "asset_description": "str",
+                        "asset_type": "str",
+                        "amount": "str",
+                        "transaction_type": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "transactions": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_available_disclosures",
+            "url": "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/filemap.xml",
+            "description": "Fetches the list of available disclosures as JSON files.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nfrom xml.etree import ElementTree as ET\n\nurl = 'https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/filemap.xml'\nresponse = requests.get(url)\nxml_content = response.text\ntree = ET.fromstring(xml_content)\nresults = [key.text for key in tree.findall('.//Key') if key.text.endswith('.json')]\nfiles = [file.split('/')[1] for file in results]\nprint(files)",
+            "statuscode": 200,
+            "body": {
+                "files": [
+                    "transaction_report_for_01_01_2021.json",
+                    "transaction_report_for_01_02_2021.json"
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_daily_transaction_report",
+            "url": "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/transaction_report_for_MM_DD_YYYY.json",
+            "description": "Fetches the JSON report for a single day's disclosure.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+                    "default": "01_01_2021"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\ndate = '01_01_2021'\nurl = f'https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/transaction_report_for_{date}.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "transactions": [
+                    {
+                        "transaction_date": "date",
+                        "owner": "str",
+                        "ticker": "str",
+                        "asset_description": "str",
+                        "asset_type": "str",
+                        "amount": "str",
+                        "transaction_type": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "transactions": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,235 @@
+```python
+### api.py
+
+import requests
+from typing import Optional, List
+
+
+def get_weather_forecast(latitude: float, longitude: float, hourly: Optional[List[str]] = None,
+                         daily: Optional[List[str]] = None, current: Optional[List[str]] = None, 
+                         temperature_unit: Optional[str] = "celsius", wind_speed_unit: Optional[str] = "kmh", 
+                         precipitation_unit: Optional[str] = "mm", timeformat: Optional[str] = "iso8601", 
+                         timezone: Optional[str] = "GMT", past_days: Optional[int] = 0, 
+                         forecast_days: Optional[int] = 7, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.
+
+    Parameters:
+    latitude [Required]: float [Description: Geographical WGS84 coordinates of the location.]
+    longitude [Required]: float [Description: Geographical WGS84 coordinates of the location.]
+    hourly [Optional]: list [Description: A list of weather variables which should be returned hourly.]
+    daily [Optional]: list [Description: A list of daily weather variable aggregations which should be returned.]
+    current [Optional]: list [Description: A list of weather variables to get current conditions.]
+    temperature_unit [Optional]: string [Description: Temperature units like celsius or fahrenheit.]
+    wind_speed_unit [Optional]: string [Description: Wind speed units like km/h, m/s, mph, or knots.]
+    precipitation_unit [Optional]: string [Description: Precipitation units like mm or inch.]
+    timeformat [Optional]: string [Description: Time format like iso8601 or unixtime.]
+    timezone [Optional]: string [Description: Timezone like GMT or location-based timezone.]
+    past_days [Optional]: int [Description: Number of past days to include in the weather data.]
+    forecast_days [Optional]: int [Description: Number of forecast days to include in the weather data.]
+    """
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "temperature_unit": temperature_unit,
+        "wind_speed_unit": wind_speed_unit,
+        "precipitation_unit": precipitation_unit,
+        "timeformat": timeformat,
+        "timezone": timezone,
+        "past_days": past_days,
+        "forecast_days": forecast_days
+    }
+    
+    if hourly:
+        params["hourly"] = ",".join(hourly)
+    if daily:
+        params["daily"] = ",".join(daily)
+    if current:
+        params["current"] = ",".join(current)
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+```python
+### api_test.py
+
+import unittest
+from api import get_weather_forecast
+
+class TestOpenMeteoAPI(unittest.TestCase):
+
+    def test_get_weather_forecast(self):
+        response = get_weather_forecast(latitude=52.52, longitude=13.41, hourly=["temperature_2m"])
+        self.assertIn("latitude", response)
+        self.assertIn("longitude", response)
+        self.assertIn("hourly", response)
+        self.assertNotIn("error", response)
+
+    def test_get_weather_forecast_with_daily(self):
+        response = get_weather_forecast(
+            latitude=52.52, 
+            longitude=13.41,
+            daily=["temperature_2m_max", "temperature_2m_min"]
+        )
+        self.assertIn("daily", response)
+        self.assertNotIn("error", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+```json
+### openmetro.json
+
+{
+    "tool_name": "openmetro",
+    "tool_description": "API to access weather forecast data using various weather models for different geographic locations.",
+    "title": "Open-Meteo Weather Forecast API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.open-meteo.com/",
+    "host": "api.open-meteo.com",
+    "api_list": [
+        {
+            "name": "get_weather_forecast",
+            "url": "https://api.open-meteo.com/v1/forecast",
+            "description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "latitude",
+                    "type": "FLOAT",
+                    "description": "Geographical WGS84 coordinates of the location.",
+                    "default": "None"
+                },
+                {
+                    "name": "longitude",
+                    "type": "FLOAT",
+                    "description": "Geographical WGS84 coordinates of the location.",
+                    "default": "None"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "hourly",
+                    "type": "LIST",
+                    "description": "A list of weather variables which should be returned hourly.",
+                    "default": "None"
+                },
+                {
+                    "name": "daily",
+                    "type": "LIST",
+                    "description": "A list of daily weather variable aggregations which should be returned.",
+                    "default": "None"
+                },
+                {
+                    "name": "current",
+                    "type": "LIST",
+                    "description": "A list of weather variables to get current conditions.",
+                    "default": "None"
+                },
+                {
+                    "name": "temperature_unit",
+                    "type": "STRING",
+                    "description": "Temperature units like celsius or fahrenheit.",
+                    "default": "celsius"
+                },
+                {
+                    "name": "wind_speed_unit",
+                    "type": "STRING",
+                    "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                    "default": "kmh"
+                },
+                {
+                    "name": "precipitation_unit",
+                    "type": "STRING",
+                    "description": "Precipitation units like mm or inch.",
+                    "default": "mm"
+                },
+                {
+                    "name": "timeformat",
+                    "type": "STRING",
+                    "description": "Time format like iso8601 or unixtime.",
+                    "default": "iso8601"
+                },
+                {
+                    "name": "timezone",
+                    "type": "STRING",
+                    "description": "Timezone like GMT or location-based timezone.",
+                    "default": "GMT"
+                },
+                {
+                    "name": "past_days",
+                    "type": "INTEGER",
+                    "description": "Number of past days to include in the weather data.",
+                    "default": "0"
+                },
+                {
+                    "name": "forecast_days",
+                    "type": "INTEGER",
+                    "description": "Number of forecast days to include in the weather data.",
+                    "default": "7"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.open-meteo.com/v1/forecast'\nparams = {'latitude': latitude, 'longitude': longitude, 'temperature_unit': temperature_unit, 'wind_speed_unit': wind_speed_unit, 'precipitation_unit': precipitation_unit, 'timeformat': timeformat, 'timezone': timezone, 'past_days': past_days, 'forecast_days': forecast_days}\nif hourly: params[\"hourly\"] = \",\".join(hourly)\nif daily: params[\"daily\"] = \",\".join(daily)\nif current: params[\"current\"] = \",\".join(current)\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "latitude": "float",
+                "longitude": "float",
+                "generationtime_ms": "float",
+                "utc_offset_seconds": "int",
+                "timezone": "str",
+                "timezone_abbreviation": "str",
+                "hourly": {
+                    "time": "list",
+                    "temperature_2m": "list"
+                },
+                "hourly_units": {
+                    "temperature_2m": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "latitude": {
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "type": "number"
+                    },
+                    "generationtime_ms": {
+                        "type": "number"
+                    },
+                    "utc_offset_seconds": {
+                        "type": "integer"
+                    },
+                    "timezone": {
+                        "type": "string"
+                    },
+                    "timezone_abbreviation": {
+                        "type": "string"
+                    },
+                    "hourly": {
+                        "type": "object"
+                    },
+                    "hourly_units": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

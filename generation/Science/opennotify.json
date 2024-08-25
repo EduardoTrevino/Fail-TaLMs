@@ -1,0 +1,88 @@
+{
+    "tool_name": "opennotify",
+    "tool_description": "API to access real-time data about the International Space Station's location and the current people in space.",
+    "title": "Open Notify API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "http://open-notify.org/Open-Notify-API",
+    "host": "api.open-notify.org",
+    "api_list": [
+        {
+            "name": "get_iss_location",
+            "url": "http://api.open-notify.org/iss-now.json",
+            "description": "Returns the current location of the International Space Station (ISS).",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'http://api.open-notify.org/iss-now.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "message": "str",
+                "timestamp": "int",
+                "iss_position": {
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {"type": "string"},
+                    "timestamp": {"type": "integer"},
+                    "iss_position": {
+                        "type": "object",
+                        "properties": {
+                            "latitude": {"type": "string"},
+                            "longitude": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_people_in_space",
+            "url": "http://api.open-notify.org/astros.json",
+            "description": "Returns the current number of people in space, along with their names and spacecraft.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'http://api.open-notify.org/astros.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "message": "str",
+                "number": "int",
+                "people": [
+                    {
+                        "name": "str",
+                        "craft": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {"type": "string"},
+                    "number": {"type": "integer"},
+                    "people": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"type": "string"},
+                                "craft": {"type": "string"}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

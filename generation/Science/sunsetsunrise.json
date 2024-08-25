@@ -1,0 +1,93 @@
+{
+    "tool_name": "sunsetsunrise",
+    "tool_description": "API for retrieving accurate sunrise and sunset times for a specific location using latitude and longitude.",
+    "title": "Sunset and Sunrise Times API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.sunrisesunset.io",
+    "host": "api.sunrisesunset.io",
+    "api_list": [
+        {
+            "name": "get_sunrise_sunset_times",
+            "url": "https://api.sunrisesunset.io/json",
+            "description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location in decimal degrees."
+                },
+                {
+                    "name": "lng",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location in decimal degrees."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                },
+                {
+                    "name": "timezone",
+                    "type": "STRING",
+                    "description": "Timezone of the returned times. Defaults to the location's timezone."
+                },
+                {
+                    "name": "date_start",
+                    "type": "STRING",
+                    "description": "Start date in YYYY-MM-DD format for retrieving a range."
+                },
+                {
+                    "name": "date_end",
+                    "type": "STRING",
+                    "description": "End date in YYYY-MM-DD format for retrieving a range."
+                },
+                {
+                    "name": "time_format",
+                    "type": "STRING",
+                    "description": "Time format such as '24', 'military', or 'unix'."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.sunrisesunset.io/json'\nparams = {'lat': lat, 'lng': lng, 'date': date, 'timezone': timezone, 'date_start': date_start, 'date_end': date_end, 'time_format': time_format}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "results": {
+                    "date": "str",
+                    "sunrise": "str",
+                    "sunset": "str",
+                    "first_light": "str",
+                    "last_light": "str",
+                    "dawn": "str",
+                    "dusk": "str",
+                    "solar_noon": "str",
+                    "golden_hour": "str",
+                    "day_length": "str",
+                    "timezone": "str",
+                    "utc_offset": "int"
+                },
+                "status": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "object"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

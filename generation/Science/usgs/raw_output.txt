@@ -1,0 +1,279 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def application_json(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Request known enumerated parameter values for the interface.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/application.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def application_wadl(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Request WADL for the interface.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/application.wadl"
+    response = requests.get(url)
+    try:
+        return response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def catalogs(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Request available catalogs.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/catalogs"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def contributors(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Request available contributors.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/contributors"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def count(format: Optional[str] = "geojson", starttime: Optional[str] = None, endtime: Optional[str] = None, minmagnitude: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Perform a count on a data request.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/count"
+    params = {
+        'format': format,
+        'starttime': starttime,
+        'endtime': endtime,
+        'minmagnitude': minmagnitude
+    }
+    response = requests.get(url, params=params)
+    try:
+        if format == 'geojson':
+            return response.json()
+        else:
+            return response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def query(format: Optional[str] = "geojson", starttime: Optional[str] = None, endtime: Optional[str] = None, minmagnitude: Optional[float] = None, maxmagnitude: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Submit a data request.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+    params = {
+        'format': format,
+        'starttime': starttime,
+        'endtime': endtime,
+        'minmagnitude': minmagnitude,
+        'maxmagnitude': maxmagnitude
+    }
+    response = requests.get(url, params=params)
+    try:
+        if format == 'geojson':
+            return response.json()
+        else:
+            return response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Request full service version number.
+    """
+    url = "https://earthquake.usgs.gov/fdsnws/event/1/version"
+    response = requests.get(url)
+    try:
+        return response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import application_json, application_wadl, catalogs, contributors, count, query, version
+
+class TestUSGSApi(unittest.TestCase):
+
+    def test_application_json(self):
+        response = application_json()
+        self.assertIsInstance(response, dict)
+        self.assertIn("parameters", response.keys())
+
+    def test_application_wadl(self):
+        response = application_wadl()
+        self.assertIsInstance(response, str)
+        self.assertIn("<wadl", response)
+
+    def test_catalogs(self):
+        response = catalogs()
+        self.assertIsInstance(response, list)
+
+    def test_contributors(self):
+        response = contributors()
+        self.assertIsInstance(response, list)
+
+    def test_count(self):
+        response = count(starttime="2023-01-01", endtime="2023-01-02", minmagnitude=5)
+        self.assertIsInstance(response, dict)
+        self.assertIn("metadata", response.keys())
+
+    def test_query(self):
+        response = query(starttime="2023-01-01", endtime="2023-01-02", minmagnitude=5)
+        self.assertIsInstance(response, dict)
+        self.assertIn("metadata", response.keys())
+
+    def test_version(self):
+        response = version()
+        self.assertIsInstance(response, str)
+        self.assertRegex(response, r'^\d+\.\d+\.\d+')
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### usgs.json
+```json
+{
+    "tool_name": "usgs",
+    "tool_description": "API to access the USGS Earthquake Catalog, providing data on historical and real-time earthquakes.",
+    "title": "USGS Earthquake Catalog API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 94,
+        "avgLatency": 120,
+        "avgSuccessRate": 96,
+        "popularityScore": 9.1,
+        "__typename": "Score"
+    },
+    "home_url": "https://earthquake.usgs.gov/fdsnws/event/1/",
+    "host": "earthquake.usgs.gov",
+    "api_list": [
+        {
+            "name": "application_json",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/application.json",
+            "description": "Request known enumerated parameter values for the interface.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "application_wadl",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/application.wadl",
+            "description": "Request WADL for the interface.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "catalogs",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/catalogs",
+            "description": "Request available catalogs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "contributors",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/contributors",
+            "description": "Request available contributors.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "count",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/count",
+            "description": "Perform a count on a data request.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Specify the output format.",
+                    "default": "geojson"
+                },
+                {
+                    "name": "starttime",
+                    "type": "STRING",
+                    "description": "Limit events on or after the specified start time.",
+                    "default": "NOW - 30 days"
+                },
+                {
+                    "name": "endtime",
+                    "type": "STRING",
+                    "description": "Limit the events on or before the specified end time.",
+                    "default": "present"
+                },
+                {
+                    "name": "minmagnitude",
+                    "type": "DECIMAL",
+                    "description": "Limit to events with a magnitude larger than the specified minimum.",
+                    "default": "null"
+                }
+            ]
+        },
+        {
+            "name": "query",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+            "description": "Submit a data request.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Specify the output format.",
+                    "default": "geojson"
+                },
+                {
+                    "name": "starttime",
+                    "type": "STRING",
+                    "description": "Limit events on or after the specified start time.",
+                    "default": "NOW - 30 days"
+                },
+                {
+                    "name": "endtime",
+                    "type": "STRING",
+                    "description": "Limit the events on or before the specified end time.",
+                    "default": "present"
+                },
+                {
+                    "name": "minmagnitude",
+                    "type": "DECIMAL",
+                    "description": "Limit to events with a magnitude larger than the specified minimum.",
+                    "default": "null"
+                },
+                {
+                    "name": "maxmagnitude",
+                    "type": "DECIMAL",
+                    "description": "Limit to events with a magnitude smaller than the specified maximum.",
+                    "default": "null"
+                }
+            ]
+        },
+        {
+            "name": "version",
+            "url": "https://earthquake.usgs.gov/fdsnws/event/1/version",
+            "description": "Request full service version number.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        }
+    ]
+}
+```

@@ -1,0 +1,141 @@
+{
+    "tool_name": "wikipedia",
+    "tool_description": "API for accessing a wealth of data on the usage of categories and media files on Wikimedia Commons, as well as analysis of pageviews and edits on Wikimedia projects.",
+    "title": "Wikipedia API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://wikimedia.org/api/docs/",
+    "host": "wikimedia.org",
+    "api_list": [
+        {
+            "name": "get_category_metrics",
+            "url": "/commons-analytics/category-metrics-snapshot/{category}/{start}/{end}",
+            "description": "Get time series of category metrics.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_edits_per_category",
+            "url": "/commons-analytics/edits-per-category-monthly/{category}/{category-scope}/{edit-type}/{start}/{end}",
+            "description": "Get time series of edit counts for a given category.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category", "type": "STRING" },
+                { "name": "category-scope", "type": "STRING" },
+                { "name": "edit-type", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_pageviews_per_category",
+            "url": "/commons-analytics/pageviews-per-category-monthly/{category}/{category-scope}/{wiki}/{start}/{end}",
+            "description": "Get time series of pageview counts for a given category.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category", "type": "STRING" },
+                { "name": "category-scope", "type": "STRING" },
+                { "name": "wiki", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_top_edited_categories",
+            "url": "/commons-analytics/top-edited-categories-monthly/{category-scope}/{edit-type}/{year}/{month}",
+            "description": "Get ranking of most edited categories.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category-scope", "type": "STRING" },
+                { "name": "edit-type", "type": "STRING" },
+                { "name": "year", "type": "INTEGER" },
+                { "name": "month", "type": "INTEGER" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_top_viewed_categories",
+            "url": "/commons-analytics/top-viewed-categories-monthly/{category-scope}/{wiki}/{year}/{month}",
+            "description": "Get ranking of categories with most pageviews.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category-scope", "type": "STRING" },
+                { "name": "wiki", "type": "STRING" },
+                { "name": "year", "type": "INTEGER" },
+                { "name": "month", "type": "INTEGER" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_top_pages_per_category",
+            "url": "/commons-analytics/top-pages-per-category-monthly/{category}/{category-scope}/{wiki}/{year}/{month}",
+            "description": "Get ranking of pages with most pageviews for a given category.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "category", "type": "STRING" },
+                { "name": "category-scope", "type": "STRING" },
+                { "name": "wiki", "type": "STRING" },
+                { "name": "year", "type": "INTEGER" },
+                { "name": "month", "type": "INTEGER" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_unique_devices",
+            "url": "/unique-devices/{project}/{access-site}/{granularity}/{start}/{end}",
+            "description": "Get number of unique devices.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "project", "type": "STRING" },
+                { "name": "access-site", "type": "STRING" },
+                { "name": "granularity", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_edits_aggregate",
+            "url": "/edits/aggregate/{project}/{editor-type}/{page-type}/{granularity}/{start}/{end}",
+            "description": "Get number of edits.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "project", "type": "STRING" },
+                { "name": "editor-type", "type": "STRING" },
+                { "name": "page-type", "type": "STRING" },
+                { "name": "granularity", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_pageviews_aggregate",
+            "url": "/pageviews/aggregate/{project}/{access}/{agent}/{granularity}/{start}/{end}",
+            "description": "Get number of page views.",
+            "method": "GET",
+            "required_parameters": [
+                { "name": "project", "type": "STRING" },
+                { "name": "access", "type": "STRING" },
+                { "name": "agent", "type": "STRING" },
+                { "name": "granularity", "type": "STRING" },
+                { "name": "start", "type": "DATE" },
+                { "name": "end", "type": "DATE" }
+            ],
+            "optional_parameters": []
+        }
+    ]
+}

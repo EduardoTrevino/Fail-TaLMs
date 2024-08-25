@@ -1,0 +1,66 @@
+{
+    "tool_name": "waybackmachine",
+    "tool_description": "API to interact with the Internet Archive's Wayback Machine, allowing users to check if URLs are archived and retrieve archived data.",
+    "title": "Wayback Machine API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://archive.org/help/wayback_api.php",
+    "host": "archive.org",
+    "api_list": [
+        {
+            "name": "wayback_availability",
+            "url": "http://archive.org/wayback/available",
+            "description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL to check for availability in the Wayback Machine.",
+                    "default": "example.com"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "timestamp",
+                    "type": "STRING",
+                    "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                    "default": ""
+                },
+                {
+                    "name": "callback",
+                    "type": "STRING",
+                    "description": "Callback function for JSONP response.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\napi_url = 'http://archive.org/wayback/available'\nparams = {'url': url}\nif timestamp:\n    params['timestamp'] = timestamp\nif callback:\n    params['callback'] = callback\nresponse = requests.get(api_url, params=params)\nresult = response.json()\nprint(result)",
+            "statuscode": 200,
+            "body": {
+                "archived_snapshots": {
+                    "closest": {
+                        "available": "boolean",
+                        "url": "string",
+                        "timestamp": "string",
+                        "status": "string"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "archived_snapshots": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}

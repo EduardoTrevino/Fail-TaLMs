@@ -1,0 +1,95 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_cat_facts(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve daily cat facts.
+    """
+    url = "https://cat-fact.herokuapp.com/facts"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_cat_facts
+
+class TestCatFactsAPI(unittest.TestCase):
+    
+    def test_get_cat_facts(self):
+        response = get_cat_facts()
+        self.assertIsInstance(response, list)
+        if response:
+            for fact in response:
+                self.assertIn('text', fact)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### catfacts.json**
+
+```json
+{
+    "tool_name": "catfacts",
+    "tool_description": "API to access daily cat facts for fun and educational purposes.",
+    "title": "Cat Facts API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 300,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://cat-fact.herokuapp.com",
+    "host": "cat-fact.herokuapp.com",
+    "api_list": [
+        {
+            "name": "get_cat_facts",
+            "url": "https://cat-fact.herokuapp.com/facts",
+            "description": "Retrieve daily cat facts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://cat-fact.herokuapp.com/facts'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string"
+                        },
+                        "_id": {
+                            "type": "string"
+                        },
+                        "updatedAt": {
+                            "type": "string"
+                        },
+                        "createdAt": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                }
+            }
+        }
+    ]
+}
+```

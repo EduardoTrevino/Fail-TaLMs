@@ -1,0 +1,166 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List, Dict
+
+def get_metadata(item_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve metadata for an Archive.org item.
+
+    Parameters:
+    item_id (str): The identifier for the Archive.org item for which you want metadata.
+    """
+    url = f"https://archive.org/metadata/{item_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_items(query: str, fields: Optional[str] = 'title', sorts: Optional[str] = None, count: Optional[int] = 100, 
+                 cursor: Optional[str] = None, total_only: Optional[bool] = False,
+                 toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Search items in Archive.org using the scraping API.
+
+    Parameters:
+    query (str): The query string in Lucene-like syntax.
+    fields (str): Metadata fields to return, comma-delimited.
+    sorts (str): Fields to sort on, comma-delimited.
+    count (int): Number of results to return.
+    cursor (str): A cursor, if any, for paginated results.
+    total_only (bool): If set to true, only returns the number of results.
+    """
+    url = "https://archive.org/services/search/v1/scrape"
+    params = {
+        'q': query,
+        'fields': fields,
+        'count': count,
+        'total_only': total_only
+    }
+    if sorts:
+        params['sorts'] = sorts
+    if cursor:
+        params['cursor'] = cursor
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_metadata, search_items
+
+class ArchiveOrgAPITest(unittest.TestCase):
+
+    def test_get_metadata(self):
+        result = get_metadata('popeye_taxi-turvey')
+        self.assertIn('metadata', result, "Metadata should be in the result")
+        
+    def test_search_items(self):
+        results = search_items('collection:nasa')
+        self.assertIn('items', results, "Items should be in the results")
+        self.assertIsInstance(results['items'], list, "Items should be a list")
+    
+    def test_search_items_with_cursor(self):
+        initial_results = search_items('collection:nasa')
+        cursor = initial_results.get('cursor', None)
+        results_with_cursor = search_items('collection:nasa', cursor=cursor)
+        self.assertIn('items', results_with_cursor, "Items should be in the results with cursor")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### archiveorg.json**
+
+```json
+{
+    "tool_name": "archiveorg",
+    "tool_description": "API for accessing a variety of data and resources from the Internet Archive including metadata on items and searching capabilities.",
+    "title": "Archive.org API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://archive.org/services/docs/api",
+    "host": "archive.org",
+    "api_list": [
+        {
+            "name": "get_metadata",
+            "url": "https://archive.org/metadata/{id}",
+            "description": "Retrieve metadata for an Archive.org item.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "The identifier for the Archive.org item.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://archive.org/metadata/{item_id}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "search_items",
+            "url": "https://archive.org/services/search/v1/scrape",
+            "description": "Search for items using the Archive.org scraping API.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The query string using Lucene-like syntax.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Metadata fields to return, comma-delimited.",
+                    "default": "title"
+                },
+                {
+                    "name": "sorts",
+                    "type": "STRING",
+                    "description": "Fields to sort results on, comma-delimited.",
+                    "default": ""
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of results to return.",
+                    "default": "100"
+                },
+                {
+                    "name": "cursor",
+                    "type": "STRING",
+                    "description": "Cursor for paginated results.",
+                    "default": ""
+                },
+                {
+                    "name": "total_only",
+                    "type": "BOOLEAN",
+                    "description": "If true, only returns the number of results.",
+                    "default": "false"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://archive.org/services/search/v1/scrape'\nparams = {'q': query, 'fields': fields, 'count': count}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        }
+    ]
+}
+```

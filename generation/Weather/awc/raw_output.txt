@@ -1,0 +1,511 @@
+### api.py
+
+```python
+import requests
+from typing import Optional, Any, Dict
+
+# Configuring the base URL
+BASE_URL = "https://aviationweather.gov/api"
+
+def get_metar(
+    ids: Optional[str] = None, 
+    format: Optional[str] = 'json', 
+    taf: Optional[bool] = False, 
+    hours: Optional[int] = 1, 
+    bbox: Optional[str] = None, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch METAR data"""
+    endpoint = f"{BASE_URL}/data/metar"
+    params = {
+        "ids": ids,
+        "format": format,
+        "taf": taf,
+        "hours": hours,
+        "bbox": bbox,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_taf(
+    ids: Optional[str] = None, 
+    format: Optional[str] = 'json', 
+    metar: Optional[bool] = False, 
+    bbox: Optional[str] = None, 
+    time: Optional[str] = None, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch TAF data"""
+    endpoint = f"{BASE_URL}/data/taf"
+    params = {
+        "ids": ids,
+        "format": format,
+        "metar": metar,
+        "bbox": bbox,
+        "time": time,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_pirep(
+    id: Optional[str] = None, 
+    format: Optional[str] = 'raw', 
+    age: Optional[int] = 1, 
+    distance: Optional[int] = 0, 
+    level: Optional[int] = 0, 
+    inten: Optional[str] = None, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch PIREP data"""
+    endpoint = f"{BASE_URL}/data/pirep"
+    params = {
+        "id": id,
+        "format": format,
+        "age": age,
+        "distance": distance,
+        "level": level,
+        "inten": inten,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return {"response": response.text}
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_airsigmet(
+    format: Optional[str] = 'json', 
+    type: Optional[str] = None, 
+    hazard: Optional[str] = None, 
+    level: Optional[int] = 0, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch AIRMET/SIGMET data"""
+    endpoint = f"{BASE_URL}/data/airsigmet"
+    params = {
+        "format": format,
+        "type": type,
+        "hazard": hazard,
+        "level": level,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_isigmet(
+    format: Optional[str] = 'json', 
+    hazard: Optional[str] = None, 
+    level: Optional[int] = 0, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch international SIGMETs"""
+    endpoint = f"{BASE_URL}/data/isigmet"
+    params = {
+        "format": format,
+        "hazard": hazard,
+        "level": level,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_gairmet(
+    type: Optional[str] = None, 
+    hazard: Optional[str] = None, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Graphical AIRMETs"""
+    endpoint = f"{BASE_URL}/data/gairmet"
+    params = {
+        "type": type,
+        "hazard": hazard,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_cwa(
+    hazard: Optional[str] = None, 
+    date: Optional[str] = None, 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch CWSU Center Advisories"""
+    endpoint = f"{BASE_URL}/data/cwa"
+    params = {
+        "hazard": hazard,
+        "date": date
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_windtemp(
+    region: Optional[str] = 'all', 
+    level: Optional[str] = 'low', 
+    fcst: Optional[str] = '06', 
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Wind/Temp data"""
+    endpoint = f"{BASE_URL}/data/windtemp"
+    params = {
+        "region": region,
+        "level": level,
+        "fcst": fcst
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_areafcst(
+    region: str,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Area Forecasts"""
+    endpoint = f"{BASE_URL}/data/areafcst"
+    params = {
+        "region": region
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_fcstdisc(
+    cwa: Optional[str] = None,
+    type: Optional[str] = 'af',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Forecast Discussions"""
+    endpoint = f"{BASE_URL}/data/fcstdisc"
+    params = {
+        "cwa": cwa,
+        "type": type
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_mis(
+    loc: Optional[str] = None,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Meteorological Information Statement"""
+    endpoint = f"{BASE_URL}/data/mis"
+    params = {
+        "loc": loc
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_stationinfo(
+    ids: Optional[str] = None,
+    bbox: Optional[str] = None,
+    format: Optional[str] = 'json',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Station Info"""
+    endpoint = f"{BASE_URL}/data/stationinfo"
+    params = {
+        "ids": ids,
+        "bbox": bbox,
+        "format": format
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_airport(
+    ids: Optional[str] = None,
+    bbox: Optional[str] = None,
+    format: Optional[str] = 'json',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Airport Info"""
+    endpoint = f"{BASE_URL}/data/airport"
+    params = {
+        "ids": ids,
+        "bbox": bbox,
+        "format": format
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_feature(
+    bbox: str,
+    format: Optional[str] = 'json',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Feature Info"""
+    endpoint = f"{BASE_URL}/data/feature"
+    params = {
+        "bbox": bbox,
+        "format": format
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_obstacle(
+    bbox: str,
+    format: Optional[str] = 'json',
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """Fetch Obstacle Info"""
+    endpoint = f"{BASE_URL}/data/obstacle"
+    params = {
+        "bbox": bbox,
+        "format": format
+    }
+    response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+
+```python
+import unittest
+from api import (
+    get_metar, get_taf, get_pirep, get_airsigmet, get_isigmet,
+    get_gairmet, get_cwa, get_windtemp, get_areafcst,
+    get_fcstdisc, get_mis, get_stationinfo, get_airport,
+    get_feature, get_obstacle
+)
+
+class TestAWCAPI(unittest.TestCase):
+    
+    def setUp(self):
+        self.api_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+    def test_get_metar(self):
+        response = get_metar(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_taf(self):
+        response = get_taf(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_pirep(self):
+        response = get_pirep(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_airsigmet(self):
+        response = get_airsigmet(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_isigmet(self):
+        response = get_isigmet(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_gairmet(self):
+        response = get_gairmet(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_cwa(self):
+        response = get_cwa(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_windtemp(self):
+        response = get_windtemp(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_areafcst(self):
+        response = get_areafcst(region='gulf', toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_fcstdisc(self):
+        response = get_fcstdisc(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_mis(self):
+        response = get_mis(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_stationinfo(self):
+        response = get_stationinfo(toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_airport(self):
+        response = get_airport(ids='KMCI', toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_feature(self):
+        response = get_feature(bbox='35,-90,45,-80', toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+
+    def test_get_obstacle(self):
+        response = get_obstacle(bbox='35,-90,45,-80', toolbench_rapidapi_key=self.api_key)
+        self.assertTrue(isinstance(response, dict))
+        
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### awc.json
+
+```json
+{
+    "tool_name": "awc",
+    "tool_description": "API that provides machine-to-machine access to aviation weather information, supporting real-time aviation safety decision-making.",
+    "title": "Aviation Weather Center Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://aviationweather.gov",
+    "host": "aviationweather.gov",
+    "api_list": [
+        {
+            "name": "get_metar",
+            "url": "https://aviationweather.gov/api/data/metar",
+            "description": "Fetches decoded aviation weather observations (METAR).",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Station ID(s).", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "taf", "type": "BOOLEAN", "description": "Include TAF information with the METAR.", "default": false},
+                {"name": "hours", "type": "NUMBER", "description": "Hours back to search.", "default": 1},
+                {"name": "bbox", "type": "STRING", "description": "Geographic bounding box.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specific date to fetch records for.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_taf",
+            "url": "https://aviationweather.gov/api/data/taf",
+            "description": "Retrieves Terminal Aerodrome Forecast products (TAF).",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Station ID(s).", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "metar", "type": "BOOLEAN", "description": "Include METAR with the TAF.", "default": false},
+                {"name": "bbox", "type": "STRING", "description": "Geographic bounding box.", "default": null},
+                {"name": "time", "type": "STRING", "description": "Process time by valid (default) or issuance time.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Fetch records for a specific date.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_pirep",
+            "url": "https://aviationweather.gov/api/data/pirep",
+            "description": "Gets Pilot Reports issued in PIREP or AIREP format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "id", "type": "STRING", "description": "Station ID.", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format. Available value: raw", "default": "raw"},
+                {"name": "age", "type": "NUMBER", "description": "Hours back to search.", "default": 1},
+                {"name": "distance", "type": "NUMBER", "description": "Distance", "default": 0},
+                {"name": "level", "type": "NUMBER", "description": "Level +-3000' to search", "default": 0},
+                {"name": "inten", "type": "STRING", "description": "Minimum intensity.", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specify the date.", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_airsigmet",
+            "url": "https://aviationweather.gov/api/data/airsigmet",
+            "description": "Fetches AIRMETs and SIGMETs in decoded format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "type", "type": "STRING", "description": "Product type", "default": null},
+                {"name": "hazard", "type": "STRING", "description": "Hazard type", "default": null},
+                {"name": "level", "type": "NUMBER", "description": "The level +-3000' to search", "default": 0},
+                {"name": "date", "type": "STRING", "description": "Specify the date", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        }
+        // Other entries omitted for brevity
+    ]
+}
+```

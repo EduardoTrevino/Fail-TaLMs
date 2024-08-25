@@ -1,0 +1,179 @@
+**api.py**
+```python
+import requests
+from typing import Optional
+
+def get_networks(fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a list of all available networks.
+    
+    Parameters:
+    fields [Optional]: A comma-separated list of fields to include in the response.
+    """
+    url = "http://api.citybik.es/v2/networks"
+    params = {}
+    if fields:
+        params['fields'] = fields
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_network_details(network_id: str, fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve details of a specific network.
+
+    Parameters:
+    network_id [Required]: The ID of the network.
+    fields [Optional]: A comma-separated list of fields to include in the response.
+    """
+    url = f"http://api.citybik.es/v2/networks/{network_id}"
+    params = {}
+    if fields:
+        params['fields'] = fields
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+```python
+import unittest
+from api import get_networks, get_network_details
+
+class TestCityBikesAPI(unittest.TestCase):
+
+    def test_get_networks(self):
+        response = get_networks(fields="id,name,href")
+        self.assertIn('networks', response)
+        self.assertIsInstance(response['networks'], list)
+
+    def test_get_network_details(self):
+        network_id = "velib"
+        response = get_network_details(network_id)
+        self.assertIn('network', response)
+        self.assertEqual(response['network']['id'], network_id)
+
+    def test_get_networks_with_invalid_field(self):
+        response = get_networks(fields="invalid_field")
+        self.assertNotIn('error', response)
+
+    def test_get_network_details_with_invalid_id(self):
+        response = get_network_details("invalid_id")
+        self.assertIn('network', response)
+        self.assertIsNone(response['network'])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**citybikes.json**
+```json
+{
+    "tool_name": "citybikes",
+    "tool_description": "API providing data of bike sharing networks around the world.",
+    "title": "CityBikes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "http://api.citybik.es",
+    "host": "api.citybik.es",
+    "api_list": [
+        {
+            "name": "get_networks",
+            "url": "http://api.citybik.es/v2/networks",
+            "description": "Retrieve a list of all available networks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "A comma-separated list of fields to include in the response.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://api.citybik.es/v2/networks'\nparams = {}\nparams['fields'] = fields\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "networks": [
+                    {
+                        "href": "str",
+                        "id": "str",
+                        "name": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "networks": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_network_details",
+            "url": "http://api.citybik.es/v2/networks/{network_id}",
+            "description": "Retrieve details of a specific network.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "network_id",
+                    "type": "STRING",
+                    "description": "The ID of the network.",
+                    "default": "velib"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "A comma-separated list of fields to include in the response.",
+                    "default": ""
+                }
+            ],
+            "code": "import requests\n\nurl = f'http://api.citybik.es/v2/networks/{network_id}'\nparams = {}\nparams['fields'] = fields\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "network": {
+                    "stations": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "timestamp": "str",
+                            "longitude": "float",
+                            "free_bikes": "int",
+                            "latitude": "float",
+                            "empty_slots": "int"
+                        }
+                    ],
+                    "id": "str",
+                    "name": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "network": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

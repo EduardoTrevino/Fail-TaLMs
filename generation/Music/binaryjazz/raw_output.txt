@@ -1,0 +1,133 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_genres(count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Fetch a number of random music genres.
+    Parameters:
+    count [Optional]: integer [Description: The number of genres to fetch. Default is 1.]
+    """
+    url = f"https://binaryjazz.us/wp-json/genrenator/v1/genre/{count}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_stories(count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Fetch a number of random genre stories.
+    Parameters:
+    count [Optional]: integer [Description: The number of stories to fetch. Default is 1.]
+    """
+    url = f"https://binaryjazz.us/wp-json/genrenator/v1/story/{count}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_genres, get_stories
+
+class TestBinaryJazzAPI(unittest.TestCase):
+
+    def test_get_single_genre(self):
+        """Test fetching a single genre"""
+        result = get_genres(1)
+        self.assertIsInstance(result, list)
+        self.assertGreaterEqual(len(result), 1)
+
+    def test_get_multiple_genres(self):
+        """Test fetching multiple genres"""
+        count = 5
+        result = get_genres(count)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), count)
+
+    def test_get_single_story(self):
+        """Test fetching a single story"""
+        result = get_stories(1)
+        self.assertIsInstance(result, list)
+        self.assertGreaterEqual(len(result), 1)
+
+    def test_get_multiple_stories(self):
+        """Test fetching multiple stories"""
+        count = 3
+        result = get_stories(count)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), count)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### binaryjazz.json
+```json
+{
+    "tool_name": "binaryjazz",
+    "tool_description": "API to generate random music genres and stories about genres.",
+    "title": "Binary Jazz Genrenator API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": null,
+        "avgLatency": null,
+        "avgSuccessRate": null,
+        "popularityScore": null,
+        "__typename": "Score"
+    },
+    "home_url": "https://binaryjazz.us",
+    "host": "binaryjazz.us",
+    "api_list": [
+        {
+            "name": "get_genres",
+            "url": "https://binaryjazz.us/wp-json/genrenator/v1/genre/",
+            "description": "Fetch a number of random music genres.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "The number of genres to fetch.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_stories",
+            "url": "https://binaryjazz.us/wp-json/genrenator/v1/story/",
+            "description": "Fetch a number of random genre stories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "The number of stories to fetch.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}
+```

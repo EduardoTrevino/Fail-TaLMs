@@ -1,0 +1,222 @@
+{
+    "tool_name": "fipe",
+    "tool_description": "API to access average vehicle prices in the Brazilian national market based on the FIPE table.",
+    "title": "FIPE API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": null,
+        "avgLatency": null,
+        "avgSuccessRate": null,
+        "popularityScore": null,
+        "__typename": "Score"
+    },
+    "home_url": "https://github.com/deividfortuna/fipe",
+    "host": "parallelum.com.br",
+    "api_list": [
+        {
+            "name": "get_brands",
+            "url": "https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas",
+            "description": "Fetch the brands for the specified vehicle type.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                    "default": "carros"
+                }
+            ],
+            "code": "import requests\n\nurl = f\"https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "code": "str",
+                    "name": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_models",
+            "url": "https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos",
+            "description": "Fetch the models for a specified brand.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "brand_code",
+                    "type": "STRING",
+                    "description": "Code of the brand."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                    "default": "carros"
+                }
+            ],
+            "code": "import requests\n\nurl = f\"https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "modelos": [
+                    {
+                        "code": "int",
+                        "name": "str"
+                    }
+                ],
+                "anos": [
+                    {
+                        "code": "str",
+                        "name": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "modelos": {
+                        "type": "array"
+                    },
+                    "anos": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_years",
+            "url": "https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos/{model_code}/anos",
+            "description": "Fetch the years for a specified model.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "brand_code",
+                    "type": "STRING",
+                    "description": "Code of the brand."
+                },
+                {
+                    "name": "model_code",
+                    "type": "STRING",
+                    "description": "Code of the model."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                    "default": "carros"
+                }
+            ],
+            "code": "import requests\n\nurl = f\"https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos/{model_code}/anos\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "code": "str",
+                    "name": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_value",
+            "url": "https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos/{model_code}/anos/{year_code}",
+            "description": "Fetch the current price from FIPE table for a specified vehicle, model and year.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "brand_code",
+                    "type": "STRING",
+                    "description": "Code of the brand."
+                },
+                {
+                    "name": "model_code",
+                    "type": "STRING",
+                    "description": "Code of the model."
+                },
+                {
+                    "name": "year_code",
+                    "type": "STRING",
+                    "description": "Code of the year."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                    "default": "carros"
+                }
+            ],
+            "code": "import requests\n\nurl = f\"https://parallelum.com.br/fipe/api/v1/{vehicle_type}/marcas/{brand_code}/modelos/{model_code}/anos/{year_code}\"\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "Valor": "str",
+                "Marca": "str",
+                "Modelo": "str",
+                "AnoModelo": "int",
+                "Combustivel": "str",
+                "CodigoFipe": "str",
+                "MesReferencia": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Valor": {
+                        "type": "string"
+                    },
+                    "Marca": {
+                        "type": "string"
+                    },
+                    "Modelo": {
+                        "type": "string"
+                    },
+                    "AnoModelo": {
+                        "type": "integer"
+                    },
+                    "Combustivel": {
+                        "type": "string"
+                    },
+                    "CodigoFipe": {
+                        "type": "string"
+                    },
+                    "MesReferencia": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

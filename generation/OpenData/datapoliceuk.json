@@ -1,0 +1,185 @@
+{
+    "tool_name": "datapoliceuk",
+    "tool_description": "API providing access to various data related to police services in the UK, including crime data, police force details, and stop and search information.",
+    "title": "Data Police UK API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://data.police.uk/docs/",
+    "host": "data.police.uk",
+    "api_list": [
+        {
+            "name": "available_datasets",
+            "url": "https://data.police.uk/api/crimes-street-dates",
+            "description": "Returns a list of available datasets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_forces",
+            "url": "https://data.police.uk/api/forces",
+            "description": "Returns a list of all police forces available via the API except the British Transport Police.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "specific_force",
+            "url": "https://data.police.uk/api/forces/{force_id}",
+            "description": "Returns detailed information about a specific police force given its ID.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "force_senior_officers",
+            "url": "https://data.police.uk/api/forces/{force_id}/people",
+            "description": "Returns a list of senior officers for a specific police force given its ID.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "street_level_crimes",
+            "url": "https://data.police.uk/api/crimes-street/all-crime",
+            "description": "Returns crimes at street-level for a given latitude and longitude, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["lat", "lng"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crimes_at_location",
+            "url": "https://data.police.uk/api/crimes-at-location",
+            "description": "Returns crimes which occurred at a specified location ID or nearest pre-defined location for given latitude/longitude.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["location_id", "lat", "lng", "date"]
+        },
+        {
+            "name": "crimes_with_no_location",
+            "url": "https://data.police.uk/api/crimes-no-location",
+            "description": "Returns a list of crimes that could not be mapped to a location.",
+            "method": "GET",
+            "required_parameters": ["category", "force"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crime_categories",
+            "url": "https://data.police.uk/api/crime-categories",
+            "description": "Returns a list of valid crime categories for a given date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crime_last_updated",
+            "url": "https://data.police.uk/api/crime-last-updated",
+            "description": "Returns the date when the crime data was last updated.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "outcomes_for_specific_crime",
+            "url": "https://data.police.uk/api/outcomes-for-crime/{crime_id}",
+            "description": "Returns the outcomes for a specific crime by its crime ID.",
+            "method": "GET",
+            "required_parameters": ["crime_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhoods_by_force",
+            "url": "https://data.police.uk/api/{force_id}/neighbourhoods",
+            "description": "Returns a list of neighbourhoods for a specified police force.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "specific_neighbourhood",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}",
+            "description": "Returns detailed information about a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_boundary",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/boundary",
+            "description": "Returns a list of latitude/longitude pairs that make up the boundary of a neighbourhood.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_teams",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/people",
+            "description": "Returns a list of team members for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_events",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/events",
+            "description": "Returns a list of upcoming events for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_priorities",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/priorities",
+            "description": "Returns a list of priorities for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "locate_neighbourhood",
+            "url": "https://data.police.uk/api/locate-neighbourhood",
+            "description": "Finds the neighbourhood policing team responsible for a particular area based on latitude and longitude.",
+            "method": "GET",
+            "required_parameters": ["lat", "lng"],
+            "optional_parameters": []
+        },
+        {
+            "name": "stop_and_searches_by_area",
+            "url": "https://data.police.uk/api/stops-street",
+            "description": "Returns stop and searches at street-level for a given latitude and longitude or within a custom area.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["lat", "lng", "poly", "date"]
+        },
+        {
+            "name": "stop_and_searches_by_location",
+            "url": "https://data.police.uk/api/stops-at-location",
+            "description": "Returns stop and searches at a particular location ID, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["location_id"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "stop_and_searches_no_location",
+            "url": "https://data.police.uk/api/stops-no-location",
+            "description": "Returns stop and searches that could not be mapped to a location for a specific force.",
+            "method": "GET",
+            "required_parameters": ["force"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "stop_and_searches_by_force",
+            "url": "https://data.police.uk/api/stops-force",
+            "description": "Returns stop and searches reported by a particular force, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["force"],
+            "optional_parameters": ["date"]
+        }
+    ]
+}

@@ -1,0 +1,178 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def get_sunrise_sunset_times(lat: float, lng: float, date: Optional[str] = 'today', timezone: Optional[str] = None, 
+                             date_start: Optional[str] = None, date_end: Optional[str] = None, 
+                             time_format: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve sunrise and sunset times for a specific location based on latitude and longitude.
+    
+    Parameters:
+    lat [Required]: float - Latitude of the location in decimal degrees.
+    lng [Required]: float - Longitude of the location in decimal degrees.
+    date [Optional]: str - Date in YYYY-MM-DD format or relative formats such as “today” and “tomorrow”. Defaults to today.
+    timezone [Optional]: str - Timezone of the returned times. Defaults to the location's timezone.
+    date_start [Optional]: str - Start date in YYYY-MM-DD format for a range.
+    date_end [Optional]: str - End date in YYYY-MM-DD format for a range.
+    time_format [Optional]: str - Time format such as "24", "military", or "unix".
+    """
+    url = "https://api.sunrisesunset.io/json"
+    params = {
+        'lat': lat,
+        'lng': lng,
+        'date': date
+    }
+    if timezone:
+        params['timezone'] = timezone
+    if date_start:
+        params['date_start'] = date_start
+    if date_end:
+        params['date_end'] = date_end
+    if time_format:
+        params['time_format'] = time_format
+    
+    response = requests.get(url, params=params)
+    
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_sunrise_sunset_times
+
+class TestSunriseSunsetAPI(unittest.TestCase):
+    
+    def test_get_sunrise_sunset_times_standard_request(self):
+        # Test with only required parameters
+        response = get_sunrise_sunset_times(38.907192, -77.036873)
+        self.assertEqual(response.get("status"), "OK")
+        self.assertIn("results", response)
+
+    def test_get_sunrise_sunset_times_specific_date(self):
+        # Test with a specific date and timezone
+        response = get_sunrise_sunset_times(38.907192, -77.036873, date="1990-05-22", timezone="UTC")
+        self.assertEqual(response.get("status"), "OK")
+        self.assertIn("results", response)
+
+    def test_get_sunrise_sunset_times_date_range(self):
+        # Test with a date range
+        response = get_sunrise_sunset_times(38.907192, -77.036873, date_start="1990-05-01", date_end="1990-07-01")
+        self.assertEqual(response.get("status"), "OK")
+        self.assertIn("results", response)
+
+    def test_get_sunrise_sunset_times_24_hour_format(self):
+        # Test with 24-hour time format
+        response = get_sunrise_sunset_times(38.907192, -77.036873, date="1990-05-22", timezone="UTC", time_format="24")
+        self.assertEqual(response.get("status"), "OK")
+        self.assertIn("results", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### sunsetsunrise.json**
+
+```json
+{
+    "tool_name": "sunsetsunrise",
+    "tool_description": "API for retrieving accurate sunrise and sunset times for a specific location using latitude and longitude.",
+    "title": "Sunset and Sunrise Times API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.sunrisesunset.io",
+    "host": "api.sunrisesunset.io",
+    "api_list": [
+        {
+            "name": "get_sunrise_sunset_times",
+            "url": "https://api.sunrisesunset.io/json",
+            "description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location in decimal degrees."
+                },
+                {
+                    "name": "lng",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location in decimal degrees."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                },
+                {
+                    "name": "timezone",
+                    "type": "STRING",
+                    "description": "Timezone of the returned times. Defaults to the location's timezone."
+                },
+                {
+                    "name": "date_start",
+                    "type": "STRING",
+                    "description": "Start date in YYYY-MM-DD format for retrieving a range."
+                },
+                {
+                    "name": "date_end",
+                    "type": "STRING",
+                    "description": "End date in YYYY-MM-DD format for retrieving a range."
+                },
+                {
+                    "name": "time_format",
+                    "type": "STRING",
+                    "description": "Time format such as '24', 'military', or 'unix'."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.sunrisesunset.io/json'\nparams = {'lat': lat, 'lng': lng, 'date': date, 'timezone': timezone, 'date_start': date_start, 'date_end': date_end, 'time_format': time_format}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "results": {
+                    "date": "str",
+                    "sunrise": "str",
+                    "sunset": "str",
+                    "first_light": "str",
+                    "last_light": "str",
+                    "dawn": "str",
+                    "dusk": "str",
+                    "solar_noon": "str",
+                    "golden_hour": "str",
+                    "day_length": "str",
+                    "timezone": "str",
+                    "utc_offset": "int"
+                },
+                "status": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "object"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

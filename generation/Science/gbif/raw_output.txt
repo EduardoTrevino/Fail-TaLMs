@@ -1,0 +1,337 @@
+Below is the implementation of the `api.py` file containing Python functions to interact with the GBIF endpoints and the corresponding `api_test.py` for testing. Additionally, I have created a `gbif.json` file with metadata about the API.
+
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+BASE_URL = "https://api.gbif.org/v1"
+
+def list_datasets(
+    country: Optional[str] = None,
+    type: Optional[str] = None,
+    limit: Optional[int] = 10,
+    offset: Optional[int] = 0,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Lists all current datasets (deleted datasets are not listed).
+    """
+    url = f"{BASE_URL}/dataset"
+    params = {
+        'country': country,
+        'type': type,
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_datasets(
+    q: Optional[str] = "",
+    limit: Optional[int] = 10,
+    offset: Optional[int] = 0,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Full-text search across all datasets. Results are ordered by relevance.
+    """
+    url = f"{BASE_URL}/dataset/search"
+    params = {
+        'q': q,
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_dataset_details(
+    key: str,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Get details of a single dataset. Also works for deleted datasets.
+    """
+    url = f"{BASE_URL}/dataset/{key}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_organizations(
+    limit: Optional[int] = 10,
+    offset: Optional[int] = 0,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Lists all current publishing organizations (deleted organizations are not listed).
+    """
+    url = f"{BASE_URL}/organization"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_organization_details(
+    key: str,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Get details of a single publishing organization. Also works for deleted publishing organizations.
+    """
+    url = f"{BASE_URL}/organization/{key}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_nodes(
+    limit: Optional[int] = 10,
+    offset: Optional[int] = 0,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Lists all current nodes (deleted nodes are not listed).
+    """
+    url = f"{BASE_URL}/node"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_node_details(
+    key: str,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+):
+    """
+    Get details of a single node. Also works for deleted nodes.
+    """
+    url = f"{BASE_URL}/node/{key}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    list_datasets,
+    search_datasets,
+    get_dataset_details,
+    list_organizations,
+    get_organization_details,
+    list_nodes,
+    get_node_details,
+)
+
+class TestGBIFAPI(unittest.TestCase):
+
+    def test_list_datasets(self):
+        response = list_datasets(limit=2)
+        self.assertIn('results', response)
+
+    def test_search_datasets(self):
+        response = search_datasets(q="plants", limit=2)
+        self.assertIn('results', response)
+
+    def test_get_dataset_details(self):
+        response = get_dataset_details(key="3fa85f64-5717-4562-b3fc-2c963f66afa6") # Example key
+        self.assertIn('key', response)
+
+    def test_list_organizations(self):
+        response = list_organizations(limit=2)
+        self.assertIn('results', response)
+
+    def test_get_organization_details(self):
+        response = get_organization_details(key="3fa85f64-5717-4562-b3fc-2c963f66afa6") # Example key
+        self.assertIn('key', response)
+
+    def test_list_nodes(self):
+        response = list_nodes(limit=2)
+        self.assertIn('results', response)
+
+    def test_get_node_details(self):
+        response = get_node_details(key="3fa85f64-5717-4562-b3fc-2c963f66afa6") # Example key
+        self.assertIn('key', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### gbif.json
+```json
+{
+    "tool_name": "gbif",
+    "tool_description": "Global Biodiversity Information Facility API to query biodiversity data.",
+    "title": "GBIF API",
+    "pricing": "FREE",
+    "home_url": "https://www.gbif.org/developer/summary",
+    "host": "api.gbif.org",
+    "api_list": [
+        {
+            "name": "list_datasets",
+            "url": "https://api.gbif.org/v1/dataset",
+            "description": "Lists all current datasets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "The 2-letter country code"
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Primary type of the dataset"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset of the results"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "search_datasets",
+            "url": "https://api.gbif.org/v1/dataset/search",
+            "description": "Full-text search across all datasets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "Full text search query"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset of the results"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_dataset_details",
+            "url": "https://api.gbif.org/v1/dataset/{key}",
+            "description": "Get details of a single dataset.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the dataset"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "list_organizations",
+            "url": "https://api.gbif.org/v1/organization",
+            "description": "Lists all current publishing organizations.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset of the results"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_organization_details",
+            "url": "https://api.gbif.org/v1/organization/{key}",
+            "description": "Get details of a single publishing organization.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the organization"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "list_nodes",
+            "url": "https://api.gbif.org/v1/node",
+            "description": "Lists all current nodes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset of the results"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_node_details",
+            "url": "https://api.gbif.org/v1/node/{key}",
+            "description": "Get details of a single node.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the node"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        }
+    ]
+}
+```
+
+This comprehensive implementation covers a variety of endpoints for the GBIF API and includes test cases for validation purposes. Adjust the fake UUIDs and other placeholders as necessary with valid data when necessary.

@@ -1,0 +1,520 @@
+### api.py
+```python
+import requests
+from typing import Optional, List, Dict
+
+BASE_URL = "https://data.police.uk/api"
+
+def available_datasets(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Returns a list of available datasets.
+    """
+    url = f"{BASE_URL}/crimes-street-dates"
+    response = requests.get(url)
+    return response.json()
+
+def list_forces(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of all the police forces available via the API except the British Transport Police.
+    """
+    url = f"{BASE_URL}/forces"
+    response = requests.get(url)
+    return response.json()
+
+def specific_force(force_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Returns detailed information about a specific police force given its ID.
+    """
+    url = f"{BASE_URL}/forces/{force_id}"
+    response = requests.get(url)
+    return response.json()
+
+def force_senior_officers(force_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of senior officers for a specific police force given its ID.
+    """
+    url = f"{BASE_URL}/forces/{force_id}/people"
+    response = requests.get(url)
+    return response.json()
+
+def street_level_crimes(lat: float, lng: float, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns crimes at street-level for a given latitude and longitude, optionally limited to a specific date.
+    """
+    url = f"{BASE_URL}/crimes-street/all-crime"
+    params = {
+        "lat": lat,
+        "lng": lng,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def crimes_at_location(location_id: Optional[int] = None, lat: Optional[float] = None, lng: Optional[float] = None, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns crimes which occurred at a specified location ID or nearest pre-defined location for given latitude/longitude.
+    """
+    url = f"{BASE_URL}/crimes-at-location"
+    params = {
+        "date": date
+    }
+    if location_id:
+        params["location_id"] = location_id
+    elif lat and lng:
+        params["lat"] = lat
+        params["lng"] = lng
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def crimes_with_no_location(category: str, force: str, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of crimes that could not be mapped to a location for a specified category and police force.
+    """
+    url = f"{BASE_URL}/crimes-no-location"
+    params = {
+        "category": category,
+        "force": force,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def crime_categories(date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of valid crime categories for a given date.
+    """
+    url = f"{BASE_URL}/crime-categories"
+    params = {
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def crime_last_updated(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Returns the date when the crime data was last updated.
+    """
+    url = f"{BASE_URL}/crime-last-updated"
+    response = requests.get(url)
+    return response.json()
+
+def outcomes_for_specific_crime(crime_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Returns the outcomes for a specific crime by its crime ID.
+    """
+    url = f"{BASE_URL}/outcomes-for-crime/{crime_id}"
+    response = requests.get(url)
+    return response.json()
+
+def neighbourhoods_by_force(force_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of neighbourhoods for a specified police force.
+    """
+    url = f"{BASE_URL}/{force_id}/neighbourhoods"
+    response = requests.get(url)
+    return response.json()
+
+def specific_neighbourhood(force_id: str, neighbourhood_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Returns detailed information about a specific neighbourhood in a police force.
+    """
+    url = f"{BASE_URL}/{force_id}/{neighbourhood_id}"
+    response = requests.get(url)
+    return response.json()
+
+def neighbourhood_boundary(force_id: str, neighbourhood_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of latitude/longitude pairs that make up the boundary of a neighbourhood.
+    """
+    url = f"{BASE_URL}/{force_id}/{neighbourhood_id}/boundary"
+    response = requests.get(url)
+    return response.json()
+
+def neighbourhood_team(force_id: str, neighbourhood_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of team members for a specific neighbourhood in a police force.
+    """
+    url = f"{BASE_URL}/{force_id}/{neighbourhood_id}/people"
+    response = requests.get(url)
+    return response.json()
+
+def neighbourhood_events(force_id: str, neighbourhood_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of upcoming events for a specific neighbourhood in a police force.
+    """
+    url = f"{BASE_URL}/{force_id}/{neighbourhood_id}/events"
+    response = requests.get(url)
+    return response.json()
+
+def neighbourhood_priorities(force_id: str, neighbourhood_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns a list of priorities for a specific neighbourhood in a police force.
+    """
+    url = f"{BASE_URL}/{force_id}/{neighbourhood_id}/priorities"
+    response = requests.get(url)
+    return response.json()
+
+def locate_neighbourhood(lat: float, lng: float, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Finds the neighbourhood policing team responsible for a particular area based on latitude and longitude.
+    """
+    url = f"{BASE_URL}/locate-neighbourhood"
+    params = {
+        "q": f"{lat},{lng}"
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def stop_and_searches_by_area(lat: Optional[float] = None, lng: Optional[float] = None, poly: Optional[str] = None, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns stop and searches at street-level for a given latitude and longitude or within a custom area.
+    """
+    url = f"{BASE_URL}/stops-street"
+    params = {
+        "lat": lat,
+        "lng": lng,
+        "poly": poly,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def stop_and_searches_by_location(location_id: int, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns stop and searches at a particular location ID, optionally limited to a specific date.
+    """
+    url = f"{BASE_URL}/stops-at-location"
+    params = {
+        "location_id": location_id,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def stop_and_searches_no_location(force: str, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns stop and searches that could not be mapped to a location for a specific force.
+    """
+    url = f"{BASE_URL}/stops-no-location"
+    params = {
+        "force": force,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def stop_and_searches_by_force(force: str, date: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
+    """
+    Returns stop and searches reported by a particular force, optionally limited to a specific date.
+    """
+    url = f"{BASE_URL}/stops-force"
+    params = {
+        "force": force,
+        "date": date
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class TestPoliceAPI(unittest.TestCase):
+
+    def test_available_datasets(self):
+        response = available_datasets()
+        self.assertIsInstance(response, list)
+
+    def test_list_forces(self):
+        response = list_forces()
+        self.assertIsInstance(response, list)
+
+    def test_specific_force(self):
+        force_id = "leicestershire"
+        response = specific_force(force_id)
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response['id'], force_id)
+
+    def test_force_senior_officers(self):
+        force_id = "leicestershire"
+        response = force_senior_officers(force_id)
+        self.assertIsInstance(response, list)
+
+    def test_street_level_crimes(self):
+        lat, lng = 52.629729, -1.131592
+        response = street_level_crimes(lat, lng)
+        self.assertIsInstance(response, list)
+
+    def test_crimes_at_location_by_location_id(self):
+        location_id = 884227
+        response = crimes_at_location(location_id=location_id)
+        self.assertIsInstance(response, list)
+
+    def test_crimes_with_no_location(self):
+        category, force = "all-crime", "leicestershire"
+        response = crimes_with_no_location(category, force)
+        self.assertIsInstance(response, list)
+
+    def test_crime_categories(self):
+        response = crime_categories()
+        self.assertIsInstance(response, list)
+
+    def test_crime_last_updated(self):
+        response = crime_last_updated()
+        self.assertIsInstance(response, dict)
+        
+    def test_outcomes_for_specific_crime(self):
+        crime_id = "590d68b69228a9ff95b675bb4af591b38de561aa03129dc09a03ef34f537588c"
+        response = outcomes_for_specific_crime(crime_id)
+        self.assertIsInstance(response, dict)
+
+    def test_neighbourhoods_by_force(self):
+        force_id = "leicestershire"
+        response = neighbourhoods_by_force(force_id)
+        self.assertIsInstance(response, list)
+
+    def test_specific_neighbourhood(self):
+        force_id, neighbourhood_id = "leicestershire", "NC04"
+        response = specific_neighbourhood(force_id, neighbourhood_id)
+        self.assertIsInstance(response, dict)
+
+    def test_neighbourhood_boundary(self):
+        force_id, neighbourhood_id = "leicestershire", "NC04"
+        response = neighbourhood_boundary(force_id, neighbourhood_id)
+        self.assertIsInstance(response, list)
+
+    def test_neighbourhood_team(self):
+        force_id, neighbourhood_id = "leicestershire", "NC04"
+        response = neighbourhood_team(force_id, neighbourhood_id)
+        self.assertIsInstance(response, list)
+
+    def test_neighbourhood_events(self):
+        force_id, neighbourhood_id = "leicestershire", "NC04"
+        response = neighbourhood_events(force_id, neighbourhood_id)
+        self.assertIsInstance(response, list)
+
+    def test_neighbourhood_priorities(self):
+        force_id, neighbourhood_id = "leicestershire", "NC04"
+        response = neighbourhood_priorities(force_id, neighbourhood_id)
+        self.assertIsInstance(response, list)
+
+    def test_locate_neighbourhood(self):
+        lat, lng = 51.500617, -0.124629
+        response = locate_neighbourhood(lat, lng)
+        self.assertIsInstance(response, dict)
+
+    def test_stop_and_searches_by_area(self):
+        lat, lng = 52.629729, -1.131592
+        response = stop_and_searches_by_area(lat, lng)
+        self.assertIsInstance(response, list)
+
+    def test_stop_and_searches_by_location(self):
+        location_id = 883407
+        response = stop_and_searches_by_location(location_id)
+        self.assertIsInstance(response, list)
+
+    def test_stop_and_searches_no_location(self):
+        force = "leicestershire"
+        response = stop_and_searches_no_location(force)
+        self.assertIsInstance(response, list)
+
+    def test_stop_and_searches_by_force(self):
+        force = "avon-and-somerset"
+        response = stop_and_searches_by_force(force)
+        self.assertIsInstance(response, list)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### datapoliceuk.json
+```json
+{
+    "tool_name": "datapoliceuk",
+    "tool_description": "API providing access to various data related to police services in the UK, including crime data, police force details, and stop and search information.",
+    "title": "Data Police UK API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://data.police.uk/docs/",
+    "host": "data.police.uk",
+    "api_list": [
+        {
+            "name": "available_datasets",
+            "url": "https://data.police.uk/api/crimes-street-dates",
+            "description": "Returns a list of available datasets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "list_forces",
+            "url": "https://data.police.uk/api/forces",
+            "description": "Returns a list of all police forces available via the API except the British Transport Police.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "specific_force",
+            "url": "https://data.police.uk/api/forces/{force_id}",
+            "description": "Returns detailed information about a specific police force given its ID.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "force_senior_officers",
+            "url": "https://data.police.uk/api/forces/{force_id}/people",
+            "description": "Returns a list of senior officers for a specific police force given its ID.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "street_level_crimes",
+            "url": "https://data.police.uk/api/crimes-street/all-crime",
+            "description": "Returns crimes at street-level for a given latitude and longitude, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["lat", "lng"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crimes_at_location",
+            "url": "https://data.police.uk/api/crimes-at-location",
+            "description": "Returns crimes which occurred at a specified location ID or nearest pre-defined location for given latitude/longitude.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["location_id", "lat", "lng", "date"]
+        },
+        {
+            "name": "crimes_with_no_location",
+            "url": "https://data.police.uk/api/crimes-no-location",
+            "description": "Returns a list of crimes that could not be mapped to a location.",
+            "method": "GET",
+            "required_parameters": ["category", "force"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crime_categories",
+            "url": "https://data.police.uk/api/crime-categories",
+            "description": "Returns a list of valid crime categories for a given date.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "crime_last_updated",
+            "url": "https://data.police.uk/api/crime-last-updated",
+            "description": "Returns the date when the crime data was last updated.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "outcomes_for_specific_crime",
+            "url": "https://data.police.uk/api/outcomes-for-crime/{crime_id}",
+            "description": "Returns the outcomes for a specific crime by its crime ID.",
+            "method": "GET",
+            "required_parameters": ["crime_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhoods_by_force",
+            "url": "https://data.police.uk/api/{force_id}/neighbourhoods",
+            "description": "Returns a list of neighbourhoods for a specified police force.",
+            "method": "GET",
+            "required_parameters": ["force_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "specific_neighbourhood",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}",
+            "description": "Returns detailed information about a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_boundary",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/boundary",
+            "description": "Returns a list of latitude/longitude pairs that make up the boundary of a neighbourhood.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_teams",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/people",
+            "description": "Returns a list of team members for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_events",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/events",
+            "description": "Returns a list of upcoming events for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "neighbourhood_priorities",
+            "url": "https://data.police.uk/api/{force_id}/{neighbourhood_id}/priorities",
+            "description": "Returns a list of priorities for a specific neighbourhood in a police force.",
+            "method": "GET",
+            "required_parameters": ["force_id", "neighbourhood_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "locate_neighbourhood",
+            "url": "https://data.police.uk/api/locate-neighbourhood",
+            "description": "Finds the neighbourhood policing team responsible for a particular area based on latitude and longitude.",
+            "method": "GET",
+            "required_parameters": ["lat", "lng"],
+            "optional_parameters": []
+        },
+        {
+            "name": "stop_and_searches_by_area",
+            "url": "https://data.police.uk/api/stops-street",
+            "description": "Returns stop and searches at street-level for a given latitude and longitude or within a custom area.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": ["lat", "lng", "poly", "date"]
+        },
+        {
+            "name": "stop_and_searches_by_location",
+            "url": "https://data.police.uk/api/stops-at-location",
+            "description": "Returns stop and searches at a particular location ID, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["location_id"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "stop_and_searches_no_location",
+            "url": "https://data.police.uk/api/stops-no-location",
+            "description": "Returns stop and searches that could not be mapped to a location for a specific force.",
+            "method": "GET",
+            "required_parameters": ["force"],
+            "optional_parameters": ["date"]
+        },
+        {
+            "name": "stop_and_searches_by_force",
+            "url": "https://data.police.uk/api/stops-force",
+            "description": "Returns stop and searches reported by a particular force, optionally limited to a specific date.",
+            "method": "GET",
+            "required_parameters": ["force"],
+            "optional_parameters": ["date"]
+        }
+    ]
+}
+```

@@ -1,0 +1,957 @@
+**### api.py**
+```python
+import requests
+from typing import Optional
+
+BASE_URL = "https://vpic.nhtsa.dot.gov/api/vehicles"
+
+def decode_vin(vin: str, modelyear: Optional[int] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode a VIN (Vehicle Identification Number) to get detailed vehicle information.
+    """
+    url = f"{BASE_URL}/DecodeVin/{vin}"
+    params = {'format': format}
+    if modelyear:
+        params['modelyear'] = modelyear
+    response = requests.get(url, params=params)
+    return response.json()
+
+def decode_vin_values(vin: str, modelyear: Optional[int] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode a VIN and provide data in a flat format.
+    """
+    url = f"{BASE_URL}/DecodeVinValues/{vin}"
+    params = {'format': format}
+    if modelyear:
+        params['modelyear'] = modelyear
+    response = requests.get(url, params=params)
+    return response.json()
+
+def decode_vin_extended(vin: str, modelyear: Optional[int] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode a VIN with extended data information.
+    """
+    url = f"{BASE_URL}/DecodeVinExtended/{vin}"
+    params = {'format': format}
+    if modelyear:
+        params['modelyear'] = modelyear
+    response = requests.get(url, params=params)
+    return response.json()
+
+def decode_vin_values_extended(vin: str, modelyear: Optional[int] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode a VIN in a flat format with extended data information.
+    """
+    url = f"{BASE_URL}/DecodeVinValuesExtended/{vin}"
+    params = {'format': format}
+    if modelyear:
+        params['modelyear'] = modelyear
+    response = requests.get(url, params=params)
+    return response.json()
+
+def decode_wmi(wmi: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode the World Manufacturer Identifier (WMI).
+    """
+    url = f"{BASE_URL}/DecodeWMI/{wmi}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_wmis_for_manufacturer(manufacturer: str, vehicle_type: Optional[str] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the World Manufacturer Identifier (WMI) for a specified manufacturer.
+    """
+    url = f"{BASE_URL}/GetWMIsForManufacturer/{manufacturer}"
+    params = {'format': format}
+    if vehicle_type:
+        params['vehicleType'] = vehicle_type
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_all_makes(format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all the Makes available.
+    """
+    url = f"{BASE_URL}/GetAllMakes"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_parts(type: int, from_date: Optional[str] = None, to_date: Optional[str] = None, manufacturer: Optional[str] = None, format: str = 'json', page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of ORGs with letter date in the given range of the dates and with specified Type of ORG.
+    """
+    url = f"{BASE_URL}/GetParts"
+    params = {
+        'type': type,
+        'format': format,
+        'page': page
+    }
+    if from_date:
+        params['fromDate'] = from_date
+    if to_date:
+        params['toDate'] = to_date
+    if manufacturer:
+        params['manufacturer'] = manufacturer
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_all_manufacturers(manufacturer_type: Optional[str] = None, page: int = 1, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all the Manufacturers available, optionally filtered by Manufacturer Type.
+    """
+    url = f"{BASE_URL}/GetAllManufacturers"
+    params = {
+        'page': page,
+        'format': format
+    }
+    if manufacturer_type:
+        params['ManufacturerType'] = manufacturer_type
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_manufacturer_details(manufacturer: str, page: Optional[int] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the details for a specific manufacturer.
+    """
+    url = f"{BASE_URL}/GetManufacturerDetails/{manufacturer}"
+    params = {'format': format}
+    if page:
+        params['page'] = page
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_make_for_manufacturer(manufacturer: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the Makes for a specified manufacturer.
+    """
+    url = f"{BASE_URL}/GetMakeForManufacturer/{manufacturer}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_makes_for_manufacturer_and_year(manufacturer: str, year: int, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the Makes for a specified manufacturer and year.
+    """
+    url = f"{BASE_URL}/GetMakesForManufacturerAndYear/{manufacturer}"
+    params = {'year': year, 'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_makes_for_vehicle_type(vehicle_type: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the Makes for a specified vehicle type.
+    """
+    url = f"{BASE_URL}/GetMakesForVehicleType/{vehicle_type}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_vehicle_types_for_make(make: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the Vehicle Types for a specified Make.
+    """
+    url = f"{BASE_URL}/GetVehicleTypesForMake/{make}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_vehicle_types_for_make_id(make_id: int, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the Vehicle Types for a specified Make ID.
+    """
+    url = f"{BASE_URL}/GetVehicleTypesForMakeId/{make_id}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_equipment_plant_codes(year: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get assigned Equipment Plant Codes by Year.
+    """
+    url = f"{BASE_URL}/GetEquipmentPlantCodes/{year}"
+    params = {'format': 'json'}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_models_for_make(make: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the Models for a specified Make.
+    """
+    url = f"{BASE_URL}/GetModelsForMake/{make}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_models_for_make_id(make_id: int, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the Models for a specified Make ID.
+    """
+    url = f"{BASE_URL}/GetModelsForMakeId/{make_id}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_models_for_make_year(make: str, modelyear: Optional[int] = None, vehicletype: Optional[str] = None, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the Models for a specified Make by Year and Vehicle Type.
+    """
+    url = f"{BASE_URL}/GetModelsForMakeYear/make/{make}"
+    if modelyear:
+        url += f"/modelyear/{modelyear}"
+    if vehicletype:
+        url += f"/vehicletype/{vehicletype}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_vehicle_variable_list(format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all the vehicle-related variables.
+    """
+    url = f"{BASE_URL}/GetVehicleVariableList"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_vehicle_variable_values_list(variable: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a list of all the accepted values for a given vehicle variable.
+    """
+    url = f"{BASE_URL}/GetVehicleVariableValuesList/{variable}"
+    params = {'format': format}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def decode_vin_values_batch(vins: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode multiple VINs in batch, separated by semicolon and model year.
+    """
+    url = f"{BASE_URL}/DecodeVINValuesBatch/"
+    headers = {'Content-Type': 'application/json'}
+    params = {'format': format}
+    data = vins  # Send string of VINs
+    response = requests.post(url, headers=headers, params=params, data=data)
+    return response.json()
+
+def get_canadian_vehicle_specifications(year: int, make: str, model: Optional[str] = None, units: Optional[str] = 'Metric', format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get Canadian vehicle specifications.
+    """
+    url = f"{BASE_URL}/GetCanadianVehicleSpecifications/"
+    params = {
+        'year': year,
+        'make': make,
+        'units': units,
+        'format': format
+    }
+    if model:
+        params['model'] = model
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**### api_test.py**
+```python
+import unittest
+from api import *
+
+class TestVehiclesAPI(unittest.TestCase):
+
+    def test_decode_vin(self):
+        response = decode_vin("5UXWX7C5*BA", 2011)
+        self.assertIn('Results', response)
+
+    def test_decode_vin_values(self):
+        response = decode_vin_values("5UXWX7C5*BA", 2011)
+        self.assertIn('Results', response)
+
+    def test_decode_vin_extended(self):
+        response = decode_vin_extended("5UXWX7C5*BA", 2011)
+        self.assertIn('Results', response)
+
+    def test_decode_vin_values_extended(self):
+        response = decode_vin_values_extended("5UXWX7C5*BA", 2011)
+        self.assertIn('Results', response)
+
+    def test_decode_wmi(self):
+        response = decode_wmi("1FD")
+        self.assertIn('Results', response)
+
+    def test_get_wmis_for_manufacturer(self):
+        response = get_wmis_for_manufacturer("hon")
+        self.assertIn('Results', response)
+
+    def test_get_all_makes(self):
+        response = get_all_makes()
+        self.assertIn('Results', response)
+
+    def test_get_parts(self):
+        response = get_parts(565, "1/1/2015", "5/5/2015")
+        self.assertIn('Results', response)
+
+    def test_get_all_manufacturers(self):
+        response = get_all_manufacturers()
+        self.assertIn('Results', response)
+
+    def test_get_manufacturer_details(self):
+        response = get_manufacturer_details("honda")
+        self.assertIn('Results', response)
+
+    def test_get_make_for_manufacturer(self):
+        response = get_make_for_manufacturer("honda")
+        self.assertIn('Results', response)
+
+    def test_get_makes_for_manufacturer_and_year(self):
+        response = get_makes_for_manufacturer_and_year("mer", 2013)
+        self.assertIn('Results', response)
+
+    def test_get_makes_for_vehicle_type(self):
+        response = get_makes_for_vehicle_type("car")
+        self.assertIn('Results', response)
+
+    def test_get_vehicle_types_for_make(self):
+        response = get_vehicle_types_for_make("mercedes")
+        self.assertIn('Results', response)
+
+    def test_get_vehicle_types_for_make_id(self):
+        response = get_vehicle_types_for_make_id(450)
+        self.assertIn('Results', response)
+
+    def test_get_equipment_plant_codes(self):
+        response = get_equipment_plant_codes(2015)
+        self.assertIn('Results', response)
+
+    def test_get_models_for_make(self):
+        response = get_models_for_make("honda")
+        self.assertIn('Results', response)
+
+    def test_get_models_for_make_id(self):
+        response = get_models_for_make_id(440)
+        self.assertIn('Results', response)
+
+    def test_get_models_for_make_year(self):
+        response = get_models_for_make_year("honda", 2015, "truck")
+        self.assertIn('Results', response)
+
+    def test_get_vehicle_variable_list(self):
+        response = get_vehicle_variable_list()
+        self.assertIn('Results', response)
+
+    def test_get_vehicle_variable_values_list(self):
+        response = get_vehicle_variable_values_list("battery type")
+        self.assertIn('Results', response)
+
+    def test_decode_vin_values_batch(self):
+        vins = "5UXWX7C5*BA,2011;5YJSA3DS*EF"
+        response = decode_vin_values_batch(vins)
+        self.assertIn('Results', response)
+
+    def test_get_canadian_vehicle_specifications(self):
+        response = get_canadian_vehicle_specifications(2011, "Acura")
+        self.assertIn('Results', response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**### vehicles.json**
+```json
+{
+    "tool_name": "vehicles",
+    "tool_description": "The NHTSA Product Information Catalog Vehicle Listing (vPIC) API provides different ways to gather information on Vehicles and their specifications.",
+    "title": "Vehicle Information API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 200,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.7
+    },
+    "home_url": "https://vpic.nhtsa.dot.gov/api/",
+    "host": "vpic.nhtsa.dot.gov",
+    "api_list": [
+        {
+            "name": "decode_vin",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/{vin}",
+            "description": "Decode a VIN to get detailed vehicle information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vin",
+                    "type": "STRING",
+                    "description": "Vehicle Identification Number"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "modelyear",
+                    "type": "INTEGER",
+                    "description": "Year of the Vehicle model"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_vin(vin, modelyear, format)"
+        },
+        {
+            "name": "decode_vin_values",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/{vin}",
+            "description": "Decode a VIN to get vehicle data in flat format.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vin",
+                    "type": "STRING",
+                    "description": "Vehicle Identification Number"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "modelyear",
+                    "type": "INTEGER",
+                    "description": "Year of the Vehicle model"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_vin_values(vin, modelyear, format)"
+        },
+        {
+            "name": "decode_vin_extended",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinExtended/{vin}",
+            "description": "Decode a VIN with extended data information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vin",
+                    "type": "STRING",
+                    "description": "Vehicle Identification Number"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "modelyear",
+                    "type": "INTEGER",
+                    "description": "Year of the Vehicle model"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_vin_extended(vin, modelyear, format)"
+        },
+        {
+            "name": "decode_vin_values_extended",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/{vin}",
+            "description": "Decode a VIN in flat format with extended data information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vin",
+                    "type": "STRING",
+                    "description": "Vehicle Identification Number"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "modelyear",
+                    "type": "INTEGER",
+                    "description": "Year of the Vehicle model"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_vin_values_extended(vin, modelyear, format)"
+        },
+        {
+            "name": "decode_wmi",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeWMI/{wmi}",
+            "description": "Decode the World Manufacturer Identifier (WMI).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "wmi",
+                    "type": "STRING",
+                    "description": "World Manufacturer Identifier"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_wmi(wmi, format)"
+        },
+        {
+            "name": "get_wmis_for_manufacturer",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetWMIsForManufacturer/{manufacturer}",
+            "description": "Get the WMI for a specified manufacturer.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "manufacturer",
+                    "type": "STRING",
+                    "description": "Manufacturer name or ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_wmis_for_manufacturer(manufacturer, vehicle_type, format)"
+        },
+        {
+            "name": "get_all_makes",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllMakes",
+            "description": "Get a list of all vehicle makes.",
+            "method": "GET",
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_all_makes(format)"
+        },
+        {
+            "name": "get_parts",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetParts",
+            "description": "Get parts list for given type and date range.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "type",
+                    "type": "INTEGER",
+                    "description": "Type of parts (565 or 566)"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "from_date",
+                    "type": "STRING",
+                    "description": "Start date for search"
+                },
+                {
+                    "name": "to_date",
+                    "type": "STRING",
+                    "description": "End date for search"
+                },
+                {
+                    "name": "manufacturer",
+                    "type": "STRING",
+                    "description": "Manufacturer name or ID"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number",
+                    "default": 1
+                }
+            ],
+            "code": "get_parts(type, from_date, to_date, manufacturer, format, page)"
+        },
+        {
+            "name": "get_all_manufacturers",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetAllManufacturers",
+            "description": "Get all manufacturers, with optional Manufacturer Type filter.",
+            "method": "GET",
+            "optional_parameters": [
+                {
+                    "name": "manufacturer_type",
+                    "type": "STRING",
+                    "description": "Type of manufacturer"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number",
+                    "default": 1
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_all_manufacturers(manufacturer_type, page, format)"
+        },
+        {
+            "name": "get_manufacturer_details",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetManufacturerDetails/{manufacturer}",
+            "description": "Get details of a manufacturer by name or ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "manufacturer",
+                    "type": "STRING",
+                    "description": "Manufacturer name or ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number (if using name)",
+                    "default": 1
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_manufacturer_details(manufacturer, page, format)"
+        },
+        {
+            "name": "get_make_for_manufacturer",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakeForManufacturer/{manufacturer}",
+            "description": "Get all Makes produced by a specified manufacturer.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "manufacturer",
+                    "type": "STRING",
+                    "description": "Manufacturer name or ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_make_for_manufacturer(manufacturer, format)"
+        },
+        {
+            "name": "get_makes_for_manufacturer_and_year",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/{manufacturer}",
+            "description": "Get Makes for a specified manufacturer and year.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "manufacturer",
+                    "type": "STRING",
+                    "description": "Manufacturer name or ID"
+                },
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "Specific year"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_makes_for_manufacturer_and_year(manufacturer, year, format)"
+        },
+        {
+            "name": "get_makes_for_vehicle_type",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/{vehicle_type}",
+            "description": "Get Makes for a specified vehicle type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vehicle_type",
+                    "type": "STRING",
+                    "description": "Type of vehicle"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_makes_for_vehicle_type(vehicle_type, format)"
+        },
+        {
+            "name": "get_vehicle_types_for_make",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMake/{make}",
+            "description": "Get Vehicle Types for a specified make.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "make",
+                    "type": "STRING",
+                    "description": "Make name"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_vehicle_types_for_make(make, format)"
+        },
+        {
+            "name": "get_vehicle_types_for_make_id",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/{make_id}",
+            "description": "Get Vehicle Types for a specified make ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "make_id",
+                    "type": "INTEGER",
+                    "description": "Make ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_vehicle_types_for_make_id(make_id, format)"
+        },
+        {
+            "name": "get_equipment_plant_codes",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetEquipmentPlantCodes/{year}",
+            "description": "Get Equipment Plant Codes by year.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "Year"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_equipment_plant_codes(year, format)"
+        },
+        {
+            "name": "get_models_for_make",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/{make}",
+            "description": "Get Models for a specified make.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "make",
+                    "type": "STRING",
+                    "description": "Make name"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_models_for_make(make, format)"
+        },
+        {
+            "name": "get_models_for_make_id",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeId/{make_id}",
+            "description": "Get Models for a specified make ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "make_id",
+                    "type": "INTEGER",
+                    "description": "Make ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_models_for_make_id(make_id, format)"
+        },
+        {
+            "name": "get_models_for_make_year",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{make}",
+            "description": "Get Models for a specified make by year and vehicle type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "make",
+                    "type": "STRING",
+                    "description": "Make name"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "modelyear",
+                    "type": "INTEGER",
+                    "description": "Year for models"
+                },
+                {
+                    "name": "vehicletype",
+                    "type": "STRING",
+                    "description": "Type of vehicle"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_models_for_make_year(make, modelyear, vehicletype, format)"
+        },
+        {
+            "name": "get_vehicle_variable_list",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleVariableList",
+            "description": "Get a list of all vehicle-related variables.",
+            "method": "GET",
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_vehicle_variable_list(format)"
+        },
+        {
+            "name": "get_vehicle_variable_values_list",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleVariableValuesList/{variable}",
+            "description": "Get accepted values for a given vehicle variable.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "variable",
+                    "type": "STRING",
+                    "description": "Variable name or ID"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_vehicle_variable_values_list(variable, format)"
+        },
+        {
+            "name": "decode_vin_values_batch",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValuesBatch",
+            "description": "Decode multiple VINs in batch.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "vins",
+                    "type": "STRING",
+                    "description": "Comma-separated VINs"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "decode_vin_values_batch(vins, format)"
+        },
+        {
+            "name": "get_canadian_vehicle_specifications",
+            "url": "https://vpic.nhtsa.dot.gov/api/vehicles/GetCanadianVehicleSpecifications",
+            "description": "Get Canadian vehicle specifications for model year and make.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "Year of the vehicle"
+                },
+                {
+                    "name": "make",
+                    "type": "STRING",
+                    "description": "Vehicle's make"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "model",
+                    "type": "STRING",
+                    "description": "Vehicle's model"
+                },
+                {
+                    "name": "units",
+                    "type": "STRING",
+                    "description": "Units of measure ('Metric' or 'US')",
+                    "default": "Metric"
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format",
+                    "default": "json"
+                }
+            ],
+            "code": "get_canadian_vehicle_specifications(year, make, model, units, format)"
+        }
+    ]
+}
+```

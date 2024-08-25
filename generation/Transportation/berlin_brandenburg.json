@@ -1,0 +1,81 @@
+{
+    "tool_name": "berlin_brandenburg",
+    "tool_description": "REST API for accessing public transport data in the Berlin and Brandenburg area, including stops, locations and vehicle movements.",
+    "title": "Berlin Brandenburg Public Transport API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://v6.vbb.transport.rest/",
+    "host": "v6.vbb.transport.rest",
+    "api_list": [
+        {
+            "name": "locations",
+            "url": "https://v6.vbb.transport.rest/locations",
+            "description": "Find stops/stations, POIs and addresses matching a query.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query for locations.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fuzzy",
+                    "type": "BOOLEAN",
+                    "description": "Find more than exact matches?",
+                    "default": "true"
+                },
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "How many stations to show?",
+                    "default": "10"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "type": "object",
+                            "properties": {
+                                "latitude": {
+                                    "type": "number"
+                                },
+                                "longitude": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Other endpoints follow the same structure here...        
+    ]
+}

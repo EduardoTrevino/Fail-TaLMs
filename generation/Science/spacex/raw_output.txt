@@ -1,0 +1,719 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict
+
+def get_all_capsules(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/capsules"
+    response = requests.get(url)
+    return response.json()
+
+def get_capsule_by_id(capsule_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/capsules/{capsule_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_capsules(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/capsules/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_company_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/company"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_cores(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/cores"
+    response = requests.get(url)
+    return response.json()
+
+def get_core_by_id(core_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/cores/{core_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_cores(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/cores/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_crew(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/crew"
+    response = requests.get(url)
+    return response.json()
+
+def get_crew_member_by_id(crew_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/crew/{crew_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_crew_members(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/crew/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_dragons(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/dragons"
+    response = requests.get(url)
+    return response.json()
+
+def get_dragon_by_id(dragon_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/dragons/{dragon_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_dragons(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/dragons/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_history_events(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/history"
+    response = requests.get(url)
+    return response.json()
+
+def get_history_event_by_id(event_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/history/{event_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_history_events(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/history/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_landing_pads(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/landpads"
+    response = requests.get(url)
+    return response.json()
+
+def get_landing_pad_by_id(pad_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/landpads/{pad_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_landing_pads(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/landpads/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_launches(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v5/launches"
+    response = requests.get(url)
+    return response.json()
+
+def get_next_launch(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v5/launches/next"
+    response = requests.get(url)
+    return response.json()
+
+def get_launch_by_id(launch_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v5/launches/{launch_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def get_all_past_launches(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v5/launches/past"
+    response = requests.get(url)
+    return response.json()
+
+def query_launches(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v5/launches/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_upcoming_launches(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v5/launches/upcoming"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_launchpads(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/launchpads"
+    response = requests.get(url)
+    return response.json()
+
+def get_launchpad_by_id(pad_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/launchpads/{pad_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_launchpads(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/launchpads/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_payloads(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/payloads"
+    response = requests.get(url)
+    return response.json()
+
+def get_payload_by_id(payload_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/payloads/{payload_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_payloads(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/payloads/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_roadster_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/roadster"
+    response = requests.get(url)
+    return response.json()
+
+def get_all_rockets(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/rockets"
+    response = requests.get(url)
+    return response.json()
+
+def get_rocket_by_id(rocket_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/rockets/{rocket_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_rockets(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/rockets/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+
+def get_all_ships(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/ships"
+    response = requests.get(url)
+    return response.json()
+
+def get_ship_by_id(ship_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.spacexdata.com/v4/ships/{ship_id}"
+    response = requests.get(url)
+    if response.status_code == 404:
+        return {"error": "Not Found"}
+    return response.json()
+
+def query_ships(query: Dict, options: Dict, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.spacexdata.com/v4/ships/query"
+    response = requests.post(url, json={"query": query, "options": options})
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class SpaceXAPITestCase(unittest.TestCase):
+
+    def test_get_all_capsules(self):
+        response = get_all_capsules()
+        self.assertIsInstance(response, list)
+
+    def test_get_capsule_by_id(self):
+        response = get_capsule_by_id("5e9e2c5bf35918ed873b2664")
+        self.assertIsInstance(response, dict)
+        self.assertIn("serial", response)
+
+    def test_query_capsules(self):
+        response = query_capsules({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_company_info(self):
+        response = get_company_info()
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_get_all_cores(self):
+        response = get_all_cores()
+        self.assertIsInstance(response, list)
+
+    def test_get_core_by_id(self):
+        response = get_core_by_id("5e9e28a6f35918c0803b265c")
+        self.assertIsInstance(response, dict)
+        self.assertIn("serial", response)
+
+    def test_query_cores(self):
+        response = query_cores({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_crew(self):
+        response = get_all_crew()
+        self.assertIsInstance(response, list)
+
+    def test_get_crew_member_by_id(self):
+        response = get_crew_member_by_id("5ebf1a6e23a9a60006e03a7a")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_crew_members(self):
+        response = query_crew_members({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_dragons(self):
+        response = get_all_dragons()
+        self.assertIsInstance(response, list)
+
+    def test_get_dragon_by_id(self):
+        response = get_dragon_by_id("5e9d058759b1ff74a7ad5f8f")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_dragons(self):
+        response = query_dragons({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_history_events(self):
+        response = get_all_history_events()
+        self.assertIsInstance(response, list)
+
+    def test_get_history_event_by_id(self):
+        response = get_history_event_by_id("5f6fb2e9b3467846b3242159")
+        self.assertIsInstance(response, dict)
+        self.assertIn("title", response)
+
+    def test_query_history_events(self):
+        response = query_history_events({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_landing_pads(self):
+        response = get_all_landing_pads()
+        self.assertIsInstance(response, list)
+
+    def test_get_landing_pad_by_id(self):
+        response = get_landing_pad_by_id("5e9e3032383ecb90a834e7c8")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_landing_pads(self):
+        response = query_landing_pads({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_launches(self):
+        response = get_all_launches()
+        self.assertIsInstance(response, list)
+
+    def test_get_next_launch(self):
+        response = get_next_launch()
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_get_launch_by_id(self):
+        response = get_launch_by_id("5eb87d42ffd86e000604b384")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_get_all_past_launches(self):
+        response = get_all_past_launches()
+        self.assertIsInstance(response, list)
+
+    def test_query_launches(self):
+        response = query_launches({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_upcoming_launches(self):
+        response = get_all_upcoming_launches()
+        self.assertIsInstance(response, list)
+
+    def test_get_all_launchpads(self):
+        response = get_all_launchpads()
+        self.assertIsInstance(response, list)
+
+    def test_get_launchpad_by_id(self):
+        response = get_launchpad_by_id("5e9e4502f509092b78566f87")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_launchpads(self):
+        response = query_launchpads({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_payloads(self):
+        response = get_all_payloads()
+        self.assertIsInstance(response, list)
+
+    def test_get_payload_by_id(self):
+        response = get_payload_by_id("5eb0e4c6b6c3bb0006eeb21e")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_payloads(self):
+        response = query_payloads({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_roadster_info(self):
+        response = get_roadster_info()
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_get_all_rockets(self):
+        response = get_all_rockets()
+        self.assertIsInstance(response, list)
+
+    def test_get_rocket_by_id(self):
+        response = get_rocket_by_id("5e9d0d95eda69974db09d1ed")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_rockets(self):
+        response = query_rockets({}, {})
+        self.assertIsInstance(response, dict)
+
+    def test_get_all_ships(self):
+        response = get_all_ships()
+        self.assertIsInstance(response, list)
+
+    def test_get_ship_by_id(self):
+        response = get_ship_by_id("5ea6ed2e080df4000697c90a")
+        self.assertIsInstance(response, dict)
+        self.assertIn("name", response)
+
+    def test_query_ships(self):
+        response = query_ships({}, {})
+        self.assertIsInstance(response, dict)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### spacex.json
+```json
+{
+    "tool_name": "spacex",
+    "tool_description": "Access SpaceX public data related to launches, rockets, capsules, and more.",
+    "title": "SpaceX API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.9,
+        "__typename": "Score"
+    },
+    "home_url": "https://github.com/r-spacex/SpaceX-API",
+    "host": "api.spacexdata.com",
+    "api_list": [
+        {
+            "name": "get_all_capsules",
+            "url": "https://api.spacexdata.com/v4/capsules",
+            "description": "Retrieve all capsules information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_capsule_by_id",
+            "url": "https://api.spacexdata.com/v4/capsules/:id",
+            "description": "Retrieve information for a specific capsule by its ID.",
+            "method": "GET",
+            "required_parameters": ["capsule_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_capsules",
+            "url": "https://api.spacexdata.com/v4/capsules/query",
+            "description": "Query capsules with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_company_info",
+            "url": "https://api.spacexdata.com/v4/company",
+            "description": "Retrieve general info about SpaceX.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_cores",
+            "url": "https://api.spacexdata.com/v4/cores",
+            "description": "Retrieve all cores information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_core_by_id",
+            "url": "https://api.spacexdata.com/v4/cores/:id",
+            "description": "Retrieve information for a specific core by its ID.",
+            "method": "GET",
+            "required_parameters": ["core_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_cores",
+            "url": "https://api.spacexdata.com/v4/cores/query",
+            "description": "Query cores with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_crew",
+            "url": "https://api.spacexdata.com/v4/crew",
+            "description": "Retrieve all crew information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_crew_member_by_id",
+            "url": "https://api.spacexdata.com/v4/crew/:id",
+            "description": "Retrieve information for a specific crew member by their ID.",
+            "method": "GET",
+            "required_parameters": ["crew_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_crew_members",
+            "url": "https://api.spacexdata.com/v4/crew/query",
+            "description": "Query crew members with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_dragons",
+            "url": "https://api.spacexdata.com/v4/dragons",
+            "description": "Retrieve all dragons information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_dragon_by_id",
+            "url": "https://api.spacexdata.com/v4/dragons/:id",
+            "description": "Retrieve information for a specific dragon by its ID.",
+            "method": "GET",
+            "required_parameters": ["dragon_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_dragons",
+            "url": "https://api.spacexdata.com/v4/dragons/query",
+            "description": "Query dragons with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_history_events",
+            "url": "https://api.spacexdata.com/v4/history",
+            "description": "Retrieve all history events.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_history_event_by_id",
+            "url": "https://api.spacexdata.com/v4/history/:id",
+            "description": "Retrieve information for a specific history event by its ID.",
+            "method": "GET",
+            "required_parameters": ["event_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_history_events",
+            "url": "https://api.spacexdata.com/v4/history/query",
+            "description": "Query history events with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_landing_pads",
+            "url": "https://api.spacexdata.com/v4/landpads",
+            "description": "Retrieve all landing pads information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_landing_pad_by_id",
+            "url": "https://api.spacexdata.com/v4/landpads/:id",
+            "description": "Retrieve information for a specific landing pad by its ID.",
+            "method": "GET",
+            "required_parameters": ["pad_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_landing_pads",
+            "url": "https://api.spacexdata.com/v4/landpads/query",
+            "description": "Query landing pads with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_launches",
+            "url": "https://api.spacexdata.com/v5/launches",
+            "description": "Retrieve all launch information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_next_launch",
+            "url": "https://api.spacexdata.com/v5/launches/next",
+            "description": "Retrieve information about the next launch.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_launch_by_id",
+            "url": "https://api.spacexdata.com/v5/launches/:id",
+            "description": "Retrieve information about a launch by its ID.",
+            "method": "GET",
+            "required_parameters": ["launch_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_past_launches",
+            "url": "https://api.spacexdata.com/v5/launches/past",
+            "description": "Retrieve all past launch information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_launches",
+            "url": "https://api.spacexdata.com/v5/launches/query",
+            "description": "Query launches with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_upcoming_launches",
+            "url": "https://api.spacexdata.com/v5/launches/upcoming",
+            "description": "Retrieve all upcoming launch information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_launchpads",
+            "url": "https://api.spacexdata.com/v4/launchpads",
+            "description": "Retrieve all launchpad information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_launchpad_by_id",
+            "url": "https://api.spacexdata.com/v4/launchpads/:id",
+            "description": "Retrieve information for a specific launchpad by its ID.",
+            "method": "GET",
+            "required_parameters": ["pad_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_launchpads",
+            "url": "https://api.spacexdata.com/v4/launchpads/query",
+            "description": "Query launchpads with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_payloads",
+            "url": "https://api.spacexdata.com/v4/payloads",
+            "description": "Retrieve all payload information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_payload_by_id",
+            "url": "https://api.spacexdata.com/v4/payloads/:id",
+            "description": "Retrieve information for a specific payload by its ID.",
+            "method": "GET",
+            "required_parameters": ["payload_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_payloads",
+            "url": "https://api.spacexdata.com/v4/payloads/query",
+            "description": "Query payloads with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_roadster_info",
+            "url": "https://api.spacexdata.com/v4/roadster",
+            "description": "Retrieve information about the SpaceX roadster.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_rockets",
+            "url": "https://api.spacexdata.com/v4/rockets",
+            "description": "Retrieve all rocket information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_rocket_by_id",
+            "url": "https://api.spacexdata.com/v4/rockets/:id",
+            "description": "Retrieve information for a specific rocket by its ID.",
+            "method": "GET",
+            "required_parameters": ["rocket_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_rockets",
+            "url": "https://api.spacexdata.com/v4/rockets/query",
+            "description": "Query rockets with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_all_ships",
+            "url": "https://api.spacexdata.com/v4/ships",
+            "description": "Retrieve all ship information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_ship_by_id",
+            "url": "https://api.spacexdata.com/v4/ships/:id",
+            "description": "Retrieve information for a specific ship by its ID.",
+            "method": "GET",
+            "required_parameters": ["ship_id"],
+            "optional_parameters": []
+        },
+        {
+            "name": "query_ships",
+            "url": "https://api.spacexdata.com/v4/ships/query",
+            "description": "Query ships with specific criterias.",
+            "method": "POST",
+            "required_parameters": ["query", "options"],
+            "optional_parameters": []
+        }
+    ]
+}
+```
