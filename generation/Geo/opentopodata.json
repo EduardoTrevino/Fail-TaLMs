@@ -1,0 +1,101 @@
+{
+    "tool_name": "opentopodata",
+    "tool_description": "Open Topo Data is an elevation API that provides elevation data from multiple datasets.",
+    "title": "Open Topo Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.opentopodata.org/",
+    "host": "api.opentopodata.org",
+    "api_list": [
+        {
+            "name": "get_elevation",
+            "url": "https://api.opentopodata.org/v1/<dataset_name>",
+            "description": "Reads the elevation from a given dataset based on specified locations.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "dataset_name",
+                    "type": "STRING",
+                    "description": "The name of the dataset."
+                },
+                {
+                    "name": "locations",
+                    "type": "STRING",
+                    "description": "Coordinates in latitude,longitude format or Google polyline."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "samples",
+                    "type": "INTEGER",
+                    "description": "Query elevation for sample equally-spaced points."
+                },
+                {
+                    "name": "interpolation",
+                    "type": "STRING",
+                    "description": "Interpolation method (nearest, bilinear, cubic)."
+                },
+                {
+                    "name": "nodata_value",
+                    "type": "STRING",
+                    "description": "Value to return for NODATA."
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format (json or geojson)."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "results": [
+                    {
+                        "elevation": "FLOAT",
+                        "location": {
+                            "lat": "FLOAT",
+                            "lng": "FLOAT"
+                        },
+                        "dataset": "STRING"
+                    }
+                ],
+                "status": "STRING"
+            }
+        },
+        {
+            "name": "get_health",
+            "url": "https://api.opentopodata.org/health",
+            "description": "Healthcheck endpoint.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "status": "STRING"
+            }
+        },
+        {
+            "name": "get_datasets",
+            "url": "https://api.opentopodata.org/datasets",
+            "description": "Fetches the list of datasets available on the server.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "results": [
+                    {
+                        "name": "STRING",
+                        "child_datasets": "ARRAY"
+                    }
+                ],
+                "status": "STRING"
+            }
+        }
+    ]
+}

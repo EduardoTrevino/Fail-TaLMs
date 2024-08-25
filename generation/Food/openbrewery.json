@@ -1,0 +1,121 @@
+{
+    "tool_name": "openbrewery",
+    "tool_description": "API to access a variety of data about breweries.",
+    "title": "Open Brewery API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.openbrewerydb.org",
+    "host": "api.openbrewerydb.org",
+    "api_list": [
+        {
+            "name": "get_brewery_by_id",
+            "url": "https://api.openbrewerydb.org/v1/breweries/{obdb-id}",
+            "description": "Get a single brewery by its OBDB ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "obdb_id",
+                    "type": "STRING",
+                    "description": "The brewery OBDB ID."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "list_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries",
+            "description": "Returns a list of breweries with pagination.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The offset or page of breweries to return.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of breweries to return each call.",
+                    "default": "50"
+                }
+            ],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "get_random_brewery",
+            "url": "https://api.openbrewerydb.org/v1/breweries/random",
+            "description": "Get a random brewery.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "size",
+                    "type": "INTEGER",
+                    "description": "Number of random breweries to return.",
+                    "default": "1"
+                }
+            ],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "search_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries/search",
+            "description": "Search for breweries based on a search term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search term to look for breweries."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "autocomplete_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries/autocomplete",
+            "description": "Autocomplete search for breweries.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search term to autocomplete."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "get_breweries_metadata",
+            "url": "https://api.openbrewerydb.org/v1/breweries/meta",
+            "description": "Get metadata about breweries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        }
+    ]
+}

@@ -1,0 +1,254 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+def get_ip(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> str:
+    """
+    Endpoint description: Returns the requesting IP address.
+    """
+    url = "https://get.geojs.io/v1/ip.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_country(ip: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> str:
+    """
+    Endpoint description: Returns the country information about an IP.
+    
+    Parameters:
+    ip [Optional]: string [Description: Allows searching for a specific IP address; if None, uses the requester's IP]
+    """
+    url = f"https://get.geojs.io/v1/ip/country.json" if ip is None else f"https://get.geojs.io/v1/ip/country/{ip}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_geo_info(ip: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> str:
+    """
+    Endpoint description: Contains all available geographical information about an IP.
+    
+    Parameters:
+    ip [Optional]: string [Description: Allows searching for a specific IP address; if None, uses the requester's IP]
+    """
+    url = f"https://get.geojs.io/v1/ip/geo.json" if ip is None else f"https://get.geojs.io/v1/ip/geo/{ip}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_ptr_record(ip: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> str:
+    """
+    Endpoint description: Returns PTR (pointer record) information about an IP.
+    
+    Parameters:
+    ip [Required]: string [Description: The IP address to lookup]
+    """
+    url = f"https://get.geojs.io/v1/dns/ptr/{ip}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_ip, get_country, get_geo_info, get_ptr_record
+
+class TestGeoJSAPI(unittest.TestCase):
+    
+    def test_get_ip(self):
+        result = get_ip()
+        self.assertIn('ip', result)
+
+    def test_get_country_with_no_ip(self):
+        result = get_country()
+        self.assertIn('country', result)
+        self.assertIn('name', result)
+
+    def test_get_country_with_ip(self):
+        ip = "8.8.8.8"
+        result = get_country(ip)
+        self.assertEqual(result['ip'], ip)
+
+    def test_get_geo_info_with_no_ip(self):
+        result = get_geo_info()
+        self.assertIn('country', result)
+        self.assertIn('latitude', result)
+    
+    def test_get_geo_info_with_ip(self):
+        ip = "8.8.8.8"
+        result = get_geo_info(ip)
+        self.assertEqual(result['ip'], ip)
+
+    def test_get_ptr_record(self):
+        ip = "8.8.8.8"
+        result = get_ptr_record(ip)
+        self.assertIn('ptr', result)
+```
+
+### geojs.json
+```json
+{
+    "tool_name": "geojs",
+    "tool_description": "API providing geographical and DNS information based on IP addresses.",
+    "title": "GeoJS API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://get.geojs.io/",
+    "host": "get.geojs.io",
+    "api_list": [
+        {
+            "name": "get_ip",
+            "url": "https://get.geojs.io/v1/ip.json",
+            "description": "Returns the requesting IP address.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nresponse = requests.get('https://get.geojs.io/v1/ip.json')\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_country",
+            "url": "https://get.geojs.io/v1/ip/country/{ip}.json",
+            "description": "Returns the country information about an IP.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "Specific IP address to lookup."
+                }
+            ],
+            "code": "import requests\nurl = 'https://get.geojs.io/v1/ip/country/{ip}.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "country": "string",
+                "country_3": "string",
+                "ip": "string",
+                "name": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "country": {
+                        "type": "string"
+                    },
+                    "country_3": {
+                        "type": "string"
+                    },
+                    "ip": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_geo_info",
+            "url": "https://get.geojs.io/v1/ip/geo/{ip}.json",
+            "description": "Contains all available geographical information about an IP.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "Specific IP address to lookup."
+                }
+            ],
+            "code": "import requests\nurl = 'https://get.geojs.io/v1/ip/geo/{ip}.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "string",
+                "country": "string",
+                "country_code": "string",
+                "latitude": "string",
+                "longitude": "string",
+                "organization": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "country_code": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "type": "string"
+                    },
+                    "organization": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ptr_record",
+            "url": "https://get.geojs.io/v1/dns/ptr/{ip}.json",
+            "description": "Returns PTR (pointer record) information about an IP.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "The IP address to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\nurl = 'https://get.geojs.io/v1/dns/ptr/{ip}.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ptr": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ptr": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

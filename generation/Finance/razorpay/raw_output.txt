@@ -1,0 +1,113 @@
+### api.py
+```python
+import requests
+
+def get_bank_details_by_ifsc(ifsc_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve bank details by providing an IFSC code.
+
+    Parameters:
+    ifsc_code [Required]: string. The IFSC code of the bank branch.
+
+    Returns:
+    A JSON object containing branch and bank details or an error message if the IFSC code is invalid.
+    """
+    url = f"https://ifsc.razorpay.com/{ifsc_code}"
+    response = requests.get(url)
+
+    if response.status_code == 404:
+        return {"error": "Invalid IFSC code"}
+    
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_bank_details_by_ifsc
+
+class TestRazorpayAPI(unittest.TestCase):
+
+    def test_valid_ifsc_code(self):
+        response = get_bank_details_by_ifsc("YESB0DNB002")
+        self.assertIn("BANK", response)
+        self.assertEqual(response["BANK"], "Delhi Nagrik Sehkari Bank")
+
+    def test_invalid_ifsc_code(self):
+        response = get_bank_details_by_ifsc("INVALIDCODE")
+        self.assertIn("error", response)
+        self.assertEqual(response["error"], "Invalid IFSC code")
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### razorpay.json
+```json
+{
+    "tool_name": "razorpay",
+    "tool_description": "API to retrieve banking information via IFSC codes.",
+    "title": "Razorpay IFSC API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 96,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://ifsc.razorpay.com/",
+    "host": "ifsc.razorpay.com",
+    "api_list": [
+        {
+            "name": "get_bank_details_by_ifsc",
+            "url": "https://ifsc.razorpay.com/:ifsc",
+            "description": "Retrieve bank details by providing an IFSC code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ifsc_code",
+                    "type": "STRING",
+                    "description": "The IFSC code of the bank branch."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ifsc.razorpay.com/{ifsc_code}'\nresponse = requests.get(url)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "BANK": "str",
+                "IFSC": "str",
+                "BRANCH": "str",
+                "ADDRESS": "str",
+                "CONTACT": "str or null",
+                "CITY": "str",
+                "RTGS": "bool",
+                "MICR": "str or null",
+                "UPI": "bool",
+                "NEFT": "bool",
+                "IMPS": "bool"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "BANK": {"type": "string"},
+                    "IFSC": {"type": "string"},
+                    "BRANCH": {"type": "string"},
+                    "ADDRESS": {"type": "string"},
+                    "CONTACT": {"type": ["string", "null"]},
+                    "CITY": {"type": "string"},
+                    "RTGS": {"type": "boolean"},
+                    "MICR": {"type": ["string", "null"]},
+                    "UPI": {"type": "boolean"},
+                    "NEFT": {"type": "boolean"},
+                    "IMPS": {"type": "boolean"}
+                }
+            }
+        }
+    ]
+}
+```

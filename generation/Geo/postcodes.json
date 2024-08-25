@@ -1,0 +1,178 @@
+{
+    "tool_name": "postcodes",
+    "tool_description": "API to access UK postcode data for geolocation and postcode validation services.",
+    "title": "Postcodes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.postcodes.io/",
+    "host": "api.postcodes.io",
+    "api_list": [
+        {
+            "name": "lookup_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode",
+            "description": "Lookup a single postcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "bulk_lookup_postcodes",
+            "url": "https://api.postcodes.io/postcodes",
+            "description": "Perform a bulk lookup of postcodes.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "postcodes",
+                    "type": "ARRAY",
+                    "description": "Array of postcodes to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes'\ndata = {\"postcodes\": postcodes}\nresponse = requests.post(url, json=data)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_postcodes",
+            "url": "https://api.postcodes.io/postcodes?lon=:longitude&lat=:latitude",
+            "description": "Get nearest postcodes for given longitude and latitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude for the search location."
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude for the search location."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes?lon={lon}&lat={lat}&limit={limit}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "validate_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode/validate",
+            "description": "Validate if a postcode is correct.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to validate."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}/validate'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_postcodes_for_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode/nearest",
+            "description": "Find nearest postcodes for a given postcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to search around."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}/nearest'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        ... 
+        // Additional endpoints metadata
+    ]
+}

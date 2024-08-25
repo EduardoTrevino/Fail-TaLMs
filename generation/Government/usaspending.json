@@ -1,0 +1,92 @@
+{
+    "tool_name": "usaspending",
+    "tool_description": "Provides comprehensive U.S. government spending data including awards, obligations, and fiscal information.",
+    "title": "USAspending API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.usaspending.gov/docs/",
+    "host": "api.usaspending.gov",
+    "api_list": [
+        {
+            "name": "get_agency_details",
+            "url": "https://api.usaspending.gov/api/v2/agency/<TOPTIER_AGENCY_CODE>/",
+            "description": "Returns agency overview information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "toptier_agency_code",
+                    "type": "STRING",
+                    "description": "The code for the top-tier agency."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_agency_awards_summary",
+            "url": "https://api.usaspending.gov/api/v2/agency/<TOPTIER_AGENCY_CODE>/awards/",
+            "description": "Returns summary information about agency awards.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "toptier_agency_code",
+                    "type": "STRING",
+                    "description": "The code for the top-tier agency."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_award_details",
+            "url": "https://api.usaspending.gov/api/v2/awards/<AWARD_ID>/",
+            "description": "Returns details about a specific award.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "award_id",
+                    "type": "INTEGER",
+                    "description": "The ID of the award."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_spending_by_award",
+            "url": "https://api.usaspending.gov/api/v2/search/spending_by_award/",
+            "description": "Searches awards data with filters.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "filters",
+                    "type": "DICT",
+                    "description": "The filters to apply."
+                },
+                {
+                    "name": "fields",
+                    "type": "LIST",
+                    "description": "Fields to include in the response."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field to sort the results by."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Order of sorting, 'asc' or 'desc'."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        }
+    ]
+}

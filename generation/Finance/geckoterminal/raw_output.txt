@@ -1,0 +1,209 @@
+### api.py
+```python
+import requests
+
+BASE_URL = "https://api.geckoterminal.com/api/v2"
+DEFAULT_ACCEPT_HEADER = "application/json;version=20230302"
+
+def get_headers(rapidapi_key):
+    return {
+        "Accept": DEFAULT_ACCEPT_HEADER,
+        "X-RapidAPI-Key": rapidapi_key
+    }
+
+def get_token_price(network: str, addresses: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get current USD prices of multiple tokens on a network.
+    """
+    url = f"{BASE_URL}/simple/networks/{network}/token_price/{addresses}"
+    headers = get_headers(toolbench_rapidapi_key)
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+def get_supported_networks(page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get list of supported networks.
+    """
+    url = f"{BASE_URL}/networks"
+    params = {'page': page}
+    headers = get_headers(toolbench_rapidapi_key)
+    response = requests.get(url, params=params, headers=headers)
+    return response.json()
+
+def get_supported_dexes(network: str, page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get list of supported dexes on a network.
+    """
+    url = f"{BASE_URL}/networks/{network}/dexes"
+    params = {'page': page}
+    headers = get_headers(toolbench_rapidapi_key)
+    response = requests.get(url, params=params, headers=headers)
+    return response.json()
+
+def get_trending_pools_all(include: str = None, page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get trending pools across all networks.
+    """
+    url = f"{BASE_URL}/networks/trending_pools"
+    params = {'include': include, 'page': page}
+    headers = get_headers(toolbench_rapidapi_key)
+    response = requests.get(url, params=params, headers=headers)
+    return response.json()
+
+def get_trending_pools(network: str, include: str = None, page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get trending pools on a network.
+    """
+    url = f"{BASE_URL}/networks/{network}/trending_pools"
+    params = {'include': include, 'page': page}
+    headers = get_headers(toolbench_rapidapi_key)
+    response = requests.get(url, params=params, headers=headers)
+    return response.json()
+
+# Additional methods for other endpoints can be implemented in a similar manner following the API documentation
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    get_token_price, 
+    get_supported_networks,
+    get_supported_dexes,
+    get_trending_pools_all,
+    get_trending_pools
+)
+
+API_KEY = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+class TestGeckoTerminalAPI(unittest.TestCase):
+
+    def test_get_token_price(self):
+        response = get_token_price(network="eth", addresses="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", toolbench_rapidapi_key=API_KEY)
+        self.assertIn("data", response)
+
+    def test_get_supported_networks(self):
+        response = get_supported_networks(toolbench_rapidapi_key=API_KEY)
+        self.assertIn("data", response)
+
+    def test_get_supported_dexes(self):
+        response = get_supported_dexes(network="eth", toolbench_rapidapi_key=API_KEY)
+        self.assertIn("data", response)
+
+    def test_get_trending_pools_all(self):
+        response = get_trending_pools_all(toolbench_rapidapi_key=API_KEY)
+        self.assertIn("data", response)
+
+    def test_get_trending_pools(self):
+        response = get_trending_pools(network="eth", toolbench_rapidapi_key=API_KEY)
+        self.assertIn("data", response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### geckoterminal.json
+```json
+{
+    "tool_name": "geckoterminal",
+    "tool_description": "GeckoTerminal Public API allows access to token prices, networks, dexes, trending pools, and more across various blockchain networks.",
+    "title": "GeckoTerminal API v2",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.geckoterminal.com/docs/",
+    "host": "api.geckoterminal.com",
+    "api_list": [
+        {
+            "name": "get_token_price",
+            "url": "https://api.geckoterminal.com/api/v2/simple/networks/{network}/token_price/{addresses}",
+            "description": "Get current USD prices of multiple tokens on a network.",
+            "method": "GET",
+            "required_parameters": ["network", "addresses"],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_supported_networks",
+            "url": "https://api.geckoterminal.com/api/v2/networks",
+            "description": "Get list of supported networks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_supported_dexes",
+            "url": "https://api.geckoterminal.com/api/v2/networks/{network}/dexes",
+            "description": "Get list of supported dexes on a network.",
+            "method": "GET",
+            "required_parameters": ["network"],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_trending_pools_all",
+            "url": "https://api.geckoterminal.com/api/v2/networks/trending_pools",
+            "description": "Get trending pools across all networks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Attributes for related resources to include.",
+                    "default": null
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_trending_pools",
+            "url": "https://api.geckoterminal.com/api/v2/networks/{network}/trending_pools",
+            "description": "Get trending pools on a network.",
+            "method": "GET",
+            "required_parameters": ["network"],
+            "optional_parameters": [
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Attributes for related resources to include.",
+                    "default": null
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

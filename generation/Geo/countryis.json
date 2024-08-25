@@ -1,0 +1,107 @@
+{
+    "tool_name": "countryis",
+    "tool_description": "An API to obtain the country of a user's IP address. Utilizes geolocation data from Cloudflare and MaxMind. No API key or quotas required.",
+    "title": "Country.is API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.country.is",
+    "host": "api.country.is",
+    "api_list": [
+        {
+            "name": "get_country_by_own_ip",
+            "url": "https://api.country.is",
+            "description": "Retrieve the country for the requester's own IP address.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.country.is'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "str",
+                "country": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_country_by_ip",
+            "url": "https://api.country.is/{ip}",
+            "description": "Retrieve the country for a specified IP address.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "The IP address to query.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.country.is/{ip}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ip": "str",
+                "country": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_data_sources_info",
+            "url": "https://api.country.is/info",
+            "description": "Retrieve information about the data sources used by the Country.is API.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.country.is/info'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cloudflare": {
+                    "enabled": "bool"
+                },
+                "maxmind": {
+                    "enabled": "bool",
+                    "build": "str"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cloudflare": {
+                        "type": "object"
+                    },
+                    "maxmind": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    ]
+}

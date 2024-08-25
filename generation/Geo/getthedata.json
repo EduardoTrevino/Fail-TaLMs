@@ -1,0 +1,75 @@
+{
+    "tool_name": "getthedata",
+    "tool_description": "API to convert easting and northing (British National Grid) to latitude and longitude (WGS84).",
+    "title": "Get The Data API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.getthedata.com/",
+    "host": "api.getthedata.com",
+    "api_list": [
+        {
+            "name": "bng2latlong",
+            "url": "https://api.getthedata.com/bng2latlong/{easting}/{northing}",
+            "description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "easting",
+                    "type": "INTEGER",
+                    "description": "The easting coordinate.",
+                    "default": "None"
+                },
+                {
+                    "name": "northing",
+                    "type": "INTEGER",
+                    "description": "The northing coordinate.",
+                    "default": "None"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "response_format",
+                    "type": "STRING",
+                    "description": "Specify the response format, 'json' or 'xml'.",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.getthedata.com/bng2latlong/{easting}/{northing}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "status": "ok or error",
+                "easting": "int",
+                "northing": "int",
+                "latitude": "float",
+                "longitude": "float"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "easting": {
+                        "type": "integer"
+                    },
+                    "northing": {
+                        "type": "integer"
+                    },
+                    "latitude": {
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    ]
+}

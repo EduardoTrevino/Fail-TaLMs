@@ -1,0 +1,501 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional, Dict, Any
+
+def get_venues(
+    lat1: Optional[float] = None,
+    lat2: Optional[float] = None,
+    lon1: Optional[float] = None,
+    lon2: Optional[float] = None,
+    query: Optional[str] = None,
+    category: Optional[str] = None,
+    owner: Optional[str] = None,
+    upvoter: Optional[str] = None,
+    before: Optional[str] = None,
+    after: Optional[str] = None,
+    promoted: Optional[bool] = None,
+    limit: Optional[int] = 10,
+    offset: Optional[int] = 0,
+    mode: Optional[str] = "list",
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve a list of venues with optional filtering parameters.
+    """
+    url = "https://coinmap.org/api/v1/venues/"
+    params = {
+        "lat1": lat1,
+        "lat2": lat2,
+        "lon1": lon1,
+        "lon2": lon2,
+        "query": query,
+        "category": category,
+        "owner": owner,
+        "upvoter": upvoter,
+        "before": before,
+        "after": after,
+        "promoted": promoted,
+        "limit": limit,
+        "offset": offset,
+        "mode": mode
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def create_venue(
+    venue: Dict[str, Any],
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Create a new venue.
+    """
+    url = "https://coinmap.org/api/v1/venues/"
+    response = requests.post(url, json=venue)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_venue(
+    venue_id: int,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve information on a specific venue by ID.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def update_venue(
+    venue_id: int,
+    venue: Dict[str, Any],
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Update an existing venue by ID.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}"
+    response = requests.put(url, json=venue)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def delete_venue(
+    venue_id: int,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Delete a specific venue by ID.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}"
+    response = requests.delete(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_comments(
+    venue_id: int,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Retrieve comments for a specific venue by venue_id.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}/comments/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def create_comment(
+    venue_id: int,
+    text: str,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Create a comment for a specific venue.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}/comments/"
+    data = {"text": text}
+    response = requests.post(url, json=data)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_rating(
+    venue_id: int,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Get ratings for a specific venue.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}/ratings/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def create_rating(
+    venue_id: int,
+    vote: int,
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Create or update a rating for a specific venue.
+    """
+    url = f"https://coinmap.org/api/v1/venues/{venue_id}/ratings/"
+    data = {"vote": vote}
+    response = requests.post(url, json=data)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_atm_operators(
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Get a list of ATM operators.
+    """
+    url = "https://coinmap.org/api/v1/atm-operators/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_coins(
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Get a list of coins.
+    """
+    url = "https://coinmap.org/api/v1/coins/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_providers(
+    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+) -> Dict[str, Any]:
+    """
+    Get a list of ATM providers.
+    """
+    url = "https://coinmap.org/api/v1/providers/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import get_venues, create_venue, get_venue, update_venue, delete_venue, get_comments, create_comment, get_rating, create_rating, get_atm_operators, get_coins, get_providers
+
+class TestCoinmapAPI(unittest.TestCase):
+
+    def test_get_venues(self):
+        response = get_venues()
+        self.assertIn('venues', response)
+
+    def test_create_venue(self):
+        # This test requires a venue object with minimal required fields.
+        venue = {"name": "Test Venue", "location": {"lat": 0.0, "lon": 0.0}}
+        response = create_venue(venue)
+        self.assertIn('venue', response)
+
+    def test_get_venue(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = get_venue(venue_id)
+        self.assertIn('venue', response)
+
+    def test_update_venue(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        venue = {"name": "Updated Venue"}
+        response = update_venue(venue_id, venue)
+        self.assertIn('venue', response)
+
+    def test_delete_venue(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = delete_venue(venue_id)
+        self.assertIn('status', response)
+
+    def test_get_comments(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = get_comments(venue_id)
+        self.assertIn('comments', response)
+
+    def test_create_comment(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = create_comment(venue_id, "Test comment")
+        self.assertIn('comments', response)
+
+    def test_get_rating(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = get_rating(venue_id)
+        self.assertIn('ratings', response)
+
+    def test_create_rating(self):
+        venue_id = 1  # Example ID, replace with a valid ID
+        response = create_rating(venue_id, 1)
+        self.assertIn('ratings', response)
+
+    def test_get_atm_operators(self):
+        response = get_atm_operators()
+        self.assertIn('operators', response)
+
+    def test_get_coins(self):
+        response = get_coins()
+        self.assertIn('coins', response)
+
+    def test_get_providers(self):
+        response = get_providers()
+        self.assertIn('providers', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### coinmap.json**  
+```json
+{
+    "tool_name": "coinmap",
+    "tool_description": "API to access data about venues accepting cryptocurrency, comments, ratings, ATM operators, coins, and providers.",
+    "title": "Coinmap API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://coinmap.org/api",
+    "host": "coinmap.org",
+    "api_list": [
+        {
+            "name": "get_venues",
+            "url": "https://coinmap.org/api/v1/venues/",
+            "description": "List of Venues with filtering options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "lat1", "type": "FLOAT", "description": "Minimum latitude."},
+                {"name": "lat2", "type": "FLOAT", "description": "Maximum latitude."},
+                {"name": "lon1", "type": "FLOAT", "description": "Minimum longitude."},
+                {"name": "lon2", "type": "FLOAT", "description": "Maximum longitude."},
+                {"name": "query", "type": "STRING", "description": "Substring search in venue names."},
+                {"name": "category", "type": "STRING", "description": "Filter category."},
+                {"name": "owner", "type": "STRING", "description": "Venue owner (userhash)."},
+                {"name": "upvoter", "type": "STRING", "description": "User who upvoted the venue."},
+                {"name": "before", "type": "STRING", "description": "Show venues created before the date."},
+                {"name": "after", "type": "STRING", "description": "Show venues created after the date."},
+                {"name": "promoted", "type": "BOOLEAN", "description": "Show promoted venues."},
+                {"name": "limit", "type": "INTEGER", "description": "Limit number of results.", "default": "10"},
+                {"name": "offset", "type": "INTEGER", "description": "Skip first N results.", "default": "0"},
+                {"name": "mode", "type": "STRING", "description": "Result mode.", "default": "list"}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venues": {"type": "array"},
+                    "count": {"type": "integer"}
+                }
+            }
+        },
+        {
+            "name": "create_venue",
+            "url": "https://coinmap.org/api/v1/venues/",
+            "description": "Create a new venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue", "type": "OBJECT", "description": "Venue to be added."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "get_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Retrieve information on a specific venue by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be returned."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "update_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Update an existing venue by ID.",
+            "method": "PUT",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be modified."},
+                {"name": "venue", "type": "OBJECT", "description": "Updated venue information."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "delete_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Delete a specific venue by ID.",
+            "method": "DELETE",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be deleted."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_comments",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/comments/",
+            "description": "Retrieve comments for a specific venue by venue ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to retrieve comments for."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "comments": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "create_comment",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/comments/",
+            "description": "Create a comment for a specific venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to add a comment to."},
+                {"name": "text", "type": "STRING", "description": "Comment text."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "comments": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_rating",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/ratings/",
+            "description": "Get ratings for a specific venue.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to retrieve ratings for."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ratings": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "create_rating",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/ratings/",
+            "description": "Create or update a rating for a specific venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to rate."},
+                {"name": "vote", "type": "INTEGER", "description": "Rating vote (positive=1, negative=-1, no rating=0)."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ratings": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_atm_operators",
+            "url": "https://coinmap.org/api/v1/atm-operators/",
+            "description": "Get a list of ATM operators.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "operators": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_coins",
+            "url": "https://coinmap.org/api/v1/coins/",
+            "description": "Get a list of coins.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "coins": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_providers",
+            "url": "https://coinmap.org/api/v1/providers/",
+            "description": "Get a list of ATM providers.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "providers": {"type": "array"}
+                }
+            }
+        }
+    ]
+}
+```

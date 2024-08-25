@@ -1,0 +1,312 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict
+
+
+def fetch_random_joke(accept: str = "application/json", user_agent: str = "My Library (https://github.com/username/repo)", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Fetch a random dad joke in the specified format.
+    Parameters:
+        accept: str - The format to accept the joke in. Options are 'application/json', 'text/plain', or 'text/html'.
+        user_agent: str - Custom User-Agent header to include in the request.
+    """
+    url = "https://icanhazdadjoke.com/"
+    headers = {
+        "Accept": accept,
+        "User-Agent": user_agent
+    }
+    
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json() if accept == "application/json" else {"joke": response.text, "status": response.status_code}
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def fetch_random_slack_joke(user_agent: str = "My Library (https://github.com/username/repo)", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Fetch a random dad joke formatted for Slack.
+    Parameters:
+        user_agent: str - Custom User-Agent header to include in the request.
+    """
+    url = "https://icanhazdadjoke.com/slack"
+    headers = {
+        "User-Agent": user_agent
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def fetch_joke_by_id(joke_id: str, accept: str = "application/json", user_agent: str = "My Library (https://github.com/username/repo)", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Fetch a specific dad joke by its ID.
+    Parameters:
+        joke_id: str - The ID of the joke to fetch.
+        accept: str - The format to accept the joke in. Options are 'application/json' or 'text/plain'.
+        user_agent: str - Custom User-Agent header to include in the request.
+    """
+    url = f"https://icanhazdadjoke.com/j/{joke_id}"
+    headers = {
+        "Accept": accept,
+        "User-Agent": user_agent
+    }
+    
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json() if accept == "application/json" else {"joke": response.text, "status": response.status_code}
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_jokes(term: Optional[str] = None, page: int = 1, limit: int = 20, user_agent: str = "My Library (https://github.com/username/repo)", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Search for dad jokes.
+    Parameters:
+        term: Optional[str] - Search term to use.
+        page: int - Page of results to fetch.
+        limit: int - Number of results to return per page.
+        user_agent: str - Custom User-Agent header to include in the request.
+    """
+    url = "https://icanhazdadjoke.com/search"
+    params = {
+        "page": page,
+        "limit": limit,
+    }
+    if term:
+        params["term"] = term
+
+    headers = {
+        "Accept": "application/json",
+        "User-Agent": user_agent
+    }
+    
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import fetch_random_joke, fetch_random_slack_joke, fetch_joke_by_id, search_jokes
+
+
+class TestIcanhazdadjokeAPI(unittest.TestCase):
+
+    def test_fetch_random_joke_json(self):
+        result = fetch_random_joke(accept="application/json")
+        self.assertIn("joke", result)
+        self.assertEqual(result["status"], 200)
+
+    def test_fetch_random_joke_text(self):
+        result = fetch_random_joke(accept="text/plain")
+        self.assertIn("joke", result)
+        self.assertEqual(result["status"], 200)
+
+    def test_fetch_random_slack_joke(self):
+        result = fetch_random_slack_joke()
+        self.assertIn("attachments", result)
+
+    def test_fetch_joke_by_id(self):
+        result = fetch_joke_by_id("R7UfaahVfFd", accept="application/json")
+        self.assertEqual(result["id"], "R7UfaahVfFd")
+
+    def test_search_jokes(self):
+        result = search_jokes(term="hipster")
+        self.assertGreater(len(result["results"]), 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### icanhazdadjoke.json
+```json
+{
+    "tool_name": "icanhazdadjoke",
+    "tool_description": "API to fetch random, specific, or search for dad jokes in different formats.",
+    "title": "icanhazdadjoke API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://icanhazdadjoke.com/api",
+    "host": "icanhazdadjoke.com",
+    "api_list": [
+        {
+            "name": "fetch_random_joke",
+            "url": "https://icanhazdadjoke.com/",
+            "description": "Fetch a random dad joke in the specified format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "accept",
+                    "type": "STRING",
+                    "description": "The format to accept the joke in.",
+                    "default": "application/json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://icanhazdadjoke.com/'\nheaders = {'Accept': 'application/json', 'User-Agent': 'My Library'}\nresponse = requests.get(url, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "str",
+                "joke": "str",
+                "status": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "joke": {"type": "string"},
+                    "status": {"type": "integer"}
+                }
+            }
+        },
+        {
+            "name": "fetch_random_slack_joke",
+            "url": "https://icanhazdadjoke.com/slack",
+            "description": "Fetch a random dad joke formatted for Slack.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://icanhazdadjoke.com/slack'\nheaders = {'User-Agent': 'My Library'}\nresponse = requests.get(url, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "attachments": [
+                    {
+                        "fallback": "str",
+                        "footer": "str",
+                        "text": "str"
+                    }
+                ],
+                "response_type": "str",
+                "username": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "attachments": {
+                        "type": "array",
+                        "items": {"type": "object"}
+                    },
+                    "response_type": {"type": "string"},
+                    "username": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "fetch_joke_by_id",
+            "url": "https://icanhazdadjoke.com/j/{joke_id}",
+            "description": "Fetch a specific dad joke by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "joke_id",
+                    "type": "STRING",
+                    "description": "The ID of the joke to fetch."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "accept",
+                    "type": "STRING",
+                    "description": "The format to accept the joke in.",
+                    "default": "application/json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://icanhazdadjoke.com/j/{joke_id}'\nheaders = {'Accept': 'application/json', 'User-Agent': 'My Library'}\nresponse = requests.get(url, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "str",
+                "joke": "str",
+                "status": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "joke": {"type": "string"},
+                    "status": {"type": "integer"}
+                }
+            }
+        },
+        {
+            "name": "search_jokes",
+            "url": "https://icanhazdadjoke.com/search",
+            "description": "Search for dad jokes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "term",
+                    "type": "STRING",
+                    "description": "Search term to use.",
+                    "default": "null"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to fetch.",
+                    "default": "1"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results to return per page.",
+                    "default": "20"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://icanhazdadjoke.com/search'\nparams = {'term': term, 'page': page, 'limit': limit}\nheaders = {'Accept': 'application/json', 'User-Agent': 'My Library'}\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "current_page": "int",
+                "limit": "int",
+                "next_page": "int",
+                "previous_page": "int",
+                "results": [
+                    {
+                        "id": "str",
+                        "joke": "str"
+                    }
+                ],
+                "search_term": "str",
+                "status": "int",
+                "total_jokes": "int",
+                "total_pages": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "current_page": {"type": "integer"},
+                    "limit": {"type": "integer"},
+                    "next_page": {"type": "integer"},
+                    "previous_page": {"type": "integer"},
+                    "results": {
+                        "type": "array",
+                        "items": {"type": "object"}
+                    },
+                    "search_term": {"type": "string"},
+                    "status": {"type": "integer"},
+                    "total_jokes": {"type": "integer"},
+                    "total_pages": {"type": "integer"}
+                }
+            }
+        }
+    ]
+}
+```

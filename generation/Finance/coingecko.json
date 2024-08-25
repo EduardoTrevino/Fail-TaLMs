@@ -1,0 +1,155 @@
+{
+    "tool_name": "coingecko",
+    "tool_description": "CoinGecko API offers comprehensive and reliable crypto market data including price feeds, market data, metadata, and historical data of crypto assets, NFTs, and exchanges.",
+    "title": "CoinGecko Pro API",
+    "pricing": "Paid Plan",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://pro-api.coingecko.com/",
+    "host": "pro-api.coingecko.com",
+    "api_list": [
+        {
+            "name": "coins_list",
+            "url": "https://pro-api.coingecko.com/api/v3/coins/list",
+            "description": "Retrieve all supported coins with id, name, and symbol.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "include_platform",
+                    "type": "BOOLEAN",
+                    "description": "Include platform and token's contract addresses.",
+                    "default": "false"
+                },
+                {
+                    "name": "status",
+                    "type": "STRING",
+                    "description": "Filter by status of coins.",
+                    "default": "active"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "top_gainers_losers",
+            "url": "https://pro-api.coingecko.com/api/v3/coins/top_gainers_losers",
+            "description": "Retrieve the top 30 coins with the largest price gain and loss by a specific time duration.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vs_currency",
+                    "type": "STRING",
+                    "description": "Target currency of coins",
+                    "default": "usd"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "duration",
+                    "type": "STRING",
+                    "description": "Filter result by time range.",
+                    "default": "24h"
+                },
+                {
+                    "name": "top_coins",
+                    "type": "STRING",
+                    "description": "Filter result by market cap ranking.",
+                    "default": "1000"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "recently_added_coins",
+            "url": "https://pro-api.coingecko.com/api/v3/coins/list/new",
+            "description": "Retrieve the latest 200 coins that recently listed on CoinGecko.",
+            "method": "GET",
+            "required_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "coins_markets",
+            "url": "https://pro-api.coingecko.com/api/v3/coins/markets",
+            "description": "Retrieve all supported coins with price, market cap, volume, and market related data.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "vs_currency",
+                    "type": "STRING",
+                    "description": "Target currency of coins and market data.",
+                    "default": "usd"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "ids",
+                    "type": "STRING",
+                    "description": "Coins' ids, comma-separated."
+                },
+                {
+                    "name": "category",
+                    "type": "STRING",
+                    "description": "Filter based on coins' category."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Sort result by field.",
+                    "default": "market_cap_desc"
+                },
+                {
+                    "name": "per_page",
+                    "type": "NUMBER",
+                    "description": "Total results per page.",
+                    "default": 100
+                },
+                {
+                    "name": "page",
+                    "type": "NUMBER",
+                    "description": "Page through results.",
+                    "default": 1
+                },
+                {
+                    "name": "sparkline",
+                    "type": "BOOLEAN",
+                    "description": "Include sparkline 7 days data.",
+                    "default": "false"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "coin_data_by_id",
+            "url": "https://pro-api.coingecko.com/api/v3/coins/{id}",
+            "description": "Retrieve all the coin data of a coin by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "Coin id."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "localization",
+                    "type": "BOOLEAN",
+                    "description": "Include all the localized languages in the response.",
+                    "default": "true"
+                },
+                {
+                    "name": "tickers",
+                    "type": "BOOLEAN",
+                    "description": "Include tickers data.",
+                    "default": "true"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

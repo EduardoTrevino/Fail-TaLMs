@@ -1,0 +1,242 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional, Dict, Any
+
+
+def get_zip_info_by_postal_code(country: str, postal_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Get information for a specific postal code in a given country.
+    
+    :param country: The country code (e.g., "US" for the United States).
+    :param postal_code: The postal code to lookup (e.g., "90210").
+    :param toolbench_rapidapi_key: API key for authentication (default provided).
+    :return: JSON response from the API or error information.
+    """
+    url = f"http://api.zippopotam.us/{country}/{postal_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_zip_info_by_city(country: str, state: str, city: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Get information about all postal codes for a given city in a given country and state.
+    
+    :param country: The country code (e.g., "US").
+    :param state: The state code (e.g., "MA" for Massachusetts).
+    :param city: The city name (e.g., "Belmont").
+    :param toolbench_rapidapi_key: API key for authentication (default provided).
+    :return: JSON response from the API or error information.
+    """
+    url = f"http://api.zippopotam.us/{country}/{state}/{city}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import get_zip_info_by_postal_code, get_zip_info_by_city
+
+
+class TestZippopotamusAPI(unittest.TestCase):
+    
+    def test_get_zip_info_by_postal_code_valid(self):
+        result = get_zip_info_by_postal_code("us", "90210")
+        self.assertIn("places", result)
+        self.assertEqual(result["country abbreviation"], "US")
+
+    def test_get_zip_info_by_postal_code_invalid(self):
+        result = get_zip_info_by_postal_code("us", "00000")
+        self.assertIn("error", result)
+
+    def test_get_zip_info_by_city_valid(self):
+        result = get_zip_info_by_city("us", "ca", "beverly hills")
+        self.assertIn("places", result)  # Assume "places" is a key
+
+    def test_get_zip_info_by_city_invalid(self):
+        result = get_zip_info_by_city("us", "xx", "unknown city")
+        self.assertIn("error", result)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### zippopotamus.json**  
+```json
+{
+    "tool_name": "zippopotamus",
+    "tool_description": "Free API providing information on postal and zip codes, supporting over 60 countries.",
+    "title": "Zippopotamus API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "http://api.zippopotam.us/",
+    "host": "api.zippopotam.us",
+    "api_list": [
+        {
+            "name": "get_zip_info_by_postal_code",
+            "url": "http://api.zippopotam.us/{country}/{postal_code}",
+            "description": "Fetch detailed postal code information for given postal code and country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "Country code such as 'US' for United States."
+                },
+                {
+                    "name": "postal_code",
+                    "type": "STRING",
+                    "description": "The postal code to lookup, such as '90210'."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'http://api.zippopotam.us/{country}/{postal_code}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "post code": "string",
+                "country": "string",
+                "country abbreviation": "string",
+                "places": [
+                    {
+                        "place name": "string",
+                        "longitude": "string",
+                        "state": "string",
+                        "state abbreviation": "string",
+                        "latitude": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "post code": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "country abbreviation": {
+                        "type": "string"
+                    },
+                    "places": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "place name": {
+                                    "type": "string"
+                                },
+                                "longitude": {
+                                    "type": "string"
+                                },
+                                "state": {
+                                    "type": "string"
+                                },
+                                "state abbreviation": {
+                                    "type": "string"
+                                },
+                                "latitude": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_zip_info_by_city",
+            "url": "http://api.zippopotam.us/{country}/{state}/{city}",
+            "description": "Fetch postal codes associated with a given city and state in a specified country.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "Country code such as 'US' for United States."
+                },
+                {
+                    "name": "state",
+                    "type": "STRING",
+                    "description": "State code such as 'CA' for California."
+                },
+                {
+                    "name": "city",
+                    "type": "STRING",
+                    "description": "The name of the city, such as 'Belmont'."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'http://api.zippopotam.us/{country}/{state}/{city}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "post code": "string",
+                "country": "string",
+                "country abbreviation": "string",
+                "places": [
+                    {
+                        "place name": "string",
+                        "longitude": "string",
+                        "state": "string",
+                        "state abbreviation": "string",
+                        "latitude": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "post code": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "country abbreviation": {
+                        "type": "string"
+                    },
+                    "places": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "place name": {
+                                    "type": "string"
+                                },
+                                "longitude": {
+                                    "type": "string"
+                                },
+                                "state": {
+                                    "type": "string"
+                                },
+                                "state abbreviation": {
+                                    "type": "string"
+                                },
+                                "latitude": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

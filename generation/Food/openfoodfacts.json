@@ -1,0 +1,145 @@
+{
+    "tool_name": "openfoodfacts",
+    "tool_description": "Open Food Facts is a food products database made by everyone, for everyone. It provides data on food products which includes nutritional values, ingredients, and more.",
+    "title": "Open Food Facts API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 180,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.9,
+        "__typename": "Score"
+    },
+    "home_url": "https://world.openfoodfacts.org",
+    "host": "world.openfoodfacts.org",
+    "api_list": [
+        {
+            "name": "get_product_by_barcode",
+            "url": "https://world.openfoodfacts.org/api/v2/product/{barcode}.json",
+            "description": "Get product details by barcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "barcode",
+                    "type": "STRING",
+                    "description": "The barcode of the product.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Specific fields to retrieve (comma-separated).",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://world.openfoodfacts.org/api/v2/product/{barcode}.json'\nparams = {'fields': fields}\nheaders = {'User-Agent': 'OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})'}\nresponse = requests.get(url, params=params, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "code": "string",
+                "product": {
+                    "product_name": "string",
+                    "nutrition_grades": "string"
+                },
+                "status": "int",
+                "status_verbose": "string"
+            },
+            "headers": {
+                "User-Agent": "OpenFoodFactsClient/1.0"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "object"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "status_verbose": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_products",
+            "url": "https://world.openfoodfacts.org/api/v2/search",
+            "description": "Search for products with specific criteria.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "categories",
+                    "type": "STRING",
+                    "description": "Categories to filter by.",
+                    "default": null
+                },
+                {
+                    "name": "nutrition_grades",
+                    "type": "STRING",
+                    "description": "Nutrition grade to filter by.",
+                    "default": null
+                },
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Specific fields to retrieve (comma-separated).",
+                    "default": null
+                },
+                {
+                    "name": "sort_by",
+                    "type": "STRING",
+                    "description": "Field name to sort by.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://world.openfoodfacts.org/api/v2/search'\nparams = {'categories_tags_en': categories, 'nutrition_grades_tags': nutrition_grades, 'fields': fields, 'sort_by': sort_by}\nheaders = {'User-Agent': 'OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})'}\nresponse = requests.get(url, params=params, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "int",
+                "page": "int",
+                "page_count": "int",
+                "page_size": "int",
+                "products": [
+                    {
+                        "categories_tags_en": ["string"],
+                        "code": "string",
+                        "nutrition_grades": "string"
+                    }
+                ],
+                "skip": "int"
+            },
+            "headers": {
+                "User-Agent": "OpenFoodFactsClient/1.0"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "page_count": {
+                        "type": "integer"
+                    },
+                    "page_size": {
+                        "type": "integer"
+                    },
+                    "products": {
+                        "type": "array"
+                    },
+                    "skip": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    ]
+}

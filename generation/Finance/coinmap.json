@@ -1,0 +1,224 @@
+{
+    "tool_name": "coinmap",
+    "tool_description": "API to access data about venues accepting cryptocurrency, comments, ratings, ATM operators, coins, and providers.",
+    "title": "Coinmap API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://coinmap.org/api",
+    "host": "coinmap.org",
+    "api_list": [
+        {
+            "name": "get_venues",
+            "url": "https://coinmap.org/api/v1/venues/",
+            "description": "List of Venues with filtering options.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "lat1", "type": "FLOAT", "description": "Minimum latitude."},
+                {"name": "lat2", "type": "FLOAT", "description": "Maximum latitude."},
+                {"name": "lon1", "type": "FLOAT", "description": "Minimum longitude."},
+                {"name": "lon2", "type": "FLOAT", "description": "Maximum longitude."},
+                {"name": "query", "type": "STRING", "description": "Substring search in venue names."},
+                {"name": "category", "type": "STRING", "description": "Filter category."},
+                {"name": "owner", "type": "STRING", "description": "Venue owner (userhash)."},
+                {"name": "upvoter", "type": "STRING", "description": "User who upvoted the venue."},
+                {"name": "before", "type": "STRING", "description": "Show venues created before the date."},
+                {"name": "after", "type": "STRING", "description": "Show venues created after the date."},
+                {"name": "promoted", "type": "BOOLEAN", "description": "Show promoted venues."},
+                {"name": "limit", "type": "INTEGER", "description": "Limit number of results.", "default": "10"},
+                {"name": "offset", "type": "INTEGER", "description": "Skip first N results.", "default": "0"},
+                {"name": "mode", "type": "STRING", "description": "Result mode.", "default": "list"}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venues": {"type": "array"},
+                    "count": {"type": "integer"}
+                }
+            }
+        },
+        {
+            "name": "create_venue",
+            "url": "https://coinmap.org/api/v1/venues/",
+            "description": "Create a new venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue", "type": "OBJECT", "description": "Venue to be added."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "get_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Retrieve information on a specific venue by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be returned."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "update_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Update an existing venue by ID.",
+            "method": "PUT",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be modified."},
+                {"name": "venue", "type": "OBJECT", "description": "Updated venue information."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "venue": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "delete_venue",
+            "url": "https://coinmap.org/api/v1/venues/:id",
+            "description": "Delete a specific venue by ID.",
+            "method": "DELETE",
+            "required_parameters": [
+                {"name": "id", "type": "INTEGER", "description": "ID of the venue to be deleted."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_comments",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/comments/",
+            "description": "Retrieve comments for a specific venue by venue ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to retrieve comments for."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "comments": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "create_comment",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/comments/",
+            "description": "Create a comment for a specific venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to add a comment to."},
+                {"name": "text", "type": "STRING", "description": "Comment text."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "comments": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_rating",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/ratings/",
+            "description": "Get ratings for a specific venue.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to retrieve ratings for."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ratings": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "create_rating",
+            "url": "https://coinmap.org/api/v1/venues/:venue_id/ratings/",
+            "description": "Create or update a rating for a specific venue.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "venue_id", "type": "INTEGER", "description": "Venue ID to rate."},
+                {"name": "vote", "type": "INTEGER", "description": "Rating vote (positive=1, negative=-1, no rating=0)."}
+            ],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ratings": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_atm_operators",
+            "url": "https://coinmap.org/api/v1/atm-operators/",
+            "description": "Get a list of ATM operators.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "operators": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_coins",
+            "url": "https://coinmap.org/api/v1/coins/",
+            "description": "Get a list of coins.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "coins": {"type": "array"}
+                }
+            }
+        },
+        {
+            "name": "get_providers",
+            "url": "https://coinmap.org/api/v1/providers/",
+            "description": "Get a list of ATM providers.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "providers": {"type": "array"}
+                }
+            }
+        }
+    ]
+}

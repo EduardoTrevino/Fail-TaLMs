@@ -1,0 +1,184 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List, Dict
+
+
+def get_memes(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieves an array of popular memes that may be captioned with this API.
+    Parameters: None
+    """
+    url = "https://api.imgflip.com/get_memes"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def caption_image(template_id: str, username: str, password: str, text0: Optional[str] = "", text1: Optional[str] = "", font: Optional[str] = "impact", max_font_size: Optional[int] = 50, boxes: Optional[List[Dict[str, str]]] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Add a caption to an Imgflip meme template.
+    Parameters:
+     template_id [Required]: string, the ID of the template to use.
+     username [Required]: string, imgflip account username.
+     password [Required]: string, imgflip account password.
+     text0 [Optional]: string, top text for the meme.
+     text1 [Optional]: string, bottom text for the meme.
+     font [Optional]: string, font family to use for the text. Defaults to "impact".
+     max_font_size [Optional]: integer, maximum font size in pixels. Defaults to 50.
+     boxes [Optional]: list of dicts, each dict representing a text box with properties like 'text', 'x', 'y', 'width', 'height', 'color', 'outline_color'.
+    """
+    url = "https://api.imgflip.com/caption_image"
+    data = {
+        'template_id': template_id,
+        'username': username,
+        'password': password,
+        'text0': text0,
+        'text1': text1,
+        'font': font,
+        'max_font_size': max_font_size
+    }
+
+    if boxes:
+        data['boxes'] = boxes
+
+    response = requests.post(url, data=data)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_memes, caption_image
+
+class TestImgflipAPI(unittest.TestCase):
+
+    def test_get_memes(self):
+        result = get_memes()
+        self.assertTrue('success' in result)
+        self.assertTrue('data' in result)
+        self.assertTrue('memes' in result['data'])
+
+    def test_caption_image(self):
+        # Using the Imgflip hubot account as in the documentation.
+        username = "imgflip_hubot"
+        password = "imgflip_hubot"
+        template_id = "61579"
+        result = caption_image(template_id=template_id, username=username, password=password, text0="Hello", text1="World")
+        
+        self.assertTrue('success' in result)
+        if result['success']:
+            self.assertTrue('data' in result)
+            self.assertTrue('url' in result['data'])
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### imgflip.json**
+
+```json
+{
+    "tool_name": "imgflip",
+    "tool_description": "API for generating memes from templates provided by Imgflip.",
+    "title": "Imgflip API",
+    "pricing": "FREE",
+    "score": {},
+    "home_url": "https://imgflip.com/api",
+    "host": "api.imgflip.com",
+    "api_list": [
+        {
+            "name": "get_memes",
+            "url": "https://api.imgflip.com/get_memes",
+            "description": "Gets an array of popular memes that may be captioned with this API.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nurl = 'https://api.imgflip.com/get_memes'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "success": "boolean",
+                "data": {
+                    "memes": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "url": "string",
+                            "width": "integer",
+                            "height": "integer",
+                            "box_count": "integer"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "caption_image",
+            "url": "https://api.imgflip.com/caption_image",
+            "description": "Add a caption to an Imgflip meme template.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "template_id",
+                    "type": "STRING",
+                    "description": "The ID of the template to use."
+                },
+                {
+                    "name": "username",
+                    "type": "STRING",
+                    "description": "Imgflip account username."
+                },
+                {
+                    "name": "password",
+                    "type": "STRING",
+                    "description": "Imgflip account password."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "text0",
+                    "type": "STRING",
+                    "description": "Top text for the meme."
+                },
+                {
+                    "name": "text1",
+                    "type": "STRING",
+                    "description": "Bottom text for the meme."
+                },
+                {
+                    "name": "font",
+                    "type": "STRING",
+                    "description": "Font family to use for the text. Defaults to 'impact'."
+                },
+                {
+                    "name": "max_font_size",
+                    "type": "INTEGER",
+                    "description": "Maximum font size in pixels. Defaults to 50."
+                },
+                {
+                    "name": "boxes",
+                    "type": "LIST",
+                    "description": "Configurations for creating memes with more than two text boxes."
+                }
+            ],
+            "code": "import requests\nurl = 'https://api.imgflip.com/caption_image'\ndata = {'template_id': template_id, 'username': username, 'password': password, 'text0': text0, 'text1': text1, 'font': font, 'max_font_size': max_font_size}\nresponse = requests.post(url, data=data)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "success": "boolean",
+                "data": {
+                    "url": "string",
+                    "page_url": "string"
+                }
+            }
+        }
+    ]
+}
+```

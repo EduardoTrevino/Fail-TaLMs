@@ -1,0 +1,154 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional, List
+
+def get_population_data(drilldowns: str = 'Nation', measures: str = 'Population', year: Optional[str] = 'latest', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get population data for specified geographical drilldowns and measures.
+    Parameters:
+        drilldowns [Optional]: string [Description: The geographical level to retrieve data for, e.g., 'Nation' or 'State'. Default is 'Nation'.]
+        measures [Optional]: string [Description: The measure to retrieve data for, e.g., 'Population'. Default is 'Population'.]
+        year [Optional]: string [Description: The year of data to retrieve, 'latest' for the most recent. Default is 'latest'.]
+    """
+    url = "https://datausa.io/api/data"
+    params = {
+        'drilldowns': drilldowns,
+        'measures': measures,
+        'year': year
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import get_population_data
+
+class TestDataUSAApi(unittest.TestCase):
+
+    def test_get_population_data_default(self):
+        # Test the default API call for national level population data
+        result = get_population_data()
+        self.assertIn('data', result)
+        self.assertIn('source', result)
+        self.assertGreater(len(result['data']), 0)
+    
+    def test_get_population_data_state(self):
+        # Test retrieving population data for states
+        result = get_population_data(drilldowns='State')
+        self.assertIn('data', result)
+        self.assertIn('source', result)
+        self.assertGreater(len(result['data']), 0)
+    
+    def test_get_population_data_specific_year(self):
+        # Test retrieving population data for a specific year
+        result = get_population_data(year='2016')
+        self.assertIn('data', result)
+        self.assertIn('source', result)
+        self.assertGreater(len(result['data']), 0)
+
+    def test_get_population_data_no_measures(self):
+        # Test call with no specified measures should still return data
+        result = get_population_data(measures='')
+        self.assertIn('data', result)
+        self.assertIn('source', result)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**datausa.json**
+
+```json
+{
+    "tool_name": "datausa",
+    "tool_description": "The Data USA API allows users to explore a wide range of data on the U.S., including geographic, demographic, economic, and more.",
+    "title": "Data USA API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://datausa.io/about/api/",
+    "host": "datausa.io",
+    "api_list": [
+        {
+            "name": "get_population_data",
+            "url": "https://datausa.io/api/data",
+            "description": "Get population data for specified geographical drilldowns and measures.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "drilldowns",
+                    "type": "STRING",
+                    "description": "The geographical level to retrieve data for, e.g., 'Nation' or 'State'.",
+                    "default": "Nation"
+                },
+                {
+                    "name": "measures",
+                    "type": "STRING",
+                    "description": "The measure to retrieve data for, e.g., 'Population'.",
+                    "default": "Population"
+                },
+                {
+                    "name": "year",
+                    "type": "STRING",
+                    "description": "The year of data to retrieve, 'latest' for the most recent.",
+                    "default": "latest"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "ID Nation": "01000US",
+                        "Nation": "United States",
+                        "ID Year": "int",
+                        "Year": "str",
+                        "Population": "int",
+                        "Slug Nation": "str"
+                    }
+                ],
+                "source": [
+                    {
+                        "measures": ["Population"],
+                        "annotations": {
+                            "source_name": "Census Bureau",
+                            "source_description": "Census Bureau conducts surveys of the United States Population, including the American Community Survey",
+                            "dataset_name": "ACS 1-year Estimate",
+                            "dataset_link": "http://www.census.gov/programs-surveys/acs/",
+                            "table_id": "B01003",
+                            "topic": "Diversity"
+                        },
+                        "name": "acs_yg_total_population_1",
+                        "substitutions": []
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array"
+                    },
+                    "source": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

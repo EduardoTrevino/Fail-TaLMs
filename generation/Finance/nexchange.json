@@ -1,0 +1,133 @@
+{
+    "tool_name": "nexchange",
+    "tool_description": "API for cryptocurrency exchange operations.",
+    "title": "N.exchange API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.n.exchange",
+    "host": "api.n.exchange",
+    "api_list": [
+        {
+            "name": "get_currencies",
+            "url": "https://api.n.exchange/en/api/v1/currency/",
+            "description": "Get all supported currencies.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_pairs",
+            "url": "https://api.n.exchange/en/api/v1/pair/",
+            "description": "Get all supported currency pairs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_price",
+            "url": "https://api.n.exchange/en/api/v1/get_price/{pair_name}/",
+            "description": "Get price quote of a given amount of currency.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "amount_base", "type": "DOUBLE", "description": "Amount of base currency to get."},
+                {"name": "amount_quote", "type": "DOUBLE", "description": "Amount of quote currency to send."}
+            ]
+        },
+        {
+            "name": "get_rate_info",
+            "url": "https://api.n.exchange/en/api/v1/rate/{rate_id}/",
+            "description": "Gets price info by rate_id.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "rate_id", "type": "STRING", "description": "Unique rate ID value of a price."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_latest_price",
+            "url": "https://api.n.exchange/en/api/v1/price/{pair_name}/latest/",
+            "description": "Gets latest price of the pair.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "market_code", "type": "STRING", "description": "Price market code."}
+            ]
+        },
+        {
+            "name": "get_price_history",
+            "url": "https://api.n.exchange/en/api/v1/price/{pair_name}/history/",
+            "description": "Returns price history for selected pair.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Number of hours back to get prices for."},
+                {"name": "data_points", "type": "INTEGER", "description": "Number of data points to retrieve."},
+                {"name": "market_code", "type": "STRING", "description": "Price market code."}
+            ]
+        },
+        {
+            "name": "get_prices_info_list",
+            "url": "https://api.n.exchange/en/api/v1/info/bulk/",
+            "description": "Returns list of rates with minimal and maximal amounts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_orders",
+            "url": "https://api.n.exchange/en/api/v1/orders/",
+            "description": "Returns orders.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "page", "type": "INTEGER", "description": "Page number."},
+                {"name": "page_size", "type": "INTEGER", "description": "Number of orders per page."},
+                {"name": "pair", "type": "STRING", "description": "Pair name."},
+                {"name": "status", "type": "INTEGER", "description": "Order status."}
+            ]
+        },
+        {
+            "name": "get_order",
+            "url": "https://api.n.exchange/en/api/v1/orders/{unique_reference}/",
+            "description": "Get order data.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "unique_reference", "type": "STRING", "description": "Unique reference of the order."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_ticker",
+            "url": "https://api.n.exchange/en/api/v1/ticker/",
+            "description": "Get trade Volume.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Hours back to get trade volume for."}
+            ]
+        },
+        {
+            "name": "get_volume",
+            "url": "https://api.n.exchange/en/api/v1/volume/",
+            "description": "Get trade Volume.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Hours back to get trade volume for."}
+            ]
+        }
+    ]
+}

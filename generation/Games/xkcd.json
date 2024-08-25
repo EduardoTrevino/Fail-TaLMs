@@ -1,0 +1,103 @@
+{
+    "tool_name": "xkcd",
+    "tool_description": "API for fetching XKCD comics and metadata, providing current and specific comic data.",
+    "title": "XKCD API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99.9,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://xkcd.com/",
+    "host": "xkcd.com",
+    "api_list": [
+        {
+            "name": "get_current_comic",
+            "url": "https://xkcd.com/info.0.json",
+            "description": "Retrieve the current comic.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://xkcd.com/info.0.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "month": "str",
+                "num": "int",
+                "link": "",
+                "year": "str",
+                "news": "",
+                "safe_title": "str",
+                "transcript": "str",
+                "alt": "str",
+                "img": "str",
+                "title": "str",
+                "day": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "month": {"type": "string"},
+                    "num": {"type": "integer"},
+                    "link": {"type": "string"},
+                    "year": {"type": "string"},
+                    "news": {"type": "string"},
+                    "safe_title": {"type": "string"},
+                    "transcript": {"type": "string"},
+                    "alt": {"type": "string"},
+                    "img": {"type": "string"},
+                    "title": {"type": "string"},
+                    "day": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_comic_by_number",
+            "url": "https://xkcd.com/{comic_number}/info.0.json",
+            "description": "Retrieve a specific comic by number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "The comic number to fetch."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nnumber = 614\nurl = f'https://xkcd.com/{number}/info.0.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "month": "str",
+                "num": "int",
+                "link": "",
+                "year": "str",
+                "news": "",
+                "safe_title": "str",
+                "transcript": "str",
+                "alt": "str",
+                "img": "str",
+                "title": "str",
+                "day": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "month": {"type": "string"},
+                    "num": {"type": "integer"},
+                    "link": {"type": "string"},
+                    "year": {"type": "string"},
+                    "news": {"type": "string"},
+                    "safe_title": {"type": "string"},
+                    "transcript": {"type": "string"},
+                    "alt": {"type": "string"},
+                    "img": {"type": "string"},
+                    "title": {"type": "string"},
+                    "day": {"type": "string"}
+                }
+            }
+        }
+    ]
+}

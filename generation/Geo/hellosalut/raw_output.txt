@@ -1,0 +1,141 @@
+### api.py
+
+```python
+import requests
+from typing import Optional
+
+def say_hello(lang: Optional[str] = None, ip: Optional[str] = None, cc: Optional[str] = None, mode: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint to get a greeting in the appropriate language based on provided language code, IP address, country code, or automatic detection mode.
+    Parameters:
+    lang [Optional]: string - Language code (e.g., 'en', 'ja', 'fr').
+    ip [Optional]: string - IP address of the user (e.g., '89.120.120.120').
+    cc [Optional]: string - Country code (e.g., 'nl').
+    mode [Optional]: string - Automatic mode detection (e.g., 'auto').
+    """
+    url = "https://hellosalut.stefanbohacek.dev/"
+    params = {}
+
+    if lang:
+        params['lang'] = lang
+    if ip:
+        params['ip'] = ip
+    if cc:
+        params['cc'] = cc
+    if mode:
+        params['mode'] = mode
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+
+```python
+import unittest
+from api import say_hello
+
+class TestHelloSalutAPI(unittest.TestCase):
+    
+    def test_hello_with_language(self):
+        response = say_hello(lang='ja')
+        self.assertIn('hello', response)
+    
+    def test_hello_with_ip(self):
+        response = say_hello(ip='89.120.120.120')
+        self.assertIn('hello', response)
+    
+    def test_hello_with_country_code(self):
+        response = say_hello(cc='nl')
+        self.assertIn('hello', response)
+    
+    def test_hello_auto_mode(self):
+        response = say_hello(mode='auto')
+        self.assertIn('hello', response)
+
+    def test_hello_with_no_params(self):
+        response = say_hello()
+        self.assertIn('hello', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### hellosalut.json
+
+```json
+{
+    "tool_name": "hellosalut",
+    "tool_description": "API to say hello to users in their native language based on language code, IP address, or automatic detection.",
+    "title": "HelloSalut API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 50,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5
+    },
+    "home_url": "https://hellosalut.stefanbohacek.dev/",
+    "host": "hellosalut.stefanbohacek.dev",
+    "api_list": [
+        {
+            "name": "say_hello",
+            "url": "https://hellosalut.stefanbohacek.dev/",
+            "description": "Get a greeting based on language code, IP address, or country code. Supports automatic detection.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Language code.",
+                    "default": ""
+                },
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "IP address.",
+                    "default": ""
+                },
+                {
+                    "name": "cc",
+                    "type": "STRING",
+                    "description": "Country code.",
+                    "default": ""
+                },
+                {
+                    "name": "mode",
+                    "type": "STRING",
+                    "description": "Automatic detection mode.",
+                    "default": "auto"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://hellosalut.stefanbohacek.dev/'\nparams = {'lang': lang, 'ip': ip, 'cc': cc, 'mode': mode}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "hello": "string",
+                "cc": "string",
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "hello": {
+                        "type": "string"
+                    },
+                    "cc": {
+                        "type": "string"
+                    },
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,408 @@
+Running tests for API 'geoplugin'...
+F.
+======================================================================
+FAIL: test_currency_converter (__main__.TestGeoPluginAPI.test_currency_converter)
+Test the currency conversion
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/geoplugin/api_test.py", line 22, in test_currency_converter
+    self.assertIn('geoplugin_baseCurrency', result)
+AssertionError: 'geoplugin_baseCurrency' not found in {'error': 'Expecting value: line 1 column 1 (char 0)', 'response': '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested URL was not found on this server.</p>\n</body></html>\n'}
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.151s
+
+FAILED (failures=1)
+Tests completed for API 'geoplugin'
+
+==================================================
+
+Running tests for API 'viacep'...
+.F....
+======================================================================
+FAIL: test_query_cep_nonexistent (__main__.TestViaCepAPI.test_query_cep_nonexistent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/viacep/api_test.py", line 19, in test_query_cep_nonexistent
+    self.assertIn('erro', result)
+AssertionError: 'erro' not found in {'cep': '99999-999', 'logradouro': 'Avenida das Torres', 'complemento': 'até 99999999 - lado ímpar', 'unidade': '', 'bairro': 'Jardim Centro Cívico', 'localidade': 'Sarandi', 'uf': 'PR', 'ibge': '4126256', 'gia': '', 'ddd': '44', 'siafi': '8461'}
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.900s
+
+FAILED (failures=1)
+Tests completed for API 'viacep'
+
+==================================================
+
+Running tests for API 'zippopotamus'...
+F.F.
+======================================================================
+FAIL: test_get_zip_info_by_city_invalid (__main__.TestZippopotamusAPI.test_get_zip_info_by_city_invalid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/zippopotamus/api_test.py", line 22, in test_get_zip_info_by_city_invalid
+    self.assertIn("error", result)
+AssertionError: 'error' not found in {}
+
+======================================================================
+FAIL: test_get_zip_info_by_postal_code_invalid (__main__.TestZippopotamusAPI.test_get_zip_info_by_postal_code_invalid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/zippopotamus/api_test.py", line 14, in test_get_zip_info_by_postal_code_invalid
+    self.assertIn("error", result)
+AssertionError: 'error' not found in {}
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.603s
+
+FAILED (failures=2)
+Tests completed for API 'zippopotamus'
+
+==================================================
+
+Running tests for API 'getthedata'...
+....
+----------------------------------------------------------------------
+Ran 4 tests in 2.445s
+
+OK
+Tests completed for API 'getthedata'
+
+==================================================
+
+Running tests for API 'geocode'...
+.F.FFF
+======================================================================
+FAIL: test_forward_geocode_with_output_format (__main__.TestGeocodeAPI.test_forward_geocode_with_output_format)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/geocode/api_test.py", line 24, in test_forward_geocode_with_output_format
+    self.assertIsInstance(result, str)  # XML response is a string and not a dictionary
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'error': 'Expecting value: line 1 column 1 (char 0)', 'response': '<?xml version="1.0" encoding="UTF-8" ?>\n<geodata>\n        <error>\n                <code>003</code>\n                <description>Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.</description>\n        </error>\n    \n<msg>Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.</msg>\n</geodata>\n'} is not an instance of <class 'str'>
+
+======================================================================
+FAIL: test_geoparse_with_sentiment_analysis (__main__.TestGeocodeAPI.test_geoparse_with_sentiment_analysis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/geocode/api_test.py", line 33, in test_geoparse_with_sentiment_analysis
+    self.assertIn('sentiment', result)
+AssertionError: 'sentiment' not found in {'msg': 'Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.', 'longt': '0.00000', 'matches': None, 'error': {'description': 'Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.', 'code': '003'}, 'latt': '0.00000'}
+
+======================================================================
+FAIL: test_reverse_geocode (__main__.TestGeocodeAPI.test_reverse_geocode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/geocode/api_test.py", line 13, in test_reverse_geocode
+    self.assertIn('standard', result)
+AssertionError: 'standard' not found in {'msg': 'Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.', 'longt': '0.00000', 'matches': None, 'error': {'description': 'Authentication token: 088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff not found.', 'code': '003'}, 'latt': '0.00000'}
+
+======================================================================
+FAIL: test_reverse_geocode_with_output_format (__main__.TestGeocodeAPI.test_reverse_geocode_with_output_format)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/geocode/api_test.py", line 28, in test_reverse_geocode_with_output_format
+    self.assertIsInstance(result, str)  # CSV response is a string
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'error': 'Expecting value: line 1 column 1 (char 0)', 'response': ''} is not an instance of <class 'str'>
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.915s
+
+FAILED (failures=4)
+Tests completed for API 'geocode'
+
+==================================================
+
+Running tests for API 'postcodes'...
+.......FF.......
+======================================================================
+FAIL: test_lookup_scottish_postcode (__main__.TestPostcodesAPI.test_lookup_scottish_postcode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/postcodes/api_test.py", line 56, in test_lookup_scottish_postcode
+    self.assertEqual(response['status'], 200)
+AssertionError: 404 != 200
+
+======================================================================
+FAIL: test_lookup_terminated_postcode (__main__.TestPostcodesAPI.test_lookup_terminated_postcode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/postcodes/api_test.py", line 40, in test_lookup_terminated_postcode
+    self.assertEqual(response['status'], 200)
+AssertionError: 404 != 200
+
+----------------------------------------------------------------------
+Ran 16 tests in 4.857s
+
+FAILED (failures=2)
+Tests completed for API 'postcodes'
+
+==================================================
+
+Running tests for API 'ziptastic'...
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.647s
+
+OK
+Tests completed for API 'ziptastic'
+
+==================================================
+
+Running tests for API 'ipapi'...
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.843s
+
+OK
+Tests completed for API 'ipapi'
+
+==================================================
+
+Running tests for API 'nominatum'...
+EEEEE
+======================================================================
+ERROR: test_lookup (__main__.TestNominatumAPI.test_lookup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api_test.py", line 23, in test_lookup
+    result = api.lookup(osm_ids=osm_ids)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api.py", line 125, in lookup
+    return response.json()
+           ^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_reverse (__main__.TestNominatumAPI.test_reverse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api_test.py", line 17, in test_reverse
+    result = api.reverse(lat=51.5235, lon=-0.1586)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api.py", line 91, in reverse
+    return response.json()
+           ^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_search_freeform (__main__.TestNominatumAPI.test_search_freeform)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api_test.py", line 7, in test_search_freeform
+    result = api.search(q="Baker Street, London", limit=1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api.py", line 57, in search
+    return response.json()
+           ^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_search_structured (__main__.TestNominatumAPI.test_search_structured)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api_test.py", line 12, in test_search_structured
+    result = api.search(street="Baker Street", city="London", limit=1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api.py", line 57, in search
+    return response.json()
+           ^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_status (__main__.TestNominatumAPI.test_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api_test.py", line 29, in test_status
+    result = api.status(format="json")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/nominatum/api.py", line 143, in status
+    return response.json()
+           ^^^^^^^^^^^^^^^
+  File "/home/trevea/miniconda3/envs/nlp-rag/lib/python3.12/site-packages/requests/models.py", line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+----------------------------------------------------------------------
+Ran 5 tests in 12.407s
+
+FAILED (errors=5)
+Tests completed for API 'nominatum'
+
+==================================================
+
+Running tests for API 'hellosalut'...
+....F
+======================================================================
+FAIL: test_hello_with_no_params (__main__.TestHelloSalutAPI.test_hello_with_no_params)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/hellosalut/api_test.py", line 24, in test_hello_with_no_params
+    self.assertIn('hello', response)
+AssertionError: 'hello' not found in {'error': 'Expecting value: line 1 column 1 (char 0)', 'response': "Please see <a href='https://stefanbohacek.com/project/hellosalut-api/'>https://stefanbohacek.com/project/hellosalut-api/</a> for details on how to use this service."}
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.677s
+
+FAILED (failures=1)
+Tests completed for API 'hellosalut'
+
+==================================================
+
+Running tests for API 'countryis'...
+..F
+======================================================================
+FAIL: test_get_data_sources_info (__main__.TestCountryIsApi.test_get_data_sources_info)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/countryis/api_test.py", line 23, in test_get_data_sources_info
+    self.assertIn('cloudflare', result)
+AssertionError: 'cloudflare' not found in {'dataSources': ['maxmind', 'cloudflare'], 'lastUpdated': '2024-08-20T18:34:36.000Z'}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.689s
+
+FAILED (failures=1)
+Tests completed for API 'countryis'
+
+==================================================
+
+Running tests for API 'geojs'...
+Tests completed for API 'geojs'
+
+==================================================
+
+Running tests for API 'adresse'...
+EE..
+======================================================================
+ERROR: test_mass_geocode_csv (__main__.TestAdresseAPI.test_mass_geocode_csv)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/adresse/api_test.py", line 18, in test_mass_geocode_csv
+    response = mass_geocode_csv(file_path="test_files/search.csv", columns=['adresse', 'postcode'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/adresse/api.py", line 74, in mass_geocode_csv
+    files = {'data': open(file_path, 'rb')}
+                     ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'test_files/search.csv'
+
+======================================================================
+ERROR: test_mass_reverse_geocode_csv (__main__.TestAdresseAPI.test_mass_reverse_geocode_csv)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/adresse/api_test.py", line 22, in test_mass_reverse_geocode_csv
+    response = mass_reverse_geocode_csv(file_path="test_files/reverse.csv")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Geo/adresse/api.py", line 105, in mass_reverse_geocode_csv
+    files = {'data': open(file_path, 'rb')}
+                     ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'test_files/reverse.csv'
+
+----------------------------------------------------------------------
+Ran 4 tests in 11.073s
+
+FAILED (errors=2)
+Tests completed for API 'adresse'
+
+==================================================
+
+Running tests for API 'opentopodata'...
+..Tests completed for API 'opentopodata'
+
+==================================================
+
+.
+----------------------------------------------------------------------
+Ran 3 tests in 1.506s
+
+OK

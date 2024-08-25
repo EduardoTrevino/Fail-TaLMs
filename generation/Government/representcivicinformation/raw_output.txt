@@ -1,0 +1,400 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List, Union
+
+
+def get_representatives_by_postal_code(postal_code: str, sets: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.
+    
+    :param postal_code: The postal code in uppercase letters with no spaces.
+    :param sets: Optional boundary set to limit results.
+    :return: JSON response from the API.
+    """
+    url = f"https://represent.opennorth.ca/postcodes/{postal_code}/"
+    params = {'sets': sets} if sets else {}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_boundary_sets(limit: Optional[int] = 20, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of boundary sets.
+    
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :return: JSON response from the API containing the boundary sets.
+    """
+    url = "https://represent.opennorth.ca/boundary-sets/"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_boundaries(sets: Optional[str] = None, name: Optional[str] = None, contains: Optional[str] = None, limit: Optional[int] = 20, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of boundaries, optionally filtering by boundary sets, names, or geospatial queries.
+    
+    :param sets: Optional comma-separated list of boundary sets.
+    :param name: Optional name to filter boundaries.
+    :param contains: Optional latitude and longitude for geospatial query.
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :return: JSON response from the API.
+    """
+    url = "https://represent.opennorth.ca/boundaries/"
+    params = {
+        'sets': sets,
+        'name': name,
+        'contains': contains,
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params={key: value for key, value in params.items() if value is not None})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_representative_sets(limit: Optional[int] = 20, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of representative sets.
+    
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :return: JSON response from the API.
+    """
+    url = "https://represent.opennorth.ca/representative-sets/"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_representatives(limit: Optional[int] = 20, offset: Optional[int] = 0, last_name: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of representatives, optionally filtering by last name.
+    
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :param last_name: Optional last name of the representative to filter results.
+    :return: JSON response from the API.
+    """
+    url = "https://represent.opennorth.ca/representatives/"
+    params = {
+        'limit': limit,
+        'offset': offset,
+        'last_name': last_name
+    }
+    response = requests.get(url, params={key: value for key, value in params.items() if value is not None})
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_elections(limit: Optional[int] = 20, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of elections.
+    
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :return: JSON response from the API.
+    """
+    url = "https://represent.opennorth.ca/elections/"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_candidates(limit: Optional[int] = 20, offset: Optional[int] = 0, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get one page of candidates.
+    
+    :param limit: Optional number of results per page.
+    :param offset: Optional number for page offset.
+    :return: JSON response from the API.
+    """
+    url = "https://represent.opennorth.ca/candidates/"
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import *
+
+
+class TestApi(unittest.TestCase):
+
+    def test_get_representatives_by_postal_code(self):
+        response = get_representatives_by_postal_code("L5G4L3")
+        self.assertIn("boundaries_centroid", response)
+
+    def test_get_boundary_sets(self):
+        response = get_boundary_sets(limit=2)
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+    def test_get_boundaries(self):
+        response = get_boundaries(name="Niagara Falls")
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+    def test_get_representative_sets(self):
+        response = get_representative_sets(limit=2)
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+    def test_get_representatives(self):
+        response = get_representatives(last_name="Trudeau")
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+    def test_get_elections(self):
+        response = get_elections(limit=1)
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+    def test_get_candidates(self):
+        response = get_candidates(limit=1)
+        self.assertIn("objects", response)
+        self.assertTrue(len(response["objects"]) > 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### representcivicinformation.json**
+
+```json
+{
+    "tool_name": "representcivicinformation",
+    "tool_description": "API to access civic information such as representatives, boundaries, and elections based on geographic information in Canada.",
+    "title": "Open North Represent API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://represent.opennorth.ca",
+    "host": "represent.opennorth.ca",
+    "api_list": [
+        {
+            "name": "get_representatives_by_postal_code",
+            "url": "https://represent.opennorth.ca/postcodes/{postal_code}/",
+            "description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postal_code",
+                    "type": "STRING",
+                    "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "sets",
+                    "type": "STRING",
+                    "description": "Comma-separated list of boundary sets to limit results.",
+                    "default": "None"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_boundary_sets",
+            "url": "https://represent.opennorth.ca/boundary-sets/",
+            "description": "Get one page of boundary sets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page. Default is 20.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_boundaries",
+            "url": "https://represent.opennorth.ca/boundaries/",
+            "description": "Get one page of boundaries, optionally filtering by boundary sets, names, or geospatial queries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sets",
+                    "type": "STRING",
+                    "description": "Comma-separated list of boundary sets.",
+                    "default": "None"
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name to filter boundaries.",
+                    "default": "None"
+                },
+                {
+                    "name": "contains",
+                    "type": "STRING",
+                    "description": "Latitude and longitude for geospatial query.",
+                    "default": "None"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_representative_sets",
+            "url": "https://represent.opennorth.ca/representative-sets/",
+            "description": "Get one page of representative sets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_representatives",
+            "url": "https://represent.opennorth.ca/representatives/",
+            "description": "Get one page of representatives, optionally filtering by last name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                },
+                {
+                    "name": "last_name",
+                    "type": "STRING",
+                    "description": "Last name of the representative to filter results.",
+                    "default": "None"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_elections",
+            "url": "https://represent.opennorth.ca/elections/",
+            "description": "Get one page of elections.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_candidates",
+            "url": "https://represent.opennorth.ca/candidates/",
+            "description": "Get one page of candidates.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

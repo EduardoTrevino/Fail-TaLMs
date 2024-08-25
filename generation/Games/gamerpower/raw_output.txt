@@ -1,0 +1,265 @@
+**api.py**
+```python
+import requests
+from typing import Optional
+
+def get_all_giveaways(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch all ongoing giveaways.
+    """
+    url = "https://gamerpower.com/api/giveaways"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_giveaway_by_id(giveaway_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch a specific giveaway by its unique ID.
+    """
+    url = f"https://gamerpower.com/api/giveaway?id={giveaway_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_giveaways_by_platform(platform: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch giveaways filtered by platform.
+    """
+    url = f"https://gamerpower.com/api/giveaways?platform={platform}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_giveaways_by_type(giveaway_type: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch giveaways filtered by type.
+    """
+    url = f"https://gamerpower.com/api/giveaways?type={giveaway_type}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_giveaways_sorted(sort_by: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch giveaways sorted by a specified criteria (date, value, popularity).
+    """
+    url = f"https://gamerpower.com/api/giveaways?sort-by={sort_by}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_total_worth(platform: Optional[str] = None, giveaway_type: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch the total worth of live giveaways and worth estimation in US dollars. Can filter by platform and type.
+    """
+    url = "https://gamerpower.com/api/worth"
+    if platform or giveaway_type:
+        url += "?"
+        if platform:
+            url += f"platform={platform}"
+        if giveaway_type:
+            if platform:
+                url += "&"
+            url += f"type={giveaway_type}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+```python
+import unittest
+from api import (
+    get_all_giveaways,
+    get_giveaway_by_id,
+    get_giveaways_by_platform,
+    get_giveaways_by_type,
+    get_giveaways_sorted,
+    get_total_worth
+)
+
+class TestGamerPowerAPI(unittest.TestCase):
+
+    def test_get_all_giveaways(self):
+        response = get_all_giveaways()
+        self.assertIsInstance(response, list)
+
+    def test_get_giveaway_by_id(self):
+        response = get_giveaway_by_id(525)
+        self.assertIsInstance(response, dict)
+        self.assertIn("id", response)
+        self.assertEqual(response["id"], 525)
+
+    def test_get_giveaways_by_platform(self):
+        response = get_giveaways_by_platform("pc")
+        self.assertIsInstance(response, list)
+
+    def test_get_giveaways_by_type(self):
+        response = get_giveaways_by_type("game")
+        self.assertIsInstance(response, list)
+
+    def test_get_giveaways_sorted(self):
+        response = get_giveaways_sorted("value")
+        self.assertIsInstance(response, list)
+
+    def test_get_total_worth(self):
+        response = get_total_worth()
+        self.assertIsInstance(response, dict)
+        self.assertIn("worth", response)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**gamerpower.json**
+```json
+{
+    "tool_name": "gamerpower",
+    "tool_description": "Access a treasure trove of free games, giveaways, and in-game loot with the GamerPower API.",
+    "title": "GamerPower API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://gamerpower.com/api",
+    "host": "gamerpower.com",
+    "api_list": [
+        {
+            "name": "get_all_giveaways",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch all ongoing giveaways.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaway_by_id",
+            "url": "https://gamerpower.com/api/giveaway",
+            "description": "Fetch a specific giveaway by its unique ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The giveaway ID",
+                    "default": "525"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "Giveaway object",
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_giveaways_by_platform",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways filtered by platform.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform name"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaways_by_type",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways filtered by type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Giveaway type"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaways_sorted",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways sorted by a specified criteria.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "sort-by",
+                    "type": "STRING",
+                    "description": "Sorting criteria"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_total_worth",
+            "url": "https://gamerpower.com/api/worth",
+            "description": "Fetch total live giveaways worth.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform optional filter"
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type optional filter"
+                }
+            ],
+            "statuscode": 200,
+            "body": "Worth information",
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}
+```

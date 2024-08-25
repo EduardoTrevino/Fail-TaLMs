@@ -1,0 +1,2241 @@
+Based on the documentation provided for the "brasil" API, let's generate the necessary Python code to interact with this API, create test cases for each function, and define the metadata JSON file. 
+
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+BASE_URL = "https://brasilapi.com.br"
+
+def get_banks(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Retrieves information about all banks in Brazil."""
+    url = f"{BASE_URL}/banks/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_bank_by_code(code: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetches information about a bank using its code."""
+    url = f"{BASE_URL}/banks/v1/{code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_cep(cep: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch address information using CEP."""
+    url = f"{BASE_URL}/cep/v1/{cep}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_cep_v2(cep: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch address information using CEP version 2."""
+    url = f"{BASE_URL}/cep/v2/{cep}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_cnpj(cnpj: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch company data by CNPJ."""
+    url = f"{BASE_URL}/cnpj/v1/{cnpj}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_corretoras(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Retrieve information about brokers registered with CVM."""
+    url = f"{BASE_URL}/cvm/corretoras/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_corretora_by_cnpj(cnpj: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch a broker's information by CNPJ."""
+    url = f"{BASE_URL}/cvm/corretoras/v1/{cnpj}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_cptec_cidades(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """List all cities available in CPTEC services."""
+    url = f"{BASE_URL}/cptec/v1/cidade"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_cptec_cidade(city_name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Search for cities in CPTEC by name."""
+    url = f"{BASE_URL}/cptec/v1/cidade/{city_name}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_clima_capital(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Get current weather conditions in the capitals of Brazil."""
+    url = f"{BASE_URL}/cptec/v1/clima/capital"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_clima_aeroporto(icao_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Get current weather conditions at a specified airport using ICAO code."""
+    url = f"{BASE_URL}/cptec/v1/clima/aeroporto/{icao_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_previsao_meteorologica(city_code: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch current weather forecast for a city by city code."""
+    url = f"{BASE_URL}/cptec/v1/clima/previsao/{city_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_previsao_meteorologica_dias(city_code: int, days: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch weather forecast for a city for a period up to 6 days."""
+    url = f"{BASE_URL}/cptec/v1/clima/previsao/{city_code}/{days}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_previsao_oceanica(city_code: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch oceanic forecast for a city by city code."""
+    url = f"{BASE_URL}/cptec/v1/ondas/{city_code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_previsao_oceanica_dias(city_code: int, days: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch oceanic forecast for a city for a period up to 6 days."""
+    url = f"{BASE_URL}/cptec/v1/ondas/{city_code}/{days}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ddd(ddd: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch state and city list by DDD."""
+    url = f"{BASE_URL}/ddd/v1/{ddd}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_feriados(ano: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """List national holidays for a given year."""
+    url = f"{BASE_URL}/feriados/v1/{ano}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_fipe_marcas(tipo_veiculo: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """List vehicle brands according to the type of vehicle."""
+    url = f"{BASE_URL}/fipe/marcas/v1/{tipo_veiculo}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_fipe_preco(codigo_fipe: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Get the vehicle price according to the Fipe table."""
+    url = f"{BASE_URL}/fipe/preco/v1/{codigo_fipe}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_fipe_tabelas(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """List existing reference tables in FIPE."""
+    url = f"{BASE_URL}/fipe/tabelas/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ibge_municipios(sigla_uf: str, providers: Optional[str] = 'dados-abertos-br,gov,wikipedia', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Returns the municipalities of the federative unit."""
+    url = f"{BASE_URL}/ibge/municipios/v1/{sigla_uf}"
+    params = {'providers': providers}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ibge_uf(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Returns all states of Brazil."""
+    url = f"{BASE_URL}/ibge/uf/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ibge_uf_by_code(code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch state information using its code or abbreviation."""
+    url = f"{BASE_URL}/ibge/uf/v1/{code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_isbn(isbn: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch information about a book using ISBN."""
+    url = f"{BASE_URL}/isbn/v1/{isbn}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ncms(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Returns all NCMs information."""
+    url = f"{BASE_URL}/ncm/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_ncm(code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Search NCM information by code or description."""
+    url = f"{BASE_URL}/ncm/v1"
+    params = {'search': code}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ncm_by_code(code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch NCM information using a code."""
+    url = f"{BASE_URL}/ncm/v1/{code}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_pix_participants(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Returns all PIX participants' information."""
+    url = f"{BASE_URL}/pix/v1/participants"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_registro_br(domain: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Evaluate the status of a .br domain."""
+    url = f"{BASE_URL}/registrobr/v1/{domain}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_taxas(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch interest rates and some official indices in Brazil."""
+    url = f"{BASE_URL}/taxas/v1"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_taxa_by_sigla(sigla: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch information about a rate using its name or abbreviation."""
+    url = f"{BASE_URL}/taxas/v1/{sigla}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import pytest
+import api
+
+def test_get_banks():
+    response = api.get_banks()
+    assert isinstance(response, list), "Response should be a list of banks"
+
+def test_get_bank_by_code():
+    response = api.get_bank_by_code(code=1)
+    assert isinstance(response, dict), "Response should be a dictionary with bank information"
+
+def test_get_cep():
+    response = api.get_cep(89010025)
+    assert isinstance(response, dict) and "cep" in response, "Response should be a dictionary with CEP information"
+
+def test_get_cep_v2():
+    response = api.get_cep_v2(89010025)
+    assert isinstance(response, dict) and "cep" in response, "Response should be a dictionary with CEP V2 information"
+
+def test_get_cnpj():
+    response = api.get_cnpj("19131243000197")
+    assert isinstance(response, dict) and "cnpj" in response, "Response should be a dictionary with CNPJ information"
+
+def test_get_corretoras():
+    response = api.get_corretoras()
+    assert isinstance(response, list), "Response should be a list of brokers"
+
+def test_get_corretora_by_cnpj():
+    response = api.get_corretora_by_cnpj("02332886000104")
+    assert isinstance(response, dict), "Response should be a dictionary with broker information"
+
+def test_get_cptec_cidades():
+    response = api.get_cptec_cidades()
+    assert isinstance(response, list), "Response should be a list of cities"
+
+def test_search_cptec_cidade():
+    response = api.search_cptec_cidade("São Paulo")
+    assert isinstance(response, list), "Response should be a list of cities"
+
+def test_get_clima_capital():
+    response = api.get_clima_capital()
+    assert isinstance(response, list), "Response should be a list of weather conditions for capitals"
+
+def test_get_clima_aeroporto():
+    response = api.get_clima_aeroporto("SBGR")
+    assert isinstance(response, dict), "Response should be a dictionary with airport weather information"
+
+def test_get_previsao_meteorologica():
+    response = api.get_previsao_meteorologica(999)
+    assert isinstance(response, dict), "Response should be a dictionary with weather forecast for a city"
+
+def test_get_previsao_meteorologica_dias():
+    response = api.get_previsao_meteorologica_dias(999, 3)
+    assert isinstance(response, dict), "Response should be a dictionary with weather forecast for a period"
+
+def test_get_previsao_oceanica():
+    response = api.get_previsao_oceanica(241)
+    assert isinstance(response, dict), "Response should be a dictionary with ocean forecast information"
+
+def test_get_previsao_oceanica_dias():
+    response = api.get_previsao_oceanica_dias(241, 2)
+    assert isinstance(response, dict), "Response should be a dictionary with extended ocean forecast information"
+
+def test_get_ddd():
+    response = api.get_ddd(11)
+    assert isinstance(response, dict), "Response should be a dictionary with DDD information"
+
+def test_get_feriados():
+    response = api.get_feriados(2022)
+    assert isinstance(response, list), "Response should be a list of holidays"
+
+def test_get_fipe_marcas():
+    response = api.get_fipe_marcas('carros')
+    assert isinstance(response, list), "Response should be a list of vehicle brands"
+
+def test_get_fipe_preco():
+    response = api.get_fipe_preco('001004-9')
+    assert isinstance(response, list), "Response should be a list with vehicle price information"
+
+def test_get_fipe_tabelas():
+    response = api.get_fipe_tabelas()
+    assert isinstance(response, list), "Response should be a list of FIPE tables"
+
+def test_get_ibge_municipios():
+    response = api.get_ibge_municipios('SP')
+    assert isinstance(response, list), "Response should be a list of municipalities"
+
+def test_get_ibge_uf():
+    response = api.get_ibge_uf()
+    assert isinstance(response, list), "Response should be a list of states"
+
+def test_get_ibge_uf_by_code():
+    response = api.get_ibge_uf_by_code('SP')
+    assert isinstance(response, dict), "Response should be a dictionary with state information"
+
+def test_get_isbn():
+    response = api.get_isbn('9788545702870')
+    assert isinstance(response, dict) and "isbn" in response, "Response should be a dictionary with ISBN information"
+
+def test_get_ncms():
+    response = api.get_ncms()
+    assert isinstance(response, list), "Response should be a list of NCMs"
+
+def test_search_ncm():
+    response = api.search_ncm('3305.10.00')
+    assert isinstance(response, list), "Response should be a list of NCMs"
+
+def test_get_ncm_by_code():
+    response = api.get_ncm_by_code('3305.10.00')
+    assert isinstance(response, dict), "Response should be a dictionary with NCM information"
+
+def test_get_pix_participants():
+    response = api.get_pix_participants()
+    assert isinstance(response, list), "Response should be a list of PIX participants"
+
+def test_get_registro_br():
+    response = api.get_registro_br('brasilapi.com.br')
+    assert isinstance(response, dict), "Response should be a dictionary with domain status"
+
+def test_get_taxas():
+    response = api.get_taxas()
+    assert isinstance(response, list), "Response should be a list of interest rates"
+
+def test_get_taxa_by_sigla():
+    response = api.get_taxa_by_sigla('CDI')
+    assert isinstance(response, dict), "Response should be a dictionary with rate information"
+```
+
+### brasil.json
+```json
+{
+    "tool_name": "brasil",
+    "tool_description": "Brasil API provides modern endpoints with very low latency using technologies like Vercel Smart CDN to cache information in various regions worldwide.",
+    "title": "Brasil API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://brasilapi.com.br/docs",
+    "host": "brasilapi.com.br",
+    "api_list": [
+        {
+            "name": "get_banks",
+            "url": "https://brasilapi.com.br/banks/v1",
+            "description": "Return information of all Brazilian banks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/banks/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "ispb": "string",
+                        "name": "string",
+                        "code": "integer",
+                        "fullName": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "ispb": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "code": {
+                            "type": "integer"
+                        },
+                        "fullName": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_bank_by_code",
+            "url": "https://brasilapi.com.br/banks/v1/{code}",
+            "description": "Return information of a bank by code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "code",
+                    "type": "INTEGER",
+                    "description": "Code of the bank.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/banks/v1/1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "ispb": "string",
+                "name": "string",
+                "code": "integer",
+                "fullName": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "ispb": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_cep",
+            "url": "https://brasilapi.com.br/cep/v1/{cep}",
+            "description": "Fetch address information using CEP.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cep",
+                    "type": "INTEGER",
+                    "description": "Postal code from Brazil.",
+                    "default": "00000000"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cep/v1/89010025'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cep": "string",
+                "state": "string",
+                "city": "string",
+                "neighborhood": "string",
+                "street": "string",
+                "service": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cep": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "neighborhood": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "service": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_cep_v2",
+            "url": "https://brasilapi.com.br/cep/v2/{cep}",
+            "description": "Fetch address information using CEP version 2.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cep",
+                    "type": "INTEGER",
+                    "description": "Postal code from Brazil.",
+                    "default": "00000000"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cep/v2/89010025'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cep": "string",
+                "state": "string",
+                "city": "string",
+                "neighborhood": "string",
+                "street": "string",
+                "service": "string",
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "coordinates": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cep": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "neighborhood": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "service": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "coordinates": {
+                                "type": "array"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_cnpj",
+            "url": "https://brasilapi.com.br/cnpj/v1/{cnpj}",
+            "description": "Fetch company data by CNPJ.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cnpj",
+                    "type": "STRING",
+                    "description": "Unique identifier for legal entities in Brazil.",
+                    "default": "00000000000000"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cnpj/v1/19131243000197'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cnpj": "string",
+                "identificador_matriz_filial": "integer",
+                "descricao_matriz_filial": "string",
+                "razao_social": "string",
+                "nome_fantasia": "string",
+                "situacao_cadastral": "integer",
+                "descricao_situacao_cadastral": "string",
+                "data_situacao_cadastral": "string",
+                "motivo_situacao_cadastral": "integer",
+                "nome_cidade_exterior": "string",
+                "codigo_natureza_juridica": "integer",
+                "data_inicio_atividade": "string",
+                "cnae_fiscal": "integer",
+                "cnae_fiscal_descricao": "string",
+                "descricao_tipo_de_logradouro": "string",
+                "logradouro": "string",
+                "numero": "string",
+                "complemento": "string",
+                "bairro": "string",
+                "cep": "integer",
+                "uf": "string",
+                "codigo_municipio": "integer",
+                "municipio": "string",
+                "ddd_telefone_1": "string",
+                "ddd_telefone_2": "string",
+                "ddd_fax": "string",
+                "qualificacao_do_responsavel": "integer",
+                "capital_social": "integer",
+                "porte": "integer",
+                "descricao_porte": "string",
+                "opcao_pelo_simples": "boolean",
+                "data_opcao_pelo_simples": "string",
+                "data_exclusao_do_simples": "string",
+                "opcao_pelo_mei": "boolean",
+                "situacao_especial": "string",
+                "data_situacao_especial": "string",
+                "cnaes_secundarios": {
+                    "type": "array",
+                    "items": "object"
+                },
+                "qsa": {
+                    "type": "array",
+                    "items": "object"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cnpj": {
+                        "type": "string"
+                    },
+                    "identificador_matriz_filial": {
+                        "type": "integer"
+                    },
+                    "descricao_matriz_filial": {
+                        "type": "string"
+                    },
+                    "razao_social": {
+                        "type": "string"
+                    },
+                    "nome_fantasia": {
+                        "type": "string"
+                    },
+                    "situacao_cadastral": {
+                        "type": "integer"
+                    },
+                    "descricao_situacao_cadastral": {
+                        "type": "string"
+                    },
+                    "data_situacao_cadastral": {
+                        "type": "string"
+                    },
+                    "motivo_situacao_cadastral": {
+                        "type": "integer"
+                    },
+                    "nome_cidade_exterior": {
+                        "type": "string"
+                    },
+                    "codigo_natureza_juridica": {
+                        "type": "integer"
+                    },
+                    "data_inicio_atividade": {
+                        "type": "string"
+                    },
+                    "cnae_fiscal": {
+                        "type": "integer"
+                    },
+                    "cnae_fiscal_descricao": {
+                        "type": "string"
+                    },
+                    "descricao_tipo_de_logradouro": {
+                        "type": "string"
+                    },
+                    "logradouro": {
+                        "type": "string"
+                    },
+                    "numero": {
+                        "type": "string"
+                    },
+                    "complemento": {
+                        "type": "string"
+                    },
+                    "bairro": {
+                        "type": "string"
+                    },
+                    "cep": {
+                        "type": "integer"
+                    },
+                    "uf": {
+                        "type": "string"
+                    },
+                    "codigo_municipio": {
+                        "type": "integer"
+                    },
+                    "municipio": {
+                        "type": "string"
+                    },
+                    "ddd_telefone_1": {
+                        "type": "string"
+                    },
+                    "ddd_telefone_2": {
+                        "type": "string"
+                    },
+                    "ddd_fax": {
+                        "type": "string"
+                    },
+                    "qualificacao_do_responsavel": {
+                        "type": "integer"
+                    },
+                    "capital_social": {
+                        "type": "integer"
+                    },
+                    "porte": {
+                        "type": "integer"
+                    },
+                    "descricao_porte": {
+                        "type": "string"
+                    },
+                    "opcao_pelo_simples": {
+                        "type": "boolean"
+                    },
+                    "data_opcao_pelo_simples": {
+                        "type": "string"
+                    },
+                    "data_exclusao_do_simples": {
+                        "type": "string"
+                    },
+                    "opcao_pelo_mei": {
+                        "type": "boolean"
+                    },
+                    "situacao_especial": {
+                        "type": "string"
+                    },
+                    "data_situacao_especial": {
+                        "type": "string"
+                    },
+                    "cnaes_secundarios": {
+                        "type": "array"
+                    },
+                    "qsa": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_corretoras",
+            "url": "https://brasilapi.com.br/cvm/corretoras/v1",
+            "description": "Retrieve information about brokers registered with CVM.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cvm/corretoras/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "bairro": "string",
+                        "cep": "string",
+                        "cnpj": "string",
+                        "codigo_cvm": "string",
+                        "complemento": "string",
+                        "data_inicio_situacao": "string",
+                        "data_patrimonio_liquido": "string",
+                        "data_registro": "string",
+                        "email": "string",
+                        "logradouro": "string",
+                        "municipio": "string",
+                        "nome_social": "string",
+                        "nome_comercial": "string",
+                        "pais": "string",
+                        "status": "string",
+                        "telefone": "string",
+                        "type": "string",
+                        "uf": "string",
+                        "valor_patrimonio_liquido": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "bairro": {
+                            "type": "string"
+                        },
+                        "cep": {
+                            "type": "string"
+                        },
+                        "cnpj": {
+                            "type": "string"
+                        },
+                        "codigo_cvm": {
+                            "type": "string"
+                        },
+                        "complemento": {
+                            "type": "string"
+                        },
+                        "data_inicio_situacao": {
+                            "type": "string"
+                        },
+                        "data_patrimonio_liquido": {
+                            "type": "string"
+                        },
+                        "data_registro": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        },
+                        "logradouro": {
+                            "type": "string"
+                        },
+                        "municipio": {
+                            "type": "string"
+                        },
+                        "nome_social": {
+                            "type": "string"
+                        },
+                        "nome_comercial": {
+                            "type": "string"
+                        },
+                        "pais": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string"
+                        },
+                        "telefone": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        },
+                        "uf": {
+                            "type": "string"
+                        },
+                        "valor_patrimonio_liquido": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_corretora_by_cnpj",
+            "url": "https://brasilapi.com.br/cvm/corretoras/v1/{cnpj}",
+            "description": "Fetch a broker's information by CNPJ.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cnpj",
+                    "type": "STRING",
+                    "description": "Unique identifier for legal entities in Brazil.",
+                    "default": "00000000000000"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cvm/corretoras/v1/02332886000104'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "bairro": "string",
+                "cep": "string",
+                "cnpj": "string",
+                "codigo_cvm": "string",
+                "complemento": "string",
+                "data_inicio_situacao": "string",
+                "data_patrimonio_liquido": "string",
+                "data_registro": "string",
+                "email": "string",
+                "logradouro": "string",
+                "municipio": "string",
+                "nome_social": "string",
+                "nome_comercial": "string",
+                "pais": "string",
+                "status": "string",
+                "telefone": "string",
+                "type": "string",
+                "uf": "string",
+                "valor_patrimonio_liquido": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "bairro": {
+                        "type": "string"
+                    },
+                    "cep": {
+                        "type": "string"
+                    },
+                    "cnpj": {
+                        "type": "string"
+                    },
+                    "codigo_cvm": {
+                        "type": "string"
+                    },
+                    "complemento": {
+                        "type": "string"
+                    },
+                    "data_inicio_situacao": {
+                        "type": "string"
+                    },
+                    "data_patrimonio_liquido": {
+                        "type": "string"
+                    },
+                    "data_registro": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "logradouro": {
+                        "type": "string"
+                    },
+                    "municipio": {
+                        "type": "string"
+                    },
+                    "nome_social": {
+                        "type": "string"
+                    },
+                    "nome_comercial": {
+                        "type": "string"
+                    },
+                    "pais": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "uf": {
+                        "type": "string"
+                    },
+                    "valor_patrimonio_liquido": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_cptec_cidades",
+            "url": "https://brasilapi.com.br/cptec/v1/cidade",
+            "description": "List all cities available in CPTEC services.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/cidade'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "nome": "string",
+                        "estado": "string",
+                        "id": "integer"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "string"
+                        },
+                        "estado": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_cptec_cidade",
+            "url": "https://brasilapi.com.br/cptec/v1/cidade/{cityName}",
+            "description": "Search for cities in CPTEC by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cityName",
+                    "type": "STRING",
+                    "description": "Name or part of the name of the city to be searched.",
+                    "default": "São Paulo"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/cidade/São Paulo'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "nome": "string",
+                        "estado": "string",
+                        "id": "integer"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "string"
+                        },
+                        "estado": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_clima_capital",
+            "url": "https://brasilapi.com.br/cptec/v1/clima/capital",
+            "description": "Get current weather conditions in the capitals of Brazil.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/clima/capital'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "codigo_icao": "string",
+                        "atualizado_em": "string",
+                        "pressao_atmosferica": "string",
+                        "visibilidade": "string",
+                        "vento": "integer",
+                        "direcao_vento": "integer",
+                        "umidade": "integer",
+                        "condicao": "string",
+                        "condicao_Desc": "string",
+                        "temp": "integer"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "codigo_icao": {
+                            "type": "string"
+                        },
+                        "atualizado_em": {
+                            "type": "string"
+                        },
+                        "pressao_atmosferica": {
+                            "type": "string"
+                        },
+                        "visibilidade": {
+                            "type": "string"
+                        },
+                        "vento": {
+                            "type": "integer"
+                        },
+                        "direcao_vento": {
+                            "type": "integer"
+                        },
+                        "umidade": {
+                            "type": "integer"
+                        },
+                        "condicao": {
+                            "type": "string"
+                        },
+                        "condicao_Desc": {
+                            "type": "string"
+                        },
+                        "temp": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_clima_aeroporto",
+            "url": "https://brasilapi.com.br/cptec/v1/clima/aeroporto/{icaoCode}",
+            "description": "Get current weather conditions at a specified airport using ICAO code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "icaoCode",
+                    "type": "STRING",
+                    "description": "ICAO code (4 digits) of the desired airport.",
+                    "default": "SBGR"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/clima/aeroporto/SBGR'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "codigo_icao": "string",
+                "atualizado_em": "string",
+                "pressao_atmosferica": "string",
+                "visibilidade": "string",
+                "vento": "integer",
+                "direcao_vento": "integer",
+                "umidade": "integer",
+                "condicao": "string",
+                "condicao_Desc": "string",
+                "temp": "integer"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "codigo_icao": {
+                        "type": "string"
+                    },
+                    "atualizado_em": {
+                        "type": "string"
+                    },
+                    "pressao_atmosferica": {
+                        "type": "string"
+                    },
+                    "visibilidade": {
+                        "type": "string"
+                    },
+                    "vento": {
+                        "type": "integer"
+                    },
+                    "direcao_vento": {
+                        "type": "integer"
+                    },
+                    "umidade": {
+                        "type": "integer"
+                    },
+                    "condicao": {
+                        "type": "string"
+                    },
+                    "condicao_Desc": {
+                        "type": "string"
+                    },
+                    "temp": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_previsao_meteorologica",
+            "url": "https://brasilapi.com.br/cptec/v1/clima/previsao/{cityCode}",
+            "description": "Fetch current weather forecast for a city by city code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cityCode",
+                    "type": "INTEGER",
+                    "description": "City code from endpoint /cidade.",
+                    "default": "0"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/clima/previsao/999'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cidade": "string",
+                "estado": "string",
+                "atualizado_em": "string",
+                "clima": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cidade": {
+                        "type": "string"
+                    },
+                    "estado": {
+                        "type": "string"
+                    },
+                    "atualizado_em": {
+                        "type": "string"
+                    },
+                    "clima": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_previsao_meteorologica_dias",
+            "url": "https://brasilapi.com.br/cptec/v1/clima/previsao/{cityCode}/{days}",
+            "description": "Fetch weather forecast for a city for a period up to 6 days.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cityCode",
+                    "type": "INTEGER",
+                    "description": "City code from endpoint /cidade.",
+                    "default": "0"
+                },
+                {
+                    "name": "days",
+                    "type": "INTEGER",
+                    "description": "Number of days for the forecast.",
+                    "default": "1"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/clima/previsao/999/3'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cidade": "string",
+                "estado": "string",
+                "atualizado_em": "string",
+                "clima": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cidade": {
+                        "type": "string"
+                    },
+                    "estado": {
+                        "type": "string"
+                    },
+                    "atualizado_em": {
+                        "type": "string"
+                    },
+                    "clima": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_previsao_oceanica",
+            "url": "https://brasilapi.com.br/cptec/v1/ondas/{cityCode}",
+            "description": "Fetch oceanic forecast for a city by city code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cityCode",
+                    "type": "INTEGER",
+                    "description": "City code from endpoint /cidade.",
+                    "default": "0"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/ondas/241'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cidade": "string",
+                "estado": "string",
+                "atualizado_em": "string",
+                "ondas": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cidade": {
+                        "type": "string"
+                    },
+                    "estado": {
+                        "type": "string"
+                    },
+                    "atualizado_em": {
+                        "type": "string"
+                    },
+                    "ondas": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_previsao_oceanica_dias",
+            "url": "https://brasilapi.com.br/cptec/v1/ondas/{cityCode}/{days}",
+            "description": "Fetch oceanic forecast for a city for a period up to 6 days.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cityCode",
+                    "type": "INTEGER",
+                    "description": "City code from endpoint /cidade.",
+                    "default": "0"
+                },
+                {
+                    "name": "days",
+                    "type": "INTEGER",
+                    "description": "Number of days for the oceanic forecast.",
+                    "default": "1"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/cptec/v1/ondas/241/2'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cidade": "string",
+                "estado": "string",
+                "atualizado_em": "string",
+                "ondas": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cidade": {
+                        "type": "string"
+                    },
+                    "estado": {
+                        "type": "string"
+                    },
+                    "atualizado_em": {
+                        "type": "string"
+                    },
+                    "ondas": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ddd",
+            "url": "https://brasilapi.com.br/ddd/v1/{ddd}",
+            "description": "Fetch state and city list by DDD.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ddd",
+                    "type": "INTEGER",
+                    "description": "DDD code for Brazilian regions.",
+                    "default": "11"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ddd/v1/11'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "state": "string",
+                "cities": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "state": {
+                        "type": "string"
+                    },
+                    "cities": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_feriados",
+            "url": "https://brasilapi.com.br/feriados/v1/{ano}",
+            "description": "List national holidays for a given year.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ano",
+                    "type": "INTEGER",
+                    "description": "Year for which to list holidays.",
+                    "default": "2020"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/feriados/v1/2022'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "date": "string",
+                        "name": "string",
+                        "type": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "date": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_fipe_marcas",
+            "url": "https://brasilapi.com.br/fipe/marcas/v1/{tipoVeiculo}",
+            "description": "List vehicle brands according to the type of vehicle.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "tipoVeiculo",
+                    "type": "STRING",
+                    "description": "Type of vehicle (caminhoes, carros, motos).",
+                    "default": "carros"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/fipe/marcas/v1/carros'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "nome": "string",
+                        "valor": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "string"
+                        },
+                        "valor": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_fipe_preco",
+            "url": "https://brasilapi.com.br/fipe/preco/v1/{codigoFipe}",
+            "description": "Get the vehicle price according to the Fipe table.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "codigoFipe",
+                    "type": "STRING",
+                    "description": "Fipe code of the vehicle.",
+                    "default": "000000-0"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/fipe/preco/v1/001004-9'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "valor": "string",
+                        "marca": "string",
+                        "modelo": "string",
+                        "anoModelo": "integer",
+                        "combustivel": "string",
+                        "codigoFipe": "string",
+                        "mesReferencia": "string",
+                        "tipoVeiculo": "integer",
+                        "siglaCombustivel": "string",
+                        "dataConsulta": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "valor": {
+                            "type": "string"
+                        },
+                        "marca": {
+                            "type": "string"
+                        },
+                        "modelo": {
+                            "type": "string"
+                        },
+                        "anoModelo": {
+                            "type": "integer"
+                        },
+                        "combustivel": {
+                            "type": "string"
+                        },
+                        "codigoFipe": {
+                            "type": "string"
+                        },
+                        "mesReferencia": {
+                            "type": "string"
+                        },
+                        "tipoVeiculo": {
+                            "type": "integer"
+                        },
+                        "siglaCombustivel": {
+                            "type": "string"
+                        },
+                        "dataConsulta": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_fipe_tabelas",
+            "url": "https://brasilapi.com.br/fipe/tabelas/v1",
+            "description": "List existing reference tables in FIPE.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/fipe/tabelas/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "codigo": "integer",
+                        "mes": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "codigo": {
+                            "type": "integer"
+                        },
+                        "mes": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ibge_municipios",
+            "url": "https://brasilapi.com.br/ibge/municipios/v1/{siglaUF}?providers=dados-abertos-br,gov,wikipedia",
+            "description": "Returns the municipalities of the federative unit.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "siglaUF",
+                    "type": "STRING",
+                    "description": "State abbreviation, e.g., SP, RJ.",
+                    "default": "SP"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "providers",
+                    "type": "STRING",
+                    "description": "Comma-separated list of providers.",
+                    "default": "dados-abertos-br,gov,wikipedia"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ibge/municipios/v1/SP?providers=dados-abertos-br,gov,wikipedia'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "nome": "string",
+                        "codigo_ibge": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "nome": {
+                            "type": "string"
+                        },
+                        "codigo_ibge": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ibge_uf",
+            "url": "https://brasilapi.com.br/ibge/uf/v1",
+            "description": "Returns all states of Brazil.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ibge/uf/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "id": "integer",
+                        "sigla": "string",
+                        "nome": "string",
+                        "regiao": {
+                            "type": "object",
+                            "properties": {}
+                        }
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "sigla": {
+                            "type": "string"
+                        },
+                        "nome": {
+                            "type": "string"
+                        },
+                        "regiao": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ibge_uf_by_code",
+            "url": "https://brasilapi.com.br/ibge/uf/v1/{code}",
+            "description": "Fetch state information using its code or abbreviation.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "code",
+                    "type": "STRING",
+                    "description": "State code or abbreviation.",
+                    "default": "SP"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ibge/uf/v1/SP'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "integer",
+                "sigla": "string",
+                "nome": "string",
+                "regiao": {
+                    "id": "integer",
+                    "sigla": "string",
+                    "nome": "string"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "sigla": {
+                        "type": "string"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "regiao": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "sigla": {
+                                "type": "string"
+                            },
+                            "nome": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_isbn",
+            "url": "https://brasilapi.com.br/isbn/v1/{isbn}",
+            "description": "Fetch information about a book using ISBN.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "isbn",
+                    "type": "STRING",
+                    "description": "International Standard Book Number.",
+                    "default": "0000000000000"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/isbn/v1/9788545702870'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "isbn": "string",
+                "title": "string",
+                "subtitle": "string",
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "publisher": "string",
+                "synopsis": "string",
+                "dimensions": {
+                    "type": "object",
+                    "properties": {
+                        "width": "number",
+                        "height": "number",
+                        "unit": "string"
+                    }
+                },
+                "year": "integer",
+                "format": "string",
+                "page_count": "integer",
+                "subjects": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "location": "string",
+                "retail_price": "string",
+                "cover_url": "string",
+                "provider": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "isbn": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": "string"
+                    },
+                    "publisher": {
+                        "type": "string"
+                    },
+                    "synopsis": {
+                        "type": "string"
+                    },
+                    "dimensions": {
+                        "type": "object",
+                        "properties": {
+                            "width": {
+                                "type": "number"
+                            },
+                            "height": {
+                                "type": "number"
+                            },
+                            "unit": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "year": {
+                        "type": "integer"
+                    },
+                    "format": {
+                        "type": "string"
+                    },
+                    "page_count": {
+                        "type": "integer"
+                    },
+                    "subjects": {
+                        "type": "array",
+                        "items": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "retail_price": {
+                        "type": "string"
+                    },
+                    "cover_url": {
+                        "type": "string"
+                    },
+                    "provider": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ncms",
+            "url": "https://brasilapi.com.br/ncm/v1",
+            "description": "Returns all NCMs information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ncm/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "codigo": "string",
+                        "descricao": "string",
+                        "data_inicio": "string",
+                        "data_fim": "string",
+                        "tipo_ato": "string",
+                        "numero_ato": "string",
+                        "ano_ato": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "codigo": {
+                            "type": "string"
+                        },
+                        "descricao": {
+                            "type": "string"
+                        },
+                        "data_inicio": {
+                            "type": "string"
+                        },
+                        "data_fim": {
+                            "type": "string"
+                        },
+                        "tipo_ato": {
+                            "type": "string"
+                        },
+                        "numero_ato": {
+                            "type": "string"
+                        },
+                        "ano_ato": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_ncm",
+            "url": "https://brasilapi.com.br/ncm/v1?search={code}",
+            "description": "Search NCM information by code or description.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "code",
+                    "type": "STRING",
+                    "description": "NCM code or description.",
+                    "default": "0000.00.00"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ncm/v1?search=3305.10.00'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "codigo": "string",
+                        "descricao": "string",
+                        "data_inicio": "string",
+                        "data_fim": "string",
+                        "tipo_ato": "string",
+                        "numero_ato": "string",
+                        "ano_ato": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "codigo": {
+                            "type": "string"
+                        },
+                        "descricao": {
+                            "type": "string"
+                        },
+                        "data_inicio": {
+                            "type": "string"
+                        },
+                        "data_fim": {
+                            "type": "string"
+                        },
+                        "tipo_ato": {
+                            "type": "string"
+                        },
+                        "numero_ato": {
+                            "type": "string"
+                        },
+                        "ano_ato": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ncm_by_code",
+            "url": "https://brasilapi.com.br/ncm/v1/{code}",
+            "description": "Fetch NCM information using a code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "code",
+                    "type": "STRING",
+                    "description": "NCM code.",
+                    "default": "0000.00.00"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/ncm/v1/3305.10.00'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "codigo": "string",
+                "descricao": "string",
+                "data_inicio": "string",
+                "data_fim": "string",
+                "tipo_ato": "string",
+                "numero_ato": "string",
+                "ano_ato": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "codigo": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "data_inicio": {
+                        "type": "string"
+                    },
+                    "data_fim": {
+                        "type": "string"
+                    },
+                    "tipo_ato": {
+                        "type": "string"
+                    },
+                    "numero_ato": {
+                        "type": "string"
+                    },
+                    "ano_ato": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_pix_participants",
+            "url": "https://brasilapi.com.br/pix/v1/participants",
+            "description": "Returns all PIX participants' information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/pix/v1/participants'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "ispb": "string",
+                        "nome": "string",
+                        "nome_reduzido": "string",
+                        "modalidade_participacao": "string",
+                        "tipo_participacao": "string",
+                        "inicio_operacao": "string"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "ispb": {
+                            "type": "string"
+                        },
+                        "nome": {
+                            "type": "string"
+                        },
+                        "nome_reduzido": {
+                            "type": "string"
+                        },
+                        "modalidade_participacao": {
+                            "type": "string"
+                        },
+                        "tipo_participacao": {
+                            "type": "string"
+                        },
+                        "inicio_operacao": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_registro_br",
+            "url": "https://brasilapi.com.br/registrobr/v1/{domain}",
+            "description": "Evaluate the status of a .br domain.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "The domain name to be evaluated.",
+                    "default": "example.br"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/registrobr/v1/brasilapi.com.br'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "status_code": "integer",
+                "status": "string",
+                "fqdn": "string",
+                "hosts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "publication-status": "string",
+                "expires-at": "string",
+                "suggestions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "fqdn": {
+                        "type": "string"
+                    },
+                    "hosts": {
+                        "type": "array"
+                    },
+                    "publication-status": {
+                        "type": "string"
+                    },
+                    "expires-at": {
+                        "type": "string"
+                    },
+                    "suggestions": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_taxas",
+            "url": "https://brasilapi.com.br/taxas/v1",
+            "description": "Fetch interest rates and some official indices in Brazil.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://brasilapi.com.br/taxas/v1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [

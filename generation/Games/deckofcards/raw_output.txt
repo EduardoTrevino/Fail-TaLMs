@@ -1,0 +1,460 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def shuffle_deck(deck_count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Shuffle a new deck of cards.
+    
+    Parameters:
+    deck_count [Optional]: integer [Default: 1]: Number of decks to use.
+    """
+    url = "https://deckofcardsapi.com/api/deck/new/shuffle/"
+    params = {'deck_count': deck_count}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def draw_cards(deck_id: Optional[str] = "new", count: Optional[int] = 2, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Draw cards from a deck.
+    
+    Parameters:
+    deck_id [Optional]: string [Default: "new"]: The deck id to draw cards from.
+    count [Optional]: integer [Default: 2]: Number of cards to draw.
+    """
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/draw/"
+    params = {'count': count}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def reshuffle_deck(deck_id: str, remaining: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Reshuffle a deck.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id to reshuffle.
+    remaining [Optional]: boolean [Default: False]: Only shuffle remaining cards.
+    """
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/shuffle/"
+    params = {'remaining': remaining}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def new_deck(jokers_enabled: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Open a brand new deck of cards.
+    
+    Parameters:
+    jokers_enabled [Optional]: boolean [Default: False]: Include jokers in the deck.
+    """
+    url = "https://deckofcardsapi.com/api/deck/new/"
+    params = {'jokers_enabled': jokers_enabled}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def partial_deck(cards: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Create a partial deck with specific cards.
+    
+    Parameters:
+    cards [Required]: string: Comma separated card codes for the partial deck.
+    """
+    url = "https://deckofcardsapi.com/api/deck/new/shuffle/"
+    params = {'cards': cards}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def add_to_pile(deck_id: str, pile_name: str, cards: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Add cards to a pile.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id.
+    pile_name [Required]: string: The name of the pile.
+    cards [Required]: string: Comma-separated card codes to add to the pile.
+    """
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/add/"
+    params = {'cards': cards}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def shuffle_pile(deck_id: str, pile_name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Shuffle a pile.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id.
+    pile_name [Required]: string: The name of the pile.
+    """
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/shuffle/"
+    response = requests.get(url)
+    return response.json()
+
+def list_pile(deck_id: str, pile_name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List cards in a pile.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id.
+    pile_name [Required]: string: The name of the pile.
+    """
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/list/"
+    response = requests.get(url)
+    return response.json()
+
+def draw_from_pile(deck_id: str, pile_name: str, cards: Optional[str] = None, count: Optional[int] = None, draw_type: Optional[str] = "", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Draw cards from a pile.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id.
+    pile_name [Required]: string: The name of the pile.
+    cards [Optional]: string: Comma-separated card codes to draw.
+    count [Optional]: integer: Number of cards to draw.
+    draw_type [Optional]: string: 'bottom' or 'random' for draw type.
+    """
+    path = "draw/"
+    if draw_type in ["bottom", "random"]:
+        path = f"{draw_type}/"
+    url = f"https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/{path}"
+    params = {}
+    if cards:
+        params['cards'] = cards
+    if count:
+        params['count'] = count
+    response = requests.get(url, params=params)
+    return response.json()
+
+def return_cards(deck_id: str, cards: Optional[str] = None, pile_name: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Return cards to the main deck or a pile.
+    
+    Parameters:
+    deck_id [Required]: string: The deck id.
+    cards [Optional]: string: Comma-separated list of card codes to return.
+    pile_name [Optional]: string: The name of the pile to return cards to.
+    """
+    if pile_name:
+        url = f"https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/return/"
+    else:
+        url = f"https://deckofcardsapi.com/api/deck/{deck_id}/return/"
+    params = {}
+    if cards:
+        params['cards'] = cards
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    shuffle_deck, draw_cards, reshuffle_deck, new_deck, partial_deck,
+    add_to_pile, shuffle_pile, list_pile, draw_from_pile, return_cards
+)
+
+class TestDeckOfCardsAPI(unittest.TestCase):
+
+    def test_shuffle_deck(self):
+        response = shuffle_deck(deck_count=1)
+        self.assertTrue(response['success'])
+        self.assertIn('deck_id', response)
+
+    def test_draw_cards(self):
+        response = draw_cards(deck_id="new", count=2)
+        self.assertTrue(response['success'])
+        self.assertIn('cards', response)
+
+    def test_reshuffle_deck(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        response = reshuffle_deck(deck_id=deck_id)
+        self.assertTrue(response['success'])
+
+    def test_new_deck(self):
+        response = new_deck(jokers_enabled=True)
+        self.assertTrue(response['success'])
+        self.assertEqual(response['remaining'], 54)
+
+    def test_partial_deck(self):
+        response = partial_deck(cards="AS,2S,KS")
+        self.assertTrue(response['success'])
+        self.assertEqual(response['remaining'], 3)
+
+    def test_add_to_pile(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        draw_response = draw_cards(deck_id=deck_id, count=2)
+        cards = draw_response['cards'][0]['code']
+        response = add_to_pile(deck_id=deck_id, pile_name="discard", cards=cards)
+        self.assertTrue(response['success'])
+
+    def test_shuffle_pile(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        response = shuffle_pile(deck_id=deck_id, pile_name="discard")
+        self.assertTrue(response['success'])
+
+    def test_list_pile(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        response = list_pile(deck_id=deck_id, pile_name="discard")
+        self.assertTrue(response['success'])
+
+    def test_draw_from_pile(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        response = draw_from_pile(deck_id=deck_id, pile_name="discard", count=1)
+        self.assertTrue(response['success'])
+
+    def test_return_cards(self):
+        shuffle_response = shuffle_deck(deck_count=1)
+        deck_id = shuffle_response['deck_id']
+        draw_response = draw_cards(deck_id=deck_id, count=2)
+        cards = draw_response['cards'][0]['code']
+        response = return_cards(deck_id=deck_id, cards=cards)
+        self.assertTrue(response['success'])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### deckofcards.json
+```json
+{
+    "tool_name": "deckofcards",
+    "tool_description": "API for simulating a deck of cards, allowing operations like shuffling, drawing, and managing piles.",
+    "title": "Deck of Cards API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://deckofcardsapi.com/",
+    "host": "deckofcardsapi.com",
+    "api_list": [
+        {
+            "name": "shuffle_deck",
+            "url": "https://deckofcardsapi.com/api/deck/new/shuffle/",
+            "description": "Shuffle a new deck of cards.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "deck_count",
+                    "type": "INTEGER",
+                    "description": "Number of decks to use.",
+                    "default": 1
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "draw_cards",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/draw/",
+            "description": "Draw cards from a deck.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id to draw cards from.",
+                    "default": "new"
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of cards to draw.",
+                    "default": 2
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "reshuffle_deck",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/shuffle/",
+            "description": "Reshuffle a deck.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id to reshuffle."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "remaining",
+                    "type": "BOOLEAN",
+                    "description": "Only shuffle remaining cards.",
+                    "default": false
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "new_deck",
+            "url": "https://deckofcardsapi.com/api/deck/new/",
+            "description": "Open a brand new deck of cards.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "jokers_enabled",
+                    "type": "BOOLEAN",
+                    "description": "Include jokers in the deck.",
+                    "default": false
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "partial_deck",
+            "url": "https://deckofcardsapi.com/api/deck/new/shuffle/",
+            "description": "Create a partial deck with specific cards.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cards",
+                    "type": "STRING",
+                    "description": "Comma separated card codes for the partial deck."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "add_to_pile",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/add/",
+            "description": "Add cards to a pile.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id."
+                },
+                {
+                    "name": "pile_name",
+                    "type": "STRING",
+                    "description": "The name of the pile."
+                },
+                {
+                    "name": "cards",
+                    "type": "STRING",
+                    "description": "Comma-separated card codes to add to the pile."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "shuffle_pile",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/shuffle/",
+            "description": "Shuffle a pile.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id."
+                },
+                {
+                    "name": "pile_name",
+                    "type": "STRING",
+                    "description": "The name of the pile."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "list_pile",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/list/",
+            "description": "List cards in a pile.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id."
+                },
+                {
+                    "name": "pile_name",
+                    "type": "STRING",
+                    "description": "The name of the pile."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "draw_from_pile",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/pile/{pile_name}/draw/",
+            "description": "Draw cards from a pile.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id."
+                },
+                {
+                    "name": "pile_name",
+                    "type": "STRING",
+                    "description": "The name of the pile."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "cards",
+                    "type": "STRING",
+                    "description": "Comma-separated card codes to draw."
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Number of cards to draw."
+                },
+                {
+                    "name": "draw_type",
+                    "type": "STRING",
+                    "description": "Draw type: 'bottom' or 'random'."
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "return_cards",
+            "url": "https://deckofcardsapi.com/api/deck/{deck_id}/return/",
+            "description": "Return cards to the main deck or a pile.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "deck_id",
+                    "type": "STRING",
+                    "description": "The deck id."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "cards",
+                    "type": "STRING",
+                    "description": "Comma-separated list of card codes to return."
+                },
+                {
+                    "name": "pile_name",
+                    "type": "STRING",
+                    "description": "The name of the pile to return cards to."
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

@@ -1,0 +1,250 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_assets(limit: Optional[int] = 100, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint to get a list of all assets.
+    Parameters:
+    limit [Optional]: integer [Description: The number of assets to retrieve, default is 100]
+    """
+    url = "https://api.coincap.io/v2/assets"
+    params = {
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_asset_by_id(asset_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint to get detailed information for a specific asset by ID.
+    Parameters:
+    asset_id [Required]: string [Description: Asset ID to retrieve details for]
+    """
+    url = f"https://api.coincap.io/v2/assets/{asset_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_markets(limit: Optional[int] = 100, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint to get a list of all markets.
+    Parameters:
+    limit [Optional]: integer [Description: The number of markets to retrieve, default is 100]
+    """
+    url = "https://api.coincap.io/v2/markets"
+    params = {
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_exchange_data(limit: Optional[int] = 100, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint to get a list of all exchanges.
+    Parameters:
+    limit [Optional]: integer [Description: The number of exchanges to retrieve, default is 100]
+    """
+    url = "https://api.coincap.io/v2/exchanges"
+    params = {
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_assets, get_asset_by_id, get_markets, get_exchange_data
+
+class TestCoinCapAPI(unittest.TestCase):
+
+    def test_get_assets(self):
+        response = get_assets()
+        self.assertIn('data', response)
+        self.assertIsInstance(response['data'], list)
+
+    def test_get_asset_by_id(self):
+        response = get_asset_by_id('bitcoin')
+        self.assertIn('data', response)
+        self.assertEqual(response['data']['id'], 'bitcoin')
+
+    def test_get_markets(self):
+        response = get_markets()
+        self.assertIn('data', response)
+        self.assertIsInstance(response['data'], list)
+
+    def test_get_exchange_data(self):
+        response = get_exchange_data()
+        self.assertIn('data', response)
+        self.assertIsInstance(response['data'], list)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### coincap.json
+```json
+{
+    "tool_name": "coincap",
+    "tool_description": "CoinCap is a useful tool for real-time pricing and market activity for over 1,000 cryptocurrencies.",
+    "title": "CoinCap API 2.0",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99.9,
+        "avgLatency": 120,
+        "avgSuccessRate": 99.5,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.coincap.io",
+    "host": "api.coincap.io",
+    "api_list": [
+        {
+            "name": "get_assets",
+            "url": "https://api.coincap.io/v2/assets",
+            "description": "A list of all assets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of assets to retrieve.",
+                    "default": "100"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.coincap.io/v2/assets'\nparams = {'limit': limit}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "id": "str",
+                        "rank": "str",
+                        "symbol": "str",
+                        "name": "str",
+                        "supply": "str",
+                        "maxSupply": "str",
+                        "marketCapUsd": "str",
+                        "volumeUsd24Hr": "str",
+                        "priceUsd": "str",
+                        "changePercent24Hr": "str",
+                        "vwap24Hr": "str"
+                    }
+                ]
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_asset_by_id",
+            "url": "https://api.coincap.io/v2/assets/{asset_id}",
+            "description": "Get detailed information for a specific asset by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "asset_id",
+                    "type": "STRING",
+                    "description": "Asset ID to retrieve details for."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.coincap.io/v2/assets/{asset_id}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "id": "str",
+                    "rank": "str",
+                    "symbol": "str",
+                    "name": "str",
+                    "supply": "str",
+                    "maxSupply": "str",
+                    "marketCapUsd": "str",
+                    "volumeUsd24Hr": "str",
+                    "priceUsd": "str",
+                    "changePercent24Hr": "str",
+                    "vwap24Hr": "str"
+                }
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_markets",
+            "url": "https://api.coincap.io/v2/markets",
+            "description": "A list of all markets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of markets to retrieve.",
+                    "default": "100"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.coincap.io/v2/markets'\nparams = {'limit': limit}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "exchangeId": "str",
+                        "baseId": "str",
+                        "quoteId": "str",
+                        "baseSymbol": "str",
+                        "quoteSymbol": "str",
+                        "volumeUsd24Hr": "str",
+                        "priceUsd": "str",
+                        "volumePercent": "str"
+                    }
+                ]
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_exchange_data",
+            "url": "https://api.coincap.io/v2/exchanges",
+            "description": "A list of all exchanges.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of exchanges to retrieve.",
+                    "default": "100"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.coincap.io/v2/exchanges'\nparams = {'limit': limit}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "exchangeId": "str",
+                        "name": "str",
+                        "rank": "str",
+                        "percentTotalVolume": "str",
+                        "volumeUsd": "str",
+                        "tradingPairs": "str",
+                        "socket": "bool",
+                        "exchangeUrl": "str",
+                        "updated": "int"
+                    }
+                ]
+            },
+            "headers": {}
+        }
+    ]
+}
+```

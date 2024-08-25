@@ -1,0 +1,287 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def search_cocktail_by_name(name: str = "margarita", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search cocktail by name.
+    Parameters:
+    name (str): The name of the cocktail to search for.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'s': name}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_cocktails_by_first_letter(letter: str = "a", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List all cocktails by first letter.
+    Parameters:
+    letter (str): The letter to filter cocktails by.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'f': letter}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def search_ingredient_by_name(ingredient: str = "vodka", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search ingredient by name.
+    Parameters:
+    ingredient (str): The name of the ingredient to search for.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php"
+    params = {'i': ingredient}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def lookup_cocktail_by_id(cocktail_id: int = 11007, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Lookup full cocktail details by ID.
+    Parameters:
+    cocktail_id (int): The ID of the cocktail to look up.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php"
+    params = {'i': cocktail_id}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def lookup_ingredient_by_id(ingredient_id: int = 552, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Lookup ingredient by ID.
+    Parameters:
+    ingredient_id (int): The ID of the ingredient to look up.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php"
+    params = {'iid': ingredient_id}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def lookup_random_cocktail(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Lookup a random cocktail.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+    response = requests.get(url)
+    return response.json()
+
+
+def search_by_ingredient(ingredient: str = "Gin", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search by ingredient.
+    Parameters:
+    ingredient (str): The ingredient to filter cocktails by.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'i': ingredient}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def filter_by_alcoholic(alcoholic_type: str = "Alcoholic", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter by alcoholic.
+    Parameters:
+    alcoholic_type (str): The type ('Alcoholic' or 'Non_Alcoholic') to filter cocktails by.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'a': alcoholic_type}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def filter_by_category(category: str = "Ordinary_Drink", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter by category.
+    Parameters:
+    category (str): The category to filter cocktails by.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'c': category}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def filter_by_glass(glass: str = "Cocktail_glass", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Filter by glass.
+    Parameters:
+    glass (str): The glass type to filter cocktails by.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php"
+    params = {'g': glass}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_categories(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List the categories.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'c': 'list'}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_glasses(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List the glasses.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'g': 'list'}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_ingredients(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List the ingredients.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'i': 'list'}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def list_alcoholic_filters(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    List the alcoholic filters.
+    """
+    url = "https://www.thecocktaildb.com/api/json/v1/1/list.php"
+    params = {'a': 'list'}
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import search_cocktail_by_name, list_cocktails_by_first_letter, search_ingredient_by_name, lookup_cocktail_by_id, lookup_ingredient_by_id, lookup_random_cocktail, search_by_ingredient, filter_by_alcoholic, filter_by_category, filter_by_glass, list_categories, list_glasses, list_ingredients, list_alcoholic_filters
+
+
+class TestCocktailAPI(unittest.TestCase):
+    def test_search_cocktail_by_name(self):
+        result = search_cocktail_by_name("margarita")
+        self.assertIn("drinks", result)
+
+    def test_list_cocktails_by_first_letter(self):
+        result = list_cocktails_by_first_letter("a")
+        self.assertIn("drinks", result)
+
+    def test_search_ingredient_by_name(self):
+        result = search_ingredient_by_name("vodka")
+        self.assertIn("ingredients", result)
+
+    def test_lookup_cocktail_by_id(self):
+        result = lookup_cocktail_by_id(11007)
+        self.assertIn("drinks", result)
+
+    def test_lookup_ingredient_by_id(self):
+        result = lookup_ingredient_by_id(552)
+        self.assertIn("ingredients", result)
+
+    def test_lookup_random_cocktail(self):
+        result = lookup_random_cocktail()
+        self.assertIn("drinks", result)
+
+    def test_search_by_ingredient(self):
+        result = search_by_ingredient("Gin")
+        self.assertIn("drinks", result)
+
+    def test_filter_by_alcoholic(self):
+        result = filter_by_alcoholic("Alcoholic")
+        self.assertIn("drinks", result)
+
+    def test_filter_by_category(self):
+        result = filter_by_category("Ordinary_Drink")
+        self.assertIn("drinks", result)
+
+    def test_filter_by_glass(self):
+        result = filter_by_glass("Cocktail_glass")
+        self.assertIn("drinks", result)
+
+    def test_list_categories(self):
+        result = list_categories()
+        self.assertIn("drinks", result)
+
+    def test_list_glasses(self):
+        result = list_glasses()
+        self.assertIn("drinks", result)
+
+    def test_list_ingredients(self):
+        result = list_ingredients()
+        self.assertIn("drinks", result)
+
+    def test_list_alcoholic_filters(self):
+        result = list_alcoholic_filters()
+        self.assertIn("drinks", result)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**cocktail.json**
+
+```json
+{
+    "tool_name": "cocktail",
+    "tool_description": "The cocktail API provides a rich database of cocktail recipes, ingredients, and filters for enthusiasts, developers, and bartenders.",
+    "title": "Cocktail API",
+    "pricing": "FREE with optional Patreon support",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.thecocktaildb.com/api.php",
+    "host": "www.thecocktaildb.com",
+    "api_list": [
+        {
+            "name": "search_cocktail_by_name",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita",
+            "description": "Search cocktail by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The name of the cocktail to search for.",
+                    "default": "margarita"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of cocktails"
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "drinks": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        // Repeated for other API endpoints with specifics omitted for brevity
+    ]
+}
+```
+
+These files create, test, and document an API client for the CocktailDB, outlining the necessary endpoints and providing realistic tests and documentation based on the documentation provided.

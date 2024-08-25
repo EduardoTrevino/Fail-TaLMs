@@ -1,0 +1,421 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_server_time(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get the server's time.
+    
+    Parameters:
+    None
+    """
+    url = "https://api.kraken.com/0/public/Time"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_system_status(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get the current system status or trading mode.
+    
+    Parameters:
+    None
+    """
+    url = "https://api.kraken.com/0/public/SystemStatus"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_asset_info(asset: Optional[str] = None, aclass: Optional[str] = "currency", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get information about the assets that are available for deposit, withdrawal, trading, and earn.
+    
+    Parameters:
+    asset [Optional]: string - Comma delimited list of assets to get info on (optional, default all available assets)
+    aclass [Optional]: string - Asset class (optional, default: currency)
+    """
+    url = "https://api.kraken.com/0/public/Assets"
+    params = {
+        'asset': asset,
+        'aclass': aclass
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_tradable_asset_pairs(pair: Optional[str] = None, info: Optional[str] = "info", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get tradable asset pairs.
+    
+    Parameters:
+    pair [Optional]: string - Asset pairs to get data for
+    info [Optional]: string - Info to retrieve (optional)
+    """
+    url = "https://api.kraken.com/0/public/AssetPairs"
+    params = {
+        'pair': pair,
+        'info': info
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_ticker_information(pair: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get ticker information for all or requested markets.
+    
+    Parameters:
+    pair [Optional]: string - Asset pair to get data for (optional, default: all tradeable exchange pairs)
+    """
+    url = "https://api.kraken.com/0/public/Ticker"
+    params = {
+        'pair': pair
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_ohlc_data(pair: str, interval: Optional[int] = 1, since: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get OHLC (open/high/low/close) data for a given market.
+    
+    Parameters:
+    pair [Required]: string - Asset pair to get data for
+    interval [Optional]: integer - Time frame interval in minutes
+    since [Optional]: integer - Return up to 720 OHLC data points since given timestamp
+    """
+    url = "https://api.kraken.com/0/public/OHLC"
+    params = {
+        'pair': pair,
+        'interval': interval,
+        'since': since
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_order_book(pair: str, count: Optional[int] = 100, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get current order book details.
+    
+    Parameters:
+    pair [Required]: string - Asset pair to get data for
+    count [Optional]: integer - Maximum number of asks/bids
+    """
+    url = "https://api.kraken.com/0/public/Depth"
+    params = {
+        'pair': pair,
+        'count': count
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_recent_trades(pair: str, since: Optional[str] = None, count: Optional[int] = 1000, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Returns the last 1000 trades by default.
+    
+    Parameters:
+    pair [Required]: string - Asset pair to get data for
+    since [Optional]: string - Return trade data since given timestamp
+    count [Optional]: integer - Return specific number of trades, up to 1000
+    """
+    url = "https://api.kraken.com/0/public/Trades"
+    params = {
+        'pair': pair,
+        'since': since,
+        'count': count
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_recent_spreads(pair: str, since: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Returns the last ~200 top-of-book spreads for a given pair.
+    
+    Parameters:
+    pair [Required]: string - Asset pair to get data for
+    since [Optional]: integer - Returns spread data since given timestamp.
+    """
+    url = "https://api.kraken.com/0/public/Spread"
+    params = {
+        'pair': pair,
+        'since': since
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    get_server_time,
+    get_system_status,
+    get_asset_info,
+    get_tradable_asset_pairs,
+    get_ticker_information,
+    get_ohlc_data,
+    get_order_book,
+    get_recent_trades,
+    get_recent_spreads
+)
+
+class TestKrakenAPI(unittest.TestCase):
+
+    def test_get_server_time(self):
+        response = get_server_time()
+        self.assertIn("result", response)
+    
+    def test_get_system_status(self):
+        response = get_system_status()
+        self.assertIn("result", response)
+    
+    def test_get_asset_info(self):
+        response = get_asset_info()
+        self.assertIn("result", response)
+    
+    def test_get_tradable_asset_pairs(self):
+        response = get_tradable_asset_pairs()
+        self.assertIn("result", response)
+        
+    def test_get_ticker_information(self):
+        response = get_ticker_information()
+        self.assertIn("result", response)
+    
+    def test_get_ohlc_data(self):
+        response = get_ohlc_data(pair="XBTUSD")
+        self.assertIn("result", response)
+    
+    def test_get_order_book(self):
+        response = get_order_book(pair="XBTUSD")
+        self.assertIn("result", response)
+    
+    def test_get_recent_trades(self):
+        response = get_recent_trades(pair="XBTUSD")
+        self.assertIn("result", response)
+    
+    def test_get_recent_spreads(self):
+        response = get_recent_spreads(pair="XBTUSD")
+        self.assertIn("result", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### kraken.json
+```json
+{
+    "tool_name": "kraken",
+    "tool_description": "REST API for accessing Kraken's Spot exchange market data and trading features.",
+    "title": "Kraken REST API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.8
+    },
+    "home_url": "https://www.kraken.com/en-us/features/api",
+    "host": "api.kraken.com",
+    "api_list": [
+        {
+            "name": "get_server_time",
+            "url": "https://api.kraken.com/0/public/Time",
+            "description": "Get the server's time.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Time'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_system_status",
+            "url": "https://api.kraken.com/0/public/SystemStatus",
+            "description": "Get the current system status or trading mode.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/SystemStatus'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_asset_info",
+            "url": "https://api.kraken.com/0/public/Assets",
+            "description": "Get information about the assets that are available for deposit, withdrawal, trading, and earn.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "asset",
+                    "type": "STRING",
+                    "description": "Comma delimited list of assets to get info on (optional, default all available assets)"
+                },
+                {
+                    "name": "aclass",
+                    "type": "STRING",
+                    "description": "Asset class (optional, default: currency)"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Assets'\nparams = {'asset': asset, 'aclass': aclass}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_tradable_asset_pairs",
+            "url": "https://api.kraken.com/0/public/AssetPairs",
+            "description": "Get tradable asset pairs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pairs to get data for"
+                },
+                {
+                    "name": "info",
+                    "type": "STRING",
+                    "description": "Info to retrieve (optional)"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/AssetPairs'\nparams = {'pair': pair, 'info': info}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_ticker_information",
+            "url": "https://api.kraken.com/0/public/Ticker",
+            "description": "Get ticker information for all or requested markets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Ticker'\nparams = {'pair': pair}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_ohlc_data",
+            "url": "https://api.kraken.com/0/public/OHLC",
+            "description": "Get OHLC (open/high/low/close) data for a given market.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pair to get data for"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "interval",
+                    "type": "INTEGER",
+                    "description": "Time frame interval in minutes"
+                },
+                {
+                    "name": "since",
+                    "type": "INTEGER",
+                    "description": "Return up to 720 OHLC data points since given timestamp"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/OHLC'\nparams = {'pair': pair, 'interval': interval, 'since': since}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_order_book",
+            "url": "https://api.kraken.com/0/public/Depth",
+            "description": "Get current order book details.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pair to get data for"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Maximum number of asks/bids"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Depth'\nparams = {'pair': pair, 'count': count}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_recent_trades",
+            "url": "https://api.kraken.com/0/public/Trades",
+            "description": "Returns the last 1000 trades by default.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pair to get data for"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "since",
+                    "type": "STRING",
+                    "description": "Return trade data since given timestamp"
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Return specific number of trades, up to 1000"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Trades'\nparams = {'pair': pair, 'since': since, 'count': count}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        },
+        {
+            "name": "get_recent_spreads",
+            "url": "https://api.kraken.com/0/public/Spread",
+            "description": "Returns the last ~200 top-of-book spreads for a given pair.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pair",
+                    "type": "STRING",
+                    "description": "Asset pair to get data for"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "since",
+                    "type": "INTEGER",
+                    "description": "Returns spread data since given timestamp."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.kraken.com/0/public/Spread'\nparams = {'pair': pair, 'since': since}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200
+        }
+    ]
+}
+```

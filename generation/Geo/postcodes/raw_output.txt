@@ -1,0 +1,349 @@
+### api.py
+```python
+import requests
+from typing import List, Optional
+
+def lookup_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/postcodes/{postcode}"
+    response = requests.get(url)
+    return response.json()
+
+def bulk_lookup_postcodes(postcodes: List[str], toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.postcodes.io/postcodes"
+    data = {"postcodes": postcodes}
+    response = requests.post(url, json=data)
+    return response.json()
+
+def nearest_postcodes(lon: float, lat: float, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.postcodes.io/postcodes"
+    params = {"lon": lon, "lat": lat, "limit": limit}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def validate_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/postcodes/{postcode}/validate"
+    response = requests.get(url)
+    return response.json()
+
+def nearest_postcodes_for_postcode(postcode: str, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/postcodes/{postcode}/nearest"
+    params = {"limit": limit}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def autocomplete_postcode(postcode: str, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/postcodes/{postcode}/autocomplete"
+    params = {"limit": limit}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def query_postcodes(query: str, limit: Optional[int] = 10, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/postcodes"
+    params = {"q": query, "limit": limit}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def lookup_random_postcode(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.postcodes.io/random/postcodes"
+    response = requests.get(url)
+    return response.json()
+
+def lookup_terminated_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/terminated_postcodes/{postcode}"
+    response = requests.get(url)
+    return response.json()
+
+def lookup_outward_code(outcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/outcodes/{outcode}"
+    response = requests.get(url)
+    return response.json()
+
+def nearest_outcode_for_outcode(outcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/outcodes/{outcode}/nearest"
+    response = requests.get(url)
+    return response.json()
+
+def nearest_outcode(lon: float, lat: float, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/outcodes"
+    params = {"lon": lon, "lat": lat}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def lookup_scottish_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/scotland/postcodes/{postcode}"
+    response = requests.get(url)
+    return response.json()
+
+def lookup_place(code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/places/{code}"
+    response = requests.get(url)
+    return response.json()
+
+def query_places(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = f"https://api.postcodes.io/places"
+    params = {"q": query}
+    response = requests.get(url, params=params)
+    return response.json()
+
+def lookup_random_place(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    url = "https://api.postcodes.io/random/places"
+    response = requests.get(url)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class TestPostcodesAPI(unittest.TestCase):
+
+    def test_lookup_postcode(self):
+        response = lookup_postcode("SW1A1AA")
+        self.assertEqual(response['status'], 200)
+
+    def test_bulk_lookup_postcodes(self):
+        response = bulk_lookup_postcodes(["SW1A1AA", "OX49 5NU"])
+        self.assertEqual(response['status'], 200)
+
+    def test_nearest_postcodes(self):
+        response = nearest_postcodes(lon=-0.127758, lat=51.507351)
+        self.assertEqual(response['status'], 200)
+
+    def test_validate_postcode(self):
+        response = validate_postcode("SW1A1AA")
+        self.assertEqual(response['status'], 200)
+
+    def test_nearest_postcodes_for_postcode(self):
+        response = nearest_postcodes_for_postcode("SW1A1AA")
+        self.assertEqual(response['status'], 200)
+
+    def test_autocomplete_postcode(self):
+        response = autocomplete_postcode("SW1A")
+        self.assertEqual(response['status'], 200)
+
+    def test_query_postcodes(self):
+        response = query_postcodes("SW1A")
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_random_postcode(self):
+        response = lookup_random_postcode()
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_terminated_postcode(self):
+        response = lookup_terminated_postcode("EX16 5BL")
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_outward_code(self):
+        response = lookup_outward_code("EC1A")
+        self.assertEqual(response['status'], 200)
+
+    def test_nearest_outcode_for_outcode(self):
+        response = nearest_outcode_for_outcode("EC1A")
+        self.assertEqual(response['status'], 200)
+
+    def test_nearest_outcode(self):
+        response = nearest_outcode(lon=-0.127758, lat=51.507351)
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_scottish_postcode(self):
+        response = lookup_scottish_postcode("EH1 1AA")
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_place(self):
+        response = lookup_place("osgb4000000074564391")
+        self.assertEqual(response['status'], 200)
+
+    def test_query_places(self):
+        response = query_places("London")
+        self.assertEqual(response['status'], 200)
+
+    def test_lookup_random_place(self):
+        response = lookup_random_place()
+        self.assertEqual(response['status'], 200)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### postcodes.json
+```json
+{
+    "tool_name": "postcodes",
+    "tool_description": "API to access UK postcode data for geolocation and postcode validation services.",
+    "title": "Postcodes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.postcodes.io/",
+    "host": "api.postcodes.io",
+    "api_list": [
+        {
+            "name": "lookup_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode",
+            "description": "Lookup a single postcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "bulk_lookup_postcodes",
+            "url": "https://api.postcodes.io/postcodes",
+            "description": "Perform a bulk lookup of postcodes.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "postcodes",
+                    "type": "ARRAY",
+                    "description": "Array of postcodes to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes'\ndata = {\"postcodes\": postcodes}\nresponse = requests.post(url, json=data)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_postcodes",
+            "url": "https://api.postcodes.io/postcodes?lon=:longitude&lat=:latitude",
+            "description": "Get nearest postcodes for given longitude and latitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude for the search location."
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude for the search location."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes?lon={lon}&lat={lat}&limit={limit}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "validate_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode/validate",
+            "description": "Validate if a postcode is correct.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to validate."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}/validate'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_postcodes_for_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode/nearest",
+            "description": "Find nearest postcodes for a given postcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "The postcode to search around."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}/nearest'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        ... 
+        // Additional endpoints metadata
+    ]
+}
+```

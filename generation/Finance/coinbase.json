@@ -1,0 +1,211 @@
+{
+    "tool_name": "coinbase",
+    "tool_description": "API to access Coinbase's data including user information, currencies, exchange rates, and more.",
+    "title": "Coinbase API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.coinbase.com/",
+    "host": "api.coinbase.com",
+    "api_list": [
+        {
+            "name": "show_current_user",
+            "url": "https://api.coinbase.com/v2/user",
+            "description": "Get current user's public information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "token",
+                    "type": "STRING",
+                    "description": "Authorization token."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "id": "string",
+                "name": "string",
+                "username": "string",
+                "profile_location": "string",
+                "profile_bio": "string",
+                "profile_url": "string",
+                "avatar_url": "string",
+                "resource": "string",
+                "resource_path": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "show_authorization_information",
+            "url": "https://api.coinbase.com/v2/user/auth",
+            "description": "Get current user's authorization information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "token",
+                    "type": "STRING",
+                    "description": "Authorization token."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "method": "string",
+                "scopes": ["string"],
+                "oauth_meta": "object"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_fiat_currencies",
+            "url": "https://api.coinbase.com/v2/currencies",
+            "description": "Lists known fiat currencies.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "id": "string",
+                "name": "string",
+                "min_size": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_cryptocurrencies",
+            "url": "https://api.coinbase.com/v2/currencies/crypto",
+            "description": "Lists known cryptocurrencies.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "code": "string",
+                "name": "string",
+                "color": "string",
+                "sort_index": "integer",
+                "exponent": "integer",
+                "type": "string",
+                "address_regex": "string",
+                "asset_id": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_exchange_rates",
+            "url": "https://api.coinbase.com/v2/exchange-rates",
+            "description": "Get current exchange rates. Default base currency is USD.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Base currency (default: USD)."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "currency": "string",
+                "rates": {
+                    "string": "string"
+                }
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_buy_price",
+            "url": "https://api.coinbase.com/v2/prices/{currency_pair}/buy",
+            "description": "Get the total price to buy one bitcoin or ether.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "currency_pair",
+                    "type": "STRING",
+                    "description": "Currency pair e.g. 'BTC-USD'."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "amount": "string",
+                "currency": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_sell_price",
+            "url": "https://api.coinbase.com/v2/prices/{currency_pair}/sell",
+            "description": "Get the total price to sell one bitcoin or ether.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "currency_pair",
+                    "type": "STRING",
+                    "description": "Currency pair e.g. 'BTC-USD'."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "amount": "string",
+                "currency": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_spot_price",
+            "url": "https://api.coinbase.com/v2/prices/{currency_pair}/spot",
+            "description": "Get the current market price for bitcoin or other cryptocurrencies.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "currency_pair",
+                    "type": "STRING",
+                    "description": "Currency pair e.g. 'BTC-USD'."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "For historic spot price, use format YYYY-MM-DD (UTC)."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "amount": "string",
+                "currency": "string"
+            },
+            "headers": {},
+            "schema": {}
+        },
+        {
+            "name": "get_current_time",
+            "url": "https://api.coinbase.com/v2/time",
+            "description": "Get the API server time.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "iso": "string",
+                "epoch": "integer"
+            },
+            "headers": {},
+            "schema": {}
+        }
+    ]
+}

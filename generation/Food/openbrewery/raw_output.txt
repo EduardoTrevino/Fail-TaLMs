@@ -1,0 +1,244 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+def get_brewery_by_id(obdb_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a single brewery by its OBDB ID.
+    """
+    url = f"https://api.openbrewerydb.org/v1/breweries/{obdb_id}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def list_breweries(page: Optional[int] = 1, per_page: Optional[int] = 50, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a list of breweries with pagination.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries"
+    params = {
+        'page': page,
+        'per_page': per_page
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_random_brewery(size: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a random brewery.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/random"
+    params = {
+        'size': size
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_breweries(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for breweries based on a search term.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/search"
+    params = {
+        'query': query
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def autocomplete_breweries(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Return a list of names and ids of breweries for autocomplete.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/autocomplete"
+    params = {
+        'query': query
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_breweries_metadata(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get metadata for breweries.
+    """
+    url = "https://api.openbrewerydb.org/v1/breweries/meta"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import *
+
+class TestOpenBreweryAPI(unittest.TestCase):
+    
+    def test_get_brewery_by_id(self):
+        response = get_brewery_by_id('bnaf9f')
+        self.assertIn('id', response)
+    
+    def test_list_breweries(self):
+        response = list_breweries()
+        self.assertIsInstance(response, list)
+    
+    def test_get_random_brewery(self):
+        response = get_random_brewery()
+        self.assertIsInstance(response, list)
+    
+    def test_search_breweries(self):
+        response = search_breweries('ale')
+        self.assertIsInstance(response, list)
+    
+    def test_autocomplete_breweries(self):
+        response = autocomplete_breweries('dog')
+        self.assertIsInstance(response, list)
+    
+    def test_get_breweries_metadata(self):
+        response = get_breweries_metadata()
+        self.assertIsInstance(response, dict)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### openbrewery.json
+```json
+{
+    "tool_name": "openbrewery",
+    "tool_description": "API to access a variety of data about breweries.",
+    "title": "Open Brewery API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.openbrewerydb.org",
+    "host": "api.openbrewerydb.org",
+    "api_list": [
+        {
+            "name": "get_brewery_by_id",
+            "url": "https://api.openbrewerydb.org/v1/breweries/{obdb-id}",
+            "description": "Get a single brewery by its OBDB ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "obdb_id",
+                    "type": "STRING",
+                    "description": "The brewery OBDB ID."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "list_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries",
+            "description": "Returns a list of breweries with pagination.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The offset or page of breweries to return.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of breweries to return each call.",
+                    "default": "50"
+                }
+            ],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "get_random_brewery",
+            "url": "https://api.openbrewerydb.org/v1/breweries/random",
+            "description": "Get a random brewery.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "size",
+                    "type": "INTEGER",
+                    "description": "Number of random breweries to return.",
+                    "default": "1"
+                }
+            ],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "search_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries/search",
+            "description": "Search for breweries based on a search term.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search term to look for breweries."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "autocomplete_breweries",
+            "url": "https://api.openbrewerydb.org/v1/breweries/autocomplete",
+            "description": "Autocomplete search for breweries.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search term to autocomplete."
+                }
+            ],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        },
+        {
+            "name": "get_breweries_metadata",
+            "url": "https://api.openbrewerydb.org/v1/breweries/meta",
+            "description": "Get metadata about breweries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "headers": {},
+            "statuscode": 200,
+            "schema": {}
+        }
+    ]
+}
+```

@@ -1,0 +1,256 @@
+### api.py
+```python
+import requests
+
+def get_random_joke(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a random Chuck Norris joke in JSON format.
+    """
+    url = "https://api.chucknorris.io/jokes/random"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_random_joke_by_category(category: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a random Chuck Norris joke from a given category.
+    
+    Parameters:
+    category [Required]: string [Description: The category to retrieve a joke from.]
+    """
+    url = f"https://api.chucknorris.io/jokes/random?category={category}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_joke_categories(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a list of available categories for Chuck Norris jokes.
+    """
+    url = "https://api.chucknorris.io/jokes/categories"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_jokes(query: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Free text search for Chuck Norris jokes.
+    
+    Parameters:
+    query [Required]: string [Description: The search query for jokes.]
+    """
+    url = f"https://api.chucknorris.io/jokes/search?query={query}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_random_joke, get_random_joke_by_category, get_joke_categories, search_jokes
+
+class TestChuckNorrisJokesAPI(unittest.TestCase):
+
+    def test_get_random_joke(self):
+        response = get_random_joke()
+        self.assertIn('value', response)
+
+    def test_get_random_joke_by_category(self):
+        categories = get_joke_categories()
+        if categories:
+            response = get_random_joke_by_category(categories[0])  # Test with the first category
+            self.assertIn('value', response)
+
+    def test_get_joke_categories(self):
+        response = get_joke_categories()
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+    def test_search_jokes(self):
+        response = search_jokes("chuck")
+        self.assertIn('result', response)
+        self.assertIsInstance(response['result'], list)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### chucknorrisjokes.json
+```json
+{
+    "tool_name": "chucknorrisjokes",
+    "tool_description": "A free JSON API for hand-curated Chuck Norris facts.",
+    "title": "Chuck Norris Jokes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.chucknorris.io/",
+    "host": "api.chucknorris.io",
+    "api_list": [
+        {
+            "name": "get_random_joke",
+            "url": "https://api.chucknorris.io/jokes/random",
+            "description": "Retrieve a random Chuck Norris joke in JSON format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.chucknorris.io/jokes/random'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "icon_url": "str",
+                "id": "str",
+                "url": "str",
+                "value": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "icon_url": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_random_joke_by_category",
+            "url": "https://api.chucknorris.io/jokes/random?category={category}",
+            "description": "Retrieve a random Chuck Norris joke from a given category.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "STRING",
+                    "description": "The category to retrieve a joke from.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.chucknorris.io/jokes/random?category={category}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "icon_url": "str",
+                "id": "str",
+                "url": "str",
+                "value": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "icon_url": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_joke_categories",
+            "url": "https://api.chucknorris.io/jokes/categories",
+            "description": "Retrieve a list of available categories for Chuck Norris jokes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.chucknorris.io/jokes/categories'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "search_jokes",
+            "url": "https://api.chucknorris.io/jokes/search?query={query}",
+            "description": "Free text search for Chuck Norris jokes.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query for jokes.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.chucknorris.io/jokes/search?query={query}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "result": [
+                    {
+                        "icon_url": "str",
+                        "id": "str",
+                        "url": "str",
+                        "value": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "icon_url": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

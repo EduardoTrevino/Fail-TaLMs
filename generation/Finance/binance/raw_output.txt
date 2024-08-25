@@ -1,0 +1,303 @@
+**api.py**
+
+```python
+import requests
+from typing import Optional, List
+
+BASE_URL = "https://api.binance.com"
+
+def get_agg_trades(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve aggregated trades for a specific symbol.
+    """
+    url = f"{BASE_URL}/api/v3/aggTrades"
+    params = {
+        'symbol': symbol
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_avg_price(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve current average price for a specific symbol.
+    """
+    url = f"{BASE_URL}/api/v3/avgPrice"
+    params = {
+        'symbol': symbol
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_exchange_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch exchange information.
+    """
+    url = f"{BASE_URL}/api/v3/exchangeInfo"
+    response = requests.get(url)
+    return response.json()
+
+def ping(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Ping the server.
+    """
+    url = f"{BASE_URL}/api/v3/ping"
+    response = requests.get(url)
+    return response.json()
+
+def get_24hr_ticker_price_change(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch 24hr ticker price change statistics for a specific symbol.
+    """
+    url = f"{BASE_URL}/api/v3/ticker/24hr"
+    params = {
+        'symbol': symbol
+    }
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_all_ticker_prices(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch ticker price for all market symbols.
+    """
+    url = f"{BASE_URL}/api/v3/ticker/price"
+    response = requests.get(url)
+    return response.json()
+
+def get_system_status(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get system status.
+    """
+    url = f"{BASE_URL}/sapi/v1/system/status"
+    response = requests.get(url)
+    return response.json()
+
+def get_account_status(timestamp: int, recvWindow: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch account status detail.
+    """
+    url = f"{BASE_URL}/sapi/v1/account/status"
+    params = {
+        'timestamp': timestamp
+    }
+    if recvWindow:
+        params['recvWindow'] = recvWindow
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_api_trading_status(timestamp: int, recvWindow: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch account API trading status detail.
+    """
+    url = f"{BASE_URL}/sapi/v1/account/apiTradingStatus"
+    params = {
+        'timestamp': timestamp
+    }
+    if recvWindow:
+        params['recvWindow'] = recvWindow
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**api_test.py**
+
+```python
+import unittest
+from api import *
+
+class TestBinanceAPI(unittest.TestCase):
+    def setUp(self):
+        self.toolbench_rapidapi_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+
+    def test_get_agg_trades(self):
+        response = get_agg_trades(symbol="BTCUSDT", toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('data', response)
+
+    def test_get_avg_price(self):
+        response = get_avg_price(symbol="BTCUSDT", toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('price', response)
+
+    def test_get_exchange_info(self):
+        response = get_exchange_info(toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('symbols', response)
+
+    def test_ping(self):
+        response = ping(toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertEqual({}, response)
+
+    def test_get_24hr_ticker_price_change(self):
+        response = get_24hr_ticker_price_change(symbol="BTCUSDT", toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('lastPrice', response)
+
+    def test_get_all_ticker_prices(self):
+        response = get_all_ticker_prices(toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIsInstance(response, list)
+
+    def test_get_system_status(self):
+        response = get_system_status(toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('status', response)
+
+    def test_get_account_status(self):
+        timestamp = 1640000000000  # example timestamp
+        response = get_account_status(timestamp=timestamp, toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('data', response)
+
+    def test_get_api_trading_status(self):
+        timestamp = 1640000000000  # example timestamp
+        response = get_api_trading_status(timestamp=timestamp, toolbench_rapidapi_key=self.toolbench_rapidapi_key)
+        self.assertIn('data', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**binance.json**
+
+```json
+{
+    "tool_name": "binance",
+    "tool_description": "Binance API to access trading data, exchange information and account details.",
+    "title": "Binance API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 93,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://binance-docs.github.io/apidocs/spot/en/",
+    "host": "api.binance.com",
+    "api_list": [
+        {
+            "name": "get_agg_trades",
+            "url": "https://api.binance.com/api/v3/aggTrades",
+            "description": "Retrieve aggregated trades for a specific symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Symbol of the market.",
+                    "default": "BTCUSDT"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_avg_price",
+            "url": "https://api.binance.com/api/v3/avgPrice",
+            "description": "Retrieve current average price for a specific symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Symbol of the market.",
+                    "default": "BTCUSDT"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_exchange_info",
+            "url": "https://api.binance.com/api/v3/exchangeInfo",
+            "description": "Fetch exchange information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "ping",
+            "url": "https://api.binance.com/api/v3/ping",
+            "description": "Ping the server.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_24hr_ticker_price_change",
+            "url": "https://api.binance.com/api/v3/ticker/24hr",
+            "description": "Fetch 24hr ticker price change statistics for a specific symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Symbol of the market.",
+                    "default": "BTCUSDT"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_all_ticker_prices",
+            "url": "https://api.binance.com/api/v3/ticker/price",
+            "description": "Fetch ticker price for all market symbols.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_system_status",
+            "url": "https://api.binance.com/sapi/v1/system/status",
+            "description": "Get system status.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_account_status",
+            "url": "https://api.binance.com/sapi/v1/account/status",
+            "description": "Fetch account status detail.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "timestamp",
+                    "type": "LONG",
+                    "description": "Timestamp in milliseconds.",
+                    "default": "current time"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "recvWindow",
+                    "type": "LONG",
+                    "description": "The number of milliseconds after timestamp the request is valid for.",
+                    "default": "5000"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_api_trading_status",
+            "url": "https://api.binance.com/sapi/v1/account/apiTradingStatus",
+            "description": "Fetch account API trading status detail.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "timestamp",
+                    "type": "LONG",
+                    "description": "Timestamp in milliseconds.",
+                    "default": "current time"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "recvWindow",
+                    "type": "LONG",
+                    "description": "The number of milliseconds after timestamp the request is valid for.",
+                    "default": "5000"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

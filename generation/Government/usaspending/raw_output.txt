@@ -1,0 +1,189 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict, Any, List
+
+def get_agency_details(toptier_agency_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Fetches the agency overview information for a specific agency.
+
+    :param toptier_agency_code: The top-tier agency code to fetch data for.
+    :param toolbench_rapidapi_key: The API key.
+    :return: JSON response containing the agency details.
+    """
+    url = f"https://api.usaspending.gov/api/v2/agency/{toptier_agency_code}/"
+    response = requests.get(url)
+    return response.json()
+
+def get_agency_awards_summary(toptier_agency_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Fetches agency summary information like number of transactions and award obligations.
+
+    :param toptier_agency_code: The top-tier agency code to fetch data for.
+    :param toolbench_rapidapi_key: The API key.
+    :return: JSON response containing agency award summary.
+    """
+    url = f"https://api.usaspending.gov/api/v2/agency/{toptier_agency_code}/awards/"
+    response = requests.get(url)
+    return response.json()
+
+def get_award_details(award_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Returns details about a specific award.
+
+    :param award_id: The ID of the award.
+    :param toolbench_rapidapi_key: The API key.
+    :return: JSON response containing award details.
+    """
+    url = f"https://api.usaspending.gov/api/v2/awards/{award_id}/"
+    response = requests.get(url)
+    return response.json()
+
+def search_spending_by_award(filters: Dict[str, Any], fields: List[str], sort: str, order: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict[str, Any]:
+    """
+    Searches awards data using advanced filters and returns the search results.
+
+    :param filters: Dictionary containing the filters for the search query.
+    :param fields: List of fields to return in the search result.
+    :param sort: Field to sort by.
+    :param order: Sort order, either 'asc' or 'desc'.
+    :param toolbench_rapidapi_key: The API key.
+    :return: JSON response containing the search results.
+    """
+    url = "https://api.usaspending.gov/api/v2/search/spending_by_award/"
+    payload = {
+        "filters": filters,
+        "fields": fields,
+        "sort": sort,
+        "order": order
+    }
+    response = requests.post(url, json=payload)
+    return response.json()
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_agency_details, get_agency_awards_summary, get_award_details, search_spending_by_award
+
+class TestUSASpendingAPI(unittest.TestCase):
+
+    def test_get_agency_details(self):
+        response = get_agency_details(toptier_agency_code="123")
+        self.assertIn('agency', response)
+
+    def test_get_agency_awards_summary(self):
+        response = get_agency_awards_summary(toptier_agency_code="123")
+        self.assertIn('award_totals', response)
+
+    def test_get_award_details(self):
+        response = get_award_details(award_id=1018950)
+        self.assertIn('award', response)
+
+    def test_search_spending_by_award(self):
+        filters = {
+            "award_type_codes": ["10"]
+        }
+        fields = ["Award ID", "Recipient Name"]
+        response = search_spending_by_award(filters=filters, fields=fields, sort="Recipient Name", order="desc")
+        self.assertIn('results', response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### usaspending.json
+```json
+{
+    "tool_name": "usaspending",
+    "tool_description": "Provides comprehensive U.S. government spending data including awards, obligations, and fiscal information.",
+    "title": "USAspending API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.usaspending.gov/docs/",
+    "host": "api.usaspending.gov",
+    "api_list": [
+        {
+            "name": "get_agency_details",
+            "url": "https://api.usaspending.gov/api/v2/agency/<TOPTIER_AGENCY_CODE>/",
+            "description": "Returns agency overview information.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "toptier_agency_code",
+                    "type": "STRING",
+                    "description": "The code for the top-tier agency."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_agency_awards_summary",
+            "url": "https://api.usaspending.gov/api/v2/agency/<TOPTIER_AGENCY_CODE>/awards/",
+            "description": "Returns summary information about agency awards.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "toptier_agency_code",
+                    "type": "STRING",
+                    "description": "The code for the top-tier agency."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_award_details",
+            "url": "https://api.usaspending.gov/api/v2/awards/<AWARD_ID>/",
+            "description": "Returns details about a specific award.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "award_id",
+                    "type": "INTEGER",
+                    "description": "The ID of the award."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_spending_by_award",
+            "url": "https://api.usaspending.gov/api/v2/search/spending_by_award/",
+            "description": "Searches awards data with filters.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "filters",
+                    "type": "DICT",
+                    "description": "The filters to apply."
+                },
+                {
+                    "name": "fields",
+                    "type": "LIST",
+                    "description": "Fields to include in the response."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field to sort the results by."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Order of sorting, 'asc' or 'desc'."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        }
+    ]
+}
+```

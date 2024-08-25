@@ -1,0 +1,698 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def get_thing_items(ids: str, type: Optional[str] = None, versions: Optional[int] = None, videos: Optional[int] = None,
+                    stats: Optional[int] = None, page: Optional[int] = 1, pagesize: Optional[int] = 100,
+                    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about specified 'thing' items such as boardgames or other types from BGG.
+    
+    Parameters:
+    ids (str): Comma-separated list of thing IDs to retrieve.
+    type (Optional[str]): Filter results by THINGTYPEs like boardgame, expansion, accessory etc. Multiple types can be comma-separated.
+    versions (Optional[int]): Include version info. 
+    videos (Optional[int]): Include videos. 
+    stats (Optional[int]): Include ranking and rating stats. 
+    page (Optional[int]): Page number for paginated results.
+    pagesize (Optional[int]): Page size for paginated results.
+    """
+    
+    url = "https://boardgamegeek.com/xmlapi2/thing"
+    params = {
+        'id': ids,
+        'type': type,
+        'versions': versions,
+        'videos': videos,
+        'stats': stats,
+        'page': page,
+        'pagesize': pagesize
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_family_items(ids: str, type: Optional[str] = None, 
+                     toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about specified 'family' items from BGG.
+
+    Parameters:
+    ids (str): Comma-separated list of family IDs to retrieve.
+    type (Optional[str]): Filter results by FAMILYTYPEs like boardgamefamily.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/family"
+    params = {
+        'id': ids,
+        'type': type
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_forum_list(id: int, type: str, 
+                   toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve forum list for a specific type/id from BGG.
+
+    Parameters:
+    id (int): The ID of the entry you want the forum list for.
+    type (str): The type of entry (either thing or family).
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/forumlist"
+    params = {
+        'id': id,
+        'type': type
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_forum(id: int, page: Optional[int] = 1, 
+              toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve threads for a specific forum from BGG.
+
+    Parameters:
+    id (int): The ID of the forum.
+    page (Optional[int]): The page of the thread list to return.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/forum"
+    params = {
+        'id': id,
+        'page': page
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_thread(id: int, minarticleid: Optional[int] = None, minarticledate: Optional[str] = None,
+               count: Optional[int] = None, username: Optional[str] = None,
+               toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a specific forum thread by ID.
+
+    Parameters:
+    id (int): The ID of the thread to retrieve.
+    minarticleid (Optional[int]): Minimum article ID to filter articles.
+    minarticledate (Optional[str]): Minimum date (YYYY-MM-DD) to filter articles.
+    count (Optional[int]): Limit the number of articles returned.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/thread"
+    params = {
+        'id': id,
+        'minarticleid': minarticleid,
+        'minarticledate': minarticledate,
+        'count': count
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_user_info(name: str, buddies: Optional[int] = None, guilds: Optional[int] = None,
+                  hot: Optional[int] = None, top: Optional[int] = None, domain: Optional[str] = 'boardgame',
+                  page: Optional[int] = 1, 
+                  toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about a user by username from BGG.
+
+    Parameters:
+    name (str): The username to retrieve info for.
+    buddies (Optional[int]): Include buddies.
+    guilds (Optional[int]): Include guilds.
+    hot (Optional[int]): Include user's hot 10 list.
+    top (Optional[int]): Include user's top 10 list.
+    domain (Optional[str]): The domain for hot and top lists.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/user"
+    params = {
+        'name': name,
+        'buddies': buddies,
+        'guilds': guilds,
+        'hot': hot,
+        'top': top,
+        'domain': domain,
+        'page': page
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_guild_info(id: int, members: Optional[int] = None, sort: Optional[str] = 'username',
+                   page: Optional[int] = 1, 
+                   toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about a guild by ID.
+
+    Parameters:
+    id (int): The ID of the guild.
+    members (Optional[int]): Include member roster.
+    sort (Optional[str]): How to sort the members list (e.g. username, date).
+    page (Optional[int]): Page of members list to return.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/guild"
+    params = {
+        'id': id,
+        'members': members,
+        'sort': sort,
+        'page': page
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_plays(username: Optional[str] = None, id: Optional[int] = None, type: Optional[str] = 'thing',
+              mindate: Optional[str] = None, maxdate: Optional[str] = None, subtype: Optional[str] = 'boardgame',
+              page: Optional[int] = 1, 
+              toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve play information logged by a user or for an item.
+
+    Parameters:
+    username (Optional[str]): Username to retrieve play information for.
+    id (Optional[int]): Item ID to retrieve play information for.
+    type (Optional[str]): Type of the item (thing, family).
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/plays"
+    params = {
+        'username': username,
+        'id': id,
+        'type': type,
+        'mindate': mindate,
+        'maxdate': maxdate,
+        'subtype': subtype,
+        'page': page
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_collection(username: str, version: Optional[int] = None, subtype: Optional[str] = 'boardgame', 
+                   excludesubtype: Optional[str] = None, id: Optional[str] = None, brief: Optional[int] = None,
+                   stats: Optional[int] = None, own: Optional[int] = None, rated: Optional[int] = None,
+                   played: Optional[int] = None, comment: Optional[int] = None, trade: Optional[int] = None,
+                   want: Optional[int] = None, wishlist: Optional[int] = None, wishlistpriority: Optional[int] = None,
+                   preordered: Optional[int] = None, wanttoplay: Optional[int] = None, 
+                   wanttobuy: Optional[int] = None, prevowned: Optional[int] = None, hasparts: Optional[int] = None,
+                   wantparts: Optional[int] = None, minrating: Optional[int] = None, rating: Optional[int] = None,
+                   minbggrating: Optional[int] = None, bggrating: Optional[int] = None, minplays: Optional[int] = None,
+                   maxplays: Optional[int] = None, showprivate: Optional[int] = None, collid: Optional[int] = None,
+                   modifiedsince: Optional[str] = None,
+                   toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve details about a user's collection.
+
+    Parameters:
+    username (str): The username to request the collection for.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/collection"
+    params = {
+        'username': username,
+        'version': version,
+        'subtype': subtype,
+        'excludesubtype': excludesubtype,
+        'id': id,
+        'brief': brief,
+        'stats': stats,
+        'own': own,
+        'rated': rated,
+        'played': played,
+        'comment': comment,
+        'trade': trade,
+        'want': want,
+        'wishlist': wishlist,
+        'wishlistpriority': wishlistpriority,
+        'preordered': preordered,
+        'wanttoplay': wanttoplay,
+        'wanttobuy': wanttobuy,
+        'prevowned': prevowned,
+        'hasparts': hasparts,
+        'wantparts': wantparts,
+        'minrating': minrating,
+        'rating': rating,
+        'minbggrating': minbggrating,
+        'bggrating': bggrating,
+        'minplays': minplays,
+        'maxplays': maxplays,
+        'showprivate': showprivate,
+        'collid': collid,
+        'modifiedsince': modifiedsince
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def get_hot_items(type: str, 
+                  toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the list of most active items on BGG.
+
+    Parameters:
+    type (str): The type of hot list to retrieve (e.g. boardgame, rpg).
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/hot"
+    params = {
+        'type': type
+    }
+    response = requests.get(url, params=params)
+    return response.content
+
+
+def search_items(query: str, type: Optional[str] = None, exact: Optional[int] = None,
+                 toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for items by name from the BGG database.
+
+    Parameters:
+    query (str): The search query.
+    type (Optional[str]): The type of items to return.
+    """
+
+    url = "https://boardgamegeek.com/xmlapi2/search"
+    params = {
+        'query': query,
+        'type': type,
+        'exact': exact
+    }
+    response = requests.get(url, params=params)
+    return response.content
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import (get_thing_items, get_family_items, get_forum_list, get_user_info, get_guild_info, 
+                 get_plays, get_collection, get_hot_items, search_items, get_thread, get_forum)
+
+
+class TestBoardGamesGeekAPI(unittest.TestCase):
+
+    def test_get_thing_items(self):
+        response = get_thing_items(ids="174430")
+        self.assertIn("<name>", response.decode('utf-8'))
+
+    def test_get_family_items(self):
+        response = get_family_items(ids="1234")
+        self.assertIn("<family>", response.decode('utf-8'))
+
+    def test_get_forum_list(self):
+        response = get_forum_list(id=174430, type='thing')
+        self.assertIn("<forum>", response.decode('utf-8'))
+
+    def test_get_forum(self):
+        response = get_forum(id=123)
+        self.assertIn("<threads>", response.decode('utf-8'))
+
+    def test_get_thread(self):
+        response = get_thread(id=123)
+        self.assertIn("<thread>", response.decode('utf-8'))
+
+    def test_get_user_info(self):
+        response = get_user_info(name="gamer456")
+        self.assertIn("<user>", response.decode('utf-8'))
+
+    def test_get_guild_info(self):
+        response = get_guild_info(id=9967)
+        self.assertIn("<guild>", response.decode('utf-8'))
+
+    def test_get_plays(self):
+        response = get_plays(username="gamer456")
+        self.assertIn("<plays>", response.decode('utf-8'))
+
+    def test_get_collection(self):
+        response = get_collection(username="gamer456")
+        self.assertIn("<item>", response.decode('utf-8'))
+
+    def test_get_hot_items(self):
+        response = get_hot_items(type="boardgame")
+        self.assertIn("<item>", response.decode('utf-8'))
+
+    def test_search_items(self):
+        response = search_items(query="Catan")
+        self.assertIn("<item>", response.decode('utf-8'))
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### boardgamesgeek.json**
+
+```json
+{
+    "tool_name": "boardgamesgeek",
+    "tool_description": "The BGG XMLAPI2 provides a programmatic way to access BoardGameGeek data such as information on games, families, users, plays, guilds, and more.",
+    "title": "BoardGameGeek XML API 2",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.3
+    },
+    "home_url": "https://boardgamegeek.com/xmlapi/2",
+    "host": "boardgamegeek.com",
+    "api_list": [
+        {
+            "name": "get_thing_items",
+            "url": "https://boardgamegeek.com/xmlapi2/thing",
+            "description": "Retrieve information about specific 'thing' items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ids",
+                    "type": "STRING",
+                    "description": "IDs of the things to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Filter by specific thing types."
+                },
+                {
+                    "name": "versions",
+                    "type": "INTEGER",
+                    "description": "Include versions information."
+                },
+                {
+                    "name": "videos",
+                    "type": "INTEGER",
+                    "description": "Include videos information."
+                },
+                {
+                    "name": "stats",
+                    "type": "INTEGER",
+                    "description": "Include stats information."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Pagination page number."
+                },
+                {
+                    "name": "pagesize",
+                    "type": "INTEGER",
+                    "description": "Page size for pagination."
+                }
+            ]
+        },
+        {
+            "name": "get_family_items",
+            "url": "https://boardgamegeek.com/xmlapi2/family",
+            "description": "Retrieve information about specific 'family' items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ids",
+                    "type": "STRING",
+                    "description": "IDs of the families to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Filter by specific family types."
+                }
+            ]
+        },
+        {
+            "name": "get_forum_list",
+            "url": "https://boardgamegeek.com/xmlapi2/forumlist",
+            "description": "Retrieve forum list for a specific type and ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the entry."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of the entry (thing or family)."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_forum",
+            "url": "https://boardgamegeek.com/xmlapi2/forum",
+            "description": "Retrieve threads for a specific forum.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the forum."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number of threads to return."
+                }
+            ]
+        },
+        {
+            "name": "get_thread",
+            "url": "https://boardgamegeek.com/xmlapi2/thread",
+            "description": "Retrieve a specific forum thread by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the thread."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "minarticleid",
+                    "type": "INTEGER",
+                    "description": "Filter articles by minimum ID."
+                },
+                {
+                    "name": "minarticledate",
+                    "type": "STRING",
+                    "description": "Filter articles by minimum date."
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Limit on number of articles returned."
+                }
+            ]
+        },
+        {
+            "name": "get_user_info",
+            "url": "https://boardgamegeek.com/xmlapi2/user",
+            "description": "Retrieve information about a user by username.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The username."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "buddies",
+                    "type": "INTEGER",
+                    "description": "Include buddies information."
+                },
+                {
+                    "name": "guilds",
+                    "type": "INTEGER",
+                    "description": "Include guilds information."
+                },
+                {
+                    "name": "hot",
+                    "type": "INTEGER",
+                    "description": "Include the user's hot 10 list."
+                },
+                {
+                    "name": "top",
+                    "type": "INTEGER",
+                    "description": "Include the user's top 10 list."
+                },
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "Domain for hot and top lists."
+                }
+            ]
+        },
+        {
+            "name": "get_guild_info",
+            "url": "https://boardgamegeek.com/xmlapi2/guild",
+            "description": "Retrieve information about a guild by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the guild."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "members",
+                    "type": "INTEGER",
+                    "description": "Include member roster."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort the members list."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number of member list."
+                }
+            ]
+        },
+        {
+            "name": "get_plays",
+            "url": "https://boardgamegeek.com/xmlapi2/plays",
+            "description": "Retrieve play information logged by a user or item.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "username",
+                    "type": "STRING",
+                    "description": "Username for play information."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "ID for item play information."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of item."
+                },
+                {
+                    "name": "mindate",
+                    "type": "STRING",
+                    "description": "Minimum date for plays."
+                },
+                {
+                    "name": "maxdate",
+                    "type": "STRING",
+                    "description": "Maximum date for plays."
+                },
+                {
+                    "name": "subtype",
+                    "type": "STRING",
+                    "description": "Subtype for play filter."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of plays to return."
+                }
+            ]
+        },
+        {
+            "name": "get_collection",
+            "url": "https://boardgamegeek.com/xmlapi2/collection",
+            "description": "Retrieve details about a user's collection.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "username",
+                    "type": "STRING",
+                    "description": "Username whose collection to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "version",
+                    "type": "INTEGER",
+                    "description": "Include version information."
+                },
+                {
+                    "name": "subtype",
+                    "type": "STRING",
+                    "description": "Type of collection to retrieve."
+                },
+                {
+                    "name": "excludesubtype",
+                    "type": "STRING",
+                    "description": "Subtype to exclude."
+                },
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "Specific item IDs to filter."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of collection to return."
+                }
+            ]
+        },
+        {
+            "name": "get_hot_items",
+            "url": "https://boardgamegeek.com/xmlapi2/hot",
+            "description": "Retrieve the list of most active items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of hot items (e.g. boardgame)."
+                }
+            ]
+        },
+        {
+            "name": "search_items",
+            "url": "https://boardgamegeek.com/xmlapi2/search",
+            "description": "Search for items from the database by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of items to return."
+                },
+                {
+                    "name": "exact",
+                    "type": "INTEGER",
+                    "description": "Exact match for search."
+                }
+            ]
+        }
+    ]
+}
+```

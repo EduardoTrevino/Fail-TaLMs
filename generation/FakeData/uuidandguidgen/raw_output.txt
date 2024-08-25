@@ -1,0 +1,239 @@
+**### api.py**
+```python
+import requests
+from typing import Optional
+
+# Public API Key required for any request call
+def generate_v1_uuid(count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generate version-1 UUIDs. Max count is 100.
+    """
+    url = f"https://www.uuidtools.com/api/generate/v1/count/{count}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def generate_v3_uuid(namespace: str, name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generate a version-3 UUID based on a namespace and name.
+    """
+    url = f"https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def generate_v4_uuid(count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generate version-4 UUIDs. Max count is 100.
+    """
+    url = f"https://www.uuidtools.com/api/generate/v4/count/{count}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def generate_v5_uuid(namespace: str, name: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generate a version-5 UUID based on a namespace and name.
+    """
+    url = f"https://www.uuidtools.com/api/generate/v5/namespace/{namespace}/name/{name}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def generate_timestamp_first_uuid(count: Optional[int] = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Generate timestamp-first UUIDs. Max count is 100.
+    """
+    url = f"https://www.uuidtools.com/api/generate/timestamp-first/count/{count}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def decode_uuid(uuid: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Decode a UUID to find its version and variant.
+    """
+    url = f"https://www.uuidtools.com/api/decode/{uuid}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+```python
+import unittest
+from api import (
+    generate_v1_uuid,
+    generate_v3_uuid,
+    generate_v4_uuid,
+    generate_v5_uuid,
+    generate_timestamp_first_uuid,
+    decode_uuid
+)
+
+class TestUUIDandGUIDGenAPI(unittest.TestCase):
+    def test_generate_v1_uuid(self):
+        result = generate_v1_uuid(count=3)
+        self.assertEqual(len(result), 3)
+        self.assertTrue(all(isinstance(uuid, str) for uuid in result))
+
+    def test_generate_v3_uuid(self):
+        namespace = "ns:url"
+        name = "https://www.google.com/"
+        result = generate_v3_uuid(namespace=namespace, name=name)
+        self.assertTrue(isinstance(result, str))
+
+    def test_generate_v4_uuid(self):
+        result = generate_v4_uuid(count=3)
+        self.assertEqual(len(result), 3)
+        self.assertTrue(all(isinstance(uuid, str) for uuid in result))
+
+    def test_generate_v5_uuid(self):
+        namespace = "ns:url"
+        name = "https://www.uuidtools.com/generate"
+        result = generate_v5_uuid(namespace=namespace, name=name)
+        self.assertTrue(isinstance(result, str))
+
+    def test_generate_timestamp_first_uuid(self):
+        result = generate_timestamp_first_uuid(count=3)
+        self.assertEqual(len(result), 3)
+        self.assertTrue(all(isinstance(uuid, str) for uuid in result))
+
+    def test_decode_uuid(self):
+        uuid = "b01eb720-171a-11ea-b949-73c91bba743d"
+        result = decode_uuid(uuid=uuid)
+        self.assertIn("decode", result)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### uuidandguidgen.json**
+```json
+{
+    "tool_name": "uuidandguidgen",
+    "tool_description": "Super simple API to generate various versions of UUIDs and GUIDs quickly on-the-fly for testing purposes.",
+    "title": "UUID and GUID Generator API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.uuidtools.com/docs/",
+    "host": "www.uuidtools.com",
+    "api_list": [
+        {
+            "name": "generate_v1_uuid",
+            "url": "https://www.uuidtools.com/api/generate/v1",
+            "description": "Generate version-1 UUIDs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "The number of UUIDs to generate.",
+                    "default": "1"
+                }
+            ]
+        },
+        {
+            "name": "generate_v3_uuid",
+            "url": "https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}",
+            "description": "Generate version-3 UUIDs.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "namespace",
+                    "type": "STRING",
+                    "description": "The namespace for UUID generation."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The name for UUID generation."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "generate_v4_uuid",
+            "url": "https://www.uuidtools.com/api/generate/v4",
+            "description": "Generate version-4 UUIDs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "The number of UUIDs to generate.",
+                    "default": "1"
+                }
+            ]
+        },
+        {
+            "name": "generate_v5_uuid",
+            "url": "https://www.uuidtools.com/api/generate/v5/namespace/{namespace}/name/{name}",
+            "description": "Generate version-5 UUIDs.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "namespace",
+                    "type": "STRING",
+                    "description": "The namespace for UUID generation."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The name for UUID generation."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "generate_timestamp_first_uuid",
+            "url": "https://www.uuidtools.com/api/generate/timestamp-first",
+            "description": "Generate timestamp-first UUIDs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "The number of UUIDs to generate.",
+                    "default": "1"
+                }
+            ]
+        },
+        {
+            "name": "decode_uuid",
+            "url": "https://www.uuidtools.com/api/decode/{uuid}",
+            "description": "Decode UUID to find its version and variant.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "uuid",
+                    "type": "STRING",
+                    "description": "The UUID to decode."
+                }
+            ],
+            "optional_parameters": []
+        }
+    ]
+}
+```

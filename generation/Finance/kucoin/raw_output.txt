@@ -1,0 +1,416 @@
+**api.py**
+```python
+import requests
+from typing import Optional
+
+BASE_URL_SPOT_MARGIN = "https://api.kucoin.com"
+BASE_URL_FUTURES = "https://api-futures.kucoin.com"
+
+
+def get_transferable(currency: str, type: str, tag: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get the transferable balance of a specified account.
+
+    Parameters:
+    - currency (Required): str - Currency
+    - type (Required): str - The account type: MAIN, TRADE, TRADE_HF, MARGIN, ISOLATED
+    - tag (Optional): str - Trading pair, required when the account type is ISOLATED
+    """
+    url = f"{BASE_URL_SPOT_MARGIN}/api/v1/accounts/transferable"
+    params = {
+        'currency': currency,
+        'type': type
+    }
+    if tag:
+        params['tag'] = tag
+
+    headers = {'KC-API-KEY': toolbench_rapidapi_key}
+    response = requests.get(url, params=params, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def universal_transfer(clientOid: str, type: str, currency: str, amount: str, fromAccountType: str, toAccountType: str, fromUserId: Optional[str] = None, toUserId: Optional[str] = None, fromAccountTag: Optional[str] = None, toAccountTag: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Handle universal transfers between accounts, and optionally between master and sub accounts.
+
+    Parameters:
+    - clientOid (Required): str - Unique order id
+    - type (Required): str - Transfer type: INTERNAL, PARENT_TO_SUB, SUB_TO_PARENT
+    - currency (Required): str - Currency
+    - amount (Required): str - Transfer amount
+    - fromAccountType (Required): str - Account type
+    - toAccountType (Required): str - Account type
+    - fromUserId (Optional): str - Transfer out UserId (required for sub to master account transfers)
+    - toUserId (Optional): str - Transfer in UserId (required for master to sub account transfers)
+    - fromAccountTag (Optional): str - Symbol for isolated account types
+    - toAccountTag (Optional): str - Symbol for isolated account types
+    """
+    url = f"{BASE_URL_SPOT_MARGIN}/api/v3/accounts/universal-transfer"
+    data = {
+        'clientOid': clientOid,
+        'type': type,
+        'currency': currency,
+        'amount': amount,
+        'fromAccountType': fromAccountType,
+        'toAccountType': toAccountType
+    }
+    if fromUserId:
+        data['fromUserId'] = fromUserId
+    if toUserId:
+        data['toUserId'] = toUserId
+    if fromAccountTag:
+        data['fromAccountTag'] = fromAccountTag
+    if toAccountTag:
+        data['toAccountTag'] = toAccountTag
+
+    headers = {'KC-API-KEY': toolbench_rapidapi_key}
+    response = requests.post(url, json=data, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def inner_transfer(clientOid: str, currency: str, from_: str, to: str, amount: str, fromTag: Optional[str] = None, toTag: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Transfer funds between accounts internally.
+
+    Parameters:
+    - clientOid (Required): str - Unique order id
+    - currency (Required): str - Currency
+    - from_ (Required): str - Payment account type
+    - to (Required): str - Receiving account type
+    - amount (Required): str - Transfer amount
+    - fromTag (Optional): str - Required when payment account type is isolated
+    - toTag (Optional): str - Required when receiving account type is isolated
+    """
+    url = f"{BASE_URL_SPOT_MARGIN}/api/v2/accounts/inner-transfer"
+    data = {
+        'clientOid': clientOid,
+        'currency': currency,
+        'from': from_,
+        'to': to,
+        'amount': amount
+    }
+    if fromTag:
+        data['fromTag'] = fromTag
+    if toTag:
+        data['toTag'] = toTag
+
+    headers = {'KC-API-KEY': toolbench_rapidapi_key}
+    response = requests.post(url, json=data, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def transfer_out(amount: float, currency: str, recAccountType: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Transfer from the KuCoin Futures account to main or trade account.
+
+    Parameters:
+    - amount (Required): float - Amount to be transferred out
+    - currency (Required): str - Currency
+    - recAccountType (Required): str - Receive account type: MAIN, TRADE
+    """
+    url = f"{BASE_URL_FUTURES}/api/v3/transfer-out"
+    data = {
+        'amount': amount,
+        'currency': currency,
+        'recAccountType': recAccountType
+    }
+
+    headers = {'KC-API-KEY': toolbench_rapidapi_key}
+    response = requests.post(url, json=data, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def transfer_in(amount: float, currency: str, payAccountType: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Transfer to the KuCoin Futures account.
+
+    Parameters:
+    - amount (Required): float - Amount to be transferred in
+    - currency (Required): str - Currency, including XBT, USDT
+    - payAccountType (Required): str - Payment account type, including MAIN, TRADE
+    """
+    url = f"{BASE_URL_FUTURES}/api/v1/transfer-in"
+    data = {
+        'amount': amount,
+        'currency': currency,
+        'payAccountType': payAccountType
+    }
+
+    headers = {'KC-API-KEY': toolbench_rapidapi_key}
+    response = requests.post(url, json=data, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**api_test.py**
+```python
+import unittest
+from api import get_transferable, universal_transfer, inner_transfer, transfer_out, transfer_in
+
+
+class TestKucoinAPI(unittest.TestCase):
+
+    def setUp(self):
+        self.api_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+    
+    def test_get_transferable(self):
+        response = get_transferable(currency='BTC', type='MAIN', toolbench_rapidapi_key=self.api_key)
+        self.assertIn('currency', response)
+
+    def test_universal_transfer(self):
+        response = universal_transfer(
+            clientOid='64ccc0f164781800010d8c09',
+            type='INTERNAL',
+            currency='BTC',
+            amount='1',
+            fromAccountType='TRADE',
+            toAccountType='CONTRACT',
+            toolbench_rapidapi_key=self.api_key
+        )
+        self.assertIn('orderId', response)
+
+    def test_inner_transfer(self):
+        response = inner_transfer(
+            clientOid='64ccc0f164781800010d8c09',
+            currency='BTC',
+            from_='trade',
+            to='main',
+            amount='1',
+            toolbench_rapidapi_key=self.api_key
+        )
+        self.assertIn('orderId', response)
+    
+    def test_transfer_out(self):
+        response = transfer_out(
+            amount=1.0,
+            currency='USDT',
+            recAccountType='MAIN',
+            toolbench_rapidapi_key=self.api_key
+        )
+        self.assertIn('applyId', response)
+
+    def test_transfer_in(self):
+        response = transfer_in(
+            amount=1.0,
+            currency='USDT',
+            payAccountType='MAIN',
+            toolbench_rapidapi_key=self.api_key
+        )
+        self.assertIn('code', response)  # expecting "200" for success
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**kucoin.json**
+```json
+{
+    "tool_name": "kucoin",
+    "tool_description": "API for interaction with KuCoin's various accounts, transfers, and trading functionalities.",
+    "title": "KuCoin API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 9.0
+    },
+    "home_url": "https://api.kucoin.com/docs/",
+    "host": "api.kucoin.com",
+    "api_list": [
+        {
+            "name": "get_transferable",
+            "url": "https://api.kucoin.com/api/v1/accounts/transferable",
+            "description": "Retrieve the transferable balance of a specified account.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Currency displayed as code."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "The account type: MAIN, TRADE, TRADE_HF, MARGIN, ISOLATED."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "tag",
+                    "type": "STRING",
+                    "description": "Trading pair, required when the account type is ISOLATED."
+                }
+            ]
+        },
+        {
+            "name": "universal_transfer",
+            "url": "https://api.kucoin.com/api/v3/accounts/universal-transfer",
+            "description": "Universal transfers between accounts, and indirectly between master and sub accounts.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "clientOid",
+                    "type": "STRING",
+                    "description": "Unique order id."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Transfer type: INTERNAL, PARENT_TO_SUB, SUB_TO_PARENT."
+                },
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Currency for the transfer."
+                },
+                {
+                    "name": "amount",
+                    "type": "STRING",
+                    "description": "Transfer amount."
+                },
+                {
+                    "name": "fromAccountType",
+                    "type": "STRING",
+                    "description": "Account type to transfer from."
+                },
+                {
+                    "name": "toAccountType",
+                    "type": "STRING",
+                    "description": "Account type to transfer to."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fromUserId",
+                    "type": "STRING",
+                    "description": "User ID for sub to master account transfers."
+                },
+                {
+                    "name": "toUserId",
+                    "type": "STRING",
+                    "description": "User ID for master to sub account transfers."
+                },
+                {
+                    "name": "fromAccountTag",
+                    "type": "STRING",
+                    "description": "Symbol for isolated account types."
+                },
+                {
+                    "name": "toAccountTag",
+                    "type": "STRING",
+                    "description": "Symbol for isolated account types."
+                }
+            ]
+        },
+        {
+            "name": "inner_transfer",
+            "url": "https://api.kucoin.com/api/v2/accounts/inner-transfer",
+            "description": "Transfer funds between accounts internally.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "clientOid",
+                    "type": "STRING",
+                    "description": "Unique identifier created by the client."
+                },
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Currency for the transfer."
+                },
+                {
+                    "name": "from",
+                    "type": "STRING",
+                    "description": "Payment account type."
+                },
+                {
+                    "name": "to",
+                    "type": "STRING",
+                    "description": "Receiving account type."
+                },
+                {
+                    "name": "amount",
+                    "type": "STRING",
+                    "description": "Transfer amount."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fromTag",
+                    "type": "STRING",
+                    "description": "Trading pair, required when payment account type is isolated."
+                },
+                {
+                    "name": "toTag",
+                    "type": "STRING",
+                    "description": "Trading pair, required when receiving account type is isolated."
+                }
+            ]
+        },
+        {
+            "name": "transfer_out",
+            "url": "https://api-futures.kucoin.com/api/v3/transfer-out",
+            "description": "Transfer from the KuCoin Futures account to main or trade account.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "amount",
+                    "type": "FLOAT",
+                    "description": "Amount to be transferred out."
+                },
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Currency for the transfer."
+                },
+                {
+                    "name": "recAccountType",
+                    "type": "STRING",
+                    "description": "Receive account type: MAIN, TRADE."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "transfer_in",
+            "url": "https://api-futures.kucoin.com/api/v1/transfer-in",
+            "description": "Transfer to the KuCoin Futures account.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "amount",
+                    "type": "FLOAT",
+                    "description": "Amount to be transferred in."
+                },
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "Currency for the transfer."
+                },
+                {
+                    "name": "payAccountType",
+                    "type": "STRING",
+                    "description": "Payment account type: MAIN, TRADE."
+                }
+            ],
+            "optional_parameters": []
+        }
+    ]
+}
+```

@@ -1,0 +1,315 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional, Dict
+
+BASE_URL = "https://www.freetogame.com/api"
+
+
+def list_games(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve a list of all free-to-play games.
+    """
+    url = f"{BASE_URL}/games"
+    response = requests.get(url)
+    return response.json()
+
+
+def game_details(game_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve details of a specific game by its ID.
+    
+    Parameters:
+    - game_id: int : The ID of the game.
+    """
+    url = f"{BASE_URL}/game"
+    params = {'id': game_id}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def games_by_category(category: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve a list of all available games from a specific genre.
+    
+    Parameters:
+    - category: str : The category name (e.g., mmorpg, shooter).
+    """
+    url = f"{BASE_URL}/games"
+    params = {'category': category}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def games_by_platform(platform: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve a list of all available games from a specific platform.
+    
+    Parameters:
+    - platform: str : The platform name (e.g., pc, browser).
+    """
+    url = f"{BASE_URL}/games"
+    params = {'platform': platform}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def sorted_games(sort_by: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Sort games by release date, alphabetical or relevance.
+    
+    Parameters:
+    - sort_by: str : Sort criteria (e.g., release-date, popularity, alphabetical).
+    """
+    url = f"{BASE_URL}/games"
+    params = {'sort-by': sort_by}
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def games_by_filters(tag: Optional[str] = None, platform: Optional[str] = None, sort: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Filter games by multiple tags, platform, and sort.
+    
+    Parameters:
+    - tag: str : Comma-separated list of tags (optional).
+    - platform: str : Platform name (optional).
+    - sort: str : Sort criteria (optional).
+    """
+    url = f"{BASE_URL}/filter"
+    params = {}
+    if tag:
+        params['tag'] = tag
+    if platform:
+        params['platform'] = platform
+    if sort:
+        params['sort'] = sort
+
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import list_games, game_details, games_by_category, games_by_platform, sorted_games, games_by_filters
+
+
+class TestFreeToGameAPI(unittest.TestCase):
+
+    def test_list_games(self):
+        response = list_games()
+        self.assertIsInstance(response, list)
+
+    def test_game_details(self):
+        response = game_details(452)
+        self.assertIsInstance(response, dict)
+        self.assertIn('id', response)
+
+    def test_games_by_category(self):
+        response = games_by_category('shooter')
+        self.assertIsInstance(response, list)
+
+    def test_games_by_platform(self):
+        response = games_by_platform('pc')
+        self.assertIsInstance(response, list)
+
+    def test_sorted_games(self):
+        response = sorted_games('alphabetical')
+        self.assertIsInstance(response, list)
+
+    def test_games_by_filters(self):
+        response = games_by_filters(tag='3d', platform='pc')
+        self.assertIsInstance(response, list)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### freetogame.json**  
+```json
+{
+    "tool_name": "freetogame",
+    "tool_description": "Discover the best free-to-play games with ease.",
+    "title": "FreeToGame API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 100,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.freetogame.com/api",
+    "host": "www.freetogame.com",
+    "api_list": [
+        {
+            "name": "list_games",
+            "url": "https://www.freetogame.com/api/games",
+            "description": "Retrieve a list of all free-to-play games.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/games'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        },
+        {
+            "name": "game_details",
+            "url": "https://www.freetogame.com/api/game",
+            "description": "Retrieve details of a specific game by its ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the game."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/game'\nparams = {'id': game_id}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "description": "str",
+                    "game_url": "str",
+                    "genre": "str",
+                    "platform": "str",
+                    "publisher": "str",
+                    "developer": "str",
+                    "release_date": "str",
+                    "profile_url": "str"
+                }
+            }
+        },
+        {
+            "name": "games_by_category",
+            "url": "https://www.freetogame.com/api/games",
+            "description": "Retrieve a list of all available games from a specific genre.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "STRING",
+                    "description": "The category name."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/games'\nparams = {'category': category}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        },
+        {
+            "name": "games_by_platform",
+            "url": "https://www.freetogame.com/api/games",
+            "description": "Retrieve a list of all available games from a specific platform.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "The platform name."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/games'\nparams = {'platform': platform}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        },
+        {
+            "name": "sorted_games",
+            "url": "https://www.freetogame.com/api/games",
+            "description": "Sort games by release date, alphabetical or relevance.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "sort-by",
+                    "type": "STRING",
+                    "description": "Sort criteria."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/games'\nparams = {'sort-by': sort_by}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        },
+        {
+            "name": "games_by_filters",
+            "url": "https://www.freetogame.com/api/filter",
+            "description": "Filter games by multiple tags, platform, and sort.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "tag",
+                    "type": "STRING",
+                    "description": "Comma-separated list of tags."
+                },
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform name."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort criteria."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.freetogame.com/api/filter'\nparams = {'tag': tag, 'platform': platform, 'sort': sort}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "properties": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        }
+    ]
+}
+```

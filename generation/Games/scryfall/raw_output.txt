@@ -1,0 +1,382 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+BASE_URL = "https://api.scryfall.com"
+
+def card_search(q: str, unique: Optional[str] = "cards", order: Optional[str] = "name", dir: Optional[str] = "auto", include_extras: bool = False, page: int = 1, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search Magic cards using a fulltext search string.
+    
+    Parameters:
+        q (str): The fulltext search query.
+        unique (Optional[str]): Strategy for omitting similar cards. Default is "cards".
+        order (Optional[str]): The method to sort returned cards. Default is "name".
+        dir (Optional[str]): The direction to sort cards. Default is "auto".
+        include_extras (bool): If true, includes extra cards such as tokens. Default is False.
+        page (int): The page number to return. Default is 1.
+    """
+    url = f"{BASE_URL}/cards/search"
+    params = {
+        "q": q,
+        "unique": unique,
+        "order": order,
+        "dir": dir,
+        "include_extras": str(include_extras).lower(),
+        "page": page
+    }
+    headers = {
+        "User-Agent": "ScryfallExampleApp/1.0",
+        "Accept": "application/json"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+def card_named_exact(exact: str, set: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve exact card details based on card name.
+    
+    Parameters:
+        exact (str): The exact card name to search for.
+        set (Optional[str]): A set code to limit the search to one set. Default is None.
+    """
+    url = f"{BASE_URL}/cards/named"
+    params = {
+        "exact": exact
+    }
+    if set:
+        params["set"] = set
+    headers = {
+        "User-Agent": "ScryfallExampleApp/1.0",
+        "Accept": "application/json"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+def card_named_fuzzy(fuzzy: str, set: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve card details based on a fuzzy name search.
+    
+    Parameters:
+        fuzzy (str): A fuzzy card name to search for.
+        set (Optional[str]): A set code to limit the search to one set. Default is None.
+    """
+    url = f"{BASE_URL}/cards/named"
+    params = {
+        "fuzzy": fuzzy
+    }
+    if set:
+        params["set"] = set
+    headers = {
+        "User-Agent": "ScryfallExampleApp/1.0",
+        "Accept": "application/json"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+def cards_autocomplete(q: str, include_extras: bool = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Autocomplete card names.
+    
+    Parameters:
+        q (str): The string to autocomplete.
+        include_extras (bool): If true, includes extra cards such as tokens. Default is False.
+    """
+    url = f"{BASE_URL}/cards/autocomplete"
+    params = {
+        "q": q,
+        "include_extras": str(include_extras).lower()
+    }
+    headers = {
+        "User-Agent": "ScryfallExampleApp/1.0",
+        "Accept": "application/json"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
+def card_random(q: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve a random card.
+    
+    Parameters:
+        q (Optional[str]): An optional fulltext search query to filter the pool of random cards. Default is None.
+    """
+    url = f"{BASE_URL}/cards/random"
+    params = {}
+    if q:
+        params["q"] = q
+    headers = {
+        "User-Agent": "ScryfallExampleApp/1.0",
+        "Accept": "application/json"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import card_search, card_named_exact, card_named_fuzzy, cards_autocomplete, card_random
+
+class TestScryfallAPI(unittest.TestCase):
+
+    def test_card_search(self):
+        result = card_search(q="c:blue mv=1")
+        self.assertIn("data", result)
+
+    def test_card_named_exact(self):
+        result = card_named_exact(exact="Black Lotus")
+        self.assertEqual(result.get("name"), "Black Lotus")
+
+    def test_card_named_fuzzy(self):
+        result = card_named_fuzzy(fuzzy="blck lot")
+        self.assertEqual(result.get("name"), "Black Lotus")
+
+    def test_cards_autocomplete(self):
+        result = cards_autocomplete(q="thal")
+        self.assertIn("data", result)
+
+    def test_card_random(self):
+        result = card_random()
+        self.assertIn("name", result)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### scryfall.json**
+
+```json
+{
+    "tool_name": "scryfall",
+    "tool_description": "Scryfall API provides Magic: The Gathering card data and imagery.",
+    "title": "Scryfall API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://scryfall.com/docs/api",
+    "host": "api.scryfall.com",
+    "api_list": [
+        {
+            "name": "card_search",
+            "url": "https://api.scryfall.com/cards/search",
+            "description": "Search Magic cards using a fulltext search string.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The fulltext search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "unique",
+                    "type": "STRING",
+                    "description": "Strategy for omitting similar cards.",
+                    "default": "cards"
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "The method to sort returned cards.",
+                    "default": "name"
+                },
+                {
+                    "name": "dir",
+                    "type": "STRING",
+                    "description": "The direction to sort cards.",
+                    "default": "auto"
+                },
+                {
+                    "name": "include_extras",
+                    "type": "BOOLEAN",
+                    "description": "Includes extra cards if true.",
+                    "default": "false"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page number to return.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "object": "list",
+                "data": "array"
+            },
+            "headers": {
+                "User-Agent": "ScryfallExampleApp/1.0",
+                "Accept": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "card_named_exact",
+            "url": "https://api.scryfall.com/cards/named",
+            "description": "Retrieve card details based on exact name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "exact",
+                    "type": "STRING",
+                    "description": "The exact card name to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "set",
+                    "type": "STRING",
+                    "description": "A set code to limit the search to one set.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "object": "card"
+            },
+            "headers": {
+                "User-Agent": "ScryfallExampleApp/1.0",
+                "Accept": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "card_named_fuzzy",
+            "url": "https://api.scryfall.com/cards/named",
+            "description": "Retrieve card details based on fuzzy name search.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "fuzzy",
+                    "type": "STRING",
+                    "description": "A fuzzy card name to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "set",
+                    "type": "STRING",
+                    "description": "A set code to limit the search to one set.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "object": "card"
+            },
+            "headers": {
+                "User-Agent": "ScryfallExampleApp/1.0",
+                "Accept": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "cards_autocomplete",
+            "url": "https://api.scryfall.com/cards/autocomplete",
+            "description": "Autocomplete card names.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The string to autocomplete."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "include_extras",
+                    "type": "BOOLEAN",
+                    "description": "Includes extra cards if true.",
+                    "default": "false"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "object": "catalog",
+                "data": "array"
+            },
+            "headers": {
+                "User-Agent": "ScryfallExampleApp/1.0",
+                "Accept": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "card_random",
+            "url": "https://api.scryfall.com/cards/random",
+            "description": "Retrieve a random card.",
+            "method": "GET",
+            "optional_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "A fulltext search query to filter random cards.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "object": "card"
+            },
+            "headers": {
+                "User-Agent": "ScryfallExampleApp/1.0",
+                "Accept": "application/json"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "object": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+
+This implementation covers the major features and endpoints of the Scryfall API, provides corresponding test cases in `api_test.py`, and includes metadata about the API in `scryfall.json`.

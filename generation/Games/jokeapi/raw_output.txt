@@ -1,0 +1,467 @@
+**api.py**
+```python
+import requests
+from typing import Optional, List
+
+def get_joke(category: str = "Any", blacklist_flags: Optional[List[str]] = None, lang: str = "en", joke_type: Optional[str] = None,
+             contains: Optional[str] = None, id_range: Optional[str] = None, amount: int = 1, 
+             format: str = "json", safe_mode: bool = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetches jokes from JokeAPI based on given parameters.
+    
+    :param category: The joke category to fetch (e.g., "Programming"). Default is "Any".
+    :param blacklist_flags: List of flags to filter out jokes (e.g., ["nsfw", "religious"]).
+    :param lang: Language of the joke (e.g., "en" for English). Default is "en".
+    :param joke_type: Type of joke ("single" or "twopart").
+    :param contains: Search for a joke containing this string.
+    :param id_range: ID range or specific ID(s) to retrieve joke(s).
+    :param amount: How many jokes to fetch. Maximum is 10. Default is 1.
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param safe_mode: Whether to fetch only safe jokes.
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: A response containing joke(s).
+    """
+    url = f"https://v2.jokeapi.dev/joke/{category}"
+    params = {
+        'blacklistFlags': ','.join(blacklist_flags) if blacklist_flags else None,
+        'lang': lang,
+        'type': joke_type,
+        'contains': contains,
+        'idRange': id_range,
+        'amount': amount,
+        'format': format,
+    }
+    if safe_mode:
+        params['safe-mode'] = ''
+    
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
+    return response.json()
+
+def get_joke_info(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves information about the JokeAPI.
+
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: Information about the JokeAPI.
+    """
+    url = "https://v2.jokeapi.dev/info"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_joke_categories(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves all available joke categories.
+
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: List of available joke categories.
+    """
+    url = "https://v2.jokeapi.dev/categories"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_language_code(language: str, format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves ISO 639-1 language code for the specified language.
+    
+    :param language: The language name to search for.
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: The ISO 639-1 language code.
+    """
+    url = f"https://v2.jokeapi.dev/langcode/{language}"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_supported_languages(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves supported languages for jokes and system messages.
+
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: Information about supported languages.
+    """
+    url = "https://v2.jokeapi.dev/languages"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_flags(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves available blacklist flags.
+    
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: List of available blacklist flags.
+    """
+    url = "https://v2.jokeapi.dev/flags"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_formats(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves available response formats.
+    
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: List of available response formats.
+    """
+    url = "https://v2.jokeapi.dev/formats"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def ping_jokeapi(format: str = "json", lang: str = "en", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Pings JokeAPI to test connectivity.
+
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param lang: Language code for system messages (e.g., "en" for English). Default is "en".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: A response message indicating the API is reachable.
+    """
+    url = "https://v2.jokeapi.dev/ping"
+    params = {
+        'format': format,
+        'lang': lang,
+    }
+
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_endpoints_info(format: str = "json", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieves information about all available endpoints.
+    
+    :param format: Response format ("json", "xml", "yaml", "txt"). Default is "json".
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: List of available endpoints with their usage and descriptions.
+    """
+    url = "https://v2.jokeapi.dev/endpoints"
+    params = {
+        'format': format,
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+def submit_joke(joke_payload: dict, dry_run: bool = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Submits a joke to JokeAPI.
+
+    :param joke_payload: A dictionary containing the joke data.
+    :param dry_run: If True, performs a dry-run (validation only, no submission).
+    :param toolbench_rapidapi_key: API key for accessing JokeAPI.
+    :return: A response containing the submission status.
+    """
+    url = "https://v2.jokeapi.dev/submit"
+    headers = {'Content-Type': 'application/json'}
+    params = {'dry-run': ''} if dry_run else None
+
+    response = requests.post(url, json=joke_payload, headers=headers, params=params)
+    return response.json()
+```
+
+**api_test.py**
+```python
+import unittest
+from api import *
+
+class JokeAPITestCase(unittest.TestCase):
+    
+    def test_get_joke(self):
+        response = get_joke()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_get_joke_info(self):
+        response = get_joke_info()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_get_joke_categories(self):
+        response = get_joke_categories()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_get_language_code(self):
+        response = get_language_code("English")
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+        self.assertEqual(response['code'], 'en')
+
+    def test_get_supported_languages(self):
+        response = get_supported_languages()
+        self.assertIn('defaultLanguage', response)
+
+    def test_get_flags(self):
+        response = get_flags()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_get_formats(self):
+        response = get_formats()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_ping_jokeapi(self):
+        response = ping_jokeapi()
+        self.assertIn('ping', response)
+        self.assertEqual(response['ping'], 'Pong!')
+
+    def test_get_endpoints_info(self):
+        response = get_endpoints_info()
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+    def test_submit_joke_dry_run(self):
+        joke_payload = {
+            "formatVersion": 3,
+            "category": "Misc",
+            "type": "single",
+            "joke": "A horse walks into a bar...",
+            "flags": {
+                "nsfw": False,
+                "religious": False,
+                "political": False,
+                "racist": False,
+                "sexist": False,
+                "explicit": False
+            },
+            "lang": "en"
+        }
+        response = submit_joke(joke_payload, dry_run=True)
+        self.assertIn('error', response)
+        self.assertFalse(response['error'])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**jokeapi.json**
+```json
+{
+    "tool_name": "jokeapi",
+    "tool_description": "JokeAPI is a REST API that serves jokes from various categories with support for multiple languages and filtering options.",
+    "title": "JokeAPI - RESTful Joke API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 100,
+        "popularityScore": 9.8
+    },
+    "home_url": "https://v2.jokeapi.dev/",
+    "host": "v2.jokeapi.dev",
+    "api_list": [
+        {
+            "name": "get_joke",
+            "url": "https://v2.jokeapi.dev/joke",
+            "description": "Fetch jokes based on category, filters and other parameters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "category", "type": "STRING", "description": "Joke category", "default": "Any"},
+                {"name": "blacklist_flags", "type": "LIST", "description": "Flags to filter out", "default": "None"},
+                {"name": "lang", "type": "STRING", "description": "Language code for joke", "default": "en"},
+                {"name": "joke_type", "type": "STRING", "description": "Type of joke (single/twopart)", "default": "None"},
+                {"name": "contains", "type": "STRING", "description": "String to search within jokes", "default": "None"},
+                {"name": "id_range", "type": "STRING", "description": "ID range for jokes", "default": "None"},
+                {"name": "amount", "type": "INTEGER", "description": "Number of jokes to fetch", "default": 1},
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "safe_mode", "type": "BOOLEAN", "description": "Fetch only safe jokes", "default": false}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "jokes": "array",
+                "amount": "integer"
+            }
+        },
+        {
+            "name": "get_joke_info",
+            "url": "https://v2.jokeapi.dev/info",
+            "description": "Retrieve information about JokeAPI and its capabilities.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "info": "object"
+            }
+        },
+        {
+            "name": "get_joke_categories",
+            "url": "https://v2.jokeapi.dev/categories",
+            "description": "Retrieve all available joke categories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "categories": "array"
+            }
+        },
+        {
+            "name": "get_language_code",
+            "url": "https://v2.jokeapi.dev/langcode",
+            "description": "Retrieve ISO 639-1 language code for a given language.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "language", "type": "STRING", "description": "Language name"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "code": "string"
+            }
+        },
+        {
+            "name": "get_supported_languages",
+            "url": "https://v2.jokeapi.dev/languages",
+            "description": "Retrieve supported languages for jokes and system messages.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "defaultLanguage": "string",
+                "jokeLanguages": "array",
+                "systemLanguages": "array",
+                "possibleLanguages": "array"
+            }
+        },
+        {
+            "name": "get_flags",
+            "url": "https://v2.jokeapi.dev/flags",
+            "description": "Retrieve available blacklist flags.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "flags": "array"
+            }
+        },
+        {
+            "name": "get_formats",
+            "url": "https://v2.jokeapi.dev/formats",
+            "description": "Retrieve available response formats.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "formats": "array"
+            }
+        },
+        {
+            "name": "ping_jokeapi",
+            "url": "https://v2.jokeapi.dev/ping",
+            "description": "Ping JokeAPI to test connectivity.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"},
+                {"name": "lang", "type": "STRING", "description": "System message language", "default": "en"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "ping": "string",
+                "timestamp": "integer"
+            }
+        },
+        {
+            "name": "get_endpoints_info",
+            "url": "https://v2.jokeapi.dev/endpoints",
+            "description": "Retrieve information about all available endpoints.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Response format", "default": "json"}
+            ],
+            "statuscode": 200,
+            "body": {
+                "error": "boolean",
+                "endpoints": "array"
+            }
+        },
+        {
+            "name": "submit_joke",
+            "url": "https://v2.jokeapi.dev/submit",
+            "description": "Submit a joke for review and inclusion in JokeAPI.",
+            "method": "POST",
+            "required_parameters": [
+                {"name": "joke_payload", "type": "OBJECT", "description": "The joke payload structure"}
+            ],
+            "optional_parameters": [
+                {"name": "dry_run", "type": "BOOLEAN", "description": "Perform a dry run without actual submission", "default": false}
+            ],
+            "statuscode": 201,
+            "body": {
+                "error": "boolean",
+                "message": "string",
+                "submission": "object"
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,277 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+def get_all_resources(endpoint: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get list of all available resources for an endpoint.
+    Parameters:
+    endpoint [Required]: string - The endpoint to query for available resources.
+    """
+    url = f"https://www.dnd5eapi.co/api/{endpoint}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ability_score(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get an ability score by index.
+    Parameters:
+    index [Required]: string - The index of the ability score to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/ability-scores/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_alignment(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get an alignment by index.
+    Parameters:
+    index [Required]: string - The index of the alignment to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/alignments/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_background(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a background by index.
+    Parameters:
+    index [Required]: string - The index of the background to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/backgrounds/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_class(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a class by index.
+    Parameters:
+    index [Required]: string - The index of the class to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/classes/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_condition(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a condition by index.
+    Parameters:
+    index [Required]: string - The index of the condition to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/conditions/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_damage_type(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get a damage type by index.
+    Parameters:
+    index [Required]: string - The index of the damage type to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/damage-types/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_equipment(index: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get an equipment item by index.
+    Parameters:
+    index [Required]: string - The index of the equipment to get.
+    """
+    url = f"https://www.dnd5eapi.co/api/equipment/{index}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_all_resources, get_ability_score, get_alignment, get_background, get_class, get_condition, get_damage_type, get_equipment
+
+class TestDnD5API(unittest.TestCase):
+
+    def test_get_all_resources(self):
+        # Test retrieving all resources for the 'classes' endpoint
+        response = get_all_resources('classes')
+        self.assertIsInstance(response, dict)
+        self.assertIn('results', response)
+
+    def test_get_ability_score(self):
+        # Test retrieving an ability score by index
+        response = get_ability_score('cha')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'cha')
+
+    def test_get_alignment(self):
+        # Test retrieving an alignment by index
+        response = get_alignment('neutral-good')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'neutral-good')
+
+    def test_get_background(self):
+        # Test retrieving a background by index
+        response = get_background('acolyte')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'acolyte')
+
+    def test_get_class(self):
+        # Test retrieving a class by index
+        response = get_class('wizard')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'wizard')
+
+    def test_get_condition(self):
+        # Test retrieving a condition by index
+        response = get_condition('blinded')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'blinded')
+
+    def test_get_damage_type(self):
+        # Test retrieving a damage type by index
+        response = get_damage_type('fire')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'fire')
+
+    def test_get_equipment(self):
+        # Test retrieving equipment by index
+        response = get_equipment('club')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(response.get('index'), 'club')
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### DnD5.json
+```json
+{
+    "tool_name": "DnD5",
+    "tool_description": "API to access Dungeons & Dragons 5th Edition SRD data including classes, backgrounds, abilities, and more.",
+    "title": "Dungeons & Dragons 5th Edition SRD API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.dnd5eapi.co",
+    "host": "www.dnd5eapi.co",
+    "api_list": [
+        {
+            "name": "get_all_resources",
+            "url": "https://www.dnd5eapi.co/api/{endpoint}",
+            "description": "Get list of all available resources for an endpoint.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "endpoint",
+                    "type": "STRING",
+                    "description": "The endpoint to query for available resources."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/{endpoint}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "number",
+                "results": "object[]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number"
+                    },
+                    "results": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ability_score",
+            "url": "https://www.dnd5eapi.co/api/ability-scores/{index}",
+            "description": "Get an ability score by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the ability score to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/ability-scores/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "url": "string",
+                "desc": "string[]",
+                "full_name": "string",
+                "skills": "object[]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "array"
+                    },
+                    "full_name": {
+                        "type": "string"
+                    },
+                    "skills": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,173 @@
+{
+    "tool_name": "federalregister",
+    "tool_description": "API to access a wealth of data about published and public inspection documents from the Federal Register.",
+    "title": "Federal Register API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.federalregister.gov/developers/api/v1",
+    "host": "www.federalregister.gov",
+    "api_list": [
+        {
+            "name": "fetch_single_document",
+            "url": "https://www.federalregister.gov/api/v1/documents/{fr_document_number}.json",
+            "description": "Fetch single Federal Register document using the FR document number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "fr_document_number",
+                    "type": "STRING",
+                    "description": "Federal Register document number."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_multiple_documents",
+            "url": "https://www.federalregister.gov/api/v1/documents/multiple.json",
+            "description": "Fetch multiple Federal Register documents by their document numbers.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "fr_document_numbers",
+                    "type": "ARRAY",
+                    "description": "List of Federal Register document numbers."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_documents",
+            "url": "https://www.federalregister.gov/api/v1/documents.json",
+            "description": "Search Federal Register documents using query parameters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for paginated results.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_single_pi_document",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/{pi_document_number}.json",
+            "description": "Fetch metadata and PDF link for a Public Inspection document by its number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pi_document_number",
+                    "type": "STRING",
+                    "description": "Public Inspection document number."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_multiple_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/multiple.json",
+            "description": "Fetch multiple Public Inspection documents by their document numbers.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pi_document_numbers",
+                    "type": "ARRAY",
+                    "description": "List of Public Inspection document numbers."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection.json",
+            "description": "Search Public Inspection documents using query parameters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for paginated results.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_current_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/current.json",
+            "description": "Get all documents currently on public inspection.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_pi_documents_by_date",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/{date}.json",
+            "description": "Get all the documents that were on public inspection on a given date.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date in format YYYY-MM-DD."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_agency_data",
+            "url": "https://www.federalregister.gov/api/v1/agencies.json",
+            "description": "Get basic data about agencies. Optionally filter by agency ID.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "agency_id",
+                    "type": "STRING",
+                    "description": "ID of the agency.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

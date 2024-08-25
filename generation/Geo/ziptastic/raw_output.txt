@@ -1,0 +1,107 @@
+### api.py
+```python
+import requests
+
+
+def get_location_by_zip(zipcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetches the country, state, and city for the given ZIP code.
+    
+    Parameters:
+    zipcode: str - The ZIP code to query.
+    toolbench_rapidapi_key: str - Your API key for authentication.
+    
+    Returns:
+    dict - The location information including country, state, and city.
+    """
+    url = f"http://ZiptasticAPI.com/{zipcode}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_location_by_zip
+
+
+class TestZiptasticAPI(unittest.TestCase):
+
+    def test_get_location_by_zip_valid(self):
+        # Using a well-known ZIP code for test
+        zipcode = "90210"  # Beverly Hills, CA, USA
+        response = get_location_by_zip(zipcode)
+        self.assertIn("city", response)
+        self.assertIn("state", response)
+        self.assertIn("country", response)
+
+    def test_get_location_by_zip_invalid(self):
+        # Using an invalid ZIP code to test
+        zipcode = "00000"
+        response = get_location_by_zip(zipcode)
+        self.assertIn("error", response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### ziptastic.json
+```json
+{
+    "tool_name": "ziptastic",
+    "tool_description": "Ziptastic API returns the country, state, and city of the zip code supplied.",
+    "title": "Ziptastic API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://ZiptasticAPI.com/",
+    "host": "ZiptasticAPI.com",
+    "api_list": [
+        {
+            "name": "get_location_by_zip",
+            "url": "http://ZiptasticAPI.com/{zipcode}",
+            "description": "Fetches the country, state, and city for the given ZIP code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "zipcode",
+                    "type": "STRING",
+                    "description": "The ZIP code to query."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'http://ZiptasticAPI.com/{zipcode}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "country": "str",
+                "state": "str",
+                "city": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "country": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

@@ -1,0 +1,97 @@
+{
+    "tool_name": "geoplugin",
+    "tool_description": "API for geolocation and currency conversion based on IP addresses.",
+    "title": "GeoPlugin API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.4,
+        "__typename": "Score"
+    },
+    "home_url": "http://www.geoplugin.com/",
+    "host": "www.geoplugin.net",
+    "api_list": [
+        {
+            "name": "get_location_by_ip",
+            "url": "http://www.geoplugin.net/json.gp",
+            "description": "Get geolocation information based on IP address.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "The IPv4 or IPv6 address to look up.",
+                    "default": "auto"
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://www.geoplugin.net/json.gp?ip=auto'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "geoplugin_request": "str",
+                "geoplugin_status": "int",
+                "geoplugin_countryName": "str",
+                "geoplugin_city": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "geoplugin_request": {"type": "string"},
+                    "geoplugin_status": {"type": "integer"},
+                    "geoplugin_countryName": {"type": "string"},
+                    "geoplugin_city": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "currency_converter",
+            "url": "http://www.geoplugin.net/convert",
+            "description": "Converts an amount from one currency to another using real-time rates.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "base_currency",
+                    "type": "STRING",
+                    "description": "The currency code of the base currency.",
+                    "default": "USD"
+                },
+                {
+                    "name": "amount",
+                    "type": "FLOAT",
+                    "description": "The amount in base currency to convert.",
+                    "default": 1.0
+                },
+                {
+                    "name": "target_currency",
+                    "type": "STRING",
+                    "description": "The currency code to convert the base currency to.",
+                    "default": "EUR"
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://www.geoplugin.net/convert?from=USD&to=EUR&amount=1'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "geoplugin_baseCurrency": "str",
+                "geoplugin_targetCurrency": "str",
+                "geoplugin_amount": "str",
+                "geoplugin_convert": "str",
+                "geoplugin_status": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "geoplugin_baseCurrency": {"type": "string"},
+                    "geoplugin_targetCurrency": {"type": "string"},
+                    "geoplugin_amount": {"type": "string"},
+                    "geoplugin_convert": {"type": "string"},
+                    "geoplugin_status": {"type": "integer"}
+                }
+            }
+        }
+    ]
+}

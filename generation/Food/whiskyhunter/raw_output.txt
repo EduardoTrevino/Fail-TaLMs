@@ -1,0 +1,251 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def auction_data(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: List only aggregated data for online auction {slug}.
+    Parameters:
+     slug [Required]: string [Path parameter. Example: 'catawiki']
+    """
+    url = f"https://api.whiskyhunter.net/api/auction_data/{slug}/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def auctions_data(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: List all online auctions aggregated data.
+    """
+    url = "https://api.whiskyhunter.net/api/auctions_data/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def auctions_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: List all online auctions main information.
+    """
+    url = "https://api.whiskyhunter.net/api/auctions_info/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def distilleries_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: List all distilleries main information.
+    """
+    url = "https://api.whiskyhunter.net/api/distilleries_info/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def distillery_data(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: List data for distillery {slug}.
+    Parameters:
+     slug [Required]: string [Path parameter. Example: 'ardbeg']
+    """
+    url = f"https://api.whiskyhunter.net/api/distillery_data/{slug}/"
+    headers = {
+        'X-RapidAPI-Key': toolbench_rapidapi_key
+    }
+
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import auction_data, auctions_data, auctions_info, distilleries_info, distillery_data
+
+class TestWhiskyHunterAPI(unittest.TestCase):
+
+    def test_auction_data(self):
+        response = auction_data(slug='catawiki')
+        self.assertIn('auctions_data', response)
+
+    def test_auctions_data(self):
+        response = auctions_data()
+        self.assertIn('auctions_info', response)
+
+    def test_auctions_info(self):
+        response = auctions_info()
+        self.assertIn('auctions_info', response)
+
+    def test_distilleries_info(self):
+        response = distilleries_info()
+        self.assertIn('distilleries_info', response)
+
+    def test_distillery_data(self):
+        response = distillery_data(slug='ardbeg')
+        self.assertIn('distillery_data', response)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### whiskyhunter.json
+```json
+{
+    "tool_name": "whiskyhunter",
+    "tool_description": "API for accessing detailed data on whisky auctions and distilleries.",
+    "title": "Whisky Hunter API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.whiskyhunter.net/docs/",
+    "host": "api.whiskyhunter.net",
+    "api_list": [
+        {
+            "name": "auction_data",
+            "url": "https://api.whiskyhunter.net/api/auction_data/{slug}/",
+            "description": "List only aggregated data for online auction {slug}.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "slug",
+                    "type": "STRING",
+                    "description": "The unique identifier for an auction.",
+                    "default": "catawiki"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "auctions_data": {
+                        "type": "array"
+                    }
+                }
+            },
+            "headers": {
+                "X-RapidAPI-Key": "string"
+            }
+        },
+        {
+            "name": "auctions_data",
+            "url": "https://api.whiskyhunter.net/api/auctions_data/",
+            "description": "List all online auctions aggregated data.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "auctions_info": {
+                        "type": "array"
+                    }
+                }
+            },
+            "headers": {
+                "X-RapidAPI-Key": "string"
+            }
+        },
+        {
+            "name": "auctions_info",
+            "url": "https://api.whiskyhunter.net/api/auctions_info/",
+            "description": "List all online auctions main information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "auctions_info": {
+                        "type": "array"
+                    }
+                }
+            },
+            "headers": {
+                "X-RapidAPI-Key": "string"
+            }
+        },
+        {
+            "name": "distilleries_info",
+            "url": "https://api.whiskyhunter.net/api/distilleries_info/",
+            "description": "List all distilleries main information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "distilleries_info": {
+                        "type": "array"
+                    }
+                }
+            },
+            "headers": {
+                "X-RapidAPI-Key": "string"
+            }
+        },
+        {
+            "name": "distillery_data",
+            "url": "https://api.whiskyhunter.net/api/distillery_data/{slug}/",
+            "description": "List data for distillery {slug}.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "slug",
+                    "type": "STRING",
+                    "description": "The unique identifier for a distillery.",
+                    "default": "ardbeg"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "distillery_data": {
+                        "type": "array"
+                    }
+                }
+            },
+            "headers": {
+                "X-RapidAPI-Key": "string"
+            }
+        }
+    ]
+}
+```

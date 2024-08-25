@@ -1,0 +1,204 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+
+def get_berry(berry_id_or_name: str = 'cheri', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get information about a specific berry by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/berry/{berry_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_berry_firmness(firmness_id_or_name: str = 'very-soft', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get information about a specified berry firmness by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/berry-firmness/{firmness_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_berry_flavor(flavor_id_or_name: str = 'spicy', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get information about a specific berry flavor by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/berry-flavor/{flavor_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_ability(ability_id_or_name: str = 'stench', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get details about a specific Pokemon ability by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/ability/{ability_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_pokemon(pokemon_id_or_name: str = 'clefairy', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get details about a specific Pokemon by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_type(type_id_or_name: str = 'ground', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get details about a specific Pokemon type by ID or name.
+    """
+    url = f"https://pokeapi.co/api/v2/type/{type_id_or_name}/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_berry, get_berry_firmness, get_berry_flavor, get_ability, get_pokemon, get_type
+
+
+class TestPokeAPI(unittest.TestCase):
+
+    def test_get_berry(self):
+        response = get_berry()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'cheri')
+
+    def test_get_berry_firmness(self):
+        response = get_berry_firmness()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'very-soft')
+
+    def test_get_berry_flavor(self):
+        response = get_berry_flavor()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'spicy')
+
+    def test_get_ability(self):
+        response = get_ability()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'stench')
+
+    def test_get_pokemon(self):
+        response = get_pokemon()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'clefairy')
+
+    def test_get_type(self):
+        response = get_type()
+        self.assertIn('name', response)
+        self.assertEqual(response['name'], 'ground')
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### pokeapi.json**
+
+```json
+{
+    "tool_name": "pokeapi",
+    "tool_description": "PokéAPI provides a RESTful API interface to highly detailed objects built from thousands of lines of data related to Pokémon.",
+    "title": "PokéAPI",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 180,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.9,
+        "__typename": "Score"
+    },
+    "home_url": "https://pokeapi.co/",
+    "host": "pokeapi.co",
+    "api_list": [
+        {
+            "name": "get_berry",
+            "url": "https://pokeapi.co/api/v2/berry/{id or name}/",
+            "description": "Get information about a specific berry by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_berry(berry_id_or_name='cheri')",
+            "statuscode": 200
+        },
+        {
+            "name": "get_berry_firmness",
+            "url": "https://pokeapi.co/api/v2/berry-firmness/{id or name}/",
+            "description": "Get information about a specific berry firmness by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_berry_firmness(firmness_id_or_name='very-soft')",
+            "statuscode": 200
+        },
+        {
+            "name": "get_berry_flavor",
+            "url": "https://pokeapi.co/api/v2/berry-flavor/{id or name}/",
+            "description": "Get information about a specific berry flavor by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_berry_flavor(flavor_id_or_name='spicy')",
+            "statuscode": 200
+        },
+        {
+            "name": "get_ability",
+            "url": "https://pokeapi.co/api/v2/ability/{id or name}/",
+            "description": "Get details about a specific Pokémon ability by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_ability(ability_id_or_name='stench')",
+            "statuscode": 200
+        },
+        {
+            "name": "get_pokemon",
+            "url": "https://pokeapi.co/api/v2/pokemon/{id or name}/",
+            "description": "Get details about a specific Pokémon by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_pokemon(pokemon_id_or_name='clefairy')",
+            "statuscode": 200
+        },
+        {
+            "name": "get_type",
+            "url": "https://pokeapi.co/api/v2/type/{id or name}/",
+            "description": "Get details about a specific Pokémon type by ID or name.",
+            "method": "GET",
+            "required_parameters": ["id or name"],
+            "optional_parameters": [],
+            "code": "get_type(type_id_or_name='ground')",
+            "statuscode": 200
+        }
+    ]
+}
+```

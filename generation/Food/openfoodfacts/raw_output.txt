@@ -1,0 +1,239 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_product_by_barcode(barcode: str, fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get product details by barcode.
+    
+    Parameters:
+    - barcode: str [Required] - The barcode of the product.
+    - fields: str [Optional] - Specific fields to retrieve (comma-separated).
+    """
+    url = f"https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
+    params = {}
+    if fields:
+        params['fields'] = fields
+
+    headers = {
+        "User-Agent": f"OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})"
+    }
+    
+    response = requests.get(url, params=params, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def search_products(categories: Optional[str] = None, nutrition_grades: Optional[str] = None, fields: Optional[str] = None, sort_by: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search for products with specific criteria.
+
+    Parameters:
+    - categories: str [Optional] - Categories to filter by.
+    - nutrition_grades: str [Optional] - Nutrition grade to filter by.
+    - fields: str [Optional] - Specific fields to retrieve (comma-separated).
+    - sort_by: str [Optional] - Field name to sort by.
+    """
+    url = "https://world.openfoodfacts.org/api/v2/search"
+    params = {}
+    if categories:
+        params['categories_tags_en'] = categories
+    if nutrition_grades:
+        params['nutrition_grades_tags'] = nutrition_grades
+    if fields:
+        params['fields'] = fields
+    if sort_by:
+        params['sort_by'] = sort_by
+
+    headers = {
+        "User-Agent": f"OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})"
+    }
+    
+    response = requests.get(url, params=params, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_product_by_barcode, search_products
+
+class OpenFoodFactsAPITest(unittest.TestCase):
+    
+    def test_get_product_by_barcode(self):
+        response = get_product_by_barcode('3017624010701', fields='product_name,nutrition_grades')
+        self.assertEqual(response.get('status'), 1)
+        self.assertIn('product', response)
+        self.assertEqual(response['product']['product_name'], 'Nutella')
+        self.assertEqual(response['product']['nutrition_grades'], 'e')
+
+    def test_search_products(self):
+        response = search_products(categories='Orange Juice', nutrition_grades='c', fields='code,nutrition_grades')
+        self.assertIsInstance(response, dict)
+        self.assertIn('products', response)
+        self.assertGreater(len(response['products']), 0)
+        for product in response['products']:
+            self.assertEqual(product['nutrition_grades'], 'c')
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### openfoodfacts.json**
+
+```json
+{
+    "tool_name": "openfoodfacts",
+    "tool_description": "Open Food Facts is a food products database made by everyone, for everyone. It provides data on food products which includes nutritional values, ingredients, and more.",
+    "title": "Open Food Facts API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 180,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.9,
+        "__typename": "Score"
+    },
+    "home_url": "https://world.openfoodfacts.org",
+    "host": "world.openfoodfacts.org",
+    "api_list": [
+        {
+            "name": "get_product_by_barcode",
+            "url": "https://world.openfoodfacts.org/api/v2/product/{barcode}.json",
+            "description": "Get product details by barcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "barcode",
+                    "type": "STRING",
+                    "description": "The barcode of the product.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Specific fields to retrieve (comma-separated).",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://world.openfoodfacts.org/api/v2/product/{barcode}.json'\nparams = {'fields': fields}\nheaders = {'User-Agent': 'OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})'}\nresponse = requests.get(url, params=params, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "code": "string",
+                "product": {
+                    "product_name": "string",
+                    "nutrition_grades": "string"
+                },
+                "status": "int",
+                "status_verbose": "string"
+            },
+            "headers": {
+                "User-Agent": "OpenFoodFactsClient/1.0"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "object"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "status_verbose": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_products",
+            "url": "https://world.openfoodfacts.org/api/v2/search",
+            "description": "Search for products with specific criteria.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "categories",
+                    "type": "STRING",
+                    "description": "Categories to filter by.",
+                    "default": null
+                },
+                {
+                    "name": "nutrition_grades",
+                    "type": "STRING",
+                    "description": "Nutrition grade to filter by.",
+                    "default": null
+                },
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Specific fields to retrieve (comma-separated).",
+                    "default": null
+                },
+                {
+                    "name": "sort_by",
+                    "type": "STRING",
+                    "description": "Field name to sort by.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://world.openfoodfacts.org/api/v2/search'\nparams = {'categories_tags_en': categories, 'nutrition_grades_tags': nutrition_grades, 'fields': fields, 'sort_by': sort_by}\nheaders = {'User-Agent': 'OpenFoodFactsClient/1.0 ({toolbench_rapidapi_key})'}\nresponse = requests.get(url, params=params, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "int",
+                "page": "int",
+                "page_count": "int",
+                "page_size": "int",
+                "products": [
+                    {
+                        "categories_tags_en": ["string"],
+                        "code": "string",
+                        "nutrition_grades": "string"
+                    }
+                ],
+                "skip": "int"
+            },
+            "headers": {
+                "User-Agent": "OpenFoodFactsClient/1.0"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "page_count": {
+                        "type": "integer"
+                    },
+                    "page_size": {
+                        "type": "integer"
+                    },
+                    "products": {
+                        "type": "array"
+                    },
+                    "skip": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

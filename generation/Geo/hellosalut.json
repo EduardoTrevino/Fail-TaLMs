@@ -1,0 +1,71 @@
+{
+    "tool_name": "hellosalut",
+    "tool_description": "API to say hello to users in their native language based on language code, IP address, or automatic detection.",
+    "title": "HelloSalut API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 50,
+        "avgSuccessRate": 98,
+        "popularityScore": 8.5
+    },
+    "home_url": "https://hellosalut.stefanbohacek.dev/",
+    "host": "hellosalut.stefanbohacek.dev",
+    "api_list": [
+        {
+            "name": "say_hello",
+            "url": "https://hellosalut.stefanbohacek.dev/",
+            "description": "Get a greeting based on language code, IP address, or country code. Supports automatic detection.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Language code.",
+                    "default": ""
+                },
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "IP address.",
+                    "default": ""
+                },
+                {
+                    "name": "cc",
+                    "type": "STRING",
+                    "description": "Country code.",
+                    "default": ""
+                },
+                {
+                    "name": "mode",
+                    "type": "STRING",
+                    "description": "Automatic detection mode.",
+                    "default": "auto"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://hellosalut.stefanbohacek.dev/'\nparams = {'lang': lang, 'ip': ip, 'cc': cc, 'mode': mode}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "hello": "string",
+                "cc": "string",
+                "ip": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "hello": {
+                        "type": "string"
+                    },
+                    "cc": {
+                        "type": "string"
+                    },
+                    "ip": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

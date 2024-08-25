@@ -1,0 +1,128 @@
+{
+    "tool_name": "viacep",
+    "tool_description": "Free high-performance webservice for consulting Brazilian Postal Codes (CEPs).",
+    "title": "ViaCEP API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.8
+    },
+    "home_url": "https://viacep.com.br",
+    "host": "viacep.com.br",
+    "api_list": [
+        {
+            "name": "query_cep",
+            "url": "https://viacep.com.br/ws/{cep}/{return_format}/",
+            "description": "Retrieve information for a given ZIP code in Brazil.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cep",
+                    "type": "STRING",
+                    "description": "ZIP code in the format of 8 digits."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "return_format",
+                    "type": "STRING",
+                    "description": "Format of the return data (json or xml).",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://viacep.com.br/ws/{cep}/json/'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "cep": "string",
+                "logradouro": "string",
+                "complemento": "string",
+                "bairro": "string",
+                "localidade": "string",
+                "uf": "string",
+                "ibge": "string",
+                "gia": "string",
+                "ddd": "string",
+                "siafi": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "cep": {
+                        "type": "string"
+                    },
+                    "logradouro": {
+                        "type": "string"
+                    },
+                    "complemento": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "search_address",
+            "url": "https://viacep.com.br/ws/{state}/{city}/{street}/{return_format}/",
+            "description": "Search for a ZIP code based on the address details.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "state",
+                    "type": "STRING",
+                    "description": "Two-letter state code in Brazil."
+                },
+                {
+                    "name": "city",
+                    "type": "STRING",
+                    "description": "Name of the city. Must have at least 3 characters."
+                },
+                {
+                    "name": "street",
+                    "type": "STRING",
+                    "description": "Name of the street. Must have at least 3 characters."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "return_format",
+                    "type": "STRING",
+                    "description": "Format of the return data (json or xml).",
+                    "default": "json"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://viacep.com.br/ws/{state}/{city}/{street}/json/'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "cep": "string",
+                    "logradouro": "string",
+                    "complemento": "string",
+                    "bairro": "string",
+                    "localidade": "string",
+                    "uf": "string",
+                    "ibge": "string",
+                    "gia": "string",
+                    "ddd": "string",
+                    "siafi": "string"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "cep": {
+                            "type": "string"
+                        },
+                        "logradouro": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

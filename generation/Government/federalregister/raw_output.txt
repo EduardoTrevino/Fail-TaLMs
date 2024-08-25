@@ -1,0 +1,384 @@
+### api.py
+```python
+import requests
+from typing import Optional, List
+
+def fetch_single_document(fr_document_number: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch single Federal Register document using the FR document number.
+    
+    Parameters:
+    fr_document_number [Required]: string - Federal Register document number.
+    """
+    url = f"https://www.federalregister.gov/api/v1/documents/{fr_document_number}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def fetch_multiple_documents(fr_document_numbers: List[str], toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch multiple Federal Register documents by their document numbers.
+    
+    Parameters:
+    fr_document_numbers [Required]: list of strings - List of Federal Register document numbers.
+    """
+    url = "https://www.federalregister.gov/api/v1/documents/multiple.json"
+    params = {
+        'document_numbers[]': fr_document_numbers
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_documents(query: str, page: Optional[int] = 1, per_page: Optional[int] = 20, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search Federal Register documents using query parameters.
+    
+    Parameters:
+    query [Required]: string - Search query.
+    page [Optional]: integer - Page number for paginated results.
+    per_page [Optional]: integer - Number of results per page.
+    """
+    url = "https://www.federalregister.gov/api/v1/documents.json"
+    params = {
+        'q': query,
+        'page': page,
+        'per_page': per_page
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def fetch_single_pi_document(pi_document_number: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch metadata and PDF link for a Public Inspection document by its number.
+    
+    Parameters:
+    pi_document_number [Required]: string - Public Inspection document number.
+    """
+    url = f"https://www.federalregister.gov/api/v1/public-inspection/{pi_document_number}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def fetch_multiple_pi_documents(pi_document_numbers: List[str], toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch multiple Public Inspection documents by their document numbers.
+    
+    Parameters:
+    pi_document_numbers [Required]: list of strings - List of Public Inspection document numbers.
+    """
+    url = "https://www.federalregister.gov/api/v1/public-inspection/multiple.json"
+    params = {
+        'document_numbers[]': pi_document_numbers
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def search_pi_documents(query: str, page: Optional[int] = 1, per_page: Optional[int] = 20, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Search Public Inspection documents using query parameters.
+    
+    Parameters:
+    query [Required]: string - Search query.
+    page [Optional]: integer - Page number for paginated results.
+    per_page [Optional]: integer - Number of results per page.
+    """
+    url = "https://www.federalregister.gov/api/v1/public-inspection.json"
+    params = {
+        'q': query,
+        'page': page,
+        'per_page': per_page
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_current_pi_documents(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all documents currently on public inspection.
+    """
+    url = "https://www.federalregister.gov/api/v1/public-inspection/current.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_pi_documents_by_date(date: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all the documents that were on public inspection on a given date.
+    
+    Parameters:
+    date [Required]: string - Date in format YYYY-MM-DD.
+    """
+    url = f"https://www.federalregister.gov/api/v1/public-inspection/{date}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_agency_data(agency_id: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get basic data about agencies. Optionally filter by agency ID.
+    
+    Parameters:
+    agency_id [Optional]: string - ID of the agency.
+    """
+    url = "https://www.federalregister.gov/api/v1/agencies.json"
+    if agency_id:
+        url = f"https://www.federalregister.gov/api/v1/agencies/{agency_id}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    fetch_single_document,
+    fetch_multiple_documents,
+    search_documents,
+    fetch_single_pi_document,
+    fetch_multiple_pi_documents,
+    search_pi_documents,
+    get_current_pi_documents,
+    get_pi_documents_by_date,
+    get_agency_data
+)
+
+class TestFederalRegisterAPI(unittest.TestCase):
+
+    def test_fetch_single_document(self):
+        response = fetch_single_document(fr_document_number="2021-12345")
+        self.assertIn("document_number", response)
+
+    def test_fetch_multiple_documents(self):
+        response = fetch_multiple_documents(fr_document_numbers=["2021-12345", "2021-12346"])
+        self.assertIsInstance(response, list)
+
+    def test_search_documents(self):
+        response = search_documents(query="environment")
+        self.assertIn("results", response)
+
+    def test_fetch_single_pi_document(self):
+        response = fetch_single_pi_document(pi_document_number="2021-12345")
+        self.assertIn("document_number", response)
+
+    def test_fetch_multiple_pi_documents(self):
+        response = fetch_multiple_pi_documents(pi_document_numbers=["2021-12345", "2021-12346"])
+        self.assertIsInstance(response, list)
+
+    def test_search_pi_documents(self):
+        response = search_pi_documents(query="policy")
+        self.assertIn("results", response)
+
+    def test_get_current_pi_documents(self):
+        response = get_current_pi_documents()
+        self.assertIn("results", response)
+
+    def test_get_pi_documents_by_date(self):
+        response = get_pi_documents_by_date(date="2023-10-01")
+        self.assertIn("results", response)
+
+    def test_get_agency_data(self):
+        response = get_agency_data()
+        self.assertIn("results", response)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### federalregister.json
+```json
+{
+    "tool_name": "federalregister",
+    "tool_description": "API to access a wealth of data about published and public inspection documents from the Federal Register.",
+    "title": "Federal Register API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.federalregister.gov/developers/api/v1",
+    "host": "www.federalregister.gov",
+    "api_list": [
+        {
+            "name": "fetch_single_document",
+            "url": "https://www.federalregister.gov/api/v1/documents/{fr_document_number}.json",
+            "description": "Fetch single Federal Register document using the FR document number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "fr_document_number",
+                    "type": "STRING",
+                    "description": "Federal Register document number."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_multiple_documents",
+            "url": "https://www.federalregister.gov/api/v1/documents/multiple.json",
+            "description": "Fetch multiple Federal Register documents by their document numbers.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "fr_document_numbers",
+                    "type": "ARRAY",
+                    "description": "List of Federal Register document numbers."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_documents",
+            "url": "https://www.federalregister.gov/api/v1/documents.json",
+            "description": "Search Federal Register documents using query parameters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for paginated results.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_single_pi_document",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/{pi_document_number}.json",
+            "description": "Fetch metadata and PDF link for a Public Inspection document by its number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pi_document_number",
+                    "type": "STRING",
+                    "description": "Public Inspection document number."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "fetch_multiple_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/multiple.json",
+            "description": "Fetch multiple Public Inspection documents by their document numbers.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "pi_document_numbers",
+                    "type": "ARRAY",
+                    "description": "List of Public Inspection document numbers."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "search_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection.json",
+            "description": "Search Public Inspection documents using query parameters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for paginated results.",
+                    "default": "1"
+                },
+                {
+                    "name": "per_page",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_current_pi_documents",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/current.json",
+            "description": "Get all documents currently on public inspection.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_pi_documents_by_date",
+            "url": "https://www.federalregister.gov/api/v1/public-inspection/{date}.json",
+            "description": "Get all the documents that were on public inspection on a given date.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date in format YYYY-MM-DD."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_agency_data",
+            "url": "https://www.federalregister.gov/api/v1/agencies.json",
+            "description": "Get basic data about agencies. Optionally filter by agency ID.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "agency_id",
+                    "type": "STRING",
+                    "description": "ID of the agency.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}
+```

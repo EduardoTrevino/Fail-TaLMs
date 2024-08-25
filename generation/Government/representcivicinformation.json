@@ -1,0 +1,196 @@
+{
+    "tool_name": "representcivicinformation",
+    "tool_description": "API to access civic information such as representatives, boundaries, and elections based on geographic information in Canada.",
+    "title": "Open North Represent API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://represent.opennorth.ca",
+    "host": "represent.opennorth.ca",
+    "api_list": [
+        {
+            "name": "get_representatives_by_postal_code",
+            "url": "https://represent.opennorth.ca/postcodes/{postal_code}/",
+            "description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postal_code",
+                    "type": "STRING",
+                    "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "sets",
+                    "type": "STRING",
+                    "description": "Comma-separated list of boundary sets to limit results.",
+                    "default": "None"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_boundary_sets",
+            "url": "https://represent.opennorth.ca/boundary-sets/",
+            "description": "Get one page of boundary sets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page. Default is 20.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_boundaries",
+            "url": "https://represent.opennorth.ca/boundaries/",
+            "description": "Get one page of boundaries, optionally filtering by boundary sets, names, or geospatial queries.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "sets",
+                    "type": "STRING",
+                    "description": "Comma-separated list of boundary sets.",
+                    "default": "None"
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name to filter boundaries.",
+                    "default": "None"
+                },
+                {
+                    "name": "contains",
+                    "type": "STRING",
+                    "description": "Latitude and longitude for geospatial query.",
+                    "default": "None"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_representative_sets",
+            "url": "https://represent.opennorth.ca/representative-sets/",
+            "description": "Get one page of representative sets.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_representatives",
+            "url": "https://represent.opennorth.ca/representatives/",
+            "description": "Get one page of representatives, optionally filtering by last name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                },
+                {
+                    "name": "last_name",
+                    "type": "STRING",
+                    "description": "Last name of the representative to filter results.",
+                    "default": "None"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_elections",
+            "url": "https://represent.opennorth.ca/elections/",
+            "description": "Get one page of elections.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_candidates",
+            "url": "https://represent.opennorth.ca/candidates/",
+            "description": "Get one page of candidates.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

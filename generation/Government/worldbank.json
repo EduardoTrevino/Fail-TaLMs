@@ -1,0 +1,100 @@
+{
+  "tool_name": "worldbank",
+  "tool_description": "API to access a wealth of data about global development indicators from the World Bank.",
+  "title": "World Bank Indicators API V2",
+  "pricing": "FREE",
+  "score": {
+      "avgServiceLevel": 99,
+      "avgLatency": 180,
+      "avgSuccessRate": 99,
+      "popularityScore": 9.7,
+      "__typename": "Score"
+  },
+  "home_url": "http://api.worldbank.org/",
+  "host": "api.worldbank.org",
+  "api_list": [
+      {
+          "name": "get_country_data",
+          "url": "http://api.worldbank.org/v2/country/{country_code}",
+          "description": "Retrieve information about a specific country using its ISO2 country code.",
+          "method": "GET",
+          "required_parameters": [
+              {"name": "country_code", "type": "STRING", "description": "Two-letter ISO code of the country.", "default": "BR"}
+          ],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "get_indicator_data",
+          "url": "http://api.worldbank.org/v2/country/{country_code}/indicator/{indicator_code}",
+          "description": "Retrieve indicator data for a specific country and indicator.",
+          "method": "GET",
+          "required_parameters": [
+              {"name": "country_code", "type": "STRING", "description": "ISO code of the country.", "default": "BR"},
+              {"name": "indicator_code", "type": "STRING", "description": "Code of the indicator.", "default": "NY.GDP.MKTP.CD"}
+          ],
+          "optional_parameters": [
+              {"name": "date", "type": "STRING", "description": "Date or date range for the data.", "default": ""},
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "list_countries",
+          "url": "http://api.worldbank.org/v2/country",
+          "description": "List all countries available in the World Bank API.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "list_indicators",
+          "url": "http://api.worldbank.org/v2/indicator",
+          "description": "List all indicators available in the World Bank API.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "list_regions",
+          "url": "http://api.worldbank.org/v2/region",
+          "description": "List all regions available in the World Bank API.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "list_income_levels",
+          "url": "http://api.worldbank.org/v2/incomelevel",
+          "description": "List all income levels available in the World Bank API.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      },
+      {
+          "name": "list_lending_types",
+          "url": "http://api.worldbank.org/v2/lendingtype",
+          "description": "List all lending types available in the World Bank API.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {"name": "format_type", "type": "STRING", "description": "The format in which to receive the data.", "default": "json"}
+          ],
+          "statuscode": 200
+      }
+  ]
+}

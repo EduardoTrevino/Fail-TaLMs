@@ -1,0 +1,102 @@
+{
+    "tool_name": "geckoterminal",
+    "tool_description": "GeckoTerminal Public API allows access to token prices, networks, dexes, trending pools, and more across various blockchain networks.",
+    "title": "GeckoTerminal API v2",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.geckoterminal.com/docs/",
+    "host": "api.geckoterminal.com",
+    "api_list": [
+        {
+            "name": "get_token_price",
+            "url": "https://api.geckoterminal.com/api/v2/simple/networks/{network}/token_price/{addresses}",
+            "description": "Get current USD prices of multiple tokens on a network.",
+            "method": "GET",
+            "required_parameters": ["network", "addresses"],
+            "optional_parameters": [],
+            "statuscode": 200
+        },
+        {
+            "name": "get_supported_networks",
+            "url": "https://api.geckoterminal.com/api/v2/networks",
+            "description": "Get list of supported networks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_supported_dexes",
+            "url": "https://api.geckoterminal.com/api/v2/networks/{network}/dexes",
+            "description": "Get list of supported dexes on a network.",
+            "method": "GET",
+            "required_parameters": ["network"],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_trending_pools_all",
+            "url": "https://api.geckoterminal.com/api/v2/networks/trending_pools",
+            "description": "Get trending pools across all networks.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Attributes for related resources to include.",
+                    "default": null
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        },
+        {
+            "name": "get_trending_pools",
+            "url": "https://api.geckoterminal.com/api/v2/networks/{network}/trending_pools",
+            "description": "Get trending pools on a network.",
+            "method": "GET",
+            "required_parameters": ["network"],
+            "optional_parameters": [
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Attributes for related resources to include.",
+                    "default": null
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "statuscode": 200
+        }
+    ]
+}

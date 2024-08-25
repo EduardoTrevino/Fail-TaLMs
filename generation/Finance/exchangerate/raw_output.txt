@@ -1,0 +1,247 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_standard_exchange_rates(base_currency: str = "USD", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetch all supported currency exchange rates for a given base currency."""
+    url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/latest/{base_currency}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def pair_conversion(base_currency: str, target_currency: str, amount: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Convert a specific amount from a base currency to a target currency.
+    If amount is None, only the conversion rate is returned.
+    """
+    if amount is None:
+        url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/pair/{base_currency}/{target_currency}"
+    else:
+        url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/pair/{base_currency}/{target_currency}/{amount}"
+    
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_historical_data(base_currency: str, year: int, month: int, day: int, amount: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetch historical exchange rate data for a specific date.
+    If amount is provided, returns amount conversion as well.
+    """
+    if amount is None:
+        url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/history/{base_currency}/{year}/{month}/{day}"
+    else:
+        url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/history/{base_currency}/{year}/{month}/{day}/{amount}"
+    
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_supported_codes(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """Fetches all the supported currency codes and their names."""
+    url = f"https://v6.exchangerate-api.com/v6/{toolbench_rapidapi_key}/codes"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_standard_exchange_rates, pair_conversion, get_historical_data, get_supported_codes
+
+class TestExchangeRateAPI(unittest.TestCase):
+    def setUp(self):
+        self.api_key = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
+    
+    def test_get_standard_exchange_rates(self):
+        result = get_standard_exchange_rates(base_currency="USD", toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result.get('result'), 'success')
+        self.assertIn('conversion_rates', result)
+
+    def test_pair_conversion(self):
+        result = pair_conversion(base_currency="USD", target_currency="EUR", toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result.get('result'), 'success')
+        self.assertIn('conversion_rate', result)
+
+        result_with_amount = pair_conversion(base_currency="USD", target_currency="EUR", amount=100, toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result_with_amount.get('result'), 'success')
+        self.assertIn('conversion_result', result_with_amount)
+
+    def test_get_historical_data(self):
+        result = get_historical_data(base_currency="USD", year=2020, month=3, day=27, toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result.get('result'), 'success')
+        self.assertIn('conversion_rates', result)
+
+        result_with_amount = get_historical_data(base_currency="USD", year=2020, month=3, day=27, amount=100, toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result_with_amount.get('result'), 'success')
+        self.assertIn('conversion_amounts', result_with_amount)
+
+    def test_get_supported_codes(self):
+        result = get_supported_codes(toolbench_rapidapi_key=self.api_key)
+        self.assertEqual(result.get('result'), 'success')
+        self.assertIn('supported_codes', result)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### exchangerate.json
+```json
+{
+    "tool_name": "exchangerate",
+    "tool_description": "API to access and convert currency exchange rates globally, supporting over 160 currencies, with historical data available from 1990.",
+    "title": "ExchangeRate-API",
+    "pricing": "FREE to Business Plans",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.exchangerate-api.com/docs",
+    "host": "v6.exchangerate-api.com",
+    "api_list": [
+        {
+            "name": "get_standard_exchange_rates",
+            "url": "https://v6.exchangerate-api.com/v6/{api_key}/latest/{base_currency}",
+            "description": "Fetch all supported currency exchange rates for a given base currency.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "base_currency",
+                    "type": "STRING",
+                    "description": "The base currency ISO 4217 code.",
+                    "default": "USD"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "result": {"type": "string"},
+                    "conversion_rates": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "pair_conversion",
+            "url": "https://v6.exchangerate-api.com/v6/{api_key}/pair/{base_currency}/{target_currency}/{amount}",
+            "description": "Convert a specific amount from a base currency to a target currency.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "base_currency",
+                    "type": "STRING",
+                    "description": "The base currency ISO 4217 code."
+                },
+                {
+                    "name": "target_currency",
+                    "type": "STRING",
+                    "description": "The target currency ISO 4217 code."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "amount",
+                    "type": "FLOAT",
+                    "description": "The amount to convert.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "result": {"type": "string"},
+                    "conversion_rate": {"type": "number"},
+                    "conversion_result": {"type": "number"}
+                }
+            }
+        },
+        {
+            "name": "get_historical_data",
+            "url": "https://v6.exchangerate-api.com/v6/{api_key}/history/{base_currency}/{year}/{month}/{day}",
+            "description": "Fetch historical exchange rate data for a specific date.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "base_currency",
+                    "type": "STRING",
+                    "description": "The base currency ISO 4217 code."
+                },
+                {
+                    "name": "year",
+                    "type": "INTEGER",
+                    "description": "The year for historical data."
+                },
+                {
+                    "name": "month",
+                    "type": "INTEGER",
+                    "description": "The month for historical data."
+                },
+                {
+                    "name": "day",
+                    "type": "INTEGER",
+                    "description": "The day for historical data."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "amount",
+                    "type": "FLOAT",
+                    "description": "The amount to convert historically.",
+                    "default": null
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "result": {"type": "string"},
+                    "conversion_rates": {"type": "object"},
+                    "requested_amount": {"type": "number"},
+                    "conversion_amounts": {"type": "object"}
+                }
+            }
+        },
+        {
+            "name": "get_supported_codes",
+            "url": "https://v6.exchangerate-api.com/v6/{api_key}/codes",
+            "description": "Fetches all the supported currency codes and their names.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "result": {"type": "string"},
+                    "supported_codes": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

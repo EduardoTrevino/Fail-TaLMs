@@ -1,0 +1,409 @@
+### api.py
+
+```python
+import requests
+from typing import Optional, List
+
+BASE_URL = "https://api.gemini.com"
+
+
+def get_symbols(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve all available symbols for trading.
+    """
+    url = f"{BASE_URL}/v1/symbols"
+    response = requests.get(url)
+    return response.json()
+
+def get_symbol_details(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve extra details about a supported symbol.
+    """
+    url = f"{BASE_URL}/v1/symbols/details/{symbol}"
+    response = requests.get(url)
+    return response.json()
+
+def get_network(token: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve the associated network for a requested token.
+    """
+    url = f"{BASE_URL}/v1/network/{token}"
+    response = requests.get(url)
+    return response.json()
+
+def get_ticker(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about recent trading activity for the symbol.
+    """
+    url = f"{BASE_URL}/v1/pubticker/{symbol}"
+    response = requests.get(url)
+    return response.json()
+
+def get_ticker_v2(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve information about recent trading activity for the provided symbol.
+    """
+    url = f"{BASE_URL}/v2/ticker/{symbol}"
+    response = requests.get(url)
+    return response.json()
+
+def get_candles(symbol: str, time_frame: str = "15m", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve time-intervaled data for the provided symbol.
+    """
+    url = f"{BASE_URL}/v2/candles/{symbol}/{time_frame}"
+    response = requests.get(url)
+    return response.json()
+
+def get_derivatives_candles(symbol: str, time_frame: str = "1m", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve time-intervaled data for the provided derivatives symbol.
+    """
+    url = f"{BASE_URL}/v2/derivatives/candles/{symbol}/{time_frame}"
+    response = requests.get(url)
+    return response.json()
+
+def get_fee_promos(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve symbols that currently have fee promos.
+    """
+    url = f"{BASE_URL}/v1/feepromos"
+    response = requests.get(url)
+    return response.json()
+
+def get_current_order_book(symbol: str, limit_bids: Optional[int] = 50, limit_asks: Optional[int] = 50, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Return the current order book as two arrays (bids / asks).
+    """
+    params = {
+        'limit_bids': limit_bids,
+        'limit_asks': limit_asks,
+    }
+    url = f"{BASE_URL}/v1/book/{symbol}"
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_trade_history(symbol: str, timestamp: Optional[int] = None, since_tid: Optional[int] = None, limit_trades: Optional[int] = 50, include_breaks: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Return the trades that have executed since the specified timestamp.
+    """
+    params = {
+        'timestamp': timestamp,
+        'since_tid': since_tid,
+        'limit_trades': limit_trades,
+        'include_breaks': '1' if include_breaks else '0',
+    }
+    url = f"{BASE_URL}/v1/trades/{symbol}"
+    response = requests.get(url, params=params)
+    return response.json()
+
+def get_price_feed(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve price feed for all trading pairs.
+    """
+    url = f"{BASE_URL}/v1/pricefeed"
+    response = requests.get(url)
+    return response.json()
+
+def get_funding_amount(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Retrieve extra detail on supported symbols, such as minimum order size, tick size, quote increment and more.
+    """
+    url = f"{BASE_URL}/v1/fundingamount/{symbol}"
+    response = requests.get(url)
+    return response.json()
+```
+
+### api_test.py
+
+```python
+import unittest
+from api import *
+
+
+class TestGeminiAPI(unittest.TestCase):
+
+    def test_get_symbols(self):
+        symbols = get_symbols()
+        self.assertIsInstance(symbols, list)
+        self.assertGreater(len(symbols), 0)
+
+    def test_get_symbol_details(self):
+        details = get_symbol_details('btcusd')
+        self.assertIsInstance(details, dict)
+        self.assertIn('symbol', details)
+
+    def test_get_network(self):
+        network = get_network('btc')
+        self.assertIsInstance(network, dict)
+        self.assertIn('network', network)
+
+    def test_get_ticker(self):
+        ticker = get_ticker('btcusd')
+        self.assertIsInstance(ticker, dict)
+        self.assertIn('ask', ticker)
+
+    def test_get_ticker_v2(self):
+        ticker_v2 = get_ticker_v2('btcusd')
+        self.assertIsInstance(ticker_v2, dict)
+        self.assertIn('symbol', ticker_v2)
+
+    def test_get_candles(self):
+        candles = get_candles('btcusd', '15m')
+        self.assertIsInstance(candles, list)
+        self.assertGreater(len(candles), 0)
+
+    def test_get_derivatives_candles(self):
+        derivatives_candles = get_derivatives_candles('BTCGUSDPERP', '1m')
+        self.assertIsInstance(derivatives_candles, list)
+
+    def test_get_fee_promos(self):
+        fee_promos = get_fee_promos()
+        self.assertIsInstance(fee_promos, dict)
+        self.assertIn('symbols', fee_promos)
+
+    def test_get_current_order_book(self):
+        order_book = get_current_order_book('btcusd')
+        self.assertIsInstance(order_book, dict)
+        self.assertIn('bids', order_book)
+        self.assertIn('asks', order_book)
+
+    def test_get_trade_history(self):
+        trade_history = get_trade_history('btcusd')
+        self.assertIsInstance(trade_history, list)
+
+    def test_get_price_feed(self):
+        price_feed = get_price_feed()
+        self.assertIsInstance(price_feed, list)
+
+    def test_get_funding_amount(self):
+        funding_amount = get_funding_amount('btcgusdperp')
+        self.assertIsInstance(funding_amount, dict)
+        self.assertIn('symbol', funding_amount)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### gemini.json
+
+```json
+{
+    "tool_name": "gemini",
+    "tool_description": "Access public market data from Gemini including symbols, ticker, and trade history.",
+    "title": "Gemini API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 150,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.gemini.com/docs",
+    "host": "api.gemini.com",
+    "api_list": [
+        {
+            "name": "get_symbols",
+            "url": "https://api.gemini.com/v1/symbols",
+            "description": "Retrieves all available symbols for trading.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_symbol_details",
+            "url": "https://api.gemini.com/v1/symbols/details/:symbol",
+            "description": "Retrieves extra detail on supported symbols.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_network",
+            "url": "https://api.gemini.com/v1/network/:token",
+            "description": "Retrieves the associated network for a requested token.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "token",
+                    "type": "STRING",
+                    "description": "Token identifier."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_ticker",
+            "url": "https://api.gemini.com/v1/pubticker/:symbol",
+            "description": "Retrieves recent trading activity for the symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_ticker_v2",
+            "url": "https://api.gemini.com/v2/ticker/:symbol",
+            "description": "Retrieves recent trading activity for the provided symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_candles",
+            "url": "https://api.gemini.com/v2/candles/:symbol/:time_frame",
+            "description": "Retrieves time-intervaled data for the provided symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "time_frame",
+                    "type": "STRING",
+                    "description": "Time range for each candle",
+                    "default": "15m"
+                }
+            ]
+        },
+        {
+            "name": "get_derivatives_candles",
+            "url": "https://api.gemini.com/v2/derivatives/candles/:symbol/:time_frame",
+            "description": "Retrieves time-intervaled data for the provided derivatives symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol for derivatives."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "time_frame",
+                    "type": "STRING",
+                    "description": "Time range for each candle",
+                    "default": "1m"
+                }
+            ]
+        },
+        {
+            "name": "get_fee_promos",
+            "url": "https://api.gemini.com/v1/feepromos",
+            "description": "Retrieves symbols that currently have fee promos.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_current_order_book",
+            "url": "https://api.gemini.com/v1/book/:symbol",
+            "description": "Returns the current order book with potential limits on bids and asks.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit_bids",
+                    "type": "INTEGER",
+                    "description": "Optional limit on number of bid price levels returned.",
+                    "default": 50
+                },
+                {
+                    "name": "limit_asks",
+                    "type": "INTEGER",
+                    "description": "Optional limit on number of ask price levels returned.",
+                    "default": 50
+                }
+            ]
+        },
+        {
+            "name": "get_trade_history",
+            "url": "https://api.gemini.com/v1/trades/:symbol",
+            "description": "Returns the trades executed since a specified timestamp.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "timestamp",
+                    "type": "INTEGER",
+                    "description": "Optional timestamp to fetch trades after."
+                },
+                {
+                    "name": "since_tid",
+                    "type": "INTEGER",
+                    "description": "Optional trade ID number to fetch trades after."
+                },
+                {
+                    "name": "limit_trades",
+                    "type": "INTEGER",
+                    "description": "Optional max number of trades to return.",
+                    "default": 50
+                },
+                {
+                    "name": "include_breaks",
+                    "type": "BOOLEAN",
+                    "description": "Whether to include broken trades.",
+                    "default": false
+                }
+            ]
+        },
+        {
+            "name": "get_price_feed",
+            "url": "https://api.gemini.com/v1/pricefeed",
+            "description": "Retrieves price feed for all trading pairs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_funding_amount",
+            "url": "https://api.gemini.com/v1/fundingamount/:symbol",
+            "description": "Retrieves funding amount details for a symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol."
+                }
+            ],
+            "optional_parameters": []
+        }
+    ]
+}
+```

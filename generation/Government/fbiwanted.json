@@ -1,0 +1,60 @@
+{
+    "tool_name": "fbiwanted",
+    "tool_description": "API to access information from the FBI Wanted program.",
+    "title": "FBI Wanted API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 96,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.fbi.gov/docs/",
+    "host": "api.fbi.gov",
+    "api_list": [
+        {
+            "name": "get_wanted_list",
+            "url": "https://api.fbi.gov/wanted/v1/list",
+            "description": "Retrieve information from the FBI Wanted list.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "field_offices",
+                    "type": "STRING",
+                    "description": "Filter results by specific FBI field offices.",
+                    "default": "None"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.fbi.gov/wanted/v1/list'\nparams = {'field_offices': field_offices, 'page': page}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "page": "int",
+                "items": "array"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "items": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}

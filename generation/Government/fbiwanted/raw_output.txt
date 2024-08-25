@@ -1,0 +1,121 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_wanted_list(field_offices: Optional[str] = None, page: Optional[int] = 1, 
+                    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint that retrieves information from the FBI Wanted list.
+    
+    Parameters:
+    field_offices [Optional]: string - Filter results by specific FBI field offices.
+    page [Optional]: integer - The page of resources to retrieve.
+    """
+    url = "https://api.fbi.gov/wanted/v1/list"
+    params = {
+        'field_offices': field_offices,
+        'page': page
+    }
+    try:
+        response = requests.get(url, params=params)
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_wanted_list
+
+class TestFBIWantedAPI(unittest.TestCase):
+
+    def test_get_wanted_list_no_params(self):
+        """Test fetching the wanted list with no parameters."""
+        response = get_wanted_list()
+        self.assertIn('items', response)
+        self.assertIsInstance(response['items'], list)
+
+    def test_get_wanted_list_with_field_offices(self):
+        """Test fetching the wanted list filtered by field office."""
+        response = get_wanted_list(field_offices="miami")
+        self.assertIn('items', response)
+        self.assertIsInstance(response['items'], list)
+
+    def test_get_wanted_list_with_page(self):
+        """Test fetching the wanted list with a specific page."""
+        response = get_wanted_list(page=2)
+        self.assertIn('page', response)
+        self.assertEqual(response['page'], 2)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**### fbiwanted.json**
+
+```json
+{
+    "tool_name": "fbiwanted",
+    "tool_description": "API to access information from the FBI Wanted program.",
+    "title": "FBI Wanted API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 96,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.fbi.gov/docs/",
+    "host": "api.fbi.gov",
+    "api_list": [
+        {
+            "name": "get_wanted_list",
+            "url": "https://api.fbi.gov/wanted/v1/list",
+            "description": "Retrieve information from the FBI Wanted list.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "field_offices",
+                    "type": "STRING",
+                    "description": "Filter results by specific FBI field offices.",
+                    "default": "None"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.fbi.gov/wanted/v1/list'\nparams = {'field_offices': field_offices, 'page': page}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "page": "int",
+                "items": "array"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "items": {
+                        "type": "array"
+                    }
+                }
+            }
+        }
+    ]
+}
+```

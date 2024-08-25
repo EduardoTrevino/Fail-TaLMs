@@ -1,0 +1,144 @@
+{
+    "tool_name": "randomuser",
+    "tool_description": "A free, open-source API for generating random user data. Like Lorem Ipsum, but for people.",
+    "title": "Random User Generator API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://randomuser.me/",
+    "host": "randomuser.me",
+    "api_list": [
+        {
+            "name": "get_random_user",
+            "url": "https://randomuser.me/api/",
+            "description": "Retrieve a set of random users.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "The number of users to return.",
+                    "default": "1"
+                },
+                {
+                    "name": "seed",
+                    "type": "STRING",
+                    "description": "Seed to get repeatable results.",
+                    "default": "None"
+                },
+                {
+                    "name": "gender",
+                    "type": "STRING",
+                    "description": "Filter results by gender. Values can be 'male' or 'female'.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://randomuser.me/api/'\nparams = {'results': results, 'seed': seed, 'gender': gender}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "results": [
+                    {
+                        "gender": "string",
+                        "name": {
+                            "title": "string",
+                            "first": "string",
+                            "last": "string"
+                        },
+                        "location": {
+                            "street": {
+                                "number": "int",
+                                "name": "string"
+                            },
+                            "city": "string",
+                            "state": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "coordinates": {
+                                "latitude": "string",
+                                "longitude": "string"
+                            },
+                            "timezone": {
+                                "offset": "string",
+                                "description": "string"
+                            }
+                        },
+                        "email": "string",
+                        "login": {
+                            "uuid": "string",
+                            "username": "string",
+                            "password": "string",
+                            "salt": "string",
+                            "md5": "string",
+                            "sha1": "string",
+                            "sha256": "string"
+                        },
+                        "dob": {
+                            "date": "string",
+                            "age": "int"
+                        },
+                        "registered": {
+                            "date": "string",
+                            "age": "int"
+                        },
+                        "phone": "string",
+                        "cell": "string",
+                        "id": {
+                            "name": "string",
+                            "value": "string"
+                        },
+                        "picture": {
+                            "large": "string",
+                            "medium": "string",
+                            "thumbnail": "string"
+                        },
+                        "nat": "string"
+                    }
+                ],
+                "info": {
+                    "seed": "string",
+                    "results": "int",
+                    "page": "int",
+                    "version": "string"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array"
+                    },
+                    "info": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_random_user_in_format",
+            "url": "https://randomuser.me/api/",
+            "description": "Retrieve a random user in a specified format.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "The format to return the data in. Values can be 'json', 'xml', 'csv', 'yaml'.",
+                    "default": "json"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://randomuser.me/api/'\nparams = {'format': format}\nresponse = requests.get(url, params=params)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {},
+            "headers": {},
+            "schema": {}
+        }
+    ]
+}

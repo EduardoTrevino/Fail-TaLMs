@@ -1,0 +1,278 @@
+{
+    "tool_name": "xivapi",
+    "tool_description": "XIVAPI provides a massive amount of FINAL FANTASY XIV game data in JSON format via a REST API.",
+    "title": "FINAL FANTASY XIV API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 300,
+        "avgSuccessRate": 97,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://xivapi.com",
+    "host": "xivapi.com",
+    "api_list": [
+        {
+            "name": "search",
+            "url": "https://xivapi.com/search",
+            "description": "Search endpoint for various types of game content.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "string",
+                    "type": "STRING",
+                    "description": "The string to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "indexes",
+                    "type": "STRING",
+                    "description": "Comma-separated list of indexes to search."
+                },
+                {
+                    "name": "string_algo",
+                    "type": "STRING",
+                    "description": "String matching algorithm, default is 'wildcard'."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for pagination."
+                },
+                {
+                    "name": "sort_field",
+                    "type": "STRING",
+                    "description": "Field to sort by."
+                },
+                {
+                    "name": "sort_order",
+                    "type": "STRING",
+                    "description": "Sort order, either 'asc' or 'desc'."
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Limit the number of results."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Pagination": {
+                        "type": "object"
+                    },
+                    "Results": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_content",
+            "url": "https://xivapi.com/content",
+            "description": "Retrieve the list of available content.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "get_item",
+            "url": "https://xivapi.com/item/{item_id}",
+            "description": "Get information about a specific item by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "INTEGER",
+                    "description": "Item ID to retrieve information for."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "list_servers",
+            "url": "https://xivapi.com/servers",
+            "description": "Retrieve a list of all servers.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "list_servers_data_centers",
+            "url": "https://xivapi.com/servers/dc",
+            "description": "Retrieve a list of servers grouped by data centers.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "character_search",
+            "url": "https://xivapi.com/character/search",
+            "description": "Search for a character by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Character name to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "server",
+                    "type": "STRING",
+                    "description": "Server name to narrow down search."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for pagination."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "get_character",
+            "url": "https://xivapi.com/character/{lodestone_id}",
+            "description": "Get detailed data about a character by Lodestone ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lodestone_id",
+                    "type": "INTEGER",
+                    "description": "Lodestone ID of character."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "extended",
+                    "type": "INTEGER",
+                    "description": "Return extended data if set."
+                },
+                {
+                    "name": "data",
+                    "type": "STRING",
+                    "description": "Additional data sets to include."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "freecompany_search",
+            "url": "https://xivapi.com/freecompany/search",
+            "description": "Search for a Free Company by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the Free Company."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "server",
+                    "type": "STRING",
+                    "description": "Server to search within."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for pagination."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "get_freecompany",
+            "url": "https://xivapi.com/freecompany/{lodestone_id}",
+            "description": "Get detailed data about a Free Company by Lodestone ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lodestone_id",
+                    "type": "INTEGER",
+                    "description": "Lodestone ID of Free Company."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "extended",
+                    "type": "INTEGER",
+                    "description": "Return extended data if set."
+                },
+                {
+                    "name": "data",
+                    "type": "STRING",
+                    "description": "Additional data sets to include."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "linkshell_search",
+            "url": "https://xivapi.com/linkshell/search",
+            "description": "Search for a Linkshell by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the Linkshell to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "server",
+                    "type": "STRING",
+                    "description": "Server to narrow down search."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for pagination."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        },
+        {
+            "name": "linkshell_crossworld_search",
+            "url": "https://xivapi.com/linkshell/crossworld/search",
+            "description": "Search for a cross-world Linkshell by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the cross-world Linkshell to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number for pagination."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {}
+        }
+    ]
+}

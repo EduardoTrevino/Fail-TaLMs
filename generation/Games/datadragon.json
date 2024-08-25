@@ -1,0 +1,167 @@
+{
+    "tool_name": "datadragon",
+    "tool_description": "Data Dragon provides static data about League of Legends including champions, items, runes, and more.",
+    "title": "League of Legends Data Dragon API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://developer.riotgames.com/docs/lol",
+    "host": "ddragon.leagueoflegends.com",
+    "api_list": [
+        {
+            "name": "get_latest_version",
+            "url": "https://ddragon.leagueoflegends.com/api/versions.json",
+            "description": "Retrieve the latest version of Data Dragon.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/api/versions.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "list",
+                "items": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_champion_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/champion.json",
+            "description": "Retrieve champion data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "object"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_item_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/item.json",
+            "description": "Retrieve item data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/item.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "object"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_rune_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/runesReforged.json",
+            "description": "Retrieve rune data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/runesReforged.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": "object"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                }
+            }
+        },
+        {
+            "name": "get_language_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/languages.json",
+            "description": "Retrieve available languages for Data Dragon.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/languages.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}

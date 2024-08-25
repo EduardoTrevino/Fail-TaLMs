@@ -1,0 +1,109 @@
+{
+    "tool_name": "civix",
+    "tool_description": "API for accessing British Columbia's law and bylaw content.",
+    "title": "CiviX Server API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://www.bclaws.ca/",
+    "host": "www.bclaws.ca",
+    "api_list": [
+        {
+            "name": "get_content",
+            "url": "http://www.bclaws.ca/civix/content/{aspect}/",
+            "description": "Retrieve a list of documents within a specific aspect of the content library.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "aspect",
+                    "type": "STRING",
+                    "description": "Aspect to retrieve content from.",
+                    "default": "complete"
+                }
+            ]
+        },
+        {
+            "name": "get_document",
+            "url": "http://www.bclaws.ca/civix/document/id/{aspect}/{index_id}/{document_id}",
+            "description": "Retrieve a document from the repository by its index and document identifier.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index_id",
+                    "type": "STRING",
+                    "description": "Unique index identifier."
+                },
+                {
+                    "name": "document_id",
+                    "type": "STRING",
+                    "description": "Unique document identifier."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "aspect",
+                    "type": "STRING",
+                    "description": "Aspect of the document.",
+                    "default": "complete"
+                },
+                {
+                    "name": "xml",
+                    "type": "BOOLEAN",
+                    "description": "Retrieve document in XML format if true.",
+                    "default": "false"
+                }
+            ]
+        },
+        {
+            "name": "search_content",
+            "url": "http://www.bclaws.ca/civix/search/{aspect}/fullsearch",
+            "description": "Perform a search within an aspect of the content library.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Query term to search for."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "aspect",
+                    "type": "STRING",
+                    "description": "Aspect to search within.",
+                    "default": "complete"
+                },
+                {
+                    "name": "start",
+                    "type": "INTEGER",
+                    "description": "First hit to return.",
+                    "default": "0"
+                },
+                {
+                    "name": "end",
+                    "type": "INTEGER",
+                    "description": "Last hit to return.",
+                    "default": "20"
+                },
+                {
+                    "name": "n_frag",
+                    "type": "INTEGER",
+                    "description": "Number of fragment snippets to return.",
+                    "default": "5"
+                },
+                {
+                    "name": "l_frag",
+                    "type": "INTEGER",
+                    "description": "Length of each fragment.",
+                    "default": "100"
+                }
+            ]
+        }
+    ]
+}

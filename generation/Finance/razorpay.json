@@ -1,0 +1,63 @@
+{
+    "tool_name": "razorpay",
+    "tool_description": "API to retrieve banking information via IFSC codes.",
+    "title": "Razorpay IFSC API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 96,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://ifsc.razorpay.com/",
+    "host": "ifsc.razorpay.com",
+    "api_list": [
+        {
+            "name": "get_bank_details_by_ifsc",
+            "url": "https://ifsc.razorpay.com/:ifsc",
+            "description": "Retrieve bank details by providing an IFSC code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ifsc_code",
+                    "type": "STRING",
+                    "description": "The IFSC code of the bank branch."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ifsc.razorpay.com/{ifsc_code}'\nresponse = requests.get(url)\nresponse.json()",
+            "statuscode": 200,
+            "body": {
+                "BANK": "str",
+                "IFSC": "str",
+                "BRANCH": "str",
+                "ADDRESS": "str",
+                "CONTACT": "str or null",
+                "CITY": "str",
+                "RTGS": "bool",
+                "MICR": "str or null",
+                "UPI": "bool",
+                "NEFT": "bool",
+                "IMPS": "bool"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "BANK": {"type": "string"},
+                    "IFSC": {"type": "string"},
+                    "BRANCH": {"type": "string"},
+                    "ADDRESS": {"type": "string"},
+                    "CONTACT": {"type": ["string", "null"]},
+                    "CITY": {"type": "string"},
+                    "RTGS": {"type": "boolean"},
+                    "MICR": {"type": ["string", "null"]},
+                    "UPI": {"type": "boolean"},
+                    "NEFT": {"type": "boolean"},
+                    "IMPS": {"type": "boolean"}
+                }
+            }
+        }
+    ]
+}

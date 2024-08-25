@@ -1,0 +1,181 @@
+{
+    "tool_name": "adresse",
+    "tool_description": "API to perform address and reverse geocoding, including mass geocoding from CSV files.",
+    "title": "Adresse API",
+    "pricing": "FREE with a limit of 50 calls/second/IP",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://api-adresse.data.gouv.fr/",
+    "host": "api-adresse.data.gouv.fr",
+    "api_list": [
+        {
+            "name": "search_address",
+            "url": "https://api-adresse.data.gouv.fr/search/",
+            "description": "Perform a full-text address search with optional filters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The query string.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The maximum number of results to return.",
+                    "default": "10"
+                },
+                {
+                    "name": "autocomplete",
+                    "type": "INTEGER",
+                    "description": "Enable or disable autocomplete.",
+                    "default": "1"
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude for geographic priority.",
+                    "default": ""
+                },
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude for geographic priority.",
+                    "default": ""
+                },
+                {
+                    "name": "type_filter",
+                    "type": "STRING",
+                    "description": "Filter by type.",
+                    "default": ""
+                },
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "Filter by postal code.",
+                    "default": ""
+                },
+                {
+                    "name": "citycode",
+                    "type": "STRING",
+                    "description": "Filter by INSEE city code.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "FeatureCollection",
+                "features": "ARRAY"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "reverse_geocode",
+            "url": "https://api-adresse.data.gouv.fr/reverse/",
+            "description": "Perform reverse geocoding to get address from coordinates.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the point to reverse geocode.",
+                    "default": ""
+                },
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude of the point to reverse geocode.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type_filter",
+                    "type": "STRING",
+                    "description": "Filter the type of result.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "FeatureCollection",
+                "features": "ARRAY"
+            }
+        },
+        {
+            "name": "mass_geocode_csv",
+            "url": "https://api-adresse.data.gouv.fr/search/csv/",
+            "description": "Perform mass geocoding from a provided CSV file.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "file_path",
+                    "type": "STRING",
+                    "description": "Path to the CSV file.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "columns",
+                    "type": "ARRAY",
+                    "description": "Columns to use for forming the address.",
+                    "default": "[]"
+                },
+                {
+                    "name": "citycode",
+                    "type": "STRING",
+                    "description": "Column for INSEE city code.",
+                    "default": ""
+                },
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "Column for postal code.",
+                    "default": ""
+                },
+                {
+                    "name": "result_columns",
+                    "type": "ARRAY",
+                    "description": "Fields expected in the response.",
+                    "default": "[]"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "features": "ARRAY"
+            }
+        },
+        {
+            "name": "mass_reverse_geocode_csv",
+            "url": "https://api-adresse.data.gouv.fr/reverse/csv/",
+            "description": "Perform mass reverse geocoding from a provided CSV file.",
+            "method": "POST",
+            "required_parameters": [
+                {
+                    "name": "file_path",
+                    "type": "STRING",
+                    "description": "Path to the CSV file.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "features": "ARRAY"
+            }
+        }
+    ]
+}

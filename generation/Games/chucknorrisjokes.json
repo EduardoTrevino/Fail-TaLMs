@@ -1,0 +1,167 @@
+{
+    "tool_name": "chucknorrisjokes",
+    "tool_description": "A free JSON API for hand-curated Chuck Norris facts.",
+    "title": "Chuck Norris Jokes API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.chucknorris.io/",
+    "host": "api.chucknorris.io",
+    "api_list": [
+        {
+            "name": "get_random_joke",
+            "url": "https://api.chucknorris.io/jokes/random",
+            "description": "Retrieve a random Chuck Norris joke in JSON format.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.chucknorris.io/jokes/random'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "icon_url": "str",
+                "id": "str",
+                "url": "str",
+                "value": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "icon_url": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_random_joke_by_category",
+            "url": "https://api.chucknorris.io/jokes/random?category={category}",
+            "description": "Retrieve a random Chuck Norris joke from a given category.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "STRING",
+                    "description": "The category to retrieve a joke from.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.chucknorris.io/jokes/random?category={category}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "icon_url": "str",
+                "id": "str",
+                "url": "str",
+                "value": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "icon_url": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_joke_categories",
+            "url": "https://api.chucknorris.io/jokes/categories",
+            "description": "Retrieve a list of available categories for Chuck Norris jokes.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.chucknorris.io/jokes/categories'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "search_jokes",
+            "url": "https://api.chucknorris.io/jokes/search?query={query}",
+            "description": "Free text search for Chuck Norris jokes.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query for jokes.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = f'https://api.chucknorris.io/jokes/search?query={query}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "total": "int",
+                "result": [
+                    {
+                        "icon_url": "str",
+                        "id": "str",
+                        "url": "str",
+                        "value": "str"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "icon_url": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,129 @@
+{
+    "tool_name": "nbpweb",
+    "tool_description": "Currency exchange rates and gold prices in JSON format provided by the NBP.PL service.",
+    "title": "NBP Web API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "http://api.nbp.pl",
+    "host": "api.nbp.pl",
+    "api_list": [
+        {
+            "name": "get_exchange_rate_table",
+            "url": "http://api.nbp.pl/api/exchangerates/tables/{table}",
+            "description": "Fetch a complete table of exchange rates of specified type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "table",
+                    "type": "STRING",
+                    "description": "Type of table 'A', 'B', or 'C'.",
+                    "default": "A"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "top_count",
+                    "type": "INTEGER",
+                    "description": "Return last top_count entries."
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Specific date in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "start_date",
+                    "type": "STRING",
+                    "description": "Start date for range in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "end_date",
+                    "type": "STRING",
+                    "description": "End date for range in 'YYYY-MM-DD' format."
+                }
+            ],
+            "statuscode": 200,
+            "response_format": "application/json"
+        },
+        {
+            "name": "get_currency_exchange_rate",
+            "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",
+            "description": "Fetch the exchange rate of a specific currency.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "table",
+                    "type": "STRING",
+                    "description": "Type of table 'A', 'B', or 'C'.",
+                    "default": "A"
+                },
+                {
+                    "name": "code",
+                    "type": "STRING",
+                    "description": "Currency code based on ISO 4217.",
+                    "default": "USD"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "top_count",
+                    "type": "INTEGER",
+                    "description": "Return last top_count entries."
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Specific date in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "start_date",
+                    "type": "STRING",
+                    "description": "Start date for range in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "end_date",
+                    "type": "STRING",
+                    "description": "End date for range in 'YYYY-MM-DD' format."
+                }
+            ],
+            "statuscode": 200,
+            "response_format": "application/json"
+        },
+        {
+            "name": "get_gold_price",
+            "url": "http://api.nbp.pl/api/cenyzlota",
+            "description": "Fetch the price of gold.",
+            "method": "GET",
+            "optional_parameters": [
+                {
+                    "name": "top_count",
+                    "type": "INTEGER",
+                    "description": "Return last top_count entries."
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Specific date in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "start_date",
+                    "type": "STRING",
+                    "description": "Start date for range in 'YYYY-MM-DD' format."
+                },
+                {
+                    "name": "end_date",
+                    "type": "STRING",
+                    "description": "End date for range in 'YYYY-MM-DD' format."
+                }
+            ],
+            "statuscode": 200,
+            "response_format": "application/json"
+        }
+    ]
+}

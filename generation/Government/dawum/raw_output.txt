@@ -1,0 +1,147 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_database(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetches the entire election polls database from the DAWUM API, which includes comprehensive information 
+    on various polls including parliament, institute, clients, survey results of parties, and more.
+
+    :param toolbench_rapidapi_key: API key for accessing DAWUM API
+    :return: JSON response with database information
+    """
+    url = "https://api.dawum.de/"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_last_update(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Fetches the last update date of the DAWUM election polls database to check for the most recent data.
+
+    :param toolbench_rapidapi_key: API key for accessing DAWUM API
+    :return: Text response with last update datetime
+    """
+    url = "https://api.dawum.de/last_update.txt"
+    response = requests.get(url)
+    try:
+        return response.text
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_database, get_last_update
+
+class TestDawumAPI(unittest.TestCase):
+
+    def test_get_database(self):
+        """
+        Test fetching the entire election polls database to ensure the API endpoint is working.
+        """
+        data = get_database()
+        self.assertIsInstance(data, dict)
+        self.assertIn('Database', data)
+        self.assertIn('Parliaments', data)
+
+    def test_get_last_update(self):
+        """
+        Test fetching the last update date of the election polls database.
+        """
+        last_update = get_last_update()
+        self.assertIsInstance(last_update, str)
+        self.assertRegex(last_update, r"\d{4}-\d{2}-\d{2}")  # Check if the string is a date
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**### dawum.json**
+
+```json
+{
+    "tool_name": "dawum",
+    "tool_description": "Free database for election polls, providing comprehensive information on various polls including parliament, institute, clients, and survey results for parties.",
+    "title": "DAWUM Election Polls API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 94,
+        "avgLatency": 100,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.dawum.de/",
+    "host": "api.dawum.de",
+    "api_list": [
+        {
+            "name": "get_database",
+            "url": "https://api.dawum.de/",
+            "description": "Fetches the entire election polls database, with comprehensive poll data.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.dawum.de/'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "Database": "object",
+                "License": "object",
+                "Publisher": "string",
+                "Author": "string",
+                "Last_Update": "string",
+                "Parliaments": "array",
+                "Institutes": "array",
+                "Taskers": "array",
+                "Methods": "array",
+                "Parties": "array",
+                "Surveys": "array"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "Database": {
+                        "type": "object"
+                    },
+                    "License": {
+                        "type": "object"
+                    },
+                    "Publisher": {
+                        "type": "string"
+                    },
+                    "Author": {
+                        "type": "string"
+                    },
+                    "Last_Update": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_last_update",
+            "url": "https://api.dawum.de/last_update.txt",
+            "description": "Fetches the last update date of the database for election polls.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.dawum.de/last_update.txt'\nresponse = requests.get(url)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "Last_Update": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "string"
+            }
+        }
+    ]
+}
+```

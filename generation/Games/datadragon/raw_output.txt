@@ -1,0 +1,280 @@
+### api.py
+```python
+import requests
+from typing import Optional, Dict
+
+def get_latest_version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve the latest version of Data Dragon.
+    Returns information about the latest patch version.
+    """
+    url = "https://ddragon.leagueoflegends.com/api/versions.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_champion_data(version: str = "12.6.1", language: str = "en_US", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve champion data for a specified version and language.
+    Parameters:
+    - version: version of the data files
+    - language: language code (e.g., "en_US")
+    """
+    url = f"https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/champion.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_item_data(version: str = "12.6.1", language: str = "en_US", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve item data for a specified version and language.
+    Parameters:
+    - version: version of the data files
+    - language: language code (e.g., "en_US")
+    """
+    url = f"https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/item.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_rune_data(version: str = "12.6.1", language: str = "en_US", toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve rune data for a specified version and language.
+    Parameters:
+    - version: version of the data files
+    - language: language code (e.g., "en_US")
+    """
+    url = f"https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/runesReforged.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_language_data(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> Dict:
+    """
+    Retrieve available languages for Data Dragon.
+    """
+    url = "https://ddragon.leagueoflegends.com/cdn/languages.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_latest_version, get_champion_data, get_item_data, get_rune_data, get_language_data
+
+class TestDataDragonAPI(unittest.TestCase):
+
+    def test_get_latest_version(self):
+        response = get_latest_version()
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+    def test_get_champion_data(self):
+        latest_version = get_latest_version()[0]
+        response = get_champion_data(version=latest_version)
+        self.assertIsInstance(response, dict)
+        self.assertIn("data", response)
+
+    def test_get_item_data(self):
+        latest_version = get_latest_version()[0]
+        response = get_item_data(version=latest_version)
+        self.assertIsInstance(response, dict)
+        self.assertIn("data", response)
+    
+    def test_get_rune_data(self):
+        latest_version = get_latest_version()[0]
+        response = get_rune_data(version=latest_version)
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+    def test_get_language_data(self):
+        response = get_language_data()
+        self.assertIsInstance(response, list)
+        self.assertGreater(len(response), 0)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### datadragon.json
+```json
+{
+    "tool_name": "datadragon",
+    "tool_description": "Data Dragon provides static data about League of Legends including champions, items, runes, and more.",
+    "title": "League of Legends Data Dragon API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://developer.riotgames.com/docs/lol",
+    "host": "ddragon.leagueoflegends.com",
+    "api_list": [
+        {
+            "name": "get_latest_version",
+            "url": "https://ddragon.leagueoflegends.com/api/versions.json",
+            "description": "Retrieve the latest version of Data Dragon.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/api/versions.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "list",
+                "items": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_champion_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/champion.json",
+            "description": "Retrieve champion data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "object"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_item_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/item.json",
+            "description": "Retrieve item data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/item.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "object"
+                }
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_rune_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/{version}/data/{language}/runesReforged.json",
+            "description": "Retrieve rune data for a specified version and language.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "version",
+                    "type": "STRING",
+                    "description": "The version of the data files.",
+                    "default": "12.6.1"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "The language code.",
+                    "default": "en_US"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/runesReforged.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": "object"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object"
+                }
+            }
+        },
+        {
+            "name": "get_language_data",
+            "url": "https://ddragon.leagueoflegends.com/cdn/languages.json",
+            "description": "Retrieve available languages for Data Dragon.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://ddragon.leagueoflegends.com/cdn/languages.json'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}
+```

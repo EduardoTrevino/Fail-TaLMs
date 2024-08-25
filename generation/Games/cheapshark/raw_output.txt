@@ -1,0 +1,160 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+
+def edit_alert(action: str, email: str, game_id: Optional[int] = None, price: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Set or delete a price alert for a specific game and price.
+    Parameters:
+    action [Required]: string (The action to take on the price alert, "set" or "delete")
+    email [Required]: string (Any valid email address)
+    game_id [Optional]: integer (An existing gameID, required for "set" and "delete")
+    price [Optional]: decimal (The price to wait for, only required when using "set" value for action parameter)
+    """
+    url = "https://www.cheapshark.com/api/1.0/alerts"
+    params = {
+        'action': action,
+        'email': email
+    }
+    if action == 'set':
+        if game_id is not None and price is not None:
+            params['gameID'] = game_id
+            params['price'] = price
+        else:
+            raise ValueError("game_id and price are required when action is 'set'")
+    elif action == 'delete':
+        if game_id is not None:
+            params['gameID'] = game_id
+        else:
+            raise ValueError("game_id is required when action is 'delete'")
+    
+    response = requests.get(url, params=params)
+    return response.json()
+
+
+def manage_alerts(email: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Send an email containing a link to manage your alerts.
+    Parameters:
+    email [Required]: string (Any valid email address with existing alerts)
+    """
+    url = "https://www.cheapshark.com/api/1.0/alerts"
+    params = {
+        'action': 'manage',
+        'email': email
+    }
+    
+    response = requests.get(url, params=params)
+    return response.json()
+```
+
+### api_test.py
+```python
+import pytest
+from api import edit_alert, manage_alerts
+
+
+def test_edit_alert_set():
+    response = edit_alert(action='set', email='someone@example.org', game_id=59, price=14.99)
+    assert response is True or response is False  # assuming the API returns a boolean
+
+
+def test_edit_alert_delete():
+    response = edit_alert(action='delete', email='someone@example.org', game_id=59)
+    assert response is True or response is False  # assuming the API returns a boolean
+
+
+def test_manage_alerts():
+    response = manage_alerts(email='address-with-alerts@example.org')
+    assert isinstance(response, dict)  # assuming a dict response, adjust as needed based on actual API response
+```
+
+### cheapshark.json
+```json
+{
+    "tool_name": "cheapshark",
+    "tool_description": "CheapShark is a price comparison website for digital PC Games, providing pricing data across multiple stores.",
+    "title": "CheapShark API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.cheapshark.com",
+    "host": "www.cheapshark.com",
+    "api_list": [
+        {
+            "name": "edit_alert",
+            "url": "https://www.cheapshark.com/api/1.0/alerts",
+            "description": "Set or delete a price alert for a specific game and price.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "action",
+                    "type": "STRING",
+                    "description": "The action to take on the price alert ('set' or 'delete').",
+                    "default": ""
+                },
+                {
+                    "name": "email",
+                    "type": "STRING",
+                    "description": "Any valid email address.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "game_id",
+                    "type": "INTEGER",
+                    "description": "An existing gameID, required for 'set' and 'delete'.",
+                    "default": null
+                },
+                {
+                    "name": "price",
+                    "type": "DECIMAL",
+                    "description": "The price to wait for, only required when using 'set' value for action parameter.",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.cheapshark.com/api/1.0/alerts'\nparams = {'action': action, 'email': email, 'gameID': game_id, 'price': price}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "boolean"
+            },
+            "headers": {},
+            "schema": {
+                "type": "boolean"
+            }
+        },
+        {
+            "name": "manage_alerts",
+            "url": "https://www.cheapshark.com/api/1.0/alerts",
+            "description": "Send an email containing a link to manage your alerts.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "email",
+                    "type": "STRING",
+                    "description": "Any valid email address with existing alerts.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.cheapshark.com/api/1.0/alerts'\nparams = {'action': 'manage', 'email': email}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "object"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}
+```

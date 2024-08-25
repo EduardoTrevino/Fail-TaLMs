@@ -1,0 +1,141 @@
+{
+    "tool_name": "runescape",
+    "tool_description": "API for accessing data related to the game RuneScape, including the Grand Exchange, HiScores, Runemetrics, and player information.",
+    "title": "RuneScape API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.runescape.com/",
+    "host": "services.runescape.com",
+    "api_list": [
+        {
+            "name": "grand_exchange_info",
+            "url": "https://secure.runescape.com/m=itemdb_rs/api/info.json",
+            "description": "Returns the runedate of when the Grand Exchange Database was last updated.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "grand_exchange_category",
+            "url": "https://services.runescape.com/m=itemdb_rs/api/catalogue/category.json",
+            "description": "Returns the number of items in a category.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "INTEGER",
+                    "description": "The category identification number."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "grand_exchange_items",
+            "url": "https://services.runescape.com/m=itemdb_rs/api/catalogue/items.json",
+            "description": "Returns items given the category, starting letter, and page number.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "INTEGER",
+                    "description": "The category identification number."
+                },
+                {
+                    "name": "alpha",
+                    "type": "STRING",
+                    "description": "The starting letter for items."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page number starting from 1.",
+                    "default": 1
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "grand_exchange_detail",
+            "url": "https://services.runescape.com/m=itemdb_rs/api/catalogue/detail.json",
+            "description": "Returns detailed information on a tradeable item.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "INTEGER",
+                    "description": "The ItemID."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "grand_exchange_graph",
+            "url": "https://services.runescape.com/m=itemdb_rs/api/graph",
+            "description": "Shows prices each day of a given item for the previous 180 days.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "INTEGER",
+                    "description": "The ItemID."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "hiscores_ranking",
+            "url": "https://secure.runescape.com/m=hiscore/ranking.json",
+            "description": "Returns up to the top 50 players in a given skill or activity.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "table",
+                    "type": "INTEGER",
+                    "description": "The skill or activity table."
+                },
+                {
+                    "name": "category",
+                    "type": "INTEGER",
+                    "description": "The category for the skill or activity."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "size",
+                    "type": "INTEGER",
+                    "description": "The amount of players to return, max 50.",
+                    "default": 50
+                }
+            ]
+        },
+        {
+            "name": "runemetrics_profile",
+            "url": "https://apps.runescape.com/runemetrics/profile/profile",
+            "description": "Returns a player's Runemetrics profile data.",
+
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "user",
+                    "type": "STRING",
+                    "description": "The name of the RuneScape player."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "player_count",
+            "url": "http://www.runescape.com/player_count.js",
+            "description": "Returns the number of players currently online in RuneScape and Old School RuneScape.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        }
+    ]
+}

@@ -1,0 +1,411 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional
+
+def get_currencies(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all supported currencies.
+    """
+    url = "https://api.n.exchange/en/api/v1/currency/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_pairs(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get all supported currency pairs.
+    """
+    url = "https://api.n.exchange/en/api/v1/pair/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_price(pair_name: str, amount_base: Optional[float] = None, amount_quote: Optional[float] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get price quote of a given amount of currency.
+    Parameters:
+    - pair_name: Name of the exchanged pair, e.g., BTCLTC.
+    - amount_base: Amount of base currency which user gets.
+    - amount_quote: Amount of base currency which user sends.
+    """
+    url = f"https://api.n.exchange/en/api/v1/get_price/{pair_name}/"
+    params = {
+        "amount_base": amount_base,
+        "amount_quote": amount_quote
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_rate_info(rate_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Gets price info by rate_id.
+    Parameters:
+    - rate_id: Unique rate id value of a price.
+    """
+    url = f"https://api.n.exchange/en/api/v1/rate/{rate_id}/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_latest_price(pair_name: str, market_code: Optional[str] = 'nex', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Gets latest price of the pair.
+    Parameters:
+    - pair_name: Name of the exchanged pair, e.g., BTCLTC.
+    - market_code: Price market code. Default is 'nex'.
+    """
+    url = f"https://api.n.exchange/en/api/v1/price/{pair_name}/latest/"
+    params = {
+        "market_code": market_code
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_price_history(pair_name: str, hours: float = 0.1, data_points: int = 3, market_code: str = 'nex', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns price history for selected pair.
+    Parameters:
+    - pair_name: Name of the exchanged pair, e.g., BTCLTC.
+    - hours: How many hours back would you like to get prices for.
+    - data_points: Number of data points in the selected hour range.
+    - market_code: Price market code. Default market is 'nex'.
+    """
+    url = f"https://api.n.exchange/en/api/v1/price/{pair_name}/history/"
+    params = {
+        "hours": hours,
+        "data_points": data_points,
+        "market_code": market_code
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_prices_info_list(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns list of rates with minimal and maximal amounts.
+    """
+    url = "https://api.n.exchange/en/api/v1/info/bulk/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_orders(page: int = 1, page_size: int = 3, pair: Optional[str] = "BTCETH", status: Optional[int] = 11, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns orders.
+    Parameters:
+    - page: Page number.
+    - page_size: Number of orders per page.
+    - pair: Pair name.
+    - status: Order status.
+    """
+    url = "https://api.n.exchange/en/api/v1/orders/"
+    params = {
+        "page": page,
+        "page_size": page_size,
+        "pair": pair,
+        "status": status
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_order(unique_reference: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get order data.
+    Parameters:
+    - unique_reference: Unique reference of the order.
+    """
+    url = f"https://api.n.exchange/en/api/v1/orders/{unique_reference}/"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_ticker(hours: float = 24, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get trade Volume.
+    Parameters:
+    - hours: How many hours back would you like to get trade Volume for.
+    """
+    url = "https://api.n.exchange/en/api/v1/ticker/"
+    params = {
+        "hours": hours
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_volume(hours: float = 24, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Get trade Volume.
+    Parameters:
+    - hours: How many hours back would you like to get trade Volume for.
+    """
+    url = "https://api.n.exchange/en/api/v1/volume/"
+    params = {
+        "hours": hours
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {toolbench_rapidapi_key}"
+    }
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import *
+
+class TestNexchangeAPI(unittest.TestCase):
+
+    def test_get_currencies(self):
+        response = get_currencies()
+        self.assertIsInstance(response, list)
+
+    def test_get_pairs(self):
+        response = get_pairs()
+        self.assertIsInstance(response, list)
+
+    def test_get_price(self):
+        response = get_price(pair_name="BTCLTC", amount_base=1.0, amount_quote=100.0)
+        self.assertIsInstance(response, dict)
+
+    def test_get_rate_info(self):
+        response = get_rate_info(rate_id="PINDUF8")
+        self.assertIsInstance(response, dict)
+
+    def test_get_latest_price(self):
+        response = get_latest_price(pair_name="BTCLTC")
+        self.assertIsInstance(response, list)
+
+    def test_get_price_history(self):
+        response = get_price_history(pair_name="BTCLTC")
+        self.assertIsInstance(response, list)
+
+    def test_get_prices_info_list(self):
+        response = get_prices_info_list()
+        self.assertIsInstance(response, list)
+
+    def test_get_orders(self):
+        response = get_orders()
+        self.assertIsInstance(response, dict)
+
+    def test_get_order(self):
+        response = get_order(unique_reference="1CPL5")
+        self.assertIsInstance(response, dict)
+
+    def test_get_ticker(self):
+        response = get_ticker()
+        self.assertIsInstance(response, dict)
+
+    def test_get_volume(self):
+        response = get_volume()
+        self.assertIsInstance(response, dict)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### nexchange.json**  
+```json
+{
+    "tool_name": "nexchange",
+    "tool_description": "API for cryptocurrency exchange operations.",
+    "title": "N.exchange API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.n.exchange",
+    "host": "api.n.exchange",
+    "api_list": [
+        {
+            "name": "get_currencies",
+            "url": "https://api.n.exchange/en/api/v1/currency/",
+            "description": "Get all supported currencies.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_pairs",
+            "url": "https://api.n.exchange/en/api/v1/pair/",
+            "description": "Get all supported currency pairs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_price",
+            "url": "https://api.n.exchange/en/api/v1/get_price/{pair_name}/",
+            "description": "Get price quote of a given amount of currency.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "amount_base", "type": "DOUBLE", "description": "Amount of base currency to get."},
+                {"name": "amount_quote", "type": "DOUBLE", "description": "Amount of quote currency to send."}
+            ]
+        },
+        {
+            "name": "get_rate_info",
+            "url": "https://api.n.exchange/en/api/v1/rate/{rate_id}/",
+            "description": "Gets price info by rate_id.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "rate_id", "type": "STRING", "description": "Unique rate ID value of a price."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_latest_price",
+            "url": "https://api.n.exchange/en/api/v1/price/{pair_name}/latest/",
+            "description": "Gets latest price of the pair.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "market_code", "type": "STRING", "description": "Price market code."}
+            ]
+        },
+        {
+            "name": "get_price_history",
+            "url": "https://api.n.exchange/en/api/v1/price/{pair_name}/history/",
+            "description": "Returns price history for selected pair.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "pair_name", "type": "STRING", "description": "Name of exchanged pair."}
+            ],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Number of hours back to get prices for."},
+                {"name": "data_points", "type": "INTEGER", "description": "Number of data points to retrieve."},
+                {"name": "market_code", "type": "STRING", "description": "Price market code."}
+            ]
+        },
+        {
+            "name": "get_prices_info_list",
+            "url": "https://api.n.exchange/en/api/v1/info/bulk/",
+            "description": "Returns list of rates with minimal and maximal amounts.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_orders",
+            "url": "https://api.n.exchange/en/api/v1/orders/",
+            "description": "Returns orders.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "page", "type": "INTEGER", "description": "Page number."},
+                {"name": "page_size", "type": "INTEGER", "description": "Number of orders per page."},
+                {"name": "pair", "type": "STRING", "description": "Pair name."},
+                {"name": "status", "type": "INTEGER", "description": "Order status."}
+            ]
+        },
+        {
+            "name": "get_order",
+            "url": "https://api.n.exchange/en/api/v1/orders/{unique_reference}/",
+            "description": "Get order data.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "unique_reference", "type": "STRING", "description": "Unique reference of the order."}
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_ticker",
+            "url": "https://api.n.exchange/en/api/v1/ticker/",
+            "description": "Get trade Volume.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Hours back to get trade volume for."}
+            ]
+        },
+        {
+            "name": "get_volume",
+            "url": "https://api.n.exchange/en/api/v1/volume/",
+            "description": "Get trade Volume.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "hours", "type": "FLOAT", "description": "Hours back to get trade volume for."}
+            ]
+        }
+    ]
+}
+```

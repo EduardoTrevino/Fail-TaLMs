@@ -1,0 +1,343 @@
+{
+    "tool_name": "boardgamesgeek",
+    "tool_description": "The BGG XMLAPI2 provides a programmatic way to access BoardGameGeek data such as information on games, families, users, plays, guilds, and more.",
+    "title": "BoardGameGeek XML API 2",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.3
+    },
+    "home_url": "https://boardgamegeek.com/xmlapi/2",
+    "host": "boardgamegeek.com",
+    "api_list": [
+        {
+            "name": "get_thing_items",
+            "url": "https://boardgamegeek.com/xmlapi2/thing",
+            "description": "Retrieve information about specific 'thing' items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ids",
+                    "type": "STRING",
+                    "description": "IDs of the things to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Filter by specific thing types."
+                },
+                {
+                    "name": "versions",
+                    "type": "INTEGER",
+                    "description": "Include versions information."
+                },
+                {
+                    "name": "videos",
+                    "type": "INTEGER",
+                    "description": "Include videos information."
+                },
+                {
+                    "name": "stats",
+                    "type": "INTEGER",
+                    "description": "Include stats information."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Pagination page number."
+                },
+                {
+                    "name": "pagesize",
+                    "type": "INTEGER",
+                    "description": "Page size for pagination."
+                }
+            ]
+        },
+        {
+            "name": "get_family_items",
+            "url": "https://boardgamegeek.com/xmlapi2/family",
+            "description": "Retrieve information about specific 'family' items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ids",
+                    "type": "STRING",
+                    "description": "IDs of the families to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Filter by specific family types."
+                }
+            ]
+        },
+        {
+            "name": "get_forum_list",
+            "url": "https://boardgamegeek.com/xmlapi2/forumlist",
+            "description": "Retrieve forum list for a specific type and ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the entry."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of the entry (thing or family)."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "name": "get_forum",
+            "url": "https://boardgamegeek.com/xmlapi2/forum",
+            "description": "Retrieve threads for a specific forum.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the forum."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number of threads to return."
+                }
+            ]
+        },
+        {
+            "name": "get_thread",
+            "url": "https://boardgamegeek.com/xmlapi2/thread",
+            "description": "Retrieve a specific forum thread by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the thread."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "minarticleid",
+                    "type": "INTEGER",
+                    "description": "Filter articles by minimum ID."
+                },
+                {
+                    "name": "minarticledate",
+                    "type": "STRING",
+                    "description": "Filter articles by minimum date."
+                },
+                {
+                    "name": "count",
+                    "type": "INTEGER",
+                    "description": "Limit on number of articles returned."
+                }
+            ]
+        },
+        {
+            "name": "get_user_info",
+            "url": "https://boardgamegeek.com/xmlapi2/user",
+            "description": "Retrieve information about a user by username.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The username."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "buddies",
+                    "type": "INTEGER",
+                    "description": "Include buddies information."
+                },
+                {
+                    "name": "guilds",
+                    "type": "INTEGER",
+                    "description": "Include guilds information."
+                },
+                {
+                    "name": "hot",
+                    "type": "INTEGER",
+                    "description": "Include the user's hot 10 list."
+                },
+                {
+                    "name": "top",
+                    "type": "INTEGER",
+                    "description": "Include the user's top 10 list."
+                },
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "Domain for hot and top lists."
+                }
+            ]
+        },
+        {
+            "name": "get_guild_info",
+            "url": "https://boardgamegeek.com/xmlapi2/guild",
+            "description": "Retrieve information about a guild by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The ID of the guild."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "members",
+                    "type": "INTEGER",
+                    "description": "Include member roster."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort the members list."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page number of member list."
+                }
+            ]
+        },
+        {
+            "name": "get_plays",
+            "url": "https://boardgamegeek.com/xmlapi2/plays",
+            "description": "Retrieve play information logged by a user or item.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "username",
+                    "type": "STRING",
+                    "description": "Username for play information."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "ID for item play information."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of item."
+                },
+                {
+                    "name": "mindate",
+                    "type": "STRING",
+                    "description": "Minimum date for plays."
+                },
+                {
+                    "name": "maxdate",
+                    "type": "STRING",
+                    "description": "Maximum date for plays."
+                },
+                {
+                    "name": "subtype",
+                    "type": "STRING",
+                    "description": "Subtype for play filter."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of plays to return."
+                }
+            ]
+        },
+        {
+            "name": "get_collection",
+            "url": "https://boardgamegeek.com/xmlapi2/collection",
+            "description": "Retrieve details about a user's collection.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "username",
+                    "type": "STRING",
+                    "description": "Username whose collection to retrieve."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "version",
+                    "type": "INTEGER",
+                    "description": "Include version information."
+                },
+                {
+                    "name": "subtype",
+                    "type": "STRING",
+                    "description": "Type of collection to retrieve."
+                },
+                {
+                    "name": "excludesubtype",
+                    "type": "STRING",
+                    "description": "Subtype to exclude."
+                },
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "Specific item IDs to filter."
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of collection to return."
+                }
+            ]
+        },
+        {
+            "name": "get_hot_items",
+            "url": "https://boardgamegeek.com/xmlapi2/hot",
+            "description": "Retrieve the list of most active items.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of hot items (e.g. boardgame)."
+                }
+            ]
+        },
+        {
+            "name": "search_items",
+            "url": "https://boardgamegeek.com/xmlapi2/search",
+            "description": "Search for items from the database by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of items to return."
+                },
+                {
+                    "name": "exact",
+                    "type": "INTEGER",
+                    "description": "Exact match for search."
+                }
+            ]
+        }
+    ]
+}

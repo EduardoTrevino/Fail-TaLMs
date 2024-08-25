@@ -1,0 +1,466 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional, List
+
+def ping(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Test connectivity to the Rest API.
+    """
+    url = "https://api.wazirx.com/sapi/v1/ping"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def system_status(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Fetch system status.
+    """
+    url = "https://api.wazirx.com/sapi/v1/systemStatus"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def server_time(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Test connectivity to the Rest API and get the current server time.
+    """
+    url = "https://api.wazirx.com/sapi/v1/time"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def exchange_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Fetch all exchange information.
+    """
+    url = "https://api.wazirx.com/sapi/v1/exchangeInfo"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def tickers_24hr(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: 24 hour rolling window price change statistics for all symbols.
+    """
+    url = "https://api.wazirx.com/sapi/v1/tickers/24hr"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def ticker_24hr(symbol: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: 24 hour rolling window price change statistics for a single symbol.
+    Parameters:
+    symbol [Required]: string [The trading pair symbol]
+    """
+    url = "https://api.wazirx.com/sapi/v1/ticker/24hr"
+    params = {
+        'symbol': symbol
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def klines(symbol: str, interval: str = '1m', limit: int = 500, start_time: Optional[int] = None, end_time: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get Kline/candlestick data of the specified symbol.
+    Parameters:
+    symbol [Required]: string [The trading pair symbol]
+    interval [Optional]: string [Time interval, default 1m]
+    limit [Optional]: int [Number of klines to return, default 500]
+    start_time [Optional]: int [Start time in milliseconds]
+    end_time [Optional]: int [End time in milliseconds]
+    """
+    url = "https://api.wazirx.com/sapi/v1/klines"
+    params = {
+        'symbol': symbol,
+        'interval': interval,
+        'limit': limit
+    }
+    if start_time:
+        params['startTime'] = start_time
+    if end_time:
+        params['endTime'] = end_time
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def depth(symbol: str, limit: Optional[int] = 20, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get Order book depth.
+    Parameters:
+    symbol [Required]: string [The trading pair symbol]
+    limit [Optional]: int [Number of orders to return, default 20]
+    """
+    url = "https://api.wazirx.com/sapi/v1/depth"
+    params = {
+        'symbol': symbol,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def recent_trades(symbol: str, limit: Optional[int] = 500, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Get recent trades.
+    Parameters:
+    symbol [Required]: string [The trading pair symbol]
+    limit [Optional]: int [Number of trades to return, default 500]
+    """
+    url = "https://api.wazirx.com/sapi/v1/trades"
+    params = {
+        'symbol': symbol,
+        'limit': limit
+    }
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+import api
+
+class TestWazirxAPI(unittest.TestCase):
+
+    def test_ping(self):
+        response = api.ping()
+        self.assertEqual(response, {})
+
+    def test_system_status(self):
+        response = api.system_status()
+        self.assertIn('status', response)
+        self.assertIn('message', response)
+
+    def test_server_time(self):
+        response = api.server_time()
+        self.assertIn('serverTime', response)
+
+    def test_exchange_info(self):
+        response = api.exchange_info()
+        self.assertIn('timezone', response)
+        self.assertIn('serverTime', response)
+        self.assertIn('symbols', response)
+
+    def test_tickers_24hr(self):
+        response = api.tickers_24hr()
+        self.assertIsInstance(response, list)
+        if response:  # Check if list is non-empty
+            self.assertIn('symbol', response[0])
+
+    def test_ticker_24hr(self):
+        response = api.ticker_24hr('btcinr')
+        self.assertIn('symbol', response)
+
+    def test_klines(self):
+        response = api.klines('btcinr')
+        self.assertIsInstance(response, list)
+        if response:  # Check if list is non-empty
+            self.assertEqual(len(response[0]), 6)
+
+    def test_depth(self):
+        response = api.depth('btcinr', limit=5)
+        self.assertIn('asks', response)
+        self.assertIn('bids', response)
+
+    def test_recent_trades(self):
+        response = api.recent_trades('btcinr')
+        self.assertIsInstance(response, list)
+        if response:  # Check if list is non-empty
+            self.assertIn('id', response[0])
+            self.assertIn('price', response[0])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### wazirx.json**
+
+```json
+{
+    "tool_name": "wazirx",
+    "tool_description": "Public Rest API for WazirX spot exchange that offers market data, exchange status and trading functionalities.",
+    "title": "WazirX API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 99,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 8,
+        "__typename": "Score"
+    },
+    "home_url": "https://api.wazirx.com",
+    "host": "api.wazirx.com",
+    "api_list": [
+        {
+            "name": "ping",
+            "url": "https://api.wazirx.com/sapi/v1/ping",
+            "description": "Test connectivity to the Rest API.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/ping'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {}
+        },
+        {
+            "name": "system_status",
+            "url": "https://api.wazirx.com/sapi/v1/systemStatus",
+            "description": "Fetch system status.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/systemStatus'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "status": "string",
+                "message": "string"
+            }
+        },
+        {
+            "name": "server_time",
+            "url": "https://api.wazirx.com/sapi/v1/time",
+            "description": "Get current server time.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/time'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "serverTime": "long"
+            }
+        },
+        {
+            "name": "exchange_info",
+            "url": "https://api.wazirx.com/sapi/v1/exchangeInfo",
+            "description": "Fetch all exchange information.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/exchangeInfo'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "timezone": "string",
+                "serverTime": "long",
+                "symbols": [
+                    {
+                        "symbol": "string",
+                        "status": "string",
+                        "baseAsset": "string",
+                        "quoteAsset": "string",
+                        "baseAssetPrecision": "int",
+                        "quoteAssetPrecision": "int",
+                        "orderTypes": ["string"],
+                        "isSpotTradingAllowed": "boolean",
+                        "filters": [
+                            {
+                                "filterType": "string",
+                                "minPrice": "string",
+                                "tickSize": "string"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "tickers_24hr",
+            "url": "https://api.wazirx.com/sapi/v1/tickers/24hr",
+            "description": "24 hr rolling window price change statistics for all symbols.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/tickers/24hr'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "symbol": "string",
+                "baseAsset": "string",
+                "quoteAsset": "string",
+                "openPrice": "string",
+                "lowPrice": "string",
+                "highPrice": "string",
+                "lastPrice": "string",
+                "volume": "string",
+                "bidPrice": "string",
+                "askPrice": "string",
+                "at": "long"
+            }
+        },
+        {
+            "name": "ticker_24hr",
+            "url": "https://api.wazirx.com/sapi/v1/ticker/24hr",
+            "description": "24 hr rolling window price change statistics for a single symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "The trading pair symbol",
+                    "default": "btcinr"
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/ticker/24hr?symbol=btcinr'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "symbol": "string",
+                "baseAsset": "string",
+                "quoteAsset": "string",
+                "openPrice": "string",
+                "lowPrice": "string",
+                "highPrice": "string",
+                "lastPrice": "string",
+                "volume": "string",
+                "bidPrice": "string",
+                "askPrice": "string",
+                "at": "long"
+            }
+        },
+        {
+            "name": "klines",
+            "url": "https://api.wazirx.com/sapi/v1/klines",
+            "description": "Get Kline/candlestick data of the specified symbol.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "The trading pair symbol",
+                    "default": "btcinr"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "interval",
+                    "type": "STRING",
+                    "description": "Time interval for klines",
+                    "default": "1m"
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of klines to return",
+                    "default": 500
+                },
+                {
+                    "name": "start_time",
+                    "type": "LONG",
+                    "description": "Start time in milliseconds",
+                    "default": null
+                },
+                {
+                    "name": "end_time",
+                    "type": "LONG",
+                    "description": "End time in milliseconds",
+                    "default": null
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/klines'\nparams = {'symbol': 'btcinr', 'interval': '1m', 'limit': 500}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                [
+                    "long", "string", "string", "string", "string", "string"
+                ]
+            ]
+        },
+        {
+            "name": "depth",
+            "url": "https://api.wazirx.com/sapi/v1/depth",
+            "description": "Get Order book depth.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "The trading pair symbol",
+                    "default": "btcinr"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of orders to return",
+                    "default": 20
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/depth'\nparams = {'symbol': 'btcinr', 'limit': 20}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "lastUpdateAt": "long",
+                "asks": [
+                    ["string", "string"]
+                ],
+                "bids": [
+                    ["string", "string"]
+                ]
+            }
+        },
+        {
+            "name": "recent_trades",
+            "url": "https://api.wazirx.com/sapi/v1/trades",
+            "description": "Get recent trades.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "The trading pair symbol",
+                    "default": "btcinr"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of trades to return",
+                    "default": 500
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.wazirx.com/sapi/v1/trades'\nparams = {'symbol': 'btcinr', 'limit': 500}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "id": "long",
+                    "price": "string",
+                    "qty": "string",
+                    "quoteQty": "string",
+                    "time": "long",
+                    "isBuyerMaker": "boolean"
+                }
+            ]
+        }
+    ]
+}
+```

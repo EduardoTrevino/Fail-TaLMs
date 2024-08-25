@@ -1,0 +1,222 @@
+**### api.py**  
+```python
+import requests
+from typing import Optional, List
+
+def get_account_balance(currency: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve the account balance for a specified currency.
+    Parameters:
+     currency [Optional]: string [Description: The currency code (e.g., BTC, ETH) whose balance you want to check.]
+    """
+    url = "https://www.okx.com/api/v5/account/balance"
+    headers = {
+        'accept': 'application/json',
+        'toolbench-rapidapi-key': toolbench_rapidapi_key
+    }
+    params = {}
+    if currency:
+        params['ccy'] = currency
+        
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_market_ticker(inst_id: str = 'BTC-USDT', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve the market ticker information for a specified instrument.
+    Parameters:
+     inst_id [Required]: string [Description: The instrument ID (e.g., BTC-USDT) for which ticker information is required.]
+    """
+    url = "https://www.okx.com/api/v5/market/ticker"
+    headers = {
+        'accept': 'application/json',
+        'toolbench-rapidapi-key': toolbench_rapidapi_key
+    }
+    params = {
+        'instId': inst_id
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_order_book(inst_id: str = 'BTC-USDT', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve the order book for a specified instrument.
+    Parameters:
+     inst_id [Required]: string [Description: The instrument ID for which the order book is required (e.g., BTC-USDT).]
+    """
+    url = "https://www.okx.com/api/v5/market/books"
+    headers = {
+        'accept': 'application/json',
+        'toolbench-rapidapi-key': toolbench_rapidapi_key
+    }
+    params = {
+        'instId': inst_id
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**  
+```python
+import unittest
+from api import get_account_balance, get_market_ticker, get_order_book
+
+class TestOKXAPI(unittest.TestCase):
+
+    def test_get_account_balance(self):
+        response = get_account_balance()
+        self.assertIn('data', response)
+
+    def test_get_account_balance_with_currency(self):
+        response = get_account_balance(currency='BTC')
+        self.assertIn('data', response)
+        # Check if the balance for BTC is returned
+        currencies = [bal['ccy'] for bal in response.get('data', {}).get('details', [])]
+        self.assertIn('BTC', currencies)
+
+    def test_get_market_ticker(self):
+        response = get_market_ticker('BTC-USDT')
+        self.assertIn('data', response)
+        self.assertEqual(response['data'][0]['instId'], 'BTC-USDT')
+
+    def test_get_order_book(self):
+        response = get_order_book('BTC-USDT')
+        self.assertIn('data', response)
+        self.assertTrue('asks' in response['data'][0] or 'bids' in response['data'][0])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**### okx.json**  
+```json
+{
+    "tool_name": "okx",
+    "tool_description": "API to interact with OKX's cryptocurrency trading platform, providing endpoints for account balance, market tickers, and order books.",
+    "title": "OKX Cryptocurrency Trading API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.8,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.okx.com/docs/",
+    "host": "www.okx.com",
+    "api_list": [
+        {
+            "name": "get_account_balance",
+            "url": "https://www.okx.com/api/v5/account/balance",
+            "description": "Retrieve the account balance for a specified currency.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "The currency code whose balance you want to check.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.okx.com/api/v5/account/balance'\nparams = {}\nheaders = {'toolbench-rapidapi-key': toolbench_rapidapi_key}\nif currency: params['ccy'] = currency\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "details": [
+                        {
+                            "ccy": "str",
+                            "bal": "float",
+                            "frozenBal": "float"
+                        }
+                    ]
+                },
+                "code": "int",
+                "msg": "str"
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_market_ticker",
+            "url": "https://www.okx.com/api/v5/market/ticker",
+            "description": "Retrieve the market ticker information for a specified instrument.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "inst_id",
+                    "type": "STRING",
+                    "description": "The instrument ID for which ticker information is required.",
+                    "default": "BTC-USDT"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.okx.com/api/v5/market/ticker'\nparams = {'instId': inst_id}\nheaders = {'toolbench-rapidapi-key': toolbench_rapidapi_key}\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "instId": "str",
+                        "last": "float",
+                        "lastSz": "float",
+                        "askPx": "float",
+                        "askSz": "float",
+                        "bidPx": "float",
+                        "bidSz": "float",
+                        "open24h": "float",
+                        "high24h": "float",
+                        "low24h": "float",
+                        "vol24h": "float"
+                    }
+                ],
+                "code": "int",
+                "msg": "str"
+            },
+            "headers": {}
+        },
+        {
+            "name": "get_order_book",
+            "url": "https://www.okx.com/api/v5/market/books",
+            "description": "Retrieve the order book for a specified instrument.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "inst_id",
+                    "type": "STRING",
+                    "description": "The instrument ID for which the order book is required.",
+                    "default": "BTC-USDT"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.okx.com/api/v5/market/books'\nparams = {'instId': inst_id}\nheaders = {'toolbench-rapidapi-key': toolbench_rapidapi_key}\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "asks": [
+                            ["float", "float", "int"]
+                        ],
+                        "bids": [
+                            ["float", "float", "int"]
+                        ],
+                        "ts": "int"
+                    }
+                ],
+                "code": "int",
+                "msg": "str"
+            },
+            "headers": {}
+        }
+    ]
+}
+```

@@ -1,0 +1,276 @@
+{
+    "tool_name": "amiibo",
+    "tool_description": "API to access data about various Amiibo available, including series, types, and characters.",
+    "title": "Amiibo API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.amiiboapi.com/docs/",
+    "host": "www.amiiboapi.com",
+    "api_list": [
+        {
+            "name": "get_amiibos",
+            "url": "https://www.amiiboapi.com/api/amiibo/",
+            "description": "Returns a list of amiibos or specific amiibo based on the filters provided.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the amiibo."
+                },
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "ID of the amiibo."
+                },
+                {
+                    "name": "head",
+                    "type": "STRING",
+                    "description": "Head hexadecimal of the amiibo."
+                },
+                {
+                    "name": "tail",
+                    "type": "STRING",
+                    "description": "Tail hexadecimal of the amiibo."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of amiibo, e.g., figure, card."
+                },
+                {
+                    "name": "game_series",
+                    "type": "STRING",
+                    "description": "Game series of the amiibo."
+                },
+                {
+                    "name": "amiibo_series",
+                    "type": "STRING",
+                    "description": "Amiibo series of the amiibo."
+                },
+                {
+                    "name": "character",
+                    "type": "STRING",
+                    "description": "Character of the amiibo."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/amiibo/'\nparams = {'name': name, 'id': id, 'head': head, 'tail': tail, 'type': type, 'gameseries': game_series, 'amiiboSeries': amiibo_series, 'character': character}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "amiibo": [
+                    {
+                        "amiiboSeries": "Legend Of Zelda",
+                        "character": "Zelda",
+                        "gameSeries": "The Legend of Zelda",
+                        "head": "01010000",
+                        "image": "URL to the image",
+                        "name": "Amiibo name",
+                        "release": {
+                            "au": "Date",
+                            "eu": "Date",
+                            "jp": "Date",
+                            "na": "Date"
+                        },
+                        "tail": "03560902",
+                        "type": "Figure"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amiibo": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_amiibo_type",
+            "url": "https://www.amiiboapi.com/api/type",
+            "description": "Returns amiibo types based on key or name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the amiibo type."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the amiibo type."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/type'\nparams = {'key': key, 'name': name}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "amiibo": [
+                    {
+                        "key": "0x00",
+                        "name": "Figure"
+                    },
+                    {
+                        "key": "0x01",
+                        "name": "Card"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amiibo": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_game_series",
+            "url": "https://www.amiiboapi.com/api/gameseries",
+            "description": "Returns game series information based on key or name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the game series."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the game series."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/gameseries'\nparams = {'key': key, 'name': name}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "amiibo": [
+                    {
+                        "key": "0x000",
+                        "name": "Super Mario"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amiibo": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_amiibo_series",
+            "url": "https://www.amiiboapi.com/api/amiiboseries",
+            "description": "Returns amiibo series based on key or name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the amiibo series."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the amiibo series."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/amiiboseries'\nparams = {'key': key, 'name': name}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "amiibo": [
+                    {
+                        "key": "0x06",
+                        "name": "8-bit Mario"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amiibo": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_character",
+            "url": "https://www.amiiboapi.com/api/character",
+            "description": "Returns character information based on key or name.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "Key of the character."
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Name of the character."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/character'\nparams = {'key': key, 'name': name}\nresponse = requests.get(url, params={k: v for k, v in params.items() if v is not None})\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "amiibo": [
+                    {
+                        "key": "0x1996",
+                        "name": "Mewtwo"
+                    }
+                ]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amiibo": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_last_updated",
+            "url": "https://www.amiiboapi.com/api/lastupdated",
+            "description": "Returns the last updated timestamp of the amiibo database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.amiiboapi.com/api/lastupdated'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "lastUpdated": "Timestamp in ISO format"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "lastUpdated": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        }
+    ]
+}
