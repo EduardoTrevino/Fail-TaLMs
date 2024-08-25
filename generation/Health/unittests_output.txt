@@ -1,0 +1,101 @@
+Running tests for API 'healthcaregov'...
+..F
+======================================================================
+FAIL: test_get_content_object (__main__.TestHealthcareGovAPI.test_get_content_object)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/healthcaregov/api_test.py", line 10, in test_get_content_object
+    self.assertEqual(response["url"], "https://www.healthcare.gov/accessibility")
+AssertionError: '/accessibility' != 'https://www.healthcare.gov/accessibility'
+- /accessibility
++ https://www.healthcare.gov/accessibility
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.695s
+
+FAILED (failures=1)
+Tests completed for API 'healthcaregov'
+
+==================================================
+
+Running tests for API 'makeup'...
+.....F
+======================================================================
+FAIL: test_search_by_tags (__main__.TestMakeupAPI.test_search_by_tags)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/makeup/api_test.py", line 30, in test_search_by_tags
+    self.assertTrue(set(["vegan", "cruelty free"]).issubset(set(product.get('tag_list', []))))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 6.542s
+
+FAILED (failures=1)
+Tests completed for API 'makeup'
+
+==================================================
+
+Running tests for API 'openfda'...
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 6.590s
+
+OK
+Tests completed for API 'openfda'
+
+==================================================
+
+Running tests for API 'healthcare'...
+...
+----------------------------------------------------------------------
+Ran 3 tests in 1.543s
+
+OK
+Tests completed for API 'healthcare'
+
+==================================================
+
+Running tests for API 'nppes'...
+FFFTests completed for API 'nppes'
+
+==================================================
+
+F
+======================================================================
+FAIL: test_search_npi_default (__main__.TestNPPESAPI.test_search_npi_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/nppes/api_test.py", line 8, in test_search_npi_default
+    self.assertIn('Results', response)
+AssertionError: 'Results' not found in {'Errors': [{'description': 'No valid search criteria provided', 'field': 'generic', 'number': '04'}]}
+
+======================================================================
+FAIL: test_search_npi_with_name (__main__.TestNPPESAPI.test_search_npi_with_name)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/nppes/api_test.py", line 19, in test_search_npi_with_name
+    self.assertIn('Results', response)
+AssertionError: 'Results' not found in {'result_count': 10, 'results': [{'created_epoch': '1177539783000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1851510887', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '5023 KANSAS DR', 'city': 'AMES', 'state': 'IA', 'postal_code': '500143089', 'telephone_number': '515-292-4780'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '3600 LINCOLN WAY', 'city': 'AMES', 'state': 'IA', 'postal_code': '500147595', 'telephone_number': '515-296-1301'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AAGESEN', 'middle_name': 'ARTHUR', 'credential': 'RPH', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2007-04-25', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': 'Mr.', 'name_suffix': '--'}, 'taxonomies': [{'code': '183500000X', 'taxonomy_group': '', 'desc': 'Pharmacist', 'state': 'IA', 'license': '1032', 'primary': True}], 'identifiers': [{'code': '05', 'desc': 'MEDICAID', 'issuer': None, 'identifier': '0170472', 'state': 'IA'}, {'code': '01', 'desc': 'Other (non-Medicare)', 'issuer': 'NCPDP', 'identifier': '1619127', 'state': 'IA'}], 'endpoints': [], 'other_names': []}, {'created_epoch': '1144077480000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1942262431', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '4060 4TH AVE', 'address_2': 'SUITE 700', 'city': 'SAN DIEGO', 'state': 'CA', 'postal_code': '921032116', 'telephone_number': '619-299-8500', 'fax_number': '619-297-1443'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '4060 4TH AVE', 'address_2': 'SUITE 700', 'city': 'SAN DIEGO', 'state': 'CA', 'postal_code': '921032116', 'telephone_number': '619-299-8500', 'fax_number': '619-297-1443'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AALBERS', 'middle_name': 'ALAN', 'credential': 'M.D.', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2006-04-03', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': 'Dr.', 'name_suffix': '--'}, 'taxonomies': [{'code': '2084N0400X', 'taxonomy_group': '', 'desc': 'Psychiatry & Neurology, Neurology', 'state': 'CA', 'license': 'G26935', 'primary': True}], 'identifiers': [{'code': '05', 'desc': 'MEDICAID', 'issuer': None, 'identifier': '00G269350', 'state': 'CA'}], 'endpoints': [], 'other_names': []}, {'created_epoch': '1164377375000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1295800191', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '819 WATER ST', 'address_2': 'SUITE 300', 'city': 'KERRVILLE', 'state': 'TX', 'postal_code': '780285333', 'telephone_number': '830-792-3300', 'fax_number': '830-792-5771'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '405 E. HWY 90', 'city': 'HONDO', 'state': 'TX', 'postal_code': '78861', 'telephone_number': '830-426-4362', 'fax_number': '830-426-4366'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AALSMA', 'middle_name': 'N', 'credential': 'R.N.', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2006-11-24', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': '--', 'name_suffix': '--'}, 'taxonomies': [{'code': '163W00000X', 'taxonomy_group': '', 'desc': 'Registered Nurse', 'state': 'TX', 'license': '243024', 'primary': True}], 'identifiers': [{'code': '01', 'desc': 'Other (non-Medicare)', 'issuer': 'NURSING LICENSE', 'identifier': '243024', 'state': 'TX'}], 'endpoints': [], 'other_names': []}, {'created_epoch': '1246907692000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1674855006000', 'number': '1518196054', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '3115 TIDAL BAY LN', 'city': 'VIRGINIA BEACH', 'state': 'VA', 'postal_code': '234511136'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '620 JOHN PAUL JONES CIR', 'city': 'PORTSMOUTH', 'state': 'VA', 'postal_code': '237082111', 'telephone_number': '757-953-1813'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AALTO', 'middle_name': 'MARTIN', 'credential': 'DPM', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2009-07-06', 'last_updated': '2023-01-27', 'certification_date': '2023-01-27', 'status': 'A', 'name_prefix': 'Dr.'}, 'taxonomies': [{'code': '213EP1101X', 'taxonomy_group': '', 'desc': 'Podiatrist, Primary Podiatric Medicine', 'state': 'PA', 'license': 'SC004681L', 'primary': False}, {'code': '213EP1101X', 'taxonomy_group': '', 'desc': 'Podiatrist, Primary Podiatric Medicine', 'state': 'NY', 'license': 'N006227-1', 'primary': False}, {'code': '213ES0103X', 'taxonomy_group': '', 'desc': 'Podiatrist, Foot & Ankle Surgery', 'state': 'VA', 'license': '0103301024', 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': []}, {'created_epoch': '1149395381000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1790723302', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '1329 FAIRMOUNT AVE', 'city': 'SAINT PAUL', 'state': 'MN', 'postal_code': '551052704', 'telephone_number': '651-695-9574'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '2130 CLIFF RD', 'address_2': 'SUITE 220', 'city': 'EAGAN', 'state': 'MN', 'postal_code': '551222485', 'telephone_number': '651-405-1055', 'fax_number': '651-405-0727'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AAMODT', 'middle_name': 'CHRISTOPHER', 'credential': 'D.D.S., M.S.', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2006-06-04', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': 'Dr.', 'name_suffix': '--'}, 'taxonomies': [{'code': '1223X0400X', 'taxonomy_group': '', 'desc': 'Dentist, Orthodontics and Dentofacial Orthopedics', 'state': 'MN', 'license': 'D11334', 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': []}, {'created_epoch': '1294604609000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1294604609000', 'number': '1932403755', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '7932 ULMERTON RD', 'city': 'LARGO', 'state': 'FL', 'postal_code': '337714028', 'telephone_number': '727-667-8901'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '7932 ULMERTON RD', 'city': 'LARGO', 'state': 'FL', 'postal_code': '337714028', 'telephone_number': '727-667-8901'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AARON', 'middle_name': 'S.', 'credential': 'lmt', 'sole_proprietor': 'YES', 'gender': 'M', 'enumeration_date': '2011-01-09', 'last_updated': '2011-01-09', 'status': 'A', 'name_prefix': 'Mr.', 'name_suffix': 'Jr.'}, 'taxonomies': [{'code': '225700000X', 'taxonomy_group': '', 'desc': 'Massage Therapist', 'state': 'FL', 'license': 'ma49373', 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': []}, {'created_epoch': '1285704252000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1368726186000', 'number': '1356650139', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '4895 WINDWARD PKWY', 'address_2': 'SUITE 202', 'city': 'ALPHARETTA', 'state': 'GA', 'postal_code': '300043850', 'telephone_number': '770-475-0888', 'fax_number': '770-475-3025'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '4895 WINDWARD PKWY', 'address_2': 'SUITE 202', 'city': 'ALPHARETTA', 'state': 'GA', 'postal_code': '300043850', 'telephone_number': '770-475-0888', 'fax_number': '770-475-3025'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AARON', 'middle_name': 'M', 'credential': 'PA', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2010-09-28', 'last_updated': '2013-05-16', 'status': 'A', 'name_prefix': '--', 'name_suffix': '--'}, 'taxonomies': [{'code': '363AM0700X', 'taxonomy_group': '', 'desc': 'Physician Assistant, Medical', 'state': None, 'license': None, 'primary': False}, {'code': '363AM0700X', 'taxonomy_group': '', 'desc': 'Physician Assistant, Medical', 'state': 'GA', 'license': '3388', 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': []}, {'created_epoch': '1122908400000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1972503985', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '1471 DEWAR DR', 'address_2': 'SUITE 112', 'city': 'ROCK SPRINGS', 'state': 'WY', 'postal_code': '829015851', 'telephone_number': '307-382-3257', 'fax_number': '307-382-2296'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '1471 DEWAR DR', 'address_2': 'SUITE 112', 'city': 'ROCK SPRINGS', 'state': 'WY', 'postal_code': '829015851', 'telephone_number': '307-382-3257', 'fax_number': '307-382-2296'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AARON', 'middle_name': 'WENDEL', 'credential': 'D.P.M.', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2005-08-01', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': 'Dr.', 'name_suffix': 'III'}, 'taxonomies': [{'code': '213E00000X', 'taxonomy_group': '', 'desc': 'Podiatrist', 'state': 'WY', 'license': '72', 'primary': True}], 'identifiers': [{'code': '01', 'desc': 'Other (non-Medicare)', 'issuer': 'Blue Cross Blue Shield', 'identifier': '302477', 'state': 'WY'}, {'code': '01', 'desc': 'Other (non-Medicare)', 'issuer': 'RR Medicare', 'identifier': '480004199', 'state': 'WY'}], 'endpoints': [], 'other_names': []}, {'created_epoch': '1150825125000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1183947785000', 'number': '1427094531', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '900 WEST BALTIMORE PIKE', 'address_2': 'STE 101', 'city': 'WEST GROVE', 'state': 'PA', 'postal_code': '19390', 'telephone_number': '610-869-9330', 'fax_number': '610-869-0660'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '900 WEST BALTIMORE PIKE', 'address_2': 'STE 101 JENNERSVILLE PROFESSIONAL CTR', 'city': 'WEST GROVE', 'state': 'PA', 'postal_code': '19390', 'telephone_number': '610-869-9330', 'fax_number': '610-869-0660'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AARON', 'credential': 'MD', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2006-06-20', 'last_updated': '2007-07-08', 'status': 'A', 'name_prefix': 'Dr.', 'name_suffix': '--'}, 'taxonomies': [{'code': '207R00000X', 'taxonomy_group': '', 'desc': 'Internal Medicine', 'state': 'PA', 'license': 'MD045839L', 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': []}, {'created_epoch': '1149851766000', 'enumeration_type': 'NPI-1', 'last_updated_epoch': '1206031406000', 'number': '1629019922', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': 'PO BOX 3799', 'city': 'CLARKSVILLE', 'state': 'TN', 'postal_code': '37043', 'telephone_number': '931-245-7094', 'fax_number': '931-245-7069'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '2147 WILMA RUDOLPH BLVD', 'city': 'CLARKSVILLE', 'state': 'TN', 'postal_code': '37040', 'telephone_number': '931-245-8300', 'fax_number': '931-245-8360'}], 'practiceLocations': [], 'basic': {'first_name': 'JOHN', 'last_name': 'AARON', 'credential': 'MD', 'sole_proprietor': 'NO', 'gender': 'M', 'enumeration_date': '2006-06-09', 'last_updated': '2008-03-20', 'status': 'A', 'name_prefix': '--', 'name_suffix': '--'}, 'taxonomies': [{'code': '207Q00000X', 'taxonomy_group': '', 'desc': 'Family Medicine', 'state': 'MS', 'license': '16845', 'primary': False}, {'code': '207R00000X', 'taxonomy_group': '', 'desc': 'Internal Medicine', 'state': 'TN', 'license': '42101', 'primary': True}], 'identifiers': [{'code': '01', 'desc': 'Other (non-Medicare)', 'issuer': 'RR Medicare', 'identifier': 'P00444983', 'state': 'TN'}], 'endpoints': [], 'other_names': []}]}
+
+======================================================================
+FAIL: test_search_npi_with_number (__main__.TestNPPESAPI.test_search_npi_with_number)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/nppes/api_test.py", line 13, in test_search_npi_with_number
+    self.assertIn('Results', response)
+AssertionError: 'Results' not found in {'result_count': 0, 'results': []}
+
+======================================================================
+FAIL: test_search_npi_with_organization (__main__.TestNPPESAPI.test_search_npi_with_organization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/trevea/Projects/ToolsForTheJobBenchmark/generation/Health/nppes/api_test.py", line 24, in test_search_npi_with_organization
+    self.assertIn('Results', response)
+AssertionError: 'Results' not found in {'result_count': 1, 'results': [{'created_epoch': '1715966103000', 'enumeration_type': 'NPI-2', 'last_updated_epoch': '1715966103000', 'number': '1902655285', 'addresses': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'MAILING', 'address_type': 'DOM', 'address_1': '51 E 125TH ST # 3L', 'city': 'NEW YORK', 'state': 'NY', 'postal_code': '100351685', 'telephone_number': '347-885-7280'}, {'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '51 E 125TH ST # 3L', 'city': 'NEW YORK', 'state': 'NY', 'postal_code': '100351685', 'telephone_number': '347-885-7280', 'fax_number': '646-921-3189'}], 'practiceLocations': [{'country_code': 'US', 'country_name': 'United States', 'address_purpose': 'LOCATION', 'address_type': 'DOM', 'address_1': '51 E 125TH ST # 3L', 'city': 'NEW YORK', 'state': 'NY', 'postal_code': '100351685', 'telephone_number': '347-885-7280'}], 'basic': {'organization_name': 'UNIM HEALTH CORPORATION', 'organizational_subpart': 'NO', 'enumeration_date': '2024-05-17', 'last_updated': '2024-05-17', 'certification_date': '2024-05-17', 'status': 'A', 'authorized_official_first_name': 'LAQUAN', 'authorized_official_last_name': 'SMITH', 'authorized_official_telephone_number': '3478857280', 'authorized_official_title_or_position': 'Medical Director', 'authorized_official_credential': 'MD'}, 'taxonomies': [{'code': '2083P0901X', 'taxonomy_group': '193200000X - Multi-Specialty Group', 'desc': 'Preventive Medicine, Public Health & General Preventive Medicine', 'state': None, 'license': None, 'primary': True}], 'identifiers': [], 'endpoints': [], 'other_names': [{'organization_name': 'HEALTH CORP', 'type': 'Doing Business As', 'code': '3'}, {'organization_name': 'THE COMMUNITY HEALTH INITIATIVE (NYC MIGRANT SERVICES HERRC', 'type': 'Other Name', 'code': '5'}]}]}
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.398s
+
+FAILED (failures=4)

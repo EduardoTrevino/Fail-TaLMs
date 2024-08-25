@@ -1,0 +1,230 @@
+### api.py
+```python
+import requests
+from urllib.parse import urlencode
+from typing import Optional, List
+
+
+def search_makeup_products(brand: Optional[str] = None, product_type: Optional[str] = None,
+                           product_category: Optional[str] = None, product_tags: Optional[List[str]] = None,
+                           price_greater_than: Optional[float] = None, price_less_than: Optional[float] = None,
+                           rating_greater_than: Optional[float] = None, rating_less_than: Optional[float] = None,
+                           toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Search for makeup products and filter them by brand, product type, category, tags, price, and ratings.
+    Parameters:
+      brand [Optional]: string [Description: Brand of the product.]
+      product_type [Optional]: string [Description: The type of makeup.]
+      product_category [Optional]: string [Description: The category of the product type.]
+      product_tags [Optional]: list of strings [Description: Tags applied to products.]
+      price_greater_than [Optional]: float [Description: Products with price greater than this number.]
+      price_less_than [Optional]: float [Description: Products with price less than this number.]
+      rating_greater_than [Optional]: float [Description: Products with rating greater than this number.]
+      rating_less_than [Optional]: float [Description: Products with rating less than this number.]
+    """
+    url = "http://makeup-api.herokuapp.com/api/v1/products.json"
+    params = {}
+    
+    if brand:
+        params['brand'] = brand
+    if product_type:
+        params['product_type'] = product_type
+    if product_category:
+        params['product_category'] = product_category
+    if product_tags:
+        params['product_tags'] = ','.join(product_tags)
+    if price_greater_than is not None:
+        params['price_greater_than'] = price_greater_than
+    if price_less_than is not None:
+        params['price_less_than'] = price_less_than
+    if rating_greater_than is not None:
+        params['rating_greater_than'] = rating_greater_than
+    if rating_less_than is not None:
+        params['rating_less_than'] = rating_less_than
+
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import search_makeup_products
+
+
+class TestMakeupAPI(unittest.TestCase):
+
+    def test_search_by_brand_only(self):
+        result = search_makeup_products(brand="maybelline")
+        self.assertIsInstance(result, list)
+        for product in result:
+            self.assertEqual(product.get('brand').lower(), "maybelline")
+
+    def test_search_by_product_type(self):
+        result = search_makeup_products(product_type="lipstick")
+        self.assertIsInstance(result, list)
+        for product in result:
+            self.assertEqual(product.get('product_type'), "lipstick")
+
+    def test_search_by_brand_and_type(self):
+        result = search_makeup_products(brand="maybelline", product_type="eyeliner")
+        self.assertIsInstance(result, list)
+        for product in result:
+            self.assertEqual(product.get('brand').lower(), "maybelline")
+            self.assertEqual(product.get('product_type'), "eyeliner")
+
+    def test_search_by_tags(self):
+        result = search_makeup_products(product_tags=["vegan", "cruelty free"])
+        self.assertIsInstance(result, list)
+        for product in result:
+            self.assertTrue(set(["vegan", "cruelty free"]).issubset(set(product.get('tag_list', []))))
+
+    def test_price_filtering(self):
+        result = search_makeup_products(price_greater_than=10.0, price_less_than=20.0)
+        self.assertIsInstance(result, list)
+        for product in result:
+            price = float(product.get('price', 0))
+            self.assertGreater(price, 10.0)
+            self.assertLess(price, 20.0)
+
+    def test_rating_filtering(self):
+        result = search_makeup_products(rating_greater_than=4.0, rating_less_than=5.0)
+        self.assertIsInstance(result, list)
+        for product in result:
+            rating = product.get('rating', 0)
+            self.assertGreater(rating, 4.0)
+            self.assertLess(rating, 5.0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### makeup.json
+```json
+{
+    "tool_name": "makeup",
+    "tool_description": "API to search and filter various makeup products by brand, type, category, tags, price, and ratings.",
+    "title": "Makeup API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "http://makeup-api.herokuapp.com/",
+    "host": "makeup-api.herokuapp.com",
+    "api_list": [
+        {
+            "name": "search_makeup_products",
+            "url": "http://makeup-api.herokuapp.com/api/v1/products.json",
+            "description": "Search for makeup products and filter them by various criteria.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "brand",
+                    "type": "STRING",
+                    "description": "Brand of the product."
+                },
+                {
+                    "name": "product_type",
+                    "type": "STRING",
+                    "description": "Type of makeup product."
+                },
+                {
+                    "name": "product_category",
+                    "type": "STRING",
+                    "description": "Category of the makeup product."
+                },
+                {
+                    "name": "product_tags",
+                    "type": "LIST of STRINGS",
+                    "description": "Tags related to the product."
+                },
+                {
+                    "name": "price_greater_than",
+                    "type": "FLOAT",
+                    "description": "Products with price greater than this value."
+                },
+                {
+                    "name": "price_less_than",
+                    "type": "FLOAT",
+                    "description": "Products with price less than this value."
+                },
+                {
+                    "name": "rating_greater_than",
+                    "type": "FLOAT",
+                    "description": "Products with rating greater than this value."
+                },
+                {
+                    "name": "rating_less_than",
+                    "type": "FLOAT",
+                    "description": "Products with rating less than this value."
+                }
+            ],
+            "code": "import requests\n\nurl = 'http://makeup-api.herokuapp.com/api/v1/products.json'\nparams = {...}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "id": "int",
+                "brand": "str",
+                "name": "str",
+                "price": "str",
+                "price_sign": "str",
+                "currency": "str",
+                "image_link": "str",
+                "product_link": "str",
+                "website_link": "str",
+                "description": "str",
+                "rating": "float",
+                "category": "str",
+                "product_type": "str",
+                "tag_list": ["str"],
+                "created_at": "str",
+                "updated_at": "str",
+                "product_api_url": "str",
+                "api_featured_image": "str",
+                "product_colors": ["str"]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "brand": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "price": {
+                            "type": "string"
+                        },
+                        "rating": {
+                            "type": "float"
+                        },
+                        "product_type": {
+                            "type": "string"
+                        },
+                        "tag_list": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

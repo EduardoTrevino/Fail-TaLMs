@@ -1,0 +1,163 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+
+def get_content_object(post_title: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve a specific content post object by post title.
+    Parameters:
+    post_title [Required]: string [The title of the post]
+    """
+    url = f"https://www.healthcare.gov/{post_title}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_content_collection(content_type: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve a list of post objects by content type.
+    Parameters:
+    content_type [Required]: string [The type of content like 'articles', 'blog', 'questions', etc.]
+    """
+    url = f"https://www.healthcare.gov/api/{content_type}.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def get_content_index(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Endpoint description: Retrieve a site-wide index of all posts and their metadata.
+    Parameters:
+    None
+    """
+    url = "https://www.healthcare.gov/api/index.json"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import get_content_object, get_content_collection, get_content_index
+
+
+class TestHealthcareGovAPI(unittest.TestCase):
+
+    def test_get_content_object(self):
+        response = get_content_object("accessibility", toolbench_rapidapi_key='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff')
+        self.assertIn("title", response)
+        self.assertEqual(response["url"], "https://www.healthcare.gov/accessibility")
+
+    def test_get_content_collection(self):
+        response = get_content_collection("glossary", toolbench_rapidapi_key='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff')
+        self.assertIn("glossary", response)
+
+    def test_get_content_index(self):
+        response = get_content_index(toolbench_rapidapi_key='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff')
+        self.assertIsInstance(response, list)
+        if len(response) > 0:
+            self.assertIn("tags", response[0])
+            self.assertIn("title", response[0])
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### healthcaregov.json
+```json
+{
+    "tool_name": "healthcaregov",
+    "tool_description": "API to access HealthCare.gov content including articles, blog posts, glossary terms, and a content index.",
+    "title": "HealthCare.gov Content API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.healthcare.gov/developers/",
+    "host": "www.healthcare.gov",
+    "api_list": [
+        {
+            "name": "get_content_object",
+            "url": "https://www.healthcare.gov/:post-title.json",
+            "description": "Retrieve a specific content post object by post title.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "post_title",
+                    "type": "STRING",
+                    "description": "The title of the post"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "url": "string",
+                "title": "string",
+                "content": "string",
+                "author": "string",
+                "date": "string",
+                "lang": "string",
+                "categories": "array",
+                "tags": "array",
+                "topics": "array",
+                "layout": "string",
+                "order": "integer"
+            }
+        },
+        {
+            "name": "get_content_collection",
+            "url": "https://www.healthcare.gov/api/:content-type.json",
+            "description": "Retrieve a list of post objects by content type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "content_type",
+                    "type": "STRING",
+                    "description": "The type of content like 'articles', 'blog', 'questions', etc."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "content-type": "array"
+            }
+        },
+        {
+            "name": "get_content_index",
+            "url": "https://www.healthcare.gov/api/index.json",
+            "description": "Retrieve a site-wide index of all posts and their metadata.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "tags": "array",
+                "categories": "array",
+                "topics": "array",
+                "title": "string",
+                "es-title": "string",
+                "url": "string",
+                "bite": "string",
+                "es-bite": "string",
+                "state": "array"
+            }
+        }
+    ]
+}
+```

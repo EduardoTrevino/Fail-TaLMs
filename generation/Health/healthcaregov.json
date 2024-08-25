@@ -1,0 +1,83 @@
+{
+    "tool_name": "healthcaregov",
+    "tool_description": "API to access HealthCare.gov content including articles, blog posts, glossary terms, and a content index.",
+    "title": "HealthCare.gov Content API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 100,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.healthcare.gov/developers/",
+    "host": "www.healthcare.gov",
+    "api_list": [
+        {
+            "name": "get_content_object",
+            "url": "https://www.healthcare.gov/:post-title.json",
+            "description": "Retrieve a specific content post object by post title.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "post_title",
+                    "type": "STRING",
+                    "description": "The title of the post"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "url": "string",
+                "title": "string",
+                "content": "string",
+                "author": "string",
+                "date": "string",
+                "lang": "string",
+                "categories": "array",
+                "tags": "array",
+                "topics": "array",
+                "layout": "string",
+                "order": "integer"
+            }
+        },
+        {
+            "name": "get_content_collection",
+            "url": "https://www.healthcare.gov/api/:content-type.json",
+            "description": "Retrieve a list of post objects by content type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "content_type",
+                    "type": "STRING",
+                    "description": "The type of content like 'articles', 'blog', 'questions', etc."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "content-type": "array"
+            }
+        },
+        {
+            "name": "get_content_index",
+            "url": "https://www.healthcare.gov/api/index.json",
+            "description": "Retrieve a site-wide index of all posts and their metadata.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "tags": "array",
+                "categories": "array",
+                "topics": "array",
+                "title": "string",
+                "es-title": "string",
+                "url": "string",
+                "bite": "string",
+                "es-bite": "string",
+                "state": "array"
+            }
+        }
+    ]
+}
