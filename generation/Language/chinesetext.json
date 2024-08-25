@@ -1,0 +1,144 @@
+{
+    "tool_name": "chinesetext",
+    "tool_description": "API for accessing data about Chinese texts, characters, dynasties, and more.",
+    "title": "Chinese Text Project API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.0,
+        "__typename": "Score"
+    },
+    "home_url": "http://ctext.org/tools/api",
+    "host": "api.ctext.org",
+    "api_list": [
+        {
+            "name": "getcapabilities",
+            "url": "https://api.ctext.org/getcapabilities",
+            "description": "Returns a list of available API functions and list of their parameters.",
+            "method": "GET"
+        },
+        {
+            "name": "getcharacter",
+            "url": "https://api.ctext.org/getcharacter",
+            "description": "Returns basic data about a character.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "char",
+                    "type": "STRING",
+                    "description": "Character to describe."
+                }
+            ]
+        },
+        {
+            "name": "getdictionaryheadwords",
+            "url": "https://api.ctext.org/getdictionaryheadwords",
+            "description": "Returns a complete list of headwords for distinct word senses, names, and places having entries in the CTP dictionary.",
+            "method": "GET"
+        },
+        {
+            "name": "getdynasties",
+            "url": "https://api.ctext.org/getdynasties",
+            "description": "Returns a list of identifiers, labels, and dates for dynasties used in the Chinese Text Project.",
+            "method": "GET"
+        },
+        {
+            "name": "getlink",
+            "url": "https://api.ctext.org/getlink",
+            "description": "Returns a http://ctext.org URL corresponding to a URN.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "urn",
+                    "type": "STRING",
+                    "description": "URN specifying the text to return a link to."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "redirect",
+                    "type": "INTEGER",
+                    "description": "If set to 1, do not return a JSON response, but instead return an HTTP 30x response.",
+                    "default": "0"
+                },
+                {
+                    "name": "search",
+                    "type": "STRING",
+                    "description": "Link to human-readable search results for the phrase within the specified URN."
+                }
+            ]
+        },
+        {
+            "name": "getstats",
+            "url": "https://api.ctext.org/getstats",
+            "description": "Machine-readable interface to data available at http://ctext.org/system-statistics",
+            "method": "GET"
+        },
+        {
+            "name": "getstatus",
+            "url": "https://api.ctext.org/getstatus",
+            "description": "Returns the status of the current client-server relationship.",
+            "method": "GET"
+        },
+        {
+            "name": "gettext",
+            "url": "https://api.ctext.org/gettext",
+            "description": "Returns the textual content of a chapter of text.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "urn",
+                    "type": "STRING",
+                    "description": "URN specifying the text to return."
+                }
+            ]
+        },
+        {
+            "name": "gettextinfo",
+            "url": "https://api.ctext.org/gettextinfo",
+            "description": "Returns metadata about a textual object.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "urn",
+                    "type": "STRING",
+                    "description": "URN specifying the text to describe."
+                }
+            ]
+        },
+        {
+            "name": "gettexttitles",
+            "url": "https://api.ctext.org/gettexttitles",
+            "description": "Returns a complete list of top-level textual items in the textual database and Wiki.",
+            "method": "GET"
+        },
+        {
+            "name": "readlink",
+            "url": "https://api.ctext.org/readlink",
+            "description": "Returns a URN corresponding to a http://ctext.org URL.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "URL specifying a text on http://ctext.org."
+                }
+            ]
+        },
+        {
+            "name": "searchtexts",
+            "url": "https://api.ctext.org/searchtexts",
+            "description": "Returns a list of items in the textual database and Wiki matching specified parameters.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "title",
+                    "type": "STRING",
+                    "description": "Part or all of the text title."
+                }
+            ]
+        }
+    ]
+}

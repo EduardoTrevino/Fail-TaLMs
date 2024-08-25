@@ -1,0 +1,132 @@
+{
+    "tool_name": "purgomalum",
+    "tool_description": "API for filtering and removing profanity and unwanted text, allowing customization and returning results in multiple formats.",
+    "title": "PurgoMalum API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.4
+    },
+    "home_url": "https://www.purgomalum.com",
+    "host": "purgomalum.com",
+    "api_list": [
+        {
+            "name": "contains_profanity",
+            "url": "https://www.purgomalum.com/service/containsprofanity",
+            "description": "Check if input text contains profanity.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "description": "Input text to be checked for profanity."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "requests.get('https://www.purgomalum.com/service/containsprofanity', params={'text': text})",
+            "statuscode": 200,
+            "body": "true or false"
+        },
+        {
+            "name": "filter_text_json",
+            "url": "https://www.purgomalum.com/service/json",
+            "description": "Filter profanity from text and return result as JSON.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "description": "Input text to be processed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "add",
+                    "type": "STRING",
+                    "description": "Comma separated words to add to the profanity list."
+                },
+                {
+                    "name": "fill_text",
+                    "type": "STRING",
+                    "description": "Text for replacing profane words."
+                },
+                {
+                    "name": "fill_char",
+                    "type": "STRING",
+                    "description": "Character to replace profane words."
+                }
+            ],
+            "code": "requests.get('https://www.purgomalum.com/service/json', params={'text': text, 'add': add, 'fill_text': fill_text, 'fill_char': fill_char})",
+            "statuscode": 200,
+            "body": {"result": "resulting text"}
+        },
+        {
+            "name": "filter_text_plain",
+            "url": "https://www.purgomalum.com/service/plain",
+            "description": "Filter profanity from text and return result as plain text.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "description": "Input text to be processed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "add",
+                    "type": "STRING",
+                    "description": "Comma separated words to add to the profanity list."
+                },
+                {
+                    "name": "fill_text",
+                    "type": "STRING",
+                    "description": "Text for replacing profane words."
+                },
+                {
+                    "name": "fill_char",
+                    "type": "STRING",
+                    "description": "Character to replace profane words."
+                }
+            ],
+            "code": "requests.get('https://www.purgomalum.com/service/plain', params={'text': text, 'add': add, 'fill_text': fill_text, 'fill_char': fill_char})",
+            "statuscode": 200,
+            "body": "resulting text"
+        },
+        {
+            "name": "filter_text_xml",
+            "url": "https://www.purgomalum.com/service/xml",
+            "description": "Filter profanity from text and return result as XML.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "description": "Input text to be processed."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "add",
+                    "type": "STRING",
+                    "description": "Comma separated words to add to the profanity list."
+                },
+                {
+                    "name": "fill_text",
+                    "type": "STRING",
+                    "description": "Text for replacing profane words."
+                },
+                {
+                    "name": "fill_char",
+                    "type": "STRING",
+                    "description": "Character to replace profane words."
+                }
+            ],
+            "code": "requests.get('https://www.purgomalum.com/service/xml', params={'text': text, 'add': add, 'fill_text': fill_text, 'fill_char': fill_char})",
+            "statuscode": 200,
+            "body": "<PurgoMalum><result>resulting text</result></PurgoMalum>"
+        }
+    ]
+}

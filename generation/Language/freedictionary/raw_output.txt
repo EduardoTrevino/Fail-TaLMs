@@ -1,0 +1,136 @@
+**### api.py**
+
+```python
+import requests
+from typing import Optional
+
+def get_word_definition(word: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> dict:
+    """
+    Retrieves the definition of the specified English word from the FreeDictionary API.
+    
+    Parameters:
+    - word (str): The word to get the definition for.
+    
+    Returns:
+    - dict: The API response containing the word definition.
+    """
+    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+**### api_test.py**
+
+```python
+import unittest
+from api import get_word_definition
+
+class TestFreeDictionaryAPI(unittest.TestCase):
+
+    def test_get_word_definition_valid(self):
+        """
+        Test fetching a valid word definition.
+        """
+        response = get_word_definition("hello")
+        self.assertIsInstance(response, list)
+        self.assertIn("word", response[0])
+        self.assertEqual(response[0]["word"], "hello")
+
+    def test_get_word_definition_invalid(self):
+        """
+        Test checking response for an invalid word.
+        """
+        response = get_word_definition("nonexistentwordthatisunlikely")
+        self.assertTrue(any("title" in entry for entry in response))  # API should return a title for error
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**### freedictionary.json**
+
+```json
+{
+    "tool_name": "freedictionary",
+    "tool_description": "API to access definitions of English words.",
+    "title": "Free Dictionary API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://dictionaryapi.dev/",
+    "host": "api.dictionaryapi.dev",
+    "api_list": [
+        {
+            "name": "get_word_definition",
+            "url": "https://api.dictionaryapi.dev/api/v2/entries/en/<word>",
+            "description": "Retrieve the definition of the specified English word.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "word",
+                    "type": "STRING",
+                    "description": "The word to get the definition for.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.dictionaryapi.dev/api/v2/entries/en/<word>'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "word": "string",
+                    "phonetic": "string",
+                    "phonetics": [
+                        {
+                            "text": "string",
+                            "audio": "string"
+                        }
+                    ],
+                    "origin": "string",
+                    "meanings": [
+                        {
+                            "partOfSpeech": "string",
+                            "definitions": [
+                                {
+                                    "definition": "string",
+                                    "example": "string",
+                                    "synonyms": [],
+                                    "antonyms": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "word": {"type": "string"},
+                        "phonetic": {"type": "string"},
+                        "phonetics": {
+                            "type": "array",
+                            "items": {"type": "object"}
+                        },
+                        "origin": {"type": "string"},
+                        "meanings": {
+                            "type": "array",
+                            "items": {"type": "object"}
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
+```

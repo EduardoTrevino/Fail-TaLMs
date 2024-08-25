@@ -1,0 +1,301 @@
+### api.py
+```python
+import requests
+from typing import Optional
+
+def get_version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns date information about the CCDB service, the Unicode version/date the data came from, and PHP/MySQL versions.
+    """
+    url = "http://ccdb.hemiola.com/version"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_fields(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a list of all field names in the database.
+    """
+    url = "http://ccdb.hemiola.com/fields"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_all_characters(filter: Optional[str] = None, fields: Optional[str] = None, count: bool = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns all characters, optionally filtered, or the count of characters.
+    """
+    url = "http://ccdb.hemiola.com/characters"
+    params = {}
+    if filter:
+        params['filter'] = filter
+    if fields:
+        params['fields'] = fields
+    if count:
+        params['count'] = ''
+    
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_characters_by_radical(radical: int, strokes: Optional[int] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns characters that use a specific Kangxi radical, optionally filtered by additional strokes.
+    """
+    url = f"http://ccdb.hemiola.com/characters/radicals/{radical}"
+    params = {}
+    if strokes is not None:
+        params['strokes'] = strokes
+    
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_strokes(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a list of valid total strokes and a count of characters with each number of total strokes.
+    """
+    url = "http://ccdb.hemiola.com/strokes"
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+def get_sounds_mandarin(with_pitch: bool = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    Returns a list of Mandarin sounds, optionally with pitch.
+    """
+    url = "http://ccdb.hemiola.com/sounds/mandarin"
+    if with_pitch:
+        url += "/with-pitch"
+    
+    response = requests.get(url)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+### api_test.py
+```python
+import unittest
+from api import (
+    get_version, 
+    get_fields, 
+    get_all_characters, 
+    get_characters_by_radical,
+    get_strokes,
+    get_sounds_mandarin
+)
+
+class TestChineseCharacterWebAPI(unittest.TestCase):
+
+    def test_get_version(self):
+        result = get_version()
+        self.assertIsInstance(result, dict)
+        self.assertIn('phpVersion', result)
+
+    def test_get_fields(self):
+        result = get_fields()
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_get_all_characters(self):
+        result = get_all_characters(filter='gb', fields='kDefinition,kMandarin', count=False)
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_get_all_characters_count(self):
+        result = get_all_characters(filter='gb', count=True)
+        self.assertIsInstance(result, dict)
+        self.assertIn('count', result)
+
+    def test_get_characters_by_radical(self):
+        result = get_characters_by_radical(85, strokes=10)
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_get_strokes(self):
+        result = get_strokes()
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_get_sounds_mandarin(self):
+        result = get_sounds_mandarin(with_pitch=True)
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+### chinesecharacterweb.json
+```json
+{
+    "tool_name": "chinesecharacterweb",
+    "tool_description": "The Chinese Character Web API provides a programmatic way to get information about Chinese characters from the Unihan Database.",
+    "title": "Chinese Character Web API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 100,
+        "avgSuccessRate": 95,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "http://ccdb.hemiola.com",
+    "host": "ccdb.hemiola.com",
+    "api_list": [
+        {
+            "name": "get_version",
+            "url": "http://ccdb.hemiola.com/version",
+            "description": "Returns date information about the CCDB service, the Unicode version, and the PHP/MySQL versions.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nurl = 'http://ccdb.hemiola.com/version'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "date": "str",
+                "unicodeVersion": "str",
+                "phpVersion": "str",
+                "mysqlVersion": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_fields",
+            "url": "http://ccdb.hemiola.com/fields",
+            "description": "Returns a list of all field names in the database.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nurl = 'http://ccdb.hemiola.com/fields'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "fields": ["str"]
+            },
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_all_characters",
+            "url": "http://ccdb.hemiola.com/characters",
+            "description": "Returns all characters, optionally filtered, or the count of characters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter",
+                    "type": "STRING",
+                    "description": "Filter for the characters."
+                },
+                {
+                    "name": "fields",
+                    "type": "STRING",
+                    "description": "Specify fields for the characters."
+                },
+                {
+                    "name": "count",
+                    "type": "BOOLEAN",
+                    "description": "Return count instead of characters."
+                }
+            ],
+            "code": "import requests\nurl = 'http://ccdb.hemiola.com/characters'\nparams = {'filter': filter, 'fields': fields, 'count': count}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "characters": ["str"],
+                "count": "int"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_characters_by_radical",
+            "url": "http://ccdb.hemiola.com/characters/radicals/{radical}",
+            "description": "Returns characters that use a specific Kangxi radical.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "radical",
+                    "type": "INTEGER",
+                    "description": "Kangxi radical number."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "strokes",
+                    "type": "INTEGER",
+                    "description": "Filter by number of additional strokes."
+                }
+            ],
+            "code": "import requests\nurl = f'http://ccdb.hemiola.com/characters/radicals/{radical}'\nparams = {'strokes': strokes}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "characters": ["str"]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_strokes",
+            "url": "http://ccdb.hemiola.com/strokes",
+            "description": "Returns a list of total strokes and a count of characters with each stroke count.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\nurl = 'http://ccdb.hemiola.com/strokes'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "strokes": ["int", "int"],
+                "count": ["int", "int"]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_sounds_mandarin",
+            "url": "http://ccdb.hemiola.com/sounds/mandarin",
+            "description": "Returns a list of Mandarin sounds, optionally with pitch.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "with_pitch",
+                    "type": "BOOLEAN",
+                    "description": "Include pitch in sounds."
+                }
+            ],
+            "code": "import requests\nurl = 'http://ccdb.hemiola.com/sounds/mandarin'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "mandarin": ["str"]
+            },
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}
+```

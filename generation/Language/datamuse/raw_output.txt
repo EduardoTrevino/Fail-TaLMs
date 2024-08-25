@@ -1,0 +1,248 @@
+## **api.py**
+
+```python
+import requests
+from typing import Optional, List
+
+def words(ml: Optional[str] = None, sl: Optional[str] = None, sp: Optional[str] = None, 
+          rel_code: Optional[str] = None, v: Optional[str] = None, topics: Optional[str] = None, 
+          lc: Optional[str] = None, rc: Optional[str] = None, max: Optional[int] = 100, 
+          md: Optional[str] = None, qe: Optional[str] = None, 
+          toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[dict]:
+    """
+    The /words endpoint returns a list of words and multiword expressions from a given vocabulary 
+    matching a set of constraints. 
+    
+    Parameters:
+    - ml (Optional): string. Means like constraint.
+    - sl (Optional): string. Sounds like constraint.
+    - sp (Optional): string. Spelled like constraint.
+    - rel_code (Optional): string. Related word constraints, e.g., 'syn', 'ant'.
+    - v (Optional): string. Identifier for the vocabulary to use.
+    - topics (Optional): string. Topic hint words.
+    - lc (Optional): string. Left context hint word.
+    - rc (Optional): string. Right context hint word.
+    - max (Optional): int. Maximum number of results to return (default 100).
+    - md (Optional): string. Metadata flags, e.g., 'd', 'p'.
+    - qe (Optional): string. Query echo.
+
+    Returns a list of word objects.
+    """
+    url = "https://api.datamuse.com/words"
+    params = {k: v for k, v in locals().items() if v is not None and k != 'toolbench_rapidapi_key'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+
+
+def sug(s: str, max: Optional[int] = 10, v: Optional[str] = None,
+        toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[dict]:
+    """
+    The /sug endpoint provides word suggestions given a partially-entered query for autocomplete.
+
+    Parameters:
+    - s: string. Prefix hint string entered by user.
+    - max (Optional): int. Maximum number of results to return (default is 10).
+    - v (Optional): string. Identifier for the vocabulary to use.
+
+    Returns a list of suggested word objects.
+    """
+    url = "https://api.datamuse.com/sug"
+    params = {k: v for k, v in locals().items() if v is not None and k != 'toolbench_rapidapi_key'}
+    response = requests.get(url, params=params)
+    try:
+        return response.json()
+    except Exception as e:
+        return {"error": str(e), "response": response.text}
+```
+
+## **api_test.py**
+
+```python
+import unittest
+from api import words, sug
+
+class TestDatamuseAPI(unittest.TestCase):
+    def test_words_standard_query(self):
+        response = words(ml="ringing in the ears", max=3)
+        self.assertIsInstance(response, list)
+        self.assertTrue(len(response) > 0)
+        self.assertTrue(all('word' in result for result in response))
+
+    def test_words_with_relational_constraints(self):
+        response = words(ml="spoon", sp="*a", max=3)
+        self.assertIsInstance(response, list)
+        self.assertTrue(len(response) > 0)
+
+    def test_sug_autocomplete(self):
+        response = sug(s="rawand", max=5)
+        self.assertIsInstance(response, list)
+        self.assertTrue(len(response) > 0)
+        self.assertTrue(all('word' in result for result in response))
+
+    def test_empty_query(self):
+        response = words()
+        self.assertIsInstance(response, list)
+        self.assertEqual(len(response), 0)
+
+    def test_invalid_s_query(self):
+        response = sug(s="")
+        self.assertIsInstance(response, list)
+        self.assertEqual(len(response), 0)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+## **datamuse.json**
+
+```json
+{
+    "tool_name": "datamuse",
+    "tool_description": "The Datamuse API is a word-finding query engine for developers, offering a variety of constraints on meaning, spelling, sound, and vocabulary.",
+    "title": "Datamuse API",
+    "pricing": "FREE for up to 100,000 requests per day",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 0.5,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.4,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.datamuse.com/api/",
+    "host": "api.datamuse.com",
+    "api_list": [
+        {
+            "name": "words",
+            "url": "https://api.datamuse.com/words",
+            "description": "Returns a list of words matching given constraints.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ml",
+                    "type": "STRING",
+                    "description": "Means like constraint."
+                },
+                {
+                    "name": "sl",
+                    "type": "STRING",
+                    "description": "Sounds like constraint."
+                },
+                {
+                    "name": "sp",
+                    "type": "STRING",
+                    "description": "Spelled like constraint."
+                },
+                {
+                    "name": "rel_code",
+                    "type": "STRING",
+                    "description": "Related word constraint codes like 'syn', 'trg'."
+                },
+                {
+                    "name": "v",
+                    "type": "STRING",
+                    "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+                },
+                {
+                    "name": "topics",
+                    "type": "STRING",
+                    "description": "Hints about the context or topic."
+                },
+                {
+                    "name": "lc",
+                    "type": "STRING",
+                    "description": "Left context hint."
+                },
+                {
+                    "name": "rc",
+                    "type": "STRING",
+                    "description": "Right context hint."
+                },
+                {
+                    "name": "max",
+                    "type": "INTEGER",
+                    "description": "Max number of results (default is 100).",
+                    "default": "100"
+                },
+                {
+                    "name": "md",
+                    "type": "STRING",
+                    "description": "Metadata flags like 'd' for definitions."
+                },
+                {
+                    "name": "qe",
+                    "type": "STRING",
+                    "description": "Query echo."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.datamuse.com/words'\nparams = {'ml': ml, 'sl': sl, 'sp': sp, 'rel_code': rel_code, 'v': v, 'topics': topics, 'lc': lc, 'rc': rc, 'max': max, 'md': md, 'qe': qe}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "word": "string",
+                    "score": "integer"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "word": {"type": "string"},
+                        "score": {"type": "integer"}
+                    }
+                }
+            }
+        },
+        {
+            "name": "sug",
+            "url": "https://api.datamuse.com/sug",
+            "description": "Provides word suggestions given a partial query for autocomplete.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "s",
+                    "type": "STRING",
+                    "description": "Prefix hint string entered by user."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "max",
+                    "type": "INTEGER",
+                    "description": "Max number of results (default is 10).",
+                    "default": "10"
+                },
+                {
+                    "name": "v",
+                    "type": "STRING",
+                    "description": "Vocab identifier, like in /words."
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.datamuse.com/sug'\nparams = {'s': s, 'max': max, 'v': v}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": [
+                {
+                    "word": "string",
+                    "score": "integer"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "word": {"type": "string"},
+                        "score": {"type": "integer"}
+                    }
+                }
+            }
+        }
+    ]
+}
+```
