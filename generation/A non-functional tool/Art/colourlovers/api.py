@@ -3,14 +3,35 @@ from typing import Optional, List, Dict
 
 BASE_URL = "http://www.colourlovers.com/api"
 
-def request_colorlovers_api(method: str, endpoint: str, params: Dict = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+def request_colorlovers_api(method: str, endpoint: str, params: Dict = None, toolbench_rapidapi_key: str = None):
     """
-    Helper function to request Colourlovers API.
+    Helper function to request ColourLovers API with error handling.
     """
     url = f"{BASE_URL}{endpoint}"
-    response = requests.get(url, params=params)
-    response.raise_for_status()  # Raise an error for bad status codes
-    return response.json() if 'json' in params.get("format", "xml") else response.text
+    headers = {}
+
+    # Include the API key if it’s required
+    if toolbench_rapidapi_key:
+        headers["Authorization"] = f"Bearer {toolbench_rapidapi_key}"
+
+    try:
+        response = requests.get(url, params=params, headers=headers)
+
+        # Handle 403 Forbidden with a specific message
+        if response.status_code == 403:
+            raise requests.exceptions.HTTPError(
+                f"403 Forbidden: Access to {url} is denied. Ensure your requests meet the API's requirements, and check if there are any IP-based or rate limits."
+            )
+
+        response.raise_for_status()  # Raise error for other bad status codes
+        return response.json() if 'json' in params.get("format", "xml") else response.text
+
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return {"error": str(http_err)}
+    except Exception as err:
+        print(f"An error occurred: {err}")
+        return {"error": str(err)}
 
 def colors(lover: Optional[str] = None, hueRange: Optional[str] = None, briRange: Optional[str] = None,
            keywords: Optional[str] = None, keywordExact: int = 0, orderCol: Optional[str] = None,

@@ -1,4 +1,5 @@
 import requests
+import mimetypes
 from typing import Optional
 
 def compress_image_get_method(img_url: str, qlty: Optional[int] = 92, exif: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
@@ -32,7 +33,7 @@ def compress_image_post_method(file_path: str, qlty: Optional[int] = 92, toolben
     mime_type = 'image/jpeg'  # Default mime type
     output = None
     try:
-        mime_type = requests.utils.guess_mime_type(file_path) or mime_type
+        mime_type = mimetypes.guess_type(file_path)[0] or mime_type
         output = ('files', (file_path, open(file_path, 'rb'), mime_type))
     except FileNotFoundError:
         return {"error": "File not found", "response": None}

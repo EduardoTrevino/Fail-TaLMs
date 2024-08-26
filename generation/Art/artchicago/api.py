@@ -91,9 +91,9 @@ def places_search(q: str, query: Optional[str] = None, sort: Optional[str] = Non
     response = requests.get(url, params=params)
     return response.json()
 
-def place_by_id(place_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    url = f"{BASE_URL}/places/{place_id}"
-    response = requests.get(url)
-    return response.json()
+# def place_by_id(place_id: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+#     url = f"{BASE_URL}/places/{place_id}"
+#     response = requests.get(url)
+#     return response.json()
 
 # More functions for other endpoints should follow the same pattern
