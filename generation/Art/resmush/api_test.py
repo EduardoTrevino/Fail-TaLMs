@@ -1,7 +1,7 @@
 import unittest
 from api import compress_image_get_method, compress_image_post_method
 
-class TestRemushAPI(unittest.TestCase):
+class TestResmushAPI(unittest.TestCase):
     
     def test_compress_image_get_method_success(self):
         # Test with a valid image URL
