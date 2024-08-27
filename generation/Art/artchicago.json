@@ -88,6 +88,43 @@
                 {"name": "size", "type": "INTEGER", "default": 10},
                 {"name": "facets", "type": "STRING", "default": null}
             ]
+        },
+        {
+            "name": "agent_by_id",
+            "url": "https://api.artic.edu/api/v1/agents/{agent_id}",
+            "description": "Search for agents by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "agent_id", "type": "INTEGER", "default": 1}
+            ]
+        },
+        {
+            "name": "places",
+            "url": "https://api.artic.edu/api/v1/places",
+            "description": "Paginated list of places.",
+            "method": "GET",
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "default": null},
+                {"name": "limit", "type": "INTEGER", "default": 2},
+                {"name": "page", "type": "INTEGER", "default": 1},
+                {"name": "fields", "type": "STRING", "default": null}
+            ]
+        },
+        {
+            "name": "places_search",
+            "url": "https://api.artic.edu/api/v1/places/search",
+            "description": "Search results for places.",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "q", "type": "STRING", "default": "sample query"}
+            ],
+            "optional_parameters": [
+                {"name": "query", "type": "STRING", "default": null},
+                {"name": "sort", "type": "STRING", "default": null},
+                {"name": "from", "type": "INTEGER", "default": 0},
+                {"name": "size", "type": "INTEGER", "default": 10},
+                {"name": "facets", "type": "STRING", "default": null}
+            ]
         }
     ]
 }
