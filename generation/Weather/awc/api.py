@@ -298,19 +298,3 @@ def get_obstacle(
         return response.json()
     except Exception as e:
         return {"error": str(e), "response": response.text}
-    
-# print(get_metar())
-# print(get_taf())
-# print(get_pirep())
-# print(get_airsigmet())
-# print(get_isigmet())
-# print(get_gairmet())
-# print(get_cwa())
-# print(get_windtemp())
-# print(get_areafcst('gulf'))
-# print(get_fcstdisc())
-# print(get_mis())
-# print(get_stationinfo())
-# print(get_airport())
-# print(get_feature(bbox='35,-90,45,-80'))
-# print(get_obstacle(bbox='35,-90,45,-80'))

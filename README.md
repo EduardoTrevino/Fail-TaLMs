@@ -222,7 +222,7 @@ Please update as you add and intergrate diffrent apis
 | Transportation   | MBTA                             | 0          | :x:        | TBD      |
 | Transportation   | Metro Lisboa                     | 0          | :x:        | TBD      |
 | Weather          | 7Timer!                          | 2          | ✅         | TBD      |
-| Weather          | Aviation Weather Center          | 0          | :x:        | TBD      |
+| Weather          | Aviation Weather Center          | 0          | ✅         | TBD      |
 | Weather          | Open-Meteo                       | 0          | ✅         | TBD      |
 | Weather          | openSenseMap                     | 0          | ✅         | TBD      |
 | Weather          | SG Weather                       | 0          | :x:        | TBD      |
