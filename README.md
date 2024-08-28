@@ -203,7 +203,7 @@ Please update as you add and intergrate diffrent apis
 | Science          | SpaceX                           | 2          | 🟢         | TBD      |
 | Science          | SunriseSunset                    | 0          | :x:        | TBD      |
 | Science          | TheSpaceDevs                     | 0          | :x:        | TBD      |
-| Science          | USGS Earthquake Catalog          | 0          | :x:        | TBD      |
+| Science          | USGS Earthquake Catalog          | 0          | ✅         | TBD      |
 | Sports           | CityBikes                        | 0          | :x:        | TBD      |
 | Sports           | Ergast F1                        | 0          | :x:        | TBD      |
 | Sports           | Football-Data                    | 0          | ✅         | TBD      |
