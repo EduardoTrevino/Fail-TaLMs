@@ -45,12 +45,10 @@ def get_alerts(
         "fields[alert]": fields_alert,
         "include": include
     }
-    headers = {
-        'x-api-key': toolbench_rapidapi_key  # Assumes the API requires this key
-    }
-    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -60,12 +58,10 @@ def get_alert_detail(alert_id: str, toolbench_rapidapi_key: str = '088440d910msh
     Get details of a specific alert by ID.
     """
     url = f"{BASE_URL}/alerts/{alert_id}"
-    headers = {
-        'x-api-key': toolbench_rapidapi_key
-    }
-    response = requests.get(url, headers=headers)
+    
+    response = requests.get(url)
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -90,12 +86,10 @@ def get_facilities(
         "fields[facility]": fields_facility,
         "include": include
     }
-    headers = {
-        'x-api-key': toolbench_rapidapi_key
-    }
-    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -105,12 +99,10 @@ def get_facility_detail(facility_id: str, toolbench_rapidapi_key: str = '088440d
     Get details of a specific facility by ID.
     """
     url = f"{BASE_URL}/facilities/{facility_id}"
-    headers = {
-        'x-api-key': toolbench_rapidapi_key
-    }
-    response = requests.get(url, headers=headers)
+    
+    response = requests.get(url)
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -133,12 +125,10 @@ def get_lines(
         "fields[line]": fields_line,
         "include": include
     }
-    headers = {
-        'x-api-key': toolbench_rapidapi_key
-    }
-    response = requests.get(url, params={k: v for k, v in params.items() if v is not None}, headers=headers)
+    
+    response = requests.get(url, params={k: v for k, v in params.items() if v is not None})
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -148,12 +138,10 @@ def get_line_detail(line_id: str, toolbench_rapidapi_key: str = '088440d910mshef
     Get details of a specific line by ID.
     """
     url = f"{BASE_URL}/lines/{line_id}"
-    headers = {
-        'x-api-key': toolbench_rapidapi_key
-    }
-    response = requests.get(url, headers=headers)
+    
+    response = requests.get(url)
     try:
-        return response.json()
+        return str(response.json())
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
