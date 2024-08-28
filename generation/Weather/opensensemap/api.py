@@ -1,5 +1,6 @@
 import requests
 from typing import Optional, List
+import json
 
 # Endpoint functions for OpenSenseMap API
 
@@ -112,7 +113,7 @@ def get_idw_statistics(bbox: str, phenomenon: str, from_date: Optional[str] = No
     
     response = requests.get(url, params=params)
     try:
-        return response.json()
+        return str(json.dumps(response.json()))
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -239,23 +240,23 @@ def get_latest_measurements_of_sense_box(sense_box_id: str, count: Optional[int]
         return {"error": str(e), "response": response.text}
 
 
-def get_latest_measurements_of_sensor(sense_box_id: str, sensor_id: str, only_value: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Get the latest measurements of a sensor.
+# def get_latest_measurements_of_sensor(sense_box_id: str, sensor_id: str, only_value: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+#     """
+#     Get the latest measurements of a sensor.
     
-    Parameters:
-    senseBoxId [Required]: string : The ID of the senseBox you are referring to.
-    sensorId [Required]: string : The ID of the sensor you are referring to.
-    onlyValue [Optional]: boolean : If true, only returns the measured value.
-    """
-    url = f"https://api.opensensemap.org/boxes/{sense_box_id}/sensors/{sensor_id}"
-    params = {'onlyValue': only_value}
+#     Parameters:
+#     senseBoxId [Required]: string : The ID of the senseBox you are referring to.
+#     sensorId [Required]: string : The ID of the sensor you are referring to.
+#     onlyValue [Optional]: boolean : If true, only returns the measured value.
+#     """
+#     url = f"https://api.opensensemap.org/boxes/{sense_box_id}/sensors/{sensor_id}"
+#     params = {'onlyValue': only_value}
     
-    response = requests.get(url, params=params)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
+#     response = requests.get(url, params=params)
+#     try:
+#         return response.json()
+#     except Exception as e:
+#         return {"error": str(e), "response": response.text}
 
 
 def get_stats(human: Optional[bool] = False, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
@@ -286,3 +287,6 @@ def print_routes(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17a
         return response.json()
     except Exception as e:
         return {"error": str(e), "response": response.text}
+    
+# print(get_idw_statistics("7.6,51.2,7.8,51.4", "Temperatur"))
+# print(get_latest_measurements_of_sensor("57000b8745fd40c8196ad04c", "57000b8745fd40c8196ad050"))

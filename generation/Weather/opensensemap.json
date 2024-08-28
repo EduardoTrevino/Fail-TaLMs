@@ -1,82 +1,88 @@
 {
-    "tool_name": "opensensemap",
-    "tool_description": "API to access real-time environmental data provided by citizens from senseBoxes deployed across the world.",
-    "title": "OpenSenseMap API",
-    "pricing": "FREE",
-    "score": {
-        "avgServiceLevel": 95,
-        "avgLatency": 200,
-        "avgSuccessRate": 99,
-        "popularityScore": 8.5,
-        "__typename": "Score"
+  "tool_name": "opensensemap",
+  "tool_description": "API to access real-time environmental data provided by citizens from senseBoxes deployed across the world.",
+  "title": "OpenSenseMap API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://docs.opensensemap.org/",
+  "host": "api.opensensemap.org",
+  "api_list": [
+    {
+      "name": "get_boxes",
+      "url": "https://api.opensensemap.org/boxes/:senseBoxId",
+      "description": "Get information about a single senseBox.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "sense_box_id",
+          "type": "STRING",
+          "description": "The ID of the senseBox you are referring to."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "The format the sensor data is returned in.",
+          "default": "json"
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        /* truncated for brevity */
+      }
     },
-    "home_url": "https://docs.opensensemap.org/",
-    "host": "api.opensensemap.org",
-    "api_list": [
+    {
+      "name": "get_all_boxes",
+      "url": "https://api.opensensemap.org/boxes",
+      "description": "Get all senseBoxes.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
         {
-            "name": "get_boxes",
-            "url": "https://api.opensensemap.org/boxes/:senseBoxId",
-            "description": "Get information about a single senseBox.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "sense_box_id",
-                    "type": "STRING",
-                    "description": "The ID of the senseBox you are referring to."
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "format",
-                    "type": "STRING",
-                    "description": "The format the sensor data is returned in.",
-                    "default": "json"
-                }
-            ],
-            "statuscode": 200,
-            "body": {/* truncated for brevity */}
-        },
+          "name": "limit",
+          "type": "NUMBER",
+          "description": "Limit the search results.",
+          "default": "5"
+        }
+        // Other parameters...
+      ],
+      "statuscode": 200,
+      "body": {
+        /* truncated for brevity */
+      }
+    },
+    {
+      "name": "get_locations",
+      "url": "https://api.opensensemap.org/boxes/:senseBoxId/locations",
+      "description": "Get all locations of the specified senseBox.",
+      "method": "GET",
+      "required_parameters": [
         {
-            "name": "get_all_boxes",
-            "url": "https://api.opensensemap.org/boxes",
-            "description": "Get all senseBoxes.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [
-                {
-                    "name": "limit",
-                    "type": "NUMBER",
-                    "description": "Limit the search results.",
-                    "default": "5"
-                },
-                // Other parameters...
-            ],
-            "statuscode": 200,
-            "body": {/* truncated for brevity */}
-        },
+          "name": "sense_box_id",
+          "type": "STRING",
+          "description": "The ID of the senseBox you are referring to."
+        }
+      ],
+      "optional_parameters": [
         {
-            "name": "get_locations",
-            "url": "https://api.opensensemap.org/boxes/:senseBoxId/locations",
-            "description": "Get all locations of the specified senseBox.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "sense_box_id",
-                    "type": "STRING",
-                    "description": "The ID of the senseBox you are referring to."
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "format",
-                    "type": "STRING",
-                    "description": "The format the data is returned in.",
-                    "default": "json"
-                }
-            ],
-            "statuscode": 200,
-            "body": {/* truncated for brevity */}
-        },
-        // Add others in similar fashion...
-    ]
+          "name": "format",
+          "type": "STRING",
+          "description": "The format the data is returned in.",
+          "default": "json"
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        /* truncated for brevity */
+      }
+    }
+    // Add others in similar fashion...
+  ]
 }

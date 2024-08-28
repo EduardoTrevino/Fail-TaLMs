@@ -16,7 +16,7 @@ Please update as you add and intergrate diffrent apis
 | Art & Images     | Placebear                        | 0          | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0          | :x:        | TBD      |
 | Art & Images     | RandomFox                        | 0          | :x:        | TBD      |
-| Art & Images     | ReSmush                          | 2          | 🟢         | TBD      |
+| Art & Images     | ReSmush                          | 2          | :x:        | TBD      |
 | Art & Images     | RoboHash                         | 0          | :x:        | TBD      |
 | Art & Images     | Vadivelu Status Codes            | 0          | :x:        | TBD      |
 | Calendar         | Nager.Date                       | 2          | 🟢         | TBD      |
@@ -223,7 +223,7 @@ Please update as you add and intergrate diffrent apis
 | Transportation   | Metro Lisboa                     | 0          | :x:        | TBD      |
 | Weather          | 7Timer!                          | 2          | ✅         | TBD      |
 | Weather          | Aviation Weather Center          | 0          | :x:        | TBD      |
-| Weather          | Open-Meteo                       | 0          | :x:        | TBD      |
-| Weather          | openSenseMap                     | 0          | :x:        | TBD      |
+| Weather          | Open-Meteo                       | 0          | ✅         | TBD      |
+| Weather          | openSenseMap                     | 0          | ✅         | TBD      |
 | Weather          | SG Weather                       | 0          | :x:        | TBD      |
 | Weather          | wttr                             | 0          | :x:        | TBD      |
