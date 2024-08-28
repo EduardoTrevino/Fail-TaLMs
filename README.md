@@ -200,8 +200,8 @@ Please update as you add and intergrate diffrent apis
 | Science          | Numbers                          | 0          | :x:        | TBD      |
 | Science          | Open Notify                      | 0          | :x:        | TBD      |
 | Science          | Spaceflight News                 | 0          | :x:        | TBD      |
-| Science          | SpaceX                           | 2          | 🟢         | TBD      |
-| Science          | SunriseSunset                    | 0          | :x:        | TBD      |
+| Science          | SpaceX                           | 2          | ✅         | TBD      |
+| Science          | SunriseSunset                    | 0          | ✅         | TBD      |
 | Science          | TheSpaceDevs                     | 0          | :x:        | TBD      |
 | Science          | USGS Earthquake Catalog          | 0          | ✅         | TBD      |
 | Sports           | CityBikes                        | 0          | :x:        | TBD      |

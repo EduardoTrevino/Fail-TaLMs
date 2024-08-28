@@ -65,7 +65,7 @@ class SpaceXAPITestCase(unittest.TestCase):
         self.assertIsInstance(response, list)
 
     def test_get_history_event_by_id(self):
-        response = get_history_event_by_id("5f6fb2e9b3467846b3242159")
+        response = get_history_event_by_id("5f6fb2cfdcfdf403df37971e")
         self.assertIsInstance(response, dict)
         self.assertIn("title", response)
 
