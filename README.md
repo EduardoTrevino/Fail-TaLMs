@@ -206,8 +206,8 @@ Please update as you add and intergrate diffrent apis
 | Science          | USGS Earthquake Catalog          | 0          | :x:        | TBD      |
 | Sports           | CityBikes                        | 0          | :x:        | TBD      |
 | Sports           | Ergast F1                        | 0          | :x:        | TBD      |
-| Sports           | Football-Data                    | 0          | :x:        | TBD      |
-| Sports           | nhlapi                           | 2          | 🟢         | TBD      |
+| Sports           | Football-Data                    | 0          | ✅         | TBD      |
+| Sports           | nhlapi                           | 2          | :x:        | TBD      |
 | Test Data        | Bacon Ipsum                      | 0          | :x:        | TBD      |
 | Test Data        | Faker                            | 0          | :x:        | TBD      |
 | Test Data        | JSONPlaceholder                  | 0          | :x:        | TBD      |
@@ -217,7 +217,7 @@ Please update as you add and intergrate diffrent apis
 | Test Data        | REST                             | 0          | :x:        | TBD      |
 | Test Data        | Softwium                         | 0          | :x:        | TBD      |
 | Test Data        | UUID Generator                   | 2          | ✅         | TBD      |
-| Transportation   | Derhuerst                        | 0          | :x:        | TBD      |
+| Transportation   | Derhuerst                        | 0          | ✅         | TBD      |
 | Transportation   | iRail                            | 2          | ✅         | TBD      |
 | Transportation   | MBTA                             | 0          | ✅         | TBD      |
 | Transportation   | Metro Lisboa                     | 0          | :x:        | TBD      |
