@@ -1,6 +1,7 @@
 import requests
 from typing import Optional
 
+# API_BASE_URL = "https://api-web.nhle.com/v1" # works but not with these endpoints
 API_BASE_URL = "https://statsapi.web.nhl.com/api/v1"
 
 def get_awards(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
