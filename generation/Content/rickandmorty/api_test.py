@@ -19,7 +19,7 @@ class TestRickAndMortyAPI(unittest.TestCase):
 
     def test_get_location_by_id(self):
         response = get_location_by_id(1)  # Earth
-        self.assertEqual(response['name'], "Earth")
+        self.assertEqual(response['name'], "Earth (C-137)")
 
     def test_get_episodes(self):
         response = get_episodes()

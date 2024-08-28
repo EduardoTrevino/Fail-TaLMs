@@ -32,6 +32,7 @@ class TestJikanAPI(unittest.TestCase):
 
     def test_get_character_by_id(self):
         response = get_character_by_id(1)
+        print(response)
         self.assertEqual(response['data']['mal_id'], 1)
 
     def test_get_character_anime(self):

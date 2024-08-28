@@ -11,7 +11,7 @@ from api import (
 class TestStapiEndpoints(unittest.TestCase):
 
     def test_get_animal(self):
-        uid = "example_uid"
+        uid = "ANMA0000032315"
         response = get_animal(uid)
         self.assertIn("animal", response)
 
@@ -20,7 +20,7 @@ class TestStapiEndpoints(unittest.TestCase):
         self.assertIn("animals", response)
 
     def test_get_book(self):
-        uid = "example_uid"
+        uid = "BOMA0000154026"
         response = get_book(uid)
         self.assertIn("book", response)
 
@@ -29,7 +29,7 @@ class TestStapiEndpoints(unittest.TestCase):
         self.assertIn("books", response)
 
     def test_get_character(self):
-        uid = "example_uid"
+        uid = "CHMA0000215045"
         response = get_character(uid)
         self.assertIn("character", response)
 
@@ -42,7 +42,7 @@ class TestStapiEndpoints(unittest.TestCase):
         self.assertIn("dataVersion", response)
 
     def test_get_episode(self):
-        uid = "example_uid"
+        uid = "EPMA0000001002"
         response = get_episode(uid)
         self.assertIn("episode", response)
 

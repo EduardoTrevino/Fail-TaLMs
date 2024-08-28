@@ -64,7 +64,7 @@ class TestTvMazeAPI(unittest.TestCase):
         self.assertTrue(len(result) > 0)
 
     def test_person_crew_credits(self):
-        result = person_crew_credits(person_id=1)
+        result = person_crew_credits(person_id=100)
         self.assertIsInstance(result, list)
         self.assertTrue(len(result) > 0)
 

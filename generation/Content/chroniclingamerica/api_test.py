@@ -13,11 +13,15 @@ from api import (
 class TestChroniclingAmericaAPI(unittest.TestCase):
     def test_search_titles(self):
         response = search_titles('michigan', format='json', page=1)
-        assert 'results' in response
+        # print(response)  # Debugging line
+        self.assertIn('items', response, f"'items' key not found in response: {response}")
+        self.assertIsInstance(response['items'], list, "Expected 'items' to be a list.")
 
     def test_search_pages(self):
         response = search_pages('thomas', format='json', page=1)
-        assert 'results' in response
+        # print(response)  # Debugging line
+        self.assertIn('items', response, f"'items' key not found in response: {response}")
+        self.assertIsInstance(response['items'], list, "Expected 'items' to be a list.")
 
     def test_suggest_titles(self):
         response = suggest_titles('Florida')
@@ -33,7 +37,7 @@ class TestChroniclingAmericaAPI(unittest.TestCase):
 
     def test_get_specific_batch_json(self):
         response = get_specific_batch_json('dlc_jamaica_ver01')
-        assert 'name' in response and 'pages' in response
+        assert 'name' in response and 'url' in response
 
     def test_get_awardees_json(self):
         response = get_awardees_json()
