@@ -1,7 +1,5 @@
 import unittest
 from api import (
-    show_current_user,
-    show_authorization_information,
     get_fiat_currencies,
     get_cryptocurrencies,
     get_exchange_rates,
@@ -16,14 +14,6 @@ class TestCoinbaseAPI(unittest.TestCase):
     def setUp(self):
         self.token = 'TEST_TOKEN'
         self.currency_pair = 'BTC-USD'
-
-    def test_show_current_user(self):
-        response = show_current_user(self.token)
-        self.assertIn('data', response)
-
-    def test_show_authorization_information(self):
-        response = show_authorization_information(self.token)
-        self.assertIn('data', response)
 
     def test_get_fiat_currencies(self):
         response = get_fiat_currencies()

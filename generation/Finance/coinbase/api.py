@@ -2,36 +2,6 @@ import requests
 from typing import Optional
 
 
-def show_current_user(token: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Endpoint description: Get current user's public information. To get user's email or private information, use permissions wallet:user:email and wallet:user:read.
-    """
-    url = "https://api.coinbase.com/v2/user"
-    headers = {
-        'Authorization': f'Bearer {token}'
-    }
-    response = requests.get(url, headers=headers)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-
-def show_authorization_information(token: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Endpoint description: Get current user's authorization information including granted scopes and send limits.
-    """
-    url = "https://api.coinbase.com/v2/user/auth"
-    headers = {
-        'Authorization': f'Bearer {token}'
-    }
-    response = requests.get(url, headers=headers)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-
 def get_fiat_currencies(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Endpoint description: Lists known fiat currencies.

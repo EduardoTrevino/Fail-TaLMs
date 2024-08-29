@@ -44,20 +44,6 @@ def get_venues(
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
-def create_venue(
-    venue: Dict[str, Any],
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Create a new venue.
-    """
-    url = "https://coinmap.org/api/v1/venues/"
-    response = requests.post(url, json=venue)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
 def get_venue(
     venue_id: int,
     toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
@@ -67,35 +53,6 @@ def get_venue(
     """
     url = f"https://coinmap.org/api/v1/venues/{venue_id}"
     response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-def update_venue(
-    venue_id: int,
-    venue: Dict[str, Any],
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Update an existing venue by ID.
-    """
-    url = f"https://coinmap.org/api/v1/venues/{venue_id}"
-    response = requests.put(url, json=venue)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-def delete_venue(
-    venue_id: int,
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Delete a specific venue by ID.
-    """
-    url = f"https://coinmap.org/api/v1/venues/{venue_id}"
-    response = requests.delete(url)
     try:
         return response.json()
     except Exception as e:
@@ -115,22 +72,6 @@ def get_comments(
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
-def create_comment(
-    venue_id: int,
-    text: str,
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Create a comment for a specific venue.
-    """
-    url = f"https://coinmap.org/api/v1/venues/{venue_id}/comments/"
-    data = {"text": text}
-    response = requests.post(url, json=data)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
 def get_rating(
     venue_id: int,
     toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
@@ -140,22 +81,6 @@ def get_rating(
     """
     url = f"https://coinmap.org/api/v1/venues/{venue_id}/ratings/"
     response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-def create_rating(
-    venue_id: int,
-    vote: int,
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Create or update a rating for a specific venue.
-    """
-    url = f"https://coinmap.org/api/v1/venues/{venue_id}/ratings/"
-    data = {"vote": vote}
-    response = requests.post(url, json=data)
     try:
         return response.json()
     except Exception as e:
@@ -181,19 +106,6 @@ def get_coins(
     Get a list of coins.
     """
     url = "https://coinmap.org/api/v1/coins/"
-    response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
-def get_providers(
-    toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'
-) -> Dict[str, Any]:
-    """
-    Get a list of ATM providers.
-    """
-    url = "https://coinmap.org/api/v1/providers/"
     response = requests.get(url)
     try:
         return response.json()
