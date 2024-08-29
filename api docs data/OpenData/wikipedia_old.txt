@@ -1,0 +1,224 @@
+Commons analytics
+Commons analytics provides data about the usage of categories and media files on Wikimedia Commons. This data is focused on categories associated with contributions from galleries, libraries, archives, and museums (GLAM).
+
+Available data
+Because of data size and complexity, Commons analytics data is only available for:
+
+categories on the allow list
+subcategories of allowed categories, up to seven steps from the allowed category on the category tree
+media files directly associated with any of these categories or subcategories
+To learn more about the underlying dataset and how to add a category to the allow list, see Commons Impact Metrics on Wikitech.
+
+Response properties
+For details about response properties, see the data model documentation on Wikitech.
+
+Categories
+Get time series of category metrics
+get
+/commons-analytics/category-metrics-snapshot/{category}/{start}/{end}
+Get time series of category metrics
+Get time series of edit counts for a given category
+get
+/commons-analytics/edits-per-category-monthly/{category}/{category-scope}/{edit-type}/{start}/{end}
+Get time series of edit counts for a given category
+Get time series of pageview counts for a given category
+get
+/commons-analytics/pageviews-per-category-monthly/{category}/{category-scope}/{wiki}/{start}/{end}
+Get time series of pageview counts for a given category
+Get ranking of most edited categories
+get
+/commons-analytics/top-edited-categories-monthly/{category-scope}/{edit-type}/{year}/{month}
+Get ranking of most edited categories
+Get ranking of categories with most pageviews
+get
+/commons-analytics/top-viewed-categories-monthly/{category-scope}/{wiki}/{year}/{month}
+Get ranking of categories with most pageviews
+Get ranking of wikis with most pageviews for a given category
+get
+/commons-analytics/top-wikis-per-category-monthly/{category}/{category-scope}/{year}/{month}
+Get ranking of wikis with most pageviews for a given category
+Get ranking of pages with most pageviews for a given category
+get
+/commons-analytics/top-pages-per-category-monthly/{category}/{category-scope}/{wiki}/{year}/{month}
+Get ranking of pages with most pageviews for a given category
+Get ranking of users with most edits to a given category
+get
+/commons-analytics/top-editors-monthly/{category}/{category-scope}/{edit-type}/{year}/{month}
+Get ranking of users with most edits to a given category
+Media files
+Get time series of media file metrics
+get
+/commons-analytics/media-file-metrics-snapshot/{media-file}/{start}/{end}
+Get time series of media file metrics
+Get time series of pageview counts for a given media file
+get
+/commons-analytics/pageviews-per-media-file-monthly/{media-file}/{wiki}/{start}/{end}
+Get time series of pageview counts for a given media file
+Get ranking of media files with most pageviews
+get
+/commons-analytics/top-viewed-media-files-monthly/{category}/{category-scope}/{wiki}/{year}/{month}
+Get ranking of media files with most pageviews
+Get ranking of wikis with most pageviews for a given media file
+get
+/commons-analytics/top-wikis-per-media-file-monthly/{media-file}/{year}/{month}
+Get ranking of wikis with most pageviews for a given media file
+Get ranking of pages with most pageviews for a given media file
+get
+/commons-analytics/top-pages-per-media-file-monthly/{media-file}/{wiki}/{year}/{month}
+Get ranking of pages with most pageviews for a given media file
+Users
+Get time series of edit counts for a given user
+get
+/commons-analytics/edits-per-user-monthly/{user-name}/{edit-type}/{start}/{end}
+Get time series of edit counts for a given user
+
+Device analytics
+Device analytics provides data about the number of unique devices that access Wikimedia projects.
+
+This endpoint only returns data for projects that have at least 1,000 unique devices for the requested time period. Projects with less than 1,000 unique devices show too much random variation for the data to be actionable. For more information, visit Last access solution on Wikitech.
+
+Get number of unique devices
+get
+/unique-devices/{project}/{access-site}/{granularity}/{start}/{end}
+Get number of unique devices
+
+Edit analytics
+Edit analytics provides data about the number of edits and edited pages on Wikimedia projects.
+
+Edits
+Data returned by these endpoints includes edits on redirects.
+
+Get number of edits
+get
+/edits/aggregate/{project}/{editor-type}/{page-type}/{granularity}/{start}/{end}
+Get number of edits
+Get number of edits to a page
+get
+/edits/per-page/{project}/{page-title}/{editor-type}/{granularity}/{start}/{end}
+Get number of edits to a page
+Changes in page length
+Data returned by these endpoints includes edits on redirects.
+
+Get net change, in bytes
+get
+/bytes-difference/net/aggregate/{project}/{editor-type}/{page-type}/{granularity}/{start}/{end}
+Get net change, in bytes
+Get net change for a page, in bytes
+get
+/bytes-difference/net/per-page/{project}/{page-title}/{editor-type}/{granularity}/{start}/{end}
+Get net change for a page, in bytes
+Get absolute change, in bytes
+get
+/bytes-difference/absolute/aggregate/{project}/{editor-type}/{page-type}/{granularity}/{start}/{end}
+Get absolute change, in bytes
+Get absolute change for a page, in bytes
+get
+/bytes-difference/absolute/per-page/{project}/{page-title}/{editor-type}/{granularity}/{start}/{end}
+Get absolute change for a page, in bytes
+Edited pages
+Data returned by these endpoints does not include edits on redirects.
+
+Get number of new pages
+get
+/edited-pages/new/{project}/{editor-type}/{page-type}/{granularity}/{start}/{end}
+Get number of new pages
+Get number of edited pages
+get
+/edited-pages/aggregate/{project}/{editor-type}/{page-type}/{activity-level}/{granularity}/{start}/{end}
+Get number of edited pages
+List most-edited pages by net difference in bytes
+get
+/edited-pages/top-by-net-bytes-difference/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-edited pages by net difference in bytes
+List most-edited pages by number of bytes changed
+get
+/edited-pages/top-by-absolute-bytes-difference/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-edited pages by number of bytes changed
+List most-edited pages by number of edits
+get
+/edited-pages/top-by-edits/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-edited pages by number of edits
+
+Editor analytics
+Editor analytics provides data about the number of editors and newly registered users of Wikimedia projects. Data returned by these endpoints includes edits on redirects.
+
+Get number of editors
+get
+/editors/aggregate/{project}/{editor-type}/{page-type}/{activity-level}/{granularity}/{start}/{end}
+Get number of editors
+Get number of editors by country
+get
+/editors/by-country/{project}/{activity-level}/{year}/{month}
+Get number of editors by country
+Get number of new users
+get
+/registered-users/new/{project}/{granularity}/{start}/{end}
+Get number of new users
+List most-active editors by net difference in bytes
+get
+/editors/top-by-net-bytes-difference/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-active editors by net difference in bytes
+List most-active editors by number of bytes changed
+get
+/editors/top-by-absolute-bytes-difference/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-active editors by number of bytes changed
+List most-active editors by number of edits
+get
+/editors/top-by-edits/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
+List most-active editors by number of edits
+
+Media file analytics
+Media file analytics provides data about requests for media files on Wikimedia projects. These endpoints serve data starting on January 1, 2015. For more information about the underlying dataset, see the docs on Wikitech.
+
+Media types
+Media types are classified according to file extensions.
+
+Extensions	Media type
+svg, png, tiff, tiff, jpeg, gif, xcf, webp, bmp	image
+mp3, ogg, oga, flac, wav, midi, midi	audio
+webm, ogv	video
+pdf, djvu, srt, txt	document
+(all other extensions)	other
+Filter limitations
+The ability to split and filter by referrer and by agent type is only available for data starting in May 2019. Before that, referrer is only split into internal, external, and unknown.
+
+Get number of media requests
+get
+/mediarequests/aggregate/{referer}/{media-type}/{agent}/{granularity}/{start}/{end}
+Get number of media requests
+Get number of media requests for a file
+get
+/mediarequests/per-file/{referer}/{agent}/{file-path}/{granularity}/{start}/{end}
+Get number of media requests for a file
+List most-requested files
+get
+/mediarequests/top/{referer}/{media-type}/{year}/{month}/{day}
+List most-requested files
+
+Page view analytics
+Page view analytics provides data about page views for Wikimedia projects. These endpoints serve data starting on July 1, 2015.
+
+Get number of page views
+get
+/pageviews/aggregate/{project}/{access}/{agent}/{granularity}/{start}/{end}
+Get number of page views
+Get number of page views by country
+get
+/pageviews/top-by-country/{project}/{access}/{year}/{month}
+Get number of page views by country
+Get number of page views for a page
+get
+/pageviews/per-article/{project}/{access}/{agent}/{article}/{granularity}/{start}/{end}
+Get number of page views for a page
+List most-viewed pages
+get
+/pageviews/top/{project}/{access}/{year}/{month}/{day}
+List most-viewed pages
+List most-viewed pages for a country
+get
+/pageviews/top-per-country/{country}/{access}/{year}/{month}/{day}
+List most-viewed pages for a country
+Get number of page views (legacy)
+get
+/legacy/pagecounts/aggregate/{project}/{access-site}/{granularity}/{start}/{end}
+Get number of page views (legacy)

@@ -63,10 +63,6 @@ class TestVehiclesAPI(unittest.TestCase):
         response = get_vehicle_types_for_make_id(450)
         self.assertIn('Results', response)
 
-    def test_get_equipment_plant_codes(self):
-        response = get_equipment_plant_codes(2015)
-        self.assertIn('Results', response)
-
     def test_get_models_for_make(self):
         response = get_models_for_make("honda")
         self.assertIn('Results', response)
@@ -85,11 +81,6 @@ class TestVehiclesAPI(unittest.TestCase):
 
     def test_get_vehicle_variable_values_list(self):
         response = get_vehicle_variable_values_list("battery type")
-        self.assertIn('Results', response)
-
-    def test_decode_vin_values_batch(self):
-        vins = "5UXWX7C5*BA,2011;5YJSA3DS*EF"
-        response = decode_vin_values_batch(vins)
         self.assertIn('Results', response)
 
     def test_get_canadian_vehicle_specifications(self):

@@ -1,3 +1,646 @@
+Getting started
+Wikimedia projects are free, collaborative repositories of knowledge, written and maintained by volunteers around the world. Each project hosts a different type of content, such as encyclopedia articles on Wikipedia and dictionary entries on Wiktionary. The Analytics API gives you open access to data about Wikimedia projects, including page views, unique device, and more.
+
+Projects and languages
+Most Wikimedia projects are created and maintained in a single language. This means that what we think of as Wikipedia is really over 300 different Wikipedias (English Wikipedia, Cebuano Wikipedia, Swedish Wikipedia, and many more) all with original articles in their own language. Single-language projects use the language code as the subdomain.
+
+Some projects are maintained in English and translated into other languages (like Commons), or they are created to be language neutral (like Wikispecies). These multilingual projects use the project name as the subdomain instead of a language code.
+
+For a complete list of projects and languages, visit the site matrix on Meta-Wiki.
+
+API overview
+API endpoints share a consistent URL structure that begins with:
+
+
+https://wikimedia.org/api/rest_v[version number]/metrics/
+The API uses HTTP request methods and response status codes and returns data in JSON format.
+
+Make your first request
+Get the number of monthly page views for English Wikipedia in 2023.
+
+sh
+curl https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/en.wikipedia.org/all-access/all-agents/monthly/2023010100/2024010100
+Try the sandbox
+Click on the box below to open the sandbox for the get number of page views endpoint.
+
+You can use the sandbox to explore the data by trying different parameters. Change the project parameter to get page views for Japanese Wikipedia (ja.wikipedia.org), or try different access methods and agent types.
+
+↓ CLICK TO EXPAND ↓
+get
+/pageviews/aggregate/{project}/{access}/{agent}/{granularity}/{start}/{end}
+Get number of page views
+Next steps
+Read about policies for data licensing and API rate limits.
+Discover the underlying concepts behind Wikimedia data, such as page views.
+Learn how to use the API with examples and tutorials, such as comparing page metrics.
+Explore available endpoints in the API reference, and try the sandbox for each endpoint.
+Other Wikimedia APIs
+Use the Analytics API alongside other APIs that allow you to interact with Wikimedia projects.
+
+Get wiki content and metadata with the MediaWiki Action API.
+Get daily featured content with the Wikimedia REST API.
+Get the most recent changes to Wikimedia projects with the Event Steams API.
+
+Access policy
+This page includes information to help you comply with Wikimedia's policies for using the Analytics API.
+
+Terms of use
+By using the API, you agree to Wikimedia's terms of use and privacy policy.
+
+Data licensing
+Data provided by the API is available under the CC0 1.0 license
+
+Client identification
+The API requires an HTTP User-Agent header for all requests. This helps identify your app and ensures that system administrators can contact you if a problem arises. Clients making requests without a User-Agent header may be blocked without notice. See the Wikimedia Foundation's User-Agent policy for more information.
+
+The User-Agent header can include a link to a user page on a Wikimedia wiki, a URL for a relevant external website, or an email address.
+
+
+# Preferred format for User-Agent headers
+<client name>/<version> (<contact information>) <library/framework name>/<version>
+If you are calling the API from browser-based JavaScript, you may not be able to influence the User-Agent header, depending on the browser. To work around this, use the Api-User-Agent header.
+
+Data downloads
+Datasets provided via the API can also be downloaded in bulk via dumps.wikimedia.org.
+
+Rate limits
+There's no fixed limit on requests to the API, but your client may be blocked if you endanger the stability of the service. To stay within a safe request rate, wait for each request to finish before sending another request.
+
+Page views
+A page view is a request for content of a page that receives a response of 200 OK or 304 Not Modified (a redirect to cached version of the page). The MIME type of such a request is text/html for web browsers, or application/json for mobile app requests.
+
+Additionally, the following rules apply when identifying page views:
+
+API requests count as page views if they come from the mobile app.
+Most requests to pages in the Special namespace aren't counted as page views.
+Edits aren't considered page views.
+Redirects, particularly redirects based on alternate spellings of a page title, aren't counted as views of the actual article. For more information, see Redirects.
+For a complete definition of a page view and extra background information, see Research:Page view.
+
+Spiders and automated traffic
+Page views associated with user agents that self-identify as bots receive the spider category.
+
+Other automated traffic, identified as such based on a set of heuristics, receives the automated category instead.
+
+To learn more about detection of automatic page views, see BotDetection.
+
+Country data
+Data related to geographical location of contributors has many privacy concerns. To minimize the risk to individuals resulting from publication of data, the Wikimedia Foundation follows the Data Publication Guidelines and maintains the Country and Territory Protection List.
+
+Editors
+To protect the privacy of editors, the Analytics API applies certain limitations on editor data split by country:
+
+The API provides ranges instead of exact numbers of editors per project and per country. For example, instead of returning the number of Romanian editors of Estonian Wikipedia, the API returns a range - between one and ten.
+The API doesn't provide editor data for wikis with fewer than three active editors in a given month. Wikis with three or more editors making five or more edits are included.
+For more information, see the documentation for the Geoeditors Monthly dataset.
+
+Page views
+To protect the privacy of readers, the Analytics API also limits page view data split by country:
+
+The API doesn't report the exact number of page views per country. Page view values are given in a bucketed format: Instead of reporting 7,876,451 views, the API returns "views": "1000000-9999999". However, even though two or more countries might appear to have the same views in terms of buckets, the rank field reveals which country has more views.
+The API only returns page view data for countries with more than 100 page views in the requested time period. If no countries meet that threshold for a project, the project's per-country page views aren't reported by the API.
+The API doesn't report page view values of zero. See Missing values within time series.
+For more information, see the documentation for Page views per project.
+
+Page metrics
+This page includes examples of API requests for metrics about individual wiki pages.
+
+Page changes
+Net change in article length
+Get the time series of daily net changes in article length for English Wikipedia's article "Jupiter" on all days in October 2023. Only count changes made by registered users that are not bots.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/bytes-difference/net/per-page/en.wikipedia.org/Jupiter/user/daily/20231001/20231031" \
+ -H "accept: application/json"
+Absolute change in article length
+Get the time series of daily absolute changes (counted as sums of all changes) in article length for English Wikipedia's article "Jupiter" on all days in October 2023. Only count changes made by registered users that are not bots.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/bytes-difference/absolute/per-page/en.wikipedia.org/Jupiter/user/daily/20231001/20231031" \
+ -H "accept: application/json"
+Number of edits
+Get the time series of numbers of edits to English Wikipedia's article "Jupiter" in October 2023. Only count changes made by registered users that are not bots.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/edits/per-page/en.wikipedia.org/Jupiter/user/daily/20231001/20231031" \
+ -H "accept: application/json"
+Page views
+In a month
+Get the time series of numbers of page views on German Wikipedia's article "Jupiter (Planet)" in October 2023.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia.org/all-access/all-agents/Jupiter%20(Planet)/daily/20231001/20231031" \
+ -H "accept: application/json"
+On a single day, in mobile app
+Get the number of mobile application page views on French Wikipedia's article "Jupiter (planète)" on November 15, 2023.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/fr.wikipedia.org/mobile-app/all-agents/Jupiter%20(plan%C3%A8te)/daily/20231115/20231115" \
+ -H "accept: application/json"
+
+ Project metrics
+This page includes examples of API requests for metrics about Wikimedia projects.
+
+Aggregated views
+Get the time series of numbers of monthly automated page views for all Wikimedia projects in 2023.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/pageviews/aggregate/all-projects/all-access/automated/monthly/2023010100/2023123100" \
+ -H "accept: application/json"
+Unique devices
+Daily, Spanish Wikipedia
+Get the time series of numbers of unique devices that visited Spanish Wikipedia in February 2021.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/unique-devices/es.wikipedia.org/all-sites/daily/20210201/20210228" \
+ -H "accept: application/json"
+Monthly, all Wikipedias
+Get the time series of numbers of unique devices that visited all Wikipedias in the first three months of 2020.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/unique-devices/all-wikipedia-projects/all-sites/monthly/20200101/20200331" \
+ -H "accept: application/json"
+Editors
+Get the time series of numbers of editors who edited entries in Polish Wiktionary between 5 and 24 times in the months between January and August 2021.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/editors/aggregate/pl.wiktionary.org/all-editor-types/all-page-types/5..24-edits/monthly/20210101/20210901" \
+ -H "accept: application/json"
+Most-viewed pages
+Get the list of top 1000 most-viewed articles on English Wikipedia in March 2023.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia.org/all-access/2023/03/all-days" \
+ -H "accept: application/json"
+New pages
+Get the time series of numbers of non-content pages created by all editor types on Spanish Wikipedia between January 10 and January 30, 2020.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/edited-pages/new/es.wikipedia.org/all-editor-types/non-content/daily/20200110/20200130" \
+ -H "accept: application/json"
+Most-edited pages
+Get the list of top 100 content pages with the most edits on Russian Wikipedia in January 2019.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/edited-pages/top-by-edits/ru.wikipedia.org/all-editor-types/content/2019/01/all-days" \
+ -H "accept: application/json"
+Files
+Most-requested files
+Get the list of most-requested media files in September 2023.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/mediarequests/top/all-referers/all-media-types/2023/09/all-days" \
+ -H "accept: application/json"
+Numbers of file requests
+Get the time series of numbers of media file requests in every month of 2022.
+
+sh
+curl -X GET \
+"https://wikimedia.org/api/rest_v1/metrics/mediarequests/aggregate/all-referers/all-media-types/all-agents/monthly/20220101/20230101" \
+ -H "accept: application/json"
+
+ Compare editor numbers, year over year
+This tutorial explains how to use Python to load editor data from the editors endpoint, process it, and display a diagram with a year-over-year comparison of editor numbers.
+
+A diagram like this could be useful to you, for example, in an analysis of seasonal trends in editor numbers.
+
+Most sections on this page contain Python code snippets without comments. The full script, with comments, is available at the end of the page.
+
+Prerequisites
+To follow this tutorial, you should be familiar with Python, have a basic understanding of data structures, and know what it means to make API requests.
+
+If you aren't familiar with Python, you can learn about it from the official website, Python books available on Wikibooks, or other sources available online.
+
+Before requesting data from the API, be sure to read the access policy.
+
+Software
+This tutorial requires that you have access to a Python development environment. This can be a system-wide Python installation, a virtual environment, or a Jupyter Notebook (such as PAWS, the instance hosted by the Wikimedia Foundation).
+
+To run the code on this page, you need Python version 3.9 or higher. You also need to install the following extra libraries:
+
+Matplotlib
+Pandas
+Requests
+To install these libraries, run the following command (or similar, depending on your Python distribution):
+
+sh
+pip install matplotlib pandas requests
+Setting up and requesting data from the API
+Start by importing the libraries installed earlier:
+
+Pyplot, provided by Matplotlib, will allow you to create a plot of editor numbers.
+Pandas will allow you to prepare the editor data for displaying.
+Requests will allow you to request editor data from the API.
+py
+import matplotlib.pyplot as plt
+import pandas as pd
+import requests as rq
+Next, specify the parameters for the API request. This means setting:
+
+user agent, as described in the access policy
+request URL. The URL defines what data you will request. You might want to see the documentation of the editors endpoint to understand how to construct it. In this example, you will request monthly editor numbers from the beginning of 2016 to the end of 2023.
+py
+headers = {
+    "User-Agent": "Wikimedia Analytics API Tutorial (<your wiki username>) compare-editor-numbers.py"
+}
+
+url = """https://wikimedia.org/api/rest_v1/metrics/editors/aggregate/\
+en.wikipedia.org/user/content/all-activity-levels/\
+monthly/20160101/20240101"""
+Next, request the data and parse the JSON response sent by the API.
+
+py
+response = rq.get(url, headers=headers)
+editor_numbers = response.json()
+Preparing data for plotting
+Data returned in the JSON response has a tree-like structure. For numerical calculations and comparisons, it's better to have data in the form of a table or matrix.
+
+In Python, a common table-like structure for working with data is a DataFrame (or mutable table) available in the Pandas library.
+
+The following code snippet prepares the data for displaying by:
+
+Creating a DataFrame from records returned by the API. Note that the rows of data are available under the ["items"].[0].["results"] path of the JSON response, where [0] represents the first element of the "items" list. You can preview the structure of the JSON response by opening the request link in your browser.
+Convert the data in the timestamp column to datetime, a dedicated data type for time data. This is one way of extracting month and year information from the returned records.
+Create new columns for month and year data based on the timestamp column.
+Remove the timestamp column as it's no longer needed.
+Pivot the table so that data in the DataFrame is indexed by month, with columns representing years. This makes it easier to perform a year-over-year analysis.
+py
+editors_df = pd.DataFrame.from_records(editor_numbers["items"][0]["results"])
+date = pd.to_datetime(editors_df["timestamp"])
+editors_df["month"] = pd.DatetimeIndex(date).month
+editors_df["year"] = pd.DatetimeIndex(date).year
+editors_df = editors_df.drop(columns=["timestamp"])
+editor_df = editors_df.pivot(index="month", columns="year", values="editors")
+Displaying the plot
+With the DataFrame prepared, you can now display the data.
+
+Start by specifying the plot style, in this case bmh. You can learn more about the available plot styles by reading Matplotlib's style sheets reference.
+
+py
+plt.style.use("bmh")
+Create a set of subplots and prepare to display them as a single plot based on the DataFrame. The only parameter necessary in the editor_df.plot() call is ax, as it tells the plot function to use the set of subplots created earlier. You can experiment with the other parameters, but the values in the example are:
+
+subplots set to False to display plots for all years on the same diagram
+figsize set to 20,10 to make sure the plot is wide enough to read comfortably
+colormap set to Accent, which is one of the colormaps available in Matplotlib. Colormap defines the colors used to present data on the plot. For more information, see Choosing colormaps in Matplotlib.
+With the configuration in place, you can display the plot.
+
+py
+fig, ax = plt.subplots()
+editor_df.plot(
+    subplots=False, figsize=(20, 10), ax=ax, colormap="Accent"
+)
+plt.show()
+Next steps
+To better understand the libraries and data used in this tutorial, be sure to experiment with different parameters in function calls and the request URL.
+
+To learn how to combine data from multiple endpoints to display a single diagram, read the Compare page metrics tutorial.
+
+To learn more about the ecosystem of Python tools and libraries used in data science, explore the links listed in Useful resources.
+
+To see what other endpoints are available to you in the Analytics API, check the API reference pages listed in the menu.
+
+Full script
+The full script should look like the following.
+
+py
+
+"""Displays the editors by year plot."""
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import requests as rq
+
+# Prepare and make a request #
+
+# Specify the user agent
+# Be sure to customize this variable according to the access policy
+# before running this script
+headers = {
+    "User-Agent": "GitLab CI automated test (/generated-data-platform/aqs/analytics-api) compare-editor-numbers.py"
+}
+
+# Define the request URL
+url = """https://wikimedia.org/api/rest_v1/metrics/editors/aggregate/\
+en.wikipedia.org/user/content/all-activity-levels/\
+monthly/20160101/20240101"""
+
+# Request data from the API
+response = rq.get(url, headers=headers)
+# Parse the JSON response
+editor_numbers = response.json()
+
+# Prepare data #
+
+# Create a pandas DataFrame
+editors_df = pd.DataFrame.from_records(editor_numbers["items"][0]["results"])
+# Convert the string timestamp to datetime
+date = pd.to_datetime(editors_df["timestamp"])
+# Create a new column for months
+editors_df["month"] = pd.DatetimeIndex(date).month
+# Create a new column for years
+editors_df["year"] = pd.DatetimeIndex(date).year
+# Remove the timestamp column as it's not needed anymore
+editors_df = editors_df.drop(columns=["timestamp"])
+# Pivot the data frame
+editor_df = editors_df.pivot(index="month", columns="year", values="editors")
+
+# Display results #
+
+# Set a plot style
+plt.style.use("bmh")
+
+# Create a subplot set
+fig, ax = plt.subplots()
+# Configure the plot for the DataFrame
+editor_df.plot(subplots=False, figsize=(20, 10), ax=ax, colormap="Accent")
+# Display the plot
+plt.show()
+Useful resources
+Python home page
+Python documentation
+Conda, package and environment manager popular among data scientists. It's often used to install and manage Python and R packages.
+Matplotlib documentation
+Pyplot
+Colormaps
+Style sheets reference
+Pandas documentation
+DataFrame
+Requests documentation
+JupyterLab and Jupyter Noteboook home page
+PAWS, the Jupyter Notebook instance hosted by the Wikimedia Foundation
+
+Compare page metrics
+This tutorial explains how to use Python to load page viewership and edit data from three endpoints, process it, and display it on a single diagram.
+
+A diagram like this could be useful to you, for example, when trying to identify potential correlation or causation between different metrics.
+
+Most sections on this page contain Python code snippets without comments. The full script, with comments, is available at the end of the page.
+
+Prerequisites
+To follow this tutorial, you should be familiar with Python, have a basic understanding of data structures, and know what it means to make API requests.
+
+If you aren't familiar with Python, you can learn about it from the official website, Python books available on Wikibooks, or other sources available online.
+
+Before requesting data from the API, be sure to read the access policy.
+
+Software
+This tutorial requires that you have access to a Python development environment. This can be a system-wide Python installation, a virtual environment, or a Jupyter Notebook (such as PAWS, the instance hosted by the Wikimedia Foundation).
+
+To run the code on this page, you need Python version 3.9 or higher. You also need to install the following extra libraries:
+
+Matplotlib
+Pandas
+Requests
+To install these libraries, run the following command (or similar, depending on your Python distribution):
+
+sh
+pip install matplotlib pandas requests
+Setting up and requesting data from the API
+Start by importing the libraries installed earlier:
+
+Pyplot, provided by Matplotlib, will allow you to create a plot of editor numbers.
+Pandas will allow you to prepare the editor data for displaying.
+Requests will allow you to request editor data from the API.
+py
+import matplotlib.pyplot as plt
+import pandas as pd
+import requests as rq
+Next, specify the parameters for API requests. This means setting:
+
+user agent, as described in the access policy
+request URLs. A URL defines what data you will request. You might want to see the documentation for the following endpoints to understand how to construct these: bytes changed on a page, edits to a page, and page views for a page.
+In this example, you will request:
+
+daily edit, view, and absolute difference in page size data,
+for the Land page on English Wikipedia,
+for every day between 2022.04.01 and 2022.12.31.
+py
+headers = {
+    "User-Agent": "Wikimedia Analytics API Tutorial (<your wiki username>) compare-page-metrics.py",
+}
+
+diff_url = """https://wikimedia.org/api/rest_v1/metrics/bytes-difference/\
+absolute/per-page/en.wikipedia.org/Land/all-editor-types/\
+daily/20220401/20221231"""
+
+view_url = """https://wikimedia.org/api/rest_v1/metrics/pageviews/\
+per-article/en.wikipedia.org/all-access/all-agents/\
+Land/daily/20220401/20221231"""
+
+edit_url = """
+https://wikimedia.org/api/rest_v1/metrics/edits/\
+per-page/en.wikipedia.org/Land/all-editor-types/\
+daily/20220401/20221231"""
+Next, request the data and parse the JSON responses sent by the API.
+
+py
+diff_response = rq.get(diff_url, headers=headers).json()
+view_response = rq.get(view_url, headers=headers).json()
+edit_response = rq.get(edit_url, headers=headers).json()
+Preparing data for plotting
+Data returned in the JSON response has a tree-like structure. For numerical calculations and comparisons, it's better to have data in the form of a table or matrix.
+
+In Python, a common table-like structure for working with data is a DataFrame (or mutable table) available in the Pandas library.
+
+Code in this section prepares the data for displaying by normalizing it and placing it in a single DataFrame. For each endpoint:
+
+Create a DataFrame. Make sure to point to the correct location of records in the JSON response. See the raw response data for structure details: bytes changed, views, edits. Notice that the structure of the views response is slightly different from other responses.
+Convert the timestamp column to datetime, a dedicated type for time data. Notice that the format of this column in the views endpoint differs from the other endpoints: time zone information is missing. To fix that, set the time zone during conversion by calling dt.tz_localize("UTC").
+Use the timestamp column as index of the DataFrame. An index is a set of labels that uniquely identifies each row.
+Remove unnecessary columns returned in the views response.
+py
+# bytes changed endpoint #
+diff_df = pd.DataFrame.from_records(diff_response["items"][0]["results"])
+diff_df["timestamp"] = pd.to_datetime(diff_df["timestamp"])
+diff_df = diff_df.set_index("timestamp")
+
+# views endpoint #
+view_df = pd.DataFrame.from_records(view_response["items"])
+view_df["timestamp"] = pd.to_datetime(
+    view_df["timestamp"], format="%Y%m%d%H"
+).dt.tz_localize("UTC")
+view_df = view_df.set_index("timestamp")
+view_df = view_df.drop(columns=["project", "article", "granularity", "access", "agent"])
+
+# edits endpoint #
+edit_df = pd.DataFrame.from_records(edit_response["items"][0]["results"])
+edit_df["timestamp"] = pd.to_datetime(edit_df["timestamp"])
+edit_df = edit_df.set_index("timestamp")
+All your DataFrames now have a correct index that you can use to merge them into a single DataFrame. In the parameters of the merge operation, specify:
+
+on="timestamp" to merge the data based on the timestamp - when rows have the same timestamp, join them into a single row
+how="outer" to preserve all rows, even if one of the DataFrames doesn't contain data for a given timestamp
+After the second merge, make sure to fill in empty values in the DataFrame with zeros. To do that, call fillna(0).astype(int).
+
+For more information about the way DataFrame merge works in Pandas, see merging in Pandas.
+
+py
+r = pd.merge(diff_df, edit_df, on="timestamp", how="outer")
+r = pd.merge(r, view_df, on="timestamp", how="outer").fillna(0).astype(int)
+Empty values in the dataset
+
+Zeros are often omitted in Wikimedia Analytics API responses. This means that when you request edit data for a page for a specific, seven-day period, you might receive a response that contains fewer days, with days without edits skipped. For this reason, the code presented earlier:
+
+preserves rows for timestamps that occur in at least one of the DataFrames. This ensures that when you have page views data for a given day, but no edits occurred on that day, this day isn't removed from the dataset (which would happen if you set how to inner).
+fills in missing data by calling fillna(0). This fills in missing values with zeros, which is typically what a skipped value means.
+Displaying the plot
+With the DataFrame prepared, you can now display the data.
+
+Start by specifying the plot style, in this case bmh. You can learn more about the available plot styles by reading Matplotlib's style sheets reference.
+
+py
+plt.style.use("bmh")
+Create a subplot layout and prepare to display it. To produce a plot that's readable, set the following parameters in the plt.subplots() call:
+
+nrows=3 and ncols=1 to create three subplot slots in a column, one under another
+sharex=True to ensure the subplots align based on the timestamp
+sharey=False to ensure the subplots don't adhere to a single scale. This makes them more readable.
+figsize=(15,10) to ensure the diagram is wide enough to read comfortably
+Configure the subplots, each based on one of the columns from your DataFrame, by specifying the following parameters:
+
+ax=axes[X] to assign the subplot to a specific slot in the layout. ax=axes[0] assigns the plot to the first slot, axes[1] - second, and axes[2] - third.
+color to set the color of the subplot. In the example, "c" means cyan, "m" - magenta, and "y" - yellow. For more information, see Specifying colors.
+title to set the title of the subplot
+With the configuration in place, you can display the plot.
+
+py
+fig, axes = plt.subplots(nrows=3, ncols=1, sharex=True, sharey=False, figsize=(15,10))
+
+r["views"].plot(ax=axes[0], color="c", title="Views")
+r["edits"].plot(ax=axes[1], color="m", title="Edits")
+r["abs_bytes_diff"].plot(ax=axes[2], color="y", title="Absolute change (bytes)")
+
+plt.show()
+Next steps
+To better understand the libraries and data used in this tutorial, be sure to experiment with different parameters in function calls and the request URL.
+
+To learn more about the ecosystem of Python tools and libraries used in data science, explore the links listed in Useful resources.
+
+To see what other endpoints are available to you in the Analytics API, check the API reference pages listed in the menu.
+
+Full script
+The full script should look like the following.
+
+py
+"""Displays viewership and edit data for a page."""
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import requests as rq
+
+# Prepare and make request #
+
+# Specify user agent
+# Be sure to customize this variable according to the access policy
+# before running this script
+headers = {
+    "User-Agent": "GitLab CI automated test (/generated-data-platform/aqs/analytics-api) compare-page-metrics.py",
+}
+
+# URL for absolute article size difference data
+diff_url = """https://wikimedia.org/api/rest_v1/metrics/bytes-difference/\
+absolute/per-page/en.wikipedia.org/Land/all-editor-types/\
+daily/20220401/20221231"""
+
+# URL for viewership data
+view_url = """https://wikimedia.org/api/rest_v1/metrics/pageviews/\
+per-article/en.wikipedia.org/all-access/all-agents/\
+Land/daily/20220401/20221231"""
+
+# URL for edit number data
+edit_url = """
+https://wikimedia.org/api/rest_v1/metrics/edits/\
+per-page/en.wikipedia.org/Land/all-editor-types/\
+daily/20220401/20221231"""
+
+# Request all data from APIs and parse responses as JSON
+diff_response = rq.get(diff_url, headers=headers).json()
+view_response = rq.get(view_url, headers=headers).json()
+edit_response = rq.get(edit_url, headers=headers).json()
+
+# Create Pandas DataFrame for bytes difference data
+diff_df = pd.DataFrame.from_records(diff_response["items"][0]["results"])
+
+# Parse timestamp and use it as index
+diff_df["timestamp"] = pd.to_datetime(diff_df["timestamp"])
+diff_df = diff_df.set_index("timestamp")
+
+# Create Pandas DataFrame for viewership data
+view_df = pd.DataFrame.from_records(view_response["items"])
+
+# Parse timestamp and use it as index
+# Note that timestamps for page views are in a different format
+# and do not include time zone information, this command
+# sets time zone to UTC
+view_df["timestamp"] = pd.to_datetime(
+    view_df["timestamp"], format="%Y%m%d%H"
+).dt.tz_localize("UTC")
+view_df = view_df.set_index("timestamp")
+
+# Remove unnecessary columns included in the page view response
+view_df = view_df.drop(columns=["project", "article", "granularity", "access", "agent"])
+
+# Create Pandas DataFrame for edit data
+edit_df = pd.DataFrame.from_records(edit_response["items"][0]["results"])
+
+# Parse timestamp and use it as index
+edit_df["timestamp"] = pd.to_datetime(edit_df["timestamp"])
+edit_df = edit_df.set_index("timestamp")
+
+# Merge the three DataFrames into one based on timestamp
+# Note that the joins are defined as "outer" to retain all timestamps even
+# if they are missing from any DataFrame. Also note the `.fillna(0).astype(int)`
+# which fills missing data with zeros interpreted as integers
+r = pd.merge(diff_df, edit_df, on="timestamp", how="outer")
+r = pd.merge(r, view_df, on="timestamp", how="outer").fillna(0).astype(int)
+
+# Set plot style
+plt.style.use("bmh")
+
+# Create a subplot layout
+# Note that these plots do not share the Y axis (value), but share the X axis (timestamp)
+# This is because these subplots have very different values. For example, the number of
+# edits would be completely invisible if the Y axis scale was optimized for page view data
+fig, axes = plt.subplots(nrows=3, ncols=1, sharex=True, sharey=False, figsize=(15,10))
+
+# Configure the subplot for views
+r["views"].plot(ax=axes[0], color="c", title="Views")
+# Configure the subplot for edits
+r["edits"].plot(ax=axes[1], color="m", title="Edits")
+# Configure the subplot for absolute change in bytes
+r["abs_bytes_diff"].plot(ax=axes[2], color="y", title="Absolute change (bytes)")
+
+# Display all subplots
+plt.show()
+Useful resources
+Python home page
+Python documentation
+Conda, package and environment manager popular among data scientists. It's often used to install and manage Python and R packages.
+Matplotlib documentation
+Pyplot
+Specifying colors
+Style sheets reference
+Pandas documentation
+DataFrame
+Merging DataFrames
+Requests documentation
+JupyterLab and Jupyter Noteboook home page
+PAWS, the Jupyter Notebook instance hosted by the Wikimedia Foundation
+
 Commons analytics
 Commons analytics provides data about the usage of categories and media files on Wikimedia Commons. This data is focused on categories associated with contributions from galleries, libraries, archives, and museums (GLAM).
 
@@ -167,34 +810,6 @@ get
 /editors/top-by-edits/{project}/{editor-type}/{page-type}/{year}/{month}/{day}
 List most-active editors by number of edits
 
-Media file analytics
-Media file analytics provides data about requests for media files on Wikimedia projects. These endpoints serve data starting on January 1, 2015. For more information about the underlying dataset, see the docs on Wikitech.
-
-Media types
-Media types are classified according to file extensions.
-
-Extensions	Media type
-svg, png, tiff, tiff, jpeg, gif, xcf, webp, bmp	image
-mp3, ogg, oga, flac, wav, midi, midi	audio
-webm, ogv	video
-pdf, djvu, srt, txt	document
-(all other extensions)	other
-Filter limitations
-The ability to split and filter by referrer and by agent type is only available for data starting in May 2019. Before that, referrer is only split into internal, external, and unknown.
-
-Get number of media requests
-get
-/mediarequests/aggregate/{referer}/{media-type}/{agent}/{granularity}/{start}/{end}
-Get number of media requests
-Get number of media requests for a file
-get
-/mediarequests/per-file/{referer}/{agent}/{file-path}/{granularity}/{start}/{end}
-Get number of media requests for a file
-List most-requested files
-get
-/mediarequests/top/{referer}/{media-type}/{year}/{month}/{day}
-List most-requested files
-
 Page view analytics
 Page view analytics provides data about page views for Wikimedia projects. These endpoints serve data starting on July 1, 2015.
 
@@ -221,4 +836,3 @@ List most-viewed pages for a country
 Get number of page views (legacy)
 get
 /legacy/pagecounts/aggregate/{project}/{access-site}/{granularity}/{start}/{end}
-Get number of page views (legacy)

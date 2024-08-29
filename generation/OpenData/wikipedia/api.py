@@ -2,7 +2,7 @@ import requests
 from typing import Optional
 
 # Define the base URL for the API
-BASE_URL = 'https://wikimedia.org/api'
+BASE_URL = 'https://wikimedia.org/api/rest_v1'
 
 def get_category_metrics(category: str, start: str, end: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     url = f"{BASE_URL}/commons-analytics/category-metrics-snapshot/{category}/{start}/{end}"

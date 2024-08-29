@@ -165,15 +165,6 @@ def get_vehicle_types_for_make_id(make_id: int, format: str = 'json', toolbench_
     response = requests.get(url, params=params)
     return response.json()
 
-def get_equipment_plant_codes(year: int, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Get assigned Equipment Plant Codes by Year.
-    """
-    url = f"{BASE_URL}/GetEquipmentPlantCodes/{year}"
-    params = {'format': 'json'}
-    response = requests.get(url, params=params)
-    return response.json()
-
 def get_models_for_make(make: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Get the Models for a specified Make.
@@ -221,17 +212,6 @@ def get_vehicle_variable_values_list(variable: str, format: str = 'json', toolbe
     url = f"{BASE_URL}/GetVehicleVariableValuesList/{variable}"
     params = {'format': format}
     response = requests.get(url, params=params)
-    return response.json()
-
-def decode_vin_values_batch(vins: str, format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Decode multiple VINs in batch, separated by semicolon and model year.
-    """
-    url = f"{BASE_URL}/DecodeVINValuesBatch/"
-    headers = {'Content-Type': 'application/json'}
-    params = {'format': format}
-    data = vins  # Send string of VINs
-    response = requests.post(url, headers=headers, params=params, data=data)
     return response.json()
 
 def get_canadian_vehicle_specifications(year: int, make: str, model: Optional[str] = None, units: Optional[str] = 'Metric', format: str = 'json', toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):

@@ -28,15 +28,15 @@ class TestWikipediaAPI(unittest.TestCase):
         self.assertIn('data', response)
 
     def test_get_unique_devices(self):
-        response = get_unique_devices('en.wikipedia', 'desktop', 'daily', '2023-01-01', '2023-01-31')
+        response = get_unique_devices('en.wikipedia', 'desktop', 'daily', '20230101', '20230131')
         self.assertIn('data', response)
 
     def test_get_edits_aggregate(self):
-        response = get_edits_aggregate('en.wikipedia', 'anonymous', 'all-page-types', 'daily', '2023-01-01', '2023-01-31')
+        response = get_edits_aggregate('en.wikipedia', 'anonymous', 'all-page-types', 'daily', '20230101', '20230131')
         self.assertIn('data', response)
 
     def test_get_pageviews_aggregate(self):
-        response = get_pageviews_aggregate('en.wikipedia', 'all-access', 'all-agents', 'daily', '2023-01-01', '2023-01-31')
+        response = get_pageviews_aggregate('en.wikipedia', 'all-access', 'all-agents', 'daily', '20230101', '20230131')
         self.assertIn('data', response)
 
 if __name__ == '__main__':
