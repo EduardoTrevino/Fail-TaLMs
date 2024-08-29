@@ -193,8 +193,8 @@ Please update as you add and intergrate diffrent apis
 | Science          | Cat-Facts                        | 0          | :x:        | TBD      |
 | Science          | CelesTrak                        | 0          | :x:        | TBD      |
 | Science          | GBIF                             | 0          | :x:        | TBD      |
-| Science          | iDigBio                          | 0          | :x:        | TBD      |
-| Science          | ITIS                             | 0          | :x:        | TBD      |
+| Science          | iDigBio                          | 0          | ✅         | TBD      |
+| Science          | ITIS                             | 0          | ✅         | TBD      |
 | Science          | NASA                             | 0          | :x:        | TBD      |
 | Science          | Newton                           | 0          | ✅         | TBD      |
 | Science          | Numbers                          | 0          | ✅         | TBD      |
@@ -224,6 +224,6 @@ Please update as you add and intergrate diffrent apis
 | Weather          | 7Timer!                          | 2          | ✅         | TBD      |
 | Weather          | Aviation Weather Center          | 0          | ✅         | TBD      |
 | Weather          | Open-Meteo                       | 0          | ✅         | TBD      |
-| Weather          | openSenseMap                     | 0          | ✅         | TBD      |
+| Weather          | openSenseMap                     | 0          | :x:        | TBD      |
 | Weather          | SG Weather                       | 0          | :x:        | TBD      |
 | Weather          | wttr                             | 0          | :x:        | TBD      |

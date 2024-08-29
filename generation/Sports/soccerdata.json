@@ -1,220 +1,31 @@
 {
-    "tool_name": "soccerdata",
-    "tool_description": "API to access detailed football data, including areas, competitions, teams, matches, and players.",
-    "title": "Football Data API",
-    "pricing": "FREE",
-    "score": {
-        "avgServiceLevel": 90,
-        "avgLatency": 200,
-        "avgSuccessRate": 95,
-        "popularityScore": 9.2,
-        "__typename": "Score"
-    },
-    "home_url": "https://www.football-data.org/",
-    "host": "api.football-data.org",
-    "api_list": [
+  "tool_name": "soccerdata",
+  "tool_description": "API to access detailed football data, including areas, competitions, teams, matches, and players.",
+  "title": "Football Data API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 200,
+    "avgSuccessRate": 95,
+    "popularityScore": 9.2,
+    "__typename": "Score"
+  },
+  "home_url": "https://www.football-data.org/",
+  "host": "api.football-data.org",
+  "api_list": [
+    {
+      "name": "list_competitions",
+      "url": "https://api.football-data.org/v4/competitions",
+      "description": "List all available competitions.",
+      "method": "GET",
+      "optional_parameters": [
         {
-            "name": "get_area_by_id",
-            "url": "https://api.football-data.org/v4/areas/{id}",
-            "description": "Get details of one particular area by its ID.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "area_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the area.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "list_areas",
-            "url": "https://api.football-data.org/v4/areas",
-            "description": "List all available areas.",
-            "method": "GET",
-            "required_parameters": []
-        },
-        {
-            "name": "get_competition_by_code",
-            "url": "https://api.football-data.org/v4/competitions/{code}",
-            "description": "Get details of one particular competition by its code.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "competition_code",
-                    "type": "STRING",
-                    "description": "The code of the competition.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "list_competitions",
-            "url": "https://api.football-data.org/v4/competitions",
-            "description": "List all available competitions.",
-            "method": "GET",
-            "optional_parameters": [
-                {
-                    "name": "areas",
-                    "type": "STRING",
-                    "description": "Comma separated list of area IDs.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "get_competition_standings",
-            "url": "https://api.football-data.org/v4/competitions/{id}/standings",
-            "description": "Show standings for a particular competition.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "competition_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the competition.",
-                    "default": null
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "season",
-                    "type": "INTEGER",
-                    "description": "The starting year of the season.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "get_matches_for_competition",
-            "url": "https://api.football-data.org/v4/competitions/{id}/matches",
-            "description": "List all matches for a particular competition.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "competition_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the competition.",
-                    "default": null
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "matchday",
-                    "type": "INTEGER",
-                    "description": "The matchday to retrieve matches for.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "get_team_info",
-            "url": "https://api.football-data.org/v4/teams/{id}",
-            "description": "Show information about one particular team by its ID.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "team_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the team.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "list_teams",
-            "url": "https://api.football-data.org/v4/teams/",
-            "description": "List all teams with pagination.",
-            "method": "GET",
-            "optional_parameters": [
-                {
-                    "name": "limit",
-                    "type": "INTEGER",
-                    "description": "Number of teams to retrieve.",
-                    "default": 10
-                },
-                {
-                    "name": "offset",
-                    "type": "INTEGER",
-                    "description": "Number of teams to skip.",
-                    "default": 0
-                }
-            ]
-        },
-        {
-            "name": "get_player_info",
-            "url": "https://api.football-data.org/v4/persons/{id}",
-            "description": "Show information about one particular player by their ID.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "player_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the player.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "list_matches_across_competitions",
-            "url": "https://api.football-data.org/v4/matches",
-            "description": "List matches across a set of competitions.",
-            "method": "GET",
-            "optional_parameters": [
-                {
-                    "name": "date_from",
-                    "type": "STRING",
-                    "description": "The start date for matches.",
-                    "default": null
-                },
-                {
-                    "name": "date_to",
-                    "type": "STRING",
-                    "description": "The end date for matches.",
-                    "default": null
-                },
-                {
-                    "name": "competitions",
-                    "type": "STRING",
-                    "description": "Comma separated list of competition IDs.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "get_match_by_id",
-            "url": "https://api.football-data.org/v4/matches/{id}",
-            "description": "Show one particular match by its ID.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "match_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the match.",
-                    "default": null
-                }
-            ]
-        },
-        {
-            "name": "list_head2head_matches",
-            "url": "https://api.football-data.org/v4/matches/{id}/head2head",
-            "description": "List previous encounters for the teams of a match.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "match_id",
-                    "type": "INTEGER",
-                    "description": "The ID of the match.",
-                    "default": null
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "limit",
-                    "type": "INTEGER",
-                    "description": "Number of encounters to retrieve.",
-                    "default": 10
-                }
-            ]
+          "name": "areas",
+          "type": "STRING",
+          "description": "Comma separated list of area IDs.",
+          "default": null
         }
-    ]
+      ]
+    }
+  ]
 }

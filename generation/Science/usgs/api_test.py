@@ -5,7 +5,6 @@ class TestUSGSApi(unittest.TestCase):
 
     def test_application_json(self):
         response = application_json()
-        # self.assertIn("parameters", str(json.dumps(response)))
 
     def test_application_wadl(self):
         response = application_wadl()

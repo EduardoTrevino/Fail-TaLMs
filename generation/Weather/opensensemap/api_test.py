@@ -15,7 +15,6 @@ class TestOpenSenseMapAPI(unittest.TestCase):
 
     def test_get_locations(self):
         response = get_locations("57000b8745fd40c8196ad04c")
-        # self.assertIsInstance(response, list)
 
     def test_get_idw_statistics(self):
         response = get_idw_statistics("7.6,51.2,7.8,51.4", "Temperatur")
@@ -27,19 +26,13 @@ class TestOpenSenseMapAPI(unittest.TestCase):
 
     def test_get_latest_measurements_for_sensor(self):
         response = get_latest_measurements_for_sensor("57000b8745fd40c8196ad04c", "57000b8745fd40c8196ad050")
-        # self.assertIsInstance(response, list)
       
     def test_get_latest_measurements_of_sense_box(self):
         response = get_latest_measurements_of_sense_box("57000b8745fd40c8196ad04c")
         self.assertIn("_id", response)
 
-    # def test_get_latest_measurements_of_sensor(self):
-    #     response = get_latest_measurements_of_sensor("57000b8745fd40c8196ad04c", "57000b8745fd40c8196ad050")
-    #     self.assertIn("_id", response)
-
     def test_get_stats(self):
         response = get_stats()
-        # self.assertIsInstance(response, list)
 
     def test_print_routes(self):
         response = print_routes()
