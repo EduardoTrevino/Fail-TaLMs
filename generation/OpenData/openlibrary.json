@@ -1,0 +1,182 @@
+{
+  "tool_name": "openlibrary",
+  "tool_description": "Open Library offers a suite of APIs to help developers get up and running with our data. This includes RESTful APIs providing access to book, author, and subject data in JSON format.",
+  "title": "Open Library API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 200,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.7
+  },
+  "home_url": "https://openlibrary.org/developers/api",
+  "host": "openlibrary.org",
+  "api_list": [
+    {
+      "name": "search_books",
+      "url": "https://openlibrary.org/search.json",
+      "description": "Search for books using the Open Library Search API.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "q",
+          "type": "STRING",
+          "description": "Query string to search for."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "fields",
+          "type": "STRING",
+          "description": "Fields to return."
+        },
+        { "name": "sort", "type": "STRING", "description": "Sort order." },
+        {
+          "name": "lang",
+          "type": "STRING",
+          "description": "Language preference."
+        },
+        {
+          "name": "page",
+          "type": "INTEGER",
+          "description": "Page number for pagination."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of results per page."
+        }
+      ]
+    },
+    {
+      "name": "get_work_by_id",
+      "url": "https://openlibrary.org/works/{work_id}.json",
+      "description": "Retrieve a specific work by its Open Library work ID.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "work_id",
+          "type": "STRING",
+          "description": "The work's Open Library ID."
+        }
+      ],
+      "optional_parameters": []
+    },
+    {
+      "name": "get_edition_by_id",
+      "url": "https://openlibrary.org/books/{edition_id}.json",
+      "description": "Retrieve a specific edition by its Open Library edition ID.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "edition_id",
+          "type": "STRING",
+          "description": "The edition's Open Library ID."
+        }
+      ],
+      "optional_parameters": []
+    },
+    {
+      "name": "get_author_by_id",
+      "url": "https://openlibrary.org/authors/{author_id}.json",
+      "description": "Retrieve details of an author by their Open Library author ID.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "author_id",
+          "type": "STRING",
+          "description": "The author's Open Library ID."
+        }
+      ],
+      "optional_parameters": []
+    },
+    {
+      "name": "search_authors",
+      "url": "https://openlibrary.org/search/authors.json",
+      "description": "Search for authors using the Open Library Authors API.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "q",
+          "type": "STRING",
+          "description": "Query string for author's name."
+        }
+      ],
+      "optional_parameters": []
+    },
+    {
+      "name": "get_subject_works",
+      "url": "https://openlibrary.org/subjects/{subject_name}.json",
+      "description": "Fetch works under a specific subject from the Open Library.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "subject_name",
+          "type": "STRING",
+          "description": "The name of the subject."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "details",
+          "type": "BOOLEAN",
+          "description": "Fetch detailed info."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Limit number of responses."
+        },
+        {
+          "name": "offset",
+          "type": "INTEGER",
+          "description": "Offset for pagination."
+        }
+      ]
+    },
+    {
+      "name": "get_book_cover",
+      "url": "https://covers.openlibrary.org/b/{key}/{value}-{size}.jpg",
+      "description": "Fetch book covers by ISBN or Open Library identifier.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "key",
+          "type": "STRING",
+          "description": "Identifier type (e.g., ISBN, OLID)."
+        },
+        {
+          "name": "value",
+          "type": "STRING",
+          "description": "The identifier value."
+        },
+        {
+          "name": "size",
+          "type": "STRING",
+          "description": "Size of the cover (S, M, L)."
+        }
+      ],
+      "optional_parameters": []
+    },
+    {
+      "name": "recent_changes",
+      "url": "https://openlibrary.org/recentchanges.json",
+      "description": "Get recent changes across Open Library.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Maximum number of entries."
+        },
+        { "name": "kind", "type": "STRING", "description": "Type of change." },
+        {
+          "name": "date",
+          "type": "STRING",
+          "description": "Specific date for changes in YYYY/MM/DD format."
+        }
+      ]
+    }
+  ]
+}

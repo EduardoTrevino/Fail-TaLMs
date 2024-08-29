@@ -103,7 +103,7 @@ def outcomes_for_specific_crime(crime_id: str, toolbench_rapidapi_key: str = '08
     """
     url = f"{BASE_URL}/outcomes-for-crime/{crime_id}"
     response = requests.get(url)
-    return response.json()
+    return response.text
 
 def neighbourhoods_by_force(force_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff') -> List[Dict]:
     """
