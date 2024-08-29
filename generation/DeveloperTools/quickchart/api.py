@@ -33,29 +33,34 @@ def generate_chart(chart_config: str, width: Optional[int] = 500, height: Option
         'encoding': encoding
     }
     
-    if method.upper() == 'GET':
-        response = requests.get(url, params=params)
-    elif method.upper() == 'POST':
-        # when using POST, the entire config is sent as 'chart' parameter in JSON format
-        json_data = {
-            'chart': chart_config,
-            'width': width,
-            'height': height,
-            'devicePixelRatio': device_pixel_ratio,
-            'backgroundColor': background_color,
-            'version': version,
-            'format': format,
-            'encoding': encoding
-        }
-        response = requests.post(url, json=json_data)
-    else:
-        return {"error": f"Invalid HTTP method: {method}"}
-
     try:
-        # If encoding is 'base64', the response contains base64 data
-        if encoding == 'base64':
-            return response.content
+        if method.upper() == 'GET':
+            response = requests.get(url, params=params)
+        elif method.upper() == 'POST':
+            json_data = {
+                'chart': chart_config,
+                'width': width,
+                'height': height,
+                'devicePixelRatio': device_pixel_ratio,
+                'backgroundColor': background_color,
+                'version': version,
+                'format': format,
+                'encoding': encoding
+            }
+            response = requests.post(url, json=json_data)
         else:
+            return {"error": f"Invalid HTTP method: {method}"}
+
+        # Check the response status code
+        if response.status_code != 200:
+            return {"error": f"HTTP Error: {response.status_code}", "response": response.text}
+
+        # If encoding is 'base64' or 'url', handle the response as binary (image data)
+        if encoding in ['url', 'base64']:
+            return response.content  # Return the raw image bytes
+        else:
+            # If other encodings were to be supported
             return response.json()
+
     except Exception as e:
         return {"error": str(e), "response": response.text}

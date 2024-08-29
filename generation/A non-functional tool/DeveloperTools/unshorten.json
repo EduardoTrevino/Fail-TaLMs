@@ -1,0 +1,62 @@
+{
+    "tool_name": "unshorten",
+    "tool_description": "Unshorten.me API provides an easy method to unshorten a wide range of shortened URLs.",
+    "title": "Unshorten.me API",
+    "pricing": "FREE with Rate Limits",
+    "score": {
+        "avgServiceLevel": 92,
+        "avgLatency": 120,
+        "avgSuccessRate": 97,
+        "popularityScore": 8.7,
+        "__typename": "Score"
+    },
+    "home_url": "https://unshorten.me",
+    "host": "unshorten.me",
+    "api_list": [
+        {
+            "name": "unshorten_url",
+            "url": "https://unshorten.me/api/v2/unshorten?url={short_url}",
+            "description": "Unshorten a given short URL.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "short_url",
+                    "type": "STRING",
+                    "description": "The shortened URL you want to unshorten."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "authorization_token",
+                    "type": "STRING",
+                    "description": "The authorization token found on your Unshorten.me profile page.",
+                    "default": "None"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://unshorten.me/api/v2/unshorten?url={short_url}'\nheaders = {'Authorization': 'Token {authorization_token}'}\nresponse = requests.get(url, headers=headers)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "unshortened_url": "str",
+                "shortened_url": "str",
+                "success": "bool"
+            },
+            "headers": {
+                "Authorization": "Token {your_token}"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "unshortened_url": {
+                        "type": "string"
+                    },
+                    "shortened_url": {
+                        "type": "string"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    ]
+}

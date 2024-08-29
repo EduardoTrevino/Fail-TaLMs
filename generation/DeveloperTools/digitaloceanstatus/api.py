@@ -13,17 +13,6 @@ def get_summary(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
-def get_status(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Get the status rollup for the whole page. 
-    """
-    url = "https://status.digitalocean.com/api/v2/status.json"
-    response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
 def get_components(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Get the components for the page. 

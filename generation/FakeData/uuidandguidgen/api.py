@@ -20,7 +20,10 @@ def generate_v3_uuid(namespace: str, name: str, toolbench_rapidapi_key: str = '0
     url = f"https://www.uuidtools.com/api/generate/v3/namespace/{namespace}/name/{name}"
     response = requests.get(url)
     try:
-        return response.json()
+        result = response.json()
+        if isinstance(result, list):  # If it's a list, return the first item
+            return result[0]
+        return result
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -42,7 +45,10 @@ def generate_v5_uuid(namespace: str, name: str, toolbench_rapidapi_key: str = '0
     url = f"https://www.uuidtools.com/api/generate/v5/namespace/{namespace}/name/{name}"
     response = requests.get(url)
     try:
-        return response.json()
+        result = response.json()
+        if isinstance(result, list):  # If it's a list, return the first item
+            return result[0]
+        return result
     except Exception as e:
         return {"error": str(e), "response": response.text}
 

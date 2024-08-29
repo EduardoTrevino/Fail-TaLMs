@@ -13,7 +13,6 @@ def ip_geolocation(ip: Optional[str] = None, format: Optional[str] = 'json', lan
     url = "https://api.ip2location.io/"
     params = {
         'ip': ip,
-        'key': toolbench_rapidapi_key,
         'format': format
     }
     if lang:
@@ -36,7 +35,6 @@ def domain_whois(domain: str, format: Optional[str] = 'json', toolbench_rapidapi
     url = "https://api.ip2whois.com/v2"
     params = {
         'domain': domain,
-        'key': toolbench_rapidapi_key,
         'format': format
     }
 
@@ -47,27 +45,27 @@ def domain_whois(domain: str, format: Optional[str] = 'json', toolbench_rapidapi
         return {"error": str(e), "response": response.text}
 
 
-def bulk_ip_geolocation(ips: List[str], format: Optional[str] = 'json', fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Endpoint description: Get geolocation information for multiple IP addresses in bulk.
-    Parameters:
-    ips [Required]: list of strings [Description: IP addresses (IPv4 or IPv6) to lookup]
-    format [Optional]: string [Description: Response format, valid values: json | csv, default is json]
-    fields [Optional]: string [Description: Custom fields to return, separated by commas, defaults to all fields]
-    """
-    url = "https://bulk.ip2location.io/"
-    params = {
-        'key': toolbench_rapidapi_key,
-        'format': format,
-    }
-    if fields:
-        params['fields'] = fields
+# def bulk_ip_geolocation(ips: List[str], format: Optional[str] = 'json', fields: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+#     """
+#     Endpoint description: Get geolocation information for multiple IP addresses in bulk.
+#     Parameters:
+#     ips [Required]: list of strings [Description: IP addresses (IPv4 or IPv6) to lookup]
+#     format [Optional]: string [Description: Response format, valid values: json | csv, default is json]
+#     fields [Optional]: string [Description: Custom fields to return, separated by commas, defaults to all fields]
+#     """
+#     url = "https://bulk.ip2location.io/"
+#     params = {
+#         'format': format,
+#     }
+#     if fields:
+#         params['fields'] = fields
     
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.post(url, params=params, headers=headers, json=ips)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
+#     headers = {
+#         'Content-Type': 'application/json'
+#     }
+#     response = requests.post(url, params=params, headers=headers, json=ips)
+#     try:
+#         return response.json()
+#     except Exception as e:
+#         return {"error": str(e), "response": response.text}
+    

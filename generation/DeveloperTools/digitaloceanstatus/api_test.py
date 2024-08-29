@@ -6,10 +6,6 @@ class TestDigitalOceanStatusAPI(unittest.TestCase):
     def test_get_summary(self):
         response = get_summary()
         self.assertIn("status", response)
-
-    def test_get_status(self):
-        response = get_status()
-        self.assertIn("indicator", response)
     
     def test_get_components(self):
         response = get_components()

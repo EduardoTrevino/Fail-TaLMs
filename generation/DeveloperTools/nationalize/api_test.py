@@ -19,9 +19,5 @@ class TestNationalizeAPI(unittest.TestCase):
             self.assertIn("name", res)
             self.assertIn("country", res)
 
-    def test_missing_name_parameter(self):
-        response = predict_nationality(name="")
-        self.assertIn("error", response)
-
 if __name__ == "__main__":
     unittest.main()

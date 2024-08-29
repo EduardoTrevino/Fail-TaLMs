@@ -1,0 +1,74 @@
+{
+    "tool_name": "cloudflaretrace",
+    "tool_description": "Get IP Address, TimeStamp, User Agent, Country Code, IATA, HTTP Version, TLS/SSL Version & more by Cloudflare.",
+    "title": "Cloudflare Trace API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 98,
+        "avgLatency": 50,
+        "avgSuccessRate": 99,
+        "popularityScore": 8.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://cloudflare.com",
+    "host": "cloudflare.com",
+    "api_list": [
+        {
+            "name": "cloudflaretrace",
+            "url": "https://one.one.one.one/cdn-cgi/trace",
+            "description": "Retrieve trace information from Cloudflare including IP Address, Timestamp, User Agent, Country Code, and more.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "endpoint",
+                    "type": "STRING",
+                    "description": "The endpoint URL to query Cloudflare trace information.",
+                    "default": "https://one.one.one.one/cdn-cgi/trace"
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://one.one.one.one/cdn-cgi/trace'\nresponse = requests.get(url)\nprint(response.text)",
+            "statuscode": 200,
+            "body": {
+                "fl": "str",
+                "h": "str",
+                "ip": "str",
+                "ts": "float",
+                "visit_scheme": "str",
+                "uag": "str",
+                "colo": "str",
+                "sliver": "str",
+                "http": "str",
+                "loc": "str",
+                "tls": "str",
+                "sni": "str",
+                "warp": "str",
+                "gateway": "str",
+                "rbi": "str",
+                "kex": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "fl": {"type": "string"},
+                    "h": {"type": "string"},
+                    "ip": {"type": "string"},
+                    "ts": {"type": "number"},
+                    "visit_scheme": {"type": "string"},
+                    "uag": {"type": "string"},
+                    "colo": {"type": "string"},
+                    "sliver": {"type": "string"},
+                    "http": {"type": "string"},
+                    "loc": {"type": "string"},
+                    "tls": {"type": "string"},
+                    "sni": {"type": "string"},
+                    "warp": {"type": "string"},
+                    "gateway": {"type": "string"},
+                    "rbi": {"type": "string"},
+                    "kex": {"type": "string"}
+                }
+            }
+        }
+    ]
+}
