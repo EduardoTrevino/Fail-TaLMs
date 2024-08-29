@@ -36,17 +36,6 @@ def get_device_date(device_id: str = '08BEAC0A08AE', yyyy_mm_dd: str = '2020-07-
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
-def get_devices_nearest(lat: float = 25.04, lon: float = 121.614, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Returns the 3 nearest devices to the specific GPS coordinates.
-    """
-    url = f"https://pm25.lass-net.org/API-1.0.0/device/nearest/lat/{lat}/lon/{lon}/"
-    response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
 def get_project_all(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Returns the list of the projects.

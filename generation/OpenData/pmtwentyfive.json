@@ -1,314 +1,286 @@
 {
-    "tool_name": "pmtwentyfive",
-    "tool_description": "This Open Data API provides data access to the LASS PM2.5 project, a participatory sensing project for large-scale PM2.5 monitoring.",
-    "title": "PM25 Open Data API",
-    "pricing": "FREE",
-    "score": {
-        "avgServiceLevel": 95,
-        "avgLatency": 120,
-        "avgSuccessRate": 98,
-        "popularityScore": 9.2,
-        "__typename": "Score"
-    },
-    "home_url": "https://pm25.lass-net.org/API-1.0.0/",
-    "host": "pm25.lass-net.org",
-    "api_list": [
+  "tool_name": "pmtwentyfive",
+  "tool_description": "This Open Data API provides data access to the LASS PM2.5 project, a participatory sensing project for large-scale PM2.5 monitoring.",
+  "title": "PM25 Open Data API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 120,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.2,
+    "__typename": "Score"
+  },
+  "home_url": "https://pm25.lass-net.org/API-1.0.0/",
+  "host": "pm25.lass-net.org",
+  "api_list": [
+    {
+      "name": "get_device_latest",
+      "url": "/device/{device_id}/latest/",
+      "description": "Returns the latest measurement (within 2 hours) of the device.",
+      "method": "GET",
+      "required_parameters": [
         {
-            "name": "get_device_latest",
-            "url": "/device/{device_id}/latest/",
-            "description": "Returns the latest measurement (within 2 hours) of the device.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "device_id",
-                    "type": "STRING",
-                    "description": "Device ID, usually the MAC address.",
-                    "default": "08BEAC0A08AE"
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "format",
-                    "type": "STRING",
-                    "description": "Output data format.",
-                    "default": "JSON"
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "device_id": {"type": "string"},
-                    "feeds": {"type": "object"}
-                }
-            }
-        },
-        {
-            "name": "get_device_history",
-            "url": "/device/{device_id}/history/",
-            "description": "Returns the last 7-day measurement of the device.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "device_id",
-                    "type": "STRING",
-                    "description": "Device ID, usually the MAC address.",
-                    "default": "08BEAC0A08AE"
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "format",
-                    "type": "STRING",
-                    "description": "Output data format.",
-                    "default": "JSON"
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "device_id": {"type": "string"},
-                    "feeds": {"type": "object"}
-                }
-            }
-        },
-        {
-            "name": "get_device_date",
-            "url": "/device/{device_id}/date/{yyyy-mm-dd}/",
-            "description": "Returns the measurement of the device on the specified date.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "device_id",
-                    "type": "STRING",
-                    "description": "Device ID, usually the MAC address.",
-                    "default": "08BEAC0A08AE"
-                },
-                {
-                    "name": "yyyy-mm-dd",
-                    "type": "STRING",
-                    "description": "The date for which data is required.",
-                    "default": "2020-07-01"
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "format",
-                    "type": "STRING",
-                    "description": "Output data format.",
-                    "default": "JSON"
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "device_id": {"type": "string"},
-                    "feeds": {"type": "object"}
-                }
-            }
-        },
-        {
-            "name": "get_devices_nearest",
-            "url": "/device/nearest/lat/{lat}/lon/{lon}/",
-            "description": "Returns the 3 nearest devices to the specific GPS coordinates.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "lat",
-                    "type": "FLOAT",
-                    "description": "GPS latitude.",
-                    "default": 25.04
-                },
-                {
-                    "name": "lon",
-                    "type": "FLOAT",
-                    "description": "GPS longitude.",
-                    "default": 121.614
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_project_all",
-            "url": "/project/all/",
-            "description": "Returns the list of the projects.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "string"
-            }
-        },
-        {
-            "name": "get_project_latest",
-            "url": "/project/{project}/latest/",
-            "description": "Returns the latest measurement (within 2 hours) of the devices in the specified project.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "project",
-                    "type": "STRING",
-                    "description": "Project name.",
-                    "default": "airbox"
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_analysis_adf_emission",
-            "url": "/analysis/ADF/emission/",
-            "description": "Returns the list of devices that are probably located near emission sources detected by ADF (updated daily).",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_analysis_adf_indoor",
-            "url": "/analysis/ADF/indoor/",
-            "description": "Returns the suspicious indoor devices detected by ADF (updated daily).",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_analysis_adf_pollution",
-            "url": "/analysis/ADF/pollution/",
-            "description": "Returns the list of devices with suspicious pollution ongoing in their nearby areas detected by ADF (updated hourly).",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_analysis_adf_ranking",
-            "url": "/analysis/ADF/ranking/",
-            "description": "Returns the ranking scores of all online devices (updated hourly).",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_analysis_dcf_latest",
-            "url": "/analysis/DCF/latest/",
-            "description": "Returns the latest version calibration models made by DCF (updated daily).",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "array"
-            }
-        },
-        {
-            "name": "get_analysis_dcf_nearest",
-            "url": "/analysis/DCF/nearest/lat/{lat}/lon/{lon}/",
-            "description": "Returns the nearest reference site with DCF model to the specified GPS coordinates and sensor type.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "lat",
-                    "type": "FLOAT",
-                    "description": "GPS latitude.",
-                    "default": 25.04
-                },
-                {
-                    "name": "lon",
-                    "type": "FLOAT",
-                    "description": "GPS longitude.",
-                    "default": 121.614
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "sensor",
-                    "type": "STRING",
-                    "description": "PM2.5 sensor model.",
-                    "default": "PMS5003"
-                }
-            ],
-            "statuscode": 200,
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "source": {"type": "string"},
-                    "feeds": {"type": "array"}
-                }
-            }
-        },
-        {
-            "name": "get_citation",
-            "url": "/citation/",
-            "description": "Returns the bibtex to cite this project.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "string"
-            }
-        },
-        {
-            "name": "get_citation_adf",
-            "url": "/citation/ADF/",
-            "description": "Returns the bibtex to cite the ADF work.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "schema": {
-                "type": "string"
-            }
+          "name": "device_id",
+          "type": "STRING",
+          "description": "Device ID, usually the MAC address.",
+          "default": "08BEAC0A08AE"
         }
-    ]
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "Output data format.",
+          "default": "JSON"
+        }
+      ],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "device_id": { "type": "string" },
+          "feeds": { "type": "object" }
+        }
+      }
+    },
+    {
+      "name": "get_device_history",
+      "url": "/device/{device_id}/history/",
+      "description": "Returns the last 7-day measurement of the device.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "device_id",
+          "type": "STRING",
+          "description": "Device ID, usually the MAC address.",
+          "default": "08BEAC0A08AE"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "Output data format.",
+          "default": "JSON"
+        }
+      ],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "device_id": { "type": "string" },
+          "feeds": { "type": "object" }
+        }
+      }
+    },
+    {
+      "name": "get_device_date",
+      "url": "/device/{device_id}/date/{yyyy-mm-dd}/",
+      "description": "Returns the measurement of the device on the specified date.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "device_id",
+          "type": "STRING",
+          "description": "Device ID, usually the MAC address.",
+          "default": "08BEAC0A08AE"
+        },
+        {
+          "name": "yyyy-mm-dd",
+          "type": "STRING",
+          "description": "The date for which data is required.",
+          "default": "2020-07-01"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "Output data format.",
+          "default": "JSON"
+        }
+      ],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "device_id": { "type": "string" },
+          "feeds": { "type": "object" }
+        }
+      }
+    },
+    {
+      "name": "get_project_all",
+      "url": "/project/all/",
+      "description": "Returns the list of the projects.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "get_project_latest",
+      "url": "/project/{project}/latest/",
+      "description": "Returns the latest measurement (within 2 hours) of the devices in the specified project.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "project",
+          "type": "STRING",
+          "description": "Project name.",
+          "default": "airbox"
+        }
+      ],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_analysis_adf_emission",
+      "url": "/analysis/ADF/emission/",
+      "description": "Returns the list of devices that are probably located near emission sources detected by ADF (updated daily).",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_analysis_adf_indoor",
+      "url": "/analysis/ADF/indoor/",
+      "description": "Returns the suspicious indoor devices detected by ADF (updated daily).",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_analysis_adf_pollution",
+      "url": "/analysis/ADF/pollution/",
+      "description": "Returns the list of devices with suspicious pollution ongoing in their nearby areas detected by ADF (updated hourly).",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_analysis_adf_ranking",
+      "url": "/analysis/ADF/ranking/",
+      "description": "Returns the ranking scores of all online devices (updated hourly).",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_analysis_dcf_latest",
+      "url": "/analysis/DCF/latest/",
+      "description": "Returns the latest version calibration models made by DCF (updated daily).",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "array"
+      }
+    },
+    {
+      "name": "get_analysis_dcf_nearest",
+      "url": "/analysis/DCF/nearest/lat/{lat}/lon/{lon}/",
+      "description": "Returns the nearest reference site with DCF model to the specified GPS coordinates and sensor type.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "lat",
+          "type": "FLOAT",
+          "description": "GPS latitude.",
+          "default": 25.04
+        },
+        {
+          "name": "lon",
+          "type": "FLOAT",
+          "description": "GPS longitude.",
+          "default": 121.614
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "sensor",
+          "type": "STRING",
+          "description": "PM2.5 sensor model.",
+          "default": "PMS5003"
+        }
+      ],
+      "statuscode": 200,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "feeds": { "type": "array" }
+        }
+      }
+    },
+    {
+      "name": "get_citation",
+      "url": "/citation/",
+      "description": "Returns the bibtex to cite this project.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "get_citation_adf",
+      "url": "/citation/ADF/",
+      "description": "Returns the bibtex to cite the ADF work.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [],
+      "statuscode": 200,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ]
 }

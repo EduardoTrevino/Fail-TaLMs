@@ -182,8 +182,8 @@ Please update as you add and intergrate diffrent apis
 | Open Data        | House Stock Watcher              | 0(scraped) | :x:        | TBD      |
 | Open Data        | Leadsbox                         | 0          | :x:        | TBD      |
 | Open Data        | Open Library                     | 0(scraped) | :x:        | TBD      |
-| Open Data        | PM2.5                            | 0          | :x:        | TBD      |
-| Open Data        | Universities List                | 0          | :x:        | TBD      |
+| Open Data        | PM2.5                            | 0          | ✅         | TBD      |
+| Open Data        | Universities List                | 0          | ✅         | TBD      |
 | Open Data        | Vehicles                         | 0          | ✅         | TBD      |
 | Open Data        | Wayback Machine                  | 0          | ✅         | TBD      |
 | Open Data        | Wikipedia                        | 2          | 🟢         | TBD      |

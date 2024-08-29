@@ -30,10 +30,6 @@ class TestPMTwentyFiveAPI(unittest.TestCase):
         response = get_device_date()
         self.assertIn("device_id", response)
 
-    def test_get_devices_nearest(self):
-        response = get_devices_nearest()
-        self.assertIn("feeds", response)
-
     def test_get_project_all(self):
         response = get_project_all()
         self.assertTrue(response.strip())  # Should return non-empty string
