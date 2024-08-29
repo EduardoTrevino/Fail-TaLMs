@@ -96,6 +96,7 @@ def query_by_special(special: str, format: Optional[str] = 'TLE', toolbench_rapi
     }
     response = requests.get(url, params=params)
     try:
-        return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
+        return response.text
+        # return response.text if format in ['TLE', '3LE', '2LE', 'KVN', 'XML'] else response.json()
     except Exception as e:
         return {"error": str(e), "response": response.text}
