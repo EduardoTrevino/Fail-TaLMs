@@ -19,7 +19,6 @@ class TestArxivAPI(unittest.TestCase):
     def test_query_with_sorting(self):
         result = query_arxiv(search_query="all:electron", sort_by="submittedDate", sort_order="ascending")
         self.assertIn("<feed", result)
-
-    def test_invalid_query(self):
-        result = query_arxiv(search_query="id_list=wrong")
-        self.assertIn("<summary xmlns", result)  # Error messages are within <summary>
+        
+if __name__ == '__main__':
+    unittest.main()

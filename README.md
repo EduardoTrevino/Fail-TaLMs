@@ -188,7 +188,7 @@ Please update as you add and intergrate diffrent apis
 | Open Data        | Wayback Machine                  | 0          | :x:        | TBD      |
 | Open Data        | Wikipedia                        | 2          | 🟢         | TBD      |
 | Science          | Arcsecond                        | 0          | :x:        | TBD      |
-| Science          | arXiv                            | 0          | :x:        | TBD      |
+| Science          | arXiv                            | 0          | ✅         | TBD      |
 | Science          | Asterank                         | 0          | :x:        | TBD      |
 | Science          | Cat-Facts                        | 0          | :x:        | TBD      |
 | Science          | CelesTrak                        | 0          | ✅         | TBD      |
