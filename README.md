@@ -196,8 +196,8 @@ Please update as you add and intergrate diffrent apis
 | Science          | iDigBio                          | 0          | :x:        | TBD      |
 | Science          | ITIS                             | 0          | :x:        | TBD      |
 | Science          | NASA                             | 0          | :x:        | TBD      |
-| Science          | Newton                           | 0          | :x:        | TBD      |
-| Science          | Numbers                          | 0          | :x:        | TBD      |
+| Science          | Newton                           | 0          | ✅         | TBD      |
+| Science          | Numbers                          | 0          | ✅         | TBD      |
 | Science          | Open Notify                      | 0          | ✅         | TBD      |
 | Science          | Spaceflight News                 | 0          | :x:        | TBD      |
 | Science          | SpaceX                           | 2          | ✅         | TBD      |
