@@ -1,0 +1,144 @@
+{
+  "tool_name": "openwhyd",
+  "tool_description": "Openwhyd is a music curation service that allows users to create playlists from various streaming platforms.",
+  "title": "Openwhyd API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 98,
+    "avgLatency": 100,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.5,
+    "__typename": "Score"
+  },
+  "home_url": "https://openwhyd.org",
+  "host": "openwhyd.org",
+  "api_list": [
+    {
+      "name": "get_user_tracks",
+      "url": "https://openwhyd.org/:uHandle/[playlist/:playlistId]",
+      "description": "Fetch the list of tracks posted by a user.",
+      "method": "GET",
+      "required_parameters": ["uHandle"],
+      "optional_parameters": [
+        {
+          "name": "playlistId",
+          "type": "INTEGER",
+          "description": "The ID of the playlist."
+        },
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "Response format."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of tracks to return."
+        }
+      ],
+      "code": "response = get_user_tracks(uHandle='adrien', format='json')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "get_hot_tracks",
+      "url": "https://openwhyd.org/hot",
+      "description": "Fetch the list of hot tracks.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "Response format."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of tracks to return."
+        }
+      ],
+      "code": "response = get_hot_tracks(format='json')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "get_user_data",
+      "url": "https://openwhyd.org/api/user",
+      "description": "Retrieve user data.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        { "name": "id", "type": "STRING", "description": "User ID." },
+        {
+          "name": "isSubscr",
+          "type": "BOOLEAN",
+          "description": "Include subscription status flag."
+        },
+        {
+          "name": "countPosts",
+          "type": "BOOLEAN",
+          "description": "Include post count."
+        }
+      ],
+      "code": "response = get_user_data(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "object" }
+    },
+    {
+      "name": "get_playlist_data",
+      "url": "https://openwhyd.org/api/playlist",
+      "description": "Retrieve playlist data.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [],
+      "code": "response = get_playlist_data(id='4d94501d1f78ac091dbc9b4d_0')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "list_followers",
+      "url": "https://openwhyd.org/api/follow/fetchFollowers/:id",
+      "description": "Get the list of subscribers of a user.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [
+        {
+          "name": "skip",
+          "type": "INTEGER",
+          "description": "Number of records to skip."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of records to return."
+        }
+      ],
+      "code": "response = list_followers(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    },
+    {
+      "name": "list_following",
+      "url": "https://openwhyd.org/api/follow/fetchFollowing/:id",
+      "description": "Get the list of users a user subscribes to.",
+      "method": "GET",
+      "required_parameters": ["id"],
+      "optional_parameters": [
+        {
+          "name": "skip",
+          "type": "INTEGER",
+          "description": "Number of records to skip."
+        },
+        {
+          "name": "limit",
+          "type": "INTEGER",
+          "description": "Number of records to return."
+        }
+      ],
+      "code": "response = list_following(id='4d94501d1f78ac091dbc9b4d')",
+      "statuscode": 200,
+      "schema": { "type": "array" }
+    }
+  ]
+}

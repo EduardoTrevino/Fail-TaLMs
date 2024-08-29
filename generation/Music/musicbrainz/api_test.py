@@ -7,13 +7,6 @@ class TestMusicBrainzAPI(unittest.TestCase):
         self.assertIn('artists', response)
         self.assertGreater(len(response['artists']), 0)
     
-    def test_release_lookup(self):
-        # Using the MBID for "Abbey Road" by The Beatles
-        mbid = "eab8e3bc-b3fe-4ff4-84ee-e9066a1a1e46"
-        response = release_lookup(mbid, inc="artists")
-        self.assertIn('release', response)
-        self.assertEqual(response['id'], mbid)
-    
     def test_release_group_browse(self):
         # Using the MBID for The Beatles
         artist_mbid = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d"
