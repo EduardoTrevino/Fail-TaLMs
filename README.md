@@ -192,7 +192,7 @@ Please update as you add and intergrate diffrent apis
 | Science          | Asterank                         | 0          | :x:        | TBD      |
 | Science          | Cat-Facts                        | 0          | :x:        | TBD      |
 | Science          | CelesTrak                        | 0          | :x:        | TBD      |
-| Science          | GBIF                             | 0          | :x:        | TBD      |
+| Science          | GBIF                             | 0          | ✅         | TBD      |
 | Science          | iDigBio                          | 0          | ✅         | TBD      |
 | Science          | ITIS                             | 0          | ✅         | TBD      |
 | Science          | NASA                             | 0          | :x:        | TBD      |
