@@ -1,7 +1,7 @@
 import requests
 from typing import Optional, List
 
-BASE_URL = "https://brasilapi.com.br"
+BASE_URL = "https://brasilapi.com.br/api"
 
 def get_banks(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """Retrieves information about all banks in Brazil."""
@@ -91,17 +91,6 @@ def search_cptec_cidade(city_name: str, toolbench_rapidapi_key: str = '088440d91
         return response.json()
     except Exception as e:
         return {"error": str(e), "response": response.text}
-
-
-def get_clima_capital(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """Get current weather conditions in the capitals of Brazil."""
-    url = f"{BASE_URL}/cptec/v1/clima/capital"
-    response = requests.get(url)
-    try:
-        return response.json()
-    except Exception as e:
-        return {"error": str(e), "response": response.text}
-
 
 def get_clima_aeroporto(icao_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """Get current weather conditions at a specified airport using ICAO code."""

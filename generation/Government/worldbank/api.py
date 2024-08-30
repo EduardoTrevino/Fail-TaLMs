@@ -9,7 +9,7 @@ def get_country_data(country_code: str, format_type: str = "json", toolbench_rap
     - country_code: Two-letter ISO code of the country.
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/country/{country_code}"
+    url = f"https://api.worldbank.org/v2/country/{country_code}"
     params = {
         'format': format_type
     }
@@ -26,7 +26,7 @@ def list_countries(format_type: str = "json", toolbench_rapidapi_key: str = '088
     Parameters:
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/country"
+    url = f"https://api.worldbank.org/v2/country"
     params = {
         'format': format_type
     }
@@ -46,7 +46,7 @@ def get_indicator_data(country_code: str, indicator_code: str, date: Optional[st
     - date: Date or date range for the data (e.g., '2000', '2000:2010').
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/country/{country_code}/indicator/{indicator_code}"
+    url = f"https://api.worldbank.org/v2/country/{country_code}/indicator/{indicator_code}"
     params = {
         'format': format_type
     }
@@ -65,7 +65,7 @@ def list_indicators(format_type: str = "json", toolbench_rapidapi_key: str = '08
     Parameters:
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/indicator"
+    url = f"https://api.worldbank.org/v2/indicator"
     params = {
         'format': format_type
     }
@@ -82,7 +82,7 @@ def list_regions(format_type: str = "json", toolbench_rapidapi_key: str = '08844
     Parameters:
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/region"
+    url = f"https://api.worldbank.org/v2/region"
     params = {
         'format': format_type
     }
@@ -99,7 +99,7 @@ def list_income_levels(format_type: str = "json", toolbench_rapidapi_key: str = 
     Parameters:
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/incomelevel"
+    url = f"https://api.worldbank.org/v2/incomelevel"
     params = {
         'format': format_type
     }
@@ -116,7 +116,7 @@ def list_lending_types(format_type: str = "json", toolbench_rapidapi_key: str = 
     Parameters:
     - format_type: The format in which to receive the data (default is 'json').
     """
-    url = f"http://api.worldbank.org/v2/lendingtype"
+    url = f"https://api.worldbank.org/v2/lendingtype"
     params = {
         'format': format_type
     }

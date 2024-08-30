@@ -1,0 +1,102 @@
+{
+  "tool_name": "citybikes",
+  "tool_description": "API providing data of bike sharing networks around the world.",
+  "title": "CityBikes API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 90,
+    "avgLatency": 120,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.7,
+    "__typename": "Score"
+  },
+  "home_url": "http://api.citybik.es",
+  "host": "api.citybik.es",
+  "api_list": [
+    {
+      "name": "get_networks",
+      "url": "http://api.citybik.es/v2/networks",
+      "description": "Retrieve a list of all available networks.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "fields",
+          "type": "STRING",
+          "description": "A comma-separated list of fields to include in the response.",
+          "default": ""
+        }
+      ],
+      "code": "import requests\n\nurl = 'http://api.citybik.es/v2/networks'\nparams = {}\nparams['fields'] = fields\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "networks": [
+          {
+            "href": "str",
+            "id": "str",
+            "name": "str"
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "networks": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_network_details",
+      "url": "http://api.citybik.es/v2/networks/{network_id}",
+      "description": "Retrieve details of a specific network.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "network_id",
+          "type": "STRING",
+          "description": "The ID of the network.",
+          "default": "velib"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "fields",
+          "type": "STRING",
+          "description": "A comma-separated list of fields to include in the response.",
+          "default": ""
+        }
+      ],
+      "code": "import requests\n\nurl = f'http://api.citybik.es/v2/networks/{network_id}'\nparams = {}\nparams['fields'] = fields\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "network": {
+          "stations": [
+            {
+              "id": "str",
+              "name": "str",
+              "timestamp": "str",
+              "longitude": "float",
+              "free_bikes": "int",
+              "latitude": "float",
+              "empty_slots": "int"
+            }
+          ],
+          "id": "str",
+          "name": "str"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "network": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

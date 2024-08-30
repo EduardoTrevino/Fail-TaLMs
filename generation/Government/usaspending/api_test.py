@@ -4,16 +4,16 @@ from api import get_agency_details, get_agency_awards_summary, get_award_details
 class TestUSASpendingAPI(unittest.TestCase):
 
     def test_get_agency_details(self):
-        response = get_agency_details(toptier_agency_code="123")
-        self.assertIn('agency', response)
+        response = get_agency_details(toptier_agency_code="012")
+        self.assertIn('fiscal_year', response)
 
     def test_get_agency_awards_summary(self):
-        response = get_agency_awards_summary(toptier_agency_code="123")
-        self.assertIn('award_totals', response)
+        response = get_agency_awards_summary(toptier_agency_code="012")
+        self.assertIn('fiscal_year', response)
 
     def test_get_award_details(self):
         response = get_award_details(award_id=1018950)
-        self.assertIn('award', response)
+        self.assertIn('generated_unique_award_id', response)
 
     def test_search_spending_by_award(self):
         filters = {

@@ -1,126 +1,131 @@
-import pytest
+import unittest
 import api
 
-def test_get_banks():
-    response = api.get_banks()
-    assert isinstance(response, list), "Response should be a list of banks"
+class TestAPI(unittest.TestCase):
 
-def test_get_bank_by_code():
-    response = api.get_bank_by_code(code=1)
-    assert isinstance(response, dict), "Response should be a dictionary with bank information"
+    def test_get_banks(self):
+        response = api.get_banks()
+        self.assertIsInstance(response, list, "Response should be a list of banks")
 
-def test_get_cep():
-    response = api.get_cep(89010025)
-    assert isinstance(response, dict) and "cep" in response, "Response should be a dictionary with CEP information"
+    def test_get_bank_by_code(self):
+        response = api.get_bank_by_code(code=1)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with bank information")
 
-def test_get_cep_v2():
-    response = api.get_cep_v2(89010025)
-    assert isinstance(response, dict) and "cep" in response, "Response should be a dictionary with CEP V2 information"
+    def test_get_cep(self):
+        response = api.get_cep(89010025)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with CEP information")
+        self.assertIn("cep", response, "Response should contain 'cep' key")
 
-def test_get_cnpj():
-    response = api.get_cnpj("19131243000197")
-    assert isinstance(response, dict) and "cnpj" in response, "Response should be a dictionary with CNPJ information"
+    def test_get_cep_v2(self):
+        response = api.get_cep_v2(89010025)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with CEP V2 information")
+        self.assertIn("cep", response, "Response should contain 'cep' key")
 
-def test_get_corretoras():
-    response = api.get_corretoras()
-    assert isinstance(response, list), "Response should be a list of brokers"
+    def test_get_cnpj(self):
+        response = api.get_cnpj("19131243000197")
+        self.assertIsInstance(response, dict, "Response should be a dictionary with CNPJ information")
+        self.assertIn("cnpj", response, "Response should contain 'cnpj' key")
 
-def test_get_corretora_by_cnpj():
-    response = api.get_corretora_by_cnpj("02332886000104")
-    assert isinstance(response, dict), "Response should be a dictionary with broker information"
+    def test_get_corretoras(self):
+        response = api.get_corretoras()
+        self.assertIsInstance(response, list, "Response should be a list of brokers")
 
-def test_get_cptec_cidades():
-    response = api.get_cptec_cidades()
-    assert isinstance(response, list), "Response should be a list of cities"
+    def test_get_corretora_by_cnpj(self):
+        response = api.get_corretora_by_cnpj("02332886000104")
+        self.assertIsInstance(response, dict, "Response should be a dictionary with broker information")
 
-def test_search_cptec_cidade():
-    response = api.search_cptec_cidade("São Paulo")
-    assert isinstance(response, list), "Response should be a list of cities"
+    def test_get_cptec_cidades(self):
+        response = api.get_cptec_cidades()
+        self.assertIsInstance(response, list, "Response should be a list of cities")
 
-def test_get_clima_capital():
-    response = api.get_clima_capital()
-    assert isinstance(response, list), "Response should be a list of weather conditions for capitals"
+    def test_search_cptec_cidade(self):
+        response = api.search_cptec_cidade("São Paulo")
+        self.assertIsInstance(response, list, "Response should be a list of cities")
 
-def test_get_clima_aeroporto():
-    response = api.get_clima_aeroporto("SBGR")
-    assert isinstance(response, dict), "Response should be a dictionary with airport weather information"
+    def test_get_clima_aeroporto(self):
+        response = api.get_clima_aeroporto("SBGR")
+        self.assertIsInstance(response, dict, "Response should be a dictionary with airport weather information")
 
-def test_get_previsao_meteorologica():
-    response = api.get_previsao_meteorologica(999)
-    assert isinstance(response, dict), "Response should be a dictionary with weather forecast for a city"
+    def test_get_previsao_meteorologica(self):
+        response = api.get_previsao_meteorologica(999)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with weather forecast for a city")
 
-def test_get_previsao_meteorologica_dias():
-    response = api.get_previsao_meteorologica_dias(999, 3)
-    assert isinstance(response, dict), "Response should be a dictionary with weather forecast for a period"
+    def test_get_previsao_meteorologica_dias(self):
+        response = api.get_previsao_meteorologica_dias(999, 3)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with weather forecast for a period")
 
-def test_get_previsao_oceanica():
-    response = api.get_previsao_oceanica(241)
-    assert isinstance(response, dict), "Response should be a dictionary with ocean forecast information"
+    def test_get_previsao_oceanica(self):
+        response = api.get_previsao_oceanica(241)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with ocean forecast information")
 
-def test_get_previsao_oceanica_dias():
-    response = api.get_previsao_oceanica_dias(241, 2)
-    assert isinstance(response, dict), "Response should be a dictionary with extended ocean forecast information"
+    def test_get_previsao_oceanica_dias(self):
+        response = api.get_previsao_oceanica_dias(241, 2)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with extended ocean forecast information")
 
-def test_get_ddd():
-    response = api.get_ddd(11)
-    assert isinstance(response, dict), "Response should be a dictionary with DDD information"
+    def test_get_ddd(self):
+        response = api.get_ddd(11)
+        self.assertIsInstance(response, dict, "Response should be a dictionary with DDD information")
 
-def test_get_feriados():
-    response = api.get_feriados(2022)
-    assert isinstance(response, list), "Response should be a list of holidays"
+    def test_get_feriados(self):
+        response = api.get_feriados(2022)
+        self.assertIsInstance(response, list, "Response should be a list of holidays")
 
-def test_get_fipe_marcas():
-    response = api.get_fipe_marcas('carros')
-    assert isinstance(response, list), "Response should be a list of vehicle brands"
+    def test_get_fipe_marcas(self):
+        response = api.get_fipe_marcas('carros')
+        self.assertIsInstance(response, list, "Response should be a list of vehicle brands")
 
-def test_get_fipe_preco():
-    response = api.get_fipe_preco('001004-9')
-    assert isinstance(response, list), "Response should be a list with vehicle price information"
+    def test_get_fipe_preco(self):
+        response = api.get_fipe_preco('001004-9')
+        self.assertIsInstance(response, list, "Response should be a list with vehicle price information")
 
-def test_get_fipe_tabelas():
-    response = api.get_fipe_tabelas()
-    assert isinstance(response, list), "Response should be a list of FIPE tables"
+    def test_get_fipe_tabelas(self):
+        response = api.get_fipe_tabelas()
+        self.assertIsInstance(response, list, "Response should be a list of FIPE tables")
 
-def test_get_ibge_municipios():
-    response = api.get_ibge_municipios('SP')
-    assert isinstance(response, list), "Response should be a list of municipalities"
+    def test_get_ibge_municipios(self):
+        response = api.get_ibge_municipios('SP')
+        self.assertIsInstance(response, list, "Response should be a list of municipalities")
 
-def test_get_ibge_uf():
-    response = api.get_ibge_uf()
-    assert isinstance(response, list), "Response should be a list of states"
+    def test_get_ibge_uf(self):
+        response = api.get_ibge_uf()
+        self.assertIsInstance(response, list, "Response should be a list of states")
 
-def test_get_ibge_uf_by_code():
-    response = api.get_ibge_uf_by_code('SP')
-    assert isinstance(response, dict), "Response should be a dictionary with state information"
+    def test_get_ibge_uf_by_code(self):
+        response = api.get_ibge_uf_by_code('SP')
+        self.assertIsInstance(response, dict, "Response should be a dictionary with state information")
 
-def test_get_isbn():
-    response = api.get_isbn('9788545702870')
-    assert isinstance(response, dict) and "isbn" in response, "Response should be a dictionary with ISBN information"
+    def test_get_isbn(self):
+        response = api.get_isbn('9788545702870')
+        self.assertIsInstance(response, dict, "Response should be a dictionary with ISBN information")
+        self.assertIn("isbn", response, "Response should contain 'isbn' key")
 
-def test_get_ncms():
-    response = api.get_ncms()
-    assert isinstance(response, list), "Response should be a list of NCMs"
+    def test_get_ncms(self):
+        response = api.get_ncms()
+        self.assertIsInstance(response, list, "Response should be a list of NCMs")
 
-def test_search_ncm():
-    response = api.search_ncm('3305.10.00')
-    assert isinstance(response, list), "Response should be a list of NCMs"
+    def test_search_ncm(self):
+        response = api.search_ncm('3305.10.00')
+        self.assertIsInstance(response, list, "Response should be a list of NCMs")
 
-def test_get_ncm_by_code():
-    response = api.get_ncm_by_code('3305.10.00')
-    assert isinstance(response, dict), "Response should be a dictionary with NCM information"
+    def test_get_ncm_by_code(self):
+        response = api.get_ncm_by_code('3305.10.00')
+        self.assertIsInstance(response, dict, "Response should be a dictionary with NCM information")
 
-def test_get_pix_participants():
-    response = api.get_pix_participants()
-    assert isinstance(response, list), "Response should be a list of PIX participants"
+    def test_get_pix_participants(self):
+        response = api.get_pix_participants()
+        self.assertIsInstance(response, list, "Response should be a list of PIX participants")
 
-def test_get_registro_br():
-    response = api.get_registro_br('brasilapi.com.br')
-    assert isinstance(response, dict), "Response should be a dictionary with domain status"
+    def test_get_registro_br(self):
+        response = api.get_registro_br('brasilapi.com.br')
+        self.assertIsInstance(response, dict, "Response should be a dictionary with domain status")
 
-def test_get_taxas():
-    response = api.get_taxas()
-    assert isinstance(response, list), "Response should be a list of interest rates"
+    def test_get_taxas(self):
+        response = api.get_taxas()
+        self.assertIsInstance(response, dict, "Response should be a dict of interest rates")
 
-def test_get_taxa_by_sigla():
-    response = api.get_taxa_by_sigla('CDI')
-    assert isinstance(response, dict), "Response should be a dictionary with rate information"
+    def test_get_taxa_by_sigla(self):
+        response = api.get_taxa_by_sigla('CDI')
+        self.assertIsInstance(response, dict, "Response should be a dictionary with rate information")
+
+if __name__ == '__main__':
+    unittest.main()

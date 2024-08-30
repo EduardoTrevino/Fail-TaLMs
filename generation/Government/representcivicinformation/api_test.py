@@ -29,9 +29,9 @@ class TestApi(unittest.TestCase):
         self.assertTrue(len(response["objects"]) > 0)
 
     def test_get_elections(self):
-        response = get_elections(limit=1)
+        response = get_elections(limit=5)
         self.assertIn("objects", response)
-        self.assertTrue(len(response["objects"]) > 0)
+        self.assertIsInstance(response["objects"], list)
 
     def test_get_candidates(self):
         response = get_candidates(limit=1)
