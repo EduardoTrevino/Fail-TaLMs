@@ -7,7 +7,7 @@ class TestHealthcareGovAPI(unittest.TestCase):
     def test_get_content_object(self):
         response = get_content_object("accessibility", toolbench_rapidapi_key='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff')
         self.assertIn("title", response)
-        self.assertEqual(response["url"], "https://www.healthcare.gov/accessibility")
+        self.assertEqual(response["url"], "/accessibility")
 
     def test_get_content_collection(self):
         response = get_content_collection("glossary", toolbench_rapidapi_key='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff')

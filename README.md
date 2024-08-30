@@ -151,10 +151,10 @@ Please update as you add and intergrate diffrent apis
 | Government       | USAspending                      | 0(scraped) | :x:        | TBD      |
 | Government       | USPTO                            | 0          | :x:        | TBD      |
 | Government       | World Bank                       | 0(scraped) | :x:        | TBD      |
-| Health           | HealthCare.gov                   | 0(scraped) | :x:        | TBD      |
-| Health           | Makeup                           | 0(scraped) | :x:        | TBD      |
-| Health           | NPPES                            | 0(scraped) | :x:        | TBD      |
-| Health           | openFDA                          | 0(scraped) | :x:        | TBD      |
+| Health           | HealthCare.gov                   | 0(scraped) | ✅         | TBD      |
+| Health           | Makeup                           | 0(scraped) | ✅         | TBD      |
+| Health           | NPPES                            | 0(scraped) | ✅         | TBD      |
+| Health           | openFDA                          | 0(scraped) | ✅         | TBD      |
 | Inspiration      | Advice Slip                      | 0(scraped) | ✅         | TBD      |
 | Inspiration      | Affirmations                     | 1          | ✅         | TBD      |
 | Inspiration      | Breaking Bad Quotes              | 0(scraped) | ✅         | TBD      |
