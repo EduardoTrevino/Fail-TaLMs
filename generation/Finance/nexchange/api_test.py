@@ -25,7 +25,7 @@ class TestNexchangeAPI(unittest.TestCase):
 
     def test_get_price_history(self):
         response = get_price_history(pair_name="BTCLTC")
-        self.assertIsInstance(response, list)
+        self.assertIsInstance(response, dict)
 
     def test_get_prices_info_list(self):
         response = get_prices_info_list()

@@ -18,7 +18,7 @@ class TestWazirxAPI(unittest.TestCase):
 
     def test_exchange_info(self):
         response = api.exchange_info()
-        self.assertIn('timezone', response)
+        self.assertIn('timeZone', response)
         self.assertIn('serverTime', response)
         self.assertIn('symbols', response)
 

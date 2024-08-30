@@ -14,37 +14,6 @@
     "host": "www.okx.com",
     "api_list": [
         {
-            "name": "get_account_balance",
-            "url": "https://www.okx.com/api/v5/account/balance",
-            "description": "Retrieve the account balance for a specified currency.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [
-                {
-                    "name": "currency",
-                    "type": "STRING",
-                    "description": "The currency code whose balance you want to check.",
-                    "default": "None"
-                }
-            ],
-            "code": "import requests\n\nurl = 'https://www.okx.com/api/v5/account/balance'\nparams = {}\nheaders = {'toolbench-rapidapi-key': toolbench_rapidapi_key}\nif currency: params['ccy'] = currency\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())",
-            "statuscode": 200,
-            "body": {
-                "data": {
-                    "details": [
-                        {
-                            "ccy": "str",
-                            "bal": "float",
-                            "frozenBal": "float"
-                        }
-                    ]
-                },
-                "code": "int",
-                "msg": "str"
-            },
-            "headers": {}
-        },
-        {
             "name": "get_market_ticker",
             "url": "https://www.okx.com/api/v5/market/ticker",
             "description": "Retrieve the market ticker information for a specified instrument.",

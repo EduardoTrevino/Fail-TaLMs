@@ -1,8 +1,8 @@
 {
     "tool_name": "exchangerate",
-    "tool_description": "API to access and convert currency exchange rates globally, supporting over 160 currencies, with historical data available from 1990.",
+    "tool_description": "API to access and convert currency exchange rates globally, supporting over 160 currencies.",
     "title": "ExchangeRate-API",
-    "pricing": "FREE to Business Plans",
+    "pricing": "FREE with rate limits",
     "score": {
         "avgServiceLevel": 98,
         "avgLatency": 100,
@@ -11,12 +11,12 @@
         "__typename": "Score"
     },
     "home_url": "https://www.exchangerate-api.com/docs",
-    "host": "v6.exchangerate-api.com",
+    "host": "open.er-api.com",
     "api_list": [
         {
-            "name": "get_standard_exchange_rates",
-            "url": "https://v6.exchangerate-api.com/v6/{api_key}/latest/{base_currency}",
-            "description": "Fetch all supported currency exchange rates for a given base currency.",
+            "name": "get_latest_exchange_rates",
+            "url": "https://open.er-api.com/v6/latest/{base_currency}",
+            "description": "Fetches the latest exchange rates for a given base currency.",
             "method": "GET",
             "required_parameters": [
                 {
@@ -33,112 +33,18 @@
                 "type": "object",
                 "properties": {
                     "result": {"type": "string"},
-                    "conversion_rates": {"type": "object"}
-                }
-            }
-        },
-        {
-            "name": "pair_conversion",
-            "url": "https://v6.exchangerate-api.com/v6/{api_key}/pair/{base_currency}/{target_currency}/{amount}",
-            "description": "Convert a specific amount from a base currency to a target currency.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "base_currency",
-                    "type": "STRING",
-                    "description": "The base currency ISO 4217 code."
-                },
-                {
-                    "name": "target_currency",
-                    "type": "STRING",
-                    "description": "The target currency ISO 4217 code."
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "amount",
-                    "type": "FLOAT",
-                    "description": "The amount to convert.",
-                    "default": null
-                }
-            ],
-            "statuscode": 200,
-            "headers": {},
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "result": {"type": "string"},
-                    "conversion_rate": {"type": "number"},
-                    "conversion_result": {"type": "number"}
-                }
-            }
-        },
-        {
-            "name": "get_historical_data",
-            "url": "https://v6.exchangerate-api.com/v6/{api_key}/history/{base_currency}/{year}/{month}/{day}",
-            "description": "Fetch historical exchange rate data for a specific date.",
-            "method": "GET",
-            "required_parameters": [
-                {
-                    "name": "base_currency",
-                    "type": "STRING",
-                    "description": "The base currency ISO 4217 code."
-                },
-                {
-                    "name": "year",
-                    "type": "INTEGER",
-                    "description": "The year for historical data."
-                },
-                {
-                    "name": "month",
-                    "type": "INTEGER",
-                    "description": "The month for historical data."
-                },
-                {
-                    "name": "day",
-                    "type": "INTEGER",
-                    "description": "The day for historical data."
-                }
-            ],
-            "optional_parameters": [
-                {
-                    "name": "amount",
-                    "type": "FLOAT",
-                    "description": "The amount to convert historically.",
-                    "default": null
-                }
-            ],
-            "statuscode": 200,
-            "headers": {},
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "result": {"type": "string"},
-                    "conversion_rates": {"type": "object"},
-                    "requested_amount": {"type": "number"},
-                    "conversion_amounts": {"type": "object"}
-                }
-            }
-        },
-        {
-            "name": "get_supported_codes",
-            "url": "https://v6.exchangerate-api.com/v6/{api_key}/codes",
-            "description": "Fetches all the supported currency codes and their names.",
-            "method": "GET",
-            "required_parameters": [],
-            "optional_parameters": [],
-            "statuscode": 200,
-            "headers": {},
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "result": {"type": "string"},
-                    "supported_codes": {
-                        "type": "array",
-                        "items": {
-                            "type": "array",
-                            "items": {"type": "string"}
-                        }
+                    "provider": {"type": "string"},
+                    "documentation": {"type": "string"},
+                    "terms_of_use": {"type": "string"},
+                    "time_last_update_unix": {"type": "integer"},
+                    "time_last_update_utc": {"type": "string"},
+                    "time_next_update_unix": {"type": "integer"},
+                    "time_next_update_utc": {"type": "string"},
+                    "time_eol_unix": {"type": "integer"},
+                    "base_code": {"type": "string"},
+                    "rates": {
+                        "type": "object",
+                        "additionalProperties": {"type": "number"}
                     }
                 }
             }

@@ -1,18 +1,7 @@
 import unittest
-from api import get_account_balance, get_market_ticker, get_order_book
+from api import get_market_ticker, get_order_book
 
 class TestOKXAPI(unittest.TestCase):
-
-    def test_get_account_balance(self):
-        response = get_account_balance()
-        self.assertIn('data', response)
-
-    def test_get_account_balance_with_currency(self):
-        response = get_account_balance(currency='BTC')
-        self.assertIn('data', response)
-        # Check if the balance for BTC is returned
-        currencies = [bal['ccy'] for bal in response.get('data', {}).get('details', [])]
-        self.assertIn('BTC', currencies)
 
     def test_get_market_ticker(self):
         response = get_market_ticker('BTC-USDT')

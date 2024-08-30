@@ -1,0 +1,434 @@
+{
+    "tool_name": "kucoin",
+    "tool_description": "API for interaction with KuCoin's various accounts, transfers, and trading functionalities.",
+    "title": "KuCoin API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 90,
+        "avgLatency": 200,
+        "avgSuccessRate": 95,
+        "popularityScore": 9.0
+    },
+    "home_url": "https://api.kucoin.com/docs/",
+    "host": "api.kucoin.com",
+    "api_list": [
+        {
+            "name": "get_currency_list",
+            "url": "https://api.kucoin.com/api/v3/currencies",
+            "description": "Fetch the list of available currencies with details including currency name, precision, and supported chains.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "currency": {"type": "string"},
+                                "name": {"type": "string"},
+                                "precision": {"type": "integer"},
+                                "chains": {
+                                    "type": "array",
+                                    "items": {"type": "string"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_currency_detail",
+            "url": "https://api.kucoin.com/api/v3/currencies/{currency}",
+            "description": "Retrieve details about a specified currency, including supported chains, minimum deposit/withdrawal amounts, and contract address.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "currency",
+                    "type": "STRING",
+                    "description": "The currency code (e.g., BTC)."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "currency": {"type": "string"},
+                            "name": {"type": "string"},
+                            "precision": {"type": "integer"},
+                            "chains": {
+                                "type": "array",
+                                "items": {"type": "string"}
+                            },
+                            "minDepositAmount": {"type": "string"},
+                            "minWithdrawAmount": {"type": "string"},
+                            "contractAddress": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_symbols_list",
+            "url": "https://api.kucoin.com/api/v2/symbols",
+            "description": "Get the list of available currency pairs for trading, including base and quote currencies, order sizes, and trading status.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "symbol": {"type": "string"},
+                                "baseCurrency": {"type": "string"},
+                                "quoteCurrency": {"type": "string"},
+                                "feeCurrency": {"type": "string"},
+                                "isMarginEnabled": {"type": "boolean"},
+                                "enableTrading": {"type": "boolean"}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ticker",
+            "url": "https://api.kucoin.com/api/v1/market/orderbook/level1?symbol={symbol}",
+            "description": "Get Level 1 Market Data for a specific trading pair, including bid/ask prices, last traded price, and size.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol (e.g., BTC-USDT)."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "price": {"type": "string"},
+                            "size": {"type": "string"},
+                            "bestBid": {"type": "string"},
+                            "bestAsk": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_all_tickers",
+            "url": "https://api.kucoin.com/api/v1/market/allTickers",
+            "description": "Get market tickers for all trading pairs, including the best bid/ask prices, last traded price, 24-hour volume, and more.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "ticker": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "symbol": {"type": "string"},
+                                        "buy": {"type": "string"},
+                                        "sell": {"type": "string"},
+                                        "changeRate": {"type": "string"}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_24hr_stats",
+            "url": "https://api.kucoin.com/api/v1/market/stats?symbol={symbol}",
+            "description": "Get the 24-hour statistics for a specified trading pair, including highest/lowest prices, 24-hour volume, and price changes.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol (e.g., BTC-USDT)."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "symbol": {"type": "string"},
+                            "high": {"type": "string"},
+                            "low": {"type": "string"},
+                            "vol": {"type": "string"},
+                            "last": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_market_list",
+            "url": "https://api.kucoin.com/api/v1/markets",
+            "description": "Get the list of trading markets available on KuCoin, including USDS, BTC, KCS, and others.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_part_order_book",
+            "url": "https://api.kucoin.com/api/v1/market/orderbook/{level}?symbol={symbol}",
+            "description": "Get a list of open orders for a symbol (aggregated). This includes bids and asks.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol (e.g., BTC-USDT)."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "level",
+                    "type": "STRING",
+                    "description": "Level of order book (e.g., 'level2_20' or 'level2_100'). Defaults to 'level2_20'."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "bids": {
+                                "type": "array",
+                                "items": {
+                                    "type": "array",
+                                    "items": [
+                                        {"type": "string"},
+                                        {"type": "string"}
+                                    ]
+                                }
+                            },
+                            "asks": {
+                                "type": "array",
+                                "items": {
+                                    "type": "array",
+                                    "items": [
+                                        {"type": "string"},
+                                        {"type": "string"}
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_trade_histories",
+            "url": "https://api.kucoin.com/api/v1/market/histories?symbol={symbol}",
+            "description": "Get the trade history of the specified symbol. Retrieves the last 100 transaction records.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol (e.g., BTC-USDT)."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "sequence": {"type": "string"},
+                                "price": {"type": "string"},
+                                "size": {"type": "string"},
+                                "side": {"type": "string"}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_klines",
+            "url": "https://api.kucoin.com/api/v1/market/candles?symbol={symbol}&type={type}",
+            "description": "Get Kline data for the specified symbol, including candlestick data such as opening/closing prices, highs/lows, and volumes.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "symbol",
+                    "type": "STRING",
+                    "description": "Trading pair symbol (e.g., BTC-USDT)."
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type of candlestick patterns (e.g., '1min', '1day')."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "startAt",
+                    "type": "INTEGER",
+                    "description": "Start time in seconds (default is 0)."
+                },
+                {
+                    "name": "endAt",
+                    "type": "INTEGER",
+                    "description": "End time in seconds (default is 0)."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": [
+                                {"type": "string"}, 
+                                {"type": "string"},  
+                                {"type": "string"}, 
+                                {"type": "string"},  
+                                {"type": "string"},  
+                                {"type": "string"},  
+                                {"type": "string"}   
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_fiat_price",
+            "url": "https://api.kucoin.com/api/v1/prices?base={base}&currencies={currencies}",
+            "description": "Get the fiat price of the currencies for the available trading pairs.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "base",
+                    "type": "STRING",
+                    "description": "Base currency ticker symbol (default is 'USD')."
+                },
+                {
+                    "name": "currencies",
+                    "type": "STRING",
+                    "description": "Comma-separated list of cryptocurrencies to be converted into fiat (e.g., 'BTC,ETH')."
+                }
+            ],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "BTC": {"type": "string"},
+                            "ETH": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_server_time",
+            "url": "https://api.kucoin.com/api/v1/timestamp",
+            "description": "Get the current server time.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "integer",
+                        "description": "Current server timestamp in milliseconds."
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_service_status",
+            "url": "https://api.kucoin.com/api/v1/status",
+            "description": "Get the current service status of the API.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "status": {"type": "string"},
+                            "msg": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
