@@ -155,17 +155,17 @@ Please update as you add and intergrate diffrent apis
 | Health           | Makeup                           | 0(scraped) | :x:        | TBD      |
 | Health           | NPPES                            | 0(scraped) | :x:        | TBD      |
 | Health           | openFDA                          | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Advice Slip                      | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Affirmations                     | 1          | :x:        | TBD      |
-| Inspiration      | Breaking Bad Quotes              | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Advice Slip                      | 0(scraped) | ✅         | TBD      |
+| Inspiration      | Affirmations                     | 1          | ✅         | TBD      |
+| Inspiration      | Breaking Bad Quotes              | 0(scraped) | ✅         | TBD      |
 | Inspiration      | Dictum                           | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Game of Thrones Quotes           | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Kanye                            | 1          | 🟢         | TBD      |
-| Inspiration      | Quotable                         | 0(scraped) | :x:        | TBD      |
+| Inspiration      | Game of Thrones Quotes           | 0(scraped) | ✅         | TBD      |
+| Inspiration      | Kanye                            | 1          | ✅         | TBD      |
+| Inspiration      | Quotable                         | 0(scraped) | ✅         | TBD      |
 | Inspiration      | Quote Garden                     | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Quotes on Design                 | 0(scraped) | :x:        | TBD      |
-| Inspiration      | Ron Swanson Quotes               | 0(scraped) | :x:        | TBD      |
-| Jobs             | Jobicy                           | 1          | 🟢         | TBD      |
+| Inspiration      | Quotes on Design                 | 0(scraped) | ✅         | TBD      |
+| Inspiration      | Ron Swanson Quotes               | 0(scraped) | ✅         | TBD      |
+| Jobs             | Jobicy                           | 1          | ✅         | TBD      |
 | Language         | Chinese Character Web            | 0(scraped) | ✅         | TBD      |
 | Language         | Chinese Text Project             | 2          | ✅         | TBD      |
 | Language         | Datamuse                         | 0(scraped) | ✅         | TBD      |

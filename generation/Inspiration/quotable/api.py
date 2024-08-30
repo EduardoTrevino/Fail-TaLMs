@@ -114,8 +114,11 @@ def get_author_by_slug(slug: str, toolbench_rapidapi_key: str = '088440d910mshef
     """
     Retrieve a single Author by slug.
     """
-    url = f"https://api.quotable.io/authors/{slug}"
-    response = requests.get(url)
+    url = f"https://api.quotable.io/authors"
+    params = {
+        'slug': slug,
+    }
+    response = requests.get(url, params=params)
     return response.json()
 
 

@@ -1,0 +1,137 @@
+{
+  "tool_name": "adviceslip",
+  "tool_description": "The Advice Slip JSON API provides random advice slips and allows searching and retrieval by ID.",
+  "title": "Advice Slip JSON API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 95,
+    "avgLatency": 150,
+    "avgSuccessRate": 98,
+    "popularityScore": 9.0,
+    "__typename": "Score"
+  },
+  "home_url": "https://api.adviceslip.com/",
+  "host": "api.adviceslip.com",
+  "api_list": [
+    {
+      "name": "get_random_advice",
+      "url": "https://api.adviceslip.com/advice",
+      "description": "Returns a random advice slip as a slip object.",
+      "method": "GET",
+      "required_parameters": [],
+      "optional_parameters": [
+        {
+          "name": "callback",
+          "type": "STRING",
+          "description": "Define your own callback function name for JSONP.",
+          "default": null
+        }
+      ],
+      "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "slip": {
+          "slip_id": "int",
+          "advice": "str"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "slip": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_advice_by_id",
+      "url": "https://api.adviceslip.com/advice/{slip_id}",
+      "description": "Returns a specific advice slip by slip_id.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "slip_id",
+          "type": "INTEGER",
+          "description": "The unique ID of the advice slip.",
+          "default": null
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "callback",
+          "type": "STRING",
+          "description": "Define your own callback function name for JSONP.",
+          "default": null
+        }
+      ],
+      "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice/{slip_id}'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "slip": {
+          "slip_id": "int",
+          "advice": "str"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "slip": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "name": "search_advice",
+      "url": "https://api.adviceslip.com/advice/search/{query}",
+      "description": "Search for advice slips containing the given query term.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "query",
+          "type": "STRING",
+          "description": "The search query for advice slips.",
+          "default": null
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "callback",
+          "type": "STRING",
+          "description": "Define your own callback function name for JSONP.",
+          "default": null
+        }
+      ],
+      "code": "import requests\n\nurl = 'https://api.adviceslip.com/advice/search/{query}'\nparams = {}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "total_results": "int",
+        "query": "str",
+        "slips": [
+          {
+            "slip_id": "int",
+            "advice": "str"
+          }
+        ]
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "total_results": {
+            "type": "integer"
+          },
+          "query": {
+            "type": "string"
+          },
+          "slips": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}
