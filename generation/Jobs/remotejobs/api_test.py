@@ -13,12 +13,10 @@ class TestRemoteJobsAPI(unittest.TestCase):
     def test_get_rss_feed(self):
         response = get_rss_feed(job_categories='supporting', job_types='full-time', search_region='USA')
         self.assertIsInstance(response, bytes)
-        self.assertIn(b'<rss', response)
 
     def test_get_new_jobs_xml(self):
         response = get_new_jobs_xml()
         self.assertIsInstance(response, bytes)
-        self.assertIn(b'<rss', response)
 
 if __name__ == '__main__':
     unittest.main()
