@@ -1,12 +1,17 @@
 import requests
 from typing import Optional
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+    }
+
 def get_version(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Returns date information about the CCDB service, the Unicode version/date the data came from, and PHP/MySQL versions.
     """
     url = "http://ccdb.hemiola.com/version"
-    response = requests.get(url)
+    
+    response = requests.get(url, headers=headers)
     try:
         return response.json()
     except Exception as e:
@@ -17,7 +22,7 @@ def get_fields(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9
     Returns a list of all field names in the database.
     """
     url = "http://ccdb.hemiola.com/fields"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     try:
         return response.json()
     except Exception as e:
@@ -36,7 +41,7 @@ def get_all_characters(filter: Optional[str] = None, fields: Optional[str] = Non
     if count:
         params['count'] = ''
     
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, headers=headers)
     try:
         return response.json()
     except Exception as e:
@@ -51,7 +56,7 @@ def get_characters_by_radical(radical: int, strokes: Optional[int] = None, toolb
     if strokes is not None:
         params['strokes'] = strokes
     
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, headers=headers)
     try:
         return response.json()
     except Exception as e:
@@ -62,7 +67,7 @@ def get_strokes(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae
     Returns a list of valid total strokes and a count of characters with each number of total strokes.
     """
     url = "http://ccdb.hemiola.com/strokes"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     try:
         return response.json()
     except Exception as e:
@@ -76,7 +81,7 @@ def get_sounds_mandarin(with_pitch: bool = False, toolbench_rapidapi_key: str = 
     if with_pitch:
         url += "/with-pitch"
     
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     try:
         return response.json()
     except Exception as e:

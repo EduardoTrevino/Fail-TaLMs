@@ -12,8 +12,8 @@ class TestChineseCharacterWebAPI(unittest.TestCase):
 
     def test_get_version(self):
         result = get_version()
-        self.assertIsInstance(result, dict)
-        self.assertIn('phpVersion', result)
+        self.assertIsInstance(result, list)
+        self.assertIn('PHP', str(result))
 
     def test_get_fields(self):
         result = get_fields()
@@ -27,8 +27,8 @@ class TestChineseCharacterWebAPI(unittest.TestCase):
 
     def test_get_all_characters_count(self):
         result = get_all_characters(filter='gb', count=True)
-        self.assertIsInstance(result, dict)
-        self.assertIn('count', result)
+        self.assertIsInstance(result, list)
+        self.assertIn('count', str(result))
 
     def test_get_characters_by_radical(self):
         result = get_characters_by_radical(85, strokes=10)

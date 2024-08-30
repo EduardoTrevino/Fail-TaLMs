@@ -166,11 +166,11 @@ Please update as you add and intergrate diffrent apis
 | Inspiration      | Quotes on Design                 | 0(scraped) | :x:        | TBD      |
 | Inspiration      | Ron Swanson Quotes               | 0(scraped) | :x:        | TBD      |
 | Jobs             | Jobicy                           | 1          | 🟢         | TBD      |
-| Language         | Chinese Character Web            | 0(scraped) | :x:        | TBD      |
-| Language         | Chinese Text Project             | 2          | 🟢         | TBD      |
-| Language         | Datamuse                         | 0(scraped) | :x:        | TBD      |
-| Language         | Free Dictionary                  | 0(scraped) | :x:        | TBD      |
-| Language         | PurgoMalum                       | 0(scraped) | :x:        | TBD      |
+| Language         | Chinese Character Web            | 0(scraped) | ✅         | TBD      |
+| Language         | Chinese Text Project             | 2          | ✅         | TBD      |
+| Language         | Datamuse                         | 0(scraped) | ✅         | TBD      |
+| Language         | Free Dictionary                  | 0(scraped) | ✅         | TBD      |
+| Language         | PurgoMalum                       | 0(scraped) | ✅         | TBD      |
 | Music            | Binary Jazz                      | 0(scraped) | ✅         | TBD      |
 | Music            | iTunes Search                    | 0          | :x:        | TBD      |
 | Music            | MusicBrainz                      | 0(scraped) | ✅         | TBD      |
