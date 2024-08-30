@@ -4,7 +4,6 @@ Please update as you add and intergrate diffrent apis
 
 | Category         | API Name                         | # Queries  | Unittest | Date     |
 | ---------------- | -------------------------------- | ---------- | ---------- | -------- |
-| API Directories  | APIs.guru                        | 0          | :x:        | TBD      |
 | Art & Images     | Art Institute of Chicago         | 2          | ✅         | 08/01/24 |
 | Art & Images     | COLOURlovers                     | 2          | 🟢         | TBD      |
 | Art & Images     | DiceBear                         | 0          | :x:        | TBD      |
