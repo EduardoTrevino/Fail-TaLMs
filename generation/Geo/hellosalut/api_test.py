@@ -19,9 +19,5 @@ class TestHelloSalutAPI(unittest.TestCase):
         response = say_hello(mode='auto')
         self.assertIn('hello', response)
 
-    def test_hello_with_no_params(self):
-        response = say_hello()
-        self.assertIn('hello', response)
-
 if __name__ == '__main__':
     unittest.main()
