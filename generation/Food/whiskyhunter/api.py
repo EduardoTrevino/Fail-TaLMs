@@ -1,7 +1,7 @@
 import requests
 from typing import Optional
 
-def auction_data(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+def auction_data_slug(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
     Endpoint description: List only aggregated data for online auction {slug}.
     Parameters:
@@ -31,7 +31,7 @@ def auctions_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17
     """
     Endpoint description: List all online auctions main information.
     """
-    url = "https://whiskyhunter.net/api/auctions_info/"
+    url = "https://whiskyhunter.net/api/auctions_info?format=json"
 
     response = requests.get(url)
     try:
@@ -43,7 +43,7 @@ def distilleries_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc46
     """
     Endpoint description: List all distilleries main information.
     """
-    url = "https://whiskyhunter.net/api/distilleries_info/"
+    url = "https://whiskyhunter.net/api/distilleries_info/?format=json"
 
     response = requests.get(url)
     try:
