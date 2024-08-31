@@ -1,7 +1,7 @@
 # Tool Environment
 ## A overview of all the API's tool's and their availability
 
-Please update as you add and intergrate diffrent apis
+Here is a list of all the API's we have aggregated as well as the latest unittest pass/fail for all of it's available endpoints. To add a new tool please submit a PR, include a unit test and the number of available endpoints for it.
 
 | Category         | API Name                         | # Queries  | Unittest | Date     |
 | ---------------- | -------------------------------- | ---------- | ---------- | -------- |
