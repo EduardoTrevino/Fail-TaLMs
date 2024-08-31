@@ -13,7 +13,7 @@ Here is a list of all the API's we have aggregated as well as the latest unittes
 | Art     | Lorem Picsum                     | 0          | :x:        | TBD      |
 | Art     | Metropolitan Museum of Art       | 2          | 🟢         | TBD      |
 | Art    | PHP-Noise                        | 0          | :x:        | TBD      |
-| Art & Images     | Placebear                        | 0          | :x:        | TBD      |
+| Art    | Placebear                        | 0          | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0          | :x:        | TBD      |
 | Art & Images     | RandomFox                        | 0          | :x:        | TBD      |
 | Art & Images     | ReSmush                          | 2          | :x:        | TBD      |
