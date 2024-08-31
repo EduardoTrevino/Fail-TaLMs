@@ -1,5 +1,5 @@
 import unittest
-from api import search_address, reverse_geocode, mass_geocode_csv, mass_reverse_geocode_csv
+from api import search_address, reverse_geocode
 
 
 class TestAdresseAPI(unittest.TestCase):
