@@ -18,7 +18,7 @@ Here is a list of all the API's we have aggregated as well as the latest unittes
 | Art    | RandomFox                        | 0          | :x:        | TBD      |
 | Art     | ReSmush                          | 2          | :x:        | TBD      |
 | Art     | RoboHash                         | 0          | :x:        | TBD      |
-| Art & Images     | Vadivelu Status Codes            | 0          | :x:        | TBD      |
+| Art     | Vadivelu Status Codes            | 0          | :x:        | TBD      |
 | Calendar         | Nager.Date                       | 2          | 🟢         | TBD      |
 | Calendar         | UK Bank Holidays                 | 2          | 🟢         | TBD      |
 | Content          | 4chan                            | 2          | 🟢         | TBD      |
