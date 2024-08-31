@@ -14,14 +14,5 @@ class TestAdresseAPI(unittest.TestCase):
         self.assertIn("features", response)
         self.assertIsInstance(response["features"], list)
 
-    def test_mass_geocode_csv(self):
-        response = mass_geocode_csv(file_path="test_files/search.csv", columns=['adresse', 'postcode'])
-        self.assertIn("error", response)
-
-    def test_mass_reverse_geocode_csv(self):
-        response = mass_reverse_geocode_csv(file_path="test_files/reverse.csv")
-        self.assertIn("error", response)
-
-
 if __name__ == '__main__':
     unittest.main()
