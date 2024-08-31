@@ -18,10 +18,10 @@ class TestGeoPluginAPI(unittest.TestCase):
 
     def test_currency_converter(self):
         """Test the currency conversion"""
-        result = currency_converter(base_currency="USD", amount=50, target_currency="EUR")
-        self.assertIn('geoplugin_baseCurrency', result)
-        self.assertEqual(result['geoplugin_baseCurrency'], 'USD')
-        self.assertIn('geoplugin_convert', result)
+        result = currency_converter(base_currency="USD", amount=50)
+        self.assertIn('amount', result)
+        self.assertEqual(result['local_currency'], 'USD')
+        self.assertIn('exchange_rate', result)
     
 if __name__ == '__main__':
     unittest.main()
