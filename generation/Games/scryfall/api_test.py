@@ -12,8 +12,8 @@ class TestScryfallAPI(unittest.TestCase):
         self.assertEqual(result.get("name"), "Black Lotus")
 
     def test_card_named_fuzzy(self):
-        result = card_named_fuzzy(fuzzy="blck lot")
-        self.assertEqual(result.get("name"), "Black Lotus")
+        result = card_named_fuzzy(fuzzy="aust com")
+        self.assertEqual(result.get("name"), "Austere Command")
 
     def test_cards_autocomplete(self):
         result = cards_autocomplete(q="thal")

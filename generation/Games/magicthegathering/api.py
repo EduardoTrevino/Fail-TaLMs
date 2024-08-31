@@ -24,19 +24,19 @@ def get_all_cards(page: Optional[int] = 1, page_size: Optional[int] = 100, toolb
     response = requests.get(url, params=params)
     return response.json()
 
-def get_card_by_id(card_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Get a specific card by its ID.
+# def get_card_by_id(card_id: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+#     """
+#     Get a specific card by its ID.
 
-    Parameters:
-    - card_id: The unique id or multiverseid of the card.
+#     Parameters:
+#     - card_id: The unique id or multiverseid of the card.
 
-    Returns:
-    A JSON response containing the card details.
-    """
-    url = f"{BASE_URL}/cards/{card_id}"
-    response = requests.get(url)
-    return response.json()
+#     Returns:
+#     A JSON response containing the card details.
+#     """
+#     url = f"{BASE_URL}/cards/{card_id}"
+#     response = requests.get(url)
+#     return response.json()
 
 def get_all_sets(name: Optional[str] = None, block: Optional[str] = None, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """
@@ -71,19 +71,19 @@ def get_set_by_code(set_code: str, toolbench_rapidapi_key: str = '088440d910mshe
     response = requests.get(url)
     return response.json()
 
-def generate_booster_pack(set_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Generate a booster pack for a specific set.
+# def generate_booster_pack(set_code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+#     """
+#     Generate a booster pack for a specific set.
 
-    Parameters:
-    - set_code: The code of the set to generate a booster pack for.
+#     Parameters:
+#     - set_code: The code of the set to generate a booster pack for.
 
-    Returns:
-    A JSON response containing the booster pack details.
-    """
-    url = f"{BASE_URL}/sets/{set_code}/booster"
-    response = requests.get(url)
-    return response.json()
+#     Returns:
+#     A JSON response containing the booster pack details.
+#     """
+#     url = f"{BASE_URL}/sets/{set_code}/booster"
+#     response = requests.get(url)
+#     return response.json()
 
 def get_all_types(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     """

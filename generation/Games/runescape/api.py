@@ -48,19 +48,3 @@ def hiscores_ranking(table: int, category: int, size: int = 50, toolbench_rapida
     url = f"https://secure.runescape.com/m=hiscore/ranking.json?table={table}&category={category}&size={size}"
     response = requests.get(url)
     return response.json()
-
-def runemetrics_profile(user: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Returns a player's Runemetrics profile data.
-    """
-    url = f"https://apps.runescape.com/runemetrics/profile/profile?user={user}&activities=20"
-    response = requests.get(url)
-    return response.json()
-
-def player_count(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    """
-    Returns the number of players currently online in RuneScape and Old School RuneScape.
-    """
-    url = "http://www.runescape.com/player_count.js?varname=iPlayerCount"
-    response = requests.get(url)
-    return response.text

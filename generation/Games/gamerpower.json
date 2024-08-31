@@ -1,0 +1,137 @@
+{
+    "tool_name": "gamerpower",
+    "tool_description": "Access a treasure trove of free games, giveaways, and in-game loot with the GamerPower API.",
+    "title": "GamerPower API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 97,
+        "avgLatency": 120,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://gamerpower.com/api",
+    "host": "gamerpower.com",
+    "api_list": [
+        {
+            "name": "get_all_giveaways",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch all ongoing giveaways.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaway_by_id",
+            "url": "https://gamerpower.com/api/giveaway",
+            "description": "Fetch a specific giveaway by its unique ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The giveaway ID",
+                    "default": "525"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "Giveaway object",
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        },
+        {
+            "name": "get_giveaways_by_platform",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways filtered by platform.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform name"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaways_by_type",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways filtered by type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Giveaway type"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_giveaways_sorted",
+            "url": "https://gamerpower.com/api/giveaways",
+            "description": "Fetch giveaways sorted by a specified criteria.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "sort-by",
+                    "type": "STRING",
+                    "description": "Sorting criteria"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": "List of giveaway objects",
+            "headers": {},
+            "schema": {
+                "type": "array"
+            }
+        },
+        {
+            "name": "get_total_worth",
+            "url": "https://gamerpower.com/api/worth",
+            "description": "Fetch total live giveaways worth.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform optional filter"
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type optional filter"
+                }
+            ],
+            "statuscode": 200,
+            "body": "Worth information",
+            "headers": {},
+            "schema": {
+                "type": "object"
+            }
+        }
+    ]
+}

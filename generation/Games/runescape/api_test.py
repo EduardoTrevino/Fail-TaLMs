@@ -5,9 +5,7 @@ from api import (
     grand_exchange_items, 
     grand_exchange_detail, 
     grand_exchange_graph, 
-    hiscores_ranking, 
-    runemetrics_profile, 
-    player_count
+    hiscores_ranking
 )
 
 class TestRunescapeAPI(unittest.TestCase):
@@ -35,14 +33,6 @@ class TestRunescapeAPI(unittest.TestCase):
     def test_hiscores_ranking(self):
         result = hiscores_ranking(table=9, category=0, size=2)
         self.assertIsInstance(result, list)
-
-    def test_runemetrics_profile(self):
-        result = runemetrics_profile(user="SomePlayer")
-        self.assertIn("name", result)
-        
-    def test_player_count(self):
-        result = player_count()
-        self.assertIn("iPlayerCount", result)
 
 if __name__ == '__main__':
     unittest.main()

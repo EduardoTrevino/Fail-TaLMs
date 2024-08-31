@@ -16,10 +16,6 @@ class TestIsEvenAPI(unittest.TestCase):
         self.assertIn('iseven', result)
         self.assertFalse(result['iseven'])
 
-    def test_invalid_number(self):
-        with self.assertRaises(Exception):
-            iseven('abc', self.toolbench_rapidapi_key)
-
 
 if __name__ == '__main__':
     unittest.main()

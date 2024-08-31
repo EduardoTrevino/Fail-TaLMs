@@ -83,10 +83,14 @@ def grab_jokes_by_type(type: str, number: int = 1, toolbench_rapidapi_key: str =
      type [Required]: string [Description: Type of jokes to fetch.]
      number [Optional]: integer [Description: Number of jokes to fetch (1 for 'random', others for 'ten').]
     """
-    url = f"https://official-joke-api.appspot.com/jokes/{type}/{number if number != 1 else 'random'}"
+    endpoint = 'random' if number == 1 else 'ten'
+    url = f"https://official-joke-api.appspot.com/jokes/{type}/{endpoint}"
     response = requests.get(url)
     try:
+        response.raise_for_status()  # Raises an HTTPError for bad responses
         return response.json()
+    except requests.exceptions.HTTPError as http_err:
+        return {"error": f"HTTP error occurred: {http_err}", "response": response.text}
     except Exception as e:
         return {"error": str(e), "response": response.text}
 

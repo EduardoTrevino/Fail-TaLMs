@@ -1,0 +1,220 @@
+{
+    "tool_name": "opentriviadb",
+    "tool_description": "Get random jokes, jokes by type, ten random jokes, and joke types from the Official Joke API.",
+    "title": "Official Joke API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 100,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.3,
+        "__typename": "Score"
+    },
+    "home_url": "https://official-joke-api.appspot.com/",
+    "host": "official-joke-api.appspot.com",
+    "api_list": [
+        {
+            "name": "get_random_joke",
+            "url": "https://official-joke-api.appspot.com/random_joke",
+            "description": "Fetches a random joke",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "str",
+                "setup": "str",
+                "punchline": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "setup": {
+                        "type": "string"
+                    },
+                    "punchline": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_joke_types",
+            "url": "https://official-joke-api.appspot.com/types",
+            "description": "Retrieves the types of jokes available",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": [
+                "str"
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "get_ten_random_jokes",
+            "url": "https://official-joke-api.appspot.com/random_ten",
+            "description": "Fetches ten random jokes",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": [
+                {
+                    "type": "str",
+                    "setup": "str",
+                    "punchline": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "setup": {
+                            "type": "string"
+                        },
+                        "punchline": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_random_jokes",
+            "url": "https://official-joke-api.appspot.com/jokes/random/<number>",
+            "description": "Fetches a specified number of random jokes",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "number",
+                    "type": "INTEGER",
+                    "description": "The number of random jokes to fetch."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": [
+                {
+                    "type": "str",
+                    "setup": "str",
+                    "punchline": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "setup": {
+                            "type": "string"
+                        },
+                        "punchline": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_jokes_by_type",
+            "url": "https://official-joke-api.appspot.com/jokes/:type/random",
+            "description": "Fetches jokes by type with specified quantity, either 'random' or 'ten'",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "joke_type",
+                    "type": "STRING",
+                    "description": "The type of jokes to fetch."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "quantity",
+                    "type": "STRING",
+                    "description": "The number of jokes to fetch, either 'random' or 'ten'. Default is 'random'."
+                }
+            ],
+            "statuscode": 200,
+            "body": [
+                {
+                    "type": "str",
+                    "setup": "str",
+                    "punchline": "str"
+                }
+            ],
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "setup": {
+                            "type": "string"
+                        },
+                        "punchline": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_joke_by_id",
+            "url": "https://official-joke-api.appspot.com/jokes/:id",
+            "description": "Fetch a joke by its ID",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "joke_id",
+                    "type": "INTEGER",
+                    "description": "The ID of the joke to fetch."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "type": "str",
+                "setup": "str",
+                "punchline": "str"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "setup": {
+                        "type": "string"
+                    },
+                    "punchline": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

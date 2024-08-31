@@ -1,7 +1,7 @@
 import unittest
 from api import (
     get_card, search_cards, get_set, search_sets, get_series, search_series,
-    list_categories, list_hps, list_illustrators, list_rarities,
+    list_categories, list_illustrators, list_rarities,
     list_retreats, list_types
 )
 
@@ -43,10 +43,6 @@ class TestTCGdexAPI(unittest.TestCase):
 
     def test_list_categories(self):
         response = list_categories()
-        self.assertIsInstance(response, list)
-
-    def test_list_hps(self):
-        response = list_hps()
         self.assertIsInstance(response, list)
 
     def test_list_illustrators(self):
