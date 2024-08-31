@@ -11,7 +11,7 @@ Here is a list of all the API's we have aggregated as well as the latest unittes
 | Art     | Dogs                             | 2          | 🟢         | TBD      |
 | Art     | HTTP Cats                        | 0          | :x:        | TBD      |
 | Art     | Lorem Picsum                     | 0          | :x:        | TBD      |
-| Art & Images     | Metropolitan Museum of Art       | 2          | 🟢         | TBD      |
+| Art     | Metropolitan Museum of Art       | 2          | 🟢         | TBD      |
 | Art & Images     | PHP-Noise                        | 0          | :x:        | TBD      |
 | Art & Images     | Placebear                        | 0          | :x:        | TBD      |
 | Art & Images     | Random Dog                       | 0          | :x:        | TBD      |
