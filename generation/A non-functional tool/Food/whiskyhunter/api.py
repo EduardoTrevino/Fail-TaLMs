@@ -7,12 +7,9 @@ def auction_data(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857391
     Parameters:
      slug [Required]: string [Path parameter. Example: 'catawiki']
     """
-    url = f"https://api.whiskyhunter.net/api/auction_data/{slug}/"
-    headers = {
-        'X-RapidAPI-Key': toolbench_rapidapi_key
-    }
+    url = f"https://whiskyhunter.net/api/auction_data/{slug}/"
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
         return response.json()
     except Exception as e:
@@ -22,12 +19,9 @@ def auctions_data(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17
     """
     Endpoint description: List all online auctions aggregated data.
     """
-    url = "https://api.whiskyhunter.net/api/auctions_data/"
-    headers = {
-        'X-RapidAPI-Key': toolbench_rapidapi_key
-    }
+    url = "https://whiskyhunter.net/api/auctions_data/"
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
         return response.json()
     except Exception as e:
@@ -37,12 +31,9 @@ def auctions_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17
     """
     Endpoint description: List all online auctions main information.
     """
-    url = "https://api.whiskyhunter.net/api/auctions_info/"
-    headers = {
-        'X-RapidAPI-Key': toolbench_rapidapi_key
-    }
+    url = "https://whiskyhunter.net/api/auctions_info/"
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
         return response.json()
     except Exception as e:
@@ -52,12 +43,9 @@ def distilleries_info(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc46
     """
     Endpoint description: List all distilleries main information.
     """
-    url = "https://api.whiskyhunter.net/api/distilleries_info/"
-    headers = {
-        'X-RapidAPI-Key': toolbench_rapidapi_key
-    }
+    url = "https://whiskyhunter.net/api/distilleries_info/"
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
         return response.json()
     except Exception as e:
@@ -69,12 +57,9 @@ def distillery_data(slug: str, toolbench_rapidapi_key: str = '088440d910mshef857
     Parameters:
      slug [Required]: string [Path parameter. Example: 'ardbeg']
     """
-    url = f"https://api.whiskyhunter.net/api/distillery_data/{slug}/"
-    headers = {
-        'X-RapidAPI-Key': toolbench_rapidapi_key
-    }
+    url = f"https://whiskyhunter.net/api/distillery_data/{slug}/"
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     try:
         return response.json()
     except Exception as e:
