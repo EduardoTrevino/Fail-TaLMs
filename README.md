@@ -9,7 +9,7 @@ Here is a list of all the API's we have aggregated as well as the latest unittes
 | Art    | COLOURlovers                     | 2          | 🟢         | TBD      |
 | Art     | DiceBear                         | 0          | :x:        | TBD      |
 | Art     | Dogs                             | 2          | 🟢         | TBD      |
-| Art & Images     | HTTP Cats                        | 0          | :x:        | TBD      |
+| Art     | HTTP Cats                        | 0          | :x:        | TBD      |
 | Art & Images     | Lorem Picsum                     | 0          | :x:        | TBD      |
 | Art & Images     | Metropolitan Museum of Art       | 2          | 🟢         | TBD      |
 | Art & Images     | PHP-Noise                        | 0          | :x:        | TBD      |
