@@ -31,3 +31,6 @@ class TestGeoJSAPI(unittest.TestCase):
         ip = "8.8.8.8"
         result = get_ptr_record(ip)
         self.assertIn('ptr', result)
+
+if __name__ == '__main__':
+    unittest.main()
