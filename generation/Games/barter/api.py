@@ -18,8 +18,11 @@ def browse_bundles(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p1
     """
     Browse all available bundles.
     """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
     url = f"{base_url}/browse/bundles/json"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
     try:
         return response.json()
     except Exception as e:
