@@ -5,7 +5,7 @@ Here is a list of all the API's we have aggregated as well as the latest unittes
 
 | Category         | API Name                         | Endpoint Tools  | Unittest | Date     |
 | ---------------- | -------------------------------- | ---------- | ---------- | -------- |
-| Art & Images     | Art Institute of Chicago         | 2          | ✅         | 08/01/24 |
+| Art     | Art Institute of Chicago         | 2          | ✅         | 08/01/24 |
 | Art & Images     | COLOURlovers                     | 2          | 🟢         | TBD      |
 | Art & Images     | DiceBear                         | 0          | :x:        | TBD      |
 | Art & Images     | Dogs                             | 2          | 🟢         | TBD      |
