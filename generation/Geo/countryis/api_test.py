@@ -20,8 +20,12 @@ class TestCountryIsApi(unittest.TestCase):
     def test_get_data_sources_info(self):
         # Test the retrieval of information about the data sources
         result = get_data_sources_info()
-        self.assertIn('cloudflare', result)
-        self.assertIn('maxmind', result)
+        # Ensure the 'dataSources' key exists
+        self.assertIn('dataSources', result)
+        
+        # Check that 'cloudflare' and 'maxmind' are in the 'dataSources' list
+        self.assertIn('cloudflare', result['dataSources'])
+        self.assertIn('maxmind', result['dataSources'])
 
 if __name__ == '__main__':
     unittest.main()
