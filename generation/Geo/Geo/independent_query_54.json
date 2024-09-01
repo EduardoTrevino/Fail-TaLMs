@@ -1,0 +1,140 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "ipapi",
+                "api_name": "get_ip_location",
+                "api_description": "Retrieve complete location information for a specific IP address.",
+                "required_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IP address to retrieve location for.",
+                        "default": "8.8.8.8"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "country": "str",
+                    "region": "str",
+                    "city": "str"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "viacep",
+                "api_name": "query_cep",
+                "api_description": "Retrieve information for a given ZIP code in Brazil.",
+                "required_parameters": [
+                    {
+                        "name": "cep",
+                        "type": "STRING",
+                        "description": "ZIP code in the format of 8 digits.",
+                        "default": "01001000"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "return_format",
+                        "type": "STRING",
+                        "description": "Format of the return data (json or xml).",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "cep": "str",
+                    "logradouro": "str",
+                    "bairro": "str",
+                    "localidade": "str",
+                    "uf": "str"
+                }
+            }
+        ],
+        "query": "What is the location information of the IP address 8.8.8.8? Also, can you provide the details for the Brazilian ZIP code 01001000?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "ipapi",
+                "api_name": "get_client_ip_location",
+                "api_description": "Retrieve complete location information for the client's IP address.",
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "country": "str",
+                    "region": "str",
+                    "city": "str"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "viacep",
+                "api_name": "search_address",
+                "api_description": "Search for a ZIP code based on the address details.",
+                "required_parameters": [
+                    {
+                        "name": "state",
+                        "type": "STRING",
+                        "description": "Two-letter state code in Brazil.",
+                        "default": "SP"
+                    },
+                    {
+                        "name": "city",
+                        "type": "STRING",
+                        "description": "Name of the city. Must have at least 3 characters.",
+                        "default": "São Paulo"
+                    },
+                    {
+                        "name": "street",
+                        "type": "STRING",
+                        "description": "Name of the street. Must have at least 3 characters.",
+                        "default": "Paulista"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "return_format",
+                        "type": "STRING",
+                        "description": "Format of the return data (json or xml).",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "cep": "str",
+                        "logradouro": "str",
+                        "bairro": "str",
+                        "localidade": "str",
+                        "uf": "str"
+                    }
+                ]
+            }
+        ],
+        "query": "Can you find the current location details for my IP address? Additionally, find the ZIP code for Paulista Avenue in São Paulo, SP, Brazil.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

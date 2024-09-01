@@ -1,0 +1,180 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "hellosalut",
+        "api_name": "say_hello",
+        "api_description": "Get a greeting based on language code, IP address, or country code. Supports automatic detection.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "lang",
+            "type": "STRING",
+            "description": "Language code.",
+            "default": ""
+          },
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "IP address.",
+            "default": ""
+          },
+          {
+            "name": "cc",
+            "type": "STRING",
+            "description": "Country code.",
+            "default": ""
+          },
+          {
+            "name": "mode",
+            "type": "STRING",
+            "description": "Automatic detection mode.",
+            "default": "auto"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "hello": "string",
+          "cc": "string",
+          "ip": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "viacep",
+        "api_name": "query_cep",
+        "api_description": "Retrieve information for a given ZIP code in Brazil.",
+        "required_parameters": [
+          {
+            "name": "cep",
+            "type": "STRING",
+            "description": "ZIP code in the format of 8 digits."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "return_format",
+            "type": "STRING",
+            "description": "Format of the return data (json or xml).",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "cep": "string",
+          "logradouro": "string",
+          "complemento": "string",
+          "bairro": "string",
+          "localidade": "string",
+          "uf": "string",
+          "ibge": "string",
+          "gia": "string",
+          "ddd": "string",
+          "siafi": "string"
+        }
+      }
+    ],
+    "query": "I want a greeting in Portuguese based on the IP address from Brazil. Also, can you provide the address details for the Brazilian ZIP code 01001000?",
+    "relevant APIs": [
+      "say_hello",
+      "query_cep"
+    ],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "hellosalut",
+        "api_name": "say_hello",
+        "api_description": "Get a greeting based on language code, IP address, or country code. Supports automatic detection.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "lang",
+            "type": "STRING",
+            "description": "Language code.",
+            "default": ""
+          },
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "IP address.",
+            "default": ""
+          },
+          {
+            "name": "cc",
+            "type": "STRING",
+            "description": "Country code.",
+            "default": ""
+          },
+          {
+            "name": "mode",
+            "type": "STRING",
+            "description": "Automatic detection mode.",
+            "default": "auto"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "hello": "string",
+          "cc": "string",
+          "ip": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "viacep",
+        "api_name": "search_address",
+        "api_description": "Search for a ZIP code based on the address details.",
+        "required_parameters": [
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "Two-letter state code in Brazil."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "Name of the city. Must have at least 3 characters."
+          },
+          {
+            "name": "street",
+            "type": "STRING",
+            "description": "Name of the street. Must have at least 3 characters."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "return_format",
+            "type": "STRING",
+            "description": "Format of the return data (json or xml).",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "cep": "string",
+            "logradouro": "string",
+            "complemento": "string",
+            "bairro": "string",
+            "localidade": "string",
+            "uf": "string",
+            "ibge": "string",
+            "gia": "string",
+            "ddd": "string",
+            "siafi": "string"
+          }
+        ]
+      }
+    ],
+    "query": "Using the automatic detection, greet the user and search for the ZIP code of the address with state RS, city Porto Alegre, and street Domingos.",
+    "relevant APIs": [
+      "say_hello",
+      "search_address"
+    ],
+    "query_id": 2
+  }
+]

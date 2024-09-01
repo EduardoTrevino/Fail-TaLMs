@@ -1,0 +1,123 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on a given IP address",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "str",
+                    "geoplugin_status": "int",
+                    "geoplugin_countryName": "str",
+                    "geoplugin_city": "str"
+                }
+            },
+            {
+                "tool_name": "ipapi",
+                "api_name": "get_ip_location",
+                "api_description": "Retrieve complete location information for a specific IP address",
+                "required_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IP address to retrieve location for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "country": "str",
+                    "city": "str",
+                    "region": "str"
+                }
+            }
+        ],
+        "query": "I have an IP address, and I want to gather as much location information as possible, including the city and country. Can you provide this information using both the geoplugin and ipapi tools?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "geoplugin",
+                "api_name": "currency_converter",
+                "api_description": "Convert an amount from a base currency to a target currency using real-time rates",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The currency code of the base currency",
+                        "default": "USD"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "FLOAT",
+                        "description": "The amount in base currency to convert",
+                        "default": 1.0
+                    },
+                    {
+                        "name": "target_currency",
+                        "type": "STRING",
+                        "description": "The currency code to convert the base currency to",
+                        "default": "EUR"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "base_currency": "str",
+                    "amount": "float",
+                    "local_currency": "str",
+                    "local_currency_symbol": "str",
+                    "exchange_rate": "float",
+                    "converted_amount": "float",
+                    "location": {
+                        "city": "str",
+                        "country": "str"
+                    }
+                }
+            },
+            {
+                "tool_name": "ipapi",
+                "api_name": "get_client_ip_location",
+                "api_description": "Retrieve complete location information for the client's IP address",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "country": "str",
+                    "city": "str"
+                }
+            }
+        ],
+        "query": "I want to convert an amount from USD to the local currency based on my current location's IP address information. Can you provide details on the current exchange rate using geoplugin and retrieve my current location using ipapi?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

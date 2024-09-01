@@ -1,0 +1,161 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "viacep",
+        "api_name": "query_cep",
+        "api_description": "Retrieve information for a given ZIP code in Brazil.",
+        "required_parameters": [
+          {
+            "name": "cep",
+            "type": "STRING",
+            "description": "ZIP code in the format of 8 digits."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "return_format",
+            "type": "STRING",
+            "description": "Format of the return data (json or xml).",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "cep": "string",
+          "logradouro": "string",
+          "complemento": "string",
+          "bairro": "string",
+          "localidade": "string",
+          "uf": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_postal_code",
+        "api_description": "Fetch detailed postal code information for given postal code and country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US' for United States."
+          },
+          {
+            "name": "postal_code",
+            "type": "STRING",
+            "description": "The postal code to lookup, such as '90210'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "string",
+          "country": "string",
+          "country abbreviation": "string",
+          "places": [
+            {
+              "place name": "string",
+              "longitude": "string",
+              "state": "string",
+              "state abbreviation": "string",
+              "latitude": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I have a ZIP code 01001000 for a location in Brazil. Can you retrieve the detailed address information for this ZIP code using the ViaCEP API? At the same time, can you provide information about the postal code 90210 in the United States using the Zippopotamus API?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "viacep",
+        "api_name": "search_address",
+        "api_description": "Search for a ZIP code based on the address details.",
+        "required_parameters": [
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "Two-letter state code in Brazil."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "Name of the city. Must have at least 3 characters."
+          },
+          {
+            "name": "street",
+            "type": "STRING",
+            "description": "Name of the street. Must have at least 3 characters."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "return_format",
+            "type": "STRING",
+            "description": "Format of the return data (json or xml).",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "cep": "string",
+            "logradouro": "string",
+            "complemento": "string",
+            "bairro": "string",
+            "localidade": "string",
+            "uf": "string"
+          }
+        ]
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_city",
+        "api_description": "Fetch postal codes associated with a given city and state in a specified country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US' for United States."
+          },
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "State code such as 'CA' for California."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "The name of the city, such as 'Belmont'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "string",
+          "country": "string",
+          "country abbreviation": "string",
+          "places": [
+            {
+              "place name": "string",
+              "longitude": "string",
+              "state": "string",
+              "state abbreviation": "string",
+              "latitude": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find the ZIP code for 'Domingos' street located in Porto Alegre, RS in Brazil using ViaCEP? Meanwhile, can you find all ZIP codes associated with Beverly Hills in California, USA using Zippopotamus?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

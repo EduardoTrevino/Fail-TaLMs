@@ -1,0 +1,126 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_ip",
+        "api_description": "Returns the requesting IP address.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_postal_code",
+        "api_description": "Fetch detailed postal code information for given postal code and country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US' for the United States.",
+            "default": "US"
+          },
+          {
+            "name": "postal_code",
+            "type": "STRING",
+            "description": "The postal code to lookup, such as '90210'.",
+            "default": "90210"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "string",
+          "country": "string",
+          "country abbreviation": "string",
+          "places": [
+            {
+              "place name": "string",
+              "longitude": "string",
+              "state": "string",
+              "state abbreviation": "string",
+              "latitude": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What is my current IP address and what are the geographical details for the postal code 90210 in the United States?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_geo_info",
+        "api_description": "Contains all available geographical information about an IP.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "Specific IP address to lookup."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "ip": "string",
+          "country": "string",
+          "country_code": "string",
+          "latitude": "string",
+          "longitude": "string",
+          "organization": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_city",
+        "api_description": "Fetch postal codes associated with a given city and state in a specified country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US'."
+          },
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "State code such as 'CA' for California."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "The name of the city, such as 'Belmont'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "string",
+          "country": "string",
+          "country abbreviation": "string",
+          "places": [
+            {
+              "place name": "string",
+              "longitude": "string",
+              "state": "string",
+              "state abbreviation": "string",
+              "latitude": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide me with the geographical information for my IP address and find all postal codes for the city of Beverly Hills in the state of California, USA?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

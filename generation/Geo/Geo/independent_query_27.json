@@ -1,0 +1,199 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_ip",
+        "api_description": "Returns the requesting IP address.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip": "string"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_country",
+        "api_description": "Returns the country information about an IP.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "Specific IP address to lookup.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "country": "string",
+          "country_3": "string",
+          "ip": "string",
+          "name": "string"
+        }
+      }
+    ],
+    "query": "What is my current IP address and can you tell me the country it's associated with?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_geo_info",
+        "api_description": "Contains all available geographical information about an IP.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "Specific IP address to lookup.",
+            "default": null
+            }
+        ],
+        "method": "GET",
+        "template_response": {
+          "ip": "string",
+          "country": "string",
+          "country_code": "string",
+          "latitude": "string",
+          "longitude": "string",
+          "organization": "string"
+        }
+      },
+      {
+        "category_name": "Postcodes",
+        "tool_name": "postcodes",
+        "api_name": "nearest_outcode",
+        "api_description": "Get the nearest outward codes (outcodes) for a given longitude and latitude.",
+        "required_parameters": [
+          {
+            "name": "lon",
+            "type": "FLOAT",
+            "description": "Longitude for the search location."
+          },
+          {
+            "name": "lat",
+            "type": "FLOAT",
+            "description": "Latitude for the search location."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "integer",
+          "result": "array"
+        }
+      }
+    ],
+    "query": "Can you provide geographical details about my IP and find the nearest UK outward codes from its location?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_ptr_record",
+        "api_description": "Returns PTR (pointer record) information about an IP.",
+        "required_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "The IP address to lookup.",
+            "default": "8.8.8.8"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ptr": "string"
+        }
+      },
+      {
+        "category_name": "Postcodes",
+        "tool_name": "postcodes",
+        "api_name": "lookup_postcode",
+        "api_description": "Lookup a single postcode.",
+        "required_parameters": [
+          {
+            "name": "postcode",
+            "type": "STRING",
+            "description": "The postcode to lookup.",
+            "default": "SW1A1AA"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "integer",
+          "result": "object"
+        }
+      }
+    ],
+    "query": "What is the PTR record for the IP 8.8.8.8, and can you provide details for the postcode SW1A1AA?",
+    "relevant APIs": [],
+    "query_id": 3
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Postcodes",
+        "tool_name": "postcodes",
+        "api_name": "autocomplete_postcode",
+        "api_description": "Autocomplete postcode query.",
+        "required_parameters": [
+          {
+            "name": "postcode",
+            "type": "STRING",
+            "description": "Partial postcode to autocomplete.",
+            "default": "SW1A"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "default": 10
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "status": "integer",
+          "result": "array"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "geojs",
+        "api_name": "get_country",
+        "api_description": "Returns the country information about an IP.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "Specific IP address to lookup.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "country": "string",
+          "country_3": "string",
+          "ip": "string",
+          "name": "string"
+        }
+      }
+    ],
+    "query": "Can you suggest some postcodes starting with 'SW1A' and identify the country associated with my IP?",
+    "relevant APIs": [],
+    "query_id": 4
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "adresse",
+        "api_name": "search_address",
+        "api_description": "Perform a full-text address search with optional filters.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query string.",
+            "default": "Eiffel Tower"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The maximum number of results to return.",
+            "default": "5"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "features": [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": ["float", "float"]
+              },
+              "properties": {
+                "label": "string",
+                "score": "float"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "opentopodata",
+        "api_name": "get_elevation",
+        "api_description": "Reads the elevation from a given dataset based on specified locations.",
+        "required_parameters": [
+          {
+            "name": "dataset_name",
+            "type": "STRING",
+            "description": "The name of the dataset.",
+            "default": "test-dataset"
+          },
+          {
+            "name": "locations",
+            "type": "STRING",
+            "description": "Coordinates in latitude,longitude format or Google polyline.",
+            "default": "48.8588443,2.2943506"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format (json or geojson).",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "elevation": "float",
+              "location": {
+                "lat": "float",
+                "lng": "float"
+              },
+              "dataset": "string"
+            }
+          ],
+          "status": "string"
+        }
+      }
+    ],
+    "query": "I am planning a visit to the Eiffel Tower in Paris. Can you find its address and determine the elevation at that location?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

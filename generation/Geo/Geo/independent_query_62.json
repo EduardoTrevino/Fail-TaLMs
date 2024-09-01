@@ -1,0 +1,140 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "postcodes",
+        "api_name": "lookup_postcode",
+        "api_description": "Lookup a single postcode.",
+        "required_parameters": [
+          {
+            "name": "postcode",
+            "type": "STRING",
+            "description": "The postcode to lookup."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "int",
+          "result": {
+            "postcode": "str",
+            "quality": "int",
+            "eastings": "int",
+            "northings": "int",
+            "country": "str",
+            "nhs_ha": "str",
+            "admin_district": "str",
+            "parish": "str",
+            "admin_county": "str",
+            "admin_ward": "str",
+            "longitude": "float",
+            "latitude": "float"
+          }
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_postal_code",
+        "api_description": "Fetch detailed postal code information for given postal code and country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US' for United States."
+          },
+          {
+            "name": "postal_code",
+            "type": "STRING",
+            "description": "The postal code to lookup, such as '90210'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "str",
+          "country": "str",
+          "country abbreviation": "str",
+          "places": [
+            {
+              "place name": "str",
+              "longitude": "str",
+              "state": "str",
+              "state abbreviation": "str",
+              "latitude": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I am conducting a research project that involves comparing postal information from the UK and the US. Could you provide geographic information for the postal code 'SW1A 1AA' in the UK and '90210' in the US?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "postcodes",
+        "api_name": "validate_postcode",
+        "api_description": "Validate if a postcode is correct.",
+        "required_parameters": [
+          {
+            "name": "postcode",
+            "type": "STRING",
+            "description": "The postcode to validate."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "int",
+          "result": "bool"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "zippopotamus",
+        "api_name": "get_zip_info_by_city",
+        "api_description": "Fetch postal codes associated with a given city and state in specified country.",
+        "required_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "Country code such as 'US'."
+          },
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "State code such as 'CA' for California."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "The name of the city, such as 'Belmont'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "post code": "str",
+          "country": "str",
+          "country abbreviation": "str",
+          "places": [
+            {
+              "place name": "str",
+              "longitude": "str",
+              "state": "str",
+              "state abbreviation": "str",
+              "latitude": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I recently moved to '90210', Beverly Hills in California. Can you validate if the postcode '90210' is a valid UK postcode? Additionally, I want to check which postcodes are associated with Beverly Hills in California.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

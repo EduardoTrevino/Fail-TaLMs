@@ -1,0 +1,70 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "opentopodata",
+        "api_name": "get_elevation",
+        "api_description": "Reads the elevation from a given dataset based on specified locations.",
+        "required_parameters": [
+          {
+            "name": "dataset_name",
+            "type": "STRING",
+            "description": "The name of the dataset.",
+            "default": "srtm90m"
+          },
+          {
+            "name": "locations",
+            "type": "STRING",
+            "description": "Coordinates in latitude,longitude format or Google polyline.",
+            "default": "37.7749,-122.4194"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "samples",
+            "type": "INTEGER",
+            "description": "Query elevation for sample equally-spaced points."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "elevation": "FLOAT",
+              "location": {
+                "lat": "FLOAT",
+                "lng": "FLOAT"
+              },
+              "dataset": "STRING"
+            }
+          ],
+          "status": "STRING"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "ziptastic",
+        "api_name": "get_location_by_zip",
+        "api_description": "Fetches the country, state, and city for the given ZIP code.",
+        "required_parameters": [
+          {
+            "name": "zipcode",
+            "type": "STRING",
+            "description": "The ZIP code to query.",
+            "default": "90210"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "country": "str",
+          "state": "str",
+          "city": "str"
+        }
+      }
+    ],
+    "query": "I want to know the elevation at the location of 37.7749, -122.4194 using the SRTM dataset. Can you also tell me which city, state, and country correspond to the ZIP code 90210?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

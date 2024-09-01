@@ -1,0 +1,145 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on IP address.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "str",
+                    "geoplugin_status": "int",
+                    "geoplugin_countryName": "str",
+                    "geoplugin_city": "str"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_elevation",
+                "api_description": "Reads the elevation from a given dataset based on specified locations.",
+                "required_parameters": [
+                    {
+                        "name": "dataset_name",
+                        "type": "STRING",
+                        "description": "The name of the dataset."
+                    },
+                    {
+                        "name": "locations",
+                        "type": "STRING",
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "elevation": "FLOAT",
+                            "location": {
+                                "lat": "FLOAT",
+                                "lng": "FLOAT"
+                            },
+                            "dataset": "STRING"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            }
+        ],
+        "query": "Can you determine my current location based on my IP address and also provide the elevation data for this location using the best available dataset?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "currency_converter",
+                "api_description": "Converts an amount from one currency to another using real-time rates.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The currency code of the base currency.",
+                        "default": "USD"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "FLOAT",
+                        "description": "The amount in base currency to convert.",
+                        "default": 1.0
+                    },
+                    {
+                        "name": "target_currency",
+                        "type": "STRING",
+                        "description": "The currency code to convert the base currency to.",
+                        "default": "EUR"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_baseCurrency": "str",
+                    "geoplugin_targetCurrency": "str",
+                    "geoplugin_amount": "str",
+                    "geoplugin_convert": "str",
+                    "geoplugin_status": "int"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_datasets",
+                "api_description": "Fetches the list of datasets available on the server.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "name": "STRING",
+                            "child_datasets": "ARRAY"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            }
+        ],
+        "query": "I want to convert 100 US dollars to Euros and also know what elevation datasets are available for future use.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

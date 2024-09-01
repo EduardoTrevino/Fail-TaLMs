@@ -1,0 +1,160 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "countryis",
+        "api_name": "get_country_by_own_ip",
+        "api_description": "Retrieve the country for the requester's own IP address.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip": "str",
+          "country": "str"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "opentopodata",
+        "api_name": "get_datasets",
+        "api_description": "Fetches the list of datasets available on the server.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "name": "STRING",
+              "child_datasets": "ARRAY"
+            }
+          ],
+          "status": "STRING"
+        }
+      }
+    ],
+    "query": "What is the country based on my current IP address, and could you also provide the list of available datasets from the Open Topo Data?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "countryis",
+        "api_name": "get_country_by_ip",
+        "api_description": "Retrieve the country for a specified IP address.",
+        "required_parameters": [
+          {
+            "name": "ip",
+            "type": "STRING",
+            "description": "The IP address to query.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip": "str",
+          "country": "str"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "opentopodata",
+        "api_name": "get_elevation",
+        "api_description": "Reads the elevation from a given dataset based on specified locations.",
+        "required_parameters": [
+          {
+            "name": "dataset_name",
+            "type": "STRING",
+            "description": "The name of the dataset."
+          },
+          {
+            "name": "locations",
+            "type": "STRING",
+            "description": "Coordinates in latitude,longitude format or Google polyline."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "samples",
+            "type": "INTEGER",
+            "description": "Query elevation for sample equally-spaced points."
+          },
+          {
+            "name": "interpolation",
+            "type": "STRING",
+            "description": "Interpolation method (nearest, bilinear, cubic)."
+          },
+          {
+            "name": "nodata_value",
+            "type": "STRING",
+            "description": "Value to return for NODATA."
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format (json or geojson)."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "elevation": "FLOAT",
+              "location": {
+                "lat": "FLOAT",
+                "lng": "FLOAT"
+              },
+              "dataset": "STRING"
+            }
+          ],
+          "status": "STRING"
+        }
+      }
+    ],
+    "query": "Can you find which country the IP address 8.8.8.8 belongs to? Also, what is the elevation at coordinates 37.7749,-122.4194 using the 'srtm' dataset with bilinear interpolation?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "countryis",
+        "api_name": "get_data_sources_info",
+        "api_description": "Retrieve information about the data sources used by the Country.is API.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "cloudflare": {
+            "enabled": "bool"
+          },
+          "maxmind": {
+            "enabled": "bool",
+            "build": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "opentopodata",
+        "api_name": "get_health",
+        "api_description": "Healthcheck endpoint.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "STRING"
+        }
+      }
+    ],
+    "query": "What data sources does the Country.is API use, and what is the current health status of the Open Topo Data API?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```
