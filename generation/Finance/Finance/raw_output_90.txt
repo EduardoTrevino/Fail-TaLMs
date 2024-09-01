@@ -1,0 +1,129 @@
+Here's a JSON file containing questions that require the use of at least one API from each tool, "geckoterminal" and "okx":
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_token_price",
+        "api_description": "Get current USD prices of multiple tokens on a network.",
+        "required_parameters": [
+          {
+            "name": "network",
+            "type": "STRING",
+            "description": "The blockchain network.",
+            "default": "eth"
+          },
+          {
+            "name": "addresses",
+            "type": "STRING",
+            "description": "The token addresses.",
+            "default": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": "json"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "okx",
+        "api_name": "get_market_ticker",
+        "api_description": "Retrieve the market ticker information for a specified instrument.",
+        "required_parameters": [
+          {
+            "name": "inst_id",
+            "type": "STRING",
+            "description": "The instrument ID for which ticker information is required.",
+            "default": "BTC-USDT"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "instId": "str",
+              "last": "float",
+              "high24h": "float",
+              "low24h": "float"
+            }
+          ],
+          "code": "int",
+          "msg": "str"
+        }
+      }
+    ],
+    "query": "What is the current price of Ethereum on the network, and how does it compare to the BTC-USDT market ticker on OKX?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_supported_dexes",
+        "api_description": "Get list of supported dexes on a network.",
+        "required_parameters": [
+          {
+            "name": "network",
+            "type": "STRING",
+            "description": "The blockchain network.",
+            "default": "eth"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": "json"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "okx",
+        "api_name": "get_order_book",
+        "api_description": "Retrieve the order book for a specified instrument.",
+        "required_parameters": [
+          {
+            "name": "inst_id",
+            "type": "STRING",
+            "description": "The instrument ID for which the order book is required.",
+            "default": "BTC-USDT"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "asks": [
+                ["float", "float", "int"]
+              ],
+              "bids": [
+                ["float", "float", "int"]
+              ]
+            }
+          ],
+          "code": "int",
+          "msg": "str"
+        }
+      }
+    ],
+    "query": "List the supported decentralized exchanges on the Ethereum network and fetch the order book for the BTC-USDT trading pair on OKX.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+These queries leverage APIs from both tools to extract specific financial data. The questions are designed to ensure a range of financial insights that require data from both GeckoTerminal and OKX.

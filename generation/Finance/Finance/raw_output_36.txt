@@ -1,0 +1,144 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_global_stats",
+                "api_description": "Retrieve global crypto statistics.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "coins_count": "int",
+                    "active_markets": "int",
+                    "total_mcap": "str",
+                    "total_volume": "str",
+                    "btc_d": "str",
+                    "eth_d": "str",
+                    "mcap_change": "str",
+                    "volume_change": "str",
+                    "avg_change_percent": "str",
+                    "volume_ath": "str",
+                    "mcap_ath": "str"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_system_status",
+                "api_description": "Get the current system status or trading mode.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "status": "string",
+                        "timestamp": "string"
+                    }
+                }
+            }
+        ],
+        "query": "What is the current global status of the cryptocurrency market, and is Kraken's trading system currently operational?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_ticker",
+                "api_description": "Retrieve tick data for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "symbol": "string",
+                    "name": "string",
+                    "nameid": "string",
+                    "rank": "int",
+                    "price_usd": "string",
+                    "percent_change_24h": "string",
+                    "percent_change_1h": "string",
+                    "percent_change_7d": "string",
+                    "market_cap_usd": "string",
+                    "volume24": "string",
+                    "volume24_native": "string",
+                    "csupply": "string",
+                    "price_btc": "string",
+                    "tsupply": "string",
+                    "msupply": "string"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair_name": {
+                            "a": [
+                                "string",
+                                "string",
+                                "string"
+                            ],
+                            "b": [
+                                "string",
+                                "string",
+                                "string"
+                            ],
+                            "c": [
+                                "string",
+                                "string"
+                            ],
+                            "v": [
+                                "string",
+                                "string"
+                            ],
+                            "p": [
+                                "string",
+                                "string"
+                            ],
+                            "t": [
+                                "int",
+                                "int"
+                            ],
+                            "l": [
+                                "string",
+                                "string"
+                            ],
+                            "h": [
+                                "string",
+                                "string"
+                            ],
+                            "o": "string"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide the current market data for Bitcoin from both Coinlore and Kraken?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

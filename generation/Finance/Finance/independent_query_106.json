@@ -1,0 +1,122 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "kucoin",
+        "api_name": "get_currency_list",
+        "api_description": "Fetch the list of available currencies with details including currency name, precision, and supported chains.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "currency": "string",
+              "name": "string",
+              "precision": "integer",
+              "chains": ["string"]
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "nbpweb",
+        "api_name": "get_gold_price",
+        "api_description": "Fetch the price of gold.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "top_count",
+            "type": "INTEGER",
+            "description": "Return last top_count entries."
+          },
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Specific date in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "start_date",
+            "type": "STRING",
+            "description": "Start date for range in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "end_date",
+            "type": "STRING",
+            "description": "End date for range in 'YYYY-MM-DD' format."
+          }
+        ],
+        "method": "GET",
+        "template_response": [{
+          "data": {
+            "price": "decimal",
+            "date": "string"
+          }
+        }]
+      }
+    ],
+    "query": "Can you provide me with a list of all available currencies on KuCoin and the latest gold price from NBP?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "kucoin",
+        "api_name": "get_ticker",
+        "api_description": "Get Level 1 Market Data for a specific trading pair, including bid/ask prices, last traded price, and size.",
+        "required_parameters": [
+          {
+            "name": "symbol",
+            "type": "STRING",
+            "description": "Trading pair symbol (e.g., BTC-USDT)."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "price": "string",
+            "size": "string",
+            "bestBid": "string",
+            "bestAsk": "string"
+          }
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "nbpweb",
+        "api_name": "get_currency_exchange_rate",
+        "api_description": "Fetch the exchange rate of a specific currency.",
+        "required_parameters": [
+          {
+            "name": "table",
+            "type": "STRING",
+            "description": "Type of table 'A', 'B', or 'C'."
+          },
+          {
+            "name": "code",
+            "type": "STRING",
+            "description": "Currency code based on ISO 4217."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "currency": "string",
+            "code": "string",
+            "rate": "decimal",
+            "date": "string"
+          }
+        }
+      }
+    ],
+    "query": "What is the current market data for the BTC-USDT trading pair on KuCoin, and what is the current exchange rate for USD according to the NBP?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

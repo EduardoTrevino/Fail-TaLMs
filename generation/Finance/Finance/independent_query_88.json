@@ -1,0 +1,114 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_token_price",
+                "api_description": "Get current USD prices of multiple tokens on a network.",
+                "required_parameters": [
+                    {
+                        "name": "network",
+                        "type": "STRING",
+                        "description": "The blockchain network. For example, 'eth' for Ethereum."
+                    },
+                    {
+                        "name": "addresses",
+                        "type": "STRING",
+                        "description": "Token contract addresses, comma-separated."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": "object"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "currency": "str",
+                    "code": "str",
+                    "rates": [
+                        {
+                            "no": "str",
+                            "effectiveDate": "str",
+                            "mid": "number"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the current USD price of Ethereum tokens and what is the exchange rate of USD to PLN today?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_supported_networks",
+                "api_description": "Get list of supported networks.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page of results to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": "array"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "nbpweb",
+                "api_name": "get_gold_price",
+                "api_description": "Fetch the price of gold.",
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": "array"
+                }
+            }
+        ],
+        "query": "Can you provide me with the list of blockchain networks supported by GeckoTerminal and the current gold price?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

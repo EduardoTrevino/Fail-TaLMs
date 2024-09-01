@@ -1,0 +1,108 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinlore",
+        "api_name": "get_global_stats",
+        "api_description": "Retrieve global crypto statistics.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "coins_count": "int",
+          "active_markets": "int",
+          "total_mcap": "float",
+          "total_volume": "float"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "wazirx",
+        "api_name": "tickers_24hr",
+        "api_description": "24 hour rolling window price change statistics for all symbols.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "symbol": "string",
+            "baseAsset": "string",
+            "quoteAsset": "string",
+            "openPrice": "string",
+            "lowPrice": "string",
+            "highPrice": "string",
+            "lastPrice": "string",
+            "volume": "string",
+            "bidPrice": "string",
+            "askPrice": "string",
+            "at": "long"
+          }
+        ]
+      }
+    ],
+    "query": "What are the current global statistics for all cryptocurrencies, and provide a 24-hour price change report for all symbols on WazirX?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinlore",
+        "api_name": "get_ticker",
+        "api_description": "Retrieve tick data for a specific coin.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "id": "string",
+            "symbol": "string",
+            "name": "string",
+            "price_usd": "string",
+            "24h_volume_usd": "string",
+            "market_cap_usd": "string"
+          }
+        ]
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "wazirx",
+        "api_name": "ticker_24hr",
+        "api_description": "24 hour rolling window price change statistics for a single symbol.",
+        "required_parameters": [
+          {
+            "name": "symbol",
+            "type": "STRING",
+            "description": "The trading pair symbol"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "symbol": "string",
+          "baseAsset": "string",
+          "quoteAsset": "string",
+          "openPrice": "string",
+          "lowPrice": "string",
+          "highPrice": "string",
+          "lastPrice": "string",
+          "volume": "string",
+          "bidPrice": "string",
+          "askPrice": "string",
+          "at": "long"
+        }
+      }
+    ],
+    "query": "Could you provide me with the current market data for Bitcoin using Coinlore and its 24-hour price change statistics from WazirX?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

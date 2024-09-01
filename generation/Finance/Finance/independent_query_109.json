@@ -1,0 +1,125 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "kucoin",
+                "api_name": "get_currency_detail",
+                "api_description": "Retrieve details about a specific currency including supported chains, deposit/withdrawal amounts.",
+                "required_parameters": [
+                    {
+                        "name": "currency",
+                        "type": "STRING",
+                        "description": "Currency code (e.g., 'BTC').",
+                        "default": "BTC"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "currency": "str",
+                        "name": "str",
+                        "precision": "int",
+                        "chains": ["str"],
+                        "minDepositAmount": "str",
+                        "minWithdrawAmount": "str",
+                        "contractAddress": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch.",
+                        "default": "YESB0DNB002"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "Can you provide details about the Bitcoin (BTC) currency on KuCoin? Also, I need information on a bank with the IFSC code 'YESB0DNB002'.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "kucoin",
+                "api_name": "get_ticker",
+                "api_description": "Get Level 1 Market Data for a specific trading pair including bid/ask prices and last traded price.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol (e.g., 'BTC-USDT').",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "price": "str",
+                        "size": "str",
+                        "bestBid": "str",
+                        "bestAsk": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch.",
+                        "default": "HDFC0000128"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What is the current bid and ask price for the BTC-USDT trading pair on KuCoin? Also, can you fetch the details of the bank branch with IFSC code 'HDFC0000128'?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

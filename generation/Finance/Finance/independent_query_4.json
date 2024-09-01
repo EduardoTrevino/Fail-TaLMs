@@ -1,0 +1,164 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "coinbase",
+        "api_name": "get_exchange_rates",
+        "api_description": "Get current exchange rates. Default base currency is USD.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "currency",
+            "type": "STRING",
+            "description": "Base currency (default: USD).",
+            "default": "USD"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "coinpaprika",
+        "api_name": "get_global_market_overview",
+        "api_description": "Returns global market overview metrics.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET"
+      }
+    ],
+    "query": "What are the current exchange rates for USD and the global market overview metrics?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "coinbase",
+        "api_name": "get_buy_price",
+        "api_description": "Get the total price to buy one bitcoin or ether.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET"
+      },
+      {
+        "tool_name": "coinpaprika",
+        "api_name": "get_ticker_by_id",
+        "api_description": "Returns price data of a single cryptocurrency.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency to retrieve data for (e.g., 'btc-bitcoin')."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quotes",
+            "type": "STRING",
+            "description": "Comma separated list of quotes to return",
+            "default": "USD"
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "What is the buy price for 1 Bitcoin in USD, and can you show me its price data using coin ID?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "coinbase",
+        "api_name": "get_sell_price",
+        "api_description": "Get the total price to sell one bitcoin or ether.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET"
+      },
+      {
+        "tool_name": "coinpaprika",
+        "api_name": "get_markets_by_coin_id",
+        "api_description": "Returns all available markets for a given coin.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quotes",
+            "type": "STRING",
+            "description": "Comma separated list of quotes to return",
+            "default": "USD"
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "Can you provide the sell price for Bitcoin in USD and the markets where Bitcoin is available?",
+    "relevant APIs": [],
+    "query_id": 3
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "coinbase",
+        "api_name": "get_spot_price",
+        "api_description": "Get the current market price for bitcoin or other cryptocurrencies.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "For historic spot price, use format YYYY-MM-DD (UTC)."
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "coinpaprika",
+        "api_name": "get_ohlc_today",
+        "api_description": "Returns OHLC for the current day.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quote",
+            "type": "STRING",
+            "description": "returned data quote",
+            "default": "usd"
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "I want to know the current spot price for Bitcoin in USD and today's OHLC data.",
+    "relevant APIs": [],
+    "query_id": 4
+  }
+]

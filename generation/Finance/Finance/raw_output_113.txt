@@ -1,0 +1,157 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "nbpweb",
+        "api_name": "get_exchange_rate_table",
+        "api_description": "Fetch a complete table of exchange rates of specified type.",
+        "required_parameters": [
+          {
+            "name": "table",
+            "type": "STRING",
+            "description": "Type of table 'A', 'B', or 'C'.",
+            "default": "A"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "top_count",
+            "type": "INTEGER",
+            "description": "Return last top_count entries."
+          },
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Specific date in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "start_date",
+            "type": "STRING",
+            "description": "Start date for range in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "end_date",
+            "type": "STRING",
+            "description": "End date for range in 'YYYY-MM-DD' format."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "table": "str",
+          "no": "str",
+          "tradingDate": "str",
+          "effectiveDate": "str",
+          "rates": [
+            {
+              "currency": "str",
+              "code": "str",
+              "mid": "float"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "razorpay",
+        "api_name": "get_bank_details_by_ifsc",
+        "api_description": "Retrieve bank details by providing an IFSC code.",
+        "required_parameters": [
+          {
+            "name": "ifsc_code",
+            "type": "STRING",
+            "description": "The IFSC code of the bank branch."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "BANK": "str",
+          "IFSC": "str",
+          "BRANCH": "str",
+          "ADDRESS": "str",
+          "CONTACT": "str or null",
+          "CITY": "str",
+          "RTGS": "bool",
+          "MICR": "str or null",
+          "UPI": "bool",
+          "NEFT": "bool",
+          "IMPS": "bool"
+        }
+      }
+    ],
+    "query": "What are the current exchange rates available in table type 'A' from the National Bank of Poland? Additionally, can you provide the details of the bank branch associated with the IFSC code 'HDFC0000123'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "nbpweb",
+        "api_name": "get_gold_price",
+        "api_description": "Fetch the price of gold.",
+        "optional_parameters": [
+          {
+            "name": "top_count",
+            "type": "INTEGER",
+            "description": "Return last top_count entries."
+          },
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Specific date in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "start_date",
+            "type": "STRING",
+            "description": "Start date for range in 'YYYY-MM-DD' format."
+          },
+          {
+            "name": "end_date",
+            "type": "STRING",
+            "description": "End date for range in 'YYYY-MM-DD' format."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "date": "str",
+          "price": "float"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "razorpay",
+        "api_name": "get_bank_details_by_ifsc",
+        "api_description": "Retrieve bank details by providing an IFSC code.",
+        "required_parameters": [
+          {
+            "name": "ifsc_code",
+            "type": "STRING",
+            "description": "The IFSC code of the bank branch."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "BANK": "str",
+          "IFSC": "str",
+          "BRANCH": "str",
+          "ADDRESS": "str",
+          "CONTACT": "str or null",
+          "CITY": "str",
+          "RTGS": "bool",
+          "MICR": "str or null",
+          "UPI": "bool",
+          "NEFT": "bool",
+          "IMPS": "bool"
+        }
+      }
+    ],
+    "query": "What is the latest price of gold according to the NBP API? Also, could you look up the bank details for the IFSC code 'SBIN0005500'?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

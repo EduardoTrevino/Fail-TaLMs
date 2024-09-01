@@ -1,0 +1,160 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_symbols",
+                "api_description": "Retrieves all available symbols for trading.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "symbols": ["str"]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_tradable_asset_pairs",
+                "api_description": "Get tradable asset pairs.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pairs to get data for"
+                    },
+                    {
+                        "name": "info",
+                        "type": "STRING",
+                        "description": "Info to retrieve (optional)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair_name": {
+                            "altname": "str",
+                            "wsname": "str",
+                            "base": "str",
+                            "quote": "str"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you retrieve all available symbols for trading from Gemini and list the tradable asset pairs from Kraken?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_ticker",
+                "api_description": "Retrieves recent trading activity for the symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "ask": "str",
+                    "bid": "str",
+                    "last": "str"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair_name": {
+                            "a": ["str"],
+                            "b": ["str"],
+                            "c": ["str"]
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Provide the current trading activity, including the ask and bid prices for the BTC/USD pair from both Gemini and Kraken.",
+        "relevant APIs": [],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_funding_amount",
+                "api_description": "Retrieves funding amount details for a symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "symbol": "str",
+                    "min_order_size": "str",
+                    "quote_increment": "str"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_asset_info",
+                "api_description": "Get information about the assets that are available for deposit, withdrawal, trading, and earn.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "asset",
+                        "type": "STRING",
+                        "description": "Comma delimited list of assets to get info on (optional, default all available assets)"
+                    },
+                    {
+                        "name": "aclass",
+                        "type": "STRING",
+                        "description": "Asset class (optional, default: currency)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "asset_name": {
+                            "aclass": "str",
+                            "altname": "str",
+                            "decimals": "int"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "How much is the funding amount for BTC/USD pair on Gemini and what is the asset information for BTC in Kraken?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]
+```

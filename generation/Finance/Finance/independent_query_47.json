@@ -1,0 +1,110 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_venues",
+        "api_description": "Retrieve a list of venues with optional filtering parameters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {"name": "query", "type": "STRING", "description": "Substring search in venue names."},
+          {"name": "category", "type": "STRING", "description": "Filter category."},
+          {"name": "limit", "type": "INTEGER", "description": "Limit number of results.", "default": "10"}
+        ],
+        "method": "GET",
+        "template_response": {
+          "venues": [{"type": "object"}],
+          "count": "int"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "gemini",
+        "api_name": "get_ticker",
+        "api_description": "Retrieve information about recent trading activity for the symbol.",
+        "required_parameters": [
+          {"name": "symbol", "type": "STRING", "description": "Trading pair symbol."}
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "bid": "float",
+          "ask": "float",
+          "last": "float",
+          "volume": {"time": "string", "amount": "float"}
+        }
+      }
+    ],
+    "query": "Can you find cryptocurrency-friendly venues in New York and also get the latest trading information for Bitcoin (BTC) against USD on Gemini?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_coins",
+        "api_description": "Get a list of supported coins.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "coins": [{"type": "object"}]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "gemini",
+        "api_name": "get_symbol_details",
+        "api_description": "Retrieve extra detail on supported symbols.",
+        "required_parameters": [
+          {"name": "symbol", "type": "STRING", "description": "Trading pair symbol."}
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "symbol": "string",
+          "base_currency": "string",
+          "tick_size": "float",
+          "quote_currency": "string"
+        }
+      }
+    ],
+    "query": "What cryptocurrencies are currently listed on Coinmap, and can you provide details about the BTCUSD trading pair on Gemini?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_atm_operators",
+        "api_description": "Get a list of ATM operators.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "operators": [{"type": "object"}]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "gemini",
+        "api_name": "get_fee_promos",
+        "api_description": "Retrieve symbols that currently have fee promos.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "symbols": ["string"]
+        }
+      }
+    ],
+    "query": "Which cryptocurrency ATM operators can I find in the database, and what symbols currently have fee promotions on Gemini?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

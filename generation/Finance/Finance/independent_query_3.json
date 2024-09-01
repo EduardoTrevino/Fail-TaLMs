@@ -1,0 +1,130 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_exchange_rates",
+        "api_description": "Get current exchange rates for a base currency.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "currency",
+            "type": "STRING",
+            "description": "Base currency (default: USD)."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "currency": "string",
+          "rates": {
+            "string": "string"
+          }
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_venues",
+        "api_description": "Retrieve a list of venues with optional filtering parameters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "lat1",
+            "type": "FLOAT",
+            "description": "Minimum latitude."
+          },
+          {
+            "name": "lat2",
+            "type": "FLOAT",
+            "description": "Maximum latitude."
+          },
+          {
+            "name": "lon1",
+            "type": "FLOAT",
+            "description": "Minimum longitude."
+          },
+          {
+            "name": "lon2",
+            "type": "FLOAT",
+            "description": "Maximum longitude."
+          },
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "Substring search in venue names."
+          },
+          {
+            "name": "category",
+            "type": "STRING",
+            "description": "Filter category."
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit number of results.",
+            "default": "10"
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "Skip first N results.",
+            "default": "0"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "venues": [{"name": "string", "latitude": "float", "longitude": "float"}],
+          "count": "integer"
+        }
+      }
+    ],
+    "query": "What are the current exchange rates for USD, and can you also provide a list of venues accepting cryptocurrency in New York City?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_spot_price",
+        "api_description": "Get the current market price for bitcoin or other cryptocurrencies.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "For historic spot price, use format YYYY-MM-DD (UTC)."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amount": "string",
+          "currency": "string"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_coins",
+        "api_description": "Get a list of coins.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "coins": [{"code": "string", "name": "string"}]
+        }
+      }
+    ],
+    "query": "Can you tell me the current spot price of Bitcoin in USD? Additionally, what cryptocurrencies are currently accepted by vendors?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

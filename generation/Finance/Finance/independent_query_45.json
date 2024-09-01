@@ -1,0 +1,108 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_venues",
+        "api_description": "List of Venues with filtering options.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "category",
+            "type": "STRING",
+            "description": "Filter category.",
+            "default": "shopping"
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit number of results.",
+            "default": "5"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "venues": ["object"],
+          "count": "int"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "exchangerate",
+        "api_name": "get_latest_exchange_rates",
+        "api_description": "Fetches the latest exchange rates for a given base currency.",
+        "required_parameters": [
+          {
+            "name": "base_currency",
+            "type": "STRING",
+            "description": "The base currency ISO 4217 code.",
+            "default": "USD"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "result": "string",
+          "base_code": "string",
+          "rates": {
+            "type": "object",
+            "additionalProperties": "number"
+          }
+        }
+      }
+    ],
+    "query": "Can you find some shopping venues that accept cryptocurrency globally, and also provide me the latest exchange rates for USD?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinmap",
+        "api_name": "get_venue",
+        "api_description": "Retrieve information on a specific venue by ID.",
+        "required_parameters": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "description": "ID of the venue to be returned.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "venue": "object"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "exchangerate",
+        "api_name": "get_latest_exchange_rates",
+        "api_description": "Fetches the latest exchange rates for a given base currency.",
+        "required_parameters": [
+          {
+            "name": "base_currency",
+            "type": "STRING",
+            "description": "The base currency ISO 4217 code.",
+            "default": "EUR"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "result": "string",
+          "base_code": "string",
+          "rates": {
+            "type": "object",
+            "additionalProperties": "number"
+          }
+        }
+      }
+    ],
+    "query": "I need details about a specific venue with ID 1 that accepts cryptocurrency, and I also want to know the current exchange rates starting from EUR.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

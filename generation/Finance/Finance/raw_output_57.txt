@@ -1,0 +1,188 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_global_market_overview",
+        "api_description": "Returns global market overview metrics.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "market_cap_usd": "float",
+          "volume_24h_usd": "float",
+          "bitcoin_dominance_percentage": "float"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_supported_networks",
+        "api_description": "Get list of supported networks.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "str",
+              "attributes": {
+                "name": "str",
+                "slug": "str"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide the current global market overview of cryptocurrencies and list all networks supported by GeckoTerminal?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_ticker_by_id",
+        "api_description": "Returns price data of a single cryptocurrency.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency to retrieve data for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quotes",
+            "type": "STRING",
+            "description": "Comma-separated list of quotes to return.",
+            "default": "USD"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "name": "str",
+          "symbol": "str",
+          "quotes": {
+            "USD": {
+              "price": "float",
+              "volume_24h": "float",
+              "market_cap": "float"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_token_price",
+        "api_description": "Get current USD prices of multiple tokens on a network.",
+        "required_parameters": [
+          {
+            "name": "network",
+            "type": "STRING",
+            "description": "Network of the tokens to retrieve prices from."
+          },
+          {
+            "name": "addresses",
+            "type": "STRING",
+            "description": "Token addresses to retrieve prices for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "str",
+              "attributes": {
+                "price_usd": "float"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What is the current price of Bitcoin in USD according to CoinPaprika, and can you also provide the price of Ethereum on the Ethereum network using GeckoTerminal?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_coin_events",
+        "api_description": "Returns events for a given coin.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the coin to retrieve events for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "events": [
+            {
+              "id": "str",
+              "name": "str",
+              "date": "str",
+              "description": "str",
+              "is_virtual": "bool"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_supported_dexes",
+        "api_description": "Get list of supported dexes on a network.",
+        "required_parameters": [
+          {
+            "name": "network",
+            "type": "STRING",
+            "description": "Network to retrieve dexes for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "str",
+              "attributes": {
+                "name": "str"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you list any upcoming events for Ethereum and also provide the supported decentralized exchanges (DEXes) on the Ethereum network using GeckoTerminal?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

@@ -1,0 +1,140 @@
+```json
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Finance",
+            "tool_name": "coincap",
+            "api_name": "get_assets",
+            "api_description": "Retrieve a list of all assets available with optional pagination.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of assets to retrieve.",
+                    "default": 100
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "data": [
+                    {
+                        "id": "str",
+                        "rank": "str",
+                        "symbol": "str",
+                        "name": "str",
+                        "supply": "str",
+                        "maxSupply": "str",
+                        "marketCapUsd": "str",
+                        "volumeUsd24Hr": "str",
+                        "priceUsd": "str",
+                        "changePercent24Hr": "str",
+                        "vwap24Hr": "str"
+                    }
+                ]
+            }
+        },
+      {
+            "category_name": "Finance",
+            "tool_name": "dexscreener",
+            "api_name": "get_pairs_by_chain_and_address",
+            "api_description": "Fetch pairs by chain and pair address from DEX Screener API.",
+            "required_parameters": [
+                {
+                    "name": "chain_id",
+                    "type": "STRING",
+                    "description": "The blockchain chain id (e.g., ethereum, bsc, polygon)."
+                },
+                {
+                    "name": "pair_addresses",
+                    "type": "LIST",
+                    "description": "Comma-separated pair addresses (up to 30 addresses)."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "pairs": [
+                    {
+                        "dexId": "str",
+                        "pairAddress": "str",
+                        "baseToken": "str",
+                        "quoteToken": "str",
+                        "priceUsd": "str",
+                        "volumeUsd24Hr": "str"
+                    }
+                ]
+            }
+        }
+    ],
+    "query": "Can you provide me a list of all available cryptocurrency assets and also find me pairs on Ethereum's DEX using specific pair addresses?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Finance",
+            "tool_name": "coincap",
+            "api_name": "get_asset_by_id",
+            "api_description": "Get detailed information for a specific cryptocurrency asset by its ID.",
+            "required_parameters": [
+                {
+                    "name": "asset_id",
+                    "type": "STRING",
+                    "description": "Asset ID to retrieve details for."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "data": {
+                    "id": "str",
+                    "rank": "str",
+                    "symbol": "str",
+                    "name": "str",
+                    "supply": "str",
+                    "maxSupply": "str",
+                    "marketCapUsd": "str",
+                    "volumeUsd24Hr": "str",
+                    "priceUsd": "str",
+                    "changePercent24Hr": "str",
+                    "vwap24Hr": "str"
+                }
+            }
+        },
+        {
+            "category_name": "Finance",
+            "tool_name": "dexscreener",
+            "api_name": "get_pairs_by_token_address",
+            "api_description": "Retrieve DEX pairs by token addresses from DEX Screener.",
+            "required_parameters": [
+                {
+                    "name": "token_addresses",
+                    "type": "LIST",
+                    "description": "Comma-separated token addresses (up to 30 addresses)."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "pairs": [
+                    {
+                        "dexId": "str",
+                        "pairAddress": "str",
+                        "baseToken": "str",
+                        "quoteToken": "str",
+                        "priceUsd": "str",
+                        "volumeUsd24Hr": "str"
+                    }
+                ]
+            }
+        }
+    ],
+    "query": "I am interested in detailed information about Bitcoin and would also like to check pairs for several token addresses on DEX platforms.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

@@ -1,0 +1,135 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_fiat_currencies",
+        "api_description": "Lists known fiat currencies.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "string",
+          "name": "string",
+          "min_size": "string"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "exchangerate",
+        "api_name": "get_latest_exchange_rates",
+        "api_description": "Fetches the latest exchange rates for a given base currency.",
+        "required_parameters": [
+          {
+            "name": "base_currency",
+            "type": "STRING",
+            "description": "The base currency for which to get exchange rates (e.g., 'USD').",
+            "default": "USD"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "result": "string",
+          "rates": {
+            "currency_code": "number"
+          }
+        }
+      }
+    ],
+    "query": "What are the known fiat currencies, and what are the latest exchange rates for these currencies using USD as the base currency?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_cryptocurrencies",
+        "api_description": "Lists known cryptocurrencies.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "code": "string",
+          "name": "string"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_spot_price",
+        "api_description": "Get the current market price for bitcoin or other cryptocurrencies.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "For historic spot price, use format YYYY-MM-DD (UTC)."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amount": "string",
+          "currency": "string"
+        }
+      }
+    ],
+    "query": "Can you list all known cryptocurrencies and provide their current spot prices against USD?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_buy_price",
+        "api_description": "Get the total price to buy one bitcoin or ether.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "amount": "string",
+          "currency": "string"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "coinbase",
+        "api_name": "get_sell_price",
+        "api_description": "Get the total price to sell one bitcoin or ether.",
+        "required_parameters": [
+          {
+            "name": "currency_pair",
+            "type": "STRING",
+            "description": "Currency pair e.g. 'BTC-USD'."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "amount": "string",
+          "currency": "string"
+        }
+      }
+    ],
+    "query": "What's the current buy and sell price for Bitcoin against USD?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

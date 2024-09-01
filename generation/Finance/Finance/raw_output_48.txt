@@ -1,0 +1,99 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinmap",
+                "api_name": "get_venues",
+                "api_description": "Retrieve a list of venues with optional filtering parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {"name": "lat1", "type": "FLOAT", "description": "Minimum latitude."},
+                    {"name": "lat2", "type": "FLOAT", "description": "Maximum latitude."},
+                    {"name": "lon1", "type": "FLOAT", "description": "Minimum longitude."},
+                    {"name": "lon2", "type": "FLOAT", "description": "Maximum longitude."},
+                    {"name": "query", "type": "STRING", "description": "Substring search in venue names."},
+                    {"name": "category", "type": "STRING", "description": "Filter category."},
+                    {"name": "owner", "type": "STRING", "description": "Venue owner (userhash)."},
+                    {"name": "upvoter", "type": "STRING", "description": "User who upvoted the venue."},
+                    {"name": "before", "type": "STRING", "description": "Show venues created before the date."},
+                    {"name": "after", "type": "STRING", "description": "Show venues created after the date."},
+                    {"name": "promoted", "type": "BOOLEAN", "description": "Show promoted venues."},
+                    {"name": "limit", "type": "INTEGER", "description": "Limit number of results.", "default": "10"},
+                    {"name": "offset", "type": "INTEGER", "description": "Skip first N results.", "default": "0"},
+                    {"name": "mode", "type": "STRING", "description": "Result mode.", "default": "list"}
+                ],
+                "method": "GET",
+                "template_response": {
+                    "venues": "array",
+                    "count": "integer"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_asset_info",
+                "api_description": "Get information about the assets that are available for deposit, withdrawal, trading, and earn.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "asset",
+                        "type": "STRING",
+                        "description": "Comma delimited list of assets to get info on (optional, default all available assets)"
+                    },
+                    {
+                        "name": "aclass",
+                        "type": "STRING",
+                        "description": "Asset class (optional, default: currency)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": "object"
+                }
+            }
+        ],
+        "query": "Can you find venues accepting cryptocurrency near New York City and list available trading assets on Kraken?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinmap",
+                "api_name": "get_coins",
+                "api_description": "Get a list of coins.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "coins": "array"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": "object"
+                }
+            }
+        ],
+        "query": "What coins are listed on Coinmap and what are their current prices on Kraken?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

@@ -1,0 +1,122 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_assets",
+                "api_description": "A list of all assets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of assets to retrieve.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "rank": "str",
+                            "symbol": "str",
+                            "name": "str",
+                            "supply": "str",
+                            "maxSupply": "str",
+                            "marketCapUsd": "str",
+                            "volumeUsd24Hr": "str",
+                            "priceUsd": "str",
+                            "changePercent24Hr": "str",
+                            "vwap24Hr": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_global_stats",
+                "api_description": "Retrieve global crypto statistics.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "coins_count": "int",
+                    "market_cap_usd": "str",
+                    "volume24": "str",
+                    "btc_d": "str",
+                    "eth_d": "str",
+                    "mcap_change": "str"
+                }
+            }
+        ],
+        "query": "I would like to know the total number of active cryptocurrencies along with their global market cap. Additionally, can you provide a list of top 100 crypto assets?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_markets",
+                "api_description": "A list of all markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of markets to retrieve.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "exchangeId": "str",
+                            "baseId": "str",
+                            "quoteId": "str",
+                            "baseSymbol": "str",
+                            "quoteSymbol": "str",
+                            "volumeUsd24Hr": "str",
+                            "priceUsd": "str",
+                            "volumePercent": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_markets_for_coin",
+                "api_description": "Retrieve top 50 exchanges and markets for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "base": "str",
+                            "quote": "str",
+                            "price": "str",
+                            "volume24": "str",
+                            "exchange_name": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I'm interested in knowing about all the active crypto markets. Additionally, can you provide market information for the Bitcoin (coin ID: 90)?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

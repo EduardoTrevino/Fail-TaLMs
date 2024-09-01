@@ -1,0 +1,120 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_token_price",
+        "api_description": "Get current USD prices of multiple tokens on a network.",
+        "required_parameters": [
+          {
+            "name": "network",
+            "type": "STRING",
+            "description": "The blockchain network e.g., 'eth'.",
+            "default": "eth"
+          },
+          {
+            "name": "addresses",
+            "type": "STRING",
+            "description": "Token contract addresses.",
+            "default": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "id": "string",
+            "attributes": {
+              "price": "string",
+              "price24h_change": "string"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "wazirx",
+        "api_name": "ticker_24hr",
+        "api_description": "24-hour rolling window price change statistics for a single symbol.",
+        "required_parameters": [
+          {
+            "name": "symbol",
+            "type": "STRING",
+            "description": "The trading pair symbol.",
+            "default": "btcinr"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "symbol": "string",
+          "baseAsset": "string",
+          "quoteAsset": "string",
+          "openPrice": "string",
+          "lowPrice": "string",
+          "highPrice": "string",
+          "lastPrice": "string",
+          "volume": "string"
+        }
+      }
+    ],
+    "query": "What is the current price of the Ethereum token on its network, and how has the price changed in the last 24 hours for the BTC to INR trading pair?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "geckoterminal",
+        "api_name": "get_supported_networks",
+        "api_description": "Get list of supported networks.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "string",
+              "name": "string"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "wazirx",
+        "api_name": "exchange_info",
+        "api_description": "Fetch all exchange information.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "timezone": "string",
+          "serverTime": "long",
+          "symbols": [
+            {
+              "symbol": "string",
+              "status": "string",
+              "baseAsset": "string",
+              "quoteAsset": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Which blockchain networks are supported by GeckoTerminal, and what trading pairs are available on the WazirX exchange?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

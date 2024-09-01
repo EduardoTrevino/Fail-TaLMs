@@ -1,0 +1,144 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "gemini",
+                "api_name": "get_symbols",
+                "api_description": "Retrieve all available symbols for trading.",
+                "required_parameters": [],
+                "optional_parameters": []
+            },
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_symbols_list",
+                "api_description": "Get the list of available currency pairs for trading.",
+                "required_parameters": [],
+                "optional_parameters": []
+            }
+        ],
+        "query": "Can you give me the complete list of trading symbols available on both Gemini and KuCoin?",
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "gemini",
+                "api_name": "get_ticker",
+                "api_description": "Retrieve information about recent trading activity for the symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": []
+            },
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_ticker",
+                "api_description": "Get Level 1 Market Data for a specific trading pair.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol (e.g., BTC-USDT)."
+                    }
+                ],
+                "optional_parameters": []
+            }
+        ],
+        "query": "What is the current ticker information for the BTC/USD pair on both Gemini and KuCoin?",
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "gemini",
+                "api_name": "get_current_order_book",
+                "api_description": "Return the current order book as two arrays (bids / asks).",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit_bids",
+                        "type": "INTEGER",
+                        "description": "Limit on number of bid price levels returned.",
+                        "default": 50
+                    },
+                    {
+                        "name": "limit_asks",
+                        "type": "INTEGER",
+                        "description": "Limit on number of ask price levels returned.",
+                        "default": 50
+                    }
+                ]
+            },
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_part_order_book",
+                "api_description": "Get a list of open orders for a symbol (aggregated).",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol (e.g., BTC-USDT)."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "level",
+                        "type": "STRING",
+                        "description": "Level of order book.",
+                        "default": "level2_20"
+                    }
+                ]
+            }
+        ],
+        "query": "Provide the current order book for BTC-USDT trading pair from both Gemini and KuCoin.",
+        "query_id": 3
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "gemini",
+                "api_name": "get_trade_history",
+                "api_description": "Return the trades that have executed since the specified timestamp.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "INTEGER",
+                        "description": "Fetch trades after this timestamp."
+                    }
+                ]
+            },
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_trade_histories",
+                "api_description": "Get the trade history of the specified symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol (e.g., BTC-USDT)."
+                    }
+                ],
+                "optional_parameters": []
+            }
+        ],
+        "query": "Can you summarize the recent trade history for the BTC/USDT pair on both Gemini and KuCoin?",
+        "query_id": 4
+    }
+]

@@ -1,0 +1,102 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_ticker_by_id",
+        "api_description": "Returns price data of a single cryptocurrency.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency to retrieve data for (e.g., 'btc-bitcoin')."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quotes",
+            "type": "STRING",
+            "description": "Comma-separated list of fiat currencies or other cryptocurrency symbols for price data.",
+            "default": "USD"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "kraken",
+        "api_name": "get_ticker_information",
+        "api_description": "Get ticker information for all or requested markets.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pair",
+            "type": "STRING",
+            "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)."
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "What is the current price of Bitcoin in USD as reported by Coinpaprika, and can you also provide the ticker information for the BTC/USD pair from Kraken?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinpaprika",
+        "api_name": "get_ohlc_last_day",
+        "api_description": "Returns OHLC for the last full day.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency to retrieve data for (e.g., 'btc-bitcoin')."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "quote",
+            "type": "STRING",
+            "description": "Returned data quote.",
+            "default": "usd"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "kraken",
+        "api_name": "get_ohlc_data",
+        "api_description": "Get OHLC (open/high/low/close) data for a given market.",
+        "required_parameters": [
+          {
+            "name": "pair",
+            "type": "STRING",
+            "description": "Asset pair to get data for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "interval",
+            "type": "INTEGER",
+            "description": "Time frame interval in minutes.",
+            "default": 1
+          },
+          {
+            "name": "since",
+            "type": "INTEGER",
+            "description": "Return up to 720 OHLC data points since given timestamp."
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "Can you provide the OHLC data for Bitcoin for the last full day from Coinpaprika, and also get the OHLC data for the BTC/USD pair from Kraken with a 1-minute interval?",
+    "query_id": 2
+  }
+]
+```

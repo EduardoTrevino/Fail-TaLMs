@@ -1,0 +1,130 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinlore",
+        "api_name": "get_global_stats",
+        "api_description": "Retrieve global crypto statistics.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "coins_count": "int",
+          "volume_24h": "float",
+          "market_cap_usd": "float",
+          "btc_d": "float"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "nexchange",
+        "api_name": "get_currencies",
+        "api_description": "Get all supported currencies.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "code": "str",
+          "min_confirmations": "int",
+          "is_active": "bool",
+          "cmc_rank": "int"
+        }
+      }
+    ],
+    "query": "What are the global cryptocurrency statistics, and can you list the currencies supported by the N.exchange API?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinlore",
+        "api_name": "get_ticker",
+        "api_description": "Retrieve tick data for a specific coin.",
+        "required_parameters": [
+          {
+            "name": "coin_id",
+            "type": "STRING",
+            "description": "The ID of the cryptocurrency."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "symbol": "str",
+          "name": "str",
+          "price_usd": "float"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "nexchange",
+        "api_name": "get_latest_price",
+        "api_description": "Gets latest price of the pair.",
+        "required_parameters": [
+          {
+            "name": "pair_name",
+            "type": "STRING",
+            "description": "Name of exchanged pair."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "market_code",
+            "type": "STRING",
+            "description": "Price market code."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "pair_name": "str",
+          "timestamp": "str",
+          "price": "float"
+        }
+      }
+    ],
+    "query": "Can you provide the current price of Bitcoin (BTC) using Coinlore data and also get the latest price for the BTCLTC pair using N.exchange?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Finance",
+        "tool_name": "coinlore",
+        "api_name": "get_all_exchanges",
+        "api_description": "Get all exchanges listed on the platform.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "name": "str",
+          "url": "str"
+        }
+      },
+      {
+        "category_name": "Finance",
+        "tool_name": "nexchange",
+        "api_name": "get_pairs",
+        "api_description": "Get all supported currency pairs.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "pair": "str",
+          "base": "str",
+          "quote": "str",
+          "is_active": "bool"
+        }
+      }
+    ],
+    "query": "List all the cryptocurrency exchanges available on Coinlore and provide the currency pairs supported by N.exchange.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
