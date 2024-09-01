@@ -1,0 +1,104 @@
+Here's a JSON file containing questions that require the use of at least one API from each tool ("mediawiki" and "openlibrary"):
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "mediawiki",
+        "api_name": "search_open_search",
+        "api_description": "Search the wiki using the OpenSearch protocol.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query.",
+            "default": "Albert Einstein"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The number of search results to return.",
+            "default": 5
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          "str",
+          ["str"],
+          ["str"],
+          ["str"]
+        ]
+      },
+      {
+        "tool_name": "openlibrary",
+        "api_name": "works_by_id",
+        "api_description": "Retrieve information about a work using its ID.",
+        "required_parameters": [
+          {
+            "name": "work_id",
+            "type": "STRING",
+            "description": "The Open Library ID of the work.",
+            "default": "OL45804W"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "title": "str"
+        }
+      }
+    ],
+    "query": "I want to know more about Albert Einstein. Could you find some articles about him on Wikipedia and provide information about a specific work with ID 'OL45804W' from the Open Library?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "mediawiki",
+        "api_name": "get_sitematrix",
+        "api_description": "Retrieve the list of Wikimedia sites and related information.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "sitematrix": {
+            "count": "int",
+            "specials": [
+              {
+                "code": "str",
+                "name": "str",
+                "url": "str"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "tool_name": "openlibrary",
+        "api_name": "author_search",
+        "api_description": "Search for authors by name.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query term to search for authors.",
+            "default": "George Orwell"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "docs": ["str"]
+        }
+      }
+    ],
+    "query": "Can you provide me a list of Wikimedia sites and find authors related to the search term 'George Orwell' in the Open Library?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+These examples demonstrate the use of APIs from both the "mediawiki" and "openlibrary" tools to satisfy real-world information requests a user might have.

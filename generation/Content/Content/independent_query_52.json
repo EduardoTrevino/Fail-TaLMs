@@ -1,0 +1,135 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Final Space",
+        "tool_name": "finalspace",
+        "api_name": "get_all_characters",
+        "api_description": "Retrieves all characters with options to sort and limit results.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sort in 'asc' or 'desc' order.",
+            "default": ""
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit the number of results returned.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "name": "str",
+          "species": "str",
+          "status": "str",
+          "gender": "str",
+          "origin": {
+            "name": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Star Trek",
+        "tool_name": "stapi",
+        "api_name": "get_character",
+        "api_description": "Retrieval of a single character.",
+        "required_parameters": [
+          {
+            "name": "uid",
+            "type": "STRING",
+            "description": "Character unique ID"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "character": {
+            "uid": "str",
+            "name": "str",
+            "gender": "str",
+            "yearOfBirth": "int"
+          }
+        }
+      }
+    ],
+    "query": "Can you list all the characters from Final Space and provide details about a specific Star Trek character by UID?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Final Space",
+        "tool_name": "finalspace",
+        "api_name": "get_all_episodes",
+        "api_description": "Retrieves all episodes with options to sort and limit results.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sort in 'asc' or 'desc' order.",
+            "default": ""
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit the number of results returned.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "name": "str",
+          "air_date": "str"
+        }
+      },
+      {
+        "category_name": "Star Trek",
+        "tool_name": "stapi",
+        "api_name": "search_episodes",
+        "api_description": "Pagination over episodes.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": "0"
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": "10"
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "episodes": [
+            {
+              "uid": "str",
+              "title": "str",
+              "seasonNumber": "int"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Could you list all the episodes from Final Space and provide a paginated list of episodes from Star Trek?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

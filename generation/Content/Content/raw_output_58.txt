@@ -1,0 +1,135 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "hackernews",
+        "api_name": "get_top_stories",
+        "api_description": "Fetch up to 500 top stories from Hacker News.",
+        "method": "GET",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "template_response": {
+          "type": "list of integers",
+          "description": "List of top story IDs."
+        }
+      },
+      {
+        "tool_name": "openlibrary",
+        "api_name": "openlibrary_search",
+        "api_description": "Search for books by title, author, and other criteria.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query term for the search.",
+            "default": "data science"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Fields to include in the response, use '*' to include all.",
+            "default": "*"
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sorting order (e.g., 'new', 'old', 'random').",
+            "default": ""
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number for results pagination.",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": 10
+          }
+        ],
+        "template_response": {
+          "docs": [
+            {
+              "title": "str",
+              "author_name": ["str"],
+              "first_publish_year": "int"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What are the current trending top stories on Hacker News related to 'data science', and can you find some books on 'data science' available in the Open Library?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "hackernews",
+        "api_name": "get_user",
+        "api_description": "Retrieve a specific user by their unique username.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "user_id",
+            "type": "STRING",
+            "description": "The user's unique username (case-sensitive)."
+          }
+        ],
+        "optional_parameters": [],
+        "template_response": {
+          "id": "str",
+          "created": "int",
+          "karma": "int",
+          "about": "str"
+        }
+      },
+      {
+        "tool_name": "openlibrary",
+        "api_name": "author_works",
+        "api_description": "Fetch works by a specific author using their ID.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "author_id",
+            "type": "STRING",
+            "description": "The ID of the author."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of works to return.",
+            "default": 50
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "The starting offset in the collection of works.",
+            "default": 0
+          }
+        ],
+        "template_response": {
+          "entries": [
+            {
+              "title": "str",
+              "edition_key": ["str"],
+              "cover_id": "int"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you get information about a Hacker News user with the username 'jl' and list works by J. K. Rowling available in the Open Library?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

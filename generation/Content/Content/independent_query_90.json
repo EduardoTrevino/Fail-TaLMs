@@ -1,0 +1,145 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "swapi",
+        "api_name": "get_people",
+        "api_description": "Fetch people resources or a specific person from Star Wars universe.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "resource_id",
+            "type": "INTEGER",
+            "description": "The specific ID of the person resource.",
+            "default": null
+          },
+          {
+            "name": "search",
+            "type": "STRING",
+            "description": "Search query to filter people resources.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "next": "str",
+          "previous": "str",
+          "results": [
+            {
+              "name": "str",
+              "height": "str",
+              "mass": "str",
+              "hair_color": "str",
+              "skin_color": "str",
+              "eye_color": "str",
+              "birth_year": "str",
+              "gender": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "tvmaze",
+        "api_name": "search_shows",
+        "api_description": "Search for shows by name using TVmaze API.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The name of the show to search for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "score": "float",
+          "show": {
+            "id": "int",
+            "name": "str",
+            "genres": ["str"],
+            "status": "str",
+            "premiered": "str",
+            "rating": {
+              "average": "float"
+            }
+          }
+        }
+      }
+    ],
+    "query": "Who is the character named 'Luke Skywalker' in the Star Wars universe and can you find a TV show with the name 'The Mandalorian'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "swapi",
+        "api_name": "get_films",
+        "api_description": "Fetch film resources or a specific film from Star Wars universe.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "resource_id",
+            "type": "INTEGER",
+            "description": "The specific ID of the film resource.",
+            "default": null
+          },
+          {
+            "name": "search",
+            "type": "STRING",
+            "description": "Search query to filter film resources.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "next": "str",
+          "previous": "str",
+          "results": [
+            {
+              "title": "str",
+              "episode_id": "int",
+              "opening_crawl": "str",
+              "director": "str",
+              "producer": "str",
+              "release_date": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "tvmaze",
+        "api_name": "show_single_search",
+        "api_description": "Perform a single search for a specific show by name.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The name of the show."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "name": "str",
+          "genres": ["str"],
+          "status": "str",
+          "premiered": "str",
+          "rating": {
+            "average": "float"
+          }
+        }
+      }
+    ],
+    "query": "Can you provide details about the Star Wars film 'A New Hope' and search for a TV show with the title 'Breaking Bad'?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

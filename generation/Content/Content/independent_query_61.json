@@ -1,0 +1,101 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "hackernews",
+        "api_name": "get_top_stories",
+        "api_description": "Fetch up to 500 top stories.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "response_type": "array",
+          "item_type": "int"
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "swapi",
+        "api_name": "get_people",
+        "api_description": "Fetch people resources or a specific person.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "search",
+            "type": "STRING",
+            "description": "Search query to filter people resources.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "response_type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "query": "What are some of the current top stories on Hacker News, and can you also list the Star Wars characters with the name 'Skywalker' in them?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "hackernews",
+        "api_name": "get_max_item",
+        "api_description": "Get the current largest item ID.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "response_type": "int"
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "swapi",
+        "api_name": "get_planets",
+        "api_description": "Fetch planet resources or a specific planet.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "search",
+            "type": "STRING",
+            "description": "Search query to filter planet resources.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "response_type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "query": "Can you give me the ID of the largest item currently on Hacker News? Also, list the planets in the Star Wars universe.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

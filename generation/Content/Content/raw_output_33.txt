@@ -1,0 +1,135 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_titles",
+                "api_description": "Search the newspaper directory using OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "terms",
+                        "type": "STRING",
+                        "description": "Search query",
+                        "default": "times"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for results",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        {
+                            "title": "str",
+                            "place_of_publication": "str",
+                            "start_year": "str",
+                            "end_year": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "tool_name": "stapi",
+                "api_name": "get_character",
+                "api_description": "Retrieve a single Star Trek character.",
+                "required_parameters": [
+                    {
+                        "name": "uid",
+                        "type": "STRING",
+                        "description": "Character unique ID",
+                        "default": "CHMA0000215045"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "character": {
+                        "name": "str",
+                        "species": "str",
+                        "birthPlace": "str",
+                        "episodes": [
+                            {
+                                "title": "str",
+                                "seasonNumber": "int",
+                                "episodeNumber": "int"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "Can you search for newspaper titled 'times' in the Chronicling America directory? Also, I want to know more about the Star Trek character with the unique ID 'CHMA0000215045'.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "chroniclingamerica",
+                "api_name": "get_newspapers_json",
+                "api_description": "Retrieve a list of all newspaper titles with digital content.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "newspapers": [
+                        {
+                            "title": "str",
+                            "state": "str",
+                            "publicationDate": "str",
+                            "language": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "tool_name": "stapi",
+                "api_name": "search_books",
+                "api_description": "Pagination over books.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pageNumber",
+                        "type": "INTEGER",
+                        "description": "Zero-based page number",
+                        "default": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "INTEGER",
+                        "description": "Page size",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "books": [
+                        {
+                            "title": "str",
+                            "author": "str",
+                            "publishedYear": "str",
+                            "uid": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I want a list of all digital newspapers available at Chronicling America. Additionally, can you list some Star Trek books?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

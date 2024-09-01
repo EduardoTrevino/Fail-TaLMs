@@ -1,0 +1,124 @@
+```json
+[
+  {
+    "api_list": [
+        {
+            "tool_name": "mediawiki",
+            "api_name": "parse_page",
+            "api_description": "Parser a wiki page and return its HTML content.",
+            "required_parameters": [
+                {
+                    "name": "page",
+                    "type": "STRING",
+                    "description": "Title of the page to parse."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "wiki",
+                    "type": "STRING",
+                    "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+                    "default": "https://en.wikipedia.org/w/api.php"
+                }
+            ],
+            "method": "GET"
+        },
+        {
+            "tool_name": "tvmaze",
+            "api_name": "show_single_search",
+            "api_description": "Perform a single search for a specific show by name.",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET"
+        }
+    ],
+    "query": "Can you provide the Wikipedia page content for 'Breaking Bad'? Also, I'd like detailed information about the show 'Breaking Bad' from TVmaze.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "tool_name": "mediawiki",
+            "api_name": "search_open_search",
+            "api_description": "Search the wiki using the OpenSearch protocol.",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "The number of search results to return.",
+                    "default": 10
+                }
+            ],
+            "method": "GET"
+        },
+        {
+            "tool_name": "tvmaze",
+            "api_name": "search_shows",
+            "api_description": "Search for shows by name using a fuzzy search.",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The name of the show to search for."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET"
+        }
+    ],
+    "query": "Search Wikipedia for articles related to 'Game of Thrones' and find all shows named 'Game of Thrones' or similar from TVmaze.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+        {
+            "tool_name": "mediawiki",
+            "api_name": "get_sitematrix",
+            "api_description": "Retrieve the list of Wikimedia sites and related information.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET"
+        },
+        {
+            "tool_name": "tvmaze",
+            "api_name": "schedule",
+            "api_description": "Retrieve the schedule for a given country and date.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "country",
+                    "type": "STRING",
+                    "description": "An ISO 3166-1 code of the country.",
+                    "default": "US"
+                },
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "An ISO 8601 formatted date.",
+                    "default": "current day"
+                }
+            ],
+            "method": "GET"
+        }
+    ],
+    "query": "Provide me with a list of all Wikimedia project sites. Also, what TV shows are scheduled to air in the US today according to TVmaze?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

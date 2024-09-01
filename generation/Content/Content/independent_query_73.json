@@ -1,0 +1,184 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "mediawiki",
+        "api_name": "search_open_search",
+        "api_description": "Search the wiki using the OpenSearch protocol.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query.",
+            "default": "Star Trek"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The number of search results to return.",
+            "default": "10"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "array"
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "stapi",
+        "api_name": "search_characters",
+        "api_description": "Pagination over characters in the Star Trek universe.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": "0"
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": "10"
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "object"
+        }
+      }
+    ],
+    "query": "I'm interested in learning more about Star Trek. Can you search Wikipedia for 'Star Trek' and also provide a list of characters from the Star Trek universe?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "mediawiki",
+        "api_name": "get_sitematrix",
+        "api_description": "Retrieve the list of Wikimedia sites and related information.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "type": "object",
+          "properties": {
+            "sitematrix": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "stapi",
+        "api_name": "search_books",
+        "api_description": "Pagination over books in the Star Trek universe.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": "0"
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": "10"
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "object"
+        }
+      }
+    ],
+    "query": "Can you provide a list of all Wikimedia sites available and additionally show me some books from the Star Trek universe?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "mediawiki",
+        "api_name": "parse_page",
+        "api_description": "Parses a wiki page and returns its content.",
+        "required_parameters": [
+          {
+            "name": "page",
+            "type": "STRING",
+            "description": "Title of the page to parse.",
+            "default": "Space Exploration"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "wiki",
+            "type": "STRING",
+            "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+            "default": "https://en.wikipedia.org/w/api.php"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "object",
+          "properties": {
+            "parse": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "stapi",
+        "api_name": "search_astronomical_objects",
+        "api_description": "Pagination over astronomical objects in the Star Trek universe.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": "0"
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": "10"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "object"
+        }
+      }
+    ],
+    "query": "I'm curious about space exploration. Can you parse the Wikipedia page for 'Space Exploration' and find any astronomical objects in the Star Trek universe?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

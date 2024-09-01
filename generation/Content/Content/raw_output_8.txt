@@ -1,0 +1,102 @@
+Here is a JSON file that contains questions requiring the use of at least one API from each tool, namely `animenewsnetwork` and `openlibrary`. The aim is to reflect the kinds of questions a human would ask, which requires accessing data from both sources: 
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Anime and Manga",
+        "tool_name": "animenewsnetwork",
+        "api_name": "get_reports",
+        "api_description": "Fetch reports with various filters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "'anime' or 'manga'.",
+            "default": "anime"
+          },
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Starts with the value.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML data on anime or manga reports"
+      },
+      {
+        "category_name": "Books",
+        "tool_name": "openlibrary",
+        "api_name": "openlibrary_search",
+        "api_description": "Search for books by title, author, and other criteria.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query term for the search.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": 5
+          }
+        ],
+        "method": "GET",
+        "template_response": "JSON data with book search results"
+      }
+    ],
+    "query": "Can you find any anime reports starting with 'Naruto' and search for books related to 'Naruto'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Anime and Manga",
+        "tool_name": "animenewsnetwork",
+        "api_name": "get_anime_details",
+        "api_description": "Fetch detailed info for anime/manga by ID or name.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "title",
+            "type": "STRING",
+            "description": "Fetch by name.",
+            "default": "One Piece"
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML data with details on anime or manga"
+      },
+      {
+        "category_name": "Books",
+        "tool_name": "openlibrary",
+        "api_name": "works_by_id",
+        "api_description": "Retrieve information about a work using its ID.",
+        "required_parameters": [
+          {
+            "name": "work_id",
+            "type": "STRING",
+            "description": "The ID of the work.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": "JSON data with book work details"
+      }
+    ],
+    "query": "I would like to get detailed information about the anime 'One Piece' and find the work details of a book with a specific Open Library ID that matches its theme.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+This structure provides a variety of independent questions highlighting the integration of two different datasets - anime from "AnimeNewsNetwork" and books from "OpenLibrary". Each question is geared towards combining queries that logically correlate anime elements with literary works.

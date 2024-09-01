@@ -1,0 +1,147 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "crossref",
+        "api_name": "search_works",
+        "api_description": "Search for works by a free text query",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The query string to search for within the works",
+            "default": "climate change"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "rows",
+            "type": "INTEGER",
+            "description": "Number of results per page",
+            "default": 20
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "status": "str",
+          "message-type": "str",
+          "message-Version": "str",
+          "message": {
+            "items-per-page": "int",
+            "query": {
+              "start-index": "int",
+              "search-terms": "str"
+            },
+            "items": [
+              {
+                "DOI": "str",
+                "title": ["str"],
+                "publisher": "str",
+                "published-print": {
+                  "date-parts": [["int"]]
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "tool_name": "rickandmorty",
+        "api_name": "get_characters",
+        "api_description": "Fetches all characters, with filtering options",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Filter for names containing this string",
+            "default": "Rick"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "info": {
+            "count": "int",
+            "pages": "int",
+            "next": "str",
+            "prev": "str"
+          },
+          "results": [
+            {
+              "id": "int",
+              "name": "str",
+              "status": "str",
+              "species": "str",
+              "gender": "str",
+              "origin": {
+                "name": "str",
+                "url": "str"
+              },
+              "location": {
+                "name": "str",
+                "url": "str"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find scholarly articles related to climate change? Additionally, I want to know more about characters named Rick in the Rick and Morty universe.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "crossref",
+        "api_name": "get_journal_details",
+        "api_description": "Retrieve information about a journal by its ISSN",
+        "required_parameters": [
+          {
+            "name": "issn",
+            "type": "STRING",
+            "description": "The ISSN identifier associated with the journal",
+            "default": "12345678"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "status": "str",
+          "message-type": "str",
+          "message": {
+            "ISSN": ["str"],
+            "journal-title": "str",
+            "publisher": "str",
+            "subject": ["str"]
+          }
+        }
+      },
+      {
+        "tool_name": "rickandmorty",
+        "api_name": "get_episode_by_id",
+        "api_description": "Fetches a single episode by ID",
+        "required_parameters": [
+          {
+            "name": "episode_id",
+            "type": "INTEGER",
+            "description": "ID of the episode",
+            "default": 1
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "name": "str",
+          "air_date": "str",
+          "episode": "str",
+          "characters": ["str"]
+        }
+      }
+    ],
+    "query": "Can you provide details on a journal with ISSN 12345678? Also, give me information about the first episode of Rick and Morty.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

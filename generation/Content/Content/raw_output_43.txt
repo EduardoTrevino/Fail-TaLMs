@@ -1,0 +1,149 @@
+Below is a JSON file that contains questions that would require the use of at least one API from the "crossref" tool and one from the "stapi" tool.
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Publication",
+        "tool_name": "crossref",
+        "api_name": "search_works",
+        "api_description": "Search for works by a free text query.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The query string to search for within the works.",
+            "default": "quantum mechanics"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "rows",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": 20
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total-results": "int",
+          "items": [
+            {
+              "DOI": "str",
+              "title": ["str"],
+              "author": [{"given": "str", "family": "str"}],
+              "issued": {"date-parts": [["int"]]}
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Star Trek Universe",
+        "tool_name": "stapi",
+        "api_name": "search_characters",
+        "api_description": "Pagination over characters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": 0
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": 10
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "characters": [
+            {
+              "uid": "str",
+              "name": "str",
+              "birthName": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I'm studying quantum mechanics in both fictional and academic contexts. Can you find recent scholarly works on quantum mechanics as well as Star Trek characters that might be associated with science or engineering?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Funding",
+        "tool_name": "crossref",
+        "api_name": "get_funders",
+        "api_description": "Retrieve a list of funders.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "Search query for funders.",
+            "default": "NASA"
+          },
+          {
+            "name": "rows",
+            "type": "INTEGER",
+            "description": "Number of funders per page.",
+            "default": 20
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total-results": "int",
+          "items": [
+            {
+              "id": "str",
+              "name": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Star Trek Universe",
+        "tool_name": "stapi",
+        "api_name": "search_episodes",
+        "api_description": "Pagination over episodes.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "pageNumber",
+            "type": "INTEGER",
+            "description": "Zero-based page number",
+            "default": 0
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "description": "Page size",
+            "default": 10
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "episodes": [
+            {
+              "uid": "str",
+              "title": "str",
+              "seasonNumber": "int"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I'm exploring space funding and space-themed television. Could you provide a list of funders related to space exploration, and list some Star Trek episodes about space missions?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+This JSON contains sets of tools and API calls from each tool necessary to answer human-like queries posed in the "query" field, requiring the integration of information from both scholarly and fictional universes. Each query includes the APIs involved, their descriptions, parameters, and a template response structure to guide the implementation of these API calls.

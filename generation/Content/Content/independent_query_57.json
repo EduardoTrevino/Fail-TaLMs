@@ -1,0 +1,85 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "hackernews",
+        "api_name": "get_top_stories",
+        "api_description": "Fetch up to 500 top stories on Hacker News.",
+        "method": "GET",
+        "required_parameters": [],
+        "optional_parameters": []
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "mediawiki",
+        "api_name": "search_open_search",
+        "api_description": "Search the wiki using the OpenSearch protocol.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query.",
+            "default": "Technology"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The number of search results to return.",
+            "default": "10"
+          }
+        ]
+      }
+    ],
+    "query": "Can you provide a list of the current top stories on Hacker News and also search Wikipedia for articles related to 'Technology'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Content",
+        "tool_name": "hackernews",
+        "api_name": "get_user",
+        "api_description": "Retrieve a specific user by their unique username.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "user_id",
+            "type": "STRING",
+            "description": "The user's unique username (case-sensitive)."
+          }
+        ],
+        "optional_parameters": []
+      },
+      {
+        "category_name": "Content",
+        "tool_name": "mediawiki",
+        "api_name": "parse_page",
+        "api_description": "Parses a wiki page and returns its HTML content.",
+        "method": "GET",
+        "required_parameters": [
+          {
+            "name": "page",
+            "type": "STRING",
+            "description": "Title of the page to parse."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "wiki",
+            "type": "STRING",
+            "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+            "default": "https://en.wikipedia.org/w/api.php"
+          }
+        ]
+      }
+    ],
+    "query": "I'd like to know about the user 'pg' on Hacker News and also get the parsed content of the Wikipedia page for 'Python (programming language)'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
