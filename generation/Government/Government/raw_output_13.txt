@@ -1,0 +1,196 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "datausa",
+        "api_name": "get_population_data",
+        "api_description": "Get population data for specified geographical drilldowns and measures.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "drilldowns",
+            "type": "STRING",
+            "description": "The geographical level to retrieve data for, e.g., 'Nation' or 'State'.",
+            "default": "Nation"
+          },
+          {
+            "name": "measures",
+            "type": "STRING",
+            "description": "The measure to retrieve data for, e.g., 'Population'.",
+            "default": "Population"
+          },
+          {
+            "name": "year",
+            "type": "STRING",
+            "description": "The year of data to retrieve, 'latest' for the most recent.",
+            "default": "latest"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "ID Nation": "01000US",
+              "Nation": "United States",
+              "ID Year": "int",
+              "Year": "str",
+              "Population": "int",
+              "Slug Nation": "str"
+            }
+          ],
+          "source": [
+            {
+              "measures": ["Population"],
+              "annotations": {
+                "source_name": "Census Bureau",
+                "source_description": "Census Bureau conducts surveys of the United States Population, including the American Community Survey",
+                "dataset_name": "ACS 1-year Estimate",
+                "dataset_link": "http://www.census.gov/programs-surveys/acs/",
+                "table_id": "B01003",
+                "topic": "Diversity"
+              },
+              "name": "acs_yg_total_population_1",
+              "substitutions": []
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "worldbank",
+        "api_name": "get_country_data",
+        "api_description": "Retrieve information about a specific country using its ISO2 country code.",
+        "required_parameters": [
+          {
+            "name": "country_code",
+            "type": "STRING",
+            "description": "Two-letter ISO code of the country.",
+            "default": "BR"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format_type",
+            "type": "STRING",
+            "description": "The format in which to receive the data.",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "iso2Code": "str",
+          "name": "str",
+          "region": {
+            "id": "str",
+            "value": "str"
+          },
+          "adminregion": {
+            "id": "str",
+            "value": "str"
+          },
+          "incomeLevel": {
+            "id": "str",
+            "value": "str"
+          },
+          "lendingType": {
+            "id": "str",
+            "value": "str"
+          },
+          "capitalCity": "str",
+          "longitude": "str",
+          "latitude": "str"
+        }
+      }
+    ],
+    "query": "What is the latest population data for the United States? Also, can you provide information about Brazil using its ISO code?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "datausa",
+        "api_name": "get_population_data",
+        "api_description": "Get population data for specified geographical drilldowns and measures.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "drilldowns",
+            "type": "STRING",
+            "description": "The geographical level to retrieve data for, e.g., 'Nation' or 'State'.",
+            "default": "Nation"
+          },
+          {
+            "name": "measures",
+            "type": "STRING",
+            "description": "The measure to retrieve data for, e.g., 'Population'.",
+            "default": "Population"
+          },
+          {
+            "name": "year",
+            "type": "STRING",
+            "description": "The year of data to retrieve, 'latest' for the most recent.",
+            "default": "latest"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "ID Nation": "01000US",
+              "Nation": "United States",
+              "ID Year": "int",
+              "Year": "str",
+              "Population": "int",
+              "Slug Nation": "str"
+            }
+          ],
+          "source": [
+            {
+              "measures": ["Population"],
+              "annotations": {
+                "source_name": "Census Bureau",
+                "source_description": "Census Bureau conducts surveys of the United States Population, including the American Community Survey",
+                "dataset_name": "ACS 1-year Estimate",
+                "dataset_link": "http://www.census.gov/programs-surveys/acs/",
+                "table_id": "B01003",
+                "topic": "Diversity"
+              },
+              "name": "acs_yg_total_population_1",
+              "substitutions": []
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "worldbank",
+        "api_name": "list_income_levels",
+        "api_description": "List all income levels available in the World Bank API.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format_type",
+            "type": "STRING",
+            "description": "The format in which to receive the data.",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "iso2Code": "str",
+          "value": "str"
+        }
+      }
+    ],
+    "query": "Could you tell me the population of New York State for the latest year available? Also, what are the different income levels recognized by the World Bank?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

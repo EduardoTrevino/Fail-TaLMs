@@ -1,0 +1,135 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "breakingbad",
+        "api_name": "get_random_quote",
+        "api_description": "Retrieve a random quote from Breaking Bad.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "quote": "string",
+          "author": "string"
+        }
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "get_random_quote",
+        "api_description": "Retrieve a single random quote with optional filters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {"name": "maxLength", "type": "INT"},
+          {"name": "minLength", "type": "INT"},
+          {"name": "tags", "type": "STRING"},
+          {"name": "author", "type": "STRING"}
+        ],
+        "method": "GET",
+        "template_response": {
+          "content": "string",
+          "author": "string"
+        }
+      }
+    ],
+    "query": "Can you get me a random quote from Breaking Bad and another random quote from any other source?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "breakingbad",
+        "api_name": "get_multiple_quotes",
+        "api_description": "Retrieve a specified number of quotes from Breaking Bad.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {"name": "number", "type": "INTEGER", "description": "The number of quotes to retrieve.", "default": "1"}
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "quote": "string",
+            "author": "string"
+          }
+        ]
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "list_quotes",
+        "api_description": "Get all quotes matching a given query with pagination and sorting options.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {"name": "maxLength", "type": "INT"},
+          {"name": "minLength", "type": "INT"},
+          {"name": "tags", "type": "STRING"},
+          {"name": "author", "type": "STRING"},
+          {"name": "sortBy", "type": "ENUM", "default": "dateAdded"},
+          {"name": "order", "type": "ENUM"},
+          {"name": "limit", "type": "INT", "default": "20"},
+          {"name": "page", "type": "INT", "default": "1"}
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "content": "string",
+              "author": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I need 5 quotes from Breaking Bad and 5 inspirational quotes from different authors, can you provide them?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "breakingbad",
+        "api_name": "get_random_quote",
+        "api_description": "Retrieve a random quote from Breaking Bad.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "quote": "string",
+          "author": "string"
+        }
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "search_quotes",
+        "api_description": "Search for quotes by keywords, content, and/or author name.",
+        "required_parameters": [
+          {"name": "query", "type": "STRING"}
+        ],
+        "optional_parameters": [
+          {"name": "fields", "type": "STRING", "default": "content,author,tags"},
+          {"name": "fuzzyMaxEdits", "type": "INT", "default": "0"},
+          {"name": "fuzzyMaxExpansions", "type": "INT", "default": "50"},
+          {"name": "limit", "type": "INT", "default": "20"},
+          {"name": "page", "type": "INT", "default": "1"}
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "content": "string",
+              "author": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide a popular Breaking Bad quote and a famous quote about happiness from different authors?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

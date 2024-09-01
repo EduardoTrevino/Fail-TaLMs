@@ -1,0 +1,183 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "adviceslip",
+        "api_name": "get_random_advice",
+        "api_description": "Returns a random advice slip as a slip object.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "callback",
+            "type": "STRING",
+            "description": "Define your own callback function name for JSONP."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "slip": {
+            "slip_id": "int",
+            "advice": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_random_quote",
+        "api_description": "Get a random quote from Game of Thrones.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "sentence": "str",
+          "character": {
+            "name": "str",
+            "slug": "str",
+            "house": {
+              "name": "str",
+              "slug": "str"
+            }
+          }
+        }
+      }
+    ],
+    "query": "I'm feeling down, can you give me a random piece of advice and a random Game of Thrones quote to lift my spirits?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "adviceslip",
+        "api_name": "search_advice",
+        "api_description": "Search for advice slips containing the given query term.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query for advice slips."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "callback",
+            "type": "STRING",
+            "description": "Define your own callback function name for JSONP."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total_results": "int",
+          "query": "str",
+          "slips": [
+            {
+              "slip_id": "int",
+              "advice": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_quotes_by_character",
+        "api_description": "Get quotes for a specific Game of Thrones character.",
+        "required_parameters": [
+          {
+            "name": "character_slug",
+            "type": "STRING",
+            "description": "Slug of the character."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "number",
+            "type": "INTEGER",
+            "description": "Number of quotes to return."
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "sentence": "str",
+            "character": {
+              "name": "str",
+              "slug": "str",
+              "house": {
+                "name": "str",
+                "slug": "str"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "query": "I'm looking for advice related to happiness, can you find some advice slips mentioning 'happiness'? Also, provide me with some quotes from Tyrion Lannister.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "adviceslip",
+        "api_name": "get_advice_by_id",
+        "api_description": "Returns a specific advice slip by slip_id.",
+        "required_parameters": [
+          {
+            "name": "slip_id",
+            "type": "INTEGER",
+            "description": "The unique ID of the advice slip."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "callback",
+            "type": "STRING",
+            "description": "Define your own callback function name for JSONP."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "slip": {
+            "slip_id": "int",
+            "advice": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_house_details",
+        "api_description": "Get details of a specific Game of Thrones house.",
+        "required_parameters": [
+          {
+            "name": "house_slug",
+            "type": "STRING",
+            "description": "Slug of the house."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "slug": "str",
+            "name": "str",
+            "members": [
+              {
+                "name": "str",
+                "slug": "str"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "query": "Can you find the advice slip with ID 100? Also, provide me with details about House Stark from Game of Thrones.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

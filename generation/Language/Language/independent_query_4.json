@@ -1,0 +1,162 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_version",
+        "api_description": "Returns date information about the CCDB service, the Unicode version, and the PHP/MySQL versions.",
+        "method": "GET",
+        "template_response": {
+          "date": "str",
+          "unicodeVersion": "str",
+          "phpVersion": "str",
+          "mysqlVersion": "str"
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "purgomalum",
+        "api_name": "contains_profanity",
+        "api_description": "Check if input text contains profanity.",
+        "required_parameters": [
+          {
+            "name": "text",
+            "type": "STRING",
+            "description": "Input text to be checked for profanity."
+          }
+        ],
+        "method": "GET",
+        "template_response": "true or false"
+      }
+    ],
+    "query": "What is the current version information of the Chinese Character Web API, and can you check if the phrase 'This is a test!' contains any profanity?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_all_characters",
+        "api_description": "Returns all characters, optionally filtered, or the count of characters.",
+        "optional_parameters": [
+          {
+            "name": "filter",
+            "type": "STRING",
+            "description": "Filter for the characters."
+          },
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Specify fields for the characters."
+          },
+          {
+            "name": "count",
+            "type": "BOOLEAN",
+            "description": "Return count instead of characters."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "characters": ["str"],
+          "count": "int"
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "purgomalum",
+        "api_name": "filter_text_plain",
+        "api_description": "Filter profanity from text and return result as plain text.",
+        "required_parameters": [
+          {
+            "name": "text",
+            "type": "STRING",
+            "description": "Input text to be processed."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "add",
+            "type": "STRING",
+            "description": "Comma separated words to add to the profanity list."
+          },
+          {
+            "name": "fill_text",
+            "type": "STRING",
+            "description": "Text for replacing profane words."
+          },
+          {
+            "name": "fill_char",
+            "type": "STRING",
+            "description": "Character to replace profane words."
+          }
+        ],
+        "method": "GET",
+        "template_response": "resulting text"
+      }
+    ],
+    "query": "Can you provide a list of all characters in the Chinese character database with definitions and check if the sentence 'This is a fucking awesome tool!' can be filtered for profanity using asterisks?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_sounds_mandarin",
+        "api_description": "Returns a list of Mandarin sounds, optionally with pitch.",
+        "optional_parameters": [
+          {
+            "name": "with_pitch",
+            "type": "BOOLEAN",
+            "description": "Include pitch in sounds."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "mandarin": ["str"]
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "purgomalum",
+        "api_name": "filter_text_json",
+        "api_description": "Filter profanity from text and return result as JSON.",
+        "required_parameters": [
+          {
+            "name": "text",
+            "type": "STRING",
+            "description": "Input text to be processed."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "add",
+            "type": "STRING",
+            "description": "Comma separated words to add to the profanity list."
+          },
+          {
+            "name": "fill_text",
+            "type": "STRING",
+            "description": "Text for replacing profane words."
+          },
+          {
+            "name": "fill_char",
+            "type": "STRING",
+            "description": "Character to replace profane words."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "result": "resulting text"
+        }
+      }
+    ],
+    "query": "List the Mandarin sounds along with their pitch and filter the text 'What a damn fantastic day!' for any profane language, replacing the words with '[censored]'.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

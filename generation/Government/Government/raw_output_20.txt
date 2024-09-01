@@ -1,0 +1,123 @@
+```json
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Government",
+            "tool_name": "fbiwanted",
+            "api_name": "get_wanted_list",
+            "api_description": "Retrieve information from the FBI Wanted list.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "field_offices",
+                    "type": "STRING",
+                    "description": "Filter results by specific FBI field offices.",
+                    "default": "None"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "total": "int",
+                "page": "int",
+                "items": "array"
+            }
+        },
+        {
+            "category_name": "Government",
+            "tool_name": "representcivicinformation",
+            "api_name": "get_representatives_by_postal_code",
+            "api_description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
+            "required_parameters": [
+                {
+                    "name": "postal_code",
+                    "type": "STRING",
+                    "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "sets",
+                    "type": "STRING",
+                    "description": "Comma-separated list of boundary sets to limit results.",
+                    "default": "None"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "boundaries_centroid": "object"
+            }
+        }
+    ],
+    "query": "Can you find me any wanted criminals who may be in the Miami field office area and also get the civic representatives for the postal code L5G4L3?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Government",
+            "tool_name": "fbiwanted",
+            "api_name": "get_wanted_list",
+            "api_description": "Retrieve information from the FBI Wanted list.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "field_offices",
+                    "type": "STRING",
+                    "description": "Filter results by specific FBI field offices.",
+                    "default": "None"
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "The page of resources to retrieve.",
+                    "default": "1"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "total": "int",
+                "page": "int",
+                "items": "array"
+            }
+        },
+        {
+            "category_name": "Government",
+            "tool_name": "representcivicinformation",
+            "api_name": "get_elections",
+            "api_description": "Get one page of elections.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": "20"
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for pagination.",
+                    "default": "0"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "objects": "array"
+            }
+        }
+    ],
+    "query": "I want to know about recent wanted criminals listed in the FBI records and also to see the upcoming elections in Canada.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

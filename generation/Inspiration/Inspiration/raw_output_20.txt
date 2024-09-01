@@ -1,0 +1,155 @@
+Here is the `api_list-question.json` file containing questions that would require the use of at least one API from each of the provided tools:
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_random_quote",
+        "api_description": "Get a random quote from Game of Thrones.",
+        "required_parameters": [],
+        "optional_parameters": []
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "list_tags",
+        "api_description": "Get a list of all tags with sorting options.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "sortBy",
+            "type": "ENUM",
+            "default": "name"
+          },
+          {
+            "name": "order",
+            "type": "ENUM"
+          }
+        ]
+      }
+    ],
+    "query": "Can you provide me a random Game of Thrones quote and also give me a list of available tags from the Quotable API?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_quotes_by_character",
+        "api_description": "Get quotes for a specific Game of Thrones character.",
+        "required_parameters": [
+          {
+            "name": "character_slug",
+            "type": "STRING"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "number",
+            "type": "INTEGER",
+            "default": "None"
+          }
+        ]
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "search_quotes",
+        "api_description": "Search for quotes by keywords, content, and/or author name.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "default": "content,author,tags"
+          },
+          {
+            "name": "fuzzyMaxEdits",
+            "type": "INT",
+            "default": "0"
+          },
+          {
+            "name": "fuzzyMaxExpansions",
+            "type": "INT",
+            "default": "50"
+          },
+          {
+            "name": "limit",
+            "type": "INT",
+            "default": "20"
+          },
+          {
+            "name": "page",
+            "type": "INT",
+            "default": "1"
+          }
+        ]
+      }
+    ],
+    "query": "I'd like to get a couple of quotes from Tyrion Lannister. Also, can you find some quotes related to 'wisdom' using the Quotable API?",
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Inspiration",
+        "tool_name": "gameofthrones",
+        "api_name": "get_house_details",
+        "api_description": "Get details of a specific Game of Thrones house.",
+        "required_parameters": [
+          {
+            "name": "house_slug",
+            "type": "STRING"
+          }
+        ],
+        "optional_parameters": []
+      },
+      {
+        "category_name": "Inspiration",
+        "tool_name": "quotable",
+        "api_name": "list_authors",
+        "api_description": "Get all authors matching the given query, with several options for sorting and filtering.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "slug",
+            "type": "STRING"
+          },
+          {
+            "name": "sortBy",
+            "type": "ENUM",
+            "default": "name"
+          },
+          {
+            "name": "order",
+            "type": "ENUM"
+          },
+          {
+            "name": "limit",
+            "type": "INT",
+            "default": "20"
+          },
+          {
+            "name": "page",
+            "type": "INT",
+            "default": "1"
+          }
+        ]
+      }
+    ],
+    "query": "Can you provide details about House Stark from Game of Thrones? Also, can you give me a list of authors from the Quotable API?",
+    "query_id": 3
+  }
+]
+```
+
+These questions are designed to use APIs from both the "gameofthrones" and "quotable" tools independently, combining data requests relevant to the "Inspiration" category.

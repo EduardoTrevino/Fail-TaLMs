@@ -1,0 +1,115 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_characters_by_radical",
+        "api_description": "Returns characters that use a specific Kangxi radical, optionally filtered by additional strokes.",
+        "required_parameters": [
+          {
+            "name": "radical",
+            "type": "INTEGER",
+            "description": "Kangxi radical number."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "strokes",
+            "type": "INTEGER",
+            "description": "Filter by number of additional strokes."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "characters": ["str"]
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "freedictionary",
+        "api_name": "get_word_definition",
+        "api_description": "Retrieve the definition of the specified English word.",
+        "required_parameters": [
+          {
+            "name": "word",
+            "type": "STRING",
+            "description": "The word to get the definition for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "word": "string",
+            "phonetic": "string",
+            "meanings": [
+              {
+                "partOfSpeech": "string",
+                "definitions": [
+                  {
+                    "definition": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "query": "Can you list all Chinese characters that have the Kangxi radical number 85 and provide the definition of the English word 'radical'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_strokes",
+        "api_description": "Returns a list of total strokes and a count of characters with each stroke count.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "strokes": ["int", "int"],
+          "count": ["int", "int"]
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "freedictionary",
+        "api_name": "get_word_definition",
+        "api_description": "Retrieve the definition of the specified English word.",
+        "required_parameters": [
+          {
+            "name": "word",
+            "type": "STRING",
+            "description": "The word to get the definition for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "word": "string",
+            "phonetic": "string",
+            "meanings": [
+              {
+                "partOfSpeech": "string",
+                "definitions": [
+                  {
+                    "definition": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "query": "What are the total stroke numbers in Chinese characters, and can you explain the term 'stroke' in English?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

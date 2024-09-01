@@ -1,0 +1,199 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "datamuse",
+        "api_name": "words",
+        "api_description": "Returns a list of words matching given constraints.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ml",
+            "type": "STRING",
+            "description": "Means like constraint."
+          },
+          {
+            "name": "sl",
+            "type": "STRING",
+            "description": "Sounds like constraint."
+          },
+          {
+            "name": "sp",
+            "type": "STRING",
+            "description": "Spelled like constraint."
+          },
+          {
+            "name": "rel_code",
+            "type": "STRING",
+            "description": "Related word constraint codes like 'syn', 'trg'."
+          },
+          {
+            "name": "v",
+            "type": "STRING",
+            "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+          },
+          {
+            "name": "topics",
+            "type": "STRING",
+            "description": "Hints about the context or topic."
+          },
+          {
+            "name": "lc",
+            "type": "STRING",
+            "description": "Left context hint."
+          },
+          {
+            "name": "rc",
+            "type": "STRING",
+            "description": "Right context hint."
+          },
+          {
+            "name": "max",
+            "type": "INTEGER",
+            "description": "Max number of results (default is 100).",
+            "default": "100"
+          },
+          {
+            "name": "md",
+            "type": "STRING",
+            "description": "Metadata flags like 'd' for definitions."
+          },
+          {
+            "name": "qe",
+            "type": "STRING",
+            "description": "Query echo."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "word": "string",
+          "score": "integer"
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "freedictionary",
+        "api_name": "get_word_definition",
+        "api_description": "Retrieve the definition of the specified English word.",
+        "required_parameters": [
+          {
+            "name": "word",
+            "type": "STRING",
+            "description": "The word to get the definition for.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "word": "string",
+          "phonetic": "string",
+          "phonetics": [
+            {
+              "text": "string",
+              "audio": "string"
+            }
+          ],
+          "origin": "string",
+          "meanings": [
+            {
+              "partOfSpeech": "string",
+              "definitions": [
+                {
+                  "definition": "string",
+                  "example": "string",
+                  "synonyms": [],
+                  "antonyms": []
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What are some words related to 'spoon' and can you provide the definition of one of these words?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "datamuse",
+        "api_name": "sug",
+        "api_description": "Provides word suggestions given a partial query for autocomplete.",
+        "required_parameters": [
+          {
+            "name": "s",
+            "type": "STRING",
+            "description": "Prefix hint string entered by user."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "max",
+            "type": "INTEGER",
+            "description": "Max number of results (default is 10).",
+            "default": "10"
+          },
+          {
+            "name": "v",
+            "type": "STRING",
+            "description": "Vocab identifier, like in /words."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "word": "string",
+          "score": "integer"
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "freedictionary",
+        "api_name": "get_word_definition",
+        "api_description": "Retrieve the definition of the specified English word.",
+        "required_parameters": [
+          {
+            "name": "word",
+            "type": "STRING",
+            "description": "The word to get the definition for.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "word": "string",
+          "phonetic": "string",
+          "phonetics": [
+            {
+              "text": "string",
+              "audio": "string"
+            }
+          ],
+          "origin": "string",
+          "meanings": [
+            {
+              "partOfSpeech": "string",
+              "definitions": [
+                {
+                  "definition": "string",
+                  "example": "string",
+                  "synonyms": [],
+                  "antonyms": []
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you suggest some words starting with 'hap' and provide the definition for one of them?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

@@ -1,0 +1,146 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "federalregister",
+                "api_name": "search_documents",
+                "api_description": "Search Federal Register documents using query parameters.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Search query.",
+                        "default": "climate change"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for paginated results.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": "20"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "document_number": "str",
+                            "document_title": "str",
+                            "publication_date": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "representcivicinformation",
+                "api_name": "get_representatives_by_postal_code",
+                "api_description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
+                "required_parameters": [
+                    {
+                        "name": "postal_code",
+                        "type": "STRING",
+                        "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+                        "default": "K1A0B1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "sets",
+                        "type": "STRING",
+                        "description": "Comma-separated list of boundary sets to limit results.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "boundaries_centroid": {
+                        "type": "Point",
+                        "coordinates": ["float", "float"]
+                    },
+                    "representatives": [
+                        {
+                            "name": "str",
+                            "party_name": "str",
+                            "elected_office": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find information on recent Federal documents related to climate change? Additionally, I want to know who represents the postal code K1A0B1.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "federalregister",
+                "api_name": "get_agency_data",
+                "api_description": "Get basic data about agencies. Optionally filter by agency ID.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "agency_id",
+                        "type": "STRING",
+                        "description": "ID of the agency.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "representcivicinformation",
+                "api_name": "get_candidates",
+                "api_description": "Get one page of candidates.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": "20"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Offset for pagination.",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "objects": [
+                        {
+                            "name": "str",
+                            "district_name": "str",
+                            "election_date": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I want to know about government agencies and any electoral candidates available. Could you provide information on these?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

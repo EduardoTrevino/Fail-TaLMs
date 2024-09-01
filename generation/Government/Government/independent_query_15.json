@@ -1,0 +1,109 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "dawum",
+        "api_name": "get_database",
+        "api_description": "Fetches the entire election polls database, with comprehensive poll data.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "Database": "object",
+          "License": "object",
+          "Publisher": "string",
+          "Author": "string",
+          "Last_Update": "string",
+          "Parliaments": "array",
+          "Institutes": "array",
+          "Taskers": "array",
+          "Methods": "array",
+          "Parties": "array",
+          "Surveys": "array"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "fetch_single_document",
+        "api_description": "Fetch single Federal Register document using the FR document number.",
+        "required_parameters": [
+          {
+            "name": "fr_document_number",
+            "type": "STRING",
+            "description": "Federal Register document number."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "document_number": "string",
+          "title": "string",
+          "agency": "array",
+          "abstract": "string",
+          "action": "string",
+          "dates": "string",
+          "page_range": "string",
+          "type": "string",
+          "html_url": "string",
+          "pdf_url": "string"
+        }
+      }
+    ],
+    "query": "Can you provide detailed information from the entire election polls database and fetch the document details from the Federal Register document with the number 2021-12345?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "dawum",
+        "api_name": "get_last_update",
+        "api_description": "Fetches the last update date of the database for election polls.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "Last_Update": "string"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "search_documents",
+        "api_description": "Search Federal Register documents using query parameters.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "Search query."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number for paginated results.",
+            "default": "1"
+          },
+          {
+            "name": "per_page",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": "20"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total": "int",
+          "results": "array"
+        }
+      }
+    ],
+    "query": "When was the last time the election polls database was updated, and can you search for documents related to 'climate change' in the Federal Register?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

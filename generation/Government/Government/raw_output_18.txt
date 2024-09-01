@@ -1,0 +1,149 @@
+Let's create a JSON file that contains questions that require the use of at least one API from both the "dawum" and "worldbank" tools. Here is an example of how this could look:
+
+```json
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Government",
+            "tool_name": "dawum",
+            "api_name": "get_database",
+            "api_description": "Fetches the entire election polls database, with comprehensive poll data.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "Database": "object",
+                "License": "object",
+                "Publisher": "string",
+                "Author": "string",
+                "Last_Update": "string",
+                "Parliaments": "array",
+                "Institutes": "array",
+                "Taskers": "array",
+                "Methods": "array",
+                "Parties": "array",
+                "Surveys": "array"
+            }
+        },
+        {
+            "category_name": "Government",
+            "tool_name": "worldbank",
+            "api_name": "get_country_data",
+            "api_description": "Retrieve information about a specific country using its ISO2 country code.",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "Two-letter ISO code of the country.",
+                    "default": "DE"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format_type",
+                    "type": "STRING",
+                    "description": "The format in which to receive the data.",
+                    "default": "json"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "page": "int",
+                "pages": "int",
+                "per_page": "int",
+                "total": "int",
+                "countries": [
+                    {
+                        "id": "str",
+                        "name": "str",
+                        "region": "str",
+                        "incomeLevel": "str",
+                        "lendingType": "str"
+                    }
+                ]
+            }
+        }
+    ],
+    "query": "Can you provide information on the latest German election polls? Also, what are some key statistics about Germany according to the World Bank?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Government",
+            "tool_name": "dawum",
+            "api_name": "get_last_update",
+            "api_description": "Fetches the last update date of the database for election polls.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "Last_Update": "string"
+            }
+        },
+        {
+            "category_name": "Government",
+            "tool_name": "worldbank",
+            "api_name": "get_indicator_data",
+            "api_description": "Retrieve indicator data for a specific country and indicator.",
+            "required_parameters": [
+                {
+                    "name": "country_code",
+                    "type": "STRING",
+                    "description": "ISO code of the country.",
+                    "default": "US"
+                },
+                {
+                    "name": "indicator_code",
+                    "type": "STRING",
+                    "description": "Code of the indicator.",
+                    "default": "NY.GDP.MKTP.CD"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date or date range for the data.",
+                    "default": ""
+                },
+                {
+                    "name": "format_type",
+                    "type": "STRING",
+                    "description": "The format in which to receive the data.",
+                    "default": "json"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "page": "int",
+                "pages": "int",
+                "per_page": "int",
+                "total": "int",
+                "indicators": [
+                    {
+                        "indicator": {
+                            "id": "str",
+                            "value": "str"
+                        },
+                        "country": {
+                            "id": "str",
+                            "value": "str"
+                        },
+                        "value": "float",
+                        "date": "str"
+                    }
+                ]
+            }
+        }
+    ],
+    "query": "What is the latest update date for the election polls, and what was the GDP of the United States in 2020?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+These questions are designed to independently utilize information from both the "dawum" and "worldbank" APIs, allowing a user to retrieve specific data related to their queries about election polls and country statistics.

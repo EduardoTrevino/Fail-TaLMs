@@ -1,0 +1,183 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "fbiwanted",
+        "api_name": "get_wanted_list",
+        "api_description": "Retrieve information from the FBI Wanted list.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "field_offices",
+            "type": "STRING",
+            "description": "Filter results by specific FBI field offices.",
+            "default": "None"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "The page of resources to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total": "int",
+          "page": "int",
+          "items": "array"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "search_documents",
+        "api_description": "Search Federal Register documents using query parameters.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "Search query."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number for paginated results.",
+            "default": "1"
+          },
+          {
+            "name": "per_page",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": "20"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [{
+            "title": "str",
+            "document_number": "str"
+          }]
+        }
+      }
+    ],
+    "query": "Can you provide a list of individuals currently on the FBI's most wanted list in New York, and also search for any recent Federal Register documents related to new immigration policies?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "fbiwanted",
+        "api_name": "get_wanted_list",
+        "api_description": "Retrieve information from the FBI Wanted list.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "field_offices",
+            "type": "STRING",
+            "description": "Filter results by specific FBI field offices.",
+            "default": "None"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "The page of resources to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total": "int",
+          "page": "int",
+          "items": "array"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "get_agency_data",
+        "api_description": "Get basic data about agencies. Optionally filter by agency ID.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "agency_id",
+            "type": "STRING",
+            "description": "ID of the agency.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [{
+            "name": "str",
+            "id": "str"
+          }]
+        }
+      }
+    ],
+    "query": "Are there any wanted fugitives listed by the FBI's Los Angeles field office, and can you provide basic details about U.S. government agencies from the Federal Register?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "fbiwanted",
+        "api_name": "get_wanted_list",
+        "api_description": "Retrieve information from the FBI Wanted list.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "field_offices",
+            "type": "STRING",
+            "description": "Filter results by specific FBI field offices.",
+            "default": "None"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "The page of resources to retrieve.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total": "int",
+          "page": "int",
+          "items": "array"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "get_pi_documents_by_date",
+        "api_description": "Get all the documents that were on public inspection on a given date.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Date in format YYYY-MM-DD."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "results": [{
+            "title": "str",
+            "document_number": "str"
+          }]
+        }
+      }
+    ],
+    "query": "Could you tell me about any crimes committed by individuals on the FBI wanted list retrieved on page 3? Also, provide details on public inspection documents available on October 1, 2023.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

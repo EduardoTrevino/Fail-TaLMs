@@ -1,0 +1,167 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "civix",
+                "api_name": "get_document",
+                "api_description": "Retrieve a document from the repository by its index and document identifier.",
+                "required_parameters": [
+                    {
+                        "name": "index_id",
+                        "type": "STRING",
+                        "description": "Unique index identifier.",
+                        "default": ""
+                    },
+                    {
+                        "name": "document_id",
+                        "type": "STRING",
+                        "description": "Unique document identifier.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "aspect",
+                        "type": "STRING",
+                        "description": "Aspect of the document.",
+                        "default": "complete"
+                    },
+                    {
+                        "name": "xml",
+                        "type": "BOOLEAN",
+                        "description": "Retrieve document in XML format if true.",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": "Document content in XML or HTML format"
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "federalregister",
+                "api_name": "fetch_single_document",
+                "api_description": "Fetch single Federal Register document using the FR document number.",
+                "required_parameters": [
+                    {
+                        "name": "fr_document_number",
+                        "type": "STRING",
+                        "description": "Federal Register document number.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "document_number": "str",
+                    "title": "str",
+                    "published_at": "str",
+                    "branches": ["str"],
+                    "agencies": ["str"],
+                    "abstract": "str",
+                    "html_url": "str",
+                    "pdf_url": "str"
+                }
+            }
+        ],
+        "query": "Can you retrieve the document related to British Columbia's 'statreg' from CiviX and also get the Federal Register document with number '2021-12345'?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "civix",
+                "api_name": "search_content",
+                "api_description": "Perform a search within an aspect of the content library.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Query term to search for.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "aspect",
+                        "type": "STRING",
+                        "description": "Aspect to search within.",
+                        "default": "complete"
+                    },
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "First hit to return.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "end",
+                        "type": "INTEGER",
+                        "description": "Last hit to return.",
+                        "default": "20"
+                    },
+                    {
+                        "name": "n_frag",
+                        "type": "INTEGER",
+                        "description": "Number of fragment snippets to return.",
+                        "default": "5"
+                    },
+                    {
+                        "name": "l_frag",
+                        "type": "INTEGER",
+                        "description": "Length of each fragment.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": "Search results as XML"
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "federalregister",
+                "api_name": "search_documents",
+                "api_description": "Search Federal Register documents using query parameters.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Search query.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for paginated results.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": "20"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "document_number": "str",
+                            "title": "str",
+                            "html_url": "str",
+                            "pdf_url": "str"
+                        }
+                    ],
+                    "total_pages": "int",
+                    "current_page": "int"
+                }
+            }
+        ],
+        "query": "Find content related to 'water regulations' in the British Columbia CiviX and also look for documents on the Federal Register related to 'water policy'.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

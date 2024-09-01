@@ -1,0 +1,185 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_all_characters",
+        "api_description": "Returns all characters, optionally filtered, or the count of characters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "filter",
+            "type": "STRING",
+            "description": "Filter for the characters.",
+            "default": null
+          },
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Specify fields for the characters.",
+            "default": null
+          },
+          {
+            "name": "count",
+            "type": "BOOLEAN",
+            "description": "Return count instead of characters.",
+            "default": false
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "characters": ["str"],
+          "count": "int"
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "datamuse",
+        "api_name": "words",
+        "api_description": "Returns a list of words matching given constraints.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ml",
+            "type": "STRING",
+            "description": "Means like constraint.",
+            "default": null
+          },
+          {
+            "name": "sl",
+            "type": "STRING",
+            "description": "Sounds like constraint.",
+            "default": null
+          },
+          {
+            "name": "sp",
+            "type": "STRING",
+            "description": "Spelled like constraint.",
+            "default": null
+          },
+          {
+            "name": "rel_code",
+            "type": "STRING",
+            "description": "Related word constraint codes like 'syn', 'trg'.",
+            "default": null
+          },
+          {
+            "name": "v",
+            "type": "STRING",
+            "description": "Vocab identifier.",
+            "default": null
+          },
+          {
+            "name": "topics",
+            "type": "STRING",
+            "description": "Hints about the context or topic.",
+            "default": null
+          },
+          {
+            "name": "lc",
+            "type": "STRING",
+            "description": "Left context hint.",
+            "default": null
+          },
+          {
+            "name": "rc",
+            "type": "STRING",
+            "description": "Right context hint.",
+            "default": null
+          },
+          {
+            "name": "max",
+            "type": "INTEGER",
+            "description": "Max number of results (default is 100).",
+            "default": 100
+          },
+          {
+            "name": "md",
+            "type": "STRING",
+            "description": "Metadata flags like 'd' for definitions.",
+            "default": null
+          },
+          {
+            "name": "qe",
+            "type": "STRING",
+            "description": "Query echo.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "word": "string",
+            "score": "integer"
+          }
+        ]
+      }
+    ],
+    "query": "Can you provide a list of Chinese characters that are filtered by the 'gb' filter and also find words that mean the same as 'ringing in the ears'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Language",
+        "tool_name": "chinesecharacterweb",
+        "api_name": "get_sounds_mandarin",
+        "api_description": "Returns a list of Mandarin sounds, optionally with pitch.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "with_pitch",
+            "type": "BOOLEAN",
+            "description": "Include pitch in sounds.",
+            "default": false
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "mandarin": ["str"]
+        }
+      },
+      {
+        "category_name": "Language",
+        "tool_name": "datamuse",
+        "api_name": "sug",
+        "api_description": "Provides word suggestions given a partial query for autocomplete.",
+        "required_parameters": [
+          {
+            "name": "s",
+            "type": "STRING",
+            "description": "Prefix hint string entered by user."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "max",
+            "type": "INTEGER",
+            "description": "Max number of results (default is 10).",
+            "default": 10
+          },
+          {
+            "name": "v",
+            "type": "STRING",
+            "description": "Vocab identifier, like in /words.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "word": "string",
+            "score": "integer"
+          }
+        ]
+      }
+    ],
+    "query": "What are the Mandarin sounds with pitch included, and can you suggest words that start with 'ring'?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

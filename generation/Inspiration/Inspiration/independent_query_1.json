@@ -1,0 +1,119 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Inspiration",
+                "tool_name": "adviceslip",
+                "api_name": "get_random_advice",
+                "api_description": "Returns a random advice slip as a slip object.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Define your own callback function name for JSONP.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "slip": {
+                        "slip_id": "int",
+                        "advice": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "Inspiration",
+                "tool_name": "affirmations",
+                "api_name": "get_random_affirmation",
+                "api_description": "Fetch a random affirmation.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "affirmation": "string"
+                }
+            }
+        ],
+        "query": "Can you give me a random piece of advice and a positive affirmation to start my day?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Inspiration",
+                "tool_name": "adviceslip",
+                "api_name": "get_advice_by_id",
+                "api_description": "Returns a specific advice slip by slip_id.",
+                "required_parameters": [
+                    {
+                        "name": "slip_id",
+                        "type": "INTEGER",
+                        "description": "The unique ID of the advice slip.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Define your own callback function name for JSONP.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "slip": {
+                        "slip_id": "int",
+                        "advice": "str"
+                    }
+                }
+            }
+        ],
+        "query": "I saw an advice with ID 5 a long time ago and it really inspired me. Can you fetch it for me?",
+        "relevant APIs": [],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Inspiration",
+                "tool_name": "adviceslip",
+                "api_name": "search_advice",
+                "api_description": "Search for advice slips containing the given query term.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query for advice slips.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Define your own callback function name for JSONP.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total_results": "int",
+                    "query": "str",
+                    "slips": [
+                        {
+                            "slip_id": "int",
+                            "advice": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I'm looking for some advice related to 'happiness'. Could you search for it for me?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

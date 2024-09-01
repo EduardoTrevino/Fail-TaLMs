@@ -1,0 +1,138 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "fetch_single_document",
+        "api_description": "Fetch single Federal Register document using the FR document number.",
+        "required_parameters": [
+          {
+            "name": "fr_document_number",
+            "type": "STRING",
+            "description": "Federal Register document number.",
+            "default": "2021-12345"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "document_number": "str",
+          "title": "str",
+          "abstract": "str"
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "worldbank",
+        "api_name": "get_country_data",
+        "api_description": "Retrieve information about a specific country using its ISO2 country code.",
+        "required_parameters": [
+          {
+            "name": "country_code",
+            "type": "STRING",
+            "description": "Two-letter ISO code of the country.",
+            "default": "US"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format_type",
+            "type": "STRING",
+            "description": "The format in which to receive the data.",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "name": "str",
+          "region": "str",
+          "income_level": "str"
+        }
+      }
+    ],
+    "query": "I am researching a specific legal document from the Federal Register with the document number 2021-12345. Additionally, I need some basic information about the United States like its region and income level.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Government",
+        "tool_name": "federalregister",
+        "api_name": "search_documents",
+        "api_description": "Search Federal Register documents using query parameters.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "Search query.",
+            "default": "health policy"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number for paginated results.",
+            "default": "1"
+          },
+          {
+            "name": "per_page",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": "20"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "results": [
+            {
+              "document_number": "str",
+              "title": "str",
+              "abstract": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Government",
+        "tool_name": "worldbank",
+        "api_name": "list_indicators",
+        "api_description": "List all indicators available in the World Bank API.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format_type",
+            "type": "STRING",
+            "description": "The format in which to receive the data.",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "pagination": {
+            "page": "int",
+            "pages": "int",
+            "per_page": "int",
+            "total": "int"
+          },
+          "indicators": [
+            {
+              "id": "str",
+              "name": "str",
+              "source": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you help me find federal register documents related to health policy? Also, I would like to explore the various development indicators available from the World Bank.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
