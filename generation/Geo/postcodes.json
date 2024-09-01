@@ -172,7 +172,262 @@
                 }
             }
         },
-        ... 
-        // Additional endpoints metadata
+        {
+            "name": "autocomplete_postcode",
+            "url": "https://api.postcodes.io/postcodes/:postcode/autocomplete",
+            "description": "Autocomplete postcode query.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "postcode",
+                    "type": "STRING",
+                    "description": "Partial postcode to autocomplete."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes/{postcode}/autocomplete?limit={limit}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "query_postcodes",
+            "url": "https://api.postcodes.io/postcodes",
+            "description": "Search for postcodes matching a query.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "Free-form query string to search for matching postcodes."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "default": 10
+                }
+            ],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/postcodes?q={query}&limit={limit}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lookup_random_postcode",
+            "url": "https://api.postcodes.io/random/postcodes",
+            "description": "Retrieve a random postcode.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/random/postcodes'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lookup_outward_code",
+            "url": "https://api.postcodes.io/outcodes/:outcode",
+            "description": "Lookup information for a specific outward code (outcode).",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "outcode",
+                    "type": "STRING",
+                    "description": "The outcode to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/outcodes/{outcode}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_outcode_for_outcode",
+            "url": "https://api.postcodes.io/outcodes/:outcode/nearest",
+            "description": "Find the nearest outward codes (outcodes) for a given outcode.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "outcode",
+                    "type": "STRING",
+                    "description": "The outcode to search around."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/outcodes/{outcode}/nearest'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nearest_outcode",
+            "url": "https://api.postcodes.io/outcodes",
+            "description": "Get the nearest outward codes (outcodes) for a given longitude and latitude.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "lon",
+                    "type": "FLOAT",
+                    "description": "Longitude for the search location."
+                },
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude for the search location."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/outcodes?lon={lon}&lat={lat}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lookup_place",
+            "url": "https://api.postcodes.io/places/:code",
+            "description": "Lookup information for a specific place code.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "code",
+                    "type": "STRING",
+                    "description": "The place code to lookup."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/places/{code}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "query_places",
+            "url": "https://api.postcodes.io/places",
+            "description": "Search for places matching a query.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "Free-form query string to search for matching places."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/places?q={query}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "lookup_random_place",
+            "url": "https://api.postcodes.io/random/places",
+            "description": "Retrieve a random place.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://api.postcodes.io/random/places'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
     ]
 }

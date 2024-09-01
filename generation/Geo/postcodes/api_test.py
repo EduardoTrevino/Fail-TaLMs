@@ -35,10 +35,6 @@ class TestPostcodesAPI(unittest.TestCase):
         response = lookup_random_postcode()
         self.assertEqual(response['status'], 200)
 
-    def test_lookup_terminated_postcode(self):
-        response = lookup_terminated_postcode("EX16 5BL")
-        self.assertEqual(response['status'], 200)
-
     def test_lookup_outward_code(self):
         response = lookup_outward_code("EC1A")
         self.assertEqual(response['status'], 200)
@@ -49,10 +45,6 @@ class TestPostcodesAPI(unittest.TestCase):
 
     def test_nearest_outcode(self):
         response = nearest_outcode(lon=-0.127758, lat=51.507351)
-        self.assertEqual(response['status'], 200)
-
-    def test_lookup_scottish_postcode(self):
-        response = lookup_scottish_postcode("EH1 1AA")
         self.assertEqual(response['status'], 200)
 
     def test_lookup_place(self):

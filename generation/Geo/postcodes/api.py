@@ -45,12 +45,7 @@ def lookup_random_postcode(toolbench_rapidapi_key: str = '088440d910mshef857391f
     url = "https://api.postcodes.io/random/postcodes"
     response = requests.get(url)
     return response.json()
-
-def lookup_terminated_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    url = f"https://api.postcodes.io/terminated_postcodes/{postcode}"
-    response = requests.get(url)
-    return response.json()
-
+    
 def lookup_outward_code(outcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
     url = f"https://api.postcodes.io/outcodes/{outcode}"
     response = requests.get(url)
@@ -65,11 +60,6 @@ def nearest_outcode(lon: float, lat: float, toolbench_rapidapi_key: str = '08844
     url = f"https://api.postcodes.io/outcodes"
     params = {"lon": lon, "lat": lat}
     response = requests.get(url, params=params)
-    return response.json()
-
-def lookup_scottish_postcode(postcode: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
-    url = f"https://api.postcodes.io/scotland/postcodes/{postcode}"
-    response = requests.get(url)
     return response.json()
 
 def lookup_place(code: str, toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
