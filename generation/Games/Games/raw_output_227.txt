@@ -1,0 +1,126 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "fetch_random_joke",
+        "api_description": "Fetch a random dad joke in the specified format.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "accept",
+            "type": "STRING",
+            "description": "The format to accept the joke in.",
+            "default": "application/json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "joke": "str",
+          "status": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "officaljoke",
+        "api_name": "grab_random_joke",
+        "api_description": "Grab a random joke.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "type": "str",
+          "setup": "str",
+          "punchline": "str"
+        }
+      }
+    ],
+    "query": "Can you fetch me a random dad joke and also provide me with another random joke from the official joke API?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "search_jokes",
+        "api_description": "Search for dad jokes.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "term",
+            "type": "STRING",
+            "description": "Search term to use.",
+            "default": "null"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to fetch.",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results to return per page.",
+            "default": 20
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "current_page": "int",
+          "limit": "int",
+          "next_page": "int",
+          "previous_page": "int",
+          "results": [
+            {
+              "id": "str",
+              "joke": "str"
+            }
+          ],
+          "search_term": "str",
+          "status": "int",
+          "total_jokes": "int",
+          "total_pages": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "officaljoke",
+        "api_name": "grab_jokes_by_type",
+        "api_description": "Grab jokes by type.",
+        "required_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Type of jokes to fetch."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "number",
+            "type": "INTEGER",
+            "description": "Number of jokes to fetch (1 for 'random', others for 'ten').",
+            "default": 1
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "type": "str",
+          "setup": "str",
+          "punchline": "str"
+        }
+      }
+    ],
+    "query": "I'm looking for dad jokes about 'cats' and also some programming jokes. Can you provide them?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

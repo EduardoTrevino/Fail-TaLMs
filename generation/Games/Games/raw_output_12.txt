@@ -1,0 +1,181 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibos",
+                "api_description": "Returns a list of amiibos or specific amiibo based on the filters provided.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the amiibo."
+                    },
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "ID of the amiibo."
+                    },
+                    {
+                        "name": "head",
+                        "type": "STRING",
+                        "description": "Head hexadecimal of the amiibo."
+                    },
+                    {
+                        "name": "tail",
+                        "type": "STRING",
+                        "description": "Tail hexadecimal of the amiibo."
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Type of amiibo, e.g., figure, card."
+                    },
+                    {
+                        "name": "game_series",
+                        "type": "STRING",
+                        "description": "Game series of the amiibo."
+                    },
+                    {
+                        "name": "amiibo_series",
+                        "type": "STRING",
+                        "description": "Amiibo series of the amiibo."
+                    },
+                    {
+                        "name": "character",
+                        "type": "STRING",
+                        "description": "Character of the amiibo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "amiiboSeries": "Legend Of Zelda",
+                            "character": "Zelda",
+                            "gameSeries": "The Legend of Zelda",
+                            "head": "01010000",
+                            "image": "URL to the image",
+                            "name": "Amiibo name",
+                            "release": {
+                                "au": "Date",
+                                "eu": "Date",
+                                "jp": "Date",
+                                "na": "Date"
+                            },
+                            "tail": "03560902",
+                            "type": "Figure"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "fetch_random_joke",
+                "api_description": "Fetch a random dad joke in the specified format.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "accept",
+                        "type": "STRING",
+                        "description": "The format to accept the joke in.",
+                        "default": "application/json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "joke": "str",
+                    "status": "int"
+                }
+            }
+        ],
+        "query": "Can you fetch the details of the 'Mario' amiibo and also tell me a random dad joke to lighten the mood?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_character",
+                "api_description": "Returns character information based on key or name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "key",
+                        "type": "STRING",
+                        "description": "Key of the character."
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the character."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "key": "0x1996",
+                            "name": "Mewtwo"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "search_jokes",
+                "api_description": "Search for dad jokes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "term",
+                        "type": "STRING",
+                        "description": "Search term to use.",
+                        "default": "null"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page of results to fetch.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results to return per page.",
+                        "default": "20"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "current_page": "int",
+                    "limit": "int",
+                    "next_page": "int",
+                    "previous_page": "int",
+                    "results": [
+                        {
+                            "id": "str",
+                            "joke": "str"
+                        }
+                    ],
+                    "search_term": "str",
+                    "status": "int",
+                    "total_jokes": "int",
+                    "total_pages": "int"
+                }
+            }
+        ],
+        "query": "I want to know about the Mewtwo amiibo character and find some dad jokes related to Pokemon.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

@@ -1,0 +1,74 @@
+Here is a `api_list-question` JSON file that contains questions requiring the use of at least one API from each of the provided tools, "amiibo" and "magicthegathering":
+
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibos",
+                "api_description": "Fetches a list of amiibos or a specific amiibo based on the filters provided.",
+                "optional_parameters": [
+                    {
+                        "name": "character",
+                        "type": "STRING",
+                        "description": "Character of the amiibo.",
+                        "default": "Link"
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "magicthegathering",
+                "api_name": "get_cards_by_name",
+                "api_description": "Retrieve cards by name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the MTG card.",
+                        "default": "Lightning Bolt"
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "I am looking for information on amiibos that feature the character 'Link' from the Legend of Zelda series. Additionally, could you find Magic: The Gathering cards named 'Lightning Bolt'?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibo_series",
+                "api_description": "Fetches amiibo series based on key or name.",
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the amiibo series.",
+                        "default": "Super Smash Bros."
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "magicthegathering",
+                "api_name": "get_all_formats",
+                "api_description": "Retrieve all game formats.",
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide information about the 'Super Smash Bros.' amiibo series? Also, what are all the game formats available in Magic: The Gathering?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```
+
+This JSON file provides two sample queries. Each query includes a set of APIs from both the "amiibo" tool and the "magicthegathering" tool, asking questions related to video game characters and Magic: The Gathering cards and formats. Each API entry specifies parameters required to fetch the relevant data for each question.

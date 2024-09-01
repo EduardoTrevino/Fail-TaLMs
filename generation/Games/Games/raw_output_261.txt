@@ -1,0 +1,99 @@
+Here is an `api_list-question.json` file containing questions that require the use of at least one API from each "jokeapi" and "runescape" tool.
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "jokeapi",
+        "api_name": "get_joke",
+        "api_description": "Fetch jokes based on category, filters and other parameters",
+        "required_parameters": [],
+        "optional_parameters": [
+          { "name": "category", "type": "STRING", "description": "Joke category", "default": "Any" },
+          { "name": "blacklist_flags", "type": "LIST", "description": "Flags to filter out", "default": null },
+          { "name": "lang", "type": "STRING", "description": "Language code for joke", "default": "en" },
+          { "name": "joke_type", "type": "STRING", "description": "Type of joke", "default": null }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "boolean",
+          "jokes": [
+            {
+              "category": "string",
+              "type": "string",
+              "joke": "string",
+              "setup": "string",
+              "delivery": "string"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_info",
+        "api_description": "Returns the runedate of when the Grand Exchange Database was last updated",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "lastConfigUpdateRuneday": "int"
+        }
+      }
+    ],
+    "query": "What are some programming jokes I can enjoy while waiting for the Grand Exchange database to update in RuneScape?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "jokeapi",
+        "api_name": "get_joke_categories",
+        "api_description": "Retrieve all available joke categories",
+        "required_parameters": [],
+        "optional_parameters": [
+          { "name": "format", "type": "STRING", "description": "Response format", "default": "json" },
+          { "name": "lang", "type": "STRING", "description": "System message language", "default": "en" }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "boolean",
+          "categories": ["string"]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_items",
+        "api_description": "Returns items given the category, starting letter, and page number",
+        "required_parameters": [
+          { "name": "category", "type": "INTEGER", "description": "The category ID" },
+          { "name": "alpha", "type": "STRING", "description": "The starting letter for items" }
+        ],
+        "optional_parameters": [
+          { "name": "page", "type": "INTEGER", "description": "The page number", "default": 1 }
+        ],
+        "method": "GET",
+        "template_response": {
+          "total": "int",
+          "items": [
+            {
+              "name": "string",
+              "id": "int",
+              "description": "string",
+              "category": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Could you list the available categories of jokes? Also, what items start with the letter 'C' in the RuneScape Grand Exchange for category 9?",
+    "query_id": 2
+  }
+]
+```
+
+These questions aim to utilize at least one API from the "jokeapi" and the "runescape" tools independently.

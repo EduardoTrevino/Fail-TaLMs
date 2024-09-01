@@ -1,0 +1,129 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_cards",
+                "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the card to filter by.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "types",
+                        "type": "LIST",
+                        "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "supertype": "string",
+                            "subtypes": [
+                                "string"
+                            ],
+                            "hp": "string",
+                            "types": [
+                                "string"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "scryfall",
+                "api_name": "card_search",
+                "api_description": "Search Magic cards using a fulltext search string.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The fulltext search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "unique",
+                        "type": "STRING",
+                        "description": "Strategy for omitting similar cards.",
+                        "default": "cards"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "list",
+                    "data": "array"
+                }
+            }
+        ],
+        "query": "Can you retrieve all Pokémon cards with the type 'Fire' and search for Magic cards containing the word 'Dragon'?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_card_by_id",
+                "api_description": "Retrieve a specific card by its unique ID.",
+                "required_parameters": [
+                    {
+                        "name": "card_id",
+                        "type": "STRING",
+                        "description": "The unique identifier for the specific card."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "id": "string",
+                        "name": "string",
+                        "supertype": "string"
+                    }
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "scryfall",
+                "api_name": "card_named_exact",
+                "api_description": "Retrieve card details based on exact name.",
+                "required_parameters": [
+                    {
+                        "name": "exact",
+                        "type": "STRING",
+                        "description": "The exact card name to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "A set code to limit the search to one set.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "card"
+                }
+            }
+        ],
+        "query": "I need detailed information about the Pokémon card with ID 'xy7-54' and the Magic card named 'Black Lotus'.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

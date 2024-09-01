@@ -1,0 +1,101 @@
+To create an `api_list-question` JSON file that asks questions a human would that requires the use of at least one API from each tool, we'll frame questions utilizing the APIs from both the "officaljoke" and "opentriviadb" tools. Below are a few examples:
+
+```json
+[
+    {
+        "query_id": 1,
+        "query": "Can you tell me a random joke and also provide ten jokes of any type of my choice?",
+        "api_list": [
+            {
+                "tool_name": "officaljoke",
+                "api_name": "grab_random_joke",
+                "api_description": "Grab a random joke.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET"
+            },
+            {
+                "tool_name": "opentriviadb",
+                "api_name": "get_ten_random_jokes",
+                "api_description": "Fetches ten random jokes",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "relevant APIs": []
+    },
+    {
+        "query_id": 2,
+        "query": "What are the available types of jokes and can you give me one joke from the 'programming' category?",
+        "api_list": [
+            {
+                "tool_name": "officaljoke",
+                "api_name": "get_joke_types",
+                "api_description": "Get available joke types.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET"
+            },
+            {
+                "tool_name": "opentriviadb",
+                "api_name": "get_jokes_by_type",
+                "api_description": "Fetches jokes by type with specified quantity, either 'random' or 'ten'",
+                "required_parameters": [
+                    {
+                        "name": "joke_type",
+                        "type": "STRING",
+                        "description": "The type of jokes to fetch."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quantity",
+                        "type": "STRING",
+                        "description": "The number of jokes to fetch, either 'random' or 'ten'. Default is 'random'."
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "relevant APIs": []
+    },
+    {
+        "query_id": 3,
+        "query": "I would like to know some jokes by their IDs. Can you tell me the joke with ID 1?",
+        "api_list": [
+            {
+                "tool_name": "officaljoke",
+                "api_name": "grab_joke_by_id",
+                "api_description": "Grab joke by ID.",
+                "required_parameters": [
+                    {
+                        "name": "joke_id",
+                        "type": "INTEGER",
+                        "description": "ID of the joke to fetch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            },
+            {
+                "tool_name": "opentriviadb",
+                "api_name": "get_joke_by_id",
+                "api_description": "Fetch a joke by its ID",
+                "required_parameters": [
+                    {
+                        "name": "joke_id",
+                        "type": "INTEGER",
+                        "description": "The ID of the joke to fetch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "relevant APIs": []
+    }
+]
+```
+
+This JSON file structures queries to necessitate the use of APIs from both tools, with relevant `api_list` entries detailing how each API contributes to fulfilling the query. Each question is independent, ensuring clarity and distinct requirements for the APIs involved.

@@ -1,0 +1,166 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "gamerpower",
+        "api_name": "get_all_giveaways",
+        "api_description": "Fetch all ongoing giveaways.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "list_of_giveaways": [
+            {
+              "id": "int",
+              "title": "str",
+              "description": "str",
+              "platforms": "str",
+              "type": "str",
+              "worth": "str",
+              "image": "str"
+            }
+          ]
+        }
+      },
+      {
+        "tool_name": "hyrulecompendium",
+        "api_name": "get_all_entries",
+        "api_description": "Retrieves all compendium entries.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "entry_list": [
+              {
+                "id": "int",
+                "name": "str",
+                "description": "str",
+                "category": "str",
+                "image": "str"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "query": "I'm interested in checking out all the ongoing video game giveaways and exploring all entries from the Hyrule Compendium for some game insights. Can you provide this information?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "gamerpower",
+        "api_name": "get_giveaways_by_platform",
+        "api_description": "Fetch giveaways filtered by platform.",
+        "required_parameters": [
+          {
+            "name": "platform",
+            "type": "STRING",
+            "description": "Platform name",
+            "default": "pc"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "list_of_giveaways": [
+            {
+              "id": "int",
+              "title": "str",
+              "description": "str",
+              "platforms": "str",
+              "type": "str",
+              "worth": "str",
+              "image": "str"
+            }
+          ]
+        }
+      },
+      {
+        "tool_name": "hyrulecompendium",
+        "api_name": "get_region",
+        "api_description": "Retrieves information on a single region given its name.",
+        "required_parameters": [
+          {
+            "name": "region",
+            "type": "STRING",
+            "description": "The name of the region",
+            "default": "eldin"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "id": "int",
+            "name": "str",
+            "description": "str",
+            "image": "str"
+          }
+        }
+      }
+    ],
+    "query": "Can you show me the current giveaways available for PC games? Also, I'd like to learn more about the Eldin region from the Hyrule Compendium.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "gamerpower",
+        "api_name": "get_total_worth",
+        "api_description": "Fetch the total worth of live giveaways and worth estimation in US dollars.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "platform",
+            "type": "STRING",
+            "description": "Platform optional filter"
+          },
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Type optional filter"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "worth_estimation_usd": "float"
+        }
+      },
+      {
+        "tool_name": "hyrulecompendium",
+        "api_name": "get_category_entries",
+        "api_description": "Retrieves all entries in a given category.",
+        "required_parameters": [
+          {
+            "name": "category",
+            "type": "STRING",
+            "description": "The category to retrieve entries from.",
+            "default": "monsters"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "entry_list": [
+              {
+                "id": "int",
+                "name": "str",
+                "description": "str",
+                "category": "str",
+                "image": "str"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "query": "I'm curious about the total worth of all live giveaways currently available and also want to explore all monster entries from the Hyrule Compendium. Can you provide these details?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

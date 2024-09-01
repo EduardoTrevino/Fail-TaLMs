@@ -1,0 +1,164 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "amiibo",
+        "api_name": "get_amiibos",
+        "api_description": "Returns a list of amiibos or specific amiibo based on the filters provided.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "character",
+            "type": "STRING",
+            "description": "Character of the amiibo."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amiibo": [
+            {
+              "amiiboSeries": "str",
+              "character": "str",
+              "gameSeries": "str",
+              "name": "str",
+              "type": "str",
+              "release": {
+                "na": "date"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "browse_bundles",
+        "api_description": "Browse all available bundles.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "bundles": [
+            {
+              "bundle_id": "int",
+              "name": "str",
+              "date": "date"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find amiibos related to the character Mario and also browse available game bundles?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "amiibo",
+        "api_name": "get_character",
+        "api_description": "Returns character information based on key or name.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Name of the character."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amiibo": [
+            {
+              "key": "str",
+              "name": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "get_item",
+        "api_description": "Get information about a specific item by item_id.",
+        "required_parameters": [
+          {
+            "name": "item_id",
+            "type": "NUMBER",
+            "description": "The ID of the barter.vg item (e.g. game or DLC)"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "item": {
+            "item_id": "int",
+            "name": "str",
+            "type": "str",
+            "bundles": [
+              {
+                "bundle_id": "int",
+                "name": "str"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "query": "Find information on a character named 'Link' and get details about a specific item with ID 10 on Barter.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "amiibo",
+        "api_name": "get_amiibo_series",
+        "api_description": "Returns amiibo series based on key or name.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Name of the amiibo series."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amiibo": [
+            {
+              "key": "str",
+              "name": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "get_giveaways",
+        "api_description": "Get all giveaways.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "giveaways": [
+            {
+              "giveaway_id": "int",
+              "name": "str",
+              "deadline": "date"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you get a list of amiibo series related to 'Legend of Zelda' and also check current giveaways on Barter?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

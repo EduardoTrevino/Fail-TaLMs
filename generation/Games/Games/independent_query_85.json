@@ -1,0 +1,154 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "cheapshark",
+        "api_name": "edit_alert",
+        "api_description": "Set or delete a price alert for a specific game and price.",
+        "required_parameters": [
+          {
+            "name": "action",
+            "type": "STRING",
+            "description": "The action to take on the price alert ('set' or 'delete').",
+            "default": ""
+          },
+          {
+            "name": "email",
+            "type": "STRING",
+            "description": "Any valid email address.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "game_id",
+            "type": "INTEGER",
+            "description": "An existing gameID, required for 'set' and 'delete'.",
+            "default": null
+          },
+          {
+            "name": "price",
+            "type": "DECIMAL",
+            "description": "The price to wait for, only required when using 'set' value for action parameter.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "boolean"
+        }
+      },
+      {
+        "tool_name": "pokeapi",
+        "api_name": "get_pokemon",
+        "api_description": "Get details about a specific Pokémon by ID or name.",
+        "required_parameters": ["id or name"],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "order": "int",
+          "height": "int",
+          "abilities": [
+            {
+              "ability": {
+                "name": "string",
+                "url": "string"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I want to set a price alert for the game ID 123 at $19.99. Can you also provide details about the Pokémon named Pikachu?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "cheapshark",
+        "api_name": "get_alerts",
+        "api_description": "Retrieve all existing alerts.",
+        "required_parameters": [
+          {
+            "name": "key",
+            "type": "STRING",
+            "description": "The key parameter from your manage link (received via email).",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "gameID": "int",
+            "email": "string",
+            "price": "float"
+          }
+        ]
+      },
+      {
+        "tool_name": "pokeapi",
+        "api_name": "get_ability",
+        "api_description": "Get details about a specific Pokémon ability by ID or name.",
+        "required_parameters": ["id or name"],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "generation": {
+            "name": "string",
+            "url": "string"
+          },
+          "effect": "string"
+        }
+      }
+    ],
+    "query": "Can you provide me with a list of my existing game alerts using the key 'abc123'? Additionally, I'd like details on the 'overgrow' Pokémon ability.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "cheapshark",
+        "api_name": "manage_alerts",
+        "api_description": "Send an email containing a link to manage your alerts.",
+        "required_parameters": [
+          {
+            "name": "email",
+            "type": "STRING",
+            "description": "Any valid email address with existing alerts.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": "string"
+      },
+      {
+        "tool_name": "pokeapi",
+        "api_name": "get_berry_flavor",
+        "api_description": "Get information about a specific berry flavor by ID or name.",
+        "required_parameters": ["id or name"],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "berries": [
+            {
+              "berry": {
+                "name": "string",
+                "url": "string"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Could you send me an email link to manage my game alerts stored with my email 'gamer@example.com'? Also, I'd love to know more about the 'sweet' berry flavor in Pokémon.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

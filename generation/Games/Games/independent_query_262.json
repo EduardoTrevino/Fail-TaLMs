@@ -1,0 +1,79 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "jokeapi",
+                "api_name": "get_joke",
+                "api_description": "Fetch jokes based on category, filters, and other parameters.",
+                "optional_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Joke category",
+                        "default": "Any"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "jokes": "array",
+                    "amount": "integer"
+                }
+            },
+            {
+                "tool_name": "scryfall",
+                "api_name": "card_search",
+                "api_description": "Search Magic cards using a fulltext search string.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The fulltext search query."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "list",
+                    "data": "array"
+                }
+            }
+        ],
+        "query": "Can you find a joke from the 'Programming' category and search for Magic cards related to 'artifact'?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "jokeapi",
+                "api_name": "get_joke_info",
+                "api_description": "Retrieve information about JokeAPI and its capabilities.",
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "info": "object"
+                }
+            },
+            {
+                "tool_name": "scryfall",
+                "api_name": "card_named_exact",
+                "api_description": "Retrieve card details based on exact name.",
+                "required_parameters": [
+                    {
+                        "name": "exact",
+                        "type": "STRING",
+                        "description": "The exact card name to search for."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "card"
+                }
+            }
+        ],
+        "query": "Provide details about the JokeAPI capabilities and find card details for a Magic card called 'Black Lotus'.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

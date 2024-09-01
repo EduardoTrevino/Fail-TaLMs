@@ -1,0 +1,103 @@
+Certainly, here's an `api_list-question` example JSON file that provides questions requiring the use of at least one API from each of the "barter" and "pokemontcg" tools:
+
+```json
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "barter",
+            "api_name": "get_bundles",
+            "api_description": "Get all bundles.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "bundles": [
+                    {
+                        "bundle_id": "int",
+                        "name": "str",
+                        "content": ["str"],
+                        // Other relevant fields
+                    }
+                ]
+            }
+        },
+        {
+            "category_name": "Games",
+            "tool_name": "pokemontcg",
+            "api_name": "get_sets",
+            "api_description": "Retrieve a list of all available sets in the Pokémon TCG.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "data": [
+                    {
+                        "id": "string",
+                        "name": "string",
+                        "series": "string",
+                        "total": "integer"
+                    }
+                ]
+            }
+        }
+    ],
+    "query": "Can you provide me with a list of all available bundles on Barter.vg? Also, I am interested in learning about all the Pokémon TCG sets that are currently available.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "barter",
+            "api_name": "get_item",
+            "api_description": "Get information about a specific item by item_id.",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "NUMBER",
+                    "description": "The ID of the barter.vg item (e.g. game or DLC)"
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "id": "int",
+                "name": "str",
+                "description": "str",
+                "price": "float"
+            }
+        },
+        {
+            "category_name": "Games",
+            "tool_name": "pokemontcg",
+            "api_name": "get_card_by_id",
+            "api_description": "Retrieve a specific card by its unique ID.",
+            "required_parameters": [
+                {
+                    "name": "card_id",
+                    "type": "STRING",
+                    "description": "The unique identifier for the specific card."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "data": {
+                    "id": "string",
+                    "name": "string",
+                    "supertype": "string"
+                }
+            }
+        }
+    ],
+    "query": "I have the ID of a specific item on Barter.vg, can you get me the details for item ID 123? Additionally, I want to fetch information about a Pokémon TCG card using its ID 'xy7-54'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+In this example, two distinct queries demonstrate the utilization of the `barter` and `pokemontcg` APIs. For each query, the `api_list` section includes specific APIs along with their descriptions, parameters, and expected response templates. The structure allows a developer to understand which APIs could be used to fetch the necessary data for each query.

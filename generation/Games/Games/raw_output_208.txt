@@ -1,0 +1,105 @@
+Here is a sample `api_list-question` JSON file with questions that require the use of at least one API from each tool provided:
+
+```json
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_all_giveaways",
+            "api_description": "Fetch all ongoing giveaways.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": "List of giveaway objects"
+        }
+    ],
+    "query": "Can you provide me a list of all ongoing gaming giveaways?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_giveaway_by_id",
+            "api_description": "Fetch a specific giveaway by its unique ID.",
+            "required_parameters": [
+                {
+                    "name": "giveaway_id",
+                    "type": "INTEGER",
+                    "description": "The giveaway ID",
+                    "default": "525"
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": "Giveaway object"
+        }
+    ],
+    "query": "I have a specific giveaway ID; can you provide detailed information about it?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "tcgdex",
+            "api_name": "get_card",
+            "api_description": "Retrieve information about a single card by its ID.",
+            "required_parameters": [
+                {
+                    "name": "card_id",
+                    "type": "STRING",
+                    "description": "The ID of the card."
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": "Card details object"
+        }
+    ],
+    "query": "I need detailed information about a specific Pokémon card using its ID.",
+    "relevant APIs": [],
+    "query_id": 3
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_giveaways_by_platform",
+            "api_description": "Fetch giveaways filtered by platform.",
+            "required_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform name"
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": "List of giveaway objects"
+        },
+        {
+            "category_name": "Games",
+            "tool_name": "tcgdex",
+            "api_name": "list_types",
+            "api_description": "List different Pokémon types.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": "List of Pokémon types"
+        }
+    ],
+    "query": "Can you show me the giveaways available for PC games and also list different Pokémon types?",
+    "relevant APIs": [],
+    "query_id": 4
+  }
+]
+```
+
+This JSON shows questions targeting the GamerPower and TCGdex tools effectively by pulling real-world scenarios where a user might need specific game giveaways information or TCG card details. Remember that each question is independent and would use at least one API from each specified tool.

@@ -1,0 +1,133 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "barter",
+                "api_name": "get_app_settings",
+                "api_description": "Get settings of a specific app by app_id.",
+                "required_parameters": [
+                    {
+                        "name": "app_id",
+                        "type": "NUMBER",
+                        "description": "The app ID of the third-party application"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "success": "bool",
+                    "data": "dict"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokeapi",
+                "api_name": "get_ability",
+                "api_description": "Get details about a specific Pokémon ability by ID or name.",
+                "required_parameters": [
+                    {
+                        "name": "ability_id_or_name",
+                        "type": "STRING",
+                        "description": "The ID or name of the Pokémon ability"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "effect": "str",
+                    "generation": "str"
+                }
+            }
+        ],
+        "query": "Can you provide the settings of a specific app by its app ID and also give me details about the 'stench' ability of Pokémon?",
+        "relevant_APIs": ["get_app_settings", "get_ability"],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "barter",
+                "api_name": "get_user",
+                "api_description": "Get information about a user by their user_id.",
+                "required_parameters": [
+                    {
+                        "name": "user_id",
+                        "type": "STRING",
+                        "description": "The hex ID of the barter.vg user"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "username": "str",
+                    "trading_history": "list"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokeapi",
+                "api_name": "get_pokemon",
+                "api_description": "Get details about a specific Pokémon by ID or name.",
+                "required_parameters": [
+                    {
+                        "name": "pokemon_id_or_name",
+                        "type": "STRING",
+                        "description": "The ID or name of the Pokémon"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "height": "int",
+                    "weight": "int",
+                    "abilities": "list"
+                }
+            }
+        ],
+        "query": "Find out about a barter.vg user by their user ID and tell me more about the Pokémon called 'clefairy'.",
+        "relevant_APIs": ["get_user", "get_pokemon"],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "barter",
+                "api_name": "browse_bundles",
+                "api_description": "Browse all available bundles.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "bundles": "list"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokeapi",
+                "api_name": "get_type",
+                "api_description": "Get details about a specific Pokémon type by ID or name.",
+                "required_parameters": [
+                    {
+                        "name": "type_id_or_name",
+                        "type": "STRING",
+                        "description": "The ID or name of the Pokémon type"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "damage_relations": "dict"
+                }
+            }
+        ],
+        "query": "Can you show me all available game bundles and provide information about the 'ground' type of Pokémon?",
+        "relevant_APIs": ["browse_bundles", "get_type"],
+        "query_id": 3
+    }
+]

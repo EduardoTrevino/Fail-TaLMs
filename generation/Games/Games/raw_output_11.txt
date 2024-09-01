@@ -1,0 +1,136 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "amiibo",
+        "api_name": "get_amiibos",
+        "api_description": "Returns a list of amiibos or specific amiibo based on the filters provided.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "character",
+            "type": "STRING",
+            "description": "Character of the amiibo."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amiibo": [
+            {
+              "amiiboSeries": "str",
+              "character": "str",
+              "gameSeries": "str",
+              "head": "str",
+              "image": "str",
+              "name": "str",
+              "release": {
+                "au": "str",
+                "eu": "str",
+                "jp": "str",
+                "na": "str"
+              },
+              "tail": "str",
+              "type": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "hyrulecompendium",
+        "api_name": "get_entry",
+        "api_description": "Retrieves a specific entry given its name or ID.",
+        "required_parameters": [
+          {
+            "name": "entry",
+            "type": "STRING",
+            "description": "The name or ID of the entry."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "game",
+            "type": "STRING",
+            "description": "The game version to query; defaults to 'botw'."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "id": "int",
+            "name": "str",
+            "description": "str",
+            "category": "str",
+            "image": "str",
+            "common_locations": ["str"],
+            "drops": ["str"]
+          }
+        }
+      }
+    ],
+    "query": "Can you tell me more about the Amiibo for the character Link, and also provide detailed information about a Moblin entry from the Hyrule Compendium?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "amiibo",
+        "api_name": "get_game_series",
+        "api_description": "Returns game series information based on key or name.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Name of the game series."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "amiibo": [
+            {
+              "key": "str",
+              "name": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "hyrulecompendium",
+        "api_name": "get_category_entries",
+        "api_description": "Retrieves all entries in a given category.",
+        "required_parameters": [
+          {
+            "name": "category",
+            "type": "STRING",
+            "description": "The category to retrieve entries from."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "int",
+              "name": "str",
+              "description": "str",
+              "category": "str",
+              "image": "str",
+              "common_locations": ["str"],
+              "drops": ["str"]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I want to explore more on the 'Metroid' game series from Amiibo API, and also get the list of 'monsters' category from the Hyrule Compendium.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

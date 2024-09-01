@@ -1,0 +1,116 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "get_thing_items",
+        "api_description": "Retrieve information about specified 'thing' items such as boardgames or other types from BGG.",
+        "required_parameters": [
+          {
+            "name": "ids",
+            "type": "STRING",
+            "description": "Comma-separated list of thing IDs to retrieve.",
+            "default": "174430"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Filter results by THINGTYPEs."
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML with details of 'thing' items"
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "cheapshark",
+        "api_name": "edit_alert",
+        "api_description": "Set or delete a price alert for a specific game and price.",
+        "required_parameters": [
+          {
+            "name": "action",
+            "type": "STRING",
+            "description": "The action to take on the price alert ('set' or 'delete').",
+            "default": "set"
+          },
+          {
+            "name": "email",
+            "type": "STRING",
+            "description": "A valid email address.",
+            "default": "someone@example.org"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "game_id",
+            "type": "INTEGER",
+            "description": "An existing game ID.",
+            "default": 59
+          },
+          {
+            "name": "price",
+            "type": "DECIMAL",
+            "description": "The price to wait for.",
+            "default": 14.99
+          }
+        ],
+        "method": "GET",
+        "template_response": "Boolean indicating success of action"
+      }
+    ],
+    "query": "Can you provide information on a specific board game from BoardGameGeek using its ID, and set a price alert for the same game on CheapShark if it drops below a certain price?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "search_items",
+        "api_description": "Search for items by name from the BGG database.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query.",
+            "default": "Catan"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "The type of items to return."
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML with list of matching items"
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "cheapshark",
+        "api_name": "get_alerts",
+        "api_description": "Retrieve all existing alerts.",
+        "required_parameters": [
+          {
+            "name": "key",
+            "type": "STRING",
+            "description": "The key parameter from your manage link.",
+            "default": "valid-key"
+          }
+        ],
+        "method": "GET",
+        "template_response": "JSON list of alerts or error message"
+      }
+    ],
+    "query": "I am looking for the board game 'Catan' on BoardGameGeek. Can you also show me any existing price alerts I have set for games on CheapShark?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

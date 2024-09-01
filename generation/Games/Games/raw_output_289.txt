@@ -1,0 +1,118 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_pokemon",
+        "api_description": "Get details about a specific Pokémon by ID or name.",
+        "required_parameters": [
+          {
+            "name": "pokemon_id_or_name",
+            "type": "STRING",
+            "description": "The ID or name of the Pokémon.",
+            "default": "pikachu"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "height": "int",
+          "weight": "int",
+          "types": [
+            {
+              "type": {
+                "name": "str"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "tcgdex",
+        "api_name": "get_card",
+        "api_description": "Retrieve information about a single card by its ID.",
+        "required_parameters": [
+          {
+            "name": "card_id",
+            "type": "STRING",
+            "description": "The ID of the card.",
+            "default": "sm3-20"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "supertype": "str",
+          "subtypes": ["str"],
+          "hp": "str",
+          "types": ["str"],
+          "rarity": "str"
+        }
+      }
+    ],
+    "query": "What are the types and weight of Pikachu in Pokémon data? Additionally, retrieve details of the Pokémon card with ID 'sm3-20'.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_ability",
+        "api_description": "Get details about a specific Pokémon ability by ID or name.",
+        "required_parameters": [
+          {
+            "name": "ability_id_or_name",
+            "type": "STRING",
+            "description": "The ID or name of the ability.",
+            "default": "levitate"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "effect_entries": [
+            {
+              "effect": "str",
+              "short_effect": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "tcgdex",
+        "api_name": "search_cards",
+        "api_description": "Search for cards based on filters and sorting.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "Name of the card.",
+            "default": "Jirachi"
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "name": "str",
+            "type": "str",
+            "rarity": "str"
+          }
+        ]
+      }
+    ],
+    "query": "Describe the Pokémon ability 'Levitate'. Also, search for Pokémon trading cards with the name 'Jirachi'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

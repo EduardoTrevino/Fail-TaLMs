@@ -1,0 +1,101 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "get_thing_items",
+        "api_description": "Retrieve information about specific 'thing' items such as boardgames.",
+        "required_parameters": [
+          {
+            "name": "ids",
+            "type": "STRING",
+            "description": "IDs of the things to retrieve.",
+            "default": "174430"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Filter by specific thing types.",
+            "default": "boardgame"
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML content with details about the thing items."
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_berry",
+        "api_description": "Get information about a specific berry by ID or name.",
+        "required_parameters": [
+          {
+            "name": "berry_id_or_name",
+            "type": "STRING",
+            "description": "ID or name of the berry.",
+            "default": "cheri"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+            "name": "str",
+            "growth_time": "int",
+            "max_harvest": "int"
+        }
+      }
+    ],
+    "query": "Can you provide information about boardgame ID 174430 and also tell me about the growth time and harvest details of the 'Cheri' berry?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "get_hot_items",
+        "api_description": "Retrieve the list of most active items on BGG.",
+        "required_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Type of hot items (e.g. boardgame).",
+            "default": "boardgame"
+          }
+        ],
+        "method": "GET",
+        "template_response": "XML content with a list of hot items."
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_pokemon",
+        "api_description": "Get details about a specific Pokémon by ID or name.",
+        "required_parameters": [
+          {
+            "name": "pokemon_id_or_name",
+            "type": "STRING",
+            "description": "ID or name of the Pokémon.",
+            "default": "pikachu"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+            "name": "str",
+            "height": "int",
+            "weight": "int",
+            "types": [{"type": {"name": "str"}}]
+        }
+      }
+    ],
+    "query": "What are the top hot boardgames currently? Also, provide me with the height and weight of Pikachu.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

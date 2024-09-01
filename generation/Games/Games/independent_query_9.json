@@ -1,0 +1,178 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibos",
+                "api_description": "Returns a list of amiibos or specific amiibo based on the filters provided.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "game_series",
+                        "type": "STRING",
+                        "description": "Game series of the amiibo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "amiiboSeries": "str",
+                            "character": "str",
+                            "gameSeries": "str",
+                            "head": "str",
+                            "image": "str",
+                            "name": "str",
+                            "release": {
+                                "au": "str",
+                                "eu": "str",
+                                "jp": "str",
+                                "na": "str"
+                            },
+                            "tail": "str",
+                            "type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "freetogame",
+                "api_name": "games_by_category",
+                "api_description": "Retrieve a list of all available games from a specific genre.",
+                "required_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "The category name."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "properties": {
+                        "id": "int",
+                        "title": "str",
+                        "thumbnail": "str",
+                        "short_description": "str",
+                        "game_url": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide me a list of amiibo related to the 'Super Mario' game series, and also find free-to-play games in the 'shooter' category?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_character",
+                "api_description": "Returns character information based on key or name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the character."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "key": "str",
+                            "name": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "freetogame",
+                "api_name": "list_games",
+                "api_description": "Retrieve a list of all free-to-play games.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "properties": {
+                        "id": "int",
+                        "title": "str",
+                        "thumbnail": "str",
+                        "short_description": "str",
+                        "game_url": "str"
+                    }
+                }
+            }
+        ],
+        "query": "I am interested in knowing more about the character 'Mewtwo' and I'd also like to see a list of all free-to-play games available.",
+        "relevant APIs": [],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibo_series",
+                "api_description": "Returns amiibo series based on key or name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the amiibo series."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "key": "str",
+                            "name": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "freetogame",
+                "api_name": "games_by_filters",
+                "api_description": "Filter games by multiple tags, platform, and sort.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "tag",
+                        "type": "STRING",
+                        "description": "Comma-separated list of tags."
+                    },
+                    {
+                        "name": "platform",
+                        "type": "STRING",
+                        "description": "Platform name."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "properties": {
+                        "id": "int",
+                        "title": "str",
+                        "thumbnail": "str",
+                        "short_description": "str",
+                        "game_url": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Could you tell me about the '8-bit Mario' amiibo series and show me free games available on the 'PC' platform tagged as '3D'?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

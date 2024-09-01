@@ -1,0 +1,119 @@
+Here is the `api_list-question` JSON file containing questions that require the use of at least one API from each tool ("evilinsultgenerator" and "jokeapi"):
+
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "evilinsultgenerator",
+                "api_name": "generate_insult",
+                "api_description": "This endpoint serves to generate insults from the API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "The language of the insult you want.",
+                        "default": "en"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The response type. Supports 'text', 'XML', and 'JSON'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "insult": "string",
+                    "number": "string",
+                    "language": "string",
+                    "created": "string"
+                }
+            }
+        ],
+        "query": "Can you generate an insult for me in German and return the result in JSON format?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "jokeapi",
+                "api_name": "get_joke",
+                "api_description": "Fetch jokes based on category, filters and other parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Joke category",
+                        "default": "Any"
+                    },
+                    {
+                        "name": "blacklist_flags",
+                        "type": "LIST",
+                        "description": "Flags to filter out",
+                        "default": "None"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language code for joke",
+                        "default": "en"
+                    },
+                    {
+                        "name": "joke_type",
+                        "type": "STRING",
+                        "description": "Type of joke (single/twopart)",
+                        "default": "None"
+                    },
+                    {
+                        "name": "contains",
+                        "type": "STRING",
+                        "description": "String to search within jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "id_range",
+                        "type": "STRING",
+                        "description": "ID range for jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "INTEGER",
+                        "description": "Number of jokes to fetch",
+                        "default": 1
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "safe_mode",
+                        "type": "BOOLEAN",
+                        "description": "Fetch only safe jokes",
+                        "default": false
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "jokes": "array",
+                    "amount": "integer"
+                }
+            }
+        ],
+        "query": "Tell me a programming joke in English, and ensure it is not marked as NSFW or religious.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```
+
+In this JSON file, each object contains an `api_list` which includes the use of at least one API from each tool along with a relevant natural language query.

@@ -1,0 +1,91 @@
+Here is an example of an `api_list-question` JSON file that includes questions utilizing APIs from both the "jokeapi" and "tcgdex" tools. The questions are designed to be modelled after human inquiries that can be addressed using these APIs:
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "jokeapi",
+        "api_name": "get_joke",
+        "api_description": "Fetch jokes based on category, filters and other parameters.",
+        "required_parameters": [],
+        "optional_parameters": [
+          { "name": "category", "type": "STRING", "description": "Joke category", "default": "Any" },
+          { "name": "blacklist_flags", "type": "LIST", "description": "Flags to filter out", "default": "None" },
+          { "name": "lang", "type": "STRING", "description": "Language code for joke", "default": "en" },
+          { "name": "amount", "type": "INTEGER", "description": "Number of jokes to fetch", "default": 1 }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "boolean",
+          "jokes": "array",
+          "amount": "integer"
+        }
+      },
+      {
+        "tool_name": "tcgdex",
+        "api_name": "get_card",
+        "api_description": "Retrieve information about a single card by its ID.",
+        "required_parameters": [
+          { "name": "card_id", "type": "STRING", "description": "The ID of the card." }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "description": "string",
+          "image": "string"
+        }
+      }
+    ],
+    "query": "Can you fetch a funny programming joke, and also provide the details of the 'base1-1' Pokémon card from the TCGdex API?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "jokeapi",
+        "api_name": "get_supported_languages",
+        "api_description": "Retrieve supported languages for jokes and system messages.",
+        "required_parameters": [],
+        "optional_parameters": [
+          { "name": "format", "type": "STRING", "description": "Response format", "default": "json" },
+          { "name": "lang", "type": "STRING", "description": "System message language", "default": "en" }
+        ],
+        "method": "GET",
+        "template_response": {
+          "defaultLanguage": "string",
+          "jokeLanguages": "array",
+          "systemLanguages": "array",
+          "possibleLanguages": "array"
+        }
+      },
+      {
+        "tool_name": "tcgdex",
+        "api_name": "list_types",
+        "api_description": "List different Pokémon types.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "types": "array"
+        }
+      }
+    ],
+    "query": "What languages are supported for jokes on JokeAPI, and also list the different Pokémon types available in TCGdex?",
+    "query_id": 2
+  }
+]
+```
+
+### Explanation:
+
+1. **Query 1**:
+   - **JokeAPI**: Uses the `get_joke` function to fetch a joke with a specific category (e.g., "Programming") which a user may want for humor.
+   - **TCGDex**: Uses the `get_card` function to retrieve detailed information about a Pokémon trading card with card ID 'base1-1'.
+
+2. **Query 2**:
+   - **JokeAPI**: Uses `get_supported_languages` to explore which languages are available for receiving jokes.
+   - **TCGDex**: Utilizes `list_types` to provide a list of different Pokémon types, which can be useful for a user interested in the game data. 
+
+These queries are constructed to target specific data points within each API, resulting in a comprehensive response that caters to the particular needs articulated in the query descriptions.

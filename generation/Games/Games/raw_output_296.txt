@@ -1,0 +1,85 @@
+Here's a sample `api_list-question` JSON file with questions that require using at least one API from each of the two tools: "runescape" and "tcgdex".
+
+```json
+[
+  {
+    "api_list": [
+        {
+            "tool_name": "runescape",
+            "api_name": "grand_exchange_detail",
+            "api_description": "Returns detailed information on a tradable item.",
+            "required_parameters": [
+                {
+                    "name": "item_id",
+                    "type": "INTEGER",
+                    "description": "The ItemID."
+                }
+            ],
+            "optional_parameters": []
+        },
+        {
+            "tool_name": "tcgdex",
+            "api_name": "get_card",
+            "api_description": "Retrieve information about a single card by its ID.",
+            "required_parameters": [
+                {
+                    "name": "card_id",
+                    "type": "STRING",
+                    "description": "The ID of the card."
+                }
+            ],
+            "optional_parameters": []
+        }
+    ],
+    "query": "Can you provide detailed information about the RuneScape item with ID 21787 and the TCG card with ID 'swsh3-136'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "tool_name": "runescape",
+            "api_name": "hiscores_ranking",
+            "api_description": "Returns up to the top 50 players in a given skill or activity.",
+            "required_parameters": [
+                {
+                    "name": "table",
+                    "type": "INTEGER",
+                    "description": "The skill or activity table."
+                },
+                {
+                    "name": "category",
+                    "type": "INTEGER",
+                    "description": "The category for the skill or activity."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "size",
+                    "type": "INTEGER",
+                    "description": "The amount of players to return, max 50.",
+                    "default": 50
+                }
+            ]
+        },
+        {
+            "tool_name": "tcgdex",
+            "api_name": "list_rarities",
+            "api_description": "List different card rarities.",
+            "required_parameters": [],
+            "optional_parameters": []
+        }
+    ],
+    "query": "What are the top 10 players in RuneScape for the skill table 9, category 0, and can you list all card rarities available in the TCGdex database?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+In this JSON:
+
+- The first query combines the use of `grand_exchange_detail` from the RuneScape API to get detailed information about a RuneScape item, and `get_card` from the tcgdex API to get details about a specific TCG card.
+- The second query requests player rankings from `hiscores_ranking` in RuneScape and lists card rarities using `list_rarities` from the tcgdex API. 
+
+These questions are independent and require separate API calls according to the purpose of each tool.

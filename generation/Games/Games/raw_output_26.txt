@@ -1,0 +1,109 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "barter",
+                "api_name": "get_app_settings",
+                "api_description": "Get settings of a specific app by app_id.",
+                "required_parameters": [
+                    {
+                        "name": "app_id",
+                        "type": "NUMBER",
+                        "description": "The app ID of the third-party application"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "legal": "str",
+                    "operators": ["str"]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete')."
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "Any valid email address."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for 'set' and 'delete'."
+                    },
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' value for action parameter."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "success": true
+                }
+            }
+        ],
+        "query": "I would like to know the settings of the app with ID 123 from Barter. Additionally, can you set a price alert for a game with ID 59 if it drops below $15 on CheapShark?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "barter",
+                "api_name": "browse_bundles",
+                "api_description": "Browse all available bundles.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "bundles": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "description": "str",
+                            "price": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "manage_alerts",
+                "api_description": "Send an email containing a link to manage your alerts.",
+                "required_parameters": [
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "Any valid email address with existing alerts."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "str"
+                }
+            }
+        ],
+        "query": "Can you show me all available bundles on Barter and send me a link to manage my price alerts on CheapShark using my email address?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

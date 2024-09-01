@@ -1,0 +1,170 @@
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_giveaways_by_platform",
+            "api_description": "Fetch giveaways filtered by platform.",
+            "required_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform name",
+                    "default": "pc"
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "type": "array"
+            }
+        },
+        {
+            "category_name": "Humor",
+            "tool_name": "icanhazdadjoke",
+            "api_name": "fetch_random_joke",
+            "api_description": "Fetch a random dad joke in the specified format.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "accept",
+                    "type": "STRING",
+                    "description": "The format to accept the joke in.",
+                    "default": "application/json"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "id": "str",
+                "joke": "str",
+                "status": "int"
+            }
+        }
+    ],
+    "query": "Can you find freebies for PC gamers and also lighten my mood with a joke?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_total_worth",
+            "api_description": "Fetch the total worth of live giveaways and worth estimation in US dollars.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "platform",
+                    "type": "STRING",
+                    "description": "Platform optional filter"
+                },
+                {
+                    "name": "type",
+                    "type": "STRING",
+                    "description": "Type optional filter"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "worth_estimation_usd": "str"
+            }
+        },
+        {
+            "category_name": "Humor",
+            "tool_name": "icanhazdadjoke",
+            "api_name": "search_jokes",
+            "api_description": "Search for dad jokes.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "term",
+                    "type": "STRING",
+                    "description": "Search term to use.",
+                    "default": null
+                },
+                {
+                    "name": "page",
+                    "type": "INTEGER",
+                    "description": "Page of results to fetch.",
+                    "default": 1
+                },
+                {
+                    "name": "limit",
+                    "type": "INTEGER",
+                    "description": "Number of results to return per page.",
+                    "default": 20
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "total_jokes": "int",
+                "results": [
+                    {
+                        "id": "str",
+                        "joke": "str"
+                    }
+                ],
+                "status": "int"
+            }
+        }
+    ],
+    "query": "Tell me how much all current gaming giveaways are worth in total and find a joke about games.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Games",
+            "tool_name": "gamerpower",
+            "api_name": "get_giveaway_by_id",
+            "api_description": "Fetch a specific giveaway by its unique ID.",
+            "required_parameters": [
+                {
+                    "name": "id",
+                    "type": "INTEGER",
+                    "description": "The giveaway ID",
+                    "default": 525
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "type": "object"
+            }
+        },
+        {
+            "category_name": "Humor",
+            "tool_name": "icanhazdadjoke",
+            "api_name": "fetch_joke_by_id",
+            "api_description": "Fetch a specific dad joke by its ID.",
+            "required_parameters": [
+                {
+                    "name": "joke_id",
+                    "type": "STRING",
+                    "description": "The ID of the joke to fetch."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "accept",
+                    "type": "STRING",
+                    "description": "The format to accept the joke in.",
+                    "default": "application/json"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "id": "str",
+                "joke": "str",
+                "status": "int"
+            }
+        }
+    ],
+    "query": "Get details of a specific giveaway by its ID, and also share a specific dad joke.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

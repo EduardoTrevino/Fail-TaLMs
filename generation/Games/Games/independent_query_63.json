@@ -1,0 +1,147 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "search_items",
+        "api_description": "Search for items by name from the BGG database.",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The search query.",
+            "default": "Chess"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "The type of items to return.",
+            "default": "boardgame"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "items": [
+            {
+              "id": "str",
+              "name": "str",
+              "type": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Humor",
+        "tool_name": "opentriviadb",
+        "api_name": "get_random_joke",
+        "api_description": "Fetches a random joke.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "type": "str",
+          "setup": "str",
+          "punchline": "str"
+        }
+      }
+    ],
+    "query": "I'm looking for information on the board game 'Chess' and while you're at it, can you tell me a random joke?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "get_user_info",
+        "api_description": "Retrieve information about a user by username from BGG.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The username to retrieve info for.",
+            "default": "eekspider"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "user": {
+            "id": "str",
+            "name": "str",
+            "username": "str",
+            "first_name": "str",
+            "country": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Humor",
+        "tool_name": "opentriviadb",
+        "api_name": "get_joke_types",
+        "api_description": "Retrieves the types of jokes available.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          "str"
+        ]
+      }
+    ],
+    "query": "Can you provide me with user information for 'eekspider' on BoardGameGeek? Also, I'm curious to know what types of jokes are available.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "boardgamesgeek",
+        "api_name": "get_hot_items",
+        "api_description": "Retrieve the list of most active items on BGG.",
+        "required_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "The type of hot list to retrieve.",
+            "default": "boardgame"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "items": [
+            {
+              "id": "str",
+              "name": "str",
+              "rank": "int"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Humor",
+        "tool_name": "opentriviadb",
+        "api_name": "get_ten_random_jokes",
+        "api_description": "Fetches ten random jokes.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "type": "str",
+            "setup": "str",
+            "punchline": "str"
+          }
+        ]
+      }
+    ],
+    "query": "I'm interested in knowing what the hottest board games are right now. Also, I could use a good laugh, so can you get me ten random jokes?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

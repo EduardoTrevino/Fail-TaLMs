@@ -1,0 +1,104 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "get_bundle",
+        "api_description": "Get information about a specific bundle by bundle_id.",
+        "required_parameters": [
+          {
+            "name": "bundle_id",
+            "type": "NUMBER",
+            "description": "The bundle ID",
+            "default": "1"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "items": ["str"],
+          "price": "float"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "magicthegathering",
+        "api_name": "get_all_cards",
+        "api_description": "Retrieve all MTG cards with pagination and optional filtering.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "type": "INTEGER",
+            "default": "100"
+          },
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name of the card to search for."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "cards": [
+            {
+              "name": "str",
+              "manaCost": "str",
+              "type": "str",
+              "rarity": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you get details about the first bundle available and also provide me with Magic: The Gathering cards that match the name 'Black Lotus'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "browse_dlc",
+        "api_description": "Browse all downloadable content.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "dlc_list": [
+            {
+              "title": "str",
+              "game": "str",
+              "price": "float"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "magicthegathering",
+        "api_name": "get_all_formats",
+        "api_description": "Retrieve all game formats.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "formats": ["str"]
+        }
+      }
+    ],
+    "query": "Could you provide me with a list of all available downloadable content for games on Barter? Additionally, I want to know all the different formats available in Magic: The Gathering.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

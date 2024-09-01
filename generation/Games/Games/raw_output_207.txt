@@ -1,0 +1,130 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "gamerpower",
+                "api_name": "get_total_worth",
+                "api_description": "Fetch the total worth of live giveaways and worth estimation in US dollars. Can filter by platform and type.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "platform",
+                        "type": "STRING",
+                        "description": "Platform optional filter"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Type optional filter"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "worth_estimation_usd": "float"
+                }
+            },
+            {
+                "tool_name": "scryfall",
+                "api_name": "card_search",
+                "api_description": "Search Magic cards using a fulltext search string.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The fulltext search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "unique",
+                        "type": "STRING",
+                        "description": "Strategy for omitting similar cards.",
+                        "default": "cards"
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "The method to sort returned cards.",
+                        "default": "name"
+                    },
+                    {
+                        "name": "dir",
+                        "type": "STRING",
+                        "description": "The direction to sort cards.",
+                        "default": "auto"
+                    },
+                    {
+                        "name": "include_extras",
+                        "type": "BOOLEAN",
+                        "description": "Includes extra cards if true.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page number to return.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "string",
+                    "data": "array"
+                }
+            }
+        ],
+        "query": "What is the total worth of all live Steam giveaways, and can you list Magic cards that match the search query 'land c:blue t:legendary'?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "gamerpower",
+                "api_name": "get_giveaways_by_platform",
+                "api_description": "Fetch giveaways filtered by platform.",
+                "required_parameters": [
+                    {
+                        "name": "platform",
+                        "type": "STRING",
+                        "description": "Platform name"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array"
+                }
+            },
+            {
+                "tool_name": "scryfall",
+                "api_name": "card_named_exact",
+                "api_description": "Retrieve exact card details based on card name.",
+                "required_parameters": [
+                    {
+                        "name": "exact",
+                        "type": "STRING",
+                        "description": "The exact card name to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "A set code to limit the search to one set.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "card"
+                }
+            }
+        ],
+        "query": "Can you list all ongoing giveaways for the PC platform and get the details of the Magic card 'Lightning Bolt'?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

@@ -1,0 +1,135 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokemontcg",
+        "api_name": "get_cards",
+        "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name of the card to filter by.",
+            "default": "None"
+          },
+          {
+            "name": "supertype",
+            "type": "STRING",
+            "description": "The supertype of the card, such as Pokémon, Energy, or Trainer.",
+            "default": "None"
+          },
+          {
+            "name": "types",
+            "type": "LIST",
+            "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+            "default": "None"
+          },
+          {
+            "name": "hp",
+            "type": "STRING",
+            "description": "The hit points of the card to filter by.",
+            "default": "None"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "string",
+              "name": "string",
+              "supertype": "string",
+              "hp": "string",
+              "types": ["string"]
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "xkcd",
+        "api_name": "get_current_comic",
+        "api_description": "Retrieve the current comic.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "month": "str",
+          "num": "int",
+          "link": "",
+          "year": "str",
+          "news": "",
+          "safe_title": "str",
+          "transcript": "str",
+          "alt": "str",
+          "img": "str",
+          "title": "str",
+          "day": "str"
+        }
+      }
+    ],
+    "query": "Can you show me a Pokémon card named 'Charizard' and also display the latest XKCD comic?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokemontcg",
+        "api_name": "get_card_by_id",
+        "api_description": "Retrieve a specific card by its unique ID.",
+        "required_parameters": [
+          {
+            "name": "card_id",
+            "type": "STRING",
+            "description": "The unique identifier for the specific card."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "id": "string",
+            "name": "string",
+            "supertype": "string"
+          }
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "xkcd",
+        "api_name": "get_comic_by_number",
+        "api_description": "Retrieve a specific comic by number.",
+        "required_parameters": [
+          {
+            "name": "number",
+            "type": "INTEGER",
+            "description": "The comic number to fetch."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "month": "str",
+          "num": "int",
+          "link": "",
+          "year": "str",
+          "news": "",
+          "safe_title": "str",
+          "transcript": "str",
+          "alt": "str",
+          "img": "str",
+          "title": "str",
+          "day": "str"
+        }
+      }
+    ],
+    "query": "What are the details of the Pokémon card with the ID 'xy7-54'? Also, can you retrieve the XKCD comic number 614?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

@@ -1,0 +1,149 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "get_bundle",
+        "api_description": "Get information about a specific bundle by bundle_id.",
+        "required_parameters": [
+          {
+            "name": "bundle_id",
+            "type": "NUMBER",
+            "description": "The bundle ID",
+            "default": 1
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "object": "bundle",
+          "id": "int",
+          "name": "str",
+          "games": [
+            {
+              "id": "int",
+              "title": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_named_fuzzy",
+        "api_description": "Retrieve card details based on a fuzzy name search.",
+        "required_parameters": [
+          {
+            "name": "fuzzy",
+            "type": "STRING",
+            "description": "A fuzzy card name to search for.",
+            "default": "aust com"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "set",
+            "type": "STRING",
+            "description": "A set code to limit the search to one set.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "card",
+          "name": "str",
+          "set": "str",
+          "type_line": "str",
+          "oracle_text": "str"
+        }
+      }
+    ],
+    "query": "Can you provide details about the bundle with ID 1 on Barter.vg? Simultaneously, find information on a Magic card that best matches the fuzzy name 'aust com'.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "browse_cards",
+        "api_description": "Browse all available trading cards.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "object": "list",
+          "data": [
+            {
+              "id": "int",
+              "name": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_search",
+        "api_description": "Search Magic cards using a fulltext search string.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The fulltext search query.",
+            "default": "c:blue mv=1"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "unique",
+            "type": "STRING",
+            "description": "Strategy for omitting similar cards.",
+            "default": "cards"
+          },
+          {
+            "name": "order",
+            "type": "STRING",
+            "description": "The method to sort returned cards.",
+            "default": "name"
+          },
+          {
+            "name": "dir",
+            "type": "STRING",
+            "description": "The direction to sort cards.",
+            "default": "auto"
+          },
+          {
+            "name": "include_extras",
+            "type": "BOOLEAN",
+            "description": "Includes extra cards if true.",
+            "default": "false"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "The page number to return.",
+            "default": 1
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "list",
+          "data": [
+            {
+              "id": "str",
+              "name": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I'm interested in browsing all available trading cards on Barter.vg. Additionally, can you find Magic cards with the search query 'c:blue mv=1' using the Scryfall API?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

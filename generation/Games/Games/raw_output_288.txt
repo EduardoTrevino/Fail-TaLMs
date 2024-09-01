@@ -1,0 +1,128 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_berry_flavor",
+        "api_description": "Get information about a specific berry flavor by ID or name.",
+        "required_parameters": [
+          {
+            "name": "flavor_id_or_name",
+            "type": "STRING",
+            "description": "The ID or name of the berry flavor.",
+            "default": "spicy"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "berries": [
+            {
+              "berry": {
+                "name": "string",
+                "url": "string"
+              },
+              "potency": "int"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_random",
+        "api_description": "Retrieve a random card.",
+        "optional_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "A fulltext search query to filter random cards.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "card",
+          "name": "string",
+          "set_name": "string",
+          "type_line": "string",
+          "mana_cost": "string",
+          "oracle_text": "string"
+        }
+      }
+    ],
+    "query": "Can you tell me about the spicy flavor berries in Pokémon and then show me a random Magic: The Gathering card?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "pokeapi",
+        "api_name": "get_ability",
+        "api_description": "Get details about a specific Pokémon ability by ID or name.",
+        "required_parameters": [
+          {
+            "name": "ability_id_or_name",
+            "type": "STRING",
+            "description": "The ID or name of the ability.",
+            "default": "stench"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "name": "string",
+          "effect_entries": [
+            {
+              "effect": "string",
+              "language": {
+                "name": "string",
+                "url": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_named_exact",
+        "api_description": "Retrieve card details based on exact name.",
+        "required_parameters": [
+          {
+            "name": "exact",
+            "type": "STRING",
+            "description": "The exact card name to search for.",
+            "default": "Black Lotus"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "set",
+            "type": "STRING",
+            "description": "A set code to limit the search to one set.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "card",
+          "name": "string",
+          "set_name": "string",
+          "type_line": "string",
+          "mana_cost": "string",
+          "oracle_text": "string"
+        }
+      }
+    ],
+    "query": "What is the effect of the Pokémon ability 'stench'? Also, can you provide details about the Magic card named 'Black Lotus'?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

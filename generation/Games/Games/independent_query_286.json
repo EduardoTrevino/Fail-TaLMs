@@ -1,0 +1,112 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "pokeapi",
+                "api_name": "get_pokemon",
+                "api_description": "Get details about a specific Pokémon by ID or name.",
+                "required_parameters": [
+                    {
+                        "name": "pokemon_id_or_name",
+                        "type": "STRING",
+                        "description": "The ID or name of the Pokémon.",
+                        "default": "clefairy"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "height": "int",
+                    "weight": "int",
+                    "abilities": ["str"],
+                    "types": ["str"]
+                }
+            },
+            {
+                "tool_name": "pokemontcg",
+                "api_name": "get_cards",
+                "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the card to filter by.",
+                        "default": "Pikachu"
+                    },
+                    {
+                        "name": "supertype",
+                        "type": "STRING",
+                        "description": "The supertype of the card, such as Pokémon, Energy, or Trainer.",
+                        "default": "Pokémon"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "supertype": "str",
+                            "hp": "str",
+                            "types": ["str"]
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What are the details of the Pokémon Clefairy and also list the Pokémon TCG cards available for Pikachu?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "pokeapi",
+                "api_name": "get_type",
+                "api_description": "Get details about a specific Pokémon type by ID or name.",
+                "required_parameters": [
+                    {
+                        "name": "type_id_or_name",
+                        "type": "STRING",
+                        "description": "The ID or name of the Pokémon type.",
+                        "default": "ground"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "damage_relations": {
+                        "no_damage_to": ["str"],
+                        "half_damage_to": ["str"],
+                        "double_damage_to": ["str"],
+                        "no_damage_from": ["str"],
+                        "half_damage_from": ["str"],
+                        "double_damage_from": ["str"]
+                    }
+                }
+            },
+            {
+                "tool_name": "pokemontcg",
+                "api_name": "get_sets",
+                "api_description": "Retrieve a list of all available sets in the Pokémon TCG.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "series": "str",
+                            "total": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you give me the details about the 'ground' type Pokémon and also list all the available Pokémon TCG sets?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

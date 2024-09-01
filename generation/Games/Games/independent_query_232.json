@@ -1,0 +1,122 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "fetch_random_joke",
+        "api_description": "Fetch a random dad joke in the specified format.",
+        "optional_parameters": [
+          {
+            "name": "accept",
+            "type": "STRING",
+            "description": "The format to accept the joke in.",
+            "default": "application/json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "joke": "str",
+          "status": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_random",
+        "api_description": "Retrieve a random Magic: The Gathering card.",
+        "optional_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "A fulltext search query to filter random cards.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "card"
+        }
+      }
+    ],
+    "query": "Can you give me a random dad joke and also tell me about a random Magic: The Gathering card?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "search_jokes",
+        "api_description": "Search for dad jokes.",
+        "optional_parameters": [
+          {
+            "name": "term",
+            "type": "STRING",
+            "description": "Search term to use.",
+            "default": "null"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to fetch.",
+            "default": "1"
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results to return per page.",
+            "default": "20"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "current_page": "int",
+          "limit": "int",
+          "next_page": "int",
+          "previous_page": "int",
+          "results": [
+            {
+              "id": "str",
+              "joke": "str"
+            }
+          ],
+          "search_term": "str",
+          "status": "int",
+          "total_jokes": "int",
+          "total_pages": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_named_exact",
+        "api_description": "Retrieve exact card details based on card name.",
+        "required_parameters": [
+          {
+            "name": "exact",
+            "type": "STRING",
+            "description": "The exact card name to search for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "set",
+            "type": "STRING",
+            "description": "A set code to limit the search to one set.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "object": "card"
+        }
+      }
+    ],
+    "query": "Could you find jokes related to 'pun' for me? Also, I want the details of the Magic card named 'Lightning Bolt'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

@@ -1,0 +1,126 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "get_app_settings",
+        "api_description": "Get settings of a specific app by app_id.",
+        "required_parameters": [
+          {
+            "name": "app_id",
+            "type": "NUMBER",
+            "description": "The app ID of the third-party application",
+            "default": "730"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "summaries": "str",
+          "settings": {
+            "language": "str",
+            "platform": "str"
+          }
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "imgflip",
+        "api_name": "get_memes",
+        "api_description": "Gets an array of popular memes that may be captioned with this API.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "success": "boolean",
+          "data": {
+            "memes": [
+              {
+                "id": "string",
+                "name": "string",
+                "url": "string"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "query": "Can you provide the settings for the game with app ID 730 and also show me a list of popular memes available on Imgflip?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "barter",
+        "api_name": "browse_bundles",
+        "api_description": "Browse all available bundles.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "bundles": [
+            {
+              "name": "string",
+              "bundle_id": "integer",
+              "description": "string"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "imgflip",
+        "api_name": "caption_image",
+        "api_description": "Add a caption to an Imgflip meme template.",
+        "required_parameters": [
+          {
+            "name": "template_id",
+            "type": "STRING",
+            "description": "The ID of the template to use.",
+            "default": "61579"
+          },
+          {
+            "name": "username",
+            "type": "STRING",
+            "description": "Imgflip account username.",
+            "default": "imgflip_hubot"
+          },
+          {
+            "name": "password",
+            "type": "STRING",
+            "description": "Imgflip account password.",
+            "default": "imgflip_hubot"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "text0",
+            "type": "STRING",
+            "description": "Top text for the meme.",
+            "default": "Top text"
+          },
+          {
+            "name": "text1",
+            "type": "STRING",
+            "description": "Bottom text for the meme.",
+            "default": "Bottom text"
+          }
+        ],
+        "method": "POST",
+        "template_response": {
+          "success": "boolean",
+          "data": {
+            "url": "string",
+            "page_url": "string"
+          }
+        }
+      }
+    ],
+    "query": "Show me the available game bundles and create a meme using the Imgflip template ID 61579 with the text 'Top text' and 'Bottom text'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

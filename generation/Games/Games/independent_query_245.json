@@ -1,0 +1,148 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "imgflip",
+                "api_name": "get_memes",
+                "api_description": "Gets an array of popular memes that may be captioned with this API.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "success": "boolean",
+                    "data": {
+                        "memes": [
+                            {
+                                "id": "string",
+                                "name": "string",
+                                "url": "string",
+                                "width": "integer",
+                                "height": "integer",
+                                "box_count": "integer"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "xkcd",
+                "api_name": "get_current_comic",
+                "api_description": "Retrieve the current comic.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "month": "str",
+                    "num": "int",
+                    "link": "str",
+                    "year": "str",
+                    "news": "str",
+                    "safe_title": "str",
+                    "transcript": "str",
+                    "alt": "str",
+                    "img": "str",
+                    "title": "str",
+                    "day": "str"
+                }
+            }
+        ],
+        "query": "Can you show me the most popular memes available to caption right now and also display the latest XKCD comic?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "imgflip",
+                "api_name": "caption_image",
+                "api_description": "Add a caption to an Imgflip meme template.",
+                "required_parameters": [
+                    {
+                        "name": "template_id",
+                        "type": "STRING",
+                        "description": "The ID of the template to use."
+                    },
+                    {
+                        "name": "username",
+                        "type": "STRING",
+                        "description": "Imgflip account username."
+                    },
+                    {
+                        "name": "password",
+                        "type": "STRING",
+                        "description": "Imgflip account password."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "text0",
+                        "type": "STRING",
+                        "description": "Top text for the meme."
+                    },
+                    {
+                        "name": "text1",
+                        "type": "STRING",
+                        "description": "Bottom text for the meme."
+                    },
+                    {
+                        "name": "font",
+                        "type": "STRING",
+                        "description": "Font family to use for the text. Defaults to 'impact'."
+                    },
+                    {
+                        "name": "max_font_size",
+                        "type": "INTEGER",
+                        "description": "Maximum font size in pixels. Defaults to 50."
+                    },
+                    {
+                        "name": "boxes",
+                        "type": "LIST",
+                        "description": "Configurations for creating memes with more than two text boxes."
+                    }
+                ],
+                "method": "POST",
+                "template_response": {
+                    "success": "boolean",
+                    "data": {
+                        "url": "string",
+                        "page_url": "string"
+                    }
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "xkcd",
+                "api_name": "get_comic_by_number",
+                "api_description": "Retrieve a specific comic by number.",
+                "required_parameters": [
+                    {
+                        "name": "number",
+                        "type": "INTEGER",
+                        "description": "The comic number to fetch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "month": "str",
+                    "num": "int",
+                    "link": "str",
+                    "year": "str",
+                    "news": "str",
+                    "safe_title": "str",
+                    "transcript": "str",
+                    "alt": "str",
+                    "img": "str",
+                    "title": "str",
+                    "day": "str"
+                }
+            }
+        ],
+        "query": "Create a meme using Imgflip template and add a caption. Additionally, can you provide me the XKCD comic number 614?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "gamerpower",
+        "api_name": "get_all_giveaways",
+        "api_description": "Fetch all ongoing giveaways.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "title": "str",
+          "worth": "str",
+          "thumbnail": "str",
+          "image": "str",
+          "description": "str",
+          "instructions": "str",
+          "open_giveaway": "bool"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_info",
+        "api_description": "Returns the runedate of when the Grand Exchange Database was last updated.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "lastConfigUpdateRuneday": "int"
+        }
+      }
+    ],
+    "query": "I want to know what free game giveaways are currently available and also get the latest update date of the Runescape Grand Exchange database.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "gamerpower",
+        "api_name": "get_giveaways_by_platform",
+        "api_description": "Fetch giveaways filtered by platform.",
+        "required_parameters": [
+          {
+            "name": "platform",
+            "type": "STRING",
+            "description": "Platform name",
+            "default": "pc"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "title": "str",
+          "platforms": "str",
+          "worth": "str",
+          "description": "str"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "runescape",
+        "api_name": "hiscores_ranking",
+        "api_description": "Returns up to the top 50 players in a given skill or activity.",
+        "required_parameters": [
+          {
+            "name": "table",
+            "type": "INTEGER",
+            "description": "The skill or activity table."
+          },
+          {
+            "name": "category",
+            "type": "INTEGER",
+            "description": "The category for the skill or activity."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "size",
+            "type": "INTEGER",
+            "description": "The amount of players to return, max 50.",
+            "default": 50
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "rankings": [
+            {
+              "rank": "int",
+              "name": "str",
+              "score": "int"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find giveaways available for the PC platform and also list the top players in a specific RuneScape skill?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

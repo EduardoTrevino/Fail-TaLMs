@@ -1,0 +1,193 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "deckofcards",
+        "api_name": "shuffle_deck",
+        "api_description": "Shuffle a new deck of cards.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "deck_count",
+            "type": "INTEGER",
+            "description": "Number of decks to use.",
+            "default": 1
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "success": "bool",
+          "deck_id": "string",
+          "remaining": "int",
+          "shuffled": "bool"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "fetch_random_joke",
+        "api_description": "Fetch a random dad joke in the specified format.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "accept",
+            "type": "STRING",
+            "description": "The format to accept the joke in.",
+            "default": "application/json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "string",
+          "joke": "string",
+          "status": "int"
+        }
+      }
+    ],
+    "query": "Can you shuffle a fresh deck of cards for me and then tell me a funny dad joke to lighten the mood?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "deckofcards",
+        "api_name": "draw_cards",
+        "api_description": "Draw cards from a deck.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "deck_id",
+            "type": "STRING",
+            "description": "The deck id to draw cards from.",
+            "default": "new"
+          },
+          {
+            "name": "count",
+            "type": "INTEGER",
+            "description": "Number of cards to draw.",
+            "default": 2
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "success": "bool",
+          "cards": [
+            {
+              "image": "string",
+              "value": "string",
+              "suit": "string",
+              "code": "string"
+            }
+          ],
+          "deck_id": "string",
+          "remaining": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "fetch_joke_by_id",
+        "api_description": "Fetch a specific dad joke by its ID.",
+        "required_parameters": [
+          {
+            "name": "joke_id",
+            "type": "STRING",
+            "description": "The ID of the joke to fetch."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "accept",
+            "type": "STRING",
+            "description": "The format to accept the joke in.",
+            "default": "application/json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "string",
+          "joke": "string",
+          "status": "int"
+        }
+      }
+    ],
+    "query": "Please draw two cards from a new deck and then fetch me a specific dad joke using its ID.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "deckofcards",
+        "api_name": "new_deck",
+        "api_description": "Open a brand new deck of cards.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "jokers_enabled",
+            "type": "BOOLEAN",
+            "description": "Include jokers in the deck.",
+            "default": false
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "success": "bool",
+          "deck_id": "string",
+          "remaining": "int"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "icanhazdadjoke",
+        "api_name": "search_jokes",
+        "api_description": "Search for dad jokes.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "term",
+            "type": "STRING",
+            "description": "Search term to use.",
+            "default": null
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page of results to fetch.",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results to return per page.",
+            "default": 20
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "current_page": "int",
+          "limit": "int",
+          "next_page": "int",
+          "previous_page": "int",
+          "results": [
+            {
+              "id": "string",
+              "joke": "string"
+            }
+          ],
+          "search_term": "string",
+          "status": "int",
+          "total_jokes": "int",
+          "total_pages": "int"
+        }
+      }
+    ],
+    "query": "Create a new deck of cards including jokers and then search for dad jokes related to 'cards'.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

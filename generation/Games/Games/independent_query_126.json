@@ -1,0 +1,130 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "datadragon",
+        "api_name": "get_latest_version",
+        "api_description": "Retrieve the latest version of Data Dragon.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "body": "list of strings representing versions"
+        }
+      },
+      {
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_info",
+        "api_description": "Returns the runedate of when the Grand Exchange Database was last updated.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "lastConfigUpdateRuneday": "int",
+          "lastConfigUpdateDate": "string"
+        }
+      }
+    ],
+    "query": "Can you tell me the latest version of the League of Legends Data Dragon, and also provide information on when the Grand Exchange Database for RuneScape was last updated?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "datadragon",
+        "api_name": "get_champion_data",
+        "api_description": "Retrieve champion data for a specified version and language.",
+        "required_parameters": [
+          {
+            "name": "version",
+            "type": "STRING",
+            "description": "The version of the data files.",
+            "default": "12.6.1"
+          },
+          {
+            "name": "language",
+            "type": "STRING",
+            "description": "The language code.",
+            "default": "en_US"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      {
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_category",
+        "api_description": "Returns the number of items in a category.",
+        "required_parameters": [
+          {
+            "name": "category",
+            "type": "INTEGER",
+            "description": "The category identification number."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "types": "list of objects with item type information"
+        }
+      }
+    ],
+    "query": "For the latest version of League of Legends, can you provide data on champions? Additionally, how many types of items are there in the specified RuneScape Grand Exchange category?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "datadragon",
+        "api_name": "get_item_data",
+        "api_description": "Retrieve item data for a specified version and language.",
+        "required_parameters": [
+          {
+            "name": "version",
+            "type": "STRING",
+            "description": "The version of the data files.",
+            "default": "12.6.1"
+          },
+          {
+            "name": "language",
+            "type": "STRING",
+            "description": "The language code.",
+            "default": "en_US"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      {
+        "tool_name": "runescape",
+        "api_name": "grand_exchange_detail",
+        "api_description": "Returns detailed information on a tradeable item.",
+        "required_parameters": [
+          {
+            "name": "item_id",
+            "type": "INTEGER",
+            "description": "The ItemID."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "item": {
+            "type": "object"
+          }
+        }
+      }
+    ],
+    "query": "Can you provide the item data for the latest League of Legends patch version? Also, what are the details of a specific RuneScape item in the Grand Exchange?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

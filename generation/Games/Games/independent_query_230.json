@@ -1,0 +1,132 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "fetch_random_joke",
+                "api_description": "Fetch a random dad joke in the specified format.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "accept",
+                        "type": "STRING",
+                        "description": "The format to accept the joke in.",
+                        "default": "application/json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "joke": "str",
+                    "status": "int"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_sets",
+                "api_description": "Retrieve a list of all available sets in the Pokémon TCG.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "series": "string",
+                            "total": "integer"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you tell me a random dad joke? Also, provide me with the list of all Pokémon TCG card sets available.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "search_jokes",
+                "api_description": "Search for dad jokes with a specific term.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "term",
+                        "type": "STRING",
+                        "description": "Search term to use.",
+                        "default": "null"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page of results to fetch.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results to return per page.",
+                        "default": "20"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "current_page": "int",
+                    "limit": "int",
+                    "next_page": "int",
+                    "previous_page": "int",
+                    "results": [
+                        {
+                            "id": "str",
+                            "joke": "str"
+                        }
+                    ],
+                    "search_term": "str",
+                    "status": "int",
+                    "total_jokes": "int",
+                    "total_pages": "int"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_cards",
+                "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the card to filter by.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "supertype": "string",
+                            "subtypes": [
+                                "string"
+                            ],
+                            "hp": "string",
+                            "types": [
+                                "string"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find me some dad jokes about computers. Also, can you list all the Pokémon cards with the name 'Pikachu'?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

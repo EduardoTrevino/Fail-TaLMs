@@ -1,0 +1,127 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "officaljoke",
+        "api_name": "grab_random_joke",
+        "api_description": "Grab a random joke from the Official Joke API.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "type": "string",
+          "setup": "string",
+          "punchline": "string"
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "pokemontcg",
+        "api_name": "get_cards",
+        "api_description": "Retrieve all Pokémon TCG cards, or filter them by name, supertype, types, and hp.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name of the card to filter by.",
+            "default": null
+          },
+          {
+            "name": "supertype",
+            "type": "STRING",
+            "description": "The supertype of the card, such as Pokémon, Energy, or Trainer.",
+            "default": null
+          },
+          {
+            "name": "types",
+            "type": "LIST",
+            "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+            "default": null
+          },
+          {
+            "name": "hp",
+            "type": "STRING",
+            "description": "The hit points of the card to filter by.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "string",
+              "name": "string",
+              "supertype": "string",
+              "hp": "string",
+              "types": ["string"]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you tell me a random joke to lighten my mood, and also show me some cards featuring the Pokémon Charizard from the Pokémon TCG collection?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "officaljoke",
+        "api_name": "grab_jokes_by_type",
+        "api_description": "Grab jokes by type from the Official Joke API.",
+        "required_parameters": [
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Type of jokes to fetch."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "number",
+            "type": "INTEGER",
+            "description": "Number of jokes to fetch (1 for 'random', others fetch more).",
+            "default": 1
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "id": "int",
+            "type": "string",
+            "setup": "string",
+            "punchline": "string"
+          }
+        ]
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "pokemontcg",
+        "api_name": "get_sets",
+        "api_description": "Retrieve a list of all available sets in the Pokémon TCG.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": [
+            {
+              "id": "string",
+              "name": "string",
+              "series": "string",
+              "total": "integer"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I'm in the mood for some programming jokes. Can you show me a few? Also, I would like to know all the sets available in the Pokémon TCG.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

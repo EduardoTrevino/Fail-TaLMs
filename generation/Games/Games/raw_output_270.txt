@@ -1,0 +1,125 @@
+Here is an example of an `api_list-question` JSON file, which includes questions that would require the use of at least one API from each of the provided tools:
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "magicthegathering",
+        "api_name": "get_cards_by_name",
+        "api_description": "Retrieve cards by name.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name of the card to search for."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "cards": [
+            {
+              "name": "str",
+              "id": "str",
+              "set": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "card_named_exact",
+        "api_description": "Retrieve card details based on exact name.",
+        "required_parameters": [
+          {
+            "name": "exact",
+            "type": "STRING",
+            "description": "The exact card name to search for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "set",
+            "type": "STRING",
+            "description": "A set code to limit the search to one set."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "name": "str",
+          "set": "str",
+          "type_line": "str",
+          "oracle_text": "str",
+          "colors": ["str"]
+        }
+      }
+    ],
+    "query": "Can you find detailed information about the Magic card named 'Archangel Avacyn', including its set information?",
+    "relevant APIs": ["get_cards_by_name", "card_named_exact"],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Games",
+        "tool_name": "magicthegathering",
+        "api_name": "get_all_sets",
+        "api_description": "Retrieve all MTG sets with optional filtering by name and block.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "name",
+            "type": "STRING"
+          },
+          {
+            "name": "block",
+            "type": "STRING"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "sets": [
+            {
+              "name": "str",
+              "code": "str",
+              "releaseDate": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Games",
+        "tool_name": "scryfall",
+        "api_name": "cards_autocomplete",
+        "api_description": "Autocomplete card names.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The string to autocomplete."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "include_extras",
+            "type": "BOOLEAN",
+            "description": "Includes extra cards if true."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "data": ["str"]
+        }
+      }
+    ],
+    "query": "Can you provide a list of Magic: The Gathering sets that start with 'Khans'? Also, complete the card names that begin with 'Tal'.",
+    "relevant APIs": ["get_all_sets", "cards_autocomplete"],
+    "query_id": 2
+  }
+]
+```
+
+This JSON structure includes two questions, each requiring the use of APIs from both the `magicthegathering` and `scryfall` tools. The questions are designed to retrieve information that would naturally require accessing different endpoints from each tool.
