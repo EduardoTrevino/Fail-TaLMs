@@ -1,0 +1,188 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmetro",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location."
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "hourly": {
+                        "temperature_2m": "list"
+                    }
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_graphical_forecast",
+                "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language",
+                        "default": "en"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "STRING",
+                        "description": "Unit system, either 'metric' or 'british'",
+                        "default": "metric"
+                    }
+                ],
+                "method": "GET",
+                "template_response": "Binary content of a PNG image"
+            }
+        ],
+        "query": "What is the current temperature and wind speed forecast at a specific location in Celsius and km/h? Additionally, provide a graphical weather forecast image for the same location.",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmetro",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location."
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned."
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "daily": {
+                        "temperature_2m_max": "list",
+                        "temperature_2m_min": "list"
+                    }
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "string",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the weather forecast for the next 7 days for a given location with maximum and minimum temperatures? Also, retrieve machine-readable weather data including wind and temperature for the same location.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

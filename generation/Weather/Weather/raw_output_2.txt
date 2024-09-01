@@ -1,0 +1,219 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Weather",
+        "tool_name": "awc",
+        "api_name": "get_metar",
+        "api_description": "Fetches decoded aviation weather observations (METAR).",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "ids",
+            "type": "STRING",
+            "description": "Station ID(s).",
+            "default": null
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output format.",
+            "default": "json"
+          },
+          {
+            "name": "taf",
+            "type": "BOOLEAN",
+            "description": "Include TAF information with the METAR.",
+            "default": false
+          },
+          {
+            "name": "hours",
+            "type": "NUMBER",
+            "description": "Hours back to search.",
+            "default": 1
+          },
+          {
+            "name": "bbox",
+            "type": "STRING",
+            "description": "Geographic bounding box.",
+            "default": null
+          },
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Specific date to fetch records for.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "str",
+          "response": "str"
+        }
+      },
+      {
+        "category_name": "Environment",
+        "tool_name": "opensensemap",
+        "api_name": "get_latest_measurements_of_sense_box",
+        "api_description": "Get the latest measurements of all sensors of the specified senseBox.",
+        "required_parameters": [
+          {
+            "name": "senseBoxId",
+            "type": "STRING",
+            "description": "The ID of the senseBox you are referring to."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "count",
+            "type": "NUMBER",
+            "description": "Number of measurements to be retrieved for every sensor.",
+            "default": 1
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "str",
+          "response": "str"
+        }
+      }
+    ],
+    "query": "I want to check the latest METAR weather conditions along with the latest environmental sensor data from a specific senseBox in the same region.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Weather",
+        "tool_name": "awc",
+        "api_name": "get_airsigmet",
+        "api_description": "Fetches AIRMETs and SIGMETs in decoded format.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output format.",
+            "default": "json"
+          },
+          {
+            "name": "type",
+            "type": "STRING",
+            "description": "Product type",
+            "default": null
+          },
+          {
+            "name": "hazard",
+            "type": "STRING",
+            "description": "Hazard type",
+            "default": null
+          },
+          {
+            "name": "level",
+            "type": "NUMBER",
+            "description": "The level +-3000' to search",
+            "default": 0
+          },
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Specify the date",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "str",
+          "response": "str"
+        }
+      },
+      {
+        "category_name": "Environment",
+        "tool_name": "opensensemap",
+        "api_name": "get_statistics_descriptive",
+        "api_description": "Compute basic descriptive statistics over specified time windows.",
+        "required_parameters": [
+          {
+            "name": "box_id",
+            "type": "STRING",
+            "description": "Comma separated list of senseBox IDs."
+          },
+          {
+            "name": "phenomenon",
+            "type": "STRING",
+            "description": "The name of the phenomenon you want to download the data for."
+          },
+          {
+            "name": "from_date",
+            "type": "STRING",
+            "description": "Beginning date of measurement data."
+          },
+          {
+            "name": "to_date",
+            "type": "STRING",
+            "description": "End date of measurement data."
+          },
+          {
+            "name": "operation",
+            "type": "STRING",
+            "description": "Type of operation (e.g., arithmeticMean, median)."
+          },
+          {
+            "name": "window",
+            "type": "STRING",
+            "description": "Time window over which statistics are computed."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "download",
+            "type": "BOOLEAN",
+            "description": "Download the result as a file.",
+            "default": true
+          },
+          {
+            "name": "columns",
+            "type": "STRING",
+            "description": "Specify columns to include in the response.",
+            "default": null
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output format (e.g., json, csv).",
+            "default": "csv"
+          },
+          {
+            "name": "bbox",
+            "type": "STRING",
+            "description": "A bounding box to limit the search.",
+            "default": null
+          },
+          {
+            "name": "exposure",
+            "type": "STRING",
+            "description": "Specify exposure type.",
+            "default": null
+          },
+          {
+            "name": "delimiter",
+            "type": "STRING",
+            "description": "Delimiter used if format is csv.",
+            "default": "comma"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "error": "str",
+          "response": "str"
+        }
+      }
+    ],
+    "query": "Can you check if there were any significant aviation weather hazards yesterday and also provide descriptive statistics on temperature for a selected region?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
