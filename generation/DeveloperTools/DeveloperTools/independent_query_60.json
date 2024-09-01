@@ -1,0 +1,93 @@
+[
+  {
+    "api_list": [
+      {
+          "tool_name": "digitaloceanstatus",
+          "api_name": "get_summary",
+          "api_description": "Get a summary of the DigitalOcean status page, including component statuses and incidents.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": []
+      },
+      {
+          "tool_name": "urlhaus",
+          "api_name": "query_recent_urls",
+          "api_description": "Retrieve a list of recent URLs added to URLhaus.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": [
+              {
+                  "name": "limit",
+                  "type": "INTEGER",
+                  "description": "Limit the number of results returned (max 1000).",
+                  "default": "1000"
+              }
+          ]
+      }
+    ],
+    "query": "I want to check the current status of DigitalOcean services and also fetch the most recent potentially malicious URLs added to URLhaus.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+          "tool_name": "digitaloceanstatus",
+          "api_name": "get_unresolved_incidents",
+          "api_description": "Get a list of any unresolved incidents on DigitalOcean.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": []
+      },
+      {
+          "tool_name": "urlhaus",
+          "api_name": "query_host_info",
+          "api_description": "Retrieve information about a specific host from URLhaus.",
+          "method": "POST",
+          "required_parameters": [
+              {
+                  "name": "host",
+                  "type": "STRING",
+                  "description": "The host to query (IPv4 address, hostname, or domain name)."
+              }
+          ]
+      }
+    ],
+    "query": "Can you identify any unresolved incidents for DigitalOcean and also provide information about the host example.com from URLhaus?",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+          "tool_name": "digitaloceanstatus",
+          "api_name": "get_upcoming_maintenances",
+          "api_description": "Get a list of any upcoming scheduled maintenances for DigitalOcean.",
+          "method": "GET",
+          "required_parameters": [],
+          "optional_parameters": []
+      },
+      {
+          "tool_name": "urlhaus",
+          "api_name": "query_payload_info",
+          "api_description": "Get information about a specific payload in URLhaus.",
+          "method": "POST",
+          "required_parameters": [
+              {
+                  "name": "md5_hash",
+                  "type": "STRING",
+                  "description": "The MD5 hash of the payload."
+              },
+              {
+                  "name": "sha256_hash",
+                  "type": "STRING",
+                  "description": "The SHA256 hash of the payload."
+              }
+          ]
+      }
+    ],
+    "query": "Please provide details on any upcoming maintenances for DigitalOcean, and also retrieve information about a payload with this SHA256 hash: 254ca6a7a7ef7f17d9884c4a86f88b5d5fd8fe5341c0996eaaf1d4bcb3b2337b.",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]

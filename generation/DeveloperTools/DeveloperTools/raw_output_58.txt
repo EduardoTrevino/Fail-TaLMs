@@ -1,0 +1,120 @@
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Cloud Services",
+                "tool_name": "digitaloceanstatus",
+                "api_name": "get_unresolved_incidents",
+                "api_description": "Fetch a list of any unresolved incidents currently affecting the DigitalOcean services.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "incidents": [
+                        {
+                            "id": "str",
+                            "status": "str",
+                            "impact": "str",
+                            "name": "str",
+                            "created_at": "str",
+                            "updated_at": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Data Visualization",
+                "tool_name": "quickchart",
+                "api_name": "generate_chart",
+                "api_description": "Generate a chart image based on a given Chart.js configuration.",
+                "required_parameters": [
+                    {
+                        "name": "chart_config",
+                        "type": "STRING",
+                        "description": "The Chart.js configuration object, specifying the type of chart and data.",
+                        "default": "{type:'pie',data:{labels:['Red','Blue','Yellow'],datasets:[{data:[10,20,30]}]}}"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "width",
+                        "type": "INTEGER",
+                        "description": "Width of the image in pixels.",
+                        "default": 500
+                    },
+                    {
+                        "name": "height",
+                        "type": "INTEGER",
+                        "description": "Height of the image in pixels.",
+                        "default": 300
+                    }
+                ],
+                "method": "GET or POST",
+                "template_response": "Image data, typically in bytes or as a base64 string."
+            }
+        ],
+        "query": "Can you check if there are any unresolved issues affecting DigitalOcean's services and summarize them in a pie chart showing the status of each?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Cloud Services",
+                "tool_name": "digitaloceanstatus",
+                "api_name": "get_upcoming_maintenances",
+                "api_description": "Retrieve a list of any upcoming scheduled maintenances on DigitalOcean.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "scheduled_maintenances": [
+                        {
+                            "id": "str",
+                            "status": "str",
+                            "impact": "str",
+                            "name": "str",
+                            "created_at": "str",
+                            "updated_at": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Data Visualization",
+                "tool_name": "quickchart",
+                "api_name": "generate_chart",
+                "api_description": "Create an image of a chart using a specific Chart.js configuration.",
+                "required_parameters": [
+                    {
+                        "name": "chart_config",
+                        "type": "STRING",
+                        "description": "The Chart.js configuration object in JSON format.",
+                        "default": "{type:'line',data:{labels:['January','February','March'],datasets:[{label:'Maintenance',data:[3,1,4]}]}}"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "width",
+                        "type": "INTEGER",
+                        "description": "Width of chart in pixels.",
+                        "default": 600
+                    },
+                    {
+                        "name": "height",
+                        "type": "INTEGER",
+                        "description": "Height of chart in pixels.",
+                        "default": 400
+                    }
+                ],
+                "method": "GET or POST",
+                "template_response": "The chart image in bytes or as a base64 string."
+            }
+        ],
+        "query": "I want to see a timeline of all upcoming maintenances for DigitalOcean. Can you illustrate this information with a line chart showing dates and counts of maintenances?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```

@@ -1,0 +1,122 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "agify",
+                "api_name": "estimate_age",
+                "api_description": "Estimate the age of a person based on their first name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The first name to estimate age for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "The country code to improve estimation accuracy."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "name": "str",
+                    "age": "int"
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "quickchart",
+                "api_name": "generate_chart",
+                "api_description": "Generates a chart image from a given Chart.js configuration.",
+                "required_parameters": [
+                    {
+                        "name": "chart_config",
+                        "type": "STRING",
+                        "description": "The Chart.js configuration object in Javascript or JSON format."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "width",
+                        "type": "INTEGER",
+                        "description": "Width of image in pixels.",
+                        "default": "500"
+                    },
+                    {
+                        "name": "height",
+                        "type": "INTEGER",
+                        "description": "Height of image in pixels.",
+                        "default": "300"
+                    }
+                ],
+                "method": "GET or POST",
+                "template_response": "An image in bytes or base64 string."
+            }
+        ],
+        "query": "Can you estimate the age of a person named 'Michael' from the US and generate a bar chart showing the name 'Michael' with its estimated age?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "agify",
+                "api_name": "estimate_age_batch",
+                "api_description": "Estimate the age for a batch of names.",
+                "required_parameters": [
+                    {
+                        "name": "names",
+                        "type": "ARRAY",
+                        "description": "A list of first names (up to 10) to estimate ages for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "The country code to improve estimation accuracy across all names."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "count": "int",
+                        "name": "str",
+                        "age": "int"
+                    }
+                ]
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "quickchart",
+                "api_name": "generate_chart",
+                "api_description": "Generates a chart image from a given Chart.js configuration.",
+                "required_parameters": [
+                    {
+                        "name": "chart_config",
+                        "type": "STRING",
+                        "description": "The Chart.js configuration object in Javascript or JSON format."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format for the chart.",
+                        "default": "png"
+                    }
+                ],
+                "method": "GET or POST",
+                "template_response": "An image in bytes or base64 string."
+            }
+        ],
+        "query": "I have a list of names: ['Emily', 'James', 'Sophie']. Can you provide their estimated ages and create a pie chart showing their names with the estimated ages?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

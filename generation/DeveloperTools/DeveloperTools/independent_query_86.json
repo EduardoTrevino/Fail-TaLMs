@@ -1,0 +1,135 @@
+[
+  {
+    "api_list": [
+        {
+            "category_name": "DeveloperTools",
+            "tool_name": "iptwolocation",
+            "api_name": "ip_geolocation",
+            "api_description": "Get geolocation information for a given IP address.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "IP address to lookup.",
+                    "default": null
+                },
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format, valid values: json | xml.",
+                    "default": "json"
+                },
+                {
+                    "name": "lang",
+                    "type": "STRING",
+                    "description": "Translation language in ISO639-1, applicable for certain plans.",
+                    "default": null
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "ip": "str",
+                "country_code": "str",
+                "country_name": "str",
+                "region_name": "str",
+                "city_name": "str",
+                "latitude": "float",
+                "longitude": "float",
+                "zip_code": "str",
+                "time_zone": "str",
+                "asn": "str",
+                "is_proxy": "bool"
+            }
+        },
+        {
+            "category_name": "DeveloperTools",
+            "tool_name": "microlink",
+            "api_name": "retrieve_metadata",
+            "api_description": "Retrieve metadata from any link.",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL to retrieve metadata for."
+                }
+            ],
+            "optional_parameters": [
+                {"name": "adblock", "type": "BOOLEAN", "default": "true"},
+                {"name": "animations", "type": "BOOLEAN", "default": "false"},
+                {"name": "audio", "type": "BOOLEAN", "default": "false"},
+                {"name": "colors", "type": "BOOLEAN", "default": "true"}
+            ],
+            "method": "GET",
+            "template_response": {
+                "status": "str",
+                "data": "dict"
+            }
+        }
+    ],
+    "query": "Can you provide the geolocation details of the IP address 8.8.8.8 and retrieve metadata from the page at https://www.example.com simultaneously?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "DeveloperTools",
+            "tool_name": "iptwolocation",
+            "api_name": "domain_whois",
+            "api_description": "Get WHOIS data for a given domain name.",
+            "required_parameters": [
+                {
+                    "name": "domain",
+                    "type": "STRING",
+                    "description": "Domain name for the WHOIS lookup."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "format",
+                    "type": "STRING",
+                    "description": "Response format, valid values: json | xml.",
+                    "default": "json"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "domain": "str",
+                "create_date": "str",
+                "update_date": "str",
+                "expire_date": "str",
+                "domain_age": "int"
+            }
+        },
+        {
+            "category_name": "DeveloperTools",
+            "tool_name": "microlink",
+            "api_name": "take_screenshot",
+            "api_description": "Take a screenshot of the target website.",
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL of the website to screenshot."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "screenshot",
+                    "type": "BOOLEAN",
+                    "default": "true"
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "status": "str",
+                "data": "dict"
+            }
+        }
+    ],
+    "query": "I need the domain WHOIS information for example.com and a screenshot of the website at https://www.example.com. Can you get both for me?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

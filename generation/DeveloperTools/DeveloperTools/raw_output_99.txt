@@ -1,0 +1,140 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "microlink",
+        "api_name": "retrieve_metadata",
+        "api_description": "Retrieve metadata from any link.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to retrieve metadata for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "adblock",
+            "type": "BOOLEAN",
+            "description": "Allows/disallows third-party ad requests.",
+            "default": true
+          },
+          {
+            "name": "animations",
+            "type": "BOOLEAN",
+            "description": "Enables/disables CSS animations.",
+            "default": false
+          },
+          {
+            "name": "audio",
+            "type": "BOOLEAN",
+            "description": "Enables audio source detection.",
+            "default": false
+          },
+          {
+            "name": "colors",
+            "type": "BOOLEAN",
+            "description": "Colorize output.",
+            "default": true
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "urlhaus",
+        "api_name": "query_host_info",
+        "api_description": "Get information about a specific host.",
+        "required_parameters": [
+          {
+            "name": "host",
+            "type": "STRING",
+            "description": "The host to query (IPv4 address, hostname, or domain name)."
+          }
+        ],
+        "method": "POST"
+      }
+    ],
+    "query": "Can you retrieve metadata from the homepage of a potentially malicious website? Additionally, I need information about its host to verify its legitimacy.",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "microlink",
+        "api_name": "take_screenshot",
+        "api_description": "Take a screenshot of the target website.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL of the website to screenshot."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "screenshot",
+            "type": "BOOLEAN",
+            "description": "Boolean to take a screenshot.",
+            "default": true
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "urlhaus",
+        "api_name": "query_url_info",
+        "api_description": "Get information on a specific URL by URL or ID.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to query."
+          }
+        ],
+        "method": "POST"
+      }
+    ],
+    "query": "I need a visual snapshot of a suspicious URL and detailed information about it. How can I achieve this?",
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "microlink",
+        "api_name": "filter_data",
+        "api_description": "Filter specific data fields from response payload.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to process."
+          },
+          {
+            "name": "filter",
+            "type": "STRING",
+            "description": "Comma-separated list of data fields to include."
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "urlhaus",
+        "api_name": "query_recent_urls",
+        "api_description": "Get a list of recent URLs added to URLhaus.",
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit the number of results returned (max 1000).",
+            "default": 1000
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "Retrieve filtered metadata from a technology news site and list some recent suspicious URLs for comparison.",
+    "query_id": 3
+  }
+]
+```

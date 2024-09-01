@@ -1,0 +1,182 @@
+Here's a JSON file with questions that require the use of at least one API from both the "arul" and "quickchart" tools. 
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Networking",
+        "tool_name": "arul",
+        "api_name": "get_ip_address_text",
+        "api_description": "Returns your IP address in text format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip_address": "string"
+        }
+      },
+      {
+        "category_name": "Charting",
+        "tool_name": "quickchart",
+        "api_name": "generate_chart",
+        "api_description": "Generates a chart image from a given Chart.js configuration.",
+        "required_parameters": [
+          {
+            "name": "chart_config",
+            "type": "STRING",
+            "description": "The Chart.js configuration object in Javascript or JSON format.",
+            "default": "{type:'line',data:{labels:['January','February','March'],datasets:[{label:'Temperatures',data:[-5,0,5]}]}}"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "width",
+            "type": "INTEGER",
+            "description": "Width of image in pixels.",
+            "default": "500"
+          },
+          {
+            "name": "height",
+            "type": "INTEGER",
+            "description": "Height of image in pixels.",
+            "default": "300"
+          },
+          {
+            "name": "device_pixel_ratio",
+            "type": "INTEGER",
+            "description": "Device pixel ratio, 1 for normal resolution, 2 for retina.",
+            "default": "2"
+          },
+          {
+            "name": "background_color",
+            "type": "STRING",
+            "description": "Background color of the chart.",
+            "default": "transparent"
+          },
+          {
+            "name": "version",
+            "type": "STRING",
+            "description": "Chart.js version to use.",
+            "default": "2"
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output format for the chart.",
+            "default": "png"
+          },
+          {
+            "name": "encoding",
+            "type": "STRING",
+            "description": "Output encoding, url or base64.",
+            "default": "url"
+          },
+          {
+            "name": "method",
+            "type": "STRING",
+            "description": "HTTP method to use, 'GET' or 'POST'.",
+            "default": "GET"
+          }
+        ],
+        "method": "GET or POST",
+        "template_response": {
+          "image": "bytes"
+        }
+      }
+    ],
+    "query": "Can you provide my current IP address in text format and also generate a line chart showcasing average monthly temperatures?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Networking",
+        "tool_name": "arul",
+        "api_name": "get_ip_address_json",
+        "api_description": "Returns your IP address in JSON format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "ip": "string"
+        }
+      },
+      {
+        "category_name": "Charting",
+        "tool_name": "quickchart",
+        "api_name": "generate_chart",
+        "api_description": "Generates a chart image from a given Chart.js configuration.",
+        "required_parameters": [
+          {
+            "name": "chart_config",
+            "type": "STRING",
+            "description": "The Chart.js configuration object in Javascript or JSON format.",
+            "default": "{type:'bar',data:{labels:['Q1','Q2','Q3','Q4'],datasets:[{label:'Revenue',data:[2000,3000,4000,5000]}]}}"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "width",
+            "type": "INTEGER",
+            "description": "Width of image in pixels.",
+            "default": "500"
+          },
+          {
+            "name": "height",
+            "type": "INTEGER",
+            "description": "Height of image in pixels.",
+            "default": "300"
+          },
+          {
+            "name": "device_pixel_ratio",
+            "type": "INTEGER",
+            "description": "Device pixel ratio, 1 for normal resolution, 2 for retina.",
+            "default": "2"
+          },
+          {
+            "name": "background_color",
+            "type": "STRING",
+            "description": "Background color of the chart.",
+            "default": "transparent"
+          },
+          {
+            "name": "version",
+            "type": "STRING",
+            "description": "Chart.js version to use.",
+            "default": "2"
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output format for the chart.",
+            "default": "png"
+          },
+          {
+            "name": "encoding",
+            "type": "STRING",
+            "description": "Output encoding, url or base64.",
+            "default": "url"
+          },
+          {
+            "name": "method",
+            "type": "STRING",
+            "description": "HTTP method to use, 'GET' or 'POST'.",
+            "default": "GET"
+          }
+        ],
+        "method": "GET or POST",
+        "template_response": {
+          "image": "bytes"
+        }
+      }
+    ],
+    "query": "What is my current IP address in JSON format? Also, could you create a bar chart to show quarterly revenue data?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+These questions are framed to utilize the APIs provided in both "arul" and "quickchart" tools. Each question is independent, enabling usage of specific APIs from each tool based on its functionality.

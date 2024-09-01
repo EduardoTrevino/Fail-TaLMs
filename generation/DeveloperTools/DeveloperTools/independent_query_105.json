@@ -1,0 +1,181 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "seralifcolor",
+        "api_name": "get_color_info",
+        "api_description": "Get the requested color, its complementary, and its grayscale in different formats and the black or white text corresponding to each color according to its brightness.",
+        "required_parameters": [
+          {
+            "name": "color",
+            "type": "STRING",
+            "description": "The color in Keyword, HEX, RGB, RGBA, HSL, or HSLA format.",
+            "default": "aquamarine"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "base": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          },
+          "base_without_alpha": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          }
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "urlhaus",
+        "api_name": "query_url_info",
+        "api_description": "Retrieve information about a specific URL or URL ID.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to query."
+          },
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "description": "The ID of the URL to query."
+          }
+        ],
+        "method": "POST",
+        "template_response": {
+          "query_status": "str",
+          "data": {
+            "url": "str",
+            "host": "str",
+            "date_added": "str",
+            "threat": "str"
+          }
+        }
+      }
+    ],
+    "query": "Could you provide me details about the color 'teal' and also check if the URL 'http://example.com/infected' is listed on URLhaus?",
+    "relevant APIs": ["get_color_info", "query_url_info"],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "seralifcolor",
+        "api_name": "get_color_info",
+        "api_description": "Get the requested color, its complementary, and its grayscale in different formats and the black or white text corresponding to each color according to its brightness.",
+        "required_parameters": [
+          {
+            "name": "color",
+            "type": "STRING",
+            "description": "The color in Keyword, HEX, RGB, RGBA, HSL, or HSLA format.",
+            "default": "aquamarine"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "base": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          },
+          "base_without_alpha": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          }
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "urlhaus",
+        "api_name": "query_recent_urls",
+        "api_description": "Retrieve a list of recent URLs added to URLhaus.",
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit the number of results returned (max 1000).",
+            "default": "1000"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "query_status": "str",
+          "urls": [
+            {
+              "url": "str",
+              "date_added": "str",
+              "threat": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I am working on a graphic project and need the color details for 'forestgreen'. Additionally, can you list the most recent 5 URLs flagged by URLhaus?",
+    "relevant APIs": ["get_color_info", "query_recent_urls"],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "seralifcolor",
+        "api_name": "get_color_info",
+        "api_description": "Get the requested color, its complementary, and its grayscale in different formats and the black or white text corresponding to each color according to its brightness.",
+        "required_parameters": [
+          {
+            "name": "color",
+            "type": "STRING",
+            "description": "The color in Keyword, HEX, RGB, RGBA, HSL, or HSLA format.",
+            "default": "aquamarine"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "base": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          },
+          "base_without_alpha": {
+            "hex": "str",
+            "rgb": "str",
+            "hsl": "str"
+          }
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "urlhaus",
+        "api_name": "query_host_info",
+        "api_description": "Retrieve information about a specific host.",
+        "required_parameters": [
+          {
+            "name": "host",
+            "type": "STRING",
+            "description": "The host to query (IPv4 address, hostname, or domain name)."
+          }
+        ],
+        "method": "POST",
+        "template_response": {
+          "query_status": "str",
+          "host_info": {
+            "host": "str",
+            "date_added": "str",
+            "threats": [
+              {"threat_type": "str"}
+            ]
+          }
+        }
+      }
+    ],
+    "query": "Can you find out what complementary color would work with 'navy' for a website background? Also, check if the host 'malicious-site.com' has any threats associated with it according to URLhaus.",
+    "relevant APIs": ["get_color_info", "query_host_info"],
+    "query_id": 3
+  }
+]

@@ -1,0 +1,130 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "agify",
+        "api_name": "estimate_age",
+        "api_description": "Estimate the age of a person based on their first name.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The first name to estimate age for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "The country code to improve estimation accuracy."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "name": "str",
+          "age": "int",
+          "country_id": "str"
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "check_gender",
+        "api_description": "Predicts the gender of a single name, optionally scoped to a specific country.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name to predict gender for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "Country code for localization following ISO 3166-1 alpha-2."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "name": "str",
+          "gender": "str",
+          "probability": "float",
+          "country_id": "str"
+        }
+      }
+    ],
+    "query": "Can you estimate the age and predict the gender of a person named Sarah in the United States?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "agify",
+        "api_name": "estimate_age_batch",
+        "api_description": "Estimate the age for a batch of names.",
+        "required_parameters": [
+          {
+            "name": "names",
+            "type": "ARRAY",
+            "description": "A list of first names (up to 10) to estimate ages for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "The country code to improve estimation accuracy across all names."
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "count": "int",
+            "name": "str",
+            "age": "int",
+            "country_id": "str"
+          }
+        ]
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "check_genders",
+        "api_description": "Predicts the gender of multiple names in one request, optionally scoped to a specific country.",
+        "required_parameters": [
+          {
+            "name": "names",
+            "type": "LIST OF STRINGS",
+            "description": "The names to predict genders for, maximum 10 names."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "Country code for localization following ISO 3166-1 alpha-2."
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "count": "int",
+            "name": "str",
+            "gender": "str",
+            "probability": "float",
+            "country_id": "str"
+          }
+        ]
+      }
+    ],
+    "query": "For the names Michael, Emily, and Jessica, can you provide both their estimated ages and predicted genders, taking into account the context of Canada?",
+    "query_id": 2
+  }
+]
+```

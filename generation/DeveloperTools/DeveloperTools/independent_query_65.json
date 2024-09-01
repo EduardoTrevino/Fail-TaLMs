@@ -1,0 +1,153 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "check_gender",
+        "api_description": "Predicts the gender of a single name, optionally scoped to a specific country.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name to predict gender for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "Country code for localization following ISO 3166-1 alpha-2."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "name": "str",
+          "gender": "str",
+          "probability": "float",
+          "country_id": "str"
+        }
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "microlink",
+        "api_name": "retrieve_metadata",
+        "api_description": "Retrieve metadata from any link.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to retrieve metadata for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "adblock",
+            "type": "BOOLEAN",
+            "default": "true",
+            "description": "Allows/disallows third-party ad requests."
+          },
+          {
+            "name": "animations",
+            "type": "BOOLEAN",
+            "default": "false",
+            "description": "Enables/disables CSS animations."
+          },
+          {
+            "name": "audio",
+            "type": "BOOLEAN",
+            "default": "false",
+            "description": "Enables audio source detection."
+          },
+          {
+            "name": "colors",
+            "type": "BOOLEAN",
+            "default": "true",
+            "description": "Colorize output."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "status": "success",
+          "data": {
+            "title": "str",
+            "description": "str",
+            "url": "str",
+            "image": "str",
+            "logo": "str"
+          }
+        }
+      }
+    ],
+    "query": "I want to know the gender prediction for the name 'Alex', and I would also like to retrieve metadata from the website 'https://example.com'.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "genderize",
+        "api_name": "check_genders",
+        "api_description": "Predicts the gender of multiple names in one request, optionally scoped to a specific country.",
+        "required_parameters": [
+          {
+            "name": "names",
+            "type": "LIST OF STRINGS",
+            "description": "The names to predict genders for, maximum 10 names."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country_id",
+            "type": "STRING",
+            "description": "Country code for localization following ISO 3166-1 alpha-2."
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "count": "int",
+            "name": "str",
+            "gender": "str",
+            "probability": "float",
+            "country_id": "str"
+          }
+        ]
+      },
+      {
+        "category_name": "DeveloperTools",
+        "tool_name": "microlink",
+        "api_name": "take_screenshot",
+        "api_description": "Take a screenshot of the target website.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL of the website to screenshot."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "screenshot",
+            "type": "BOOLEAN",
+            "default": "true",
+            "description": "Boolean to take a screenshot."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "status": "success",
+          "data": {
+            "url": "str",
+            "screenshot_url": "str"
+          }
+        }
+      }
+    ],
+    "query": "Can you predict the genders for the names 'Chris', 'Jordan', and 'Sam'? Also, I need a screenshot of the home page of 'https://example.org'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
