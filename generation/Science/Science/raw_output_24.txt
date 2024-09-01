@@ -1,0 +1,108 @@
+Here's a sample `api_list-question.json` file for your request using the `celestrak` and `itis` tools:
+
+```json
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "celestrak",
+                "api_name": "query_by_catnr",
+                "api_description": "Query GP data using Catalog Number (CATNR).",
+                "required_parameters": [
+                    {
+                        "name": "CATNR",
+                        "type": "STRING",
+                        "description": "Catalog number for the satellite."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "FORMAT",
+                        "type": "STRING",
+                        "description": "Format of data. Defaults to 'TLE'.",
+                        "default": "TLE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": "string or object"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "itis",
+                "api_name": "search_by_common_name",
+                "api_description": "Finds matches by comparing the search key to the ITIS common names.",
+                "required_parameters": [
+                    {
+                        "name": "srchKey",
+                        "type": "STRING",
+                        "description": "The common name to search."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": "object"
+                }
+            }
+        ],
+        "query": "I want to track the satellite with catalog number 25544 using Celestrak. Also, can you find species information for the common name 'bear' using ITIS?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "celestrak",
+                "api_name": "query_by_group",
+                "api_description": "Query GP data using groups of satellites.",
+                "required_parameters": [
+                    {
+                        "name": "GROUP",
+                        "type": "STRING",
+                        "description": "Group name for the satellites."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "FORMAT",
+                        "type": "STRING",
+                        "description": "Format of data. Defaults to 'TLE'.",
+                        "default": "TLE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": "string or object"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "itis",
+                "api_name": "search_by_scientific_name",
+                "api_description": "Returns matches found by comparing the search key to the ITIS full Scientific Names.",
+                "required_parameters": [
+                    {
+                        "name": "srchKey",
+                        "type": "STRING",
+                        "description": "The scientific name to search."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": "object"
+                }
+            }
+        ],
+        "query": "Can you get the satellite data for the 'STATIONS' group through Celestrak? Also, search for the scientific name 'Ursus arctos' in the ITIS database.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```
+
+Each entry provides a task that requires using one API from each tool, accompanied by relevant details needed to perform the request and generate responses.

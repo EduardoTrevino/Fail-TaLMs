@@ -1,0 +1,117 @@
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Transportation",
+            "tool_name": "berlin_brandenburg",
+            "api_name": "locations",
+            "api_description": "Find stops/stations, POIs and addresses matching a query.",
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query for locations.",
+                    "default": "central station"
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "fuzzy",
+                    "type": "BOOLEAN",
+                    "description": "Find more than exact matches?",
+                    "default": "true"
+                },
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "How many stations to show?",
+                    "default": "5"
+                }
+            ],
+            "method": "GET"
+        },
+        {
+            "category_name": "Transportation",
+            "tool_name": "mbta",
+            "api_name": "get_alerts",
+            "api_description": "List active and upcoming system alerts.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_route",
+                    "type": "STRING",
+                    "description": "Filter by route id.",
+                    "default": "1"
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Sort the alerts.",
+                    "default": "newest"
+                }
+            ],
+            "method": "GET"
+        }
+    ],
+    "query": "Could you find some major transport stations in Berlin and check if there are any alerts on Route 1 using the MBTA data?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "category_name": "Transportation",
+            "tool_name": "berlin_brandenburg",
+            "api_name": "radar",
+            "api_description": "Find all vehicles currently in an area and their movements.",
+            "required_parameters": [
+                {
+                    "name": "north",
+                    "type": "FLOAT",
+                    "description": "Northern boundary of the area.",
+                    "default": 52.52411
+                },
+                {
+                    "name": "west",
+                    "type": "FLOAT",
+                    "description": "Western boundary of the area.",
+                    "default": 13.41002
+                },
+                {
+                    "name": "south",
+                    "type": "FLOAT",
+                    "description": "Southern boundary of the area.",
+                    "default": 52.51942
+                },
+                {
+                    "name": "east",
+                    "type": "FLOAT",
+                    "description": "Eastern boundary of the area.",
+                    "default": 13.41709
+                }
+            ],
+            "optional_parameters": [],
+            "method": "GET"
+        },
+        {
+            "category_name": "Transportation",
+            "tool_name": "mbta",
+            "api_name": "get_lines",
+            "api_description": "List lines.",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_id",
+                    "type": "STRING",
+                    "description": "Filter by line id.",
+                    "default": "Red"
+                }
+            ],
+            "method": "GET"
+        }
+    ],
+    "query": "I need to monitor the vehicles currently moving in the central Berlin area and could you list the details of the Red Line from the MBTA data?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

@@ -1,0 +1,151 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "arxiv",
+        "api_name": "query_arxiv",
+        "api_description": "Query interface for searching arXiv articles.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "search_query",
+            "type": "STRING",
+            "description": "Search terms used for the query."
+          },
+          {
+            "name": "id_list",
+            "type": "LIST",
+            "description": "List of arXiv article IDs for the query."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "feed": {
+            "title": "str",
+            "entry": {
+              "id": "str",
+              "updated": "str",
+              "published": "str",
+              "summary": "str"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "usgs",
+        "api_name": "query",
+        "api_description": "Submit a data request.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Specify the output format.",
+            "default": "geojson"
+          },
+          {
+            "name": "starttime",
+            "type": "STRING",
+            "description": "Limit events on or after the specified start time."
+          },
+          {
+            "name": "minmagnitude",
+            "type": "DECIMAL",
+            "description": "Limit to events with a magnitude larger than the specified minimum."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "FeatureCollection",
+          "metadata": {
+            "generated": "int",
+            "url": "str",
+            "title": "str",
+            "status": "int"
+          },
+          "features": [
+            {
+              "type": "Feature",
+              "properties": {
+                "mag": "float",
+                "place": "str",
+                "time": "int"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find recent articles on AI safety from arXiv? Also, provide earthquake data for events that occurred in Japan this year with a magnitude greater than 5.0.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "arxiv",
+        "api_name": "query_arxiv",
+        "api_description": "Query interface for searching arXiv articles.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "search_query",
+            "type": "STRING",
+            "description": "Search terms used for the query."
+          },
+          {
+            "name": "max_results",
+            "type": "INTEGER",
+            "description": "Maximum number of results to return."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "feed": {
+            "title": "str",
+            "entry": {
+              "id": "str",
+              "updated": "str",
+              "published": "str",
+              "summary": "str"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "usgs",
+        "api_name": "count",
+        "api_description": "Perform a count on a data request.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "starttime",
+            "type": "STRING",
+            "description": "Limit events on or after the specified start time."
+          },
+          {
+            "name": "endtime",
+            "type": "STRING",
+            "description": "Limit the events on or before the specified end time."
+          },
+          {
+            "name": "minmagnitude",
+            "type": "DECIMAL",
+            "description": "Limit to events with a magnitude larger than the specified minimum."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int"
+        }
+      }
+    ],
+    "query": "Retrieve the latest three papers on quantum computing from arXiv and count the number of earthquakes with a magnitude above 6.0 that happened in the past week.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

@@ -1,0 +1,106 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "celestrak",
+        "api_name": "query_by_catnr",
+        "api_description": "Query GP data using Catalog Number (CATNR).",
+        "required_parameters": [
+          {
+            "name": "CATNR",
+            "type": "STRING",
+            "description": "Catalog number for the satellite."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "FORMAT",
+            "type": "STRING",
+            "description": "Format of data. Defaults to 'TLE'.",
+            "default": "TLE"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "string or object",
+          "description": "Responds with requested data in the specified format."
+        }
+      },
+      {
+        "tool_name": "spacex",
+        "api_name": "get_next_launch",
+        "api_description": "Retrieve information about the next launch.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "fairings": "object",
+          "links": "object",
+          "static_fire_date_utc": "string",
+          "rocket": "string",
+          "success": "boolean",
+          "details": "string",
+          "crew": ["string"],
+          "ships": ["string"],
+          "capsules": ["string"],
+          "payloads": ["string"],
+          "launchpad": "string"
+        }
+      }
+    ],
+    "query": "What's the latest update on the satellite with catalog number 25544? Also, when is the next SpaceX launch scheduled?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "celestrak",
+        "api_name": "query_by_group",
+        "api_description": "Query GP data using groups of satellites.",
+        "required_parameters": [
+          {
+            "name": "GROUP",
+            "type": "STRING",
+            "description": "Group name for the satellites."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "FORMAT",
+            "type": "STRING",
+            "description": "Format of data. Defaults to 'TLE'.",
+            "default": "TLE"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "string or object",
+          "description": "Responds with requested data in the specified format."
+        }
+      },
+      {
+        "tool_name": "spacex",
+        "api_name": "get_all_capsules",
+        "api_description": "Retrieve all capsules information.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": [
+          {
+            "serial": "string",
+            "reuse_count": "int",
+            "status": "string",
+            "last_update": "string",
+            "launches": ["string"]
+          }
+        ]
+      }
+    ],
+    "query": "Can you provide the list of all satellites within the STATIONS group and details of all SpaceX capsules?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

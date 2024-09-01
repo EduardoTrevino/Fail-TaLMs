@@ -1,0 +1,112 @@
+To generate the `api_list-question` JSON file, we need a list of questions that require the use of at least one API from each of the provided tools ("idigibio" and "opennotify"). These questions should be realistic inquiries that a human might have, which can be resolved using the APIs from each tool independently. Let's create an example JSON structure:
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "idigibio",
+        "api_name": "search_records",
+        "api_description": "Searches for record objects in the iDigBio database.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "rq",
+            "type": "DICT",
+            "description": "Search Query in iDigBio Query Format.",
+            "default": null
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Max results.",
+            "default": 10
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "itemCount": "int",
+          "items": ["object"]
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "opennotify",
+        "api_name": "get_iss_location",
+        "api_description": "Returns the current location of the International Space Station (ISS).",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "message": "success",
+          "timestamp": "int",
+          "iss_position": {
+            "latitude": "float",
+            "longitude": "float"
+          }
+        }
+      }
+    ],
+    "query": "Can you find the first 10 animal records available in the iDigBio database? Also, where is the International Space Station currently located?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "idigibio",
+        "api_name": "view_basic_access",
+        "api_description": "Returns iDigBio record format from legacy API given a UUID.",
+        "required_parameters": [
+          {
+            "name": "uuid",
+            "type": "STRING",
+            "description": "The unique identifier for the record."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "view_type",
+            "type": "STRING",
+            "description": "The type of object to view.",
+            "default": "records"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "uuid": "str",
+          "data": "object"
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "opennotify",
+        "api_name": "get_people_in_space",
+        "api_description": "Returns the current number of people in space, along with their names and spacecraft.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "message": "success",
+          "number": "int",
+          "people": [
+            {
+              "name": "str",
+              "craft": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I have a specific record UUID from the iDigBio database I'd like more details about. Also, could you tell me how many people are currently in space and their names?",
+    "query_id": 2
+  }
+]
+```
+
+The JSON structure contains two examples:
+- **Query 1** leverages the `search_records` API from the iDigBio tool to find records related to animals and the `get_iss_location` API from the Open Notify tool to get the current location of the ISS.
+- **Query 2** uses the `view_basic_access` API from iDigBio to retrieve specific record details using a UUID and the `get_people_in_space` API from Open Notify to list the current people in space. 
+
+These questions cover the functionalities of both tools and can be answered using their respective APIs independently.

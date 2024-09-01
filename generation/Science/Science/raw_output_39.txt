@@ -1,0 +1,131 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "idigibio",
+        "api_name": "search_records",
+        "api_description": "Searches for record objects.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "rq",
+            "type": "DICT",
+            "description": "Search Query in iDigBio Query Format."
+          },
+          {
+            "name": "sort",
+            "type": "STRING",
+            "description": "Field to sort on."
+          },
+          {
+            "name": "fields",
+            "type": "LIST",
+            "description": "List of fields to return."
+          },
+          {
+            "name": "fields_exclude",
+            "type": "LIST",
+            "description": "List of fields to exclude."
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Max results.",
+            "default": 10
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "Skip results.",
+            "default": 0
+          },
+          {
+            "name": "no_attribution",
+            "type": "BOOLEAN",
+            "description": "Disable the attribution block."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "itemCount": "int",
+          "items": ["dict"]
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "itis",
+        "api_name": "search_by_common_name",
+        "api_description": "Finds matches by comparing the search key to the ITIS common names.",
+        "required_parameters": [
+          {
+            "name": "srchKey",
+            "type": "STRING",
+            "description": "The common name to search."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "matches": ["dict"]
+        }
+      }
+    ],
+    "query": "How many biodiversity records related to mammals can I find in the iDigBio database, and can you also find any ITIS taxonomic matches for the common name 'bear'?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "idigibio",
+        "api_name": "view_basic_access",
+        "api_description": "Returns iDigBio record format from legacy API.",
+        "required_parameters": [
+          {
+            "name": "uuid",
+            "type": "STRING",
+            "description": "The unique identifier for the record."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "view_type",
+            "type": "STRING",
+            "description": "The type of object to view.",
+            "default": "records"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "uuid": "str",
+          "data": "dict"
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "itis",
+        "api_name": "get_itis_terms",
+        "api_description": "Gets a list of ITIS Terms from a common or scientific name match.",
+        "required_parameters": [
+          {
+            "name": "srchKey",
+            "type": "STRING",
+            "description": "The search key for matching."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "terms": ["dict"]
+        }
+      }
+    ],
+    "query": "I have a specific record with uuid 'c5e7b8fe-7f33-404e-96cc-35a201a4b1d9' from the iDigBio database. Can you provide its details and also give me ITIS terms for 'Panthera leo'?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

@@ -1,0 +1,86 @@
+[
+  {
+    "api_list": [
+        {
+            "category_name": "Science",
+            "tool_name": "catfacts",
+            "api_name": "get_cat_facts",
+            "api_description": "Retrieve daily cat facts.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string"
+                        },
+                        "_id": {
+                            "type": "string"
+                        },
+                        "updatedAt": {
+                            "type": "string"
+                        },
+                        "createdAt": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "category_name": "Science",
+            "tool_name": "sunsetsunrise",
+            "api_name": "get_sunrise_sunset_times",
+            "api_description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+            "required_parameters": [
+                {
+                    "name": "lat",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location in decimal degrees."
+                },
+                {
+                    "name": "lng",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location in decimal degrees."
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "date",
+                    "type": "STRING",
+                    "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                },
+                {
+                    "name": "timezone",
+                    "type": "STRING",
+                    "description": "Timezone of the returned times. Defaults to the location's timezone."
+                }
+            ],
+            "method": "GET",
+            "template_response": {
+                "results": {
+                    "date": "str",
+                    "sunrise": "str",
+                    "sunset": "str",
+                    "first_light": "str",
+                    "last_light": "str",
+                    "dawn": "str",
+                    "dusk": "str",
+                    "solar_noon": "str",
+                    "golden_hour": "str",
+                    "day_length": "str",
+                    "timezone": "str",
+                    "utc_offset": "int"
+                },
+                "status": "str"
+            }
+        }
+    ],
+    "query": "What are some interesting cat facts? Also, can you provide today's sunrise and sunset times for New York City?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

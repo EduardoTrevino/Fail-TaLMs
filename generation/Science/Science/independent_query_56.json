@@ -1,0 +1,95 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "newton",
+                "api_name": "newton_calculate",
+                "api_description": "Performs a specified mathematical operation on a provided expression and returns the result.",
+                "required_parameters": [
+                    {
+                        "name": "operation",
+                        "type": "STRING",
+                        "description": "The math operation to perform. Supported operations include: simplify, factor, derive, integrate, zeroes, area, cos, sin, tan, arccos, arcsin, arctan, abs, log."
+                    },
+                    {
+                        "name": "expression",
+                        "type": "STRING",
+                        "description": "The URL-encoded math expression to calculate."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "operation": "string",
+                    "expression": "string",
+                    "result": "string"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "usgs",
+                "api_name": "query",
+                "api_description": "Submit a data request for earthquake information based on criteria such as time frame and magnitude range.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Specify the output format.",
+                        "default": "geojson"
+                    },
+                    {
+                        "name": "starttime",
+                        "type": "STRING",
+                        "description": "Limit events on or after the specified start time."
+                    },
+                    {
+                        "name": "endtime",
+                        "type": "STRING",
+                        "description": "Limit the events on or before the specified end time."
+                    },
+                    {
+                        "name": "minmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude larger than the specified minimum."
+                    },
+                    {
+                        "name": "maxmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude smaller than the specified maximum."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "mag": "string",
+                                "place": "string",
+                                "time": "number"
+                            }
+                        }
+                    ],
+                    "metadata": {
+                        "title": "string",
+                        "count": "int"
+                    }
+                }
+            }
+        ],
+        "query": "Can you calculate the derivative of the expression '3x^2 + 2x + 1' and also provide me with a list of earthquakes that occurred with a magnitude of 5 or higher from 1st January 2021 to 2nd January 2021?",
+        "relevant APIs": [
+            {
+                "tool_name": "newton",
+                "api_name": "newton_calculate"
+            },
+            {
+                "tool_name": "usgs",
+                "api_name": "query"
+            }
+        ],
+        "query_id": 1
+    }
+]
