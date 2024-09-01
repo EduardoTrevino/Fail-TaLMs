@@ -15,9 +15,9 @@ class TestViaCepAPI(unittest.TestCase):
         self.assertEqual(result['error'], 'Invalid ZIP code format. Must be 8 digits.')
 
     def test_query_cep_nonexistent(self):
-        result = query_cep('99999999')
-        self.assertIn('erro', result)
-        self.assertTrue(result['erro'])
+        result = query_cep('9999999999')
+        self.assertIn('error', result)
+        self.assertTrue(result['error'])
 
     def test_search_address_valid(self):
         result = search_address('RS', 'Porto Alegre', 'Domingos')
