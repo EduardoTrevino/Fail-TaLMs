@@ -1,0 +1,112 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_departments",
+                "api_description": "Retrieve a list of all departments in the Met.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "departments": [
+                        {
+                            "departmentId": "int",
+                            "displayName": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "robohash",
+                "api_name": "get_robohash_image",
+                "api_description": "Generate a unique robohash image based on given text.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Text input for generating the image.",
+                        "default": "departmentName"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fmt",
+                        "type": "STRING",
+                        "description": "Output format of the image.",
+                        "default": "png"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": "binary"
+                }
+            }
+        ],
+        "query": "Can you list all departments in the Met Museum and generate a unique image for each department name?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
+                "api_description": "Search for objects in the Met's collection based on certain criteria.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Search term.",
+                        "default": "sunflowers"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "is_highlight",
+                        "type": "BOOLEAN",
+                        "description": "Return objects that are designated as highlights.",
+                        "default": "true"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total": "int",
+                    "objectIDs": ["int"]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "robohash",
+                "api_name": "get_robohash_image",
+                "api_description": "Generate a robohash image for a specific object ID.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Text input for generating the image.",
+                        "default": "objectID"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fmt",
+                        "type": "STRING",
+                        "description": "Output format of the image.",
+                        "default": "png"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": "binary"
+                }
+            }
+        ],
+        "query": "Find highlighted objects related to 'sunflowers' in the Met's collection and create a unique image for the object IDs retrieved.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

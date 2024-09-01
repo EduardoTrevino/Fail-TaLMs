@@ -1,0 +1,133 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Calendar",
+                "tool_name": "nagerdate",
+                "api_name": "public_holidays",
+                "api_description": "Retrieve public holidays for a given year and country.",
+                "required_parameters": [
+                    {
+                        "name": "year",
+                        "type": "INTEGER",
+                        "description": "The year to retrieve public holidays for.",
+                        "default": 2024
+                    },
+                    {
+                        "name": "country_code",
+                        "type": "STRING",
+                        "description": "The ISO 3166-1 alpha-2 country code.",
+                        "default": "US"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "date": "str",
+                        "localName": "str",
+                        "name": "str",
+                        "countryCode": "str",
+                        "fixed": "bool",
+                        "global": "bool",
+                        "counties": ["str"],
+                        "launchYear": "int",
+                        "types": ["str"]
+                    }
+                ]
+            },
+            {
+                "category_name": "Calendar",
+                "tool_name": "ukbankholidays",
+                "api_name": "get_bank_holidays",
+                "api_description": "Retrieve bank holidays for different regions in the UK.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "division",
+                        "type": "STRING",
+                        "description": "The division for which to fetch the bank holidays.",
+                        "default": "england-and-wales"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "title": "str",
+                    "events": [
+                        {
+                            "title": "str",
+                            "date": "str",
+                            "notes": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you tell me about the public holidays next year in the United States and also provide me the bank holidays for Scotland?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Calendar",
+                "tool_name": "nagerdate",
+                "api_name": "long_weekends",
+                "api_description": "Retrieve long weekends for a given year and country.",
+                "required_parameters": [
+                    {
+                        "name": "year",
+                        "type": "INTEGER",
+                        "description": "The year to check for long weekends.",
+                        "default": 2023
+                    },
+                    {
+                        "name": "country_code",
+                        "type": "STRING",
+                        "description": "The ISO 3166-1 alpha-2 country code.",
+                        "default": "FR"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "startDate": "str",
+                        "endDate": "str",
+                        "dayCount": "int",
+                        "needExtraDay": "bool"
+                    }
+                ]
+            },
+            {
+                "category_name": "Calendar",
+                "tool_name": "ukbankholidays",
+                "api_name": "get_bank_holidays",
+                "api_description": "Retrieve bank holidays for different regions in the UK.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "division",
+                        "type": "STRING",
+                        "description": "The division for which to fetch the bank holidays.",
+                        "default": "northern-ireland"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "title": "str",
+                    "events": [
+                        {
+                            "title": "str",
+                            "date": "str",
+                            "notes": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I need information on long weekends in France for the year 2023. Additionally, could you provide the bank holidays for Northern Ireland this year?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

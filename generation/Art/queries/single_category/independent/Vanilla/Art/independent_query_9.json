@@ -1,0 +1,113 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dicebear",
+                "api_name": "generate_avatar",
+                "api_description": "Generates an avatar of a specified style with options like seed, hair, flip, and format.",
+                "required_parameters": [
+                    {
+                        "name": "style_name",
+                        "type": "STRING",
+                        "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
+                        "default": "pixel-art"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "seed",
+                        "type": "STRING",
+                        "description": "Seed value for generating a repeatable avatar.",
+                        "default": ""
+                    },
+                    {
+                        "name": "hair",
+                        "type": "LIST",
+                        "description": "List of hair styles.",
+                        "default": []
+                    },
+                    {
+                        "name": "flip",
+                        "type": "BOOLEAN",
+                        "description": "Boolean to flip the avatar.",
+                        "default": false
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                        "default": "svg"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": {
+                        "type": "binary or object"
+                    }
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "robohash",
+                "api_name": "get_robohash_image",
+                "api_description": "Generate a unique image from any text. Customize the image by using different sets, backgrounds, sizes, etc.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Text input for generating the image.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fmt",
+                        "type": "STRING",
+                        "description": "Output format of the image.",
+                        "default": "png"
+                    },
+                    {
+                        "name": "size",
+                        "type": "STRING",
+                        "description": "Size of the generated image.",
+                        "default": null
+                    },
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "The set to generate the image from.",
+                        "default": null
+                    },
+                    {
+                        "name": "bgset",
+                        "type": "STRING",
+                        "description": "The background set to use.",
+                        "default": null
+                    },
+                    {
+                        "name": "gravatar",
+                        "type": "STRING",
+                        "description": "Use a gravatar image if available.",
+                        "default": null
+                    },
+                    {
+                        "name": "ignoreext",
+                        "type": "BOOLEAN",
+                        "description": "Whether to ignore the extension in the hash.",
+                        "default": true
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": {
+                        "type": "binary"
+                    }
+                }
+            }
+        ],
+        "query": "I would like to create a pixel-art avatar with a specific seed and flip option, and also generate a unique robot image using the text 'Artificial Intelligence' with a background set 'bg2'.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

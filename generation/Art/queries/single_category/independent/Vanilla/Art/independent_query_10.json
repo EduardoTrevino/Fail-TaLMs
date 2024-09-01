@@ -1,0 +1,160 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "list_all_breeds",
+                "api_description": "List all breeds available in the API.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": {
+                        "type": "object"
+                    },
+                    "status": "success"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_departments",
+                "api_description": "Returns a list of all departments.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "departments": [
+                        {
+                            "departmentId": "int",
+                            "displayName": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide me with a list of all dog breeds and also a list of all departments in the Met Museum collection?",
+        "relevant APIs": [],
+        "query_id": 1
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "random_image",
+                "api_description": "Retrieve a single random image from all dogs collections.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "string",
+                    "status": "success"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
+                "api_description": "Searches for objects that match the query.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The search term.",
+                        "default": "dogs"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hasImages",
+                        "type": "BOOLEAN",
+                        "description": "Filter objects that have images.",
+                        "default": "true"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total": "int",
+                    "objectIDs": ["int"]
+                }
+            }
+        ],
+        "query": "Find me a random dog image and search the Met Museum for artworks related to dogs with images available.",
+        "relevant APIs": [],
+        "query_id": 2
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "images_by_breed",
+                "api_description": "Retrieve all images of a specific breed.",
+                "required_parameters": [
+                    {
+                        "name": "breed",
+                        "type": "STRING",
+                        "description": "The breed of dog images to retrieve.",
+                        "default": "bulldog"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": ["string"],
+                    "status": "success"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_object_details",
+                "api_description": "Returns detailed information of an object.",
+                "required_parameters": [
+                    {
+                        "name": "objectID",
+                        "type": "INTEGER",
+                        "description": "The unique Object ID for the object.",
+                        "default": 1
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "objectID": "int",
+                    "isHighlight": "boolean",
+                    "accessionNumber": "string",
+                    "accessionYear": "string",
+                    "isPublicDomain": "boolean",
+                    "primaryImage": "string",
+                    "primaryImageSmall": "string",
+                    "additionalImages": ["string"],
+                    "constituents": [
+                        {
+                            "role": "string",
+                            "name": "string"
+                        }
+                    ],
+                    "department": "string",
+                    "objectName": "string",
+                    "title": "string",
+                    "culture": "string",
+                    "metadataDate": "string",
+                    "repository": "string",
+                    "objectURL": "string",
+                    "tags": [
+                        {
+                            "term": "string",
+                            "aic:tag_id": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide images of bulldogs and also give me detailed info about a specific artwork from the Met Museum collection with ID 1?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]
