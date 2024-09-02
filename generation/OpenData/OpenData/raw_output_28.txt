@@ -1,0 +1,92 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "fipe",
+        "api_name": "get_value",
+        "api_description": "Fetch the current price from FIPE table for a specified vehicle, model, and year.",
+        "required_parameters": [
+          {
+            "name": "brand_code",
+            "type": "STRING",
+            "description": "Code of the brand."
+          },
+          {
+            "name": "model_code",
+            "type": "STRING",
+            "description": "Code of the model."
+          },
+          {
+            "name": "year_code",
+            "type": "STRING",
+            "description": "Code of the year."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "vehicle_type",
+            "type": "STRING",
+            "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+            "default": "carros"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Valor": "str",
+          "Marca": "str",
+          "Modelo": "str",
+          "AnoModelo": "int",
+          "Combustivel": "str",
+          "CodigoFipe": "str",
+          "MesReferencia": "str"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "universitysearch",
+        "api_name": "search_universities",
+        "api_description": "Search for universities by name and filter by country with pagination capabilities.",
+        "required_parameters": [
+          {
+            "name": "name",
+            "type": "STRING",
+            "description": "The name or part of the name of the university to search for."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "country",
+            "type": "STRING",
+            "description": "The country to filter results by."
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Limit on the number of results to return."
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "Number of results to skip for pagination."
+          }
+        ],
+        "method": "GET",
+        "template_response": [
+          {
+            "web_pages": ["str"],
+            "domains": ["str"],
+            "country": "str",
+            "alpha_two_code": "str",
+            "name": "str"
+          }
+        ]
+      }
+    ],
+    "query": "Can you tell me the current market value of a specific car model from the FIPE table, and also find universities named 'Middle' in Turkey?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]
+```

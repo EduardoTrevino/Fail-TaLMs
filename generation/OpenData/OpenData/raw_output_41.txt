@@ -1,0 +1,143 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "pmtwentyfive",
+        "api_name": "get_device_latest",
+        "api_description": "Returns the latest measurement (within 2 hours) of the device.",
+        "required_parameters": [
+          {
+            "name": "device_id",
+            "type": "STRING",
+            "description": "Device ID, usually the MAC address.",
+            "default": "08BEAC0A08AE"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output data format.",
+            "default": "JSON"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "source": "string",
+          "device_id": "string",
+          "feeds": "object"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "decode_vin",
+        "api_description": "Decode a VIN (Vehicle Identification Number) to get detailed vehicle information.",
+        "required_parameters": [
+          {
+            "name": "vin",
+            "type": "STRING",
+            "description": "Vehicle Identification Number"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "modelyear",
+            "type": "INTEGER",
+            "description": "Year of the Vehicle model"
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": "array",
+          "SearchCriteria": "string"
+        }
+      }
+    ],
+    "query": "What is the latest air quality measurement from the device with ID '08BEAC0A08AE', and can you also decode the VIN '1HGCM82633A004352' to get the vehicle information?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "pmtwentyfive",
+        "api_name": "get_device_date",
+        "api_description": "Returns the measurement of the device on the specified date.",
+        "required_parameters": [
+          {
+            "name": "device_id",
+            "type": "STRING",
+            "description": "Device ID, usually the MAC address.",
+            "default": "08BEAC0A08AE"
+          },
+          {
+            "name": "yyyy-mm-dd",
+            "type": "STRING",
+            "description": "The date for which data is required.",
+            "default": "2020-07-01"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output data format.",
+            "default": "JSON"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "source": "string",
+          "device_id": "string",
+          "feeds": "object"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "get_manufacturer_details",
+        "api_description": "Get the details for a specific manufacturer.",
+        "required_parameters": [
+          {
+            "name": "manufacturer",
+            "type": "STRING",
+            "description": "Manufacturer name or ID"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number (if using name)",
+            "default": 1
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": "array",
+          "SearchCriteria": "string"
+        }
+      }
+    ],
+    "query": "Can you provide air quality data from the device with ID '08BEAC0A08AE' for July 1, 2020? Also, I need detailed information about the manufacturer 'honda'.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

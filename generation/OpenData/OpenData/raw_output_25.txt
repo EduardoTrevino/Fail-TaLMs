@@ -1,0 +1,120 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "fipe",
+        "api_name": "get_brands",
+        "api_description": "Fetch the brands for the specified vehicle type.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "vehicle_type",
+            "type": "STRING",
+            "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+            "default": "carros"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "housestockwatcher",
+        "api_name": "get_all_transactions",
+        "api_description": "Retrieves all transcribed stock transactions in JSON format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET"
+      }
+    ],
+    "query": "Can you provide a list of car brands available in the FIPE database and also fetch all the stock transactions recorded by members of the U.S. House of Representatives?",
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "fipe",
+        "api_name": "get_models",
+        "api_description": "Fetch the models for a specified brand.",
+        "required_parameters": [
+          {
+            "name": "brand_code",
+            "type": "STRING",
+            "description": "Code of the brand."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "vehicle_type",
+            "type": "STRING",
+            "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+            "default": "carros"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "housestockwatcher",
+        "api_name": "get_daily_transaction_report",
+        "api_description": "Fetches the JSON report for a single day's disclosure.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+            "default": "01_01_2021"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET"
+      }
+    ],
+    "query": "I need to find the models available for a specific car brand using its brand code from the FIPE database and also get a daily stock transaction report for the date '01_01_2021'.",
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "fipe",
+        "api_name": "get_value",
+        "api_description": "Fetch the current price from FIPE table for a specified vehicle, model and year.",
+        "required_parameters": [
+          {
+            "name": "brand_code",
+            "type": "STRING",
+            "description": "Code of the brand."
+          },
+          {
+            "name": "model_code",
+            "type": "STRING",
+            "description": "Code of the model."
+          },
+          {
+            "name": "year_code",
+            "type": "STRING",
+            "description": "Code of the year."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "vehicle_type",
+            "type": "STRING",
+            "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+            "default": "carros"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "housestockwatcher",
+        "api_name": "get_available_disclosures",
+        "api_description": "Fetches the list of available disclosures as JSON files.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET"
+      }
+    ],
+    "query": "Can you find the current market price for a specific vehicle using FIPE and also list all the available disclosure files for stock transactions?",
+    "query_id": 3
+  }
+]
+```

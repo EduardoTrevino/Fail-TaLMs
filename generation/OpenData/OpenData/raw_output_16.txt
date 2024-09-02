@@ -1,0 +1,189 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "carbonintensity",
+        "api_name": "get_current_intensity",
+        "api_description": "Get Carbon Intensity data for the current half hour.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "from": "string",
+            "to": "string",
+            "intensity": {
+              "forecast": "number",
+              "actual": "number",
+              "index": "string"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "decode_vin",
+        "api_description": "Decode a VIN to get detailed vehicle information.",
+        "required_parameters": [
+          {
+            "name": "vin",
+            "type": "STRING",
+            "description": "Vehicle Identification Number"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "modelyear",
+            "type": "INTEGER",
+            "description": "Year of the Vehicle model"
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "VIN": "string",
+              "Make": "string",
+              "Model": "string",
+              "Year": "integer"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What's the current carbon intensity level in the UK? Also, can you decode the VIN 5UXWX7C5*BA to get more details about the vehicle?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "carbonintensity",
+        "api_name": "get_intensity_statistics",
+        "api_description": "Get Carbon Intensity statistics (average, max, min) between specified datetimes.",
+        "required_parameters": [
+          {
+            "name": "from",
+            "type": "STRING",
+            "description": "Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+          },
+          {
+            "name": "to",
+            "type": "STRING",
+            "description": "End datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "from": "string",
+            "to": "string",
+            "intensity": {
+              "max": "number",
+              "average": "number",
+              "min": "number",
+              "index": "string"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "get_all_makes",
+        "api_description": "Get a list of all vehicle makes.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "Make_ID": "integer",
+              "Make_Name": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide the carbon intensity statistics for London from January 1st, 2022 to January 2nd, 2022? Furthermore, I would like a list of all vehicle makes available.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "carbonintensity",
+        "api_name": "get_generation_mix_current",
+        "api_description": "Get generation mix for the current half hour.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "from": "string",
+            "to": "string",
+            "generationmix": [
+              {
+                "fuel": "string",
+                "perc": "number"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "get_vehicle_types_for_make",
+        "api_description": "Get Vehicle Types for a specified make.",
+        "required_parameters": [
+          {
+            "name": "make",
+            "type": "STRING",
+            "description": "Make name"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "Make_Name": "string",
+              "Vehicle_Type": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What's the current generation mix of energy sources in the UK? On a separate note, what vehicle types does Tesla manufacture?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

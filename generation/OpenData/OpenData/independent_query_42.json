@@ -1,0 +1,135 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Environment",
+        "tool_name": "pmtwentyfive",
+        "api_name": "get_device_latest",
+        "api_description": "Returns the latest measurement (within 2 hours) of the device.",
+        "required_parameters": [
+          {
+            "name": "device_id",
+            "type": "STRING",
+            "description": "Device ID, usually the MAC address.",
+            "default": "08BEAC0A08AE"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Output data format.",
+            "default": "JSON"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "source": "string",
+          "device_id": "string",
+          "feeds": "object"
+        }
+      },
+      {
+        "category_name": "Archive",
+        "tool_name": "waybackmachine",
+        "api_name": "wayback_availability",
+        "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to check for availability in the Wayback Machine.",
+            "default": "example.com"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "timestamp",
+            "type": "STRING",
+            "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+            "default": ""
+          },
+          {
+            "name": "callback",
+            "type": "STRING",
+            "description": "Callback function for JSONP response.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "archived_snapshots": {
+            "closest": {
+              "available": "boolean",
+              "url": "string",
+              "timestamp": "string",
+              "status": "string"
+            }
+          }
+        }
+      }
+    ],
+    "query": "Can you provide the latest air quality readings from a specific PM2.5 monitoring device and also check if a specific webpage has been archived in the Wayback Machine?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "Environment",
+        "tool_name": "pmtwentyfive",
+        "api_name": "get_analysis_adf_pollution",
+        "api_description": "Returns the list of devices with suspicious pollution ongoing in their nearby areas detected by ADF (updated hourly).",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "source": "string",
+          "feeds": "array"
+        }
+      },
+      {
+        "category_name": "Archive",
+        "tool_name": "waybackmachine",
+        "api_name": "wayback_availability",
+        "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to check for availability in the Wayback Machine.",
+            "default": "example.com"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "timestamp",
+            "type": "STRING",
+            "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+            "default": ""
+          },
+          {
+            "name": "callback",
+            "type": "STRING",
+            "description": "Callback function for JSONP response.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "archived_snapshots": {
+            "closest": {
+              "available": "boolean",
+              "url": "string",
+              "timestamp": "string",
+              "status": "string"
+            }
+          }
+        }
+      }
+    ],
+    "query": "Can you list devices currently experiencing suspicious pollution and verify if an environmental news article has been archived?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

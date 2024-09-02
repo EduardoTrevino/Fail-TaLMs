@@ -1,0 +1,114 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "archiveorg",
+        "api_name": "get_metadata",
+        "api_description": "Retrieve metadata for an Archive.org item.",
+        "required_parameters": [
+          {
+            "name": "item_id",
+            "type": "STRING",
+            "description": "The identifier for the Archive.org item.",
+            "default": "popeye_taxi-turvey"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "metadata": "object"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "housestockwatcher",
+        "api_name": "get_all_transactions",
+        "api_description": "Retrieves all transcribed stock transactions in JSON format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide the metadata for a specific item available on Archive.org and list all the stock transactions recorded in the U.S. House of Representatives in the recent dataset?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "archiveorg",
+        "api_name": "search_items",
+        "api_description": "Search for items using the Archive.org scraping API.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query string using Lucene-like syntax.",
+            "default": "collection:nasa"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Metadata fields to return, comma-delimited.",
+            "default": "title"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "items": "list"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "housestockwatcher",
+        "api_name": "get_daily_transaction_report",
+        "api_description": "Fetches the JSON report for a single day's disclosure.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+            "default": "01_01_2021"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I'm interested in finding any NASA-related collections available on Archive.org and reviewing the stock transactions that were disclosed on January 1st, 2021 by U.S. House members.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```

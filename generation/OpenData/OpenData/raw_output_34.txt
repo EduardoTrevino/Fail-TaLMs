@@ -1,0 +1,142 @@
+Here's a `json` example containing questions that require the use of at least one API from each of the "housestockwatcher" and "vehicles" tools:
+
+```json
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "housestockwatcher",
+        "api_name": "get_all_transactions",
+        "api_description": "Retrieves all transcribed stock transactions in JSON format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "decode_vin",
+        "api_description": "Decode a VIN to get detailed vehicle information.",
+        "required_parameters": [
+          {
+            "name": "vin",
+            "type": "STRING",
+            "description": "Vehicle Identification Number"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "modelyear",
+            "type": "INTEGER",
+            "description": "Year of the Vehicle model"
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "Variable": "str",
+              "Value": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide me with a complete list of all transcribed stock transactions and also decode the VIN 3VWB17AJ5HM508219 to provide detailed vehicle information?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "housestockwatcher",
+        "api_name": "get_daily_transaction_report",
+        "api_description": "Fetches the JSON report for a single day's disclosure.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format."
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "vehicles",
+        "api_name": "get_all_manufacturers",
+        "api_description": "Get all manufacturers, with optional Manufacturer Type filter.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "manufacturer_type",
+            "type": "STRING",
+            "description": "Type of manufacturer"
+          },
+          {
+            "name": "page",
+            "type": "INTEGER",
+            "description": "Page number",
+            "default": 1
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format",
+            "default": "json"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "Mfr_ID": "int",
+              "Mfr_Name": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I need the transaction report for January 15, 2022, and also a list of all vehicle manufacturers.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
+```
+
+Each question in the list leverages APIs from both the "housestockwatcher" and "vehicles" categories, providing meaningful questions a user might ask.

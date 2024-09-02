@@ -1,0 +1,183 @@
+```json
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "carbonintensity",
+        "api_name": "get_intensity_by_date",
+        "api_description": "Get Carbon Intensity data for a specific date.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Date in YYYY-MM-DD format",
+            "default": "2023-01-01"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "from": "string",
+            "to": "string",
+            "intensity": {
+              "forecast": "number",
+              "actual": "number",
+              "index": "string"
+            }
+          }
+        }
+      },
+      {
+        "tool_name": "waybackmachine",
+        "api_name": "wayback_availability",
+        "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to check for availability in the Wayback Machine.",
+            "default": "example.com"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "timestamp",
+            "type": "STRING",
+            "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "archived_snapshots": {
+            "closest": {
+              "available": "boolean",
+              "url": "string",
+              "timestamp": "string",
+              "status": "string"
+            }
+          }
+        }
+      }
+    ],
+    "query": "I want to check the carbon intensity for a specific day this year and verify if a popular environmental website was archived on the same day.",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+        {
+            "tool_name": "carbonintensity",
+            "api_name": "get_current_intensity",
+            "api_description": "Get Carbon Intensity data for the current half hour.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+              "data": {
+                "from": "string",
+                "to": "string",
+                "intensity": {
+                  "forecast": "number",
+                  "actual": "number",
+                  "index": "string"
+                }
+              }
+            }
+        },
+        {
+            "tool_name": "waybackmachine",
+            "api_name": "wayback_availability",
+            "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+            "required_parameters": [
+              {
+                "name": "url",
+                "type": "STRING",
+                "description": "The URL to check for availability in the Wayback Machine.",
+                "default": "example.com"
+              }
+            ],
+            "optional_parameters": [
+              {
+                "name": "timestamp",
+                "type": "STRING",
+                "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                "default": ""
+              }
+            ],
+            "method": "GET",
+            "template_response": {
+              "archived_snapshots": {
+                "closest": {
+                  "available": "boolean",
+                  "url": "string",
+                  "timestamp": "string",
+                  "status": "string"
+                }
+              }
+            }
+        }
+    ],
+    "query": "Find out the current carbon intensity and check if a news website was archived today.",
+    "relevant APIs": [],
+    "query_id": 2
+  },
+  {
+    "api_list": [
+        {
+            "tool_name": "carbonintensity",
+            "api_name": "get_generation_mix_current",
+            "api_description": "Get generation mix for the current half hour.",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "method": "GET",
+            "template_response": {
+              "data": {
+                "from": "string",
+                "to": "string",
+                "generationmix": [
+                  {"fuel": "string", "perc": "number"}
+                ]
+              }
+            }
+        },
+        {
+            "tool_name": "waybackmachine",
+            "api_name": "wayback_availability",
+            "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+            "required_parameters": [
+              {
+                "name": "url",
+                "type": "STRING",
+                "description": "The URL to check for availability in the Wayback Machine.",
+                "default": "example.com"
+              }
+            ],
+            "optional_parameters": [
+              {
+                "name": "timestamp",
+                "type": "STRING",
+                "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                "default": ""
+              }
+            ],
+            "method": "GET",
+            "template_response": {
+              "archived_snapshots": {
+                "closest": {
+                  "available": "boolean",
+                  "url": "string",
+                  "timestamp": "string",
+                  "status": "string"
+                }
+              }
+            }
+        }
+    ],
+    "query": "Can you tell me the current generation mix and confirm if the official UK government energy site was archived?",
+    "relevant APIs": [],
+    "query_id": 3
+  }
+]
+```

@@ -1,0 +1,92 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "datapoliceuk",
+        "api_name": "list_forces",
+        "api_description": "Returns a list of all police forces available via the API except the British Transport Police.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "name": "str",
+          "url": "str"
+        }
+      },
+      {
+        "tool_name": "housestockwatcher",
+        "api_name": "get_all_transactions",
+        "api_description": "Retrieves all transcribed stock transactions in JSON format.",
+        "required_parameters": [],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide a list of police forces in the UK, and additionally, could you fetch all the transcribed stock transactions by U.S. House members?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "datapoliceuk",
+        "api_name": "specific_force",
+        "api_description": "Returns detailed information about a specific police force given its ID.",
+        "required_parameters": ["force_id"],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "id": "str",
+          "name": "str",
+          "description": "str",
+          "url": "str"
+        }
+      },
+      {
+        "tool_name": "housestockwatcher",
+        "api_name": "get_daily_transaction_report",
+        "api_description": "Fetches the JSON report for a single day's disclosure.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+            "default": "01_01_2021"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "transactions": [
+            {
+              "transaction_date": "date",
+              "owner": "str",
+              "ticker": "str",
+              "asset_description": "str",
+              "asset_type": "str",
+              "amount": "str",
+              "transaction_type": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I need detailed information about the Leicestershire police force. Additionally, can you fetch the stock transaction report for 01/01/2021?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

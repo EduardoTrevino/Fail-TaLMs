@@ -1,0 +1,96 @@
+[
+  {
+    "api_list": [
+      {
+        "tool_name": "archiveorg",
+        "api_name": "get_metadata",
+        "api_description": "Retrieve metadata for an Archive.org item",
+        "required_parameters": [
+          {
+            "name": "item_id",
+            "type": "STRING",
+            "description": "The identifier for the Archive.org item",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET"
+      },
+      {
+        "tool_name": "waybackmachine",
+        "api_name": "wayback_availability",
+        "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to check for availability in the Wayback Machine",
+            "default": "example.com"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "timestamp",
+            "type": "STRING",
+            "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format",
+            "default": ""
+          }
+        ],
+        "method": "GET"
+      }
+    ],
+    "query": "Can you retrieve the metadata for the item 'popeye_taxi-turvey' on Archive.org and also check if the URL 'example.com' was archived on the Wayback Machine at the beginning of 2020?",
+    "relevant APIs": [],
+    "query_id": 1
+  },
+  {
+    "api_list": [
+      {
+        "tool_name": "archiveorg",
+        "api_name": "search_items",
+        "api_description": "Search for items using the Archive.org scraping API",
+        "required_parameters": [
+          {
+            "name": "query",
+            "type": "STRING",
+            "description": "The query string in Lucene-like syntax",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Metadata fields to return, comma-delimited",
+            "default": "title"
+          },
+          {
+            "name": "count",
+            "type": "INTEGER",
+            "description": "Number of results to return",
+            "default": "100"
+          }
+        ],
+        "method": "GET"
+      },
+      {
+        "tool_name": "waybackmachine",
+        "api_name": "wayback_availability",
+        "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine",
+        "required_parameters": [
+          {
+            "name": "url",
+            "type": "STRING",
+            "description": "The URL to check for availability in the Wayback Machine",
+            "default": "example.com"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET"
+      }
+    ],
+    "query": "Find the first 5 titles of items in the NASA collection on Archive.org. Then, check if NASA's website was archived on the Wayback Machine.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
