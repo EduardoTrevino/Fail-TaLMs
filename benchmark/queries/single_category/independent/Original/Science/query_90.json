@@ -1,0 +1,81 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "itis",
+                "api_name": "search_by_scientific_name",
+                "api_description": "Returns matches found by comparing the search key to the ITIS full Scientific Names.",
+                "required_parameters": [
+                    {
+                        "name": "srchKey",
+                        "type": "STRING",
+                        "description": "The scientific name to search.",
+                        "default": "ursus"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "scientificName": "str",
+                    "tsn": "int",
+                    "description": "str"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "usgs",
+                "api_name": "query",
+                "api_description": "Submit a data request to the USGS Earthquake Catalog API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Specify the output format.",
+                        "default": "geojson"
+                    },
+                    {
+                        "name": "starttime",
+                        "type": "STRING",
+                        "description": "Limit events on or after the specified start time.",
+                        "default": "NOW - 30 days"
+                    },
+                    {
+                        "name": "endtime",
+                        "type": "STRING",
+                        "description": "Limit events on or before the specified end time.",
+                        "default": "present"
+                    },
+                    {
+                        "name": "minmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude larger than the specified minimum.",
+                        "default": 5
+                    },
+                    {
+                        "name": "maxmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude smaller than the specified maximum.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "features": [
+                        {
+                            "properties": {
+                                "mag": "float",
+                                "place": "str",
+                                "time": "int",
+                                "title": "str"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find information on the scientific classification for different species of bears and also provide a list of recent earthquakes with a magnitude above 5?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

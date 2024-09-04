@@ -1,0 +1,97 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_elevation",
+                "api_description": "Fetches elevation data for specific locations using a specified dataset.",
+                "required_parameters": [
+                    {
+                        "name": "dataset_name",
+                        "type": "STRING",
+                        "description": "The name of the dataset."
+                    },
+                    {
+                        "name": "locations",
+                        "type": "STRING",
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "elevation": "FLOAT",
+                            "location": {
+                                "lat": "FLOAT",
+                                "lng": "FLOAT"
+                            },
+                            "dataset": "STRING"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "viacep",
+                "api_name": "query_cep",
+                "api_description": "Retrieve information for a given ZIP code in Brazil.",
+                "required_parameters": [
+                    {
+                        "name": "cep",
+                        "type": "STRING",
+                        "description": "ZIP code in the format of 8 digits."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "return_format",
+                        "type": "STRING",
+                        "description": "Format of the return data (json or xml).",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "cep": "string",
+                    "logradouro": "string",
+                    "complemento": "string",
+                    "bairro": "string",
+                    "localidade": "string",
+                    "uf": "string",
+                    "ibge": "string",
+                    "gia": "string",
+                    "ddd": "string",
+                    "siafi": "string"
+                }
+            }
+        ],
+        "query": "Can you provide the elevation for a specific location in Brazil using the 'test-dataset'? Also, I need information about the ZIP code '01001000' in Brazil.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,60 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "digitaloceanstatus",
+                "api_name": "get_upcoming_maintenances",
+                "api_description": "Retrieve a list of any upcoming scheduled maintenances on DigitalOcean.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "scheduled_maintenances": [
+                        {
+                            "id": "str",
+                            "status": "str",
+                            "impact": "str",
+                            "name": "str",
+                            "created_at": "str",
+                            "updated_at": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "quickchart",
+                "api_name": "generate_chart",
+                "api_description": "Create an image of a chart using a specific Chart.js configuration.",
+                "required_parameters": [
+                    {
+                        "name": "chart_config",
+                        "type": "STRING",
+                        "description": "The Chart.js configuration object in JSON format.",
+                        "default": "{type:'line',data:{labels:['January','February','March'],datasets:[{label:'Maintenance',data:[3,1,4]}]}}"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "width",
+                        "type": "INTEGER",
+                        "description": "Width of chart in pixels.",
+                        "default": 600
+                    },
+                    {
+                        "name": "height",
+                        "type": "INTEGER",
+                        "description": "Height of chart in pixels.",
+                        "default": 400
+                    }
+                ],
+                "method": "GET or POST",
+                "template_response": "The chart image in bytes or as a base64 string."
+            }
+        ],
+        "query": "I want to see a timeline of all upcoming maintenances for DigitalOcean. Can you illustrate this information with a line chart showing dates and counts of maintenances?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

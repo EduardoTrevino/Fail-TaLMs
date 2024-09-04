@@ -1,0 +1,94 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency for which to get exchange rates.",
+                        "default": "EUR"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": "string",
+                    "provider": "string",
+                    "documentation": "string",
+                    "terms_of_use": "string",
+                    "time_last_update_unix": "integer",
+                    "time_last_update_utc": "string",
+                    "time_next_update_unix": "integer",
+                    "time_next_update_utc": "string",
+                    "time_eol_unix": "integer",
+                    "base_code": "string",
+                    "rates": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "wazirx",
+                "api_name": "klines",
+                "api_description": "Get Kline/candlestick data of the specified symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "The trading pair symbol",
+                        "default": "ethusdt"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "interval",
+                        "type": "STRING",
+                        "description": "Time interval for klines",
+                        "default": "1m"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of klines to return",
+                        "default": 500
+                    },
+                    {
+                        "name": "start_time",
+                        "type": "LONG",
+                        "description": "Start time in milliseconds",
+                        "default": null
+                    },
+                    {
+                        "name": "end_time",
+                        "type": "LONG",
+                        "description": "End time in milliseconds",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    [
+                        "long",
+                        "string",
+                        "string",
+                        "string",
+                        "string",
+                        "string"
+                    ]
+                ]
+            }
+        ],
+        "query": "I am planning a trip to Europe and need the latest exchange rates for EUR. Additionally, I want to analyze the candlestick data for ETH/USDT over the past day. Can you provide that information?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

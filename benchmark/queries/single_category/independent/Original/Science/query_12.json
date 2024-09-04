@@ -1,0 +1,50 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "catfacts",
+                "api_name": "get_cat_facts",
+                "api_description": "Retrieve daily cat facts.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "items": {
+                        "text": "string",
+                        "_id": "string",
+                        "updatedAt": "string",
+                        "createdAt": "string"
+                    }
+                },
+                "url": "https://cat-fact.herokuapp.com/facts"
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "itis",
+                "api_name": "search_for_any_match",
+                "api_description": "Returns matches by comparing the search key to ITIS names and TSNs.",
+                "required_parameters": [
+                    {
+                        "name": "srchKey",
+                        "type": "STRING",
+                        "description": "The search key for matching."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "matches": "array"
+                },
+                "url": "http://www.itis.gov/ITISWebService/services/ITISService/searchForAnyMatch"
+            }
+        ],
+        "query": "Can you tell me a fun fact about cats and also find any taxonomical information related to dolphins?",
+        "relevant APIs": [
+            "get_cat_facts",
+            "search_for_any_match"
+        ],
+        "query_id": 1
+    }
+]

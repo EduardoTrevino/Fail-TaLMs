@@ -1,0 +1,62 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinbase",
+                "api_name": "get_buy_price",
+                "api_description": "Get the total price to buy one bitcoin or ether.",
+                "required_parameters": [
+                    {
+                        "name": "currency_pair",
+                        "type": "STRING",
+                        "description": "Currency pair e.g. 'BTC-USD'.",
+                        "default": "BTC-USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "amount": "string",
+                    "currency": "string"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_current_order_book",
+                "api_description": "Returns the current order book as two arrays (bids / asks).",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol.",
+                        "default": "btcusd"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit_bids",
+                        "type": "INTEGER",
+                        "description": "Optional limit on number of bid price levels returned.",
+                        "default": 50
+                    },
+                    {
+                        "name": "limit_asks",
+                        "type": "INTEGER",
+                        "description": "Optional limit on number of ask price levels returned.",
+                        "default": 50
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "bids": "array",
+                    "asks": "array"
+                }
+            }
+        ],
+        "query": "What is the current buy price for one bitcoin on Coinbase, and how does the order book look on Gemini for the BTC-USD pair right now?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,61 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "digitaloceanstatus",
+                "api_name": "get_summary",
+                "api_description": "Get a summary of the status page, including component statuses and incidents.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "status": {
+                        "indicator": "str",
+                        "description": "str"
+                    },
+                    "components": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "status": "str"
+                        }
+                    ],
+                    "incidents": [],
+                    "scheduled_maintenances": []
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "genderize",
+                "api_name": "check_gender",
+                "api_description": "Predicts the gender of a single name, optionally scoped to a specific country.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name to predict gender for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "Country code for localization following ISO 3166-1 alpha-2."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "name": "str",
+                    "gender": "str",
+                    "probability": "float",
+                    "country_id": "str"
+                }
+            }
+        ],
+        "query": "Can you provide an overview of the current status of DigitalOcean's services, including any ongoing incidents or maintenances? Additionally, could you predict the gender based on the name 'Alex'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

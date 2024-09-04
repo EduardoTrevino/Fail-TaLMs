@@ -1,0 +1,69 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "adresse",
+                "api_name": "reverse_geocode",
+                "api_description": "Perform reverse geocoding to get address from coordinates.",
+                "required_parameters": [
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the point to reverse geocode.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the point to reverse geocode.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "FeatureCollection",
+                    "features": "ARRAY"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "currency_converter",
+                "api_description": "Convert an amount from one currency to another using real-time rates.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The currency code of the base currency.",
+                        "default": "USD"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "FLOAT",
+                        "description": "The amount in base currency to convert.",
+                        "default": 1.0
+                    },
+                    {
+                        "name": "target_currency",
+                        "type": "STRING",
+                        "description": "The currency code to convert the base currency to.",
+                        "default": "EUR"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "base_currency": "str",
+                    "amount": "float",
+                    "local_currency": "str",
+                    "exchange_rate": "float",
+                    "converted_amount": "float"
+                }
+            }
+        ],
+        "query": "Using reverse geocoding, find the address at coordinates (48.8566, 2.3522) and convert 100 USD to the local currency of that location.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

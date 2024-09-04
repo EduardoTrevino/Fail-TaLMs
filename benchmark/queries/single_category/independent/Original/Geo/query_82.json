@@ -1,0 +1,62 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "adresse",
+                "api_name": "reverse_geocode",
+                "api_description": "Perform reverse geocoding to get address from coordinates.",
+                "required_parameters": [
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the point to reverse geocode.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the point to reverse geocode.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "FeatureCollection",
+                    "features": "ARRAY"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok or error",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            }
+        ],
+        "query": "I have the coordinates 51.5074, -0.1278, what is the address at this location? Also, convert the British National Grid coordinates 530000, 180000 to latitude and longitude.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

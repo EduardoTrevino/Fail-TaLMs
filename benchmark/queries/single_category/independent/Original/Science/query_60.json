@@ -1,0 +1,79 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "gbif",
+                "api_name": "list_datasets",
+                "api_description": "Lists all current datasets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "The 2-letter country code",
+                        "default": "US"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Primary type of the dataset",
+                        "default": "OCCURRENCE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "offset": "int",
+                    "limit": "int",
+                    "endOfRecords": "bool",
+                    "count": "int",
+                    "results": [
+                        {
+                            "key": "str",
+                            "title": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "sunsetsunrise",
+                "api_name": "get_sunrise_sunset_times",
+                "api_description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location in decimal degrees.",
+                        "default": "38.9072"
+                    },
+                    {
+                        "name": "lng",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location in decimal degrees.",
+                        "default": "-77.0369"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today.",
+                        "default": "today"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": {
+                        "sunrise": "str",
+                        "sunset": "str"
+                    },
+                    "status": "str"
+                }
+            }
+        ],
+        "query": "Can you list some biodiversity datasets available in the United States related to occurrences, and also provide today's sunrise and sunset times in Washington D.C.?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

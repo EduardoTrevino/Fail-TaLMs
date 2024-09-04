@@ -1,0 +1,65 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "DnD5",
+                "api_name": "get_equipment",
+                "api_description": "Get an equipment item by index.",
+                "required_parameters": [
+                    {
+                        "name": "index",
+                        "type": "STRING",
+                        "description": "The index of the equipment to get.",
+                        "default": "longsword"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "index": "string",
+                    "name": "string",
+                    "equipment_category": "string",
+                    "cost": {
+                        "quantity": "integer",
+                        "unit": "string"
+                    },
+                    "damage": {
+                        "damage_dice": "string",
+                        "damage_type": "object"
+                    },
+                    "properties": "object[]"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "scryfall",
+                "api_name": "card_named_exact",
+                "api_description": "Retrieve card details based on exact name.",
+                "required_parameters": [
+                    {
+                        "name": "exact",
+                        "type": "STRING",
+                        "description": "The exact card name to search for.",
+                        "default": "Longsword"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "A set code to limit the search to one set.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "card"
+                }
+            }
+        ],
+        "query": "What details can you provide about the longsword equipment in Dungeons & Dragons, and is there a Magic: The Gathering card called 'Longsword'?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

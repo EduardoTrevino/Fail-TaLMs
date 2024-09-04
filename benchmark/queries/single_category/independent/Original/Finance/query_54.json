@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch.",
+                        "default": "KARB0000001"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "wazirx",
+                "api_name": "klines",
+                "api_description": "Get Kline/candlestick data of the specified symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "The trading pair symbol",
+                        "default": "ethinr"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "interval",
+                        "type": "STRING",
+                        "description": "Time interval for klines",
+                        "default": "15m"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    [
+                        "long",
+                        "string",
+                        "string",
+                        "string",
+                        "string",
+                        "string"
+                    ]
+                ]
+            }
+        ],
+        "query": "What are the bank details associated with the IFSC code 'KARB0000001'? Also, I need the candlestick chart data for 'ethinr' with a 15-minute interval.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

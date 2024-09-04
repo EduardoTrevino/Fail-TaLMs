@@ -1,0 +1,86 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete')."
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing game ID, required for 'set' and 'delete'."
+                    },
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' value for action parameter."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Games"
+            },
+            {
+                "tool_name": "scryfall",
+                "api_name": "card_search",
+                "api_description": "Search Magic cards using a fulltext search string.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The fulltext search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "unique",
+                        "type": "STRING",
+                        "description": "Strategy for omitting similar cards.",
+                        "default": "cards"
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "The method to sort returned cards.",
+                        "default": "name"
+                    },
+                    {
+                        "name": "dir",
+                        "type": "STRING",
+                        "description": "The direction to sort cards.",
+                        "default": "auto"
+                    },
+                    {
+                        "name": "include_extras",
+                        "type": "BOOLEAN",
+                        "description": "Includes extra cards such as tokens if true.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page number to return.",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Games"
+            }
+        ],
+        "query": "Can I set a price alert for a specific game on CheapShark at a certain price? Also, I would like to search for Magic: The Gathering cards that include blue mana and cost 1 using the Scryfall API.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

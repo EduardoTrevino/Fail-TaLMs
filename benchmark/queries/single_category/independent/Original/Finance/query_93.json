@@ -1,0 +1,77 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_asset_by_id",
+                "api_description": "Get detailed information for a specific asset by ID.",
+                "required_parameters": [
+                    {
+                        "name": "asset_id",
+                        "type": "STRING",
+                        "description": "Asset ID to retrieve details for."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "id": "str",
+                        "rank": "str",
+                        "symbol": "str",
+                        "name": "str",
+                        "supply": "str",
+                        "maxSupply": "str",
+                        "marketCapUsd": "str",
+                        "volumeUsd24Hr": "str",
+                        "priceUsd": "str",
+                        "changePercent24Hr": "str",
+                        "vwap24Hr": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_order_book",
+                "api_description": "Retrieve the order book for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which the order book is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "asks": [
+                                [
+                                    "float",
+                                    "float",
+                                    "int"
+                                ]
+                            ],
+                            "bids": [
+                                [
+                                    "float",
+                                    "float",
+                                    "int"
+                                ]
+                            ],
+                            "ts": "int"
+                        }
+                    ],
+                    "code": "int",
+                    "msg": "str"
+                }
+            }
+        ],
+        "query": "Could you provide detailed information about Ethereum and show me the current order book for ETH-USDT?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

@@ -1,0 +1,115 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "datamuse",
+                "api_name": "words",
+                "api_description": "Returns a list of words matching given constraints.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ml",
+                        "type": "STRING",
+                        "description": "Means like constraint."
+                    },
+                    {
+                        "name": "sl",
+                        "type": "STRING",
+                        "description": "Sounds like constraint."
+                    },
+                    {
+                        "name": "sp",
+                        "type": "STRING",
+                        "description": "Spelled like constraint."
+                    },
+                    {
+                        "name": "rel_code",
+                        "type": "STRING",
+                        "description": "Related word constraint codes like 'syn', 'trg'."
+                    },
+                    {
+                        "name": "v",
+                        "type": "STRING",
+                        "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+                    },
+                    {
+                        "name": "topics",
+                        "type": "STRING",
+                        "description": "Hints about the context or topic."
+                    },
+                    {
+                        "name": "lc",
+                        "type": "STRING",
+                        "description": "Left context hint."
+                    },
+                    {
+                        "name": "rc",
+                        "type": "STRING",
+                        "description": "Right context hint."
+                    },
+                    {
+                        "name": "max",
+                        "type": "INTEGER",
+                        "description": "Max number of results (default is 100).",
+                        "default": "100"
+                    },
+                    {
+                        "name": "md",
+                        "type": "STRING",
+                        "description": "Metadata flags like 'd' for definitions."
+                    },
+                    {
+                        "name": "qe",
+                        "type": "STRING",
+                        "description": "Query echo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "word": "str",
+                        "score": "int"
+                    }
+                ],
+                "category_name": "Language"
+            },
+            {
+                "tool_name": "purgomalum",
+                "api_name": "filter_text_json",
+                "api_description": "Filter profanity from text and return result as JSON.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Input text to be processed."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "add",
+                        "type": "STRING",
+                        "description": "Comma separated words to add to the profanity list."
+                    },
+                    {
+                        "name": "fill_text",
+                        "type": "STRING",
+                        "description": "Text for replacing profane words."
+                    },
+                    {
+                        "name": "fill_char",
+                        "type": "STRING",
+                        "description": "Character to replace profane words."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": "str"
+                },
+                "category_name": "Language"
+            }
+        ],
+        "query": "I need to find words related to happiness that don't contain any profanity. Can you provide a list of such words?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

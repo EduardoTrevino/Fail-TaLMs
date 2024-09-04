@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Health",
+                "tool_name": "nppes",
+                "api_name": "search_npi",
+                "api_description": "Endpoint to search the NPI registry using various search criteria.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "first_name",
+                        "type": "STRING",
+                        "description": "First name of the provider (Individual providers)."
+                    },
+                    {
+                        "name": "use_first_name_alias",
+                        "type": "BOOLEAN",
+                        "description": "If True, includes similar First Names.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Results": [
+                        {
+                            "number": "string",
+                            "basic": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Health",
+                "tool_name": "openFDA",
+                "api_name": "get_drug_event",
+                "api_description": "Retrieve drug adverse event reports.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of records to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "skip",
+                        "type": "INTEGER",
+                        "description": "Number of records to skip.",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "meta": {},
+                    "results": [
+                        {
+                            "id": "string",
+                            "companynumb": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find any healthcare providers with the first name 'John' and also provide some recent drug adverse event reports?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

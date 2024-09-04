@@ -1,0 +1,74 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "apicagent",
+                "api_name": "get_user_agent_info",
+                "api_description": "Retrieve parsed information about a user agent string using the GET method.",
+                "required_parameters": [
+                    {
+                        "name": "ua",
+                        "type": "STRING",
+                        "description": "The user agent string URL encoded.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "browser_family": "str",
+                    "client": {
+                        "engine": "str",
+                        "engine_version": "str",
+                        "name": "str",
+                        "type": "str",
+                        "version": "str"
+                    },
+                    "device": {
+                        "brand": "str",
+                        "model": "str",
+                        "type": "str"
+                    },
+                    "os": {
+                        "name": "str",
+                        "platform": "str",
+                        "version": "str"
+                    },
+                    "os_family": "str"
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "urlhaus",
+                "api_name": "query_host_info",
+                "api_description": "Get information about a specific host.",
+                "required_parameters": [
+                    {
+                        "name": "host",
+                        "type": "STRING",
+                        "description": "The host to query (IPv4 address, hostname, or domain name)."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "POST",
+                "template_response": {
+                    "query_status": "str",
+                    "data": {
+                        "host": "str",
+                        "urls": [
+                            {
+                                "url": "str",
+                                "threat": "str",
+                                "reporting_date": "str"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "I'd like to know what operating system and browser a specific user agent is using. Also, I want to gather information about any malicious activities associated with a specific host domain name.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

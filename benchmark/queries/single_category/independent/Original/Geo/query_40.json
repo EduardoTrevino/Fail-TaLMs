@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geojs",
+                "api_name": "get_geo_info",
+                "api_description": "Contains all available geographical information about an IP.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "Specific IP address to lookup."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "string",
+                    "country": "string",
+                    "country_code": "string",
+                    "latitude": "string",
+                    "longitude": "string",
+                    "organization": "string"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "response_format",
+                        "type": "STRING",
+                        "description": "Specify the response format, 'json' or 'xml'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok or error",
+                    "easting": "int",
+                    "northing": "int",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            }
+        ],
+        "query": "I'd like to get detailed geographical information about the IP 8.8.8.8. Also, find the latitude and longitude for easting 427890 and northing 902634 using the British National Grid.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

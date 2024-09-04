@@ -1,0 +1,66 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "catfacts",
+                "api_name": "get_cat_facts",
+                "api_description": "Retrieve daily cat facts.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "text": {
+                                "type": "string"
+                            },
+                            "_id": {
+                                "type": "string"
+                            },
+                            "updatedAt": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "numbers",
+                "api_name": "get_batch_number_facts",
+                "api_description": "Get facts for multiple numbers in one request.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "numbers",
+                        "type": "STRING",
+                        "description": "A comma separated list of numbers or number ranges.",
+                        "default": "1..3"
+                    },
+                    {
+                        "name": "json",
+                        "type": "BOOLEAN",
+                        "description": "Return the facts in JSON format.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "number": {
+                        "type": "string",
+                        "description": "The actual fact associated with the number"
+                    }
+                }
+            }
+        ],
+        "query": "Provide a fun cat fact and some interesting facts about the numbers 5, 6 and 7.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

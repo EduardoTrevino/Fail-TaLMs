@@ -1,0 +1,66 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": "set"
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "Any valid email address.",
+                        "default": "user@example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for 'set' and 'delete'.",
+                        "default": 123
+                    },
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' value for action parameter.",
+                        "default": 19.99
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "boolean"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "freetogame",
+                "api_name": "list_games",
+                "api_description": "Retrieve a list of all free-to-play games.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "properties": {
+                        "id": "int",
+                        "title": "str",
+                        "thumbnail": "str",
+                        "short_description": "str",
+                        "game_url": "str"
+                    }
+                }
+            }
+        ],
+        "query": "I want to set a price alert on CheapShark for a game with ID 123 at a price of $19.99. Additionally, can you list all available free-to-play games from FreeToGame?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,93 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": "sample_user"
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "application/json",
+                    "description": "Returns the schedule data in JSON format based on the request parameters."
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "stapi",
+                "api_name": "search_episodes",
+                "api_description": "Pagination over Star Trek episodes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pageNumber",
+                        "type": "INTEGER",
+                        "description": "Zero-based page number",
+                        "default": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "INTEGER",
+                        "description": "Page size",
+                        "default": 10
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "episodes": [
+                        {
+                            "uid": "str",
+                            "title": "str",
+                            "seasonNumber": "int",
+                            "episodeNumber": "int",
+                            "series": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What TV shows are airing on Czech channel ct24 on 04.08.2024? Also, can you show me a list of Star Trek episodes sorted by title in ascending order?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

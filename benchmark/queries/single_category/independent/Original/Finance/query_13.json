@@ -1,0 +1,100 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair_name": {
+                            "a": [
+                                "price",
+                                "whole lot volume",
+                                "lot volume"
+                            ],
+                            "b": [
+                                "price",
+                                "whole lot volume",
+                                "lot volume"
+                            ],
+                            "c": [
+                                "price",
+                                "lot volume"
+                            ],
+                            "v": [
+                                "today",
+                                "last 24 hours"
+                            ],
+                            "p": [
+                                "today",
+                                "last 24 hours"
+                            ],
+                            "t": [
+                                "today",
+                                "last 24 hours"
+                            ],
+                            "l": [
+                                "today",
+                                "last 24 hours"
+                            ],
+                            "h": [
+                                "today",
+                                "last 24 hours"
+                            ],
+                            "o": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_market_ticker",
+                "api_description": "Retrieve the market ticker information for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which ticker information is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "instId": "str",
+                            "last": "float",
+                            "lastSz": "float",
+                            "askPx": "float",
+                            "askSz": "float",
+                            "bidPx": "float",
+                            "bidSz": "float",
+                            "open24h": "float",
+                            "high24h": "float",
+                            "low24h": "float",
+                            "vol24h": "float"
+                        }
+                    ],
+                    "code": "int",
+                    "msg": "str"
+                }
+            }
+        ],
+        "query": "What is the current market ticker information for BTC-USDT on both Kraken and OKX?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

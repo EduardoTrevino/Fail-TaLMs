@@ -1,0 +1,82 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": "string",
+                    "provider": "string",
+                    "documentation": "string",
+                    "terms_of_use": "string",
+                    "time_last_update_unix": "integer",
+                    "time_last_update_utc": "string",
+                    "time_next_update_unix": "integer",
+                    "time_next_update_utc": "string",
+                    "time_eol_unix": "integer",
+                    "base_code": "string",
+                    "rates": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_order_book",
+                "api_description": "Retrieve the order book for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which the order book is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "asks": [
+                                [
+                                    "float",
+                                    "float",
+                                    "int"
+                                ]
+                            ],
+                            "bids": [
+                                [
+                                    "float",
+                                    "float",
+                                    "int"
+                                ]
+                            ],
+                            "ts": "int"
+                        }
+                    ],
+                    "code": "int",
+                    "msg": "str"
+                }
+            }
+        ],
+        "query": "Can you give me the latest USD exchange rates and the order book for BTC-USDT?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

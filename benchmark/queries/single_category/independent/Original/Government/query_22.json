@@ -1,0 +1,76 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "dawum",
+                "api_name": "get_last_update",
+                "api_description": "Fetches the last update date of the database for election polls.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "Last_Update": "string"
+                }
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "worldbank",
+                "api_name": "get_indicator_data",
+                "api_description": "Retrieve indicator data for a specific country and indicator.",
+                "required_parameters": [
+                    {
+                        "name": "country_code",
+                        "type": "STRING",
+                        "description": "ISO code of the country.",
+                        "default": "US"
+                    },
+                    {
+                        "name": "indicator_code",
+                        "type": "STRING",
+                        "description": "Code of the indicator.",
+                        "default": "NY.GDP.MKTP.CD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date or date range for the data.",
+                        "default": ""
+                    },
+                    {
+                        "name": "format_type",
+                        "type": "STRING",
+                        "description": "The format in which to receive the data.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "page": "int",
+                    "pages": "int",
+                    "per_page": "int",
+                    "total": "int",
+                    "indicators": [
+                        {
+                            "indicator": {
+                                "id": "str",
+                                "value": "str"
+                            },
+                            "country": {
+                                "id": "str",
+                                "value": "str"
+                            },
+                            "value": "float",
+                            "date": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the latest update date for the election polls, and what was the GDP of the United States in 2020?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

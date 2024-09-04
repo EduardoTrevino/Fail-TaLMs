@@ -1,0 +1,73 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "dexscreener",
+                "api_name": "search_pairs",
+                "api_description": "Search for pairs matching the query.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Query that includes pair address, token address, token name, or token symbol.",
+                        "default": "ETH USDT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "pairs": [
+                        {
+                            "address": "str",
+                            "baseToken": {
+                                "name": "str",
+                                "symbol": "str"
+                            },
+                            "quoteToken": {
+                                "name": "str",
+                                "symbol": "str"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "wazirx",
+                "api_name": "recent_trades",
+                "api_description": "Get recent trades.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "The trading pair symbol",
+                        "default": "ethinr"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of trades to return",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "long",
+                        "price": "str",
+                        "qty": "str",
+                        "quoteQty": "str",
+                        "time": "long",
+                        "isBuyerMaker": "bool"
+                    }
+                ]
+            }
+        ],
+        "query": "I want to find trading pairs related to ETH and USDT on DexScreener, and also fetch recent trades for the ETH/INR pair from WazirX.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

@@ -1,0 +1,77 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "datapoliceuk",
+                "api_name": "specific_force",
+                "api_description": "Returns detailed information about a specific police force given its ID.",
+                "required_parameters": [
+                    {
+                        "name": "force_id",
+                        "type": "STRING",
+                        "description": "ID of the police force",
+                        "default": "leicestershire"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "name": "str",
+                    "description": "str",
+                    "telephone": "str",
+                    "website": "str",
+                    "address": "str"
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "fipe",
+                "api_name": "get_value",
+                "api_description": "Fetch the current price from FIPE table for a specified vehicle, model and year.",
+                "required_parameters": [
+                    {
+                        "name": "brand_code",
+                        "type": "STRING",
+                        "description": "Code of the brand.",
+                        "default": "59"
+                    },
+                    {
+                        "name": "model_code",
+                        "type": "STRING",
+                        "description": "Code of the model.",
+                        "default": "5940"
+                    },
+                    {
+                        "name": "year_code",
+                        "type": "STRING",
+                        "description": "Code of the year.",
+                        "default": "2014-3"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "STRING",
+                        "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                        "default": "carros"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Valor": "str",
+                    "Marca": "str",
+                    "Modelo": "str",
+                    "AnoModelo": "int",
+                    "Combustivel": "str",
+                    "CodigoFipe": "str",
+                    "MesReferencia": "str"
+                }
+            }
+        ],
+        "query": "Can you provide details about Leicestershire police force and also the current price from the FIPE table for a 2014 VolksWagen car model?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

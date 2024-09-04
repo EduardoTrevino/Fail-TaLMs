@@ -1,0 +1,65 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "magicthegathering",
+                "api_name": "get_all_sets",
+                "api_description": "Retrieve all MTG sets with optional filtering by name and block.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING"
+                    },
+                    {
+                        "name": "block",
+                        "type": "STRING"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "sets": [
+                        {
+                            "name": "str",
+                            "code": "str",
+                            "releaseDate": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "scryfall",
+                "api_name": "cards_autocomplete",
+                "api_description": "Autocomplete card names.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The string to autocomplete."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "include_extras",
+                        "type": "BOOLEAN",
+                        "description": "Includes extra cards if true."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        "str"
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide a list of Magic: The Gathering sets that start with 'Khans'? Also, complete the card names that begin with 'Tal'.",
+        "relevant APIs": [
+            "get_all_sets",
+            "cards_autocomplete"
+        ],
+        "query_id": 2
+    }
+]

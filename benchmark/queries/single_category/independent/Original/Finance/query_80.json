@@ -1,0 +1,101 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_assets",
+                "api_description": "A list of all assets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of assets to retrieve.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "rank": "str",
+                            "symbol": "str",
+                            "name": "str",
+                            "supply": "str",
+                            "maxSupply": "str",
+                            "marketCapUsd": "str",
+                            "volumeUsd24Hr": "str",
+                            "priceUsd": "str",
+                            "changePercent24Hr": "str",
+                            "vwap24Hr": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "XXBTZUSD": {
+                            "a": [
+                                "str",
+                                "str",
+                                "str"
+                            ],
+                            "b": [
+                                "str",
+                                "str",
+                                "str"
+                            ],
+                            "c": [
+                                "str",
+                                "str"
+                            ],
+                            "v": [
+                                "str",
+                                "str"
+                            ],
+                            "p": [
+                                "str",
+                                "str"
+                            ],
+                            "t": [
+                                "int",
+                                "int"
+                            ],
+                            "l": [
+                                "str",
+                                "str"
+                            ],
+                            "h": [
+                                "str",
+                                "str"
+                            ],
+                            "o": "str"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide me with a list of the top 5 cryptocurrencies by market capitalization and give me the current ticker information for Bitcoin on Kraken?",
+        "relevant_APIs": [
+            "coincap.get_assets",
+            "kraken.get_ticker_information"
+        ],
+        "query_id": 1
+    }
+]

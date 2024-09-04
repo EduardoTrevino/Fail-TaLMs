@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "gamerpower",
+                "api_name": "get_all_giveaways",
+                "api_description": "Fetch all ongoing giveaways.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "items": "Giveaway object"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_cards",
+                "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the card to filter by.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "supertype",
+                        "type": "STRING",
+                        "description": "The supertype of the card, such as Pok\u00e9mon, Energy, or Trainer.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "types",
+                        "type": "LIST",
+                        "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "STRING",
+                        "description": "The hit points of the card to filter by.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "supertype": "string",
+                            "types": [
+                                "string"
+                            ],
+                            "hp": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What are the current giveaways available, and can you provide information about all the Pok\u00e9mon cards with the name 'Pikachu'?",
+        "relevant APIs": [
+            "get_all_giveaways",
+            "get_cards"
+        ],
+        "query_id": 1
+    }
+]

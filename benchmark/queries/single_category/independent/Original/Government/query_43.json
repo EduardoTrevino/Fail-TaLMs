@@ -1,0 +1,55 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "representcivicinformation",
+                "api_name": "get_representatives_by_postal_code",
+                "api_description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
+                "required_parameters": [
+                    {
+                        "name": "postal_code",
+                        "type": "STRING",
+                        "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "sets",
+                        "type": "STRING",
+                        "description": "Comma-separated list of boundary sets to limit results.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "boundaries_centroid": "dict",
+                    "representatives": "list"
+                }
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "usaspending",
+                "api_name": "get_agency_details",
+                "api_description": "Returns agency overview information.",
+                "required_parameters": [
+                    {
+                        "name": "toptier_agency_code",
+                        "type": "STRING",
+                        "description": "The code for the top-tier agency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "fiscal_year": "int",
+                    "agency_data": "dict"
+                }
+            }
+        ],
+        "query": "Can you find the representatives for the postal code L5G4L3, and also provide details for the top-level U.S. government agency with code 012?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

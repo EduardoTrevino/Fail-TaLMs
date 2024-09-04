@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "carbonintensity",
+                "api_name": "get_intensity_by_date",
+                "api_description": "Get Carbon Intensity data for a specific date.",
+                "required_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date in YYYY-MM-DD format"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "from": "string",
+                        "to": "string",
+                        "intensity": {
+                            "forecast": "number",
+                            "actual": "number",
+                            "index": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "pmtwentyfive",
+                "api_name": "get_device_date",
+                "api_description": "Returns the measurement of the device on the specified date.",
+                "required_parameters": [
+                    {
+                        "name": "device_id",
+                        "type": "STRING",
+                        "description": "Device ID, usually the MAC address.",
+                        "default": "08BEAC0A08AE"
+                    },
+                    {
+                        "name": "yyyy_mm_dd",
+                        "type": "STRING",
+                        "description": "The date for which data is required.",
+                        "default": "2020-07-01"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output data format.",
+                        "default": "JSON"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "source": "string",
+                    "device_id": "string",
+                    "feeds": "object"
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "What was the carbon intensity in the UK and the PM2.5 measurement from device '08BEAC0A08AE' on the date '2020-07-01'?",
+        "query_id": 2
+    }
+]

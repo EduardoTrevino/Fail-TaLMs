@@ -1,0 +1,64 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_reports",
+                "api_description": "Fetch reports with optional filtering by type and name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "nskip",
+                        "type": "INTEGER",
+                        "description": "The number of entries to skip.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "nlist",
+                        "type": "STRING",
+                        "description": "The number of entries to list. Can be a number or 'all'.",
+                        "default": "50"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Filter the list by 'anime' or 'manga'."
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Filter by entries whose main title starts with this value."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "content": "bytes"
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "tvmaze",
+                "api_name": "search_shows",
+                "api_description": "Search for shows by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The name of the show to search for."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        "dict"
+                    ]
+                }
+            }
+        ],
+        "query": "I am interested in the latest anime reports that start with the letter 'B'. Can you also search for TV shows related to 'Breaking Bad'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

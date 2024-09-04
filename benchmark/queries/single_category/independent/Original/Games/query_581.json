@@ -1,0 +1,79 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "boardgamesgeek",
+                "api_name": "search_items",
+                "api_description": "Search for items by name from the BGG database.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The type of items to return."
+                    },
+                    {
+                        "name": "exact",
+                        "type": "INTEGER",
+                        "description": "Exact match for search."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "item": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "deckofcards",
+                "api_name": "draw_cards",
+                "api_description": "Draw cards from a deck.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "deck_id",
+                        "type": "STRING",
+                        "description": "The deck id to draw cards from.",
+                        "default": "new"
+                    },
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "Number of cards to draw.",
+                        "default": 2
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "success": "bool",
+                    "cards": [
+                        {
+                            "code": "str",
+                            "image": "str",
+                            "value": "str",
+                            "suit": "str"
+                        }
+                    ],
+                    "deck_id": "str",
+                    "remaining": "int"
+                }
+            }
+        ],
+        "query": "I want to find board games related to 'Catan' and also draw 5 cards from a new deck for a quick game setup.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

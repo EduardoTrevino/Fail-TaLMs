@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "nexchange",
+                "api_name": "get_latest_price",
+                "api_description": "Gets latest price of the pair.",
+                "required_parameters": [
+                    {
+                        "name": "pair_name",
+                        "type": "STRING",
+                        "description": "Name of exchanged pair.",
+                        "default": "BTCLTC"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "market_code",
+                        "type": "STRING",
+                        "description": "Price market code.",
+                        "default": "nex"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "rate": "FLOAT",
+                        "market_code": "STRING"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_market_ticker",
+                "api_description": "Retrieve the market ticker information for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which ticker information is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "instId": "str",
+                            "last": "float",
+                            "askPx": "float",
+                            "bidPx": "float",
+                            "high24h": "float",
+                            "low24h": "float",
+                            "vol24h": "float"
+                        }
+                    ],
+                    "code": "int",
+                    "msg": "str"
+                }
+            }
+        ],
+        "query": "What is the latest BTC to LTC exchange rate on Nexchange? Additionally, can you provide the market ticker for BTC-USDT from OKX?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

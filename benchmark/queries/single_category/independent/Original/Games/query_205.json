@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "evilinsultgenerator",
+                "api_name": "generate_insult",
+                "api_description": "Generate an insult in a specified language and response type.",
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "The language of the insult you want.",
+                        "default": "en"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The response type. Supports 'text', 'XML', and 'JSON'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "insult": "str",
+                    "number": "str",
+                    "language": "str",
+                    "created": "str"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "runescape",
+                "api_name": "grand_exchange_items",
+                "api_description": "Returns items given the category, starting letter, and page number.",
+                "required_parameters": [
+                    {
+                        "name": "category",
+                        "type": "INTEGER",
+                        "description": "The category identification number."
+                    },
+                    {
+                        "name": "alpha",
+                        "type": "STRING",
+                        "description": "The starting letter for items."
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page number starting from 1.",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        {
+                            "id": "int",
+                            "name": "str",
+                            "description": "str",
+                            "price": "int",
+                            "icon": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I feel like having a laugh, could you generate a humorous insult for me? Also, can you find a list of RuneScape items that start with the letter 's' in the weapons category?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

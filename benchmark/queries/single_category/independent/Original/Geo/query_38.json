@@ -1,0 +1,52 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geojs",
+                "api_name": "get_ptr_record",
+                "api_description": "Returns PTR (pointer record) information about an IP.",
+                "required_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IP address to lookup."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "ptr": "string"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on IP address.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "string",
+                    "geoplugin_status": "integer",
+                    "geoplugin_countryName": "string",
+                    "geoplugin_city": "string"
+                }
+            }
+        ],
+        "query": "I have an IP address. Can you tell me its PTR record and the geographic location information?",
+        "relevant APIs": [
+            "get_ptr_record",
+            "get_location_by_ip"
+        ],
+        "query_id": 3
+    }
+]

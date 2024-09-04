@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinbase",
+                "api_name": "get_exchange_rates",
+                "api_description": "Get current exchange rates. Default base currency is USD.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "currency",
+                        "type": "STRING",
+                        "description": "Base currency (default: USD).",
+                        "default": "USD"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "currency": "string",
+                    "rates": {
+                        "string": "string"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "dexscreener",
+                "api_name": "get_pairs_by_token_address",
+                "api_description": "Get one or multiple pairs by token addresses.",
+                "required_parameters": [
+                    {
+                        "name": "token_addresses",
+                        "type": "LIST",
+                        "description": "Comma-separated token addresses (up to 30 addresses).",
+                        "default": [
+                            "0x2170Ed0880ac9A755fd29B2688956BD959F933F8"
+                        ]
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "pairs": [
+                        {
+                            "pair_address": "string",
+                            "chain_id": "string",
+                            "baseToken": {
+                                "name": "string",
+                                "symbol": "string",
+                                "address": "string"
+                            },
+                            "quoteToken": {
+                                "name": "string",
+                                "symbol": "string",
+                                "address": "string"
+                            },
+                            "priceNative": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you show me the latest exchange rates for major currencies using Coinbase, and also list the DEX pairs for the Ethereum token address on Dexscreener?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

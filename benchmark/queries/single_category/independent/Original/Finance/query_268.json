@@ -1,0 +1,59 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_ticker",
+                "api_description": "Retrieves recent trading activity for the symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "ask": "str",
+                    "bid": "str",
+                    "last": "str"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_ticker_information",
+                "api_description": "Get ticker information for all or requested markets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pair to get data for (optional, default: all tradeable exchange pairs)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair_name": {
+                            "a": [
+                                "str"
+                            ],
+                            "b": [
+                                "str"
+                            ],
+                            "c": [
+                                "str"
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Provide the current trading activity, including the ask and bid prices for the BTC/USD pair from both Gemini and Kraken.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

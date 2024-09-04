@@ -1,0 +1,105 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "imgflip",
+                "api_name": "get_memes",
+                "api_description": "Retrieves an array of popular memes that may be captioned with this API.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "success": "boolean",
+                    "data": {
+                        "memes": [
+                            {
+                                "id": "string",
+                                "name": "string",
+                                "url": "string",
+                                "width": "integer",
+                                "height": "integer",
+                                "box_count": "integer"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "jokeapi",
+                "api_name": "get_joke",
+                "api_description": "Fetch jokes based on category, filters and other parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Joke category",
+                        "default": "Any"
+                    },
+                    {
+                        "name": "blacklist_flags",
+                        "type": "LIST",
+                        "description": "Flags to filter out",
+                        "default": "None"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language code for joke",
+                        "default": "en"
+                    },
+                    {
+                        "name": "joke_type",
+                        "type": "STRING",
+                        "description": "Type of joke (single/twopart)",
+                        "default": "None"
+                    },
+                    {
+                        "name": "contains",
+                        "type": "STRING",
+                        "description": "String to search within jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "id_range",
+                        "type": "STRING",
+                        "description": "ID range for jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "INTEGER",
+                        "description": "Number of jokes to fetch",
+                        "default": 1
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "safe_mode",
+                        "type": "BOOLEAN",
+                        "description": "Fetch only safe jokes",
+                        "default": false
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "jokes": "array",
+                    "amount": "integer"
+                }
+            }
+        ],
+        "query": "I want to create a fun meme from a popular template on Imgflip. Also, could you tell me a programming joke to go along with it?",
+        "relevant APIs": [
+            "get_memes",
+            "get_joke"
+        ],
+        "query_id": 1
+    }
+]

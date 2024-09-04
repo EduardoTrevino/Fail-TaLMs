@@ -1,0 +1,73 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinpaprika",
+                "api_name": "get_ticker_by_id",
+                "api_description": "Returns price data of a single cryptocurrency.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quotes",
+                        "type": "STRING",
+                        "default": "USD"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "quotes": {
+                        "USD": {
+                            "price": "float",
+                            "volume_24h": "float",
+                            "market_cap": "int"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "nexchange",
+                "api_name": "get_price",
+                "api_description": "Get price quote of a given amount of currency.",
+                "required_parameters": [
+                    {
+                        "name": "pair_name",
+                        "type": "STRING"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "amount_base",
+                        "type": "DOUBLE"
+                    },
+                    {
+                        "name": "amount_quote",
+                        "type": "DOUBLE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pair": "str",
+                    "base": {
+                        "code": "str",
+                        "amount": "float"
+                    },
+                    "quote": {
+                        "code": "str",
+                        "amount": "float"
+                    }
+                }
+            }
+        ],
+        "query": "What is the current price of Bitcoin in USD on coinpaprika, and also, what's the price for the BTC-ETH pair on N.exchange?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

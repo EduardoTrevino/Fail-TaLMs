@@ -1,0 +1,56 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "carbonintensity",
+                "api_name": "get_current_intensity",
+                "api_description": "Get Carbon Intensity data for the current half hour.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "from": "string",
+                        "to": "string",
+                        "intensity": {
+                            "forecast": "number",
+                            "actual": "number",
+                            "index": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "pmtwentyfive",
+                "api_name": "get_device_latest",
+                "api_description": "Returns the latest measurement (within 2 hours) of the device.",
+                "required_parameters": [
+                    {
+                        "name": "device_id",
+                        "type": "STRING",
+                        "description": "Device ID, usually the MAC address.",
+                        "default": "08BEAC0A08AE"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output data format.",
+                        "default": "JSON"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "source": "string",
+                    "device_id": "string",
+                    "feeds": "object"
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Can you provide the current carbon intensity for the UK along with the latest PM2.5 measurement using device ID '08BEAC0A08AE'?",
+        "query_id": 1
+    }
+]

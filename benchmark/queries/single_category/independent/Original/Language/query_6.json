@@ -1,0 +1,64 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "chinesecharacterweb",
+                "api_name": "get_sounds_mandarin",
+                "api_description": "Returns a list of Mandarin sounds, optionally with pitch.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "with_pitch",
+                        "type": "BOOLEAN",
+                        "description": "Include pitch in sounds.",
+                        "default": false
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "mandarin": [
+                        "str"
+                    ]
+                }
+            },
+            {
+                "category_name": "Language",
+                "tool_name": "datamuse",
+                "api_name": "sug",
+                "api_description": "Provides word suggestions given a partial query for autocomplete.",
+                "required_parameters": [
+                    {
+                        "name": "s",
+                        "type": "STRING",
+                        "description": "Prefix hint string entered by user."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "max",
+                        "type": "INTEGER",
+                        "description": "Max number of results (default is 10).",
+                        "default": 10
+                    },
+                    {
+                        "name": "v",
+                        "type": "STRING",
+                        "description": "Vocab identifier, like in /words.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "word": "string",
+                        "score": "integer"
+                    }
+                ]
+            }
+        ],
+        "query": "What are the Mandarin sounds with pitch included, and can you suggest words that start with 'ring'?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

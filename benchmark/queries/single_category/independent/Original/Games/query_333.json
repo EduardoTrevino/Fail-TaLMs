@@ -1,0 +1,83 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "fetch_random_joke",
+                "api_description": "Fetch a random dad joke in the specified format.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "accept",
+                        "type": "STRING",
+                        "description": "The format to accept the joke in.",
+                        "default": "application/json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "joke": "str",
+                    "status": "int"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "imgflip",
+                "api_name": "caption_image",
+                "api_description": "Add a caption to an Imgflip meme template.",
+                "required_parameters": [
+                    {
+                        "name": "template_id",
+                        "type": "STRING",
+                        "description": "The ID of the template to use."
+                    },
+                    {
+                        "name": "username",
+                        "type": "STRING",
+                        "description": "Imgflip account username."
+                    },
+                    {
+                        "name": "password",
+                        "type": "STRING",
+                        "description": "Imgflip account password."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "text0",
+                        "type": "STRING",
+                        "description": "Top text for the meme."
+                    },
+                    {
+                        "name": "text1",
+                        "type": "STRING",
+                        "description": "Bottom text for the meme."
+                    },
+                    {
+                        "name": "font",
+                        "type": "STRING",
+                        "description": "Font family to use for the text. Defaults to 'impact'."
+                    },
+                    {
+                        "name": "max_font_size",
+                        "type": "INTEGER",
+                        "description": "Maximum font size in pixels. Defaults to 50."
+                    }
+                ],
+                "method": "POST",
+                "template_response": {
+                    "success": "boolean",
+                    "data": {
+                        "url": "string",
+                        "page_url": "string"
+                    }
+                }
+            }
+        ],
+        "query": "Can you fetch a random dad joke for me and then create a meme using an Imgflip template where the joke is used as the text?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

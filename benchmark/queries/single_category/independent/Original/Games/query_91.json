@@ -1,0 +1,70 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "deckofcards",
+                "api_name": "draw_cards",
+                "api_description": "Draw cards from a deck.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "deck_id",
+                        "type": "STRING",
+                        "description": "The deck id to draw cards from.",
+                        "default": "new"
+                    },
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "Number of cards to draw.",
+                        "default": 2
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "success": true,
+                    "deck_id": "string",
+                    "cards": [
+                        {
+                            "code": "string",
+                            "image": "string",
+                            "value": "string",
+                            "suit": "string"
+                        }
+                    ],
+                    "remaining": "int"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "DnD5",
+                "api_name": "get_equipment",
+                "api_description": "Get an equipment item by index.",
+                "required_parameters": [
+                    {
+                        "name": "index",
+                        "type": "STRING",
+                        "description": "The index of the equipment to get.",
+                        "default": "club"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "index": "string",
+                    "name": "string",
+                    "equipment_category": "string",
+                    "cost": {
+                        "quantity": "int",
+                        "unit": "string"
+                    },
+                    "weight": "int"
+                }
+            }
+        ],
+        "query": "I need to draw 5 cards from a deck for a game, and could you also provide some information about a 'club' equipment in D&D?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

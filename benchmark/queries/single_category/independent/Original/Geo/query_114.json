@@ -1,0 +1,78 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "ipapi",
+                "api_name": "get_ip_location",
+                "api_description": "Retrieve complete location information for a specific IP address.",
+                "required_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IP address to retrieve location for.",
+                        "default": "8.8.8.8"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "city": "str",
+                    "region": "str",
+                    "country": "str",
+                    "location": {
+                        "latitude": "float",
+                        "longitude": "float"
+                    }
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "zippopotamus",
+                "api_name": "get_zip_info_by_postal_code",
+                "api_description": "Fetch detailed postal code information for given postal code and country.",
+                "required_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "Country code such as 'US' for United States.",
+                        "default": "US"
+                    },
+                    {
+                        "name": "postal_code",
+                        "type": "STRING",
+                        "description": "The postal code to lookup, such as '90210'.",
+                        "default": "90210"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "post code": "str",
+                    "country": "str",
+                    "country abbreviation": "str",
+                    "places": [
+                        {
+                            "place name": "str",
+                            "longitude": "str",
+                            "state": "str",
+                            "state abbreviation": "str",
+                            "latitude": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What location details can you provide for the IP address 8.8.8.8? Also, give me the postal code information for 90210 in the US.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

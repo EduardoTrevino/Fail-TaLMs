@@ -1,0 +1,75 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "carbonintensity",
+                "api_name": "get_intensity_statistics",
+                "api_description": "Get Carbon Intensity statistics (average, max, min) between specified datetimes.",
+                "required_parameters": [
+                    {
+                        "name": "from",
+                        "type": "STRING",
+                        "description": "Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+                    },
+                    {
+                        "name": "to",
+                        "type": "STRING",
+                        "description": "End datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "from": "string",
+                        "to": "string",
+                        "intensity": {
+                            "max": "number",
+                            "average": "number",
+                            "min": "number",
+                            "index": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "universitysearch",
+                "api_name": "search_universities",
+                "api_description": "Search for universities by name and filter by country with pagination capabilities.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name or part of the name of the university to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit on the number of results to return."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "web_pages": [
+                            "string"
+                        ],
+                        "domains": [
+                            "string"
+                        ],
+                        "country": "string",
+                        "alpha_two_code": "string",
+                        "name": "string"
+                    }
+                ],
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Provide me with carbon intensity statistics from 2023-01-01T00:00Z to 2023-01-02T00:00Z. Also, find some universities starting with 'Stanford' but limit the results to 3.",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

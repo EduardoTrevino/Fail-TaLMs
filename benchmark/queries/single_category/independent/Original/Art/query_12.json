@@ -1,0 +1,64 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_object_details",
+                "api_description": "Retrieve detailed information for an object using its unique Object ID.",
+                "required_parameters": [
+                    {
+                        "name": "objectID",
+                        "type": "INTEGER",
+                        "description": "The unique Object ID for the object."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "objectID": "int",
+                    "title": "string",
+                    "primaryImage": "string",
+                    "additionalImages": [
+                        "string"
+                    ],
+                    "culture": "string",
+                    "department": "string"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image_post_method",
+                "api_description": "Compress an image by sending the file using the POST method.",
+                "required_parameters": [
+                    {
+                        "name": "file_path",
+                        "type": "STRING",
+                        "description": "The local file path of the image to be compressed."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "qlty",
+                        "type": "INTEGER",
+                        "description": "The quality level for JPG compression (0-100).",
+                        "default": "92"
+                    }
+                ],
+                "method": "POST",
+                "template_response": {
+                    "dest": "string",
+                    "src": "string",
+                    "src_size": "int",
+                    "dest_size": "int",
+                    "percent": "float",
+                    "expires": "string"
+                }
+            }
+        ],
+        "query": "Can you retrieve the detailed information for an object using its unique Object ID and also compress the main image file of this object using the local file path?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

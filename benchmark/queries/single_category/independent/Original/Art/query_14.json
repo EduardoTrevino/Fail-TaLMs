@@ -1,0 +1,64 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
+                "api_description": "Search for objects in the Met's collection based on certain criteria.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Search term.",
+                        "default": "sunflowers"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "is_highlight",
+                        "type": "BOOLEAN",
+                        "description": "Return objects that are designated as highlights.",
+                        "default": "true"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total": "int",
+                    "objectIDs": [
+                        "int"
+                    ]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "robohash",
+                "api_name": "get_robohash_image",
+                "api_description": "Generate a robohash image for a specific object ID.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Text input for generating the image.",
+                        "default": "objectID"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fmt",
+                        "type": "STRING",
+                        "description": "Output format of the image.",
+                        "default": "png"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": "binary"
+                }
+            }
+        ],
+        "query": "Find highlighted objects related to 'sunflowers' in the Met's collection and create a unique image for the object IDs retrieved.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

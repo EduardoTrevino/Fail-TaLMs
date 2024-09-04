@@ -1,0 +1,76 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "genderize",
+                "api_name": "check_gender",
+                "api_description": "Predicts the gender of a single name using the Genderize API, with optional localization by country.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name to predict gender for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "Country code for localization following ISO 3166-1 alpha-2."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "gender": "str",
+                    "probability": "float",
+                    "count": "int",
+                    "country_id": "str"
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "isgd",
+                "api_name": "shorten_url",
+                "api_description": "Shortens a given URL using the is.gd service.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL you want to shorten."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format of the response ('web', 'simple', 'xml', 'json'). Default is 'simple'."
+                    },
+                    {
+                        "name": "shorturl",
+                        "type": "STRING",
+                        "description": "Custom shortened URL you would like to use. (5 to 30 characters)"
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Used only with format 'json' to specify a callback function."
+                    },
+                    {
+                        "name": "logstats",
+                        "type": "INTEGER",
+                        "description": "If 1, enables logging of detailed statistics."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "shorturl": "string"
+                }
+            }
+        ],
+        "query": "Can you tell me the likely gender of the name 'Alex' based on data from the US? Also, I have a really long link to a blog post about gender studies. Can you shorten it using a URL shortener?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

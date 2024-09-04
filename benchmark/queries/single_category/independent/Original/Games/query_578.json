@@ -1,0 +1,69 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "boardgamesgeek",
+                "api_name": "search_items",
+                "api_description": "Search for items by name from the BGG database.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query.",
+                        "default": "Catan"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The type of items to return."
+                    },
+                    {
+                        "name": "exact",
+                        "type": "INTEGER",
+                        "description": "Exact match for search."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total": "int",
+                    "items": [
+                        "str"
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "datadragon",
+                "api_name": "get_champion_data",
+                "api_description": "Retrieve champion data for a specified version and language.",
+                "required_parameters": [
+                    {
+                        "name": "version",
+                        "type": "STRING",
+                        "description": "The version of the data files.",
+                        "default": "12.6.1"
+                    },
+                    {
+                        "name": "language",
+                        "type": "STRING",
+                        "description": "The language code.",
+                        "default": "en_US"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        ],
+        "query": "Can you find detailed information about the board game Catan? Also, give me the latest champion data in English from League of Legends.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

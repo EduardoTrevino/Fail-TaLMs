@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_asset_by_id",
+                "api_description": "Get detailed information for a specific asset by ID.",
+                "required_parameters": [
+                    {
+                        "name": "asset_id",
+                        "type": "STRING",
+                        "description": "Asset ID to retrieve details for."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "id": "str",
+                        "rank": "str",
+                        "symbol": "str",
+                        "name": "str",
+                        "supply": "str",
+                        "maxSupply": "str",
+                        "marketCapUsd": "str",
+                        "volumeUsd24Hr": "str",
+                        "priceUsd": "str",
+                        "changePercent24Hr": "str",
+                        "vwap24Hr": "str"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_asset_info",
+                "api_description": "Get information about the assets that are available for deposit, withdrawal, trading, and earn.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "asset",
+                        "type": "STRING",
+                        "description": "Comma delimited list of assets to get info on (optional, default all available assets)"
+                    },
+                    {
+                        "name": "aclass",
+                        "type": "STRING",
+                        "description": "Asset class (optional, default: currency)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "XBTC": {
+                            "aclass": "str",
+                            "altname": "str",
+                            "decimals": "int",
+                            "display_decimals": "int"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "I am interested in getting detailed information about Bitcoin from CoinCap and also want to know about the available trading features for Bitcoin on Kraken.",
+        "relevant_APIs": [
+            "coincap.get_asset_by_id",
+            "kraken.get_asset_info"
+        ],
+        "query_id": 2
+    }
+]

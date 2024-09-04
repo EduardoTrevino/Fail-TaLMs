@@ -1,0 +1,62 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "apicagent",
+                "api_name": "get_user_agent_info",
+                "api_description": "Retrieve parsed information about a user agent string using the GET method.",
+                "required_parameters": [
+                    {
+                        "name": "ua",
+                        "type": "STRING",
+                        "description": "The user agent string URL encoded.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "browser_family": "string",
+                    "client": "object",
+                    "device": "object",
+                    "os": "object",
+                    "os_family": "string"
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "genderize",
+                "api_name": "check_genders",
+                "api_description": "Predicts the gender of multiple names in one request, optionally scoped to a specific country.",
+                "required_parameters": [
+                    {
+                        "name": "names",
+                        "type": "LIST OF STRINGS",
+                        "description": "The names to predict genders for, maximum 10 names."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "Country code for localization following ISO 3166-1 alpha-2."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "count": "int",
+                        "name": "string",
+                        "gender": "string",
+                        "probability": "float",
+                        "country_id": "string"
+                    }
+                ]
+            }
+        ],
+        "query": "Can you provide details about a user agent string for debugging purposes? Also, could you predict the genders for the names 'Sam', 'Chris', and 'Jordan', perhaps specifying for the US country code?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

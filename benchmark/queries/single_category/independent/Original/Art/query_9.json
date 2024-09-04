@@ -1,0 +1,90 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dogs",
+                "api_name": "list_all_breeds",
+                "api_description": "List all breeds available in the API.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": {
+                        "type": "object",
+                        "properties": {
+                            "breed_name": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "status": "success"
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "robohash",
+                "api_name": "get_robohash_image",
+                "api_description": "Generate a unique image from any text. Customize the image by using different sets, backgrounds, sizes, etc.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Text input for generating the image.",
+                        "default": "dog"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fmt",
+                        "type": "STRING",
+                        "description": "Output format of the image.",
+                        "default": "png"
+                    },
+                    {
+                        "name": "size",
+                        "type": "STRING",
+                        "description": "Size of the generated image.",
+                        "default": null
+                    },
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "The set to generate the image from.",
+                        "default": null
+                    },
+                    {
+                        "name": "bgset",
+                        "type": "STRING",
+                        "description": "The background set to use.",
+                        "default": null
+                    },
+                    {
+                        "name": "gravatar",
+                        "type": "STRING",
+                        "description": "Use a gravatar image if available.",
+                        "default": null
+                    },
+                    {
+                        "name": "ignoreext",
+                        "type": "BOOLEAN",
+                        "description": "Whether to ignore the extension in the hash.",
+                        "default": true
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "image": {
+                        "type": "binary"
+                    }
+                }
+            }
+        ],
+        "query": "What are all the breeds of dogs available, and can you generate a unique image of a dog labeled as 'robotic canine' using Robohash?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,63 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "carbonintensity",
+                "api_name": "get_generation_mix_current",
+                "api_description": "Get generation mix for the current half hour.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "from": "string",
+                        "to": "string",
+                        "generationmix": [
+                            {
+                                "fuel": "string",
+                                "perc": "number"
+                            }
+                        ]
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Can you tell me the current generation mix and confirm if the official UK government energy site was archived?",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

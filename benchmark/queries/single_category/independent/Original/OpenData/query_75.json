@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "openlibrary",
+                "api_name": "get_author_by_id",
+                "api_description": "Retrieve details of an author by their Open Library author ID.",
+                "required_parameters": [
+                    {
+                        "name": "author_id",
+                        "type": "STRING",
+                        "description": "The author's Open Library ID.",
+                        "default": "OL23919A"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "key": "str",
+                    "name": "str",
+                    "works": [
+                        {
+                            "title": "str",
+                            "key": "str"
+                        }
+                    ]
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "https://example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Who is the author with Open Library ID OL23919A, and can you verify if the URL 'https://example.com' has been archived in the Wayback Machine?",
+        "query_id": 2
+    }
+]

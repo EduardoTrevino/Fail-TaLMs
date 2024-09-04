@@ -1,0 +1,67 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "jokeapi",
+                "api_name": "get_joke",
+                "api_description": "Fetch jokes based on category, filters and other parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Joke category",
+                        "default": "Any"
+                    },
+                    {
+                        "name": "blacklist_flags",
+                        "type": "LIST",
+                        "description": "Flags to filter out",
+                        "default": "None"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language code for joke",
+                        "default": "en"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "INTEGER",
+                        "description": "Number of jokes to fetch",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "jokes": "array",
+                    "amount": "integer"
+                },
+                "category_name": "Games"
+            },
+            {
+                "tool_name": "tcgdex",
+                "api_name": "get_card",
+                "api_description": "Retrieve information about a single card by its ID.",
+                "required_parameters": [
+                    {
+                        "name": "card_id",
+                        "type": "STRING",
+                        "description": "The ID of the card."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "string",
+                    "description": "string",
+                    "image": "string"
+                },
+                "category_name": "Games"
+            }
+        ],
+        "query": "Can you fetch a funny programming joke, and also provide the details of the 'base1-1' Pok\u00e9mon card from the TCGdex API?",
+        "query_id": 1
+    }
+]

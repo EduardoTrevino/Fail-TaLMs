@@ -1,0 +1,67 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinmap",
+                "api_name": "get_venues",
+                "api_description": "Retrieve a list of venues with optional filtering parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Substring search in venue names."
+                    },
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Filter category."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit number of results.",
+                        "default": "10"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "venues": [
+                        {
+                            "type": "object"
+                        }
+                    ],
+                    "count": "int"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_ticker",
+                "api_description": "Retrieve information about recent trading activity for the symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "bid": "float",
+                    "ask": "float",
+                    "last": "float",
+                    "volume": {
+                        "time": "string",
+                        "amount": "float"
+                    }
+                }
+            }
+        ],
+        "query": "Can you find cryptocurrency-friendly venues in New York and also get the latest trading information for Bitcoin (BTC) against USD on Gemini?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

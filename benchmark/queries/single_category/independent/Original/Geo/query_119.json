@@ -1,0 +1,47 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_datasets",
+                "api_description": "Retrieves a list of available datasets on the Open Topo Data server.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "name": "STRING",
+                            "child_datasets": "ARRAY"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "postcodes",
+                "api_name": "validate_postcode",
+                "api_description": "Validate if a postcode is correct.",
+                "required_parameters": [
+                    {
+                        "name": "postcode",
+                        "type": "STRING",
+                        "description": "The postcode to validate.",
+                        "default": "SW1A1AA"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "status": "INTEGER",
+                    "result": "BOOLEAN"
+                }
+            }
+        ],
+        "query": "Can you give me a list of datasets available for elevation data? Also, could you validate if SW1A1AA is a correct UK postcode?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

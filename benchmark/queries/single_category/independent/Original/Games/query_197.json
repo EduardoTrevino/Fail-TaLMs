@@ -1,0 +1,67 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "evilinsultgenerator",
+                "api_name": "generate_insult",
+                "api_description": "This endpoint serves to generate humorous and evil insults.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "The language of the insult you want.",
+                        "default": "en"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The response type. Supports 'text', 'XML', and 'JSON'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "insult": "str",
+                    "number": "str",
+                    "language": "str",
+                    "created": "str"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "officaljoke",
+                "api_name": "grab_jokes_by_type",
+                "api_description": "Grab jokes by type.",
+                "required_parameters": [
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Type of jokes to fetch."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "INTEGER",
+                        "description": "Number of jokes to fetch (1 for 'random', others for 'ten').",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "int",
+                        "type": "str",
+                        "setup": "str",
+                        "punchline": "str"
+                    }
+                ]
+            }
+        ],
+        "query": "Could you tell me some technology-themed jokes and follow up with a tech-related insult?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
