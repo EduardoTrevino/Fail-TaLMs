@@ -1,0 +1,146 @@
+{
+  "tool_name": "openmeteo",
+  "tool_description": "API to access weather forecast data using various weather models for different geographic locations.",
+  "title": "Open-Meteo Weather Forecast API",
+  "pricing": "FREE",
+  "score": {
+    "avgServiceLevel": 97,
+    "avgLatency": 120,
+    "avgSuccessRate": 99,
+    "popularityScore": 8.7,
+    "__typename": "Score"
+  },
+  "home_url": "https://api.open-meteo.com/",
+  "host": "api.open-meteo.com",
+  "api_list": [
+    {
+      "name": "get_weather_forecast",
+      "url": "https://api.open-meteo.com/v1/forecast",
+      "description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "latitude",
+          "type": "FLOAT",
+          "description": "Geographical WGS84 coordinates of the location.",
+          "default": "None"
+        },
+        {
+          "name": "longitude",
+          "type": "FLOAT",
+          "description": "Geographical WGS84 coordinates of the location.",
+          "default": "None"
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "hourly",
+          "type": "LIST",
+          "description": "A list of weather variables which should be returned hourly.",
+          "default": "None"
+        },
+        {
+          "name": "daily",
+          "type": "LIST",
+          "description": "A list of daily weather variable aggregations which should be returned.",
+          "default": "None"
+        },
+        {
+          "name": "current",
+          "type": "LIST",
+          "description": "A list of weather variables to get current conditions.",
+          "default": "None"
+        },
+        {
+          "name": "temperature_unit",
+          "type": "STRING",
+          "description": "Temperature units like celsius or fahrenheit.",
+          "default": "celsius"
+        },
+        {
+          "name": "wind_speed_unit",
+          "type": "STRING",
+          "description": "Wind speed units like km/h, m/s, mph, or knots.",
+          "default": "kmh"
+        },
+        {
+          "name": "precipitation_unit",
+          "type": "STRING",
+          "description": "Precipitation units like mm or inch.",
+          "default": "mm"
+        },
+        {
+          "name": "timeformat",
+          "type": "STRING",
+          "description": "Time format like iso8601 or unixtime.",
+          "default": "iso8601"
+        },
+        {
+          "name": "timezone",
+          "type": "STRING",
+          "description": "Timezone like GMT or location-based timezone.",
+          "default": "GMT"
+        },
+        {
+          "name": "past_days",
+          "type": "INTEGER",
+          "description": "Number of past days to include in the weather data.",
+          "default": "0"
+        },
+        {
+          "name": "forecast_days",
+          "type": "INTEGER",
+          "description": "Number of forecast days to include in the weather data.",
+          "default": "7"
+        }
+      ],
+      "code": "import requests\n\nurl = 'https://api.open-meteo.com/v1/forecast'\nparams = {'latitude': latitude, 'longitude': longitude, 'temperature_unit': temperature_unit, 'wind_speed_unit': wind_speed_unit, 'precipitation_unit': precipitation_unit, 'timeformat': timeformat, 'timezone': timezone, 'past_days': past_days, 'forecast_days': forecast_days}\nif hourly: params[\"hourly\"] = \",\".join(hourly)\nif daily: params[\"daily\"] = \",\".join(daily)\nif current: params[\"current\"] = \",\".join(current)\nresponse = requests.get(url, params=params)\nprint(response.json())",
+      "statuscode": 200,
+      "body": {
+        "latitude": "float",
+        "longitude": "float",
+        "generationtime_ms": "float",
+        "utc_offset_seconds": "int",
+        "timezone": "str",
+        "timezone_abbreviation": "str",
+        "hourly": {
+          "time": "list",
+          "temperature_2m": "list"
+        },
+        "hourly_units": {
+          "temperature_2m": "str"
+        }
+      },
+      "headers": {},
+      "schema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "generationtime_ms": {
+            "type": "number"
+          },
+          "utc_offset_seconds": {
+            "type": "integer"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "timezone_abbreviation": {
+            "type": "string"
+          },
+          "hourly": {
+            "type": "object"
+          },
+          "hourly_units": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}
