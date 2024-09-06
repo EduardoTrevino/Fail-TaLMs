@@ -1,0 +1,74 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Sports",
+        "tool_name": "nhl",
+        "api_name": "get_player_game_log",
+        "api_description": "Retrieve game log data for the specified player, season, and game type.",
+        "required_parameters": [
+          {
+            "name": "player_id",
+            "type": "INTEGER",
+            "description": "The ID of the player.",
+            "default": null
+          },
+          {
+            "name": "season",
+            "type": "INTEGER",
+            "description": "The season for which the game log is requested.",
+            "default": null
+          },
+          {
+            "name": "game_type",
+            "type": "INTEGER",
+            "description": "The type of game (e.g., regular season, playoffs).",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "games": [
+            {
+              "date": "str",
+              "opponent": "str",
+              "points": "int",
+              "assists": "int",
+              "goals": "int"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Sports",
+        "tool_name": "soccerdata",
+        "api_name": "list_competitions",
+        "api_description": "List all available competitions.",
+        "optional_parameters": [
+          {
+            "name": "areas",
+            "type": "STRING",
+            "description": "Comma separated list of area IDs.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "competitions": [
+            {
+              "id": "str",
+              "name": "str",
+              "area": {
+                "name": "str",
+                "id": "int"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide the game log for my dad's favorite NHL player for the current season including both regular season and playoff games? Additionally, list all football competitions available worldwide.",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

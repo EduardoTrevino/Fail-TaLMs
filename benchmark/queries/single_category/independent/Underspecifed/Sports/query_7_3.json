@@ -1,0 +1,61 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Sports",
+        "tool_name": "nhl",
+        "api_name": "get_standings",
+        "api_description": "Retrieve standings for the specified date.",
+        "required_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "The date for which the standings are requested (format: YYYY-MM-DD).",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "standings": [
+            {
+              "team_name": "str",
+              "points": "int",
+              "wins": "int",
+              "losses": "int"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Sports",
+        "tool_name": "soccerdata",
+        "api_name": "list_competitions",
+        "api_description": "List all available competitions.",
+        "optional_parameters": [
+          {
+            "name": "areas",
+            "type": "STRING",
+            "description": "Comma separated list of area IDs.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "competitions": [
+            {
+              "id": "str",
+              "name": "str",
+              "area": {
+                "name": "str",
+                "id": "int"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "What were the NHL standings on my cousin's first day of school, and what football competitions are currently available in my local continent?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
