@@ -3,25 +3,6 @@
     "api_list": [
       {
         "category_name": "Music",
-        "tool_name": "binaryjazz",
-        "api_name": "get_genres",
-        "api_description": "Fetch a number of random music genres.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "count",
-            "type": "INTEGER",
-            "description": "The number of genres to fetch.",
-            "default": "1"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "items": ["string"]
-        }
-      },
-      {
-        "category_name": "Music",
         "tool_name": "musicbrainz",
         "api_name": "artist_search",
         "api_description": "Allows searching for artists by name.",
@@ -51,16 +32,47 @@
         "template_response": {
           "artists": [
             {
-              "id": "str",
               "name": "str",
-              "type": "str",
-              "country": "str"
+              "mbid": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Music",
+        "tool_name": "openwhyd",
+        "api_name": "get_user_tracks",
+        "api_description": "Fetch the list of tracks posted by a user.",
+        "required_parameters": ["uHandle"],
+        "optional_parameters": [
+          {
+            "name": "playlistId",
+            "type": "INTEGER",
+            "description": "The ID of the playlist."
+          },
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Response format."
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of tracks to return."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "tracks": [
+            {
+              "title": "str",
+              "artist": "str"
             }
           ]
         }
       }
     ],
-    "query": "Can you suggest some random music genres and search for Taylor Swift?",
+    "query": "Can you search for artists similar to the ones on the radio and also fetch the tracks from my friend's Openwhyd playlist?",
     "relevant APIs": [],
     "query_id": 1
   }
