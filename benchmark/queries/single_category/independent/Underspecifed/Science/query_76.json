@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "search_records",
+                "api_description": "Searches for record objects.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Search Query in iDigBio Query Format.",
+                        "default": {
+                            "data.dwc:kingdom": "Animalia"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Max results.",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "itemCount": "int",
+                    "indexOfLastRecord": "int",
+                    "records": [
+                        "dict"
+                    ]
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "usgs",
+                "api_name": "count",
+                "api_description": "Perform a count on a data request for earthquakes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "starttime",
+                        "type": "STRING",
+                        "description": "Limit events on or after the specified start time.",
+                        "default": "NOW - 30 days"
+                    },
+                    {
+                        "name": "endtime",
+                        "type": "STRING",
+                        "description": "Limit the events on or before the specified end time.",
+                        "default": "present"
+                    },
+                    {
+                        "name": "minmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude larger than the specified minimum.",
+                        "default": 5.0
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int"
+                }
+            }
+        ],
+        "query": "I am researching biodiversity. Can you find records of animal species collected worldwide? Also, can you provide the number of earthquakes that happened in the last month with a minimum magnitude of 5?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

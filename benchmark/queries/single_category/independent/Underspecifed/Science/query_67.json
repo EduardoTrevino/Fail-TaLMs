@@ -1,0 +1,118 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "search_records",
+                "api_description": "Searches for record objects.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Search Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field to sort on."
+                    },
+                    {
+                        "name": "fields",
+                        "type": "LIST",
+                        "description": "List of fields to return."
+                    },
+                    {
+                        "name": "fields_exclude",
+                        "type": "LIST",
+                        "description": "List of fields to exclude."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Max results.",
+                        "default": 10
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip results.",
+                        "default": 0
+                    },
+                    {
+                        "name": "no_attribution",
+                        "type": "BOOLEAN",
+                        "description": "Disable the attribution block."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "itemCount": "int",
+                    "items": [
+                        "dict"
+                    ]
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "numbers",
+                "api_name": "get_number_fact",
+                "api_description": "Get a fact about a number from the Numbers API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "STRING",
+                        "description": "An integer, 'random', or day of year 'month/day'.",
+                        "default": "random"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'trivia', 'math', 'date', or 'year'.",
+                        "default": "trivia"
+                    },
+                    {
+                        "name": "fragment",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact as a sentence fragment.",
+                        "default": "False"
+                    },
+                    {
+                        "name": "notfound",
+                        "type": "STRING",
+                        "description": "'default', 'floor', 'ceil'.",
+                        "default": "default"
+                    },
+                    {
+                        "name": "min_val",
+                        "type": "INTEGER",
+                        "description": "The minimum value for random facts."
+                    },
+                    {
+                        "name": "max_val",
+                        "type": "INTEGER",
+                        "description": "The maximum value for random facts."
+                    },
+                    {
+                        "name": "json",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact in JSON format.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "text": "string",
+                    "found": "boolean",
+                    "number": "number",
+                    "type": "string"
+                }
+            }
+        ],
+        "query": "I am curious about the biodiversity in Animalia. Could you provide records from iDigBio about this kingdom? Additionally, I'm looking for an interesting mathematical fact about the number 42.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

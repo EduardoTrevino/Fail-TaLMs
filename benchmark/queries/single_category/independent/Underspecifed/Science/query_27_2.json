@@ -1,0 +1,75 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "celestrak",
+        "api_name": "query_by_name",
+        "api_description": "Query the Celestrak GP Data using Satellite Name.",
+        "required_parameters": [
+          {
+            "name": "NAME",
+            "type": "STRING",
+            "description": "Satellite Name.",
+            "default": "Hubble"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "FORMAT",
+            "type": "STRING",
+            "description": "Format of data. Defaults to 'TLE'.",
+            "default": "JSON"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "object",
+          "description": "Returns satellite data in the specified format."
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "gbif",
+        "api_name": "search_datasets",
+        "api_description": "Full-text search across all datasets. Results are ordered by relevance.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "Full text search query.",
+            "default": "birds"
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results per page.",
+            "default": 10
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "Offset of the results.",
+            "default": 0
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": [
+            {
+              "key": "str",
+              "title": "str",
+              "description": "str",
+              "type": "str",
+              "countryCoverage": "str"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you provide the latest telemetry data for the Hubble Space Telescope and also find datasets related to my favorite species worldwide?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

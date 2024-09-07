@@ -1,0 +1,53 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "view_basic_access",
+                "api_description": "Returns iDigBio record format from legacy API given a UUID.",
+                "required_parameters": [
+                    {
+                        "name": "uuid",
+                        "type": "STRING",
+                        "description": "The unique identifier for the record."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "view_type",
+                        "type": "STRING",
+                        "description": "The type of object to view.",
+                        "default": "records"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "uuid": "str",
+                    "data": "object"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "opennotify",
+                "api_name": "get_people_in_space",
+                "api_description": "Returns the current number of people in space, along with their names and spacecraft.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "success",
+                    "number": "int",
+                    "people": [
+                        {
+                            "name": "str",
+                            "craft": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I have a specific record UUID from the iDigBio database I'd like more details about. Also, could you tell me how many people are currently in space and their names?",
+        "query_id": 2
+    }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "arxiv",
+        "api_name": "query_arxiv",
+        "api_description": "Query interface for searching arXiv articles.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "search_query",
+            "type": "STRING",
+            "description": "Search terms used for the query.",
+            "default": null
+          },
+          {
+            "name": "id_list",
+            "type": "LIST",
+            "description": "List of arXiv article IDs for the query.",
+            "default": null
+          },
+          {
+            "name": "start",
+            "type": "INTEGER",
+            "description": "Index of the first returned result.",
+            "default": "0"
+          },
+          {
+            "name": "max_results",
+            "type": "INTEGER",
+            "description": "Maximum number of results to return.",
+            "default": "10"
+          },
+          {
+            "name": "sort_by",
+            "type": "STRING",
+            "description": "Sorting criteria for results.",
+            "default": null
+          },
+          {
+            "name": "sort_order",
+            "type": "STRING",
+            "description": "Sorting order (ascending/descending).",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "feed": {
+            "title": "str",
+            "id": "str",
+            "updated": "str",
+            "opensearch:totalResults": "int",
+            "opensearch:startIndex": "int",
+            "opensearch:itemsPerPage": "int",
+            "entry": {
+              "id": "str",
+              "updated": "str",
+              "published": "str",
+              "summary": "str",
+              "author": "dict",
+              "category": "list",
+              "arxiv:primary_category": "dict"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "sunsetsunrise",
+        "api_name": "get_sunrise_sunset_times",
+        "api_description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+        "required_parameters": [
+          {
+            "name": "lat",
+            "type": "FLOAT",
+            "description": "Latitude of the location in decimal degrees."
+          },
+          {
+            "name": "lng",
+            "type": "FLOAT",
+            "description": "Longitude of the location in decimal degrees."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+          },
+          {
+            "name": "timezone",
+            "type": "STRING",
+            "description": "Timezone of the returned times. Defaults to the location's timezone."
+          },
+          {
+            "name": "date_start",
+            "type": "STRING",
+            "description": "Start date in YYYY-MM-DD format for a range."
+          },
+          {
+            "name": "date_end",
+            "type": "STRING",
+            "description": "End date in YYYY-MM-DD format for a range."
+          },
+          {
+            "name": "time_format",
+            "type": "STRING",
+            "description": "Time format such as '24', 'military', or 'unix'."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "results": {
+            "date": "str",
+            "sunrise": "str",
+            "sunset": "str",
+            "first_light": "str",
+            "last_light": "str",
+            "dawn": "str",
+            "dusk": "str",
+            "solar_noon": "str",
+            "golden_hour": "str",
+            "day_length": "str",
+            "timezone": "str",
+            "utc_offset": "int"
+          },
+          "status": "str"
+        }
+      }
+    ],
+    "query": "Can you provide the latest articles related to quantum computing on arXiv and also find out when the sun sets in my favorite vacation spot today?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]
