@@ -1,0 +1,82 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "carbonintensity",
+        "api_name": "get_intensity_statistics",
+        "api_description": "Get Carbon Intensity statistics (average, max, min) between specified datetimes.",
+        "required_parameters": [
+          {
+            "name": "from",
+            "type": "STRING",
+            "description": "Start datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+          },
+          {
+            "name": "to",
+            "type": "STRING",
+            "description": "End datetime in ISO8601 format YYYY-MM-DDThh:mmZ"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "data": {
+            "from": "string",
+            "to": "string",
+            "intensity": {
+              "max": "number",
+              "average": "number",
+              "min": "number",
+              "index": "string"
+            }
+          }
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "fipe",
+        "api_name": "get_value",
+        "api_description": "Fetch the current price from FIPE table for a specified vehicle, model and year.",
+        "required_parameters": [
+          {
+            "name": "brand_code",
+            "type": "STRING",
+            "description": "Code of the brand."
+          },
+          {
+            "name": "model_code",
+            "type": "STRING",
+            "description": "Code of the model."
+          },
+          {
+            "name": "year_code",
+            "type": "STRING",
+            "description": "Code of the year."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "vehicle_type",
+            "type": "STRING",
+            "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+            "default": "carros"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Valor": "str",
+          "Marca": "str",
+          "Modelo": "str",
+          "AnoModelo": "int",
+          "Combustivel": "str",
+          "CodigoFipe": "str",
+          "MesReferencia": "str"
+        }
+      }
+    ],
+    "query": "I'd like to know the carbon intensity statistics during the week of my wedding in the UK and also get the current market price of my first car in Brazil.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

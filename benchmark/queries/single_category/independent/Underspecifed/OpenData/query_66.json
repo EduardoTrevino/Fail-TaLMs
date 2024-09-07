@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "housestockwatcher",
+                "api_name": "get_daily_transaction_report",
+                "api_description": "Fetches the JSON report for a single day's disclosure.",
+                "required_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+                        "default": "01_01_2021"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "transactions": [
+                        {
+                            "transaction_date": "date",
+                            "owner": "str",
+                            "ticker": "str",
+                            "asset_description": "str",
+                            "asset_type": "str",
+                            "amount": "str",
+                            "transaction_type": "str"
+                        }
+                    ]
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": "20230101"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "I need to know the stock transactions reported on 01_01_2021 by the U.S. House members. Simultaneously, can you verify if there is an archive available for the URL 'example.com' on January 1, 2023?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

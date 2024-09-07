@@ -1,0 +1,108 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "OpenData",
+        "tool_name": "archiveorg",
+        "api_name": "search_items",
+        "api_description": "Search for items using the Archive.org scraping API.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query string in Lucene-like syntax.",
+            "default": ""
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "fields",
+            "type": "STRING",
+            "description": "Metadata fields to return, comma-delimited.",
+            "default": "title"
+          },
+          {
+            "name": "sorts",
+            "type": "STRING",
+            "description": "Fields to sort on, comma-delimited.",
+            "default": ""
+          },
+          {
+            "name": "count",
+            "type": "INTEGER",
+            "description": "Number of results to return.",
+            "default": "100"
+          },
+          {
+            "name": "cursor",
+            "type": "STRING",
+            "description": "Cursor for paginated results.",
+            "default": ""
+          },
+          {
+            "name": "total_only",
+            "type": "BOOLEAN",
+            "description": "If true, only returns the number of results.",
+            "default": "false"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "items": [
+            {
+              "identifier": "str",
+              "title": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "datapoliceuk",
+        "api_name": "street_level_crimes",
+        "api_description": "Returns crimes at street-level for a given latitude and longitude, optionally limited to a specific date.",
+        "required_parameters": [
+          {
+            "name": "lat",
+            "type": "FLOAT",
+            "description": "Latitude for location.",
+            "default": 0.0
+          },
+          {
+            "name": "lng",
+            "type": "FLOAT",
+            "description": "Longitude for location.",
+            "default": 0.0
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "date",
+            "type": "STRING",
+            "description": "Date for filtering crimes.",
+            "default": ""
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "crimes": [
+            {
+              "category": "str",
+              "location": {
+                "latitude": "str",
+                "longitude": "str",
+                "street": {
+                  "id": "int",
+                  "name": "str"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I am interested in finding items from my favorite space organization on Archive.org. Could you help me search for these items? Also, what street-level crimes have been reported around latitude 51.5074, longitude -0.1278 in the last month?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]

@@ -1,0 +1,78 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "datapoliceuk",
+                "api_name": "list_forces",
+                "api_description": "Returns a list of all police forces available via the API except the British Transport Police.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": "string",
+                            "name": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "universitysearch",
+                "api_name": "search_universities",
+                "api_description": "Search for universities by name and filter by country with pagination capabilities.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name or part of the name of the university to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "The country to filter results by."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "web_pages": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "domains": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "country": {
+                                "type": "string"
+                            },
+                            "alpha_two_code": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide me with a list of police forces in the UK and also find universities named 'Oxford' located in the UK?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
