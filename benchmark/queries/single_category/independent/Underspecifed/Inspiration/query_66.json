@@ -25,19 +25,33 @@
             },
             {
                 "category_name": "Inspiration",
-                "tool_name": "affirmations",
-                "api_name": "get_random_affirmation",
-                "api_description": "Fetch a random affirmation.",
+                "tool_name": "quotesondesign",
+                "api_name": "get_random_quotes",
+                "api_description": "Retrieve quotes from the Quotes on Design API randomly.",
                 "required_parameters": [],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "orderby",
+                        "type": "STRING",
+                        "description": "The order in which to sort the quotes. Use 'rand' for a random order.",
+                        "default": "rand"
+                    }
+                ],
                 "method": "GET",
-                "template_response": {
-                    "affirmation": "string"
-                }
+                "template_response": [
+                    {
+                        "id": "int",
+                        "title": {
+                            "rendered": "str"
+                        },
+                        "content": {
+                            "rendered": "str"
+                        }
+                    }
+                ]
             }
         ],
-        "query": "Can you give me a random piece of advice and a positive affirmation to start my day?",
-        "relevant APIs": [],
+        "query": "I'm feeling down. Can you provide me with some random advice and a quote to uplift my spirits?",
         "query_id": 1
     }
 ]
