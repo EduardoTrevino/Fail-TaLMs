@@ -4,38 +4,27 @@
             {
                 "category_name": "Language",
                 "tool_name": "chinesecharacterweb",
-                "api_name": "get_all_characters",
-                "api_description": "Returns all characters, optionally filtered, or the count of characters.",
+                "api_name": "get_sounds_mandarin",
+                "api_description": "Returns a list of Mandarin sounds, optionally with pitch.",
                 "optional_parameters": [
                     {
-                        "name": "filter",
-                        "type": "STRING",
-                        "description": "Filter for the characters."
-                    },
-                    {
-                        "name": "fields",
-                        "type": "STRING",
-                        "description": "Specify fields for the characters."
-                    },
-                    {
-                        "name": "count",
+                        "name": "with_pitch",
                         "type": "BOOLEAN",
-                        "description": "Return count instead of characters."
+                        "description": "Include pitch in sounds."
                     }
                 ],
                 "method": "GET",
                 "template_response": {
-                    "characters": [
+                    "mandarin": [
                         "str"
-                    ],
-                    "count": "int"
+                    ]
                 }
             },
             {
                 "category_name": "Language",
                 "tool_name": "purgomalum",
-                "api_name": "filter_text_plain",
-                "api_description": "Filter profanity from text and return result as plain text.",
+                "api_name": "filter_text_json",
+                "api_description": "Filter profanity from text and return result as JSON.",
                 "required_parameters": [
                     {
                         "name": "text",
@@ -61,11 +50,13 @@
                     }
                 ],
                 "method": "GET",
-                "template_response": "resulting text"
+                "template_response": {
+                    "result": "resulting text"
+                }
             }
         ],
-        "query": "Can you provide a list of all characters in the Chinese character database with definitions and check if the sentence 'This is a fucking awesome tool!' can be filtered for profanity using asterisks?",
+        "query": "List the Mandarin sounds along with their pitch and filter the text 'What a damn fantastic day!' for any profane language, replacing the words with '[censored]'.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 3
     }
 ]
