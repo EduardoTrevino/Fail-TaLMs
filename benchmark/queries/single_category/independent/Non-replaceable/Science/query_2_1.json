@@ -1,0 +1,74 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "arxiv",
+                "api_name": "query_arxiv",
+                "api_description": "Query interface for searching arXiv articles.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "search_query",
+                        "type": "STRING",
+                        "description": "Search terms used for the query.",
+                        "default": null
+                    },
+                    {
+                        "name": "id_list",
+                        "type": "LIST",
+                        "description": "List of arXiv article IDs for the query.",
+                        "default": null
+                    },
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "Index of the first returned result.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "max_results",
+                        "type": "INTEGER",
+                        "description": "Maximum number of results to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "type": "STRING",
+                        "description": "Sorting criteria for results.",
+                        "default": null
+                    },
+                    {
+                        "name": "sort_order",
+                        "type": "STRING",
+                        "description": "Sorting order (ascending/descending).",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "feed": {
+                        "title": "str",
+                        "id": "str",
+                        "updated": "str",
+                        "opensearch:totalResults": "int",
+                        "opensearch:startIndex": "int",
+                        "opensearch:itemsPerPage": "int",
+                        "entry": {
+                            "id": "str",
+                            "updated": "str",
+                            "published": "str",
+                            "summary": "str",
+                            "author": "dict",
+                            "category": "list",
+                            "arxiv:primary_category": "dict"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide the latest articles related to reinforcement learning on arXiv and also find out when the sun sets in Kyoto, Japan (Latitude 35.011665, Longitude 135.768111) today?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
