@@ -1,0 +1,50 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Weather",
+        "tool_name": "openmeteo",
+        "api_name": "get_weather_forecast",
+        "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+        "required_parameters": [
+          {
+            "name": "latitude",
+            "type": "FLOAT",
+            "description": "Geographical WGS84 coordinates of the location."
+          },
+          {
+            "name": "longitude",
+            "type": "FLOAT",
+            "description": "Geographical WGS84 coordinates of the location."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "daily",
+            "type": "LIST",
+            "description": "A list of daily weather variable aggregations which should be returned."
+          },
+          {
+            "name": "forecast_days",
+            "type": "INTEGER",
+            "description": "Number of forecast days to include in the weather data.",
+            "default": "7"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "latitude": "float",
+          "longitude": "float",
+          "generationtime_ms": "float",
+          "daily": {
+            "temperature_2m_max": "list",
+            "temperature_2m_min": "list"
+          }
+        }
+      }
+    ],
+    "query": "What is the weather forecast for the next 7 days for a Berlin Germany with maximum and minimum temperatures? Also, retrieve machine-readable weather data including wind and temperature for the same location.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
