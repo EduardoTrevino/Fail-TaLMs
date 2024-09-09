@@ -1,0 +1,190 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Health",
+        "tool_name": "makeup",
+        "api_name": "search_makeup_products",
+        "api_description": "Search for makeup products and filter them by brand, type, category, tags, price, and ratings.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "brand",
+            "type": "STRING",
+            "description": "Brand of the product."
+          },
+          {
+            "name": "product_type",
+            "type": "STRING",
+            "description": "Type of makeup product."
+          },
+          {
+            "name": "product_category",
+            "type": "STRING",
+            "description": "Category of the makeup product."
+          },
+          {
+            "name": "product_tags",
+            "type": "LIST of STRINGS",
+            "description": "Tags related to the product."
+          },
+          {
+            "name": "price_greater_than",
+            "type": "FLOAT",
+            "description": "Products with price greater than this value."
+          },
+          {
+            "name": "price_less_than",
+            "type": "FLOAT",
+            "description": "Products with price less than this value."
+          },
+          {
+            "name": "rating_greater_than",
+            "type": "FLOAT",
+            "description": "Products with rating greater than this value."
+          },
+          {
+            "name": "rating_less_than",
+            "type": "FLOAT",
+            "description": "Products with rating less than this value."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "brand": "str",
+          "name": "str",
+          "price": "str",
+          "rating": "float",
+          "product_type": "str",
+          "tag_list": ["str"]
+        }
+      },
+      {
+        "category_name": "Health",
+        "tool_name": "nppes",
+        "api_name": "search_npi",
+        "api_description": "Endpoint to search the NPI registry using various search criteria.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "number",
+            "type": "STRING",
+            "description": "The NPI Number, a unique 10-digit identifier."
+          },
+          {
+            "name": "enumeration_type",
+            "type": "STRING",
+            "description": "Type of NPI (Individual/Organizational)."
+          },
+          {
+            "name": "taxonomy_description",
+            "type": "STRING",
+            "description": "Description related to provider's taxonomy."
+          },
+          {
+            "name": "name_purpose",
+            "type": "STRING",
+            "description": "Specifies if the name pertains to AO or Provider."
+          },
+          {
+            "name": "first_name",
+            "type": "STRING",
+            "description": "First name of the provider (Individual providers)."
+          },
+          {
+            "name": "use_first_name_alias",
+            "type": "BOOLEAN",
+            "description": "If True, includes similar First Names.",
+            "default": "True"
+          },
+          {
+            "name": "last_name",
+            "type": "STRING",
+            "description": "Last name of the provider (Individual providers)."
+          },
+          {
+            "name": "organization_name",
+            "type": "STRING",
+            "description": "Organization name (Organizational providers)."
+          },
+          {
+            "name": "address_purpose",
+            "type": "STRING",
+            "description": "Address type filter (LOCATION/MAILING/PRIMARY/SECONDARY)."
+          },
+          {
+            "name": "city",
+            "type": "STRING",
+            "description": "City associated with the provider's address."
+          },
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "State abbreviation for the provider's address."
+          },
+          {
+            "name": "postal_code",
+            "type": "STRING",
+            "description": "Postal code for the provider's address."
+          },
+          {
+            "name": "country_code",
+            "type": "STRING",
+            "description": "Country associated with the provider's address."
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Maximum number of results to return.",
+            "default": "10"
+          },
+          {
+            "name": "skip",
+            "type": "INTEGER",
+            "description": "Number of results to skip.",
+            "default": "0"
+          },
+          {
+            "name": "pretty",
+            "type": "BOOLEAN",
+            "description": "Display in readable format.",
+            "default": "False"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "number": "string",
+              "enumeration_type": "string",
+              "basic": {
+                "name": "string",
+                "other_names": ["string"],
+                "active": "boolean"
+              },
+              "addresses": [
+                {
+                  "address_1": "string",
+                  "city": "string",
+                  "state": "string",
+                  "postal_code": "string",
+                  "country_code": "string"
+                }
+              ],
+              "taxonomies": [
+                {
+                  "taxonomy_code": "string",
+                  "taxonomy_description": "string"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "query": "Can you find me makeup products that are vegan and cruelty-free under $25? Also, I need the contact details of healthcare providers named 'Smith' located in my home state.",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

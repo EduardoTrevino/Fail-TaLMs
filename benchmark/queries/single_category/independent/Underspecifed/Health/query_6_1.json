@@ -1,0 +1,94 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Health",
+        "tool_name": "makeup",
+        "api_name": "search_makeup_products",
+        "api_description": "Search for makeup products and filter them by various criteria.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "brand",
+            "type": "STRING",
+            "description": "Brand of the product."
+          },
+          {
+            "name": "product_type",
+            "type": "STRING",
+            "description": "Type of makeup product."
+          },
+          {
+            "name": "product_category",
+            "type": "STRING",
+            "description": "Category of the makeup product."
+          },
+          {
+            "name": "product_tags",
+            "type": "LIST of STRINGS",
+            "description": "Tags related to the product."
+          },
+          {
+            "name": "price_greater_than",
+            "type": "FLOAT",
+            "description": "Products with price greater than this value."
+          },
+          {
+            "name": "price_less_than",
+            "type": "FLOAT",
+            "description": "Products with price less than this value."
+          },
+          {
+            "name": "rating_greater_than",
+            "type": "FLOAT",
+            "description": "Products with rating greater than this value."
+          },
+          {
+            "name": "rating_less_than",
+            "type": "FLOAT",
+            "description": "Products with rating less than this value."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "id": "int",
+          "brand": "str",
+          "name": "str",
+          "price": "str",
+          "rating": "float",
+          "product_type": "str",
+          "tag_list": ["str"]
+        }
+      },
+      {
+        "category_name": "Health",
+        "tool_name": "openFDA",
+        "api_name": "get_drug_event",
+        "api_description": "Retrieve drug adverse event reports.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of records to return.",
+            "default": "10"
+          },
+          {
+            "name": "skip",
+            "type": "INTEGER",
+            "description": "Number of records to skip.",
+            "default": "0"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "meta": {},
+          "results": [{}]
+        }
+      }
+    ],
+    "query": "Can you find makeup products that meet my ethical standards with a rating above 4.0? Also, could you get me recent adverse event reports for drugs, limiting the results to 5?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

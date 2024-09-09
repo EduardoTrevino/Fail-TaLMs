@@ -1,0 +1,70 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Health",
+        "tool_name": "nppes",
+        "api_name": "search_npi",
+        "api_description": "Endpoint to search the NPI registry using various search criteria.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "organization_name",
+            "type": "STRING",
+            "description": "Organization name (Organizational providers)."
+          },
+          {
+            "name": "state",
+            "type": "STRING",
+            "description": "State abbreviation for the provider's address."
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "Results": [
+            {
+              "number": "string",
+              "basic": {
+                "name": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Health",
+        "tool_name": "openFDA",
+        "api_name": "get_device_event",
+        "api_description": "Retrieve device adverse event reports.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of records to return.",
+            "default": "10"
+          },
+          {
+            "name": "skip",
+            "type": "INTEGER",
+            "description": "Number of records to skip.",
+            "default": "0"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "meta": {},
+          "results": [
+            {
+              "mdr_report_key": "string",
+              "report_number": "string"
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I need a list of healthcare organizations named 'Health Corp' in my home state and some recent device adverse event reports.",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
