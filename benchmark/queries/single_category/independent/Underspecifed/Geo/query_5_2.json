@@ -1,0 +1,63 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Geo",
+        "tool_name": "adresse",
+        "api_name": "search_address",
+        "api_description": "Perform a full-text address search with optional filters.",
+        "required_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "The query string.",
+            "default": "Eiffel Tower"
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "The maximum number of results to return.",
+            "default": "5"
+          },
+          {
+            "name": "autocomplete",
+            "type": "INTEGER",
+            "description": "Enable or disable autocomplete.",
+            "default": "1"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "FeatureCollection",
+          "features": "ARRAY"
+        }
+      },
+      {
+        "category_name": "Geo",
+        "tool_name": "ziptastic",
+        "api_name": "get_location_by_zip",
+        "api_description": "Fetches the country, state, and city for the given ZIP code.",
+        "required_parameters": [
+          {
+            "name": "zipcode",
+            "type": "STRING",
+            "description": "The ZIP code to query.",
+            "default": "10001"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "country": "str",
+          "state": "str",
+          "city": "str"
+        }
+      }
+    ],
+    "query": "What is the address associated with the name 'Eiffel Tower'? Also, what is the city, state, and country of the ZIP code the ZIP code I searched earlier?",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

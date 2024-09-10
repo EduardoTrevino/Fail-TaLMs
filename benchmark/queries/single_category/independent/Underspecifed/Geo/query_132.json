@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "postcodes",
+                "api_name": "nearest_postcodes",
+                "api_description": "Get nearest postcodes for given longitude and latitude.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for the search location.",
+                        "example": -0.127758
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for the search location.",
+                        "example": 51.507351
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "integer",
+                    "result": [
+                        {
+                            "postcode": "string",
+                            "longitude": "float",
+                            "latitude": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "ziptastic",
+                "api_name": "get_location_by_zip",
+                "api_description": "Fetches the country, state, and city for the given ZIP code.",
+                "required_parameters": [
+                    {
+                        "name": "zipcode",
+                        "type": "STRING",
+                        "description": "The ZIP code to query.",
+                        "example": "10001"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "country": "string",
+                    "state": "string",
+                    "city": "string"
+                }
+            }
+        ],
+        "query": "Find the nearest UK postcodes to the location with longitude -0.127758 and latitude 51.507351. Also, retrieve location details for the US ZIP code '10001'.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

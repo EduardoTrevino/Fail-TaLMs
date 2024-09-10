@@ -11,23 +11,16 @@
             "name": "lat",
             "type": "FLOAT",
             "description": "Latitude of the point to reverse geocode.",
-            "default": ""
+            "default": "48.8588443"
           },
           {
             "name": "lon",
             "type": "FLOAT",
             "description": "Longitude of the point to reverse geocode.",
-            "default": ""
+            "default": "2.294351"
           }
         ],
-        "optional_parameters": [
-          {
-            "name": "type_filter",
-            "type": "STRING",
-            "description": "Filter the type of result.",
-            "default": ""
-          }
-        ],
+        "optional_parameters": [],
         "method": "GET",
         "template_response": {
           "type": "FeatureCollection",
@@ -36,19 +29,27 @@
       },
       {
         "category_name": "Geo",
-        "tool_name": "countryis",
-        "api_name": "get_country_by_own_ip",
-        "api_description": "Retrieve the country for the requester's own IP address.",
-        "required_parameters": [],
+        "tool_name": "ziptastic",
+        "api_name": "get_location_by_zip",
+        "api_description": "Fetches the country, state, and city for the given ZIP code.",
+        "required_parameters": [
+          {
+            "name": "zipcode",
+            "type": "STRING",
+            "description": "The ZIP code to query.",
+            "default": "30301"
+          }
+        ],
         "optional_parameters": [],
         "method": "GET",
         "template_response": {
-          "ip": "str",
-          "country": "str"
+          "country": "str",
+          "state": "str",
+          "city": "str"
         }
       }
     ],
-    "query": "I am at a specific latitude and longitude lat=48.357, lon=2.37; can you tell me what the nearest address is? Also, can you identify the country of this IP address '9.9.9.9'?",
+    "query": "Can you provide the address for a location at my latitude and longitude? Furthermore, what is the city, state, and country for ZIP code 30301?",
     "relevant APIs": [],
     "query_id": 2
   }

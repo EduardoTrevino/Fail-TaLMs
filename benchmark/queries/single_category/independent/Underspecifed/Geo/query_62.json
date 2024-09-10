@@ -1,0 +1,64 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on a given IP address.",
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up. Use 'auto' to automatically determine client's IP address.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "str",
+                    "geoplugin_status": "int",
+                    "geoplugin_countryName": "str",
+                    "geoplugin_city": "str"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "response_format",
+                        "type": "STRING",
+                        "description": "Specify the response format, 'json' or 'xml'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok or error",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            }
+        ],
+        "query": "Can you find out my current city and country based on my IP address and convert the coordinates 326897, 673919 from British National Grid to latitude and longitude?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
