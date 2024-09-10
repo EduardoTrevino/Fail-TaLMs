@@ -1,0 +1,56 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_departments",
+                "api_description": "Retrieve a list of all departments in the Met's collection.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "departments": [
+                        {
+                            "departmentId": "int",
+                            "displayName": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image_get_method",
+                "api_description": "Compress an image specified by its URL using the GET method.",
+                "required_parameters": [
+                    {
+                        "name": "img_url",
+                        "type": "STRING",
+                        "description": "The URL of the image to be compressed."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "qlty",
+                        "type": "INTEGER",
+                        "description": "The quality level for JPG compression (0-100).",
+                        "default": "92"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dest": "string",
+                    "src": "string",
+                    "src_size": "int",
+                    "dest_size": "int",
+                    "percent": "float",
+                    "expires": "string"
+                }
+            }
+        ],
+        "query": "I wish to know all the departments available in the Met's collection. Additionally, I have a URL to an image of a painting from this collection that I need to compress.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
