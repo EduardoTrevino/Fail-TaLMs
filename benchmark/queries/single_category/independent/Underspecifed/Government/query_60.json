@@ -33,56 +33,41 @@
                         {
                             "ID Nation": "01000US",
                             "Nation": "United States",
-                            "ID Year": "int",
                             "Year": "str",
-                            "Population": "int",
-                            "Slug Nation": "str"
-                        }
-                    ],
-                    "source": [
-                        {
-                            "measures": [
-                                "Population"
-                            ],
-                            "annotations": {
-                                "source_name": "Census Bureau",
-                                "source_description": "Census Bureau conducts surveys of the United States Population, including the American Community Survey",
-                                "dataset_name": "ACS 1-year Estimate",
-                                "dataset_link": "http://www.census.gov/programs-surveys/acs/",
-                                "table_id": "B01003",
-                                "topic": "Diversity"
-                            }
+                            "Population": "int"
                         }
                     ]
                 }
             },
             {
                 "category_name": "Government",
-                "tool_name": "federalregister",
-                "api_name": "get_agency_data",
-                "api_description": "Get basic data about agencies. Optionally filter by agency ID.",
+                "tool_name": "fbiwanted",
+                "api_name": "get_wanted_list",
+                "api_description": "Retrieve information from the FBI Wanted list.",
                 "required_parameters": [],
                 "optional_parameters": [
                     {
-                        "name": "agency_id",
+                        "name": "field_offices",
                         "type": "STRING",
-                        "description": "ID of the agency.",
-                        "default": null
+                        "description": "Filter results by specific FBI field offices.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
                     }
                 ],
                 "method": "GET",
                 "template_response": {
-                    "agency_data": [
-                        {
-                            "id": "str",
-                            "name": "str",
-                            "url": "str"
-                        }
-                    ]
+                    "total": "int",
+                    "page": "int",
+                    "items": "array"
                 }
             }
         ],
-        "query": "What is the current population of the United States, and can you provide basic data about a specific federal agency?",
+        "query": "I would like to know the latest population data of the United States and also get the current FBI Wanted list from the Miami field office.",
         "relevant APIs": [],
         "query_id": 1
     }

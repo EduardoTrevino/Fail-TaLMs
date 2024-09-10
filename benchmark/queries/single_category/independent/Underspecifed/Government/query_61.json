@@ -33,54 +33,41 @@
                         {
                             "ID Nation": "01000US",
                             "Nation": "United States",
-                            "ID Year": "int",
                             "Year": "str",
-                            "Population": "int",
-                            "Slug Nation": "str"
-                        }
-                    ],
-                    "source": [
-                        {
-                            "measures": [
-                                "Population"
-                            ],
-                            "annotations": {
-                                "source_name": "Census Bureau",
-                                "source_description": "Census Bureau conducts surveys of the United States Population, including the American Community Survey",
-                                "dataset_name": "ACS 1-year Estimate",
-                                "dataset_link": "http://www.census.gov/programs-surveys/acs/",
-                                "table_id": "B01003",
-                                "topic": "Diversity"
-                            },
-                            "name": "acs_yg_total_population_1",
-                            "substitutions": []
+                            "Population": "int"
                         }
                     ]
                 }
             },
             {
                 "category_name": "Government",
-                "tool_name": "worldbank",
-                "api_name": "list_income_levels",
-                "api_description": "List all income levels available in the World Bank API.",
+                "tool_name": "fbiwanted",
+                "api_name": "get_wanted_list",
+                "api_description": "Retrieve information from the FBI Wanted list.",
                 "required_parameters": [],
                 "optional_parameters": [
                     {
-                        "name": "format_type",
+                        "name": "field_offices",
                         "type": "STRING",
-                        "description": "The format in which to receive the data.",
-                        "default": "json"
+                        "description": "Filter results by specific FBI field offices.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of resources to retrieve.",
+                        "default": "1"
                     }
                 ],
                 "method": "GET",
                 "template_response": {
-                    "id": "str",
-                    "iso2Code": "str",
-                    "value": "str"
+                    "total": "int",
+                    "page": "int",
+                    "items": "array"
                 }
             }
         ],
-        "query": "Could you tell me the population of New York State for the latest year available? Also, what are the different income levels recognized by the World Bank?",
+        "query": "Can you provide the population data for Florida state and list the most wanted individuals from the FBI's page 3?",
         "relevant APIs": [],
         "query_id": 2
     }

@@ -25,44 +25,32 @@
       },
       {
         "category_name": "Government",
-        "tool_name": "worldbank",
-        "api_name": "get_country_data",
-        "api_description": "Retrieve information about a specific country using its ISO2 country code.",
+        "tool_name": "representcivicinformation",
+        "api_name": "get_representatives_by_postal_code",
+        "api_description": "Find representatives and boundaries by postal code, optionally limiting results to a specific boundary set.",
         "required_parameters": [
           {
-            "name": "country_code",
+            "name": "postal_code",
             "type": "STRING",
-            "description": "Two-letter ISO code of the country.",
-            "default": "DE"
+            "description": "The postal code for lookup, formatted in uppercase with no spaces.",
+            "default": "K1A0B1"
           }
         ],
         "optional_parameters": [
           {
-            "name": "format_type",
+            "name": "sets",
             "type": "STRING",
-            "description": "The format in which to receive the data.",
-            "default": "json"
+            "description": "Comma-separated list of boundary sets to limit results.",
+            "default": "None"
           }
         ],
         "method": "GET",
         "template_response": {
-          "page": "int",
-          "pages": "int",
-          "per_page": "int",
-          "total": "int",
-          "countries": [
-            {
-              "id": "str",
-              "name": "str",
-              "region": "str",
-              "incomeLevel": "str",
-              "lendingType": "str"
-            }
-          ]
+          "boundaries_centroid": "object"
         }
       }
     ],
-    "query": "Can you provide information on the latest German election polls? Also, what are some key statistics about Germany according to the World Bank with ISO code 'DEU'?",
+    "query": "I want to access the comprehensive election polls database for various polls in Germany. Additionally, can you provide information about representatives and boundaries for my grandma's postal code?",
     "relevant APIs": [],
     "query_id": 1
   }
