@@ -12,56 +12,44 @@
                         "name": "categories",
                         "type": "STRING",
                         "description": "Categories to filter by.",
-                        "default": "Orange Juice"
+                        "default": null
                     },
                     {
                         "name": "nutrition_grades",
                         "type": "STRING",
                         "description": "Nutrition grade to filter by.",
-                        "default": "c"
+                        "default": null
                     },
                     {
                         "name": "fields",
                         "type": "STRING",
                         "description": "Specific fields to retrieve (comma-separated).",
-                        "default": "code,nutrition_grades"
+                        "default": null
+                    },
+                    {
+                        "name": "sort_by",
+                        "type": "STRING",
+                        "description": "Field name to sort by.",
+                        "default": null
                     }
                 ],
                 "method": "GET",
                 "template_response": {
-                    "count": "int",
-                    "page": "int",
-                    "page_count": "int",
-                    "page_size": "int",
                     "products": [
                         {
+                            "code": "string",
+                            "product_name": "string",
                             "categories_tags_en": [
                                 "string"
                             ],
-                            "code": "string",
                             "nutrition_grades": "string"
                         }
-                    ],
-                    "skip": "int"
-                }
-            },
-            {
-                "category_name": "Food",
-                "tool_name": "whiskyhunter",
-                "api_name": "distilleries_info",
-                "api_description": "List all distilleries main information.",
-                "required_parameters": [],
-                "optional_parameters": [],
-                "method": "GET",
-                "template_response": {
-                    "distilleries_info": {
-                        "type": "array"
-                    }
+                    ]
                 }
             }
         ],
-        "query": "Can you find orange juice products with a nutrition grade of 'C' specifically as defined by the Open Food Facts community, and also provide a list of all the available distilleries' main information from the Whisky Hunter API?",
+        "query": "Can you suggest a random brewery in the United States that I can visit? Also, find some healthy food products with a good nutrition grade that I can enjoy along with the visit, and some bad ones that I should avoid using Open Food Facts.",
         "relevant APIs": [],
-        "query_id": 2
+        "query_id": 1
     }
 ]
