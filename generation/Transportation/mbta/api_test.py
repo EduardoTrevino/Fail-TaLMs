@@ -9,7 +9,7 @@ class TestMBTAApi(unittest.TestCase):
         # self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
 
     def test_get_alert_detail(self):
-        response = get_alert_detail("589935")  # Use a valid alert ID for actual testing
+        response = get_alert_detail("594476")  # Use a valid alert ID for actual testing
         self.assertIn("links", response) 
         # self.assertEqual(response.get("links").get("self"), "string")  # Testing if an expected structure exists
     

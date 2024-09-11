@@ -10,33 +10,41 @@ class TestOpenSenseMapAPI(unittest.TestCase):
 
     def test_get_all_boxes(self):
         response = get_all_boxes(limit=1)
+        self.assertNotIn("error", response)
         # self.assertIsInstance(response, list)
         self.assertTrue(len(response) > 0)
 
     def test_get_locations(self):
         response = get_locations("57000b8745fd40c8196ad04c")
+        self.assertNotIn("error", response)
 
     def test_get_idw_statistics(self):
         response = get_idw_statistics("7.6,51.2,7.8,51.4", "Temperatur")
         self.assertIn("featureCollection", response)
+        self.assertNotIn("error", response)
 
     def test_get_statistics_descriptive(self):
         response = get_statistics_descriptive("57000b8745fd40c8196ad04c", "Temperatur", "2023-01-01T00:00:00Z", "2023-01-31T23:59:59Z", "arithmeticMean", "1d")
         self.assertIsNotNone(response)
+        self.assertNotIn("error", response)
 
     def test_get_latest_measurements_for_sensor(self):
         response = get_latest_measurements_for_sensor("57000b8745fd40c8196ad04c", "57000b8745fd40c8196ad050")
+        self.assertNotIn("error", response)
       
     def test_get_latest_measurements_of_sense_box(self):
         response = get_latest_measurements_of_sense_box("57000b8745fd40c8196ad04c")
         self.assertIn("_id", response)
+        self.assertNotIn("error", response)
 
     def test_get_stats(self):
         response = get_stats()
+        self.assertNotIn("error", response)
 
     def test_print_routes(self):
         response = print_routes()
         self.assertIsInstance(response, dict)
+        self.assertNotIn("error", response)
 
 if __name__ == '__main__':
     unittest.main()

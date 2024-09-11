@@ -140,7 +140,7 @@ def get_gairmet(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -157,7 +157,7 @@ def get_cwa(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -176,7 +176,7 @@ def get_windtemp(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -191,7 +191,7 @@ def get_areafcst(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -208,7 +208,7 @@ def get_fcstdisc(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -223,7 +223,7 @@ def get_mis(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
@@ -242,7 +242,7 @@ def get_stationinfo(
     }
     response = requests.get(endpoint, params=params, headers={"Accept": "*/*"})
     try:
-        return response.json()
+        return response.text
     except Exception as e:
         return {"error": str(e), "response": response.text}
 
