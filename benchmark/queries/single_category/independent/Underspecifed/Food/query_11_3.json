@@ -1,0 +1,67 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "search_products",
+                "api_description": "Search for products with specific criteria.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "categories",
+                        "type": "STRING",
+                        "description": "Categories to filter by.",
+                        "default": "Orange Juice"
+                    },
+                    {
+                        "name": "nutrition_grades",
+                        "type": "STRING",
+                        "description": "Nutrition grade to filter by.",
+                        "default": "c"
+                    },
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": "code,nutrition_grades"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "page": "int",
+                    "page_count": "int",
+                    "page_size": "int",
+                    "products": [
+                        {
+                            "categories_tags_en": [
+                                "string"
+                            ],
+                            "code": "string",
+                            "nutrition_grades": "string"
+                        }
+                    ],
+                    "skip": "int"
+                }
+            },
+            {
+                "category_name": "Food",
+                "tool_name": "whiskyhunter",
+                "api_name": "distilleries_info",
+                "api_description": "List all distilleries main information.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "distilleries_info": {
+                        "type": "array"
+                    }
+                }
+            }
+        ],
+        "query": "Can you find products and also provide a list of all the available distilleries' main information?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

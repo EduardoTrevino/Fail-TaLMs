@@ -1,0 +1,58 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "boardgamesgeek",
+                "api_name": "get_hot_items",
+                "api_description": "Retrieve the list of most active items on BGG.",
+                "required_parameters": [
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The type of hot list to retrieve.",
+                        "default": "boardgame"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "item": [
+                        {
+                            "id": "int",
+                            "rank": "int",
+                            "name": "str",
+                            "yearpublished": "int"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "freetogame",
+                "api_name": "sorted_games",
+                "api_description": "Sort games by release date, alphabetical or relevance.",
+                "required_parameters": [
+                    {
+                        "name": "sort-by",
+                        "type": "STRING",
+                        "description": "Sort criteria.",
+                        "default": "popularity"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "title": "str",
+                    "thumbnail": "str",
+                    "short_description": "str",
+                    "game_url": "str"
+                }
+            }
+        ],
+        "query": "Can you tell me what the hottest items are right now on BGG? Additionally, what are the most popular free-to-play games?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
