@@ -1,0 +1,73 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "finalspace",
+                "api_name": "get_all_episodes",
+                "api_description": "Retrieves all episodes with options to sort and limit results.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort in 'asc' or 'desc' order.",
+                        "default": ""
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of results returned.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "name": "str",
+                    "air_date": "str"
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "stapi",
+                "api_name": "search_episodes",
+                "api_description": "Pagination over episodes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pageNumber",
+                        "type": "INTEGER",
+                        "description": "Zero-based page number",
+                        "default": "0"
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "INTEGER",
+                        "description": "Page size",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "episodes": [
+                        {
+                            "uid": "str",
+                            "title": "str",
+                            "seasonNumber": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Could you list all the episodes from Final Space and provide a paginated list of episodes from Star Trek?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

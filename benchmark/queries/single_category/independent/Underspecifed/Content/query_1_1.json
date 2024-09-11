@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_reports",
+                "api_description": "Fetch reports with various filters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "nlist",
+                        "type": "STRING",
+                        "description": "Number or 'all' to list.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'anime' or 'manga'.",
+                        "default": "anime"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "string (XML)"
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": "test_user"
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (e.g., ct1, ct2).",
+                        "default": "ct24"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "application/json"
+                }
+            }
+        ],
+        "query": "Can you fetch the latest reports and provide me with the TV schedule for channel ct24 on August 4, 2024, in JSON format?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
