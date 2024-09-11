@@ -2,21 +2,7 @@
   {
     "api_list": [
       {
-        "tool_name": "datapoliceuk",
-        "api_name": "specific_force",
-        "api_description": "Returns detailed information about a specific police force given its ID.",
-        "required_parameters": ["force_id"],
-        "optional_parameters": [],
-        "method": "GET",
-        "template_response": {
-          "id": "str",
-          "name": "str",
-          "description": "str",
-          "url": "str"
-        },
-        "category_name": "OpenData"
-      },
-      {
+        "category_name": "OpenData",
         "tool_name": "housestockwatcher",
         "api_name": "get_daily_transaction_report",
         "api_description": "Fetches the JSON report for a single day's disclosure.",
@@ -42,11 +28,30 @@
               "transaction_type": "str"
             }
           ]
-        },
-        "category_name": "OpenData"
+        }
+      },
+      {
+        "category_name": "OpenData",
+        "tool_name": "pmtwentyfive",
+        "api_name": "get_project_latest",
+        "api_description": "Returns the latest measurement (within 2 hours) of the devices in the specified project.",
+        "required_parameters": [
+          {
+            "name": "project",
+            "type": "STRING",
+            "description": "Project name.",
+            "default": "airbox"
+          }
+        ],
+        "optional_parameters": [],
+        "method": "GET",
+        "template_response": {
+          "source": "string",
+          "feeds": "array"
+        }
       }
     ],
-    "query": "I need detailed information about my local police force. Additionally, can you fetch the stock transaction report for the date of the IPO of my business?",
+    "query": "What are the stock transactions reported on January 1st, 2021, and what is the latest measurement from the project I was examining?",
     "relevant APIs": [],
     "query_id": 2
   }
