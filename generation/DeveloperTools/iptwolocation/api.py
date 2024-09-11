@@ -35,7 +35,8 @@ def domain_whois(domain: str, format: Optional[str] = 'json', toolbench_rapidapi
     url = "https://api.ip2whois.com/v2"
     params = {
         'domain': domain,
-        'format': format
+        'format': format,
+        'key': '9611D7E6C5C0B47214EDE957E2D1E7C0'
     }
 
     response = requests.get(url, params=params)

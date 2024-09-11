@@ -15,16 +15,19 @@ class TestCelestrakAPI(unittest.TestCase):
         result = query_by_group(group="STATIONS", format="XML")
         self.assertIsInstance(result, str)
         self.assertTrue(result.startswith('<?xml'))
+        self.assertNotIn('error', result)
 
     def test_query_by_name(self):
-        result = query_by_name(name="MICROSAT-R", format="JSON")
-        self.assertIsInstance(result, dict)
+        result = query_by_name(name="VANGUARD 1", format="JSON")
+        self.assertIsInstance(result, list)
+        self.assertNotIn('error', result)
 
     def test_query_by_special(self):
         result = query_by_special(special="gpz", format="CSV")
         self.assertIsInstance(result, str)
         self.assertIn('OBJECT_NAME', result)
         self.assertTrue(result.startswith('OBJECT_NAME'))
+        self.assertNotIn('error', result)
 
 if __name__ == '__main__':
     unittest.main()

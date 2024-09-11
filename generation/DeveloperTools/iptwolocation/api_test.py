@@ -8,18 +8,17 @@ class TestIPTwoLocationAPI(unittest.TestCase):
         response = ip_geolocation(ip='8.8.8.8')
         self.assertIsInstance(response, dict)
         self.assertIn('ip', response)
+        self.assertNotIn('error', response)
 
-    # def test_domain_whois(self):
-    #     response = domain_whois(domain='google.com')
-    #     self.assertIsInstance(response, dict)
-    #     self.assertIn('domain', response)
+    def test_ip_geolocation_valid_ip(self):
+        response = ip_geolocation(ip='8.8.8.8')
+        self.assertIsInstance(response, dict)
+        self.assertIn('country_code', response)
 
-    # def test_bulk_ip_geolocation(self):
-    #     ips = ['1.1.1.1', '2.2.2.2']
-    #     response = bulk_ip_geolocation(ips=ips)
-    #     self.assertIsInstance(response, dict)
-    #     for ip in ips:
-    #         self.assertIn(ip, response)
+    def test_domain_is_found(self):
+        response = domain_whois(domain='google.com')
+        self.assertIsInstance(response, dict)
+        self.assertNotIn('error', response)
 
     def test_ip_geolocation_invalid_ip(self):
         response = ip_geolocation(ip='999.999.999.999')
