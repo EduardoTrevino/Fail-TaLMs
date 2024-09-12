@@ -54,7 +54,7 @@ def search(
     params.update(kwargs)
     
     response = requests.get(url, params=params)
-    return response.json()
+    return response.text
 
 def reverse(
     lat: float,
@@ -88,7 +88,7 @@ def reverse(
     params.update(kwargs)
     
     response = requests.get(url, params=params)
-    return response.json()
+    return response.text
 
 def lookup(
     osm_ids: List[str],
@@ -122,7 +122,7 @@ def lookup(
     params.update(kwargs)
     
     response = requests.get(url, params=params)
-    return response.json()
+    return response.text
 
 def status(
     format: Optional[str] = "text",

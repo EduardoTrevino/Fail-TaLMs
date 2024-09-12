@@ -6,6 +6,7 @@ class TestBinaryJazzAPI(unittest.TestCase):
     def test_get_single_genre(self):
         """Test fetching a single genre"""
         result = get_genres(1)
+        self.assertNotIn("error", result)
 
     def test_get_multiple_genres(self):
         """Test fetching multiple genres"""

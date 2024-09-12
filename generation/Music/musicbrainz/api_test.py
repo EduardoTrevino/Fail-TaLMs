@@ -1,5 +1,5 @@
 import unittest
-from api import artist_search, release_lookup, release_group_browse
+from api import artist_search, release_group_browse
 
 class TestMusicBrainzAPI(unittest.TestCase):
     def test_artist_search(self):
