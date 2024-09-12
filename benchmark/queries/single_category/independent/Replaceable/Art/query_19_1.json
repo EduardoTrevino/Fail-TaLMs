@@ -1,0 +1,58 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks_search",
+                "api_description": "Search artworks in the Art Institute of Chicago data.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Your search query.",
+                        "default": "Van Gogh"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of results to return.",
+                        "default": 5
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find Renaissance sculptures made of marble in the Met collection? Also, I'd like to see artworks related to Van Gogh in the Art Institute of Chicago.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
