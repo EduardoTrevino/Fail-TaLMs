@@ -1,0 +1,110 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "gbif",
+        "api_name": "search_datasets",
+        "api_description": "Full-text search across all datasets.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "q",
+            "type": "STRING",
+            "description": "Full text search query",
+            "default": ""
+          },
+          {
+            "name": "limit",
+            "type": "INTEGER",
+            "description": "Number of results per page",
+            "default": 10
+          },
+          {
+            "name": "offset",
+            "type": "INTEGER",
+            "description": "Offset of the results",
+            "default": 0
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "count": "int",
+          "results": [
+            {
+              "key": "str",
+              "title": "str",
+              "description": "str",
+              "type": "str"
+            }
+          ]
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "usgs",
+        "api_name": "query",
+        "api_description": "Submit a data request.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "format",
+            "type": "STRING",
+            "description": "Specify the output format.",
+            "default": "geojson"
+          },
+          {
+            "name": "starttime",
+            "type": "STRING",
+            "description": "Limit events on or after the specified start time.",
+            "default": "NOW - 30 days"
+          },
+          {
+            "name": "endtime",
+            "type": "STRING",
+            "description": "Limit the events on or before the specified end time.",
+            "default": "present"
+          },
+          {
+            "name": "minmagnitude",
+            "type": "DECIMAL",
+            "description": "Limit to events with a magnitude larger than the specified minimum.",
+            "default": null
+          },
+          {
+            "name": "maxmagnitude",
+            "type": "DECIMAL",
+            "description": "Limit to events with a magnitude smaller than the specified maximum.",
+            "default": null
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "str",
+          "metadata": {
+            "generated": "int",
+            "url": "str",
+            "title": "str"
+          },
+          "features": [
+            {
+              "type": "str",
+              "properties": {
+                "mag": "float",
+                "place": "str",
+                "time": "int"
+              },
+              "geometry": {
+                "type": "str",
+                "coordinates": ["float", "float", "float"]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "query": "I am researching biodiversity datasets related to marine life. Can you find some datasets using this keyword? Also, I need data on earthquakes that happened in the last month with a magnitude of at least more than the one discussed in our research meeting.",
+    "relevant APIs": [],
+    "query_id": 1
+  }
+]

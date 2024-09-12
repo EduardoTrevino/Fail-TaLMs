@@ -1,0 +1,62 @@
+[
+  {
+    "api_list": [
+      {
+        "category_name": "Science",
+        "tool_name": "celestrak",
+        "api_name": "query_by_special",
+        "api_description": "Query GP data using special datasets.",
+        "required_parameters": [
+          {
+            "name": "SPECIAL",
+            "type": "STRING",
+            "description": "Special dataset identifier."
+          }
+        ],
+        "optional_parameters": [
+          {
+            "name": "FORMAT",
+            "type": "STRING",
+            "description": "Format of data. Defaults to 'TLE'.",
+            "default": "TLE"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "type": "string or object",
+          "description": "Responds with requested data in the specified format."
+        }
+      },
+      {
+        "category_name": "Science",
+        "tool_name": "numbers",
+        "api_name": "get_batch_number_facts",
+        "api_description": "Get facts for multiple numbers in one request.",
+        "required_parameters": [],
+        "optional_parameters": [
+          {
+            "name": "numbers",
+            "type": "STRING",
+            "description": "A comma separated list of numbers or number ranges.",
+            "default": "1..3"
+          },
+          {
+            "name": "json",
+            "type": "BOOLEAN",
+            "description": "Return the facts in JSON format.",
+            "default": "True"
+          }
+        ],
+        "method": "GET",
+        "template_response": {
+          "1": "1 is the number of dimensions of a line.",
+          "2": "2 is the number of polynucleotide strands in a DNA double helix.",
+          "3": "3 is the number of sets needed to be won to win the whole match in volleyball."
+        }
+      }
+    ],
+    "query": "I am interested in the special dataset of the GEO Protected Zone. Can you also provide me with facts about my 3 favorite numbers?",
+    "relevant APIs": [],
+    "query_id": 2
+  }
+]
