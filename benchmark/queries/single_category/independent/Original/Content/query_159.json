@@ -22,12 +22,45 @@
                 ],
                 "method": "GET",
                 "category_name": "Content"
+            },
+            {
+                "tool_name": "mediawiki",
+                "api_name": "search_open_search",
+                "api_description": "Search the wiki using the OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query.",
+                        "default": "Albert Einstein"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of search results to return.",
+                        "default": 5
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    "str",
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ]
+                ],
+                "category_name": "Content"
             }
         ],
-        "query": "Can you parse the content of the Wikipedia page titled 'Python (programming language)'?",
-        "relevant APIs": [
-            "parse_page"
-        ],
+        "query": "Can you parse the content of the Wikipedia page titled 'Python (programming language)', and provide the first 100 characters of the HTML content, additonally provide the infromation from wikipedia about the search for 'Robert Oppenheimer'?",
+        "relevant APIs": [],
         "query_id": 1
     }
 ]
