@@ -20,55 +20,42 @@
                     "ip": "str",
                     "ts": "float",
                     "uag": "str",
-                    "country": "str",
-                    "http": "str",
-                    "tls": "str",
-                    "warp": "str"
+                    "loc": "str",
+                    "http": "str"
                 }
             },
             {
                 "category_name": "DeveloperTools",
-                "tool_name": "isgd",
-                "api_name": "shorten_url",
-                "api_description": "Shortens a given URL using the is.gd service.",
+                "tool_name": "iptwolocation",
+                "api_name": "domain_whois",
+                "api_description": "Get WHOIS data for a given domain name.",
                 "required_parameters": [
                     {
-                        "name": "url",
+                        "name": "domain",
                         "type": "STRING",
-                        "description": "The URL you want to shorten."
+                        "description": "Domain name for the WHOIS lookup."
                     }
                 ],
                 "optional_parameters": [
                     {
                         "name": "format",
                         "type": "STRING",
-                        "description": "The format of the response ('web', 'simple', 'xml', 'json').",
-                        "default": "simple"
-                    },
-                    {
-                        "name": "shorturl",
-                        "type": "STRING",
-                        "description": "Custom shortened URL you would like to use (5 to 30 characters)."
-                    },
-                    {
-                        "name": "callback",
-                        "type": "STRING",
-                        "description": "Used only with format 'json' to specify a callback function."
-                    },
-                    {
-                        "name": "logstats",
-                        "type": "INTEGER",
-                        "description": "If 1, enables logging of detailed statistics."
+                        "description": "Response format, valid values: json | xml.",
+                        "default": "json"
                     }
                 ],
                 "method": "GET",
                 "template_response": {
-                    "shorturl": "string"
+                    "domain": "str",
+                    "create_date": "str",
+                    "update_date": "str",
+                    "expire_date": "str",
+                    "domain_age": "int"
                 }
             }
         ],
-        "query": "Can you tell me my current public IP address and also provide a shortened URL for a website I frequently use, 'https://www.example.com'?",
+        "query": "Can you retrieve trace information from Cloudflare to see if it shows my IP as part of a known corporate network, and also check the WHOIS data for the domain 'corporate.com' to confirm its details?",
         "relevant APIs": [],
-        "query_id": 1
+        "query_id": 2
     }
 ]
