@@ -20,11 +20,7 @@ def get_cards(name: Optional[str] = None, supertype: Optional[str] = None, types
         'hp': hp
     }
     
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key
-    }
-    
-    response = requests.get(url, headers=headers, params={key: value for key, value in params.items() if value is not None})
+    response = requests.get(url, params={key: value for key, value in params.items() if value is not None})
     
     try:
         return response.json()
@@ -38,11 +34,7 @@ def get_sets(toolbench_rapidapi_key: str = '088440d910mshef857391f2fc461p17ae9ej
     """
     url = "https://api.pokemontcg.io/v2/sets"
     
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key
-    }
-    
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     
     try:
         return response.json()
@@ -58,12 +50,8 @@ def get_card_by_id(card_id: str, toolbench_rapidapi_key: str = '088440d910mshef8
     card_id [Required]: string [Description: The unique identifier for the specific card.]
     """
     url = f"https://api.pokemontcg.io/v2/cards/{card_id}"
-    
-    headers = {
-        "X-RapidAPI-Key": toolbench_rapidapi_key
-    }
-    
-    response = requests.get(url, headers=headers)
+
+    response = requests.get(url)
     
     try:
         return response.json()

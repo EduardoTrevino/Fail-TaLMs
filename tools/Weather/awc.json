@@ -116,7 +116,254 @@
                     "response": {"type": "string"}
                 }
             }
+        },
+        {
+            "name": "get_isigmet",
+            "url": "https://aviationweather.gov/api/data/isigmet",
+            "description": "Fetch international SIGMETs",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Output format.", "default": "json"},
+                {"name": "hazard", "type": "STRING", "description": "Hazard type", "default": null},
+                {"name": "level", "type": "NUMBER", "description": "The level +-3000' to search", "default": 0},
+                {"name": "date", "type": "STRING", "description": "Specify the date", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_gairmet",
+            "url": "https://aviationweather.gov/api/data/gairmet",
+            "description": "Fetch Graphical AIRMETs",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "type", "type": "STRING", "description": "Product type", "default": null},
+                {"name": "hazard", "type": "STRING", "description": "Hazard type", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specify the date", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_cwa",
+            "url": "https://aviationweather.gov/api/data/cwa",
+            "description": "Fetch CWSU Center Advisories",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "hazard", "type": "STRING", "description": "Hazard type", "default": null},
+                {"name": "date", "type": "STRING", "description": "Specify the date", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_windtemp",
+            "url": "https://aviationweather.gov/api/data/windtemp",
+            "description": "Fetch Wind/Temp data",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "region", "type": "STRING", "description": "Region", "default": "all"},
+                {"name": "level", "type": "STRING", "description": "Level", "default": "low"},
+                {"name": "fcst", "type": "STRING", "description": "Forecast time", "default": "06"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_areafcst",
+            "url": "https://aviationweather.gov/api/data/areafcst",
+            "description": "Fetch Area Forecasts",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "region", "type": "STRING", "description": "Region"}
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_fcstdisc",
+            "url": "https://aviationweather.gov/api/data/fcstdisc",
+            "description": "Fetch Forecast Discussions",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "cwa", "type": "STRING", "description": "CWA", "default": null},
+                {"name": "type", "type": "STRING", "description": "Type", "default": "af"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_mis",
+            "url": "https://aviationweather.gov/api/data/mis",
+            "description": "Fetch Meteorological Information Statement",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "loc", "type": "STRING", "description": "Location", "default": null}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_stationinfo",
+            "url": "https://aviationweather.gov/api/data/stationinfo",
+            "description": "Fetch Station Info",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Station ID(s)", "default": null},
+                {"name": "bbox", "type": "STRING", "description": "Bounding box", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format", "default": "json"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_airport",
+            "url": "https://aviationweather.gov/api/data/airport",
+            "description": "Fetch Airport Info",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {"name": "ids", "type": "STRING", "description": "Airport ID(s)", "default": null},
+                {"name": "bbox", "type": "STRING", "description": "Bounding box", "default": null},
+                {"name": "format", "type": "STRING", "description": "Output format", "default": "json"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_feature",
+            "url": "https://aviationweather.gov/api/data/feature",
+            "description": "Fetch Feature Info",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "bbox", "type": "STRING", "description": "Bounding box"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Output format", "default": "json"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
+        },
+        {
+            "name": "get_obstacle",
+            "url": "https://aviationweather.gov/api/data/obstacle",
+            "description": "Fetch Obstacle Info",
+            "method": "GET",
+            "required_parameters": [
+                {"name": "bbox", "type": "STRING", "description": "Bounding box"}
+            ],
+            "optional_parameters": [
+                {"name": "format", "type": "STRING", "description": "Output format", "default": "json"}
+            ],
+            "statuscode": 200,
+            "headers": {
+                "Accept": "*/*"
+            },
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "error": {"type": "string"},
+                    "response": {"type": "string"}
+                }
+            }
         }
-        // Other entries omitted for brevity
     ]
 }

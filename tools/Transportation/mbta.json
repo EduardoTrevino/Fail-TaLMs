@@ -23,24 +23,91 @@
                 {
                     "name": "filter_activity",
                     "type": "STRING",
-                    "description": "Filter to alerts for only those activities matching. Special value 'ALL' to return all alerts."
+                    "description": "Filter to alerts for only those activities matching."
+                },
+                {
+                    "name": "filter_route_type",
+                    "type": "STRING",
+                    "description": "Filter by route type."
+                },
+                {
+                    "name": "filter_direction_id",
+                    "type": "STRING",
+                    "description": "Filter by direction ID."
                 },
                 {
                     "name": "filter_route",
                     "type": "STRING",
                     "description": "Filter by route id."
+                },
+                {
+                    "name": "filter_stop",
+                    "type": "STRING",
+                    "description": "Filter by stop."
+                },
+                {
+                    "name": "filter_trip",
+                    "type": "STRING",
+                    "description": "Filter by trip."
+                },
+                {
+                    "name": "filter_facility",
+                    "type": "STRING",
+                    "description": "Filter by facility."
+                },
+                {
+                    "name": "filter_id",
+                    "type": "STRING",
+                    "description": "Filter by alert ID."
+                },
+                {
+                    "name": "filter_banner",
+                    "type": "STRING",
+                    "description": "Filter by banner."
+                },
+                {
+                    "name": "filter_datetime",
+                    "type": "STRING",
+                    "description": "Filter by datetime."
+                },
+                {
+                    "name": "filter_lifecycle",
+                    "type": "STRING",
+                    "description": "Filter by lifecycle."
+                },
+                {
+                    "name": "filter_severity",
+                    "type": "STRING",
+                    "description": "Filter by severity."
+                },
+                {
+                    "name": "page_offset",
+                    "type": "INTEGER",
+                    "description": "Offset (0-based) of first element in the page."
+                },
+                {
+                    "name": "page_limit",
+                    "type": "INTEGER",
+                    "description": "Max number of elements to return."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Results can be sorted by the id or any /data/{index}/attributes key."
+                },
+                {
+                    "name": "fields_alert",
+                    "type": "STRING",
+                    "description": "Fields to include with the response."
+                },
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Relationships to include."
                 }
-                ...
             ],
             "statuscode": 200,
             "body": {
-                "links": {
-                    "self": "string",
-                    "prev": "string",
-                    "next": "string",
-                    "last": "string",
-                    "first": "string"
-                },
                 "data": [
                     {
                         "type": "alert",
@@ -57,7 +124,207 @@
             "headers": {
                 "Content-Type": "application/vnd.api+json"
             }
+        },
+        {
+            "name": "get_alert_detail",
+            "url": "https://api-v3.mbta.com/alerts/{alert_id}",
+            "description": "Get details of a specific alert by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "alert_id",
+                    "type": "STRING",
+                    "description": "ID of the alert to retrieve."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "alert",
+                    "id": "string",
+                    "attributes": {
+                        "effect": "string",
+                        "header": "string",
+                        "description": "string",
+                        "severity": 1
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        },
+        {
+            "name": "get_facilities",
+            "url": "https://api-v3.mbta.com/facilities",
+            "description": "List facilities.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_type",
+                    "type": "STRING",
+                    "description": "Filter by facility type."
+                },
+                {
+                    "name": "filter_stop",
+                    "type": "STRING",
+                    "description": "Filter by stop."
+                },
+                {
+                    "name": "page_offset",
+                    "type": "INTEGER",
+                    "description": "Offset (0-based) of first element in the page."
+                },
+                {
+                    "name": "page_limit",
+                    "type": "INTEGER",
+                    "description": "Max number of elements to return."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Results can be sorted by the id or any /data/{index}/attributes key."
+                },
+                {
+                    "name": "fields_facility",
+                    "type": "STRING",
+                    "description": "Fields to include with the response."
+                },
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Relationships to include."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "type": "facility",
+                        "id": "string",
+                        "attributes": {
+                            "name": "string",
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        },
+        {
+            "name": "get_facility_detail",
+            "url": "https://api-v3.mbta.com/facilities/{facility_id}",
+            "description": "Get details of a specific facility by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "facility_id",
+                    "type": "STRING",
+                    "description": "ID of the facility to retrieve."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "facility",
+                    "id": "string",
+                    "attributes": {
+                        "name": "string",
+                        "type": "string"
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        },
+        {
+            "name": "get_lines",
+            "url": "https://api-v3.mbta.com/lines",
+            "description": "List lines.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "filter_id",
+                    "type": "STRING",
+                    "description": "Filter by line ID."
+                },
+                {
+                    "name": "page_offset",
+                    "type": "INTEGER",
+                    "description": "Offset (0-based) of first element in the page."
+                },
+                {
+                    "name": "page_limit",
+                    "type": "INTEGER",
+                    "description": "Max number of elements to return."
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Results can be sorted by the id or any /data/{index}/attributes key."
+                },
+                {
+                    "name": "fields_line",
+                    "type": "STRING",
+                    "description": "Fields to include with the response."
+                },
+                {
+                    "name": "include",
+                    "type": "STRING",
+                    "description": "Relationships to include."
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "type": "line",
+                        "id": "string",
+                        "attributes": {
+                            "name": "string",
+                            "color": "string"
+                        }
+                    }
+                ]
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
+        },
+        {
+            "name": "get_line_detail",
+            "url": "https://api-v3.mbta.com/lines/{line_id}",
+            "description": "Get details of a specific line by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "line_id",
+                    "type": "STRING",
+                    "description": "ID of the line to retrieve."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "type": "line",
+                    "id": "string",
+                    "attributes": {
+                        "name": "string",
+                        "color": "string"
+                    }
+                }
+            },
+            "headers": {
+                "Content-Type": "application/vnd.api+json"
+            }
         }
-        // Additional endpoint metadata here
     ]
 }
