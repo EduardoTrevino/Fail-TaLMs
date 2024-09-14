@@ -1,0 +1,164 @@
+Great, now can you write the corresponding python file, and the meta data for the python file in json which makes the requests to those endpoints? The python file should be stand alone (ie no main just the functions) because these functions are called by the model, for example take a look at this python file from the simpleyoutubesearch api, and the json file which shows the meta data for the api, NOTE for the python file: despite not being used, please include the toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff' ONLY as a default paramater but do not include anywhere else in the function.:
+python file. NOTE for the json file: the "name": is the same name as the endpoint ie. "search":
+"""
+import requests
+import json
+from datetime import date, datetime, timedelta
+import os
+
+from typing import Optional, Dict, Union, List
+
+
+def search(query: str, type: str=None, safesearch: bool=None, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    "Make youtube search"
+    
+    """
+    url = f"https://simple-youtube-search.p.rapidapi.com/search"
+    querystring = {'query': query, }
+    if type:
+        querystring['type'] = type
+    if safesearch:
+        querystring['safesearch'] = safesearch
+    
+    response = requests.get(url, params=querystring)
+    try:
+        observation = response.json()
+    except:
+        observation = response.text
+    return observation
+
+def playlist(list: str, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    "YouTube playlist data"
+    
+    """
+    url = f"https://simple-youtube-search.p.rapidapi.com/playlist"
+    querystring = {'list': list, }
+
+
+    response = requests.get(url, params=querystring)
+    try:
+        observation = response.json()
+    except:
+        observation = response.text
+    return observation
+
+def video(search: str, toolbench_rapidapi_key: str='088440d910mshef857391f2fc461p17ae9ejsnaebc918926ff'):
+    """
+    "Get particular video"
+    
+    """
+    url = f"https://simple-youtube-search.p.rapidapi.com/video"
+    querystring = {'search': search, }
+    
+    response = requests.get(url, params=querystring)
+    try:
+        observation = response.json()
+    except:
+        observation = response.text
+    return observation
+"""
+json file:
+"""
+{
+    "tool_name":"Simple YouTube Search",
+    "tool_description":"Simple api to make easy youtube searches for free.",
+    "title":"Simple YouTube Search",
+    "pricing":"FREE",
+    "score":{
+        "avgServiceLevel":79,
+        "avgLatency":899,
+        "avgSuccessRate":79,
+        "popularityScore":9.9,
+        "__typename":"Score"
+    },
+    "home_url":"https://rapidapi.com/Snowflake107/api/simple-youtube-search/",
+    "host":"simple-youtube-search.p.rapidapi.com",
+    "api_list":[
+        {
+            "name":"Search",
+            "url":"https://simple-youtube-search.p.rapidapi.com/search",
+            "description":"Make youtube search",
+            "method":"GET",
+            "required_parameters":[
+                {
+                    "name":"query",
+                    "type":"STRING",
+                    "description":"",
+                    "default":"never+gonna+give+you+up"
+                }
+            ],
+            "optional_parameters":[
+                {
+                    "name":"type",
+                    "type":"ENUM",
+                    "description":"",
+                    "default":""
+                },
+                {
+                    "name":"safesearch",
+                    "type":"BOOLEAN",
+                    "description":"",
+                    "default":"false"
+                }
+            ],
+            "code":"import requests\n\nurl = \"https://simple-youtube-search.p.rapidapi.com/search\"\nquerystring = {\"safesearch\": safesearch, \"query\": query}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+            "statuscode":200,
+            "body":{
+                "key1":"value",
+                "key2":"value"
+            },
+            "headers":{},
+            "schema":{
+                "type":"object",
+                "properties":{
+                    "results":{
+                        "type":"array"
+                    }
+                }
+            }
+        },
+        {
+            "name":"Playlist",
+            "url":"https://simple-youtube-search.p.rapidapi.com/playlist",
+            "description":"YouTube playlist data",
+            "method":"GET",
+            "required_parameters":[
+                {
+                    "name":"list",
+                    "type":"STRING",
+                    "description":"",
+                    "default":"PLillGF-RfqbZ2ybcoD2OaabW2P7Ws8CWu"
+                }
+            ],
+            "optional_parameters":[],
+            "code":"import requests\n\nurl = \"https://simple-youtube-search.p.rapidapi.com/playlist\"\nquerystring = {\"list\": list}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+            "statuscode":111,
+            "body":"",
+            "headers":"",
+            "schema":""
+        },
+        {
+            "name":"Video",
+            "url":"https://simple-youtube-search.p.rapidapi.com/video",
+            "description":"Get particular video",
+            "method":"GET",
+            "required_parameters":[
+                {
+                    "name":"search",
+                    "type":"STRING",
+                    "description":"",
+                    "default":"https://www.youtube.com/watch?v=fBNz5xF-Kx4"
+                }
+            ],
+            "optional_parameters":[],
+            "code":"import requests\n\nurl = \"https://simple-youtube-search.p.rapidapi.com/video\"\nquerystring = {\"search\": search}\n\nresponse = requests.get(url, params=querystring)\n\nprint(response.json())\n",
+            "statuscode":111,
+            "body":"",
+            "headers":"",
+            "schema":""
+        }
+    ]
+}
+"""
