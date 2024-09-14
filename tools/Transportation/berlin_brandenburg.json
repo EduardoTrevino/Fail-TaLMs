@@ -75,7 +75,566 @@
                     }
                 }
             }
+        },
+        {
+            "name": "locations_nearby",
+            "url": "https://v6.vbb.transport.rest/locations/nearby",
+            "description": "Find stops/stations close to a given geolocation.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "latitude",
+                    "type": "FLOAT",
+                    "description": "Latitude of the location.",
+                    "default": ""
+                },
+                {
+                    "name": "longitude",
+                    "type": "FLOAT",
+                    "description": "Longitude of the location.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "Number of results to return.",
+                    "default": "8"
+                },
+                {
+                    "name": "distance",
+                    "type": "INTEGER",
+                    "description": "Maximum distance in meters.",
+                    "default": ""
+                },
+                {
+                    "name": "stops",
+                    "type": "BOOLEAN",
+                    "description": "Include stops in results.",
+                    "default": "true"
+                },
+                {
+                    "name": "poi",
+                    "type": "BOOLEAN",
+                    "description": "Include points of interest in results.",
+                    "default": "false"
+                },
+                {
+                    "name": "linesOfStops",
+                    "type": "BOOLEAN",
+                    "description": "Include lines of stops in results.",
+                    "default": "false"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "type": "object",
+                            "properties": {
+                                "latitude": {
+                                    "type": "number"
+                                },
+                                "longitude": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "distance": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "stops_reachable_from",
+            "url": "https://v6.vbb.transport.rest/stops/reachable-from",
+            "description": "Find stops/stations reachable within a certain time from an address.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "latitude",
+                    "type": "FLOAT",
+                    "description": "Latitude of the starting location.",
+                    "default": ""
+                },
+                {
+                    "name": "longitude",
+                    "type": "FLOAT",
+                    "description": "Longitude of the starting location.",
+                    "default": ""
+                },
+                {
+                    "name": "address",
+                    "type": "STRING",
+                    "description": "Address of the starting location.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "when",
+                    "type": "STRING",
+                    "description": "Departure time (ISO 8601 format).",
+                    "default": ""
+                },
+                {
+                    "name": "maxTransfers",
+                    "type": "INTEGER",
+                    "description": "Maximum number of transfers.",
+                    "default": "5"
+                },
+                {
+                    "name": "maxDuration",
+                    "type": "INTEGER",
+                    "description": "Maximum duration in minutes.",
+                    "default": ""
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "stop": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "location": {
+                                    "type": "object",
+                                    "properties": {
+                                        "latitude": {
+                                            "type": "number"
+                                        },
+                                        "longitude": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "duration": {
+                            "type": "number"
+                        },
+                        "transfers": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "stop_info",
+            "url": "https://v6.vbb.transport.rest/stops/{stop_id}",
+            "description": "Find a stop/station by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "stop_id",
+                    "type": "STRING",
+                    "description": "ID of the stop/station.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "linesOfStops",
+                    "type": "BOOLEAN",
+                    "description": "Include lines of stops in results.",
+                    "default": "false"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "object",
+                        "properties": {
+                            "latitude": {
+                                "type": "number"
+                            },
+                            "longitude": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "products": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        {
+            "name": "stop_departures",
+            "url": "https://v6.vbb.transport.rest/stops/{stop_id}/departures",
+            "description": "Get departures at a stop/station.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "stop_id",
+                    "type": "STRING",
+                    "description": "ID of the stop/station.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "when",
+                    "type": "STRING",
+                    "description": "Departure time (ISO 8601 format).",
+                    "default": ""
+                },
+                {
+                    "name": "direction",
+                    "type": "STRING",
+                    "description": "Filter by direction.",
+                    "default": ""
+                },
+                {
+                    "name": "duration",
+                    "type": "INTEGER",
+                    "description": "Show departures for how many minutes.",
+                    "default": "10"
+                },
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "Max. number of results.",
+                    "default": ""
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "tripId": {
+                            "type": "string"
+                        },
+                        "stop": {
+                            "type": "object"
+                        },
+                        "when": {
+                            "type": "string"
+                        },
+                        "direction": {
+                            "type": "string"
+                        },
+                        "line": {
+                            "type": "object"
+                        },
+                        "remarks": {
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "journeys",
+            "url": "https://v6.vbb.transport.rest/journeys",
+            "description": "Find journeys from A to B.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "from",
+                    "type": "STRING",
+                    "description": "Origin location ID.",
+                    "default": ""
+                },
+                {
+                    "name": "to",
+                    "type": "STRING",
+                    "description": "Destination location ID.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "departure",
+                    "type": "STRING",
+                    "description": "Departure time (ISO 8601 format).",
+                    "default": ""
+                },
+                {
+                    "name": "arrival",
+                    "type": "STRING",
+                    "description": "Arrival time (ISO 8601 format).",
+                    "default": ""
+                },
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "Number of journeys to return.",
+                    "default": "3"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "journeys": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "legs": {
+                                    "type": "array"
+                                },
+                                "refreshToken": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "radar",
+            "url": "https://v6.vbb.transport.rest/radar",
+            "description": "Find all vehicles currently in an area and their movements.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "north",
+                    "type": "FLOAT",
+                    "description": "Northern latitude of bounding box.",
+                    "default": ""
+                },
+                {
+                    "name": "west",
+                    "type": "FLOAT",
+                    "description": "Western longitude of bounding box.",
+                    "default": ""
+                },
+                {
+                    "name": "south",
+                    "type": "FLOAT",
+                    "description": "Southern latitude of bounding box.",
+                    "default": ""
+                },
+                {
+                    "name": "east",
+                    "type": "FLOAT",
+                    "description": "Eastern longitude of bounding box.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [
+                {
+                    "name": "results",
+                    "type": "INTEGER",
+                    "description": "Max. number of vehicles.",
+                    "default": "256"
+                },
+                {
+                    "name": "duration",
+                    "type": "INTEGER",
+                    "description": "Compute frames for how many seconds?",
+                    "default": "30"
+                },
+                {
+                    "name": "frames",
+                    "type": "INTEGER",
+                    "description": "Number of frames to compute.",
+                    "default": "3"
+                },
+                {
+                    "name": "polylines",
+                    "type": "BOOLEAN",
+                    "description": "Return a polyline for each vehicle?",
+                    "default": "true"
+                },
+                {
+                    "name": "language",
+                    "type": "STRING",
+                    "description": "Language of the results.",
+                    "default": "en"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "object",
+                "properties": {
+                    "movements": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "tripId": {
+                                    "type": "string"
+                                },
+                                "line": {
+                                    "type": "object"
+                                },
+                                "direction": {
+                                    "type": "string"
+                                },
+                                "frames": {
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "lines",
+            "url": "https://v6.vbb.transport.rest/lines",
+            "description": "Filter the lines available.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "id",
+                    "type": "STRING",
+                    "description": "Filter by line ID.",
+                    "default": ""
+                },
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "Filter by line name.",
+                    "default": ""
+                },
+                {
+                    "name": "operator",
+                    "type": "STRING",
+                    "description": "Filter by operator.",
+                    "default": ""
+                },
+                {
+                    "name": "variants",
+                    "type": "BOOLEAN",
+                    "description": "Include line variants?",
+                    "default": "true"
+                },
+                {
+                    "name": "mode",
+                    "type": "STRING",
+                    "description": "Filter by transport mode.",
+                    "default": ""
+                },
+                {
+                    "name": "product",
+                    "type": "STRING",
+                    "description": "Filter by product type.",
+                    "default": ""
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "mode": {
+                            "type": "string"
+                        },
+                        "product": {
+                            "type": "string"
+                        },
+                        "operator": {
+                            "type": "object"
+                        },
+                        "variants": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "direction":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        // Other endpoints follow the same structure here...        
     ]
 }
