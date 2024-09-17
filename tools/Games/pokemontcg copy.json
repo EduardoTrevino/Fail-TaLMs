@@ -1,0 +1,108 @@
+{
+    "tool_name": "pokemontcg",
+    "tool_description": "API to access a wealth of data about the Pokémon TCG, including cards, sets, and more.",
+    "title": "Pokémon TCG API",
+    "pricing": "FREE with rate limits for non-authenticated requests or authenticated with higher limits.",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 98,
+        "popularityScore": 9.5,
+        "__typename": "Score"
+    },
+    "home_url": "https://docs.pokemontcg.io/",
+    "host": "api.pokemontcg.io",
+    "api_list": [
+        {
+            "name": "get_cards",
+            "url": "https://api.pokemontcg.io/v2/cards",
+            "description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "The name of the card to filter by.",
+                    "default": "None"
+                },
+                {
+                    "name": "supertype",
+                    "type": "STRING",
+                    "description": "The supertype of the card, such as Pokémon, Energy, or Trainer.",
+                    "default": "None"
+                },
+                {
+                    "name": "types",
+                    "type": "LIST",
+                    "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+                    "default": "None"
+                },
+                {
+                    "name": "hp",
+                    "type": "STRING",
+                    "description": "The hit points of the card to filter by.",
+                    "default": "None"
+                }
+            ],
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "id": "string",
+                        "name": "string",
+                        "supertype": "string",
+                        "subtypes": [
+                            "string"
+                        ],
+                        "hp": "string",
+                        "types": [
+                            "string"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "get_sets",
+            "url": "https://api.pokemontcg.io/v2/sets",
+            "description": "Retrieve a list of all available sets in the Pokémon TCG.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "data": [
+                    {
+                        "id": "string",
+                        "name": "string",
+                        "series": "string",
+                        "total": "integer"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "get_card_by_id",
+            "url": "https://api.pokemontcg.io/v2/cards/{card_id}",
+            "description": "Retrieve a specific card by its unique ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "card_id",
+                    "type": "STRING",
+                    "description": "The unique identifier for the specific card."
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "data": {
+                    "id": "string",
+                    "name": "string",
+                    "supertype": "string"
+                }
+            }
+        }
+    ]
+}
