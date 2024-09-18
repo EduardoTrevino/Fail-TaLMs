@@ -2,7 +2,6 @@ import argparse
 import json
 import os
 import litellm
-import regex as re
 
 def main():
     parser = argparse.ArgumentParser()
@@ -36,58 +35,28 @@ def main():
     with open(args.output_answer_file, 'w') as f:
         json.dump(results, f, indent=2)
 
-
 def process_query(query_data, args):
     query_text = query_data['query']
     print(f"\nProcessing query: {query_text}")
-    model_name = args.model
-
-    # Check if the model supports function calling
-    try:
-        supports_function_calling = litellm.supports_function_calling(model=model_name)
-        print(f"Model '{model_name}' supports function calling: {supports_function_calling}")
-    except Exception as e:
-        print(f"Exception when checking function calling support: {e}")
-        supports_function_calling = False
 
     # Load functions
     functions = load_functions(args.tool_root_dir, query_data)
     print(f"Loaded {len(functions)} functions.")
-
-    # Optionally, print the functions loaded
     for function in functions:
         print(f"Function loaded: {function['name']}")
 
-        # If the model does not support function calling, set add_function_to_prompt
-    if not supports_function_calling:
-        litellm.add_function_to_prompt = True
-    else:
-        litellm.add_function_to_prompt = False
-
     # Prepare messages
-    system_message = """"system_message = You are a helpful assistant that can use tools to help the user.
-
-When you need to use a tool, output the function call in the following JSON format on a separate line:
-
-```json
-{ "function": "function_name", "arguments": { ... } }
-"""
-    if not supports_function_calling:
-        # Include function definitions in the system prompt
-        function_descriptions = "\n".join([format_function_for_prompt(f) for f in functions])
-        system_message += "\n\nAvailable tools:\n" + function_descriptions
-
     messages = [
-        {"role": "system", "content": system_message},
+        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user."},
         {"role": "user", "content": query_text}
     ]
 
     assistant_reply = None
-    for step in range(10):  # Limit the number of steps
+    for step in range(5):  # Limit the number of steps
         print(f"\n--- Step {step + 1} ---")
+
         # Call the model
         print("Sending messages to the model:")
-
         for message in messages:
             print(f"{message['role']}: {message.get('content', '')}")
 
@@ -96,7 +65,7 @@ When you need to use a tool, output the function call in the following JSON form
             base_url="https://cmu.litellm.ai",
             model=args.model,
             messages=messages,
-            functions=functions if supports_function_calling else None
+            functions=functions
         )
 
         # Extract the assistant's reply
@@ -109,13 +78,15 @@ When you need to use a tool, output the function call in the following JSON form
             'content': assistant_message.content,
         }
 
-        if supports_function_calling and assistant_message.function_call is not None:
+        if assistant_message.function_call is not None:
             assistant_message_dict['function_call'] = {
                 'name': assistant_message.function_call.name,
                 'arguments': assistant_message.function_call.arguments
             }
-            messages.append(assistant_message_dict)
 
+        messages.append(assistant_message_dict)
+
+        if assistant_message.function_call is not None:
             # Assistant is calling a function
             function_name = assistant_message.function_call.name
             function_args_str = assistant_message.function_call.arguments
@@ -138,50 +109,14 @@ When you need to use a tool, output the function call in the following JSON form
                 "content": function_response
             })
         else:
-            # Try to extract function call from assistant's content
-            function_call = extract_function_call_from_content(assistant_message.content)
-            if function_call:
-                function_name = function_call.get('function')
-                function_args = function_call.get('arguments', {})
-                print(f"Assistant is calling function '{function_name}' with arguments: {function_args}")
-
-                # Execute the function
-                function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
-                print(f"Function response: {function_response}")
-
-                # Add the assistant's message and function response to messages
-                messages.append(assistant_message_dict)
-                messages.append({
-                    "role": "function",
-                    "name": function_name,
-                    "content": function_response
-                })
-            else:
-                # Assistant provided the final answer
-                assistant_reply = assistant_message.content or ''
-                print(f"Assistant final reply: {assistant_reply}")
-                break
+            # Assistant provided the final answer
+            assistant_reply = assistant_message.content or ''
+            print(f"Assistant final reply: {assistant_reply}")
+            break
 
     if assistant_reply is None:
         print("Assistant did not provide a final reply within the allowed steps.")
     return assistant_reply
-
-def extract_function_call_from_content(content):
-    """
-    Use regex to find the function call in the specified format.
-    """
-    pattern = r'json\s*({\s*"function"\s*:\s*".+?",\s*"arguments"\s*:\s*{.*?}}\s*)'
-    match = re.search(pattern, content, re.DOTALL)
-    
-    if match:
-        function_call_str = match.group(1)
-        try:
-            function_call = json.loads(function_call_str)
-            return function_call
-        except json.JSONDecodeError:
-            pass
-    
-    return None
 
 def load_functions(tool_root_dir, query_data):
     import os
@@ -194,7 +129,7 @@ def load_functions(tool_root_dir, query_data):
         tool_name = api['tool_name']
         api_name = api['api_name']
         tool_json_path = os.path.join(tool_root_dir, category_name, tool_name + '.json')
-        
+
         if not os.path.exists(tool_json_path):
             print(f"Tool JSON file not found at {tool_json_path}")
             continue
@@ -275,30 +210,26 @@ def map_param_type(param_type):
     return type_map.get(param_type.upper(), "string")
 
 def execute_function(function_name, function_args, tool_root_dir, query_data):
-    # function_name is the name of the function to execute (api_name)
-    # function_args are the arguments for the function
-    # query_data contains the 'api_list' with 'category_name' and 'tool_name'
-    
     # Find the corresponding API entry in query_data
     api_entry = None
     for api in query_data.get('api_list', []):
         if api['api_name'] == function_name:
             api_entry = api
             break
-    
+
     if not api_entry:
         print(f"API '{function_name}' not found in query data.")
         return f"API '{function_name}' not found in query data."
-    
+
     category_name = api_entry['category_name']
     tool_name = api_entry['tool_name']
-    
+
     # Construct the path to api.py
     api_py_path = os.path.join(tool_root_dir, category_name, tool_name, 'api.py')
     if not os.path.exists(api_py_path):
         print(f"API file not found at {api_py_path}")
         return f"API file not found at {api_py_path}"
-    
+
     # Import the module from api.py
     try:
         import importlib.util
@@ -308,13 +239,13 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     except Exception as e:
         print(f"Error loading module: {e}")
         return f"Error loading module: {e}"
-    
+
     # Get the function from the module
     func = getattr(module, function_name, None)
     if not func:
         print(f"Function '{function_name}' not found in module.")
         return f"Function '{function_name}' not found in module."
-    
+
     # Execute the function with provided arguments
     try:
         print(f"Executing function '{function_name}' with arguments: {function_args}")
@@ -327,23 +258,6 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     except Exception as e:
         print(f"Error executing function '{function_name}': {e}")
         return f"Error executing function '{function_name}': {e}"
-    
-def format_function_for_prompt(function):
-    """
-    Format the function definition for inclusion in the prompt.
-    """
-    params = function['parameters']['properties']
-    required = function['parameters'].get('required', [])
-    param_descriptions = []
-    for name, details in params.items():
-        param_str = f"- {name} ({details['type']})"
-        if name in required:
-            param_str += " [required]"
-        if 'description' in details and details['description']:
-            param_str += f": {details['description']}"
-        param_descriptions.append(param_str)
-    param_text = "\n".join(param_descriptions)
-    return f"Function '{function['name']}': {function['description']}\nParameters:\n{param_text}\n"
 
 if __name__ == '__main__':
     main()

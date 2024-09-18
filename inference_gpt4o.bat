@@ -1,6 +1,6 @@
 @echo off
 REM Set the output directory
-set OUTPUT_DIR=outputs\benchmark\GPT4o_original_test
+set OUTPUT_DIR=outputs\Original\GPT4o_test
 
 REM Read the OpenAI key from the file and set it as a variable
 for /f %%i in (proxy_key.txt) do set OPENAI_KEY=%%i
@@ -12,7 +12,7 @@ REM Create the output directory if it doesn't exist
 if not exist %OUTPUT_DIR% mkdir %OUTPUT_DIR%
 
 REM Run the Python script with the necessary arguments
-python inference\pipeline.py ^
+python inference\pipeline_openai.py ^
     --tool_root_dir tools\ ^
     --model openai/neulab/gpt-4o-2024-05-13 ^
     --openai_key %OPENAI_KEY% ^
