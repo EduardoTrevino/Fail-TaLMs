@@ -1,0 +1,88 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "currency_converter",
+                "api_description": "Convert an amount from a base currency to a target currency using real-time conversion rates.",
+                "optional_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The currency code of the base currency.",
+                        "default": "USD"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "FLOAT",
+                        "description": "The amount in base currency to convert.",
+                        "default": 1.0
+                    },
+                    {
+                        "name": "target_currency",
+                        "type": "STRING",
+                        "description": "The currency code to convert the base currency to.",
+                        "default": "EUR"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "base_currency": "str",
+                    "amount": "float",
+                    "local_currency": "str",
+                    "local_currency_symbol": "str",
+                    "exchange_rate": "float",
+                    "converted_amount": "float",
+                    "location": {
+                        "city": "str",
+                        "country": "str"
+                    }
+                },
+                "required_parameters": []
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "zippopotamus",
+                "api_name": "get_zip_info_by_city",
+                "api_description": "Fetch postal codes associated with a given city and state in a specified country.",
+                "required_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "Country code such as 'US' for United States."
+                    },
+                    {
+                        "name": "state",
+                        "type": "STRING",
+                        "description": "State code such as 'CA' for California."
+                    },
+                    {
+                        "name": "city",
+                        "type": "STRING",
+                        "description": "The name of the city, such as 'Belmont'."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "post code": "string",
+                    "country": "string",
+                    "country abbreviation": "string",
+                    "places": [
+                        {
+                            "place name": "string",
+                            "longitude": "string",
+                            "state": "string",
+                            "state abbreviation": "string",
+                            "latitude": "string"
+                        }
+                    ]
+                },
+                "optional_parameters": []
+            }
+        ],
+        "query": "I need to know how much 50 USD would be in the local currency where I am currently located, and also find the postal codes for the city of Belmont, California in the United States.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

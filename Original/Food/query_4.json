@@ -1,0 +1,80 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "cocktail",
+                "api_name": "list_cocktails_by_first_letter",
+                "api_description": "List all cocktails by first letter.",
+                "required_parameters": [
+                    {
+                        "name": "letter",
+                        "type": "STRING",
+                        "description": "The letter to filter cocktails by.",
+                        "default": "a"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "drinks": [
+                        "list of cocktails"
+                    ]
+                }
+            },
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "search_products",
+                "api_description": "Search for products with specific criteria.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "categories",
+                        "type": "STRING",
+                        "description": "Categories to filter by.",
+                        "default": null
+                    },
+                    {
+                        "name": "nutrition_grades",
+                        "type": "STRING",
+                        "description": "Nutrition grade to filter by.",
+                        "default": null
+                    },
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": null
+                    },
+                    {
+                        "name": "sort_by",
+                        "type": "STRING",
+                        "description": "Field name to sort by.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "page": "int",
+                    "page_count": "int",
+                    "page_size": "int",
+                    "products": [
+                        {
+                            "categories_tags_en": [
+                                "string"
+                            ],
+                            "code": "string",
+                            "nutrition_grades": "string"
+                        }
+                    ],
+                    "skip": "int"
+                }
+            }
+        ],
+        "query": "Please list all cocktails starting with the letter 'C' and search for organic products with a nutrition grade of 'A' specifically from Open Food Facts.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

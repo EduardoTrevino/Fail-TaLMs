@@ -14,15 +14,15 @@
     "host": "api.whiskyhunter.net",
     "api_list": [
         {
-            "name": "auction_data",
-            "url": "https://api.whiskyhunter.net/api/auction_data/{slug}/",
+            "name": "auction_data_slug",
+            "url": "https://whiskyhunter.net/api/auction_data/{slug}/",
             "description": "List only aggregated data for online auction {slug}.",
             "method": "GET",
             "required_parameters": [
                 {
                     "name": "slug",
                     "type": "STRING",
-                    "description": "The unique identifier for an auction.",
+                    "description": "The unique identifier for an auction (e.g., 'catawiki').",
                     "default": "catawiki"
                 }
             ],
@@ -32,17 +32,15 @@
                 "type": "object",
                 "properties": {
                     "auctions_data": {
-                        "type": "array"
+                        "type": "array",
+                        "description": "The array of auction data."
                     }
                 }
-            },
-            "headers": {
-                "X-RapidAPI-Key": "string"
             }
         },
         {
             "name": "auctions_data",
-            "url": "https://api.whiskyhunter.net/api/auctions_data/",
+            "url": "https://whiskyhunter.net/api/auctions_data/",
             "description": "List all online auctions aggregated data.",
             "method": "GET",
             "required_parameters": [],
@@ -52,17 +50,15 @@
                 "type": "object",
                 "properties": {
                     "auctions_info": {
-                        "type": "array"
+                        "type": "array",
+                        "description": "The array of aggregated auction data."
                     }
                 }
-            },
-            "headers": {
-                "X-RapidAPI-Key": "string"
             }
         },
         {
             "name": "auctions_info",
-            "url": "https://api.whiskyhunter.net/api/auctions_info/",
+            "url": "https://whiskyhunter.net/api/auctions_info?format=json",
             "description": "List all online auctions main information.",
             "method": "GET",
             "required_parameters": [],
@@ -72,17 +68,15 @@
                 "type": "object",
                 "properties": {
                     "auctions_info": {
-                        "type": "array"
+                        "type": "array",
+                        "description": "The array of main auction information."
                     }
                 }
-            },
-            "headers": {
-                "X-RapidAPI-Key": "string"
             }
         },
         {
             "name": "distilleries_info",
-            "url": "https://api.whiskyhunter.net/api/distilleries_info/",
+            "url": "https://whiskyhunter.net/api/distilleries_info/?format=json",
             "description": "List all distilleries main information.",
             "method": "GET",
             "required_parameters": [],
@@ -92,24 +86,22 @@
                 "type": "object",
                 "properties": {
                     "distilleries_info": {
-                        "type": "array"
+                        "type": "array",
+                        "description": "The array of distillery information."
                     }
                 }
-            },
-            "headers": {
-                "X-RapidAPI-Key": "string"
             }
         },
         {
             "name": "distillery_data",
-            "url": "https://api.whiskyhunter.net/api/distillery_data/{slug}/",
+            "url": "https://whiskyhunter.net/api/distillery_data/{slug}/",
             "description": "List data for distillery {slug}.",
             "method": "GET",
             "required_parameters": [
                 {
                     "name": "slug",
                     "type": "STRING",
-                    "description": "The unique identifier for a distillery.",
+                    "description": "The unique identifier for a distillery (e.g., 'ardbeg').",
                     "default": "ardbeg"
                 }
             ],
@@ -119,12 +111,10 @@
                 "type": "object",
                 "properties": {
                     "distillery_data": {
-                        "type": "array"
+                        "type": "array",
+                        "description": "The array of data for the specified distillery."
                     }
                 }
-            },
-            "headers": {
-                "X-RapidAPI-Key": "string"
             }
         }
     ]

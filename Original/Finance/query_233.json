@@ -1,0 +1,59 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": "success",
+                    "provider": "string",
+                    "documentation": "string",
+                    "terms_of_use": "string",
+                    "base_code": "string",
+                    "rates": {
+                        "type": "object",
+                        "additionalProperties": "number"
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "kucoin",
+                "api_name": "get_ticker",
+                "api_description": "Get Level 1 Market Data for a specific trading pair, including bid/ask prices, last traded price, and size.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol (e.g., BTC-USDT)."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "price": "string",
+                        "size": "string",
+                        "bestBid": "string",
+                        "bestAsk": "string"
+                    }
+                }
+            }
+        ],
+        "query": "What are the latest exchange rates for the US Dollar, and what is the current trading price for BTC-USDT on KuCoin?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

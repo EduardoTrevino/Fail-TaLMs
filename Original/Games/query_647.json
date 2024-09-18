@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
+                    }
+                ],
+                "template_response": {
+                    "success": "boolean"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "imgflip",
+                "api_name": "get_memes",
+                "api_description": "Retrieves an array of popular memes that may be captioned with this API.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "template_response": {
+                    "success": "boolean",
+                    "data": {
+                        "memes": [
+                            {
+                                "id": "string",
+                                "name": "string",
+                                "url": "string",
+                                "width": "integer",
+                                "height": "integer",
+                                "box_count": "integer"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "query": "Can you set a price alert for a game I am interested in? Also, I'd like to explore popular meme templates I can use.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

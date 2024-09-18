@@ -1,157 +1,157 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Weather",
-        "tool_name": "awc",
-        "api_name": "get_metar",
-        "api_description": "Fetches decoded aviation weather observations (METAR).",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "ids",
-            "type": "STRING",
-            "description": "Station ID(s).",
-            "default": null
-          },
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "Output format.",
-            "default": "json"
-          },
-          {
-            "name": "taf",
-            "type": "BOOLEAN",
-            "description": "Include TAF information with the METAR.",
-            "default": false
-          },
-          {
-            "name": "hours",
-            "type": "NUMBER",
-            "description": "Hours back to search.",
-            "default": 1
-          },
-          {
-            "name": "bbox",
-            "type": "STRING",
-            "description": "Geographic bounding box.",
-            "default": null
-          },
-          {
-            "name": "date",
-            "type": "STRING",
-            "description": "Specific date to fetch records for.",
-            "default": null
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "awc",
+                "api_name": "get_metar",
+                "api_description": "Fetches decoded aviation weather observations (METAR).",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ids",
+                        "type": "STRING",
+                        "description": "Station ID(s).",
+                        "default": null
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "taf",
+                        "type": "BOOLEAN",
+                        "description": "Include TAF information with the METAR.",
+                        "default": false
+                    },
+                    {
+                        "name": "hours",
+                        "type": "NUMBER",
+                        "description": "Hours back to search.",
+                        "default": 1
+                    },
+                    {
+                        "name": "bbox",
+                        "type": "STRING",
+                        "description": "Geographic bounding box.",
+                        "default": null
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date to fetch records for.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "string",
+                    "response": "string"
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "utc_offset_seconds": "int",
+                    "timezone": "str",
+                    "timezone_abbreviation": "str",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    },
+                    "hourly_units": {
+                        "temperature_2m": "str"
+                    }
+                }
+            }
         ],
-        "method": "GET",
-        "template_response": {
-          "error": "string",
-          "response": "string"
-        }
-      },
-      {
-        "category_name": "Weather",
-        "tool_name": "openmeteo",
-        "api_name": "get_weather_forecast",
-        "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
-        "required_parameters": [
-          {
-            "name": "latitude",
-            "type": "FLOAT",
-            "description": "Geographical WGS84 coordinates of the location.",
-            "default": "None"
-          },
-          {
-            "name": "longitude",
-            "type": "FLOAT",
-            "description": "Geographical WGS84 coordinates of the location.",
-            "default": "None"
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "hourly",
-            "type": "LIST",
-            "description": "A list of weather variables which should be returned hourly.",
-            "default": "None"
-          },
-          {
-            "name": "daily",
-            "type": "LIST",
-            "description": "A list of daily weather variable aggregations which should be returned.",
-            "default": "None"
-          },
-          {
-            "name": "current",
-            "type": "LIST",
-            "description": "A list of weather variables to get current conditions.",
-            "default": "None"
-          },
-          {
-            "name": "temperature_unit",
-            "type": "STRING",
-            "description": "Temperature units like celsius or fahrenheit.",
-            "default": "celsius"
-          },
-          {
-            "name": "wind_speed_unit",
-            "type": "STRING",
-            "description": "Wind speed units like km/h, m/s, mph, or knots.",
-            "default": "kmh"
-          },
-          {
-            "name": "precipitation_unit",
-            "type": "STRING",
-            "description": "Precipitation units like mm or inch.",
-            "default": "mm"
-          },
-          {
-            "name": "timeformat",
-            "type": "STRING",
-            "description": "Time format like iso8601 or unixtime.",
-            "default": "iso8601"
-          },
-          {
-            "name": "timezone",
-            "type": "STRING",
-            "description": "Timezone like GMT or location-based timezone.",
-            "default": "GMT"
-          },
-          {
-            "name": "past_days",
-            "type": "INTEGER",
-            "description": "Number of past days to include in the weather data.",
-            "default": "0"
-          },
-          {
-            "name": "forecast_days",
-            "type": "INTEGER",
-            "description": "Number of forecast days to include in the weather data.",
-            "default": "7"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "latitude": "float",
-          "longitude": "float",
-          "generationtime_ms": "float",
-          "utc_offset_seconds": "int",
-          "timezone": "str",
-          "timezone_abbreviation": "str",
-          "hourly": {
-            "time": "list",
-            "temperature_2m": "list"
-          },
-          "hourly_units": {
-            "temperature_2m": "str"
-          }
-        }
-      }
-    ],
-    "query": "What is the current METAR weather observation at my local airport? Additionally, can I get a detailed weather forecast for the next week for New York City where latitude=40.730610 and longitude=-73.935242?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "What is the current METAR weather observation at my local airport? Additionally, can I get a detailed weather forecast for the next week for New York City where latitude=40.730610 and longitude=-73.935242?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

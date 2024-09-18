@@ -1,44 +1,43 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Music",
-        "tool_name": "openwhyd",
-        "api_name": "get_user_tracks",
-        "api_description": "Fetch the list of tracks posted by a user",
-        "required_parameters": [
-          {
-            "name": "uHandle",
-            "type": "STRING",
-            "description": "Username of the user"
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "get_user_tracks",
+                "api_description": "Fetch the list of tracks posted by a user",
+                "required_parameters": [
+                    "uHandle"
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "playlistId",
+                        "type": "INTEGER",
+                        "description": "The ID of the playlist."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of tracks to return."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "track": "str",
+                        "artist": "str",
+                        "playlistId": "int"
+                    }
+                ]
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "Response format",
-            "default": "json"
-          },
-          {
-            "name": "limit",
-            "type": "INTEGER",
-            "description": "Number of tracks to return",
-            "default": "20"
-          }
-        ],
-        "method": "GET",
-        "template_response": [
-          {
-            "track": "str",
-            "artist": "str",
-            "playlistId": "int"
-          }
-        ]
-      }
-    ],
-    "query": "I am curious to read some random stories about music genres and also see what tracks Adrien has recently posted.",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "I am curious to read some random stories about music genres and also see what tracks Adrien has recently posted.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

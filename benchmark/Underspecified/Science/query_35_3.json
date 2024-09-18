@@ -1,94 +1,94 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Science",
-        "tool_name": "celestrak",
-        "api_name": "query_by_name",
-        "api_description": "Query GP data using satellite name.",
-        "required_parameters": [
-          {
-            "name": "NAME",
-            "type": "STRING",
-            "description": "Satellite Name."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "celestrak",
+                "api_name": "query_by_name",
+                "api_description": "Query GP data using satellite name.",
+                "required_parameters": [
+                    {
+                        "name": "NAME",
+                        "type": "STRING",
+                        "description": "Satellite Name."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "FORMAT",
+                        "type": "STRING",
+                        "description": "Format of data. Defaults to 'TLE'.",
+                        "default": "TLE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "string or object",
+                    "description": "Responds with requested data in the specified format."
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "numbers",
+                "api_name": "get_number_fact",
+                "api_description": "Get a fact about a number from the Numbers API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "STRING",
+                        "description": "An integer, 'random', or day of year 'month/day'.",
+                        "default": "random"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'trivia', 'math', 'date', or 'year'.",
+                        "default": "trivia"
+                    },
+                    {
+                        "name": "fragment",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact as a sentence fragment.",
+                        "default": "False"
+                    },
+                    {
+                        "name": "notfound",
+                        "type": "STRING",
+                        "description": "'default', 'floor', 'ceil'.",
+                        "default": "default"
+                    },
+                    {
+                        "name": "min_val",
+                        "type": "INTEGER",
+                        "description": "The minimum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "max_val",
+                        "type": "INTEGER",
+                        "description": "The maximum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "json",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact in JSON format.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "text": "2012 is the year that the century's second and last solar transit of Venus occurs on June 6.",
+                    "found": true,
+                    "number": 2012,
+                    "type": "year",
+                    "date": "June 6"
+                }
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "FORMAT",
-            "type": "STRING",
-            "description": "Format of data. Defaults to 'TLE'.",
-            "default": "TLE"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "type": "string or object",
-          "description": "Responds with requested data in the specified format."
-        }
-      },
-      {
-        "category_name": "Science",
-        "tool_name": "numbers",
-        "api_name": "get_number_fact",
-        "api_description": "Get a fact about a number from the Numbers API.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "number",
-            "type": "STRING",
-            "description": "An integer, 'random', or day of year 'month/day'.",
-            "default": "random"
-          },
-          {
-            "name": "type",
-            "type": "STRING",
-            "description": "'trivia', 'math', 'date', or 'year'.",
-            "default": "trivia"
-          },
-          {
-            "name": "fragment",
-            "type": "BOOLEAN",
-            "description": "Return the fact as a sentence fragment.",
-            "default": "False"
-          },
-          {
-            "name": "notfound",
-            "type": "STRING",
-            "description": "'default', 'floor', 'ceil'.",
-            "default": "default"
-          },
-          {
-            "name": "min_val",
-            "type": "INTEGER",
-            "description": "The minimum value for random facts.",
-            "default": "None"
-          },
-          {
-            "name": "max_val",
-            "type": "INTEGER",
-            "description": "The maximum value for random facts.",
-            "default": "None"
-          },
-          {
-            "name": "json",
-            "type": "BOOLEAN",
-            "description": "Return the fact in JSON format.",
-            "default": "True"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "text": "2012 is the year that the century's second and last solar transit of Venus occurs on June 6.",
-          "found": true,
-          "number": 2012,
-          "type": "year",
-          "date": "June 6"
-        }
-      }
-    ],
-    "query": "Can you provide information about the satellite the team is interested in? Also, what is a trivia fact about my favorite number?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "Can you provide information about the satellite the team is interested in? Also, what is a trivia fact about my favorite number?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

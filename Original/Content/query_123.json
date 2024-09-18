@@ -1,0 +1,75 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "hackernews",
+                "api_name": "get_top_stories",
+                "api_description": "Fetch up to 500 top stories.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "LIST",
+                    "elements": "int"
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "rickandmorty",
+                "api_name": "get_characters",
+                "api_description": "Fetch all characters, with filtering options.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of characters to retrieve.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Filter for names containing this string."
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter by status (alive, dead, unknown)."
+                    },
+                    {
+                        "name": "species",
+                        "type": "STRING",
+                        "description": "Filter by species."
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter by gender (female, male, genderless, unknown)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "info": {
+                        "count": "int",
+                        "pages": "int",
+                        "next": "str",
+                        "prev": "str"
+                    },
+                    "results": [
+                        {
+                            "id": "int",
+                            "name": "str",
+                            "status": "str",
+                            "species": "str",
+                            "gender": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What's trending in technology on Hacker News? Also, how many characters are currently alive in the Rick and Morty universe?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

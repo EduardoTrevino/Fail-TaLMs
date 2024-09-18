@@ -1,0 +1,102 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "openlibrary",
+                "api_name": "search_books",
+                "api_description": "Search for books using the Open Library Search API.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Query string to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Fields to return."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort order."
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language preference."
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for pagination."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "docs": [
+                        {
+                            "title": "str",
+                            "author_name": [
+                                "str"
+                            ],
+                            "isbn": [
+                                "str"
+                            ],
+                            "key": "str"
+                        }
+                    ]
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Can you find books related to technology and also check if the Open Library website was archived at any point?",
+        "query_id": 1
+    }
+]

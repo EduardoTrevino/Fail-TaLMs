@@ -1,0 +1,94 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "adresse",
+                "api_name": "search_address",
+                "api_description": "Perform a full-text address search with optional filters.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The query string.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "autocomplete",
+                        "type": "INTEGER",
+                        "description": "Enable or disable autocomplete.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "type_filter",
+                        "type": "STRING",
+                        "description": "Filter by type.",
+                        "default": ""
+                    },
+                    {
+                        "name": "postcode",
+                        "type": "STRING",
+                        "description": "Filter by postal code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "citycode",
+                        "type": "STRING",
+                        "description": "Filter by INSEE city code.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "FeatureCollection",
+                    "features": "ARRAY"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on IP address.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "str",
+                    "geoplugin_status": "int",
+                    "geoplugin_countryName": "str",
+                    "geoplugin_city": "str"
+                }
+            }
+        ],
+        "query": "Can you find the address information for '1600 Amphitheatre Parkway' using the Adresse Tool and determine the city and country of my current IP location?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

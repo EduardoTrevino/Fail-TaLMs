@@ -1,0 +1,132 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "crossref",
+                "api_name": "search_works",
+                "api_description": "Search for works by a free text query",
+                "required_parameters": [
+                    "query"
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "rows",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": 20
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "str",
+                    "message-type": "str",
+                    "message-Version": "str",
+                    "message": {
+                        "items-per-page": "int",
+                        "query": {
+                            "start-index": "int",
+                            "search-terms": "str"
+                        },
+                        "items": [
+                            {
+                                "DOI": "str",
+                                "title": [
+                                    "str"
+                                ],
+                                "publisher": "str",
+                                "published-print": {
+                                    "date-parts": [
+                                        [
+                                            "int"
+                                        ]
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                "category_name": "Content"
+            },
+            {
+                "tool_name": "rickandmorty",
+                "api_name": "get_characters",
+                "api_description": "Fetches all characters, with filtering options",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of characters to retrieve.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Filter for names containing this string."
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter by status (alive, dead, unknown)."
+                    },
+                    {
+                        "name": "species",
+                        "type": "STRING",
+                        "description": "Filter by species."
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter by gender (female, male, genderless, unknown)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "info": {
+                        "count": "int",
+                        "pages": "int",
+                        "next": "str",
+                        "prev": "str"
+                    },
+                    "results": [
+                        {
+                            "id": "int",
+                            "name": "str",
+                            "status": "str",
+                            "species": "str",
+                            "gender": "str",
+                            "origin": {
+                                "name": "str",
+                                "url": "str"
+                            },
+                            "location": {
+                                "name": "str",
+                                "url": "str"
+                            }
+                        }
+                    ]
+                },
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you find scholarly articles related to climate change? Additionally, I want to know more about characters named Rick in the Rick and Morty universe.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

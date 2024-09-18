@@ -1,74 +1,80 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Science",
-        "tool_name": "arxiv",
-        "api_name": "query_arxiv",
-        "api_description": "Query interface for searching arXiv articles.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "search_query",
-            "type": "STRING",
-            "description": "Search terms used for the query."
-          },
-          {
-            "name": "id_list",
-            "type": "LIST",
-            "description": "List of arXiv article IDs for the query."
-          },
-          {
-            "name": "start",
-            "type": "INTEGER",
-            "description": "Index of the first returned result."
-          },
-          {
-            "name": "max_results",
-            "type": "INTEGER",
-            "description": "Maximum number of results to return."
-          },
-          {
-            "name": "sort_by",
-            "type": "STRING",
-            "description": "Sorting criteria for results."
-          },
-          {
-            "name": "sort_order",
-            "type": "STRING",
-            "description": "Sorting order (ascending/descending)."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "arxiv",
+                "api_name": "query_arxiv",
+                "api_description": "Query interface for searching arXiv articles.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "search_query",
+                        "type": "STRING",
+                        "description": "Search terms used for the query.",
+                        "default": null
+                    },
+                    {
+                        "name": "id_list",
+                        "type": "LIST",
+                        "description": "List of arXiv article IDs for the query.",
+                        "default": null
+                    },
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "Index of the first returned result.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "max_results",
+                        "type": "INTEGER",
+                        "description": "Maximum number of results to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "type": "STRING",
+                        "description": "Sorting criteria for results.",
+                        "default": null
+                    },
+                    {
+                        "name": "sort_order",
+                        "type": "STRING",
+                        "description": "Sorting order (ascending/descending).",
+                        "default": null
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "gbif",
+                "api_name": "search_datasets",
+                "api_description": "Full-text search across all GBIF datasets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Full text search query"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Offset of the results"
+                    }
+                ],
+                "method": "GET"
+            }
         ],
-        "method": "GET"
-      },
-      {
-        "category_name": "Science",
-        "tool_name": "gbif",
-        "api_name": "search_datasets",
-        "api_description": "Full-text search across all GBIF datasets.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "q",
-            "type": "STRING",
-            "description": "Full text search query."
-          },
-          {
-            "name": "limit",
-            "type": "INTEGER",
-            "description": "Number of results per page."
-          },
-          {
-            "name": "offset",
-            "type": "INTEGER",
-            "description": "Offset of the results."
-          }
-        ],
-        "method": "GET"
-      }
-    ],
-    "query": "Can you find the latest research articles about my research interest on arXiv? Also, could you fetch datasets pertaining to 'biodiversity' using the GBIF API?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "Can you find the latest research articles about my research interest on arXiv? Also, could you fetch datasets pertaining to 'biodiversity' using the GBIF API?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

@@ -1,42 +1,66 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Government",
-        "tool_name": "civix",
-        "api_name": "search_content",
-        "api_description": "Search for occurrences of a query term within an aspect of the British Columbia law and bylaw content library.",
-        "required_parameters": [
-          {
-            "name": "query",
-            "type": "STRING",
-            "description": "Query term to search for."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "civix",
+                "api_name": "search_content",
+                "api_description": "Search for occurrences of a query term within an aspect of the British Columbia law and bylaw content library.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Query term to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "aspect",
+                        "type": "STRING",
+                        "description": "Aspect to search within.",
+                        "default": "complete"
+                    },
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "First hit to return.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "end",
+                        "type": "INTEGER",
+                        "description": "Last hit to return.",
+                        "default": "20"
+                    },
+                    {
+                        "name": "n_frag",
+                        "type": "INTEGER",
+                        "description": "Number of fragment snippets to return.",
+                        "default": "5"
+                    },
+                    {
+                        "name": "l_frag",
+                        "type": "INTEGER",
+                        "description": "Length of each fragment.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": "Search results data in XML format"
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "dawum",
+                "api_name": "get_last_update",
+                "api_description": "Fetches the last update date of the DAWUM election polls database.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": "Last update date as a string"
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "aspect",
-            "type": "STRING",
-            "description": "Aspect to search within.",
-            "default": "complete"
-          }
-        ],
-        "method": "GET",
-        "template_response": "Search results data in XML format"
-      },
-      {
-        "category_name": "Government",
-        "tool_name": "dawum",
-        "api_name": "get_last_update",
-        "api_description": "Fetches the last update date of the DAWUM election polls database.",
-        "required_parameters": [],
-        "optional_parameters": [],
-        "method": "GET",
-        "template_response": "Last update date as a string"
-      }
-    ],
-    "query": "Search the British Columbia legal documents for any mentions of topics related to my research report and also check when the DAWUM database of election polls was last updated.",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "Search the British Columbia legal documents for any mentions of topics related to my research report and also check when the DAWUM database of election polls was last updated.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

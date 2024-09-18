@@ -28,21 +28,21 @@
                 {
                     "name": "email",
                     "type": "STRING",
-                    "description": "Any valid email address.",
+                    "description": "A valid email address.",
                     "default": ""
+                },
+                {
+                    "name": "game_id",
+                    "type": "INTEGER",
+                    "description": "An existing gameID, required for both 'set' and 'delete'.",
+                    "default": null
                 }
             ],
             "optional_parameters": [
                 {
-                    "name": "game_id",
-                    "type": "INTEGER",
-                    "description": "An existing gameID, required for 'set' and 'delete'.",
-                    "default": null
-                },
-                {
                     "name": "price",
                     "type": "DECIMAL",
-                    "description": "The price to wait for, only required when using 'set' value for action parameter.",
+                    "description": "The price to wait for, only required when using 'set' action.",
                     "default": null
                 }
             ],
@@ -65,7 +65,7 @@
                 {
                     "name": "email",
                     "type": "STRING",
-                    "description": "Any valid email address with existing alerts.",
+                    "description": "A valid email address with existing alerts.",
                     "default": ""
                 }
             ],
@@ -78,6 +78,41 @@
             "headers": {},
             "schema": {
                 "type": "object"
+            }
+        },
+        {
+            "name": "get_alerts",
+            "url": "https://www.cheapshark.com/api/1.0/alerts",
+            "description": "Retrieve all existing alerts using the 'key' parameter from the manage link.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "key",
+                    "type": "STRING",
+                    "description": "The key parameter from the manage link received via email.",
+                    "default": ""
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.cheapshark.com/api/1.0/alerts'\nparams = {'action': 'get', 'key': key}\nresponse = requests.get(url, params=params)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "type": "array"
+            },
+            "headers": {},
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "gameID": {
+                            "type": "integer"
+                        },
+                        "price": {
+                            "type": "decimal"
+                        }
+                    }
+                }
             }
         }
     ]

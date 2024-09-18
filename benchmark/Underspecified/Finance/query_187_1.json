@@ -7,11 +7,7 @@
                 "api_description": "Returns price data of a single cryptocurrency.",
                 "method": "GET",
                 "required_parameters": [
-                    {
-                        "name": "coin_id",
-                        "type": "STRING",
-                        "description": "The ID of the cryptocurrency to retrieve data for."
-                    }
+                    "coin_id"
                 ],
                 "optional_parameters": [
                     {
@@ -34,12 +30,14 @@
                     {
                         "name": "table",
                         "type": "STRING",
-                        "description": "Type of table 'A', 'B', or 'C'."
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
                     },
                     {
                         "name": "code",
                         "type": "STRING",
-                        "description": "Currency code based on ISO 4217."
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
                     }
                 ],
                 "optional_parameters": [
@@ -47,6 +45,21 @@
                         "name": "top_count",
                         "type": "INTEGER",
                         "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
                     }
                 ],
                 "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",

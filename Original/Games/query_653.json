@@ -1,0 +1,116 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "success": "bool"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "jokeapi",
+                "api_name": "get_joke",
+                "api_description": "Fetch jokes based on category, filters and other parameters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Joke category",
+                        "default": "Any"
+                    },
+                    {
+                        "name": "blacklist_flags",
+                        "type": "LIST",
+                        "description": "Flags to filter out",
+                        "default": "None"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language code for joke",
+                        "default": "en"
+                    },
+                    {
+                        "name": "joke_type",
+                        "type": "STRING",
+                        "description": "Type of joke (single/twopart)",
+                        "default": "None"
+                    },
+                    {
+                        "name": "contains",
+                        "type": "STRING",
+                        "description": "String to search within jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "id_range",
+                        "type": "STRING",
+                        "description": "ID range for jokes",
+                        "default": "None"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "INTEGER",
+                        "description": "Number of jokes to fetch",
+                        "default": 1
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "safe_mode",
+                        "type": "BOOLEAN",
+                        "description": "Fetch only safe jokes",
+                        "default": false
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "boolean",
+                    "jokes": "array",
+                    "amount": "integer"
+                }
+            }
+        ],
+        "query": "I want to set a price alert for a game at $9.99 using my email and at the same time, could you tell me a safe joke from the 'Programming' category?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

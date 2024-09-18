@@ -81,6 +81,149 @@
       "body": {
         "data": []
       }
+    },
+    {
+      "name": "get_statistics_descriptive",
+      "url": "https://api.opensensemap.org/statistics/descriptive",
+      "description": "Compute basic descriptive statistics over specified time windows.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "box_id",
+          "type": "STRING",
+          "description": "Comma-separated list of senseBox IDs."
+        },
+        {
+          "name": "phenomenon",
+          "type": "STRING",
+          "description": "The name of the phenomenon you want to download the data for."
+        },
+        {
+          "name": "from_date",
+          "type": "STRING",
+          "description": "Beginning date of measurement data."
+        },
+        {
+          "name": "to_date",
+          "type": "STRING",
+          "description": "End date of measurement data."
+        },
+        {
+          "name": "operation",
+          "type": "STRING",
+          "description": "Statistical operation to perform (e.g., 'mean', 'min', 'max')."
+        },
+        {
+          "name": "window",
+          "type": "STRING",
+          "description": "Time window for statistical aggregation."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "format",
+          "type": "STRING",
+          "description": "The format in which data should be returned.",
+          "default": "csv"
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        "data": []
+      }
+    },
+    {
+      "name": "get_latest_measurements_for_sensor",
+      "url": "https://api.opensensemap.org/boxes/:senseBoxId/data/:sensorId",
+      "description": "Get the 10000 latest measurements for a sensor.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "sense_box_id",
+          "type": "STRING",
+          "description": "The ID of the senseBox you are referring to."
+        },
+        {
+          "name": "sensor_id",
+          "type": "STRING",
+          "description": "The ID of the sensor you are referring to."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "from_date",
+          "type": "STRING",
+          "description": "Beginning date of measurement data."
+        },
+        {
+          "name": "to_date",
+          "type": "STRING",
+          "description": "End date of measurement data."
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        "data": []
+      }
+    },
+    {
+      "name": "get_latest_measurements_of_sense_box",
+      "url": "https://api.opensensemap.org/boxes/:senseBoxId/sensors",
+      "description": "Get the latest measurements of all sensors of the specified senseBox.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "sense_box_id",
+          "type": "STRING",
+          "description": "The ID of the senseBox you are referring to."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "count",
+          "type": "NUMBER",
+          "description": "Number of measurements to be retrieved for every sensor.",
+          "default": 1
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        "data": []
+      }
+    },
+    {
+      "name": "get_idw_statistics",
+      "url": "https://api.opensensemap.org/statistics/idw",
+      "description": "Get a Inverse Distance Weighting Interpolation as FeatureCollection.",
+      "method": "GET",
+      "required_parameters": [
+        {
+          "name": "bbox",
+          "type": "STRING",
+          "description": "A bounding box containing 4 WGS84 coordinates."
+        },
+        {
+          "name": "phenomenon",
+          "type": "STRING",
+          "description": "The name of the phenomenon you want to download the data for."
+        }
+      ],
+      "optional_parameters": [
+        {
+          "name": "from_date",
+          "type": "STRING",
+          "description": "Beginning date of measurement data."
+        },
+        {
+          "name": "to_date",
+          "type": "STRING",
+          "description": "End date of measurement data."
+        }
+      ],
+      "statuscode": 200,
+      "body": {
+        "data": []
+      }
     }
   ]
 }

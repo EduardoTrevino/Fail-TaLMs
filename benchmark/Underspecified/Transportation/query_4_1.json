@@ -1,59 +1,114 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Transportation",
-        "tool_name": "berlin_brandenburg",
-        "api_name": "radar",
-        "api_description": "Find all vehicles currently in an area and their movements.",
-        "required_parameters": [
-          {
-            "name": "north",
-            "type": "FLOAT",
-            "description": "Northern boundary of the area.",
-            "default": 52.52411
-          },
-          {
-            "name": "west",
-            "type": "FLOAT",
-            "description": "Western boundary of the area.",
-            "default": 13.41002
-          },
-          {
-            "name": "south",
-            "type": "FLOAT",
-            "description": "Southern boundary of the area.",
-            "default": 52.51942
-          },
-          {
-            "name": "east",
-            "type": "FLOAT",
-            "description": "Eastern boundary of the area.",
-            "default": 13.41709
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Transportation",
+                "tool_name": "berlin_brandenburg",
+                "api_name": "radar",
+                "api_description": "Find all vehicles currently in an area and their movements.",
+                "required_parameters": [
+                    {
+                        "name": "north",
+                        "type": "FLOAT",
+                        "description": "Northern latitude of bounding box.",
+                        "default": ""
+                    },
+                    {
+                        "name": "west",
+                        "type": "FLOAT",
+                        "description": "Western longitude of bounding box.",
+                        "default": ""
+                    },
+                    {
+                        "name": "south",
+                        "type": "FLOAT",
+                        "description": "Southern latitude of bounding box.",
+                        "default": ""
+                    },
+                    {
+                        "name": "east",
+                        "type": "FLOAT",
+                        "description": "Eastern longitude of bounding box.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "results",
+                        "type": "INTEGER",
+                        "description": "Max. number of vehicles.",
+                        "default": "256"
+                    },
+                    {
+                        "name": "duration",
+                        "type": "INTEGER",
+                        "description": "Compute frames for how many seconds?",
+                        "default": "30"
+                    },
+                    {
+                        "name": "frames",
+                        "type": "INTEGER",
+                        "description": "Number of frames to compute.",
+                        "default": "3"
+                    },
+                    {
+                        "name": "polylines",
+                        "type": "BOOLEAN",
+                        "description": "Return a polyline for each vehicle?",
+                        "default": "true"
+                    },
+                    {
+                        "name": "language",
+                        "type": "STRING",
+                        "description": "Language of the results.",
+                        "default": "en"
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Transportation",
+                "tool_name": "mbta",
+                "api_name": "get_lines",
+                "api_description": "List lines.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "filter_id",
+                        "type": "STRING",
+                        "description": "Filter by line ID."
+                    },
+                    {
+                        "name": "page_offset",
+                        "type": "INTEGER",
+                        "description": "Offset (0-based) of first element in the page."
+                    },
+                    {
+                        "name": "page_limit",
+                        "type": "INTEGER",
+                        "description": "Max number of elements to return."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Results can be sorted by the id or any /data/{index}/attributes key."
+                    },
+                    {
+                        "name": "fields_line",
+                        "type": "STRING",
+                        "description": "Fields to include with the response."
+                    },
+                    {
+                        "name": "include",
+                        "type": "STRING",
+                        "description": "Relationships to include."
+                    }
+                ],
+                "method": "GET"
+            }
         ],
-        "optional_parameters": [],
-        "method": "GET"
-      },
-      {
-        "category_name": "Transportation",
-        "tool_name": "mbta",
-        "api_name": "get_lines",
-        "api_description": "List lines.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "filter_id",
-            "type": "STRING",
-            "description": "Filter by line id.",
-            "default": "Red"
-          }
-        ],
-        "method": "GET"
-      }
-    ],
-    "query": "I need to monitor the vehicles currently moving in the central Berlin area with boundaries north=52.52411, west=13.41002, south=52.51942, east=13.41709 and could you list the details of the Red Line from the MBTA data?",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "I need to monitor the vehicles currently moving in the central Berlin area with boundaries north=52.52411, west=13.41002, south=52.51942, east=13.41709 and could you list the details of the Red Line from the MBTA data?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

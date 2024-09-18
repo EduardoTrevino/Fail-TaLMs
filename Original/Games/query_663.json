@@ -1,0 +1,71 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "boolean"
+                },
+                "category_name": "Games"
+            },
+            {
+                "tool_name": "pokeapi",
+                "api_name": "get_pokemon",
+                "api_description": "Get details about a specific Pok\u00e9mon by ID or name.",
+                "required_parameters": [
+                    "id or name"
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "name": "string",
+                    "order": "int",
+                    "height": "int",
+                    "abilities": [
+                        {
+                            "ability": {
+                                "name": "string",
+                                "url": "string"
+                            }
+                        }
+                    ]
+                },
+                "category_name": "Games"
+            }
+        ],
+        "query": "I want to set a price alert for the game ID 123 at $19.99. Can you also provide details about the Pok\u00e9mon named Pikachu?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

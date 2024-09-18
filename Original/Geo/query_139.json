@@ -1,0 +1,140 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "adresse",
+                "api_name": "search_address",
+                "api_description": "Perform a full-text address search with optional filters.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The query string.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "autocomplete",
+                        "type": "INTEGER",
+                        "description": "Enable or disable autocomplete.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "type_filter",
+                        "type": "STRING",
+                        "description": "Filter by type.",
+                        "default": ""
+                    },
+                    {
+                        "name": "postcode",
+                        "type": "STRING",
+                        "description": "Filter by postal code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "citycode",
+                        "type": "STRING",
+                        "description": "Filter by INSEE city code.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [
+                                    "float",
+                                    "float"
+                                ]
+                            },
+                            "properties": {
+                                "label": "string",
+                                "score": "float"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_elevation",
+                "api_description": "Reads the elevation from a given dataset based on specified locations.",
+                "required_parameters": [
+                    {
+                        "name": "dataset_name",
+                        "type": "STRING",
+                        "description": "The name of the dataset."
+                    },
+                    {
+                        "name": "locations",
+                        "type": "STRING",
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "elevation": "float",
+                            "location": {
+                                "lat": "float",
+                                "lng": "float"
+                            },
+                            "dataset": "string"
+                        }
+                    ],
+                    "status": "string"
+                }
+            }
+        ],
+        "query": "I am planning a visit to the Eiffel Tower in Paris. Can you find its address and determine the elevation at that location?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

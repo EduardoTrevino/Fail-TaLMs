@@ -1,0 +1,76 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_titles",
+                "api_description": "Search the newspaper directory using OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "terms",
+                        "type": "STRING",
+                        "description": "Search query"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "html"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for results"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        {
+                            "title": "str",
+                            "place_of_publication": "str",
+                            "start_year": "str",
+                            "end_year": "str",
+                            "url": "str"
+                        }
+                    ]
+                },
+                "category_name": "Content"
+            },
+            {
+                "tool_name": "stapi",
+                "api_name": "get_character",
+                "api_description": "Retrieve a single Star Trek character.",
+                "required_parameters": [
+                    {
+                        "name": "uid",
+                        "type": "STRING",
+                        "description": "Character unique ID"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "character": {
+                        "name": "str",
+                        "species": "str",
+                        "birthPlace": "str",
+                        "episodes": [
+                            {
+                                "title": "str",
+                                "seasonNumber": "int",
+                                "episodeNumber": "int"
+                            }
+                        ]
+                    }
+                },
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you search for newspaper titled 'times' in the Chronicling America directory? Also, I want to know more about the Star Trek character with the unique ID 'CHMA0000215045'.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

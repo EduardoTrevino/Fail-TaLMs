@@ -8,16 +8,16 @@
                 "api_description": "Retrieve artwork details by ID from the Art Institute of Chicago.",
                 "required_parameters": [
                     {
-                        "name": "artwork_id",
+                        "name": "id",
                         "type": "INTEGER",
-                        "description": "ID of the artwork",
-                        "default": 12345
+                        "default": 4
                     }
                 ],
                 "method": "GET",
                 "template_response": {
                     "data": {}
-                }
+                },
+                "optional_parameters": []
             },
             {
                 "category_name": "Art",
@@ -29,23 +29,33 @@
                         "name": "style_name",
                         "type": "STRING",
                         "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
-                        "default": "lorelei"
+                        "default": ""
                     }
                 ],
                 "optional_parameters": [
                     {
+                        "name": "seed",
+                        "type": "STRING",
+                        "description": "Seed value for generating a repeatable avatar.",
+                        "default": ""
+                    },
+                    {
                         "name": "hair",
                         "type": "LIST",
                         "description": "List of hair styles.",
-                        "default": [
-                            "short01"
-                        ]
+                        "default": []
+                    },
+                    {
+                        "name": "flip",
+                        "type": "BOOLEAN",
+                        "description": "Boolean to flip the avatar.",
+                        "default": false
                     },
                     {
                         "name": "format",
                         "type": "STRING",
-                        "description": "The format of the avatar, like 'svg', 'png'.",
-                        "default": "png"
+                        "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                        "default": "svg"
                     }
                 ],
                 "method": "GET"

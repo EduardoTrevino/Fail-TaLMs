@@ -1,0 +1,68 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "boolean"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "icanhazdadjoke",
+                "api_name": "fetch_random_joke",
+                "api_description": "Fetch a random dad joke in the specified format.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "accept",
+                        "type": "STRING",
+                        "description": "The format to accept the joke in.",
+                        "default": "application/json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "joke": "str",
+                    "status": "int"
+                }
+            }
+        ],
+        "query": "Can you set a price alert for a specific game that I am interested in? Also, it would be great to hear a random dad joke to lighten the mood.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

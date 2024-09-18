@@ -1,50 +1,100 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Weather",
-        "tool_name": "openmeteo",
-        "api_name": "get_weather_forecast",
-        "api_description": "Provides weather forecast for a given location.",
-        "required_parameters": [
-          {
-            "name": "latitude",
-            "type": "FLOAT",
-            "description": "Geographical WGS84 coordinates of the location."
-          },
-          {
-            "name": "longitude",
-            "type": "FLOAT",
-            "description": "Geographical WGS84 coordinates of the location."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    }
+                }
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "daily",
-            "type": "LIST",
-            "description": "A list of daily weather variable aggregations.",
-            "default": "None"
-          },
-          {
-            "name": "temperature_unit",
-            "type": "STRING",
-            "description": "Temperature units like celsius or fahrenheit.",
-            "default": "celsius"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "latitude": "float",
-          "longitude": "float",
-          "hourly": {
-            "time": "list",
-            "temperature_2m": "list"
-          }
-        }
-      }
-    ],
-    "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of senseBoxes located around the area.",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of senseBoxes located around the area.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

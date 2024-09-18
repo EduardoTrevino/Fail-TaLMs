@@ -1,0 +1,95 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "kraken",
+                "api_name": "get_tradable_asset_pairs",
+                "api_description": "Get tradable asset pairs.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pair",
+                        "type": "STRING",
+                        "description": "Asset pairs to get data for"
+                    },
+                    {
+                        "name": "info",
+                        "type": "STRING",
+                        "description": "Info to retrieve (optional)"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": {
+                        "pair": {
+                            "altname": "string",
+                            "wsname": "string",
+                            "aclass_base": "string",
+                            "base": "string",
+                            "aclass_quote": "string",
+                            "quote": "string",
+                            "lot": "string",
+                            "pair_decimals": "integer",
+                            "lot_decimals": "integer",
+                            "lot_multiplier": "integer",
+                            "leverage_buy": [
+                                "integer"
+                            ],
+                            "leverage_sell": [
+                                "integer"
+                            ],
+                            "fees": [
+                                [
+                                    "decimal",
+                                    "decimal"
+                                ]
+                            ],
+                            "fees_maker": [
+                                [
+                                    "decimal",
+                                    "decimal"
+                                ]
+                            ],
+                            "fee_volume_currency": "string",
+                            "margin_call": "integer",
+                            "margin_stop": "integer"
+                        }
+                    },
+                    "error": []
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "string",
+                    "IFSC": "string",
+                    "BRANCH": "string",
+                    "ADDRESS": "string",
+                    "CONTACT": "string or null",
+                    "CITY": "string",
+                    "RTGS": true,
+                    "MICR": "string or null",
+                    "UPI": true,
+                    "NEFT": true,
+                    "IMPS": true
+                }
+            }
+        ],
+        "query": "Can you provide details on the tradable asset pairs available in Kraken? Also, could you retrieve the bank details for the IFSC code 'YESB0DNB002'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

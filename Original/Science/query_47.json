@@ -1,0 +1,111 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "gbif",
+                "api_name": "list_datasets",
+                "api_description": "Lists all current datasets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "The 2-letter country code"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Primary type of the dataset"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Offset of the results"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "offset": "int",
+                    "limit": "int",
+                    "endOfRecords": "bool",
+                    "count": "int",
+                    "results": [
+                        {
+                            "key": "string",
+                            "title": "string",
+                            "created": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "search_records",
+                "api_description": "Searches for record objects.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Search Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field to sort on."
+                    },
+                    {
+                        "name": "fields",
+                        "type": "LIST",
+                        "description": "List of fields to return."
+                    },
+                    {
+                        "name": "fields_exclude",
+                        "type": "LIST",
+                        "description": "List of fields to exclude."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Max results.",
+                        "default": 10
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip results.",
+                        "default": 0
+                    },
+                    {
+                        "name": "no_attribution",
+                        "type": "BOOLEAN",
+                        "description": "Disable the attribution block."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "itemCount": "int",
+                    "items": [
+                        {
+                            "uuid": "string",
+                            "data": {
+                                "dwc:organismName": "string",
+                                "dwc:country": "string"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you list the datasets available related to biodiversity in Brazil using the GBIF API, and also search for records of animal species in Brazil using the iDigBio API?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,53 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "boardgamesgeek",
+                "api_name": "search_items",
+                "api_description": "Search for items by name from the BGG database.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Type of items to return."
+                    },
+                    {
+                        "name": "exact",
+                        "type": "INTEGER",
+                        "description": "Exact match for search."
+                    }
+                ],
+                "method": "GET",
+                "template_response": "XML with list of matching items"
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "get_alerts",
+                "api_description": "Retrieve all existing alerts.",
+                "required_parameters": [
+                    {
+                        "name": "key",
+                        "type": "STRING",
+                        "description": "The key parameter from the manage link received via email.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": "JSON list of alerts or error message",
+                "optional_parameters": []
+            }
+        ],
+        "query": "I am looking for the board game 'Catan' on BoardGameGeek. Can you also show me any existing price alerts I have set for games on CheapShark?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

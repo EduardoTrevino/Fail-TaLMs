@@ -1,0 +1,74 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "evilinsultgenerator",
+                "api_name": "generate_insult",
+                "api_description": "Generate an insult in a specified language and response type.",
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "The language of the insult you want.",
+                        "default": "en"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "The response type. Supports 'text', 'XML', and 'JSON'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "insult": "str",
+                    "number": "str",
+                    "language": "str",
+                    "created": "str"
+                },
+                "required_parameters": []
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "runescape",
+                "api_name": "hiscores_ranking",
+                "api_description": "Returns up to the top 50 players in a given skill or activity.",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "INTEGER",
+                        "description": "The skill or activity table."
+                    },
+                    {
+                        "name": "category",
+                        "type": "INTEGER",
+                        "description": "The category for the skill or activity."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "The amount of players to return, max 50.",
+                        "default": 50
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "players": [
+                        {
+                            "rank": "int",
+                            "name": "str",
+                            "level": "int",
+                            "xp": "int"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide me with a funny insult in German? Additionally, what are the current top 10 players in the RuneScape 'Attack' skill category?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

@@ -15,7 +15,7 @@
     "api_list": [
         {
             "name": "search_cocktail_by_name",
-            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php",
             "description": "Search cocktail by name.",
             "method": "GET",
             "required_parameters": [
@@ -32,15 +32,244 @@
                 "drinks": [
                     "list of cocktails"
                 ]
-            },
-            "headers": {},
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "drinks": {
-                        "type": "array"
-                    }
+            }
+        },
+        {
+            "name": "list_cocktails_by_first_letter",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php",
+            "description": "List all cocktails by first letter.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "letter",
+                    "type": "STRING",
+                    "description": "The letter to filter cocktails by.",
+                    "default": "a"
                 }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of cocktails"
+                ]
+            }
+        },
+        {
+            "name": "search_ingredient_by_name",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/search.php",
+            "description": "Search ingredient by name.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ingredient",
+                    "type": "STRING",
+                    "description": "The name of the ingredient to search for.",
+                    "default": "vodka"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "ingredients": [
+                    "list of ingredients"
+                ]
+            }
+        },
+        {
+            "name": "lookup_cocktail_by_id",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/lookup.php",
+            "description": "Lookup full cocktail details by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "cocktail_id",
+                    "type": "INTEGER",
+                    "description": "The ID of the cocktail to look up.",
+                    "default": 11007
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "cocktail details"
+                ]
+            }
+        },
+        {
+            "name": "lookup_ingredient_by_id",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/lookup.php",
+            "description": "Lookup ingredient by ID.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ingredient_id",
+                    "type": "INTEGER",
+                    "description": "The ID of the ingredient to look up.",
+                    "default": 552
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "ingredients": [
+                    "ingredient details"
+                ]
+            }
+        },
+        {
+            "name": "lookup_random_cocktail",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+            "description": "Lookup a random cocktail.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "random cocktail details"
+                ]
+            }
+        },
+        {
+            "name": "search_by_ingredient",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/filter.php",
+            "description": "Search by ingredient.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "ingredient",
+                    "type": "STRING",
+                    "description": "The ingredient to filter cocktails by.",
+                    "default": "Gin"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of cocktails with ingredient"
+                ]
+            }
+        },
+        {
+            "name": "filter_by_alcoholic",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/filter.php",
+            "description": "Filter by alcoholic type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "alcoholic_type",
+                    "type": "STRING",
+                    "description": "The type ('Alcoholic' or 'Non_Alcoholic') to filter cocktails by.",
+                    "default": "Alcoholic"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of alcoholic or non-alcoholic cocktails"
+                ]
+            }
+        },
+        {
+            "name": "filter_by_category",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/filter.php",
+            "description": "Filter by category.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "category",
+                    "type": "STRING",
+                    "description": "The category to filter cocktails by.",
+                    "default": "Ordinary_Drink"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of cocktails in category"
+                ]
+            }
+        },
+        {
+            "name": "filter_by_glass",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/filter.php",
+            "description": "Filter by glass type.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "glass",
+                    "type": "STRING",
+                    "description": "The glass type to filter cocktails by.",
+                    "default": "Cocktail_glass"
+                }
+            ],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of cocktails served in glass"
+                ]
+            }
+        },
+        {
+            "name": "list_categories",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/list.php",
+            "description": "List cocktail categories.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of categories"
+                ]
+            }
+        },
+        {
+            "name": "list_glasses",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/list.php",
+            "description": "List glass types.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of glass types"
+                ]
+            }
+        },
+        {
+            "name": "list_ingredients",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/list.php",
+            "description": "List ingredients.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of ingredients"
+                ]
+            }
+        },
+        {
+            "name": "list_alcoholic_filters",
+            "url": "https://www.thecocktaildb.com/api/json/v1/1/list.php",
+            "description": "List alcoholic filters.",
+            "method": "GET",
+            "required_parameters": [],
+            "optional_parameters": [],
+            "statuscode": 200,
+            "body": {
+                "drinks": [
+                    "list of alcoholic filters"
+                ]
             }
         }
     ]

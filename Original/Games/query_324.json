@@ -1,0 +1,126 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "amiibo",
+                "api_name": "get_amiibos",
+                "api_description": "Fetches a list of amiibos or specific amiibo based on the filters provided.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Name of the amiibo."
+                    },
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "ID of the amiibo."
+                    },
+                    {
+                        "name": "head",
+                        "type": "STRING",
+                        "description": "Head hexadecimal of the amiibo."
+                    },
+                    {
+                        "name": "tail",
+                        "type": "STRING",
+                        "description": "Tail hexadecimal of the amiibo."
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Type of amiibo, e.g., figure, card."
+                    },
+                    {
+                        "name": "game_series",
+                        "type": "STRING",
+                        "description": "Game series of the amiibo."
+                    },
+                    {
+                        "name": "amiibo_series",
+                        "type": "STRING",
+                        "description": "Amiibo series of the amiibo."
+                    },
+                    {
+                        "name": "character",
+                        "type": "STRING",
+                        "description": "Character of the amiibo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "amiibo": [
+                        {
+                            "name": "Amiibo name",
+                            "type": "Type of amiibo",
+                            "gameSeries": "Game series",
+                            "amiiboSeries": "Amiibo series",
+                            "character": "Character",
+                            "release": {
+                                "au": "Date",
+                                "eu": "Date",
+                                "jp": "Date",
+                                "na": "Date"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "scryfall",
+                "api_name": "card_search",
+                "api_description": "Search Magic cards using a fulltext search string.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The fulltext search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "unique",
+                        "type": "STRING",
+                        "description": "Strategy for omitting similar cards.",
+                        "default": "cards"
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "The method to sort returned cards.",
+                        "default": "name"
+                    },
+                    {
+                        "name": "dir",
+                        "type": "STRING",
+                        "description": "The direction to sort cards.",
+                        "default": "auto"
+                    },
+                    {
+                        "name": "include_extras",
+                        "type": "BOOLEAN",
+                        "description": "Includes extra cards if true.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page number to return.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "object": "list",
+                    "data": "array"
+                }
+            }
+        ],
+        "query": "Could you tell me which amiibo figures are available for 'Super Mario' and also find any Magic: The Gathering cards that are blue with converted mana cost of 1?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "agify",
+                "api_name": "estimate_age_batch",
+                "api_description": "Estimate the age for a batch of names.",
+                "required_parameters": [
+                    {
+                        "name": "names",
+                        "type": "ARRAY",
+                        "description": "A list of first names (up to 10) to estimate ages for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country_id",
+                        "type": "STRING",
+                        "description": "The country code to improve estimation accuracy across all names."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "age": "int",
+                        "name": "str",
+                        "count": "int"
+                    }
+                ]
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "nationalize",
+                "api_name": "predict_nationality",
+                "api_description": "Estimates the nationality of a person based on their name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING or LIST of STRINGS",
+                        "description": "The name or list of names to predict the nationality for.",
+                        "default": "johnson"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "name": "str",
+                    "country": [
+                        {
+                            "country_id": "str",
+                            "probability": "float"
+                        }
+                    ]
+                },
+                "optional_parameters": []
+            }
+        ],
+        "query": "For the names Michael, Jane, and Sarah, can you find out their estimated ages and probable nationalities?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

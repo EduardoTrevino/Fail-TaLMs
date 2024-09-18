@@ -1,0 +1,76 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "iptwolocation",
+                "api_name": "ip_geolocation",
+                "api_description": "Get geolocation information for a given IP address",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "IP address to lookup.",
+                        "default": null
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format, valid values: json | xml.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Translation language in ISO639-1, applicable for certain plans.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "str",
+                    "country_code": "str",
+                    "country_name": "str",
+                    "region_name": "str",
+                    "city_name": "str",
+                    "latitude": "float",
+                    "longitude": "float",
+                    "zip_code": "str",
+                    "time_zone": "str",
+                    "asn": "str",
+                    "is_proxy": "bool"
+                }
+            },
+            {
+                "category_name": "DeveloperTools",
+                "tool_name": "nationalize",
+                "api_name": "predict_nationality",
+                "api_description": "Estimates the nationality of a person based on the name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING or LIST of STRINGS",
+                        "description": "The name or list of names to predict the nationality for.",
+                        "default": "johnson"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "name": "str",
+                    "country": [
+                        {
+                            "country_id": "str",
+                            "probability": "float"
+                        }
+                    ]
+                },
+                "optional_parameters": []
+            }
+        ],
+        "query": "Can you tell me the country associated with the IP address 8.8.8.8 and also predict the nationality of the name 'Alexander'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

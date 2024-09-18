@@ -1,0 +1,83 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "crossref",
+                "api_name": "search_works",
+                "api_description": "Search for works by a free text query.",
+                "required_parameters": [
+                    "query"
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "rows",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": 20
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok",
+                    "message": {
+                        "items": [
+                            {
+                                "DOI": "str",
+                                "title": [
+                                    "str"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "category_name": "Content"
+            },
+            {
+                "tool_name": "finalspace",
+                "api_name": "get_all_characters",
+                "api_description": "Retrieves all characters with options to sort and limit results.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort in 'asc' or 'desc' order.",
+                        "default": ""
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of results returned.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "int",
+                        "name": "str"
+                    }
+                ],
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you search for scholarly works related to artificial intelligence and also provide a list of all characters from the Final Space show?",
+        "query_id": 1
+    }
+]

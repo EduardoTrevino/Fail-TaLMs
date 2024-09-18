@@ -1,0 +1,102 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "boardgamesgeek",
+                "api_name": "get_collection",
+                "api_description": "Retrieve details about a user's collection.",
+                "required_parameters": [
+                    {
+                        "name": "username",
+                        "type": "STRING",
+                        "description": "Username whose collection to retrieve."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "version",
+                        "type": "INTEGER",
+                        "description": "Include version information."
+                    },
+                    {
+                        "name": "subtype",
+                        "type": "STRING",
+                        "description": "Type of collection to retrieve."
+                    },
+                    {
+                        "name": "excludesubtype",
+                        "type": "STRING",
+                        "description": "Subtype to exclude."
+                    },
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "Specific item IDs to filter."
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page of collection to return."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        "dict"
+                    ]
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "pokemontcg",
+                "api_name": "get_cards",
+                "api_description": "Retrieve all cards, or filter them by name, supertype, types, and hp.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the card to filter by.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "supertype",
+                        "type": "STRING",
+                        "description": "The supertype of the card, such as Pok\u00e9mon, Energy, or Trainer.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "types",
+                        "type": "LIST",
+                        "description": "The energy types for a card, such as Fire, Water, Grass, etc.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "STRING",
+                        "description": "The hit points of the card to filter by.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "name": "string",
+                            "supertype": "string",
+                            "types": [
+                                "string"
+                            ],
+                            "hp": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find out what board games are in a user's collection on BoardGameGeek, specifically focusing on board games? Also, could you retrieve all Pok\u00e9mon cards with a supertype of Pok\u00e9mon?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

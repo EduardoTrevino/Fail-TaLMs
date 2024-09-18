@@ -1,0 +1,58 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "housestockwatcher",
+                "api_name": "get_daily_transaction_report",
+                "api_description": "Fetches the JSON report for a single day's disclosure.",
+                "required_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which to fetch the transaction report, in 'MM_DD_YYYY' format.",
+                        "default": "01_01_2021"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "transactions": [
+                        {
+                            "transaction_date": "date",
+                            "owner": "str",
+                            "ticker": "str",
+                            "asset_description": "str",
+                            "asset_type": "str",
+                            "amount": "str",
+                            "transaction_type": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "pmtwentyfive",
+                "api_name": "get_project_latest",
+                "api_description": "Returns the latest measurement (within 2 hours) of the devices in the specified project.",
+                "required_parameters": [
+                    {
+                        "name": "project",
+                        "type": "STRING",
+                        "description": "Project name.",
+                        "default": "airbox"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "source": "string",
+                    "feeds": "array"
+                }
+            }
+        ],
+        "query": "What are the stock transactions reported on January 1st, 2021, and what is the latest measurement from the 'airbox' project?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

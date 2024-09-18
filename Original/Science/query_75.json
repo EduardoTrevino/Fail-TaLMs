@@ -1,0 +1,81 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "create_map",
+                "api_description": "Creates a map with iDigBio data.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Record Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "style",
+                        "type": "DICT",
+                        "description": "JSON dictionary describing map style."
+                    },
+                    {
+                        "name": "map_type",
+                        "type": "STRING",
+                        "description": "'geohash' or 'points'",
+                        "default": "geohash"
+                    }
+                ],
+                "method": "POST"
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "sunsetsunrise",
+                "api_name": "get_sunrise_sunset_times",
+                "api_description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location in decimal degrees."
+                    },
+                    {
+                        "name": "lng",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location in decimal degrees."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone of the returned times. Defaults to the location's timezone."
+                    },
+                    {
+                        "name": "date_start",
+                        "type": "STRING",
+                        "description": "Start date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "date_end",
+                        "type": "STRING",
+                        "description": "End date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "time_format",
+                        "type": "STRING",
+                        "description": "Time format such as '24', 'military', or 'unix'."
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you generate a map showing locations of mammal species in the Amazon rainforest? Also, I want to know sunrise and sunset times in Manaus for a week from today.",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

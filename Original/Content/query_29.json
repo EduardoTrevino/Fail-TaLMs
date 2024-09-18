@@ -1,0 +1,82 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "text": "string"
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "swapi",
+                "api_name": "get_films",
+                "api_description": "Fetch film resources or a specific film.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "resource_id",
+                        "type": "INTEGER",
+                        "description": "The specific ID of the film resource.",
+                        "default": null
+                    },
+                    {
+                        "name": "search",
+                        "type": "STRING",
+                        "description": "Search query to filter film resources.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "title": "str",
+                    "episode_id": "int",
+                    "opening_crawl": "str",
+                    "producer": "str",
+                    "release_date": "str"
+                }
+            }
+        ],
+        "query": "I want to check the TV schedule for Czech Television's channel CT24 on August 4th, 2024. Also, can you provide me with details about the Star Wars film titled 'A New Hope'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

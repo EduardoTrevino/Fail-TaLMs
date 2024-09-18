@@ -1,0 +1,84 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "response_format",
+                        "type": "STRING",
+                        "description": "Specify the response format, 'json' or 'xml'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok or error",
+                    "easting": "int",
+                    "northing": "int",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "zippopotamus",
+                "api_name": "get_zip_info_by_city",
+                "api_description": "Fetch postal codes associated with a given city and state in a specified country.",
+                "required_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "Country code such as 'US' for United States."
+                    },
+                    {
+                        "name": "state",
+                        "type": "STRING",
+                        "description": "State code such as 'CA' for California."
+                    },
+                    {
+                        "name": "city",
+                        "type": "STRING",
+                        "description": "The name of the city, such as 'Belmont'."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "post code": "string",
+                    "country": "string",
+                    "country abbreviation": "string",
+                    "places": [
+                        {
+                            "place name": "string",
+                            "longitude": "string",
+                            "state": "string",
+                            "state abbreviation": "string",
+                            "latitude": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I need the latitude and longitude for specific easting and northing coordinates in the UK and the postal codes for cities named Belmont in California, USA.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

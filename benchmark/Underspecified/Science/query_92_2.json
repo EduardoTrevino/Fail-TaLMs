@@ -1,91 +1,92 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Science",
-        "tool_name": "newton",
-        "api_name": "newton_calculate",
-        "api_description": "Performs a specified mathematical operation on a provided expression and returns the result.",
-        "required_parameters": [
-          {
-            "name": "operation",
-            "type": "STRING",
-            "description": "The math operation to perform."
-          },
-          {
-            "name": "expression",
-            "type": "STRING",
-            "description": "The URL-encoded math expression to calculate."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "newton",
+                "api_name": "newton_calculate",
+                "api_description": "Performs a specified mathematical operation on a provided expression and returns the result.",
+                "required_parameters": [
+                    {
+                        "name": "operation",
+                        "type": "STRING",
+                        "description": "The math operation to perform."
+                    },
+                    {
+                        "name": "expression",
+                        "type": "STRING",
+                        "description": "The URL-encoded math expression to calculate."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "operation": "string",
+                    "expression": "string",
+                    "result": "string"
+                },
+                "optional_parameters": []
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "numbers",
+                "api_name": "get_number_fact",
+                "api_description": "Get a fact about a number from the Numbers API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "STRING",
+                        "description": "An integer, 'random', or day of year 'month/day'.",
+                        "default": "random"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'trivia', 'math', 'date', or 'year'.",
+                        "default": "trivia"
+                    },
+                    {
+                        "name": "fragment",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact as a sentence fragment.",
+                        "default": "False"
+                    },
+                    {
+                        "name": "notfound",
+                        "type": "STRING",
+                        "description": "'default', 'floor', 'ceil'.",
+                        "default": "default"
+                    },
+                    {
+                        "name": "min_val",
+                        "type": "INTEGER",
+                        "description": "The minimum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "max_val",
+                        "type": "INTEGER",
+                        "description": "The maximum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "json",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact in JSON format.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "text": "string",
+                    "found": "boolean",
+                    "number": "number",
+                    "type": "string",
+                    "date": "string"
+                }
+            }
         ],
-        "method": "GET",
-        "template_response": {
-          "operation": "string",
-          "expression": "string",
-          "result": "string"
-        }
-      },
-      {
-        "category_name": "Science",
-        "tool_name": "numbers",
-        "api_name": "get_number_fact",
-        "api_description": "Get a fact about a number from the Numbers API.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "number",
-            "type": "STRING",
-            "description": "An integer, 'random', or day of year 'month/day'.",
-            "default": "random"
-          },
-          {
-            "name": "type",
-            "type": "STRING",
-            "description": "'trivia', 'math', 'date', or 'year'.",
-            "default": "trivia"
-          },
-          {
-            "name": "fragment",
-            "type": "BOOLEAN",
-            "description": "Return the fact as a sentence fragment.",
-            "default": "False"
-          },
-          {
-            "name": "notfound",
-            "type": "STRING",
-            "description": "'default', 'floor', 'ceil'.",
-            "default": "default"
-          },
-          {
-            "name": "min_val",
-            "type": "INTEGER",
-            "description": "The minimum value for random facts.",
-            "default": "None"
-          },
-          {
-            "name": "max_val",
-            "type": "INTEGER",
-            "description": "The maximum value for random facts.",
-            "default": "None"
-          },
-          {
-            "name": "json",
-            "type": "BOOLEAN",
-            "description": "Return the fact in JSON format.",
-            "default": "True"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "text": "string",
-          "found": "boolean",
-          "number": "number",
-          "type": "string",
-          "date": "string"
-        }
-      }
-    ],
-    "query": "Can you help me solve and simplify the mathematical expression 2^2 + 2(2) using Newton's API? Also, tell me a trivia fact about my favorite number using the Numbers API.",
-    "query_id": 1
-  }
+        "query": "Can you help me solve and simplify the mathematical expression 2^2 + 2(2) using Newton's API? Also, tell me a trivia fact about my favorite number using the Numbers API.",
+        "query_id": 1
+    }
 ]

@@ -1,0 +1,72 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "vehicles",
+                "api_name": "get_all_makes",
+                "api_description": "Get a list of all the Makes available.",
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Results": [
+                        {
+                            "Make_ID": "int",
+                            "Make_Name": "string"
+                        }
+                    ]
+                },
+                "required_parameters": []
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "What are all the vehicle makes available, and is 'archive.org' archived in the Wayback Machine?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

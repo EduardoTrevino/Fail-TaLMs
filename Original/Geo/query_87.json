@@ -1,0 +1,81 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing (British National Grid) to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "response_format",
+                        "type": "STRING",
+                        "description": "Specify the response format, 'json' or 'xml'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "string",
+                    "easting": "integer",
+                    "northing": "integer",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "postcodes",
+                "api_name": "nearest_postcodes",
+                "api_description": "Get nearest postcodes for given longitude and latitude.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for the search location."
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for the search location."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "integer",
+                    "result": [
+                        {
+                            "postcode": "string",
+                            "longitude": "float",
+                            "latitude": "float"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I have the British National Grid coordinates with easting 326897 and northing 673919. Could you convert these to latitude and longitude and find the nearest postcodes to that location?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

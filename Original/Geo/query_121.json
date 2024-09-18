@@ -1,0 +1,73 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_datasets",
+                "api_description": "Fetches the list of datasets available on the server.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "name": "STRING",
+                            "child_datasets": "ARRAY"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "viacep",
+                "api_name": "search_address",
+                "api_description": "Search for a ZIP code based on the address details.",
+                "required_parameters": [
+                    {
+                        "name": "state",
+                        "type": "STRING",
+                        "description": "Two-letter state code in Brazil."
+                    },
+                    {
+                        "name": "city",
+                        "type": "STRING",
+                        "description": "Name of the city. Must have at least 3 characters."
+                    },
+                    {
+                        "name": "street",
+                        "type": "STRING",
+                        "description": "Name of the street. Must have at least 3 characters."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "return_format",
+                        "type": "STRING",
+                        "description": "Format of the return data (json or xml).",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "cep": "string",
+                        "logradouro": "string",
+                        "complemento": "string",
+                        "bairro": "string",
+                        "localidade": "string",
+                        "uf": "string",
+                        "ibge": "string",
+                        "gia": "string",
+                        "ddd": "string",
+                        "siafi": "string"
+                    }
+                ]
+            }
+        ],
+        "query": "What datasets are available for retrieving elevation data, and can you find the ZIP code for Rua Domingos in Porto Alegre, Rio Grande do Sul?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

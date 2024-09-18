@@ -1,0 +1,365 @@
+{
+    "tool_name": "dnd5",
+    "tool_description": "API to access Dungeons & Dragons 5th Edition SRD data including classes, backgrounds, abilities, and more.",
+    "title": "Dungeons & Dragons 5th Edition SRD API",
+    "pricing": "FREE",
+    "score": {
+        "avgServiceLevel": 95,
+        "avgLatency": 150,
+        "avgSuccessRate": 99,
+        "popularityScore": 9.0,
+        "__typename": "Score"
+    },
+    "home_url": "https://www.dnd5eapi.co",
+    "host": "www.dnd5eapi.co",
+    "api_list": [
+        {
+            "name": "get_all_resources",
+            "url": "https://www.dnd5eapi.co/api/{endpoint}",
+            "description": "Get list of all available resources for an endpoint.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "endpoint",
+                    "type": "STRING",
+                    "description": "The endpoint to query for available resources."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/{endpoint}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "count": "number",
+                "results": "object[]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number"
+                    },
+                    "results": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_ability_score",
+            "url": "https://www.dnd5eapi.co/api/ability-scores/{index}",
+            "description": "Get an ability score by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the ability score to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/ability-scores/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "url": "string",
+                "desc": "string[]",
+                "full_name": "string",
+                "skills": "object[]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "array"
+                    },
+                    "full_name": {
+                        "type": "string"
+                    },
+                    "skills": {
+                        "type": "array"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_alignment",
+            "url": "https://www.dnd5eapi.co/api/alignments/{index}",
+            "description": "Get an alignment by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the alignment to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/alignments/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "desc": "string[]",
+                "url": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "array"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_background",
+            "url": "https://www.dnd5eapi.co/api/backgrounds/{index}",
+            "description": "Get a background by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the background to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/backgrounds/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "url": "string",
+                "starting_proficiencies": "object[]",
+                "starting_equipment": "object[]"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "starting_proficiencies": {
+                        "type": "array"
+                    },
+                    "starting_equipment": {
+                        "type": "array"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_class",
+            "url": "https://www.dnd5eapi.co/api/classes/{index}",
+            "description": "Get a class by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the class to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/classes/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "hit_die": "integer",
+                "proficiencies": "object[]",
+                "saving_throws": "object[]",
+                "starting_equipment": "object[]",
+                "url": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "hit_die": {
+                        "type": "integer"
+                    },
+                    "proficiencies": {
+                        "type": "array"
+                    },
+                    "saving_throws": {
+                        "type": "array"
+                    },
+                    "starting_equipment": {
+                        "type": "array"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_condition",
+            "url": "https://www.dnd5eapi.co/api/conditions/{index}",
+            "description": "Get a condition by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the condition to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/conditions/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "desc": "string[]",
+                "url": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "array"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_damage_type",
+            "url": "https://www.dnd5eapi.co/api/damage-types/{index}",
+            "description": "Get a damage type by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the damage type to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/damage-types/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "desc": "string[]",
+                "url": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "desc": {
+                        "type": "array"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "name": "get_equipment",
+            "url": "https://www.dnd5eapi.co/api/equipment/{index}",
+            "description": "Get an equipment item by index.",
+            "method": "GET",
+            "required_parameters": [
+                {
+                    "name": "index",
+                    "type": "STRING",
+                    "description": "The index of the equipment to get."
+                }
+            ],
+            "optional_parameters": [],
+            "code": "import requests\n\nurl = 'https://www.dnd5eapi.co/api/equipment/{index}'\nresponse = requests.get(url)\nprint(response.json())",
+            "statuscode": 200,
+            "body": {
+                "index": "string",
+                "name": "string",
+                "cost": "object",
+                "weight": "number",
+                "category_range": "string",
+                "equipment_category": "object",
+                "url": "string"
+            },
+            "headers": {},
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "cost": {
+                        "type": "object"
+                    },
+                    "weight": {
+                        "type": "number"
+                    },
+                    "category_range": {
+                        "type": "string"
+                    },
+                    "equipment_category": {
+                        "type": "object"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
+}

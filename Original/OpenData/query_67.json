@@ -1,0 +1,94 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "openlibrary",
+                "api_name": "search_books",
+                "api_description": "Search for books using the Open Library Search API.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Query string to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Fields to return."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort order."
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language preference."
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for pagination."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "numFound": "int",
+                    "start": "int",
+                    "docs": [
+                        {
+                            "title": "str",
+                            "author_name": [
+                                "str"
+                            ],
+                            "key": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "pmtwentyfive",
+                "api_name": "get_device_latest",
+                "api_description": "Returns the latest measurement (within 2 hours) of the device.",
+                "required_parameters": [
+                    {
+                        "name": "device_id",
+                        "type": "STRING",
+                        "description": "Device ID, usually the MAC address.",
+                        "default": "08BEAC0A08AE"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output data format.",
+                        "default": "JSON"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "source": "string",
+                    "device_id": "string",
+                    "feeds": {
+                        "pm2.5": "float",
+                        "time": "string"
+                    }
+                }
+            }
+        ],
+        "query": "Can you help me find popular classic novels and let me know the latest air quality reading from a specific device in the PM25 network?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

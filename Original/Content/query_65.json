@@ -1,0 +1,90 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "crossref",
+                "api_name": "list_journals",
+                "api_description": "List journals based on a query.",
+                "optional_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Free text query for journals."
+                    },
+                    {
+                        "name": "rows",
+                        "type": "INTEGER",
+                        "description": "Number of journals per page.",
+                        "default": 20
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Offset for paging.",
+                        "default": 0
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok",
+                    "message": {
+                        "items": [
+                            {
+                                "ISSN": "str",
+                                "title": "str"
+                            }
+                        ]
+                    }
+                },
+                "category_name": "Content",
+                "required_parameters": []
+            },
+            {
+                "tool_name": "finalspace",
+                "api_name": "get_all_episodes",
+                "api_description": "Retrieves all episodes with options to sort and limit results.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort in 'asc' or 'desc' order.",
+                        "default": ""
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of results returned.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "int",
+                        "name": "str"
+                    }
+                ],
+                "category_name": "Content"
+            }
+        ],
+        "query": "I'm looking for journals related to health. At the same time, can you provide all episodes from Final Space?",
+        "query_id": 2
+    }
+]

@@ -1,0 +1,78 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "search_records",
+                "api_description": "Searches for record objects in the iDigBio database.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Search Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field to sort on."
+                    },
+                    {
+                        "name": "fields",
+                        "type": "LIST",
+                        "description": "List of fields to return."
+                    },
+                    {
+                        "name": "fields_exclude",
+                        "type": "LIST",
+                        "description": "List of fields to exclude."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Max results.",
+                        "default": 10
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip results.",
+                        "default": 0
+                    },
+                    {
+                        "name": "no_attribution",
+                        "type": "BOOLEAN",
+                        "description": "Disable the attribution block."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "itemCount": "int",
+                    "items": [
+                        "object"
+                    ]
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "opennotify",
+                "api_name": "get_iss_location",
+                "api_description": "Returns the current location of the International Space Station (ISS).",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "success",
+                    "timestamp": "int",
+                    "iss_position": {
+                        "latitude": "float",
+                        "longitude": "float"
+                    }
+                }
+            }
+        ],
+        "query": "Can you find the first 10 animal records available in the iDigBio database? Also, where is the International Space Station currently located?",
+        "query_id": 1
+    }
+]

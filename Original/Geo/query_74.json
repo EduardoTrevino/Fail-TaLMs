@@ -1,0 +1,65 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "geoplugin",
+                "api_name": "get_location_by_ip",
+                "api_description": "Get geolocation information based on a given IP address.",
+                "optional_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IPv4 or IPv6 address to look up.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "geoplugin_request": "str",
+                    "geoplugin_status": "int",
+                    "geoplugin_countryName": "str",
+                    "geoplugin_city": "str"
+                },
+                "required_parameters": []
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "zippopotamus",
+                "api_name": "get_zip_info_by_postal_code",
+                "api_description": "Fetch detailed postal code information for given postal code and country.",
+                "required_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "Country code such as 'US' for United States."
+                    },
+                    {
+                        "name": "postal_code",
+                        "type": "STRING",
+                        "description": "The postal code to lookup, such as '90210'."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "post code": "string",
+                    "country": "string",
+                    "country abbreviation": "string",
+                    "places": [
+                        {
+                            "place name": "string",
+                            "longitude": "string",
+                            "state": "string",
+                            "state abbreviation": "string",
+                            "latitude": "string"
+                        }
+                    ]
+                },
+                "optional_parameters": []
+            }
+        ],
+        "query": "Can you tell me the location details of the IP address I\u2019m currently using, and provide information about the area around the postal code 90210 in the United States?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

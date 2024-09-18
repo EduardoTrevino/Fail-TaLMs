@@ -1,0 +1,106 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "adresse",
+                "api_name": "search_address",
+                "api_description": "Perform a full-text address search with optional filters.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The query string.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "autocomplete",
+                        "type": "INTEGER",
+                        "description": "Enable or disable autocomplete.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "type_filter",
+                        "type": "STRING",
+                        "description": "Filter by type.",
+                        "default": ""
+                    },
+                    {
+                        "name": "postcode",
+                        "type": "STRING",
+                        "description": "Filter by postal code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "citycode",
+                        "type": "STRING",
+                        "description": "Filter by INSEE city code.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "FeatureCollection",
+                    "features": "ARRAY"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "getthedata",
+                "api_name": "bng2latlong",
+                "api_description": "Convert an OSGB36 easting and northing to WGS84 latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "easting",
+                        "type": "INTEGER",
+                        "description": "The easting coordinate.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "northing",
+                        "type": "INTEGER",
+                        "description": "The northing coordinate.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "response_format",
+                        "type": "STRING",
+                        "description": "Specify the response format, 'json' or 'xml'.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "ok or error",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            }
+        ],
+        "query": "Can you find the detailed address and location information for '10 Downing Street'? Also, I have the British National Grid coordinates 530000, 180000; I need them converted to latitude and longitude.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

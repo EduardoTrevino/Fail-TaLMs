@@ -1,0 +1,74 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Games",
+                "tool_name": "cheapshark",
+                "api_name": "edit_alert",
+                "api_description": "Set or delete a price alert for a specific game and price.",
+                "required_parameters": [
+                    {
+                        "name": "action",
+                        "type": "STRING",
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "STRING",
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "price",
+                        "type": "DECIMAL",
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "result": "boolean"
+                }
+            },
+            {
+                "category_name": "Games",
+                "tool_name": "datadragon",
+                "api_name": "get_champion_data",
+                "api_description": "Retrieve champion data for a specified version and language.",
+                "required_parameters": [
+                    {
+                        "name": "version",
+                        "type": "STRING",
+                        "description": "The version of the data files.",
+                        "default": "12.6.1"
+                    },
+                    {
+                        "name": "language",
+                        "type": "STRING",
+                        "description": "The language code.",
+                        "default": "en_US"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "type": "object"
+                    }
+                }
+            }
+        ],
+        "query": "Can you help me set a price alert for any game on CheapShark and also provide information about the champions from the latest version in League of Legends?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

@@ -1,0 +1,85 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "vehicles",
+                "api_name": "decode_vin",
+                "api_description": "Decode a VIN (Vehicle Identification Number) to get detailed vehicle information.",
+                "required_parameters": [
+                    {
+                        "name": "vin",
+                        "type": "STRING",
+                        "description": "Vehicle Identification Number"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "modelyear",
+                        "type": "INTEGER",
+                        "description": "Year of the Vehicle model"
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Results": [
+                        {
+                            "VIN": "string",
+                            "Manufacturer": "string",
+                            "Model": "string",
+                            "Year": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide the detailed information for the vehicle with VIN '5UXWX7C5*BA' and tell me if 'example.com' is archived in the Wayback Machine?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

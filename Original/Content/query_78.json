@@ -1,0 +1,104 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "crossref",
+                "api_name": "search_works",
+                "api_description": "Search for works by a free text query.",
+                "required_parameters": [
+                    "query"
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "rows",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": 20
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total-results": "int",
+                    "items": [
+                        {
+                            "DOI": "str",
+                            "title": [
+                                "str"
+                            ],
+                            "author": [
+                                {
+                                    "given": "str",
+                                    "family": "str"
+                                }
+                            ],
+                            "issued": {
+                                "date-parts": [
+                                    [
+                                        "int"
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "stapi",
+                "api_name": "search_characters",
+                "api_description": "Pagination over characters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pageNumber",
+                        "type": "INTEGER",
+                        "description": "Zero-based page number",
+                        "default": "0"
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "INTEGER",
+                        "description": "Page size",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "characters": [
+                        {
+                            "uid": "str",
+                            "name": "str",
+                            "birthName": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I'm studying quantum mechanics in both fictional and academic contexts. Can you find recent scholarly works on quantum mechanics as well as Star Trek characters that might be associated with science or engineering?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]
