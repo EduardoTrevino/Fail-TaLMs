@@ -11,7 +11,7 @@
                         "name": "q",
                         "type": "STRING",
                         "description": "The query string.",
-                        "default": "Eiffel Tower"
+                        "default": ""
                     }
                 ],
                 "optional_parameters": [
@@ -19,7 +19,43 @@
                         "name": "limit",
                         "type": "INTEGER",
                         "description": "The maximum number of results to return.",
-                        "default": "5"
+                        "default": "10"
+                    },
+                    {
+                        "name": "autocomplete",
+                        "type": "INTEGER",
+                        "description": "Enable or disable autocomplete.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for geographic priority.",
+                        "default": ""
+                    },
+                    {
+                        "name": "type_filter",
+                        "type": "STRING",
+                        "description": "Filter by type.",
+                        "default": ""
+                    },
+                    {
+                        "name": "postcode",
+                        "type": "STRING",
+                        "description": "Filter by postal code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "citycode",
+                        "type": "STRING",
+                        "description": "Filter by INSEE city code.",
+                        "default": ""
                     }
                 ],
                 "method": "GET",
@@ -51,22 +87,34 @@
                     {
                         "name": "dataset_name",
                         "type": "STRING",
-                        "description": "The name of the dataset.",
-                        "default": "test-dataset"
+                        "description": "The name of the dataset."
                     },
                     {
                         "name": "locations",
                         "type": "STRING",
-                        "description": "Coordinates in latitude,longitude format or Google polyline.",
-                        "default": "48.8588443,2.2943506"
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
                     }
                 ],
                 "optional_parameters": [
                     {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
                         "name": "format",
                         "type": "STRING",
-                        "description": "Response format (json or geojson).",
-                        "default": "json"
+                        "description": "Response format (json or geojson)."
                     }
                 ],
                 "method": "GET",

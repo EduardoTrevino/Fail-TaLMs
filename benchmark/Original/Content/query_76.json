@@ -6,19 +6,30 @@
                 "api_name": "search_works",
                 "api_description": "Search for works by a free text query",
                 "required_parameters": [
-                    {
-                        "name": "query",
-                        "type": "STRING",
-                        "description": "The query string to search for within the works",
-                        "default": "climate change"
-                    }
+                    "query"
                 ],
                 "optional_parameters": [
                     {
                         "name": "rows",
                         "type": "INTEGER",
-                        "description": "Number of results per page",
+                        "description": "Number of results per page.",
                         "default": 20
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
                     }
                 ],
                 "method": "GET",
@@ -59,10 +70,30 @@
                 "required_parameters": [],
                 "optional_parameters": [
                     {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page of characters to retrieve.",
+                        "default": "1"
+                    },
+                    {
                         "name": "name",
                         "type": "STRING",
-                        "description": "Filter for names containing this string",
-                        "default": "Rick"
+                        "description": "Filter for names containing this string."
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter by status (alive, dead, unknown)."
+                    },
+                    {
+                        "name": "species",
+                        "type": "STRING",
+                        "description": "Filter by species."
+                    },
+                    {
+                        "name": "gender",
+                        "type": "STRING",
+                        "description": "Filter by gender (female, male, genderless, unknown)."
                     }
                 ],
                 "method": "GET",

@@ -1,74 +1,77 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Inspiration",
-        "tool_name": "adviceslip",
-        "api_name": "search_advice",
-        "api_description": "Search for advice slips containing the given query term.",
-        "required_parameters": [
-          {
-            "name": "query",
-            "type": "STRING",
-            "description": "The search query for advice slips."
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "callback",
-            "type": "STRING",
-            "description": "Define your own callback function name for JSONP."
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "total_results": "int",
-          "query": "str",
-          "slips": [
+    {
+        "api_list": [
             {
-              "slip_id": "int",
-              "advice": "str"
+                "category_name": "Inspiration",
+                "tool_name": "adviceslip",
+                "api_name": "search_advice",
+                "api_description": "Search for advice slips containing the given query term.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query for advice slips.",
+                        "default": null
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Define your own callback function name for JSONP.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total_results": "int",
+                    "query": "str",
+                    "slips": [
+                        {
+                            "slip_id": "int",
+                            "advice": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Inspiration",
+                "tool_name": "gameofthrones",
+                "api_name": "get_quotes_by_character",
+                "api_description": "Get quotes for a specific Game of Thrones character.",
+                "required_parameters": [
+                    {
+                        "name": "character_slug",
+                        "type": "STRING",
+                        "description": "Slug of the character."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "INTEGER",
+                        "description": "Number of quotes to return.",
+                        "default": "None"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "sentence": "str",
+                        "character": {
+                            "name": "str",
+                            "slug": "str",
+                            "house": {
+                                "name": "str",
+                                "slug": "str"
+                            }
+                        }
+                    }
+                ]
             }
-          ]
-        }
-      },
-      {
-        "category_name": "Inspiration",
-        "tool_name": "gameofthrones",
-        "api_name": "get_quotes_by_character",
-        "api_description": "Get quotes for a specific Game of Thrones character.",
-        "required_parameters": [
-          {
-            "name": "character_slug",
-            "type": "STRING",
-            "description": "Slug of the character."
-          }
         ],
-        "optional_parameters": [
-          {
-            "name": "number",
-            "type": "INTEGER",
-            "description": "Number of quotes to return."
-          }
-        ],
-        "method": "GET",
-        "template_response": [
-          {
-            "sentence": "str",
-            "character": {
-              "name": "str",
-              "slug": "str",
-              "house": {
-                "name": "str",
-                "slug": "str"
-              }
-            }
-          }
-        ]
-      }
-    ],
-    "query": "I'm looking for advice related to my favorite topic, can you find some advice slips mentioning my favorite topic? Also, provide me with some quotes from Tyrion Lannister.",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "I'm looking for advice related to my favorite topic, can you find some advice slips mentioning my favorite topic? Also, provide me with some quotes from Tyrion Lannister.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

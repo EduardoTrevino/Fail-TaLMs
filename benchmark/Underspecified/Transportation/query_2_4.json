@@ -1,66 +1,122 @@
 [
-  {
-    "api_list": [
-      {
-        "tool_name": "berlin_brandenburg",
-        "api_name": "stop_departures",
-        "api_description": "Get departures at a stop/station.",
-        "required_parameters": [
-          {
-            "name": "stop_id",
-            "type": "STRING",
-            "description": "ID of the stop/station.",
-            "default": ""
-          }
+    {
+        "api_list": [
+            {
+                "tool_name": "berlin_brandenburg",
+                "api_name": "stop_departures",
+                "api_description": "Get departures at a stop/station.",
+                "required_parameters": [
+                    {
+                        "name": "stop_id",
+                        "type": "STRING",
+                        "description": "ID of the stop/station.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "when",
+                        "type": "STRING",
+                        "description": "Departure time (ISO 8601 format).",
+                        "default": ""
+                    },
+                    {
+                        "name": "direction",
+                        "type": "STRING",
+                        "description": "Filter by direction.",
+                        "default": ""
+                    },
+                    {
+                        "name": "duration",
+                        "type": "INTEGER",
+                        "description": "Show departures for how many minutes.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "results",
+                        "type": "INTEGER",
+                        "description": "Max. number of results.",
+                        "default": ""
+                    },
+                    {
+                        "name": "language",
+                        "type": "STRING",
+                        "description": "Language of the results.",
+                        "default": "en"
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Transportation"
+            },
+            {
+                "tool_name": "irail",
+                "api_name": "connections",
+                "api_description": "Get routes between two stations.",
+                "required_parameters": [
+                    {
+                        "name": "from",
+                        "type": "STRING",
+                        "description": "Departure station"
+                    },
+                    {
+                        "name": "to",
+                        "type": "STRING",
+                        "description": "Destination station"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date for query"
+                    },
+                    {
+                        "name": "time",
+                        "type": "STRING",
+                        "description": "Time for query"
+                    },
+                    {
+                        "name": "timesel",
+                        "type": "STRING",
+                        "description": "Arrivals or departures",
+                        "default": "departure"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language of response",
+                        "default": "en"
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "typeOfTransport",
+                        "type": "STRING",
+                        "description": "Type of transport",
+                        "default": "automatic"
+                    },
+                    {
+                        "name": "alerts",
+                        "type": "BOOLEAN",
+                        "description": "Include alerts",
+                        "default": "false"
+                    },
+                    {
+                        "name": "results",
+                        "type": "INTEGER",
+                        "description": "Number of results",
+                        "default": 6
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Transportation"
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "language",
-            "type": "STRING",
-            "description": "Language of the results.",
-            "default": "en"
-          }
-        ],
-        "method": "GET",
-        "category_name": "Transportation"
-      },
-      {
-        "tool_name": "irail",
-        "api_name": "connections",
-        "api_description": "Get routes between two stations.",
-        "required_parameters": [
-          {
-            "name": "from",
-            "type": "STRING",
-            "description": "The departure station.",
-            "default": ""
-          },
-          {
-            "name": "to",
-            "type": "STRING",
-            "description": "The destination station.",
-            "default": ""
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "date",
-            "type": "STRING",
-            "description": "Date for the query.",
-            "default": ""
-          },
-          {
-            "name": "time",
-            "type": "STRING",
-            "description": "Time for the query.",
-            "default": ""
-          }
-        ],
-        "method": "GET",
-        "category_name": "Transportation"
-      }
-    ],
-    "query": "Can you give me the next departures from the closest station in Berlin to my apartment and the available train connections from my hometown to the city I work tomorrow at 10am?",
-    "query_id": 2
-  }
+        "query": "Can you give me the next departures from the closest station in Berlin to my apartment and the available train connections from my hometown to the city I work tomorrow at 10am?",
+        "query_id": 2
+    }
 ]

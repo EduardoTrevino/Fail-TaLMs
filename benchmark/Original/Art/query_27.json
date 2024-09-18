@@ -10,8 +10,8 @@
                     {
                         "name": "style_name",
                         "type": "STRING",
-                        "description": "The style of the avatar, such as 'pixel-art' or 'lorelei'.",
-                        "default": "lorelei"
+                        "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
+                        "default": ""
                     }
                 ],
                 "optional_parameters": [
@@ -19,15 +19,25 @@
                         "name": "seed",
                         "type": "STRING",
                         "description": "Seed value for generating a repeatable avatar.",
-                        "default": "ArtLover"
+                        "default": ""
                     },
                     {
                         "name": "hair",
                         "type": "LIST",
-                        "description": "List of hair styles to apply.",
-                        "default": [
-                            "short02"
-                        ]
+                        "description": "List of hair styles.",
+                        "default": []
+                    },
+                    {
+                        "name": "flip",
+                        "type": "BOOLEAN",
+                        "description": "Boolean to flip the avatar.",
+                        "default": false
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                        "default": "svg"
                     }
                 ],
                 "method": "GET",
@@ -44,22 +54,64 @@
                     {
                         "name": "q",
                         "type": "STRING",
-                        "description": "Search term to query objects.",
-                        "default": "Renaissance Sculpture"
+                        "description": "The search term."
                     }
                 ],
                 "optional_parameters": [
                     {
+                        "name": "isHighlight",
+                        "type": "BOOLEAN",
+                        "description": "Returns highlighted objects."
+                    },
+                    {
+                        "name": "title",
+                        "type": "BOOLEAN",
+                        "description": "Search against title field."
+                    },
+                    {
+                        "name": "tags",
+                        "type": "BOOLEAN",
+                        "description": "Search against tags field."
+                    },
+                    {
                         "name": "departmentId",
                         "type": "INTEGER",
-                        "description": "ID of the department for filtering results.",
-                        "default": "12"
+                        "description": "Filter by department."
+                    },
+                    {
+                        "name": "isOnView",
+                        "type": "BOOLEAN",
+                        "description": "Returns objects on view."
+                    },
+                    {
+                        "name": "artistOrCulture",
+                        "type": "BOOLEAN",
+                        "description": "Search against artist name or culture."
+                    },
+                    {
+                        "name": "medium",
+                        "type": "STRING",
+                        "description": "Filter by medium."
                     },
                     {
                         "name": "hasImages",
                         "type": "BOOLEAN",
-                        "description": "Filter objects that have images.",
-                        "default": true
+                        "description": "Filter objects that have images."
+                    },
+                    {
+                        "name": "geoLocation",
+                        "type": "STRING",
+                        "description": "Filter by geographic location."
+                    },
+                    {
+                        "name": "dateBegin",
+                        "type": "INTEGER",
+                        "description": "Objects created after date."
+                    },
+                    {
+                        "name": "dateEnd",
+                        "type": "INTEGER",
+                        "description": "Objects created before date."
                     }
                 ],
                 "method": "GET",

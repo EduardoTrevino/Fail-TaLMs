@@ -33,6 +33,21 @@
                         "name": "text1",
                         "type": "STRING",
                         "description": "Bottom text for the meme."
+                    },
+                    {
+                        "name": "font",
+                        "type": "STRING",
+                        "description": "Font family to use for the text. Defaults to 'impact'."
+                    },
+                    {
+                        "name": "max_font_size",
+                        "type": "INTEGER",
+                        "description": "Maximum font size in pixels. Defaults to 50."
+                    },
+                    {
+                        "name": "boxes",
+                        "type": "LIST",
+                        "description": "Configurations for creating memes with more than two text boxes."
                     }
                 ],
                 "method": "POST",
@@ -56,7 +71,38 @@
                         "description": "The fulltext search query."
                     }
                 ],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "unique",
+                        "type": "STRING",
+                        "description": "Strategy for omitting similar cards.",
+                        "default": "cards"
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "The method to sort returned cards.",
+                        "default": "name"
+                    },
+                    {
+                        "name": "dir",
+                        "type": "STRING",
+                        "description": "The direction to sort cards.",
+                        "default": "auto"
+                    },
+                    {
+                        "name": "include_extras",
+                        "type": "BOOLEAN",
+                        "description": "Includes extra cards if true.",
+                        "default": "false"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "The page number to return.",
+                        "default": "1"
+                    }
+                ],
                 "method": "GET",
                 "template_response": {
                     "object": "list",

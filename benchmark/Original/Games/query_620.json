@@ -9,14 +9,34 @@
                     {
                         "name": "name",
                         "type": "STRING",
-                        "description": "The username to retrieve info for."
+                        "description": "The username."
                     }
                 ],
                 "optional_parameters": [
                     {
                         "name": "buddies",
                         "type": "INTEGER",
-                        "description": "Include buddies."
+                        "description": "Include buddies information."
+                    },
+                    {
+                        "name": "guilds",
+                        "type": "INTEGER",
+                        "description": "Include guilds information."
+                    },
+                    {
+                        "name": "hot",
+                        "type": "INTEGER",
+                        "description": "Include the user's hot 10 list."
+                    },
+                    {
+                        "name": "top",
+                        "type": "INTEGER",
+                        "description": "Include the user's top 10 list."
+                    },
+                    {
+                        "name": "domain",
+                        "type": "STRING",
+                        "description": "Domain for hot and top lists."
                     }
                 ],
                 "method": "GET",
@@ -38,7 +58,15 @@
                 "template_response": {
                     "object": "card"
                 },
-                "category_name": "Games"
+                "category_name": "Games",
+                "optional_parameters": [
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "A set code to limit the search to one set.",
+                        "default": null
+                    }
+                ]
             }
         ],
         "query": "Can you provide information about user 'eekspider' on BoardGameGeek? Also, I want exact details of the card named 'Black Lotus' from the Scryfall Magic: The Gathering database.",

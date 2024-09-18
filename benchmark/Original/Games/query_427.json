@@ -5,13 +5,27 @@
                 "tool_name": "jokeapi",
                 "api_name": "get_joke_info",
                 "api_description": "Retrieve information about JokeAPI and its capabilities.",
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "System message language",
+                        "default": "en"
+                    }
+                ],
                 "method": "GET",
                 "template_response": {
                     "error": "boolean",
                     "info": "object"
                 },
-                "category_name": "Games"
+                "category_name": "Games",
+                "required_parameters": []
             },
             {
                 "tool_name": "scryfall",
@@ -28,7 +42,15 @@
                 "template_response": {
                     "object": "card"
                 },
-                "category_name": "Games"
+                "category_name": "Games",
+                "optional_parameters": [
+                    {
+                        "name": "set",
+                        "type": "STRING",
+                        "description": "A set code to limit the search to one set.",
+                        "default": null
+                    }
+                ]
             }
         ],
         "query": "Provide details about the JokeAPI capabilities and find card details for a Magic card called 'Black Lotus'.",

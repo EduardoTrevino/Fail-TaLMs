@@ -9,24 +9,28 @@
                     {
                         "name": "action",
                         "type": "STRING",
-                        "description": "The action to take on the price alert ('set' or 'delete')."
+                        "description": "The action to take on the price alert ('set' or 'delete').",
+                        "default": ""
                     },
                     {
                         "name": "email",
                         "type": "STRING",
-                        "description": "A valid email address."
+                        "description": "A valid email address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "game_id",
+                        "type": "INTEGER",
+                        "description": "An existing gameID, required for both 'set' and 'delete'.",
+                        "default": null
                     }
                 ],
                 "optional_parameters": [
                     {
-                        "name": "game_id",
-                        "type": "INTEGER",
-                        "description": "An existing game ID, required for 'set' and 'delete'."
-                    },
-                    {
                         "name": "price",
                         "type": "DECIMAL",
-                        "description": "The price to wait for, only required when using 'set' value for action parameter."
+                        "description": "The price to wait for, only required when using 'set' action.",
+                        "default": null
                     }
                 ],
                 "method": "GET",
@@ -65,14 +69,14 @@
                     {
                         "name": "include_extras",
                         "type": "BOOLEAN",
-                        "description": "Includes extra cards such as tokens if true.",
+                        "description": "Includes extra cards if true.",
                         "default": "false"
                     },
                     {
                         "name": "page",
                         "type": "INTEGER",
                         "description": "The page number to return.",
-                        "default": 1
+                        "default": "1"
                     }
                 ],
                 "method": "GET",

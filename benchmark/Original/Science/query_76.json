@@ -11,16 +11,39 @@
                     {
                         "name": "rq",
                         "type": "DICT",
-                        "description": "Search Query in iDigBio Query Format.",
-                        "default": {
-                            "data.dwc:kingdom": "Animalia"
-                        }
+                        "description": "Search Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field to sort on."
+                    },
+                    {
+                        "name": "fields",
+                        "type": "LIST",
+                        "description": "List of fields to return."
+                    },
+                    {
+                        "name": "fields_exclude",
+                        "type": "LIST",
+                        "description": "List of fields to exclude."
                     },
                     {
                         "name": "limit",
                         "type": "INTEGER",
                         "description": "Max results.",
                         "default": 10
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip results.",
+                        "default": 0
+                    },
+                    {
+                        "name": "no_attribution",
+                        "type": "BOOLEAN",
+                        "description": "Disable the attribution block."
                     }
                 ],
                 "method": "GET",
@@ -40,6 +63,12 @@
                 "required_parameters": [],
                 "optional_parameters": [
                     {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Specify the output format.",
+                        "default": "geojson"
+                    },
+                    {
                         "name": "starttime",
                         "type": "STRING",
                         "description": "Limit events on or after the specified start time.",
@@ -55,7 +84,7 @@
                         "name": "minmagnitude",
                         "type": "DECIMAL",
                         "description": "Limit to events with a magnitude larger than the specified minimum.",
-                        "default": 5.0
+                        "default": "null"
                     }
                 ],
                 "method": "GET",

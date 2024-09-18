@@ -1,53 +1,51 @@
 [
-  {
-    "api_list": [
-      {
-        "tool_name": "celestrak",
-        "api_name": "query_by_group",
-        "api_description": "Query GP data using groups of satellites.",
-        "required_parameters": [
-          {
-            "name": "group",
-            "type": "STRING",
-            "description": "Group name for the satellites.",
-            "default": "STATIONS"
-          }
+    {
+        "api_list": [
+            {
+                "tool_name": "celestrak",
+                "api_name": "query_by_group",
+                "api_description": "Query GP data using groups of satellites.",
+                "required_parameters": [
+                    {
+                        "name": "GROUP",
+                        "type": "STRING",
+                        "description": "Group name for the satellites."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "FORMAT",
+                        "type": "STRING",
+                        "description": "Format of data. Defaults to 'TLE'.",
+                        "default": "TLE"
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Science"
+            },
+            {
+                "tool_name": "newton",
+                "api_name": "newton_calculate",
+                "api_description": "Performs a specified mathematical operation on a provided expression and returns the result.",
+                "required_parameters": [
+                    {
+                        "name": "operation",
+                        "type": "STRING",
+                        "description": "The math operation to perform."
+                    },
+                    {
+                        "name": "expression",
+                        "type": "STRING",
+                        "description": "The URL-encoded math expression to calculate."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Science",
+                "optional_parameters": []
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "Format of data. Defaults to 'TLE'.",
-            "default": "XML"
-          }
-        ],
-        "method": "GET",
-        "category_name": "Science"
-      },
-      {
-        "tool_name": "newton",
-        "api_name": "newton_calculate",
-        "api_description": "Performs a specified mathematical operation on a provided expression and returns the result.",
-        "required_parameters": [
-          {
-            "name": "operation",
-            "type": "STRING",
-            "description": "The math operation to perform.",
-            "default": "derive"
-          },
-          {
-            "name": "expression",
-            "type": "STRING",
-            "description": "The URL-encoded math expression to calculate.",
-            "default": "x%5E2%2B2x"
-          }
-        ],
-        "method": "GET",
-        "category_name": "Science"
-      }
-    ],
-    "query": "Can you provide the XML format data for the satellite group my team is interested in? Also, find the derivative of the expression x^2 + 2x.",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "Can you provide the XML format data for the satellite group my team is interested in? Also, find the derivative of the expression x^2 + 2x.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

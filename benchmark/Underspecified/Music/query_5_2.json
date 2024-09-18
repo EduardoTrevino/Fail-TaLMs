@@ -1,79 +1,81 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Music",
-        "tool_name": "musicbrainz",
-        "api_name": "artist_search",
-        "api_description": "Allows searching for artists by name.",
-        "required_parameters": [
-          {
-            "name": "query",
-            "type": "STRING",
-            "description": "The search query to find the artist.",
-            "default": "The Beatles"
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "limit",
-            "type": "INTEGER",
-            "description": "The maximum number of results to return.",
-            "default": "25"
-          },
-          {
-            "name": "offset",
-            "type": "INTEGER",
-            "description": "The number of results to skip.",
-            "default": "0"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "artists": [
+    {
+        "api_list": [
             {
-              "name": "str",
-              "mbid": "str"
-            }
-          ]
-        }
-      },
-      {
-        "category_name": "Music",
-        "tool_name": "openwhyd",
-        "api_name": "get_user_tracks",
-        "api_description": "Fetch the list of tracks posted by a user.",
-        "required_parameters": ["uHandle"],
-        "optional_parameters": [
-          {
-            "name": "playlistId",
-            "type": "INTEGER",
-            "description": "The ID of the playlist."
-          },
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "Response format."
-          },
-          {
-            "name": "limit",
-            "type": "INTEGER",
-            "description": "Number of tracks to return."
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "tracks": [
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "artist_search",
+                "api_description": "Allows searching for artists by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query to find the artist.",
+                        "default": "The Beatles"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "artists": [
+                        {
+                            "name": "str",
+                            "mbid": "str"
+                        }
+                    ]
+                }
+            },
             {
-              "title": "str",
-              "artist": "str"
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "get_user_tracks",
+                "api_description": "Fetch the list of tracks posted by a user.",
+                "required_parameters": [
+                    "uHandle"
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "playlistId",
+                        "type": "INTEGER",
+                        "description": "The ID of the playlist."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of tracks to return."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "tracks": [
+                        {
+                            "title": "str",
+                            "artist": "str"
+                        }
+                    ]
+                }
             }
-          ]
-        }
-      }
-    ],
-    "query": "Can you search for artists similar to 'Adele' and also fetch the tracks from my friend's Openwhyd playlist?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        ],
+        "query": "Can you search for artists similar to 'Adele' and also fetch the tracks from my friend's Openwhyd playlist?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

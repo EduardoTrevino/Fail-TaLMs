@@ -9,14 +9,24 @@
                 "required_parameters": [],
                 "optional_parameters": [
                     {
+                        "name": "nskip",
+                        "type": "INTEGER",
+                        "description": "Number to skip."
+                    },
+                    {
+                        "name": "nlist",
+                        "type": "STRING",
+                        "description": "Number or 'all' to list."
+                    },
+                    {
                         "name": "type",
                         "type": "STRING",
-                        "description": "The type of report ('anime' or 'manga')."
+                        "description": "'anime' or 'manga'."
                     },
                     {
                         "name": "name",
                         "type": "STRING",
-                        "description": "Filter by entries whose main title starts with this value."
+                        "description": "Starts with the value."
                     }
                 ],
                 "method": "GET"
@@ -27,17 +37,30 @@
                 "api_name": "search_works",
                 "api_description": "Search for works by a free text query.",
                 "required_parameters": [
-                    {
-                        "name": "query",
-                        "type": "STRING",
-                        "description": "The query string to search for within the works."
-                    }
+                    "query"
                 ],
                 "optional_parameters": [
                     {
                         "name": "rows",
                         "type": "INTEGER",
-                        "description": "The number of rows to return per page."
+                        "description": "Number of results per page.",
+                        "default": 20
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field by which results are sorted."
+                    },
+                    {
+                        "name": "order",
+                        "type": "STRING",
+                        "description": "Order of results, ascending or descending.",
+                        "default": "desc"
+                    },
+                    {
+                        "name": "mailto",
+                        "type": "STRING",
+                        "description": "Identifier for polite pool requests."
                     }
                 ],
                 "method": "GET"

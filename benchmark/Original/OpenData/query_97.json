@@ -7,9 +7,9 @@
                 "api_description": "Search for items using the Archive.org scraping API",
                 "required_parameters": [
                     {
-                        "name": "query",
+                        "name": "q",
                         "type": "STRING",
-                        "description": "The query string in Lucene-like syntax",
+                        "description": "The query string using Lucene-like syntax.",
                         "default": ""
                     }
                 ],
@@ -17,14 +17,32 @@
                     {
                         "name": "fields",
                         "type": "STRING",
-                        "description": "Metadata fields to return, comma-delimited",
+                        "description": "Metadata fields to return, comma-delimited.",
                         "default": "title"
+                    },
+                    {
+                        "name": "sorts",
+                        "type": "STRING",
+                        "description": "Fields to sort results on, comma-delimited.",
+                        "default": ""
                     },
                     {
                         "name": "count",
                         "type": "INTEGER",
-                        "description": "Number of results to return",
+                        "description": "Number of results to return.",
                         "default": "100"
+                    },
+                    {
+                        "name": "cursor",
+                        "type": "STRING",
+                        "description": "Cursor for paginated results.",
+                        "default": ""
+                    },
+                    {
+                        "name": "total_only",
+                        "type": "BOOLEAN",
+                        "description": "If true, only returns the number of results.",
+                        "default": "false"
                     }
                 ],
                 "method": "GET",
@@ -38,11 +56,24 @@
                     {
                         "name": "url",
                         "type": "STRING",
-                        "description": "The URL to check for availability in the Wayback Machine",
+                        "description": "The URL to check for availability in the Wayback Machine.",
                         "default": "example.com"
                     }
                 ],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
                 "method": "GET",
                 "category_name": "OpenData"
             }

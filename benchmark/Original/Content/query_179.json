@@ -10,15 +10,33 @@
                         "name": "q",
                         "type": "STRING",
                         "description": "The query term for the search.",
-                        "default": "Dune"
+                        "default": ""
                     }
                 ],
                 "optional_parameters": [
                     {
                         "name": "fields",
                         "type": "STRING",
-                        "description": "Fields to include in the response. Use '*' to include all fields.",
+                        "description": "Fields to include in the response, use '*' to include all.",
                         "default": "*"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sorting order (e.g., 'new', 'old', 'random').",
+                        "default": ""
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for results pagination.",
+                        "default": 1
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": 10
                     }
                 ],
                 "method": "GET",
@@ -44,10 +62,16 @@
                 "required_parameters": [],
                 "optional_parameters": [
                     {
+                        "name": "resource_id",
+                        "type": "INTEGER",
+                        "description": "The specific ID of the person resource.",
+                        "default": null
+                    },
+                    {
                         "name": "search",
                         "type": "STRING",
                         "description": "Search query to filter people resources.",
-                        "default": "skywalker"
+                        "default": null
                     }
                 ],
                 "method": "GET",

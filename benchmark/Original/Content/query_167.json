@@ -13,7 +13,14 @@
                         "description": "Title of the page to parse."
                     }
                 ],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "wiki",
+                        "type": "STRING",
+                        "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
+                        "default": "https://en.wikipedia.org/w/api.php"
+                    }
+                ],
                 "method": "GET",
                 "template_response": {
                     "parse": {
@@ -32,6 +39,12 @@
                 "api_description": "Fetch film resources or a specific film.",
                 "required_parameters": [],
                 "optional_parameters": [
+                    {
+                        "name": "resource_id",
+                        "type": "INTEGER",
+                        "description": "The specific ID of the film resource.",
+                        "default": null
+                    },
                     {
                         "name": "search",
                         "type": "STRING",

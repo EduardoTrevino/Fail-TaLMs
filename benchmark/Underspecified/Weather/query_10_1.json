@@ -1,73 +1,70 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Weather",
-        "tool_name": "opensensemap",
-        "api_name": "get_boxes",
-        "api_description": "Get information about a single senseBox.",
-        "required_parameters": [
-          {
-            "name": "sense_box_id",
-            "type": "STRING",
-            "description": "The ID of the senseBox you are referring to.",
-            "default": "57000b8745fd40c8196ad04c"
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_boxes",
+                "api_description": "Get information about a single senseBox.",
+                "required_parameters": [
+                    {
+                        "name": "sense_box_id",
+                        "type": "STRING",
+                        "description": "The ID of the senseBox you are referring to."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format the sensor data is returned in.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "_id": "57000b8745fd40c8196ad04c"
+                }
+            },
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dataseries": []
+                }
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "The format the sensor data is returned in.",
-            "default": "json"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "_id": "57000b8745fd40c8196ad04c"
-        }
-      },
-      {
-        "category_name": "Weather",
-        "tool_name": "seventimer",
-        "api_name": "get_machine_readable_forecast",
-        "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
-        "required_parameters": [
-          {
-            "name": "lon",
-            "type": "FLOAT",
-            "description": "Longitude of the location",
-            "default": 113.17
-          },
-          {
-            "name": "lat",
-            "type": "FLOAT",
-            "description": "Latitude of the location",
-            "default": 23.09
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "product",
-            "type": "STRING",
-            "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
-            "default": "astro"
-          },
-          {
-            "name": "output",
-            "type": "STRING",
-            "description": "Output format ('xml' or 'json')",
-            "default": "json"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "dataseries": []
-        }
-      }
-    ],
-    "query": "Can you provide the latest weather measurements from a specific senseBox, and also give me a weather forecast for the location of my condo?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "Can you provide the latest weather measurements from a specific senseBox, and also give me a weather forecast for the location of my condo?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

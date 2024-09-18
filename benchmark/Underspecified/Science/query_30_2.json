@@ -1,86 +1,86 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Science",
-        "tool_name": "celestrak",
-        "api_name": "query_by_group",
-        "api_description": "Query GP data using groups of satellites.",
-        "required_parameters": [
-          {
-            "name": "GROUP",
-            "type": "STRING",
-            "description": "Group name for the satellites."
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "celestrak",
+                "api_name": "query_by_group",
+                "api_description": "Query GP data using groups of satellites.",
+                "required_parameters": [
+                    {
+                        "name": "GROUP",
+                        "type": "STRING",
+                        "description": "Group name for the satellites."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "FORMAT",
+                        "type": "STRING",
+                        "description": "Format of data. Defaults to 'TLE'.",
+                        "default": "TLE"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "string or object",
+                    "description": "Responds with requested data in the specified format."
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "idigibio",
+                "api_name": "search_records",
+                "api_description": "Searches for record objects.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "rq",
+                        "type": "DICT",
+                        "description": "Search Query in iDigBio Query Format."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Field to sort on."
+                    },
+                    {
+                        "name": "fields",
+                        "type": "LIST",
+                        "description": "List of fields to return."
+                    },
+                    {
+                        "name": "fields_exclude",
+                        "type": "LIST",
+                        "description": "List of fields to exclude."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Max results.",
+                        "default": 10
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip results.",
+                        "default": 0
+                    },
+                    {
+                        "name": "no_attribution",
+                        "type": "BOOLEAN",
+                        "description": "Disable the attribution block."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "itemCount": "int",
+                    "results": "list of dict"
+                }
+            }
         ],
-        "optional_parameters": [
-          {
-            "name": "FORMAT",
-            "type": "STRING",
-            "description": "Format of data. Defaults to 'TLE'.",
-            "default": "TLE"
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "type": "string or object",
-          "description": "Responds with requested data in the specified format."
-        }
-      },
-      {
-        "category_name": "Science",
-        "tool_name": "idigibio",
-        "api_name": "search_records",
-        "api_description": "Searches for record objects.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "rq",
-            "type": "DICT",
-            "description": "Search Query in iDigBio Query Format."
-          },
-          {
-            "name": "sort",
-            "type": "STRING",
-            "description": "Field to sort on."
-          },
-          {
-            "name": "fields",
-            "type": "LIST",
-            "description": "List of fields to return."
-          },
-          {
-            "name": "fields_exclude",
-            "type": "LIST",
-            "description": "List of fields to exclude."
-          },
-          {
-            "name": "limit",
-            "type": "INTEGER",
-            "description": "Max results.",
-            "default": 10
-          },
-          {
-            "name": "offset",
-            "type": "INTEGER",
-            "description": "Skip results.",
-            "default": 0
-          },
-          {
-            "name": "no_attribution",
-            "type": "BOOLEAN",
-            "description": "Disable the attribution block."
-          }
-        ],
-        "method": "GET",
-        "template_response": {
-          "itemCount": "int",
-          "results": "list of dict"
-        }
-      }
-    ],
-    "query": "Please get the TLE data for all satellites in the 'Science' group using Celestrak. At the same time, could you search iDigBio records for any related to the species we are studying in biology?",
-    "relevant APIs": [],
-    "query_id": 2
-  }
+        "query": "Please get the TLE data for all satellites in the 'Science' group using Celestrak. At the same time, could you search iDigBio records for any related to the species we are studying in biology?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
 ]

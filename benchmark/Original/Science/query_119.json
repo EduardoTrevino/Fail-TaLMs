@@ -23,6 +23,26 @@
                         "name": "date",
                         "type": "STRING",
                         "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone of the returned times. Defaults to the location's timezone."
+                    },
+                    {
+                        "name": "date_start",
+                        "type": "STRING",
+                        "description": "Start date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "date_end",
+                        "type": "STRING",
+                        "description": "End date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "time_format",
+                        "type": "STRING",
+                        "description": "Time format such as '24', 'military', or 'unix'."
                     }
                 ],
                 "method": "GET"
@@ -34,22 +54,38 @@
                 "api_description": "Submit a data request.",
                 "optional_parameters": [
                     {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Specify the output format.",
+                        "default": "geojson"
+                    },
+                    {
                         "name": "starttime",
                         "type": "STRING",
-                        "description": "Limit events on or after the specified start time."
+                        "description": "Limit events on or after the specified start time.",
+                        "default": "NOW - 30 days"
                     },
                     {
                         "name": "endtime",
                         "type": "STRING",
-                        "description": "Limit the events on or before the specified end time."
+                        "description": "Limit the events on or before the specified end time.",
+                        "default": "present"
                     },
                     {
                         "name": "minmagnitude",
                         "type": "DECIMAL",
-                        "description": "Limit to events with a magnitude larger than the specified minimum."
+                        "description": "Limit to events with a magnitude larger than the specified minimum.",
+                        "default": "null"
+                    },
+                    {
+                        "name": "maxmagnitude",
+                        "type": "DECIMAL",
+                        "description": "Limit to events with a magnitude smaller than the specified maximum.",
+                        "default": "null"
                     }
                 ],
-                "method": "GET"
+                "method": "GET",
+                "required_parameters": []
             }
         ],
         "query": "Can you provide me with the sunrise and sunset times for Tokyo, Japan today, and also find out if there were any earthquakes with a magnitude greater than 5.0 that occurred worldwide today?",

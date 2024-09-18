@@ -10,8 +10,8 @@
                     {
                         "name": "q",
                         "type": "STRING",
-                        "description": "The query string in Lucene-like syntax.",
-                        "default": "collection:nasa"
+                        "description": "The query string using Lucene-like syntax.",
+                        "default": ""
                     }
                 ],
                 "optional_parameters": [
@@ -22,10 +22,28 @@
                         "default": "title"
                     },
                     {
+                        "name": "sorts",
+                        "type": "STRING",
+                        "description": "Fields to sort results on, comma-delimited.",
+                        "default": ""
+                    },
+                    {
                         "name": "count",
                         "type": "INTEGER",
                         "description": "Number of results to return.",
-                        "default": 100
+                        "default": "100"
+                    },
+                    {
+                        "name": "cursor",
+                        "type": "STRING",
+                        "description": "Cursor for paginated results.",
+                        "default": ""
+                    },
+                    {
+                        "name": "total_only",
+                        "type": "BOOLEAN",
+                        "description": "If true, only returns the number of results.",
+                        "default": "false"
                     }
                 ],
                 "method": "GET"
@@ -39,16 +57,34 @@
                     {
                         "name": "q",
                         "type": "STRING",
-                        "description": "Query string to search for.",
-                        "default": "astronomy"
+                        "description": "Query string to search for."
                     }
                 ],
                 "optional_parameters": [
                     {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Fields to return."
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort order."
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language preference."
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for pagination."
+                    },
+                    {
                         "name": "limit",
                         "type": "INTEGER",
-                        "description": "Number of results per page.",
-                        "default": 10
+                        "description": "Number of results per page."
                     }
                 ],
                 "method": "GET"

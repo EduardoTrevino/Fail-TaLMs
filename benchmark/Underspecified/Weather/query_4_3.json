@@ -1,111 +1,111 @@
 [
-  {
-    "api_list": [
-      {
-        "tool_name": "awc",
-        "api_name": "get_metar",
-        "api_description": "Fetches decoded aviation weather observations (METAR).",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "ids",
-            "type": "STRING",
-            "description": "Station ID(s).",
-            "default": null
-          },
-          {
-            "name": "format",
-            "type": "STRING",
-            "description": "Output format.",
-            "default": "json"
-          },
-          {
-            "name": "taf",
-            "type": "BOOLEAN",
-            "description": "Include TAF information with the METAR.",
-            "default": false
-          },
-          {
-            "name": "hours",
-            "type": "NUMBER",
-            "description": "Hours back to search.",
-            "default": 1
-          },
-          {
-            "name": "bbox",
-            "type": "STRING",
-            "description": "Geographic bounding box.",
-            "default": null
-          },
-          {
-            "name": "date",
-            "type": "STRING",
-            "description": "Specific date to fetch records for.",
-            "default": null
-          }
+    {
+        "api_list": [
+            {
+                "tool_name": "awc",
+                "api_name": "get_metar",
+                "api_description": "Fetches decoded aviation weather observations (METAR).",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ids",
+                        "type": "STRING",
+                        "description": "Station ID(s).",
+                        "default": null
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "taf",
+                        "type": "BOOLEAN",
+                        "description": "Include TAF information with the METAR.",
+                        "default": false
+                    },
+                    {
+                        "name": "hours",
+                        "type": "NUMBER",
+                        "description": "Hours back to search.",
+                        "default": 1
+                    },
+                    {
+                        "name": "bbox",
+                        "type": "STRING",
+                        "description": "Geographic bounding box.",
+                        "default": null
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date to fetch records for.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "response_format": {
+                    "error": "string",
+                    "response": "string"
+                },
+                "category_name": "Weather"
+            },
+            {
+                "tool_name": "seventimer",
+                "api_name": "get_graphical_forecast",
+                "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "ac",
+                        "type": "INTEGER",
+                        "description": "Altitude Correction, applicable in ASTRO",
+                        "default": "0"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language",
+                        "default": "en"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "STRING",
+                        "description": "Unit system, either 'metric' or 'british'",
+                        "default": "metric"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format, 'internal' for graphical",
+                        "default": "internal"
+                    },
+                    {
+                        "name": "tzshift",
+                        "type": "INTEGER",
+                        "description": "Timezone adjustment",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "response_format": "Binary content of a PNG image",
+                "category_name": "Weather"
+            }
         ],
-        "method": "GET",
-        "response_format": {
-          "error": "string",
-          "response": "string"
-        },
-        "category_name": "Weather"
-      },
-      {
-        "tool_name": "seventimer",
-        "api_name": "get_graphical_forecast",
-        "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
-        "required_parameters": [
-          {
-            "name": "lon",
-            "type": "FLOAT",
-            "description": "Longitude of the location"
-          },
-          {
-            "name": "lat",
-            "type": "FLOAT",
-            "description": "Latitude of the location"
-          }
-        ],
-        "optional_parameters": [
-          {
-            "name": "ac",
-            "type": "INTEGER",
-            "description": "Altitude Correction, applicable in ASTRO",
-            "default": 0
-          },
-          {
-            "name": "lang",
-            "type": "STRING",
-            "description": "Language",
-            "default": "en"
-          },
-          {
-            "name": "unit",
-            "type": "STRING",
-            "description": "Unit system, either 'metric' or 'british'",
-            "default": "metric"
-          },
-          {
-            "name": "output",
-            "type": "STRING",
-            "description": "Output format, 'internal' for graphical",
-            "default": "internal"
-          },
-          {
-            "name": "tzshift",
-            "type": "INTEGER",
-            "description": "Timezone adjustment",
-            "default": 0
-          }
-        ],
-        "method": "GET",
-        "response_format": "Binary content of a PNG image",
-        "category_name": "Weather"
-      }
-    ],
-    "query": "Can you provide the latest METAR report for my local airport? Additionally, I'd like a graphical weather forecast for my vacation spot.",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "Can you provide the latest METAR report for my local airport? Additionally, I'd like a graphical weather forecast for my vacation spot.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]

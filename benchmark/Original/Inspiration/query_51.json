@@ -9,11 +9,36 @@
                 "required_parameters": [
                     {
                         "name": "query",
-                        "type": "STRING",
-                        "description": "Search term or keyword."
+                        "type": "STRING"
                     }
                 ],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "default": "content,author,tags"
+                    },
+                    {
+                        "name": "fuzzyMaxEdits",
+                        "type": "INT",
+                        "default": "0"
+                    },
+                    {
+                        "name": "fuzzyMaxExpansions",
+                        "type": "INT",
+                        "default": "50"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INT",
+                        "default": "20"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INT",
+                        "default": "1"
+                    }
+                ],
                 "method": "GET"
             },
             {
@@ -22,7 +47,14 @@
                 "api_name": "get_random_quotes",
                 "api_description": "Retrieve quotes from the Quotes on Design API randomly.",
                 "required_parameters": [],
-                "optional_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "orderby",
+                        "type": "STRING",
+                        "description": "The order in which to sort the quotes. Use 'rand' for a random order.",
+                        "default": "rand"
+                    }
+                ],
                 "method": "GET"
             }
         ],

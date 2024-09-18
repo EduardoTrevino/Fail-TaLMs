@@ -10,14 +10,12 @@
                     {
                         "name": "dataset_name",
                         "type": "STRING",
-                        "description": "The name of the dataset.",
-                        "default": "srtm90m"
+                        "description": "The name of the dataset."
                     },
                     {
                         "name": "locations",
                         "type": "STRING",
-                        "description": "Coordinates in latitude,longitude format or Google polyline.",
-                        "default": "37.7749,-122.4194"
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
                     }
                 ],
                 "optional_parameters": [
@@ -25,6 +23,21 @@
                         "name": "samples",
                         "type": "INTEGER",
                         "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
                     }
                 ],
                 "method": "GET",
@@ -51,8 +64,7 @@
                     {
                         "name": "zipcode",
                         "type": "STRING",
-                        "description": "The ZIP code to query.",
-                        "default": "90210"
+                        "description": "The ZIP code to query."
                     }
                 ],
                 "method": "GET",
@@ -60,7 +72,8 @@
                     "country": "str",
                     "state": "str",
                     "city": "str"
-                }
+                },
+                "optional_parameters": []
             }
         ],
         "query": "I want to know the elevation at the location of 37.7749, -122.4194 using the SRTM dataset. Can you also tell me which city, state, and country correspond to the ZIP code 90210?",

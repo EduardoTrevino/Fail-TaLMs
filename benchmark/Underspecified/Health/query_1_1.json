@@ -1,110 +1,114 @@
 [
-  {
-    "api_list": [
-      {
-        "category_name": "Health",
-        "tool_name": "healthcaregov",
-        "api_name": "get_content_object",
-        "api_description": "Retrieve a specific content post object by post title.",
-        "required_parameters": [
-          {
-            "name": "post_title",
-            "type": "STRING",
-            "description": "The title of the post"
-          }
+    {
+        "api_list": [
+            {
+                "category_name": "Health",
+                "tool_name": "healthcaregov",
+                "api_name": "get_content_object",
+                "api_description": "Retrieve a specific content post object by post title.",
+                "required_parameters": [
+                    {
+                        "name": "post_title",
+                        "type": "STRING",
+                        "description": "The title of the post"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "title": "string",
+                    "url": "string",
+                    "content": "string",
+                    "author": "string",
+                    "date": "string",
+                    "lang": "string",
+                    "categories": "array",
+                    "tags": "array",
+                    "topics": "array",
+                    "layout": "string",
+                    "order": "integer"
+                }
+            },
+            {
+                "category_name": "Health",
+                "tool_name": "makeup",
+                "api_name": "search_makeup_products",
+                "api_description": "Search for makeup products and filter them by brand, product type, category, tags, price, and ratings.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "brand",
+                        "type": "STRING",
+                        "description": "Brand of the product."
+                    },
+                    {
+                        "name": "product_type",
+                        "type": "STRING",
+                        "description": "Type of makeup product."
+                    },
+                    {
+                        "name": "product_category",
+                        "type": "STRING",
+                        "description": "Category of the makeup product."
+                    },
+                    {
+                        "name": "product_tags",
+                        "type": "LIST of STRINGS",
+                        "description": "Tags related to the product."
+                    },
+                    {
+                        "name": "price_greater_than",
+                        "type": "FLOAT",
+                        "description": "Products with price greater than this value."
+                    },
+                    {
+                        "name": "price_less_than",
+                        "type": "FLOAT",
+                        "description": "Products with price less than this value."
+                    },
+                    {
+                        "name": "rating_greater_than",
+                        "type": "FLOAT",
+                        "description": "Products with rating greater than this value."
+                    },
+                    {
+                        "name": "rating_less_than",
+                        "type": "FLOAT",
+                        "description": "Products with rating less than this value."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "int",
+                        "brand": "str",
+                        "name": "str",
+                        "price": "str",
+                        "price_sign": "str",
+                        "currency": "str",
+                        "image_link": "str",
+                        "product_link": "str",
+                        "website_link": "str",
+                        "description": "str",
+                        "rating": "float",
+                        "category": "str",
+                        "product_type": "str",
+                        "tag_list": [
+                            "str"
+                        ],
+                        "created_at": "str",
+                        "updated_at": "str",
+                        "product_api_url": "str",
+                        "api_featured_image": "str",
+                        "product_colors": [
+                            "str"
+                        ]
+                    }
+                ]
+            }
         ],
-        "optional_parameters": [],
-        "method": "GET",
-        "template_response": {
-          "title": "string",
-          "url": "string",
-          "content": "string",
-          "author": "string",
-          "date": "string",
-          "lang": "string",
-          "categories": "array",
-          "tags": "array",
-          "topics": "array",
-          "layout": "string",
-          "order": "integer"
-        }
-      },
-      {
-        "category_name": "Health",
-        "tool_name": "makeup",
-        "api_name": "search_makeup_products",
-        "api_description": "Search for makeup products and filter them by brand, product type, category, tags, price, and ratings.",
-        "required_parameters": [],
-        "optional_parameters": [
-          {
-            "name": "brand",
-            "type": "STRING",
-            "description": "Brand of the product."
-          },
-          {
-            "name": "product_type",
-            "type": "STRING",
-            "description": "Type of makeup product."
-          },
-          {
-            "name": "product_category",
-            "type": "STRING",
-            "description": "Category of the makeup product."
-          },
-          {
-            "name": "product_tags",
-            "type": "LIST of STRINGS",
-            "description": "Tags related to the product."
-          },
-          {
-            "name": "price_greater_than",
-            "type": "FLOAT",
-            "description": "Products with price greater than this value."
-          },
-          {
-            "name": "price_less_than",
-            "type": "FLOAT",
-            "description": "Products with price less than this value."
-          },
-          {
-            "name": "rating_greater_than",
-            "type": "FLOAT",
-            "description": "Products with rating greater than this value."
-          },
-          {
-            "name": "rating_less_than",
-            "type": "FLOAT",
-            "description": "Products with rating less than this value."
-          }
-        ],
-        "method": "GET",
-        "template_response": [
-          {
-            "id": "int",
-            "brand": "str",
-            "name": "str",
-            "price": "str",
-            "price_sign": "str",
-            "currency": "str",
-            "image_link": "str",
-            "product_link": "str",
-            "website_link": "str",
-            "description": "str",
-            "rating": "float",
-            "category": "str",
-            "product_type": "str",
-            "tag_list": ["str"],
-            "created_at": "str",
-            "updated_at": "str",
-            "product_api_url": "str",
-            "api_featured_image": "str",
-            "product_colors": ["str"]
-          }
-        ]
-      }
-    ],
-    "query": "Can you provide details on the specific healthcare-related topic discussed earlier, from HealthCare.gov, and also help me find vegan and cruelty-free makeup products?",
-    "relevant APIs": [],
-    "query_id": 1
-  }
+        "query": "Can you provide details on the specific healthcare-related topic discussed earlier, from HealthCare.gov, and also help me find vegan and cruelty-free makeup products?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
 ]
