@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import litellm
-import regex as re
+import re
 
 def main():
     parser = argparse.ArgumentParser()
@@ -50,13 +50,34 @@ def process_query(query_data, args):
         print(f"Exception when checking function calling support: {e}")
         supports_function_calling = False
 
-    # Load functions
+    # Define the "Finish" function and add it to the functions list
+    finish_func = {
+        "name": "Finish",
+        "description": "If you believe that you have obtained a result that can answer the task, please call this function to provide the final answer. Alternatively, if you recognize that you are unable to proceed with the task in the current state, call this function to restart. Remember: you must ALWAYS call this function at the end of your attempt, and the only part that will be shown to the user is the final answer, so it should contain sufficient information.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "return_type": {
+                    "type": "string",
+                    "enum": ["give_answer","give_up_and_restart"],
+                },
+                "final_answer": {
+                    "type": "string",
+                    "description": "The final answer you want to give the user. You should have this field if \"return_type\"==\"give_answer\"",
+                }
+            },
+            "required": ["return_type"],
+        }
+    }
+        # Load functions
     functions = load_functions(args.tool_root_dir, query_data)
     print(f"Loaded {len(functions)} functions.")
 
     # Optionally, print the functions loaded
     for function in functions:
         print(f"Function loaded: {function['name']}")
+
+    functions.append(finish_func)
 
         # If the model does not support function calling, set add_function_to_prompt
     if not supports_function_calling:
@@ -65,8 +86,11 @@ def process_query(query_data, args):
         litellm.add_function_to_prompt = False
 
     # Prepare messages
-    system_message = """"system_message = You are a helpful assistant that can use tools to help the user.
+    system_message = """"You are a helpful assistant that can use tools to help the user.
 
+You should use functions to help handle the real-time user queries. Remember:
+1. ALWAYS call the "Finish" function at the end of the task. The final answer should contain enough information to show to the user. If you can't handle the task, or you find that function calls always fail (the function is not valid now), use function Finish->give_up_and_restart.
+2. Do not use original tool names, use only subfunctions' names.
 When you need to use a tool, output the function call in the following JSON format on a separate line:
 
 ```json
@@ -102,6 +126,7 @@ When you need to use a tool, output the function call in the following JSON form
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
         print(f"\nAssistant message received: {assistant_message}")
+        print ("Raw Response :", response)
 
         # Convert assistant_message to dict format
         assistant_message_dict = {
@@ -139,7 +164,10 @@ When you need to use a tool, output the function call in the following JSON form
             })
         else:
             # Try to extract function call from assistant's content
-            function_call = extract_function_call_from_content(assistant_message.content)
+            print("Printing assistant message dict[content]:", assistant_message_dict["content"])
+            print("Printing assistant_message.content", assistant_message.content)
+
+            function_call = extract_function_call_from_content(assistant_message_dict.content)
             if function_call:
                 function_name = function_call.get('function')
                 function_args = function_call.get('arguments', {})
@@ -156,30 +184,54 @@ When you need to use a tool, output the function call in the following JSON form
                     "name": function_name,
                     "content": function_response
                 })
-            else:
-                # Assistant provided the final answer
-                assistant_reply = assistant_message.content or ''
-                print(f"Assistant final reply: {assistant_reply}")
-                break
 
+                # Check if the function called is "Finish" and handle accordingly
+                if function_name == "Finish":
+                    if function_args.get("return_type") == "give_answer":
+                        assistant_reply = function_args.get("final_answer", "")
+                        print(f"Assistant final reply: {assistant_reply}")
+                        break
+                    elif function_args.get("return_type") == "give_up_and_restart":
+                        print("Assistant chose to give up and restart.")
+                        assistant_reply = "Assistant chose to give up and restart."
+                        break
+                else:
+                    # Continue to the next step
+                    continue
+            else:
+                # Assistant did not call a function
+                print("Assistant did not call a function. Reminding assistant to use functions.")
+                messages.append(assistant_message_dict)
+
+                # Add a message to remind the assistant
+                messages.append({
+                    "role": "assistant",
+                    "content": "Remember to use the provided functions to complete the task, and to call the 'Finish' function when you are ready to provide the final answer."
+                })
+    
     if assistant_reply is None:
         print("Assistant did not provide a final reply within the allowed steps.")
+        assistant_reply = "Assistant did not provide a final reply."
+
     return assistant_reply
+
 
 def extract_function_call_from_content(content):
     """
-    Use regex to find the function call in the specified format.
+    Use regex to find a function call in the specified format.
     """
-    pattern = r'json\s*({\s*"function"\s*:\s*".+?",\s*"arguments"\s*:\s*{.*?}}\s*)'
+    pattern = r'json\s*([\s\S]*?)'
+    print("Data being passeed to extract_function_call_from_content", content)
     match = re.search(pattern, content, re.DOTALL)
     
     if match:
         function_call_str = match.group(1)
+        print("Here is what the function call string match was", function_call_str)
         try:
             function_call = json.loads(function_call_str)
             return function_call
-        except json.JSONDecodeError:
-            pass
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}")
     
     return None
 
