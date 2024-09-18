@@ -1,0 +1,73 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "carbonintensity",
+                "api_name": "get_current_intensity",
+                "api_description": "Get Carbon Intensity data for the current half hour.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "from": "string",
+                        "to": "string",
+                        "intensity": {
+                            "forecast": "number",
+                            "actual": "number",
+                            "index": "string"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "universitysearch",
+                "api_name": "search_universities",
+                "api_description": "Search for universities by name and filter by country with pagination capabilities.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name or part of the name of the university to search for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "The country to filter results by."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit on the number of results to return."
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Number of results to skip for pagination."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "web_pages": [
+                            "string"
+                        ],
+                        "domains": [
+                            "string"
+                        ],
+                        "country": "string",
+                        "alpha_two_code": "string",
+                        "name": "string"
+                    }
+                ],
+                "category_name": "OpenData"
+            }
+        ],
+        "query": "Can you tell me the current carbon intensity and also find universities with the name 'Oxford'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

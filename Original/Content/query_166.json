@@ -1,0 +1,82 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "mediawiki",
+                "api_name": "search_open_search",
+                "api_description": "Search the wiki using the OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of search results to return.",
+                        "default": "10"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    "str",
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ]
+                ]
+            },
+            {
+                "category_name": "Content",
+                "tool_name": "swapi",
+                "api_name": "get_people",
+                "api_description": "Fetch people resources or a specific person.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "resource_id",
+                        "type": "INTEGER",
+                        "description": "The specific ID of the person resource.",
+                        "default": null
+                    },
+                    {
+                        "name": "search",
+                        "type": "STRING",
+                        "description": "Search query to filter people resources.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "next": "str",
+                    "previous": "str",
+                    "results": [
+                        {
+                            "name": "str",
+                            "height": "str",
+                            "mass": "str",
+                            "gender": "str",
+                            "homeworld": "str",
+                            "films": [
+                                "str"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I'm interested in learning more about the Star Wars character 'Luke Skywalker'. Can you provide information from Wikipedia about Luke Skywalker and retrieve details from the Star Wars API as well?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

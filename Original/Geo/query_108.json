@@ -1,0 +1,93 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "ipapi",
+                "api_name": "get_ip_location",
+                "api_description": "Retrieve complete location information for a specific IP address.",
+                "required_parameters": [
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "The IP address to retrieve location for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format: json, jsonp, xml, csv, yaml",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "ip": "string",
+                    "city": "string",
+                    "region": "string",
+                    "country": "string",
+                    "latitude": "float",
+                    "longitude": "float"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_elevation",
+                "api_description": "Reads the elevation from a given dataset based on specified locations.",
+                "required_parameters": [
+                    {
+                        "name": "dataset_name",
+                        "type": "STRING",
+                        "description": "The name of the dataset."
+                    },
+                    {
+                        "name": "locations",
+                        "type": "STRING",
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "elevation": "float",
+                            "location": {
+                                "lat": "float",
+                                "lng": "float"
+                            },
+                            "dataset": "string"
+                        }
+                    ],
+                    "status": "string"
+                }
+            }
+        ],
+        "query": "Can you find out the location information for the IP address 8.8.8.8 and get the elevation for this location using SRTM dataset?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

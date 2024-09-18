@@ -1,0 +1,93 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "opentopodata",
+                "api_name": "get_elevation",
+                "api_description": "Fetches elevation data for specific locations using a specified dataset.",
+                "required_parameters": [
+                    {
+                        "name": "dataset_name",
+                        "type": "STRING",
+                        "description": "The name of the dataset."
+                    },
+                    {
+                        "name": "locations",
+                        "type": "STRING",
+                        "description": "Coordinates in latitude,longitude format or Google polyline."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "samples",
+                        "type": "INTEGER",
+                        "description": "Query elevation for sample equally-spaced points."
+                    },
+                    {
+                        "name": "interpolation",
+                        "type": "STRING",
+                        "description": "Interpolation method (nearest, bilinear, cubic)."
+                    },
+                    {
+                        "name": "nodata_value",
+                        "type": "STRING",
+                        "description": "Value to return for NODATA."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format (json or geojson)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": [
+                        {
+                            "elevation": "FLOAT",
+                            "location": {
+                                "lat": "FLOAT",
+                                "lng": "FLOAT"
+                            },
+                            "dataset": "STRING"
+                        }
+                    ],
+                    "status": "STRING"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "postcodes",
+                "api_name": "nearest_postcodes",
+                "api_description": "Get nearest postcodes for given longitude and latitude.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude for the search location."
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude for the search location."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "default": 10
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "status": "INTEGER",
+                    "result": "ARRAY"
+                }
+            }
+        ],
+        "query": "I have the coordinates for a hiking trail. Can you provide the elevation data and find the nearest postcodes to a specific point along the trail?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

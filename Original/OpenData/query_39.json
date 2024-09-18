@@ -1,0 +1,81 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "datapoliceuk",
+                "api_name": "street_level_crimes",
+                "api_description": "Returns crimes at street-level for a given latitude and longitude, optionally limited to a specific date.",
+                "required_parameters": [
+                    "lat",
+                    "lng"
+                ],
+                "optional_parameters": [
+                    "date"
+                ],
+                "method": "GET",
+                "template_response": {
+                    "crimes": [
+                        {
+                            "category": "string",
+                            "location": {
+                                "latitude": "string",
+                                "longitude": "string",
+                                "street": {
+                                    "id": "integer",
+                                    "name": "string"
+                                }
+                            },
+                            "outcome_status": {
+                                "category": "string",
+                                "date": "string"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "waybackmachine",
+                "api_name": "wayback_availability",
+                "api_description": "Checks if a given URL is archived and currently accessible in the Wayback Machine.",
+                "required_parameters": [
+                    {
+                        "name": "url",
+                        "type": "STRING",
+                        "description": "The URL to check for availability in the Wayback Machine.",
+                        "default": "example.com"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "timestamp",
+                        "type": "STRING",
+                        "description": "Timestamp to look up in Wayback in YYYYMMDDhhmmss format.",
+                        "default": ""
+                    },
+                    {
+                        "name": "callback",
+                        "type": "STRING",
+                        "description": "Callback function for JSONP response.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "archived_snapshots": {
+                        "closest": {
+                            "available": "boolean",
+                            "url": "string",
+                            "timestamp": "string",
+                            "status": "string"
+                        }
+                    }
+                }
+            }
+        ],
+        "query": "Can you check if there are any recent street-level crimes in London, possibly around January 2023, and also verify if the URL 'example.com' has been archived in the Wayback Machine?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

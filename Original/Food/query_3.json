@@ -1,0 +1,62 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "cocktail",
+                "api_name": "search_cocktail_by_name",
+                "api_description": "Search cocktail by name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the cocktail to search for.",
+                        "default": "margarita"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "drinks": [
+                        "list of cocktails"
+                    ]
+                }
+            },
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "get_product_by_barcode",
+                "api_description": "Get product details by barcode.",
+                "required_parameters": [
+                    {
+                        "name": "barcode",
+                        "type": "STRING",
+                        "description": "The barcode of the product.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "code": "string",
+                    "product": {
+                        "product_name": "string",
+                        "nutrition_grades": "string"
+                    },
+                    "status": "int",
+                    "status_verbose": "string"
+                }
+            }
+        ],
+        "query": "Can you tell me about a cocktail called 'Margarita' and also fetch the nutritional information for a product with barcode '3017624010701'?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

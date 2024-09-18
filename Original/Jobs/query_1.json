@@ -1,0 +1,107 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Jobs",
+                "tool_name": "jobicy",
+                "api_name": "get_remote_jobs",
+                "api_description": "Retrieve the latest remote job listings with optional filters.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "Number of listings to return.",
+                        "default": "50"
+                    },
+                    {
+                        "name": "geo",
+                        "type": "STRING",
+                        "description": "Filter by job region.",
+                        "default": "all regions"
+                    },
+                    {
+                        "name": "industry",
+                        "type": "STRING",
+                        "description": "Filter by job category.",
+                        "default": "all categories"
+                    },
+                    {
+                        "name": "tag",
+                        "type": "STRING",
+                        "description": "Search by job title and description.",
+                        "default": "all jobs"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "jobs": [
+                        {
+                            "title": "string",
+                            "company": "string",
+                            "location": "string",
+                            "date_posted": "string",
+                            "description": "string",
+                            "url": "string"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Jobs",
+                "tool_name": "jobicy",
+                "api_name": "get_rss_feed",
+                "api_description": "Retrieve job listings in RSS format with optional filters.",
+                "required_parameters": [
+                    {
+                        "name": "feed",
+                        "type": "STRING",
+                        "description": "Feed type.",
+                        "default": "job_feed"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "job_categories",
+                        "type": "STRING",
+                        "description": "Filter by job category.",
+                        "default": ""
+                    },
+                    {
+                        "name": "job_types",
+                        "type": "STRING",
+                        "description": "Filter by job type.",
+                        "default": ""
+                    },
+                    {
+                        "name": "search_keywords",
+                        "type": "STRING",
+                        "description": "Search by job title and description.",
+                        "default": ""
+                    },
+                    {
+                        "name": "search_region",
+                        "type": "STRING",
+                        "description": "Filter by job region.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": "RSS Feed Data"
+            },
+            {
+                "category_name": "Jobs",
+                "tool_name": "jobicy",
+                "api_name": "get_new_jobs_xml",
+                "api_description": "Retrieve XML formatted data of the most recent remote jobs.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": "XML Data"
+            }
+        ],
+        "query": "I want to find the latest remote job listings in the USA in the marketing industry related to Python. Additionally, can you provide the RSS feed for full-time jobs in the support category in the USA, and retrieve the most recent remote jobs in XML format?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

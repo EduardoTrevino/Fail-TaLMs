@@ -1,0 +1,69 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "fipe",
+                "api_name": "get_models",
+                "api_description": "Fetch the models for a specified brand.",
+                "required_parameters": [
+                    {
+                        "name": "brand_code",
+                        "type": "STRING",
+                        "description": "Code of the brand."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "STRING",
+                        "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                        "default": "carros"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "object",
+                    "properties": {
+                        "modelos": {
+                            "type": "array"
+                        },
+                        "anos": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "category_name": "OpenData"
+            },
+            {
+                "tool_name": "pmtwentyfive",
+                "api_name": "get_project_latest",
+                "api_description": "Returns the latest measurement (within 2 hours) of the devices in the specified project.",
+                "required_parameters": [
+                    {
+                        "name": "project",
+                        "type": "STRING",
+                        "description": "Project name.",
+                        "default": "airbox"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "object",
+                    "properties": {
+                        "source": {
+                            "type": "string"
+                        },
+                        "feeds": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "category_name": "OpenData",
+                "optional_parameters": []
+            }
+        ],
+        "query": "What car models are available for Toyota in Brazil? Additionally, I want to see the latest air quality measurements of the 'airbox' project.",
+        "relevant APIs": [],
+        "query_id": 3
+    }
+]

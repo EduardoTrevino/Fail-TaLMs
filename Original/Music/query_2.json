@@ -1,0 +1,84 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "binaryjazz",
+                "api_name": "get_stories",
+                "api_description": "Fetch a number of random genre stories.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "The number of stories to fetch.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        "string"
+                    ]
+                }
+            },
+            {
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "release_group_browse",
+                "api_description": "Browse release groups by artist MBID.",
+                "required_parameters": [
+                    {
+                        "name": "artist_mbid",
+                        "type": "STRING",
+                        "description": "The MBID for the artist.",
+                        "default": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Filter release groups by type (album, single, etc.).",
+                        "default": ""
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter releases by status (official, etc.).",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "release-groups": [
+                        {
+                            "id": "str",
+                            "title": "str",
+                            "primary-type": "str",
+                            "secondary-types": [
+                                "str"
+                            ],
+                            "first-release-date": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you tell me some unique music genre stories and find albums or singles by The Beatles?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

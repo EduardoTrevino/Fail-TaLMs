@@ -1,0 +1,85 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "fipe",
+                "api_name": "get_value",
+                "api_description": "Fetch the current price from FIPE table for a specified vehicle, model and year.",
+                "required_parameters": [
+                    {
+                        "name": "brand_code",
+                        "type": "STRING",
+                        "description": "Code of the brand."
+                    },
+                    {
+                        "name": "model_code",
+                        "type": "STRING",
+                        "description": "Code of the model."
+                    },
+                    {
+                        "name": "year_code",
+                        "type": "STRING",
+                        "description": "Code of the year."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "STRING",
+                        "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                        "default": "carros"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Valor": "str",
+                    "Marca": "str",
+                    "Modelo": "str",
+                    "AnoModelo": "int",
+                    "Combustivel": "str",
+                    "CodigoFipe": "str",
+                    "MesReferencia": "str"
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "vehicles",
+                "api_name": "decode_vin",
+                "api_description": "Decode a VIN to get detailed vehicle information.",
+                "required_parameters": [
+                    {
+                        "name": "vin",
+                        "type": "STRING",
+                        "description": "Vehicle Identification Number"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "modelyear",
+                        "type": "INTEGER",
+                        "description": "Year of the Vehicle model"
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Results": [
+                        {
+                            "Variable": "str",
+                            "Value": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you help me determine the current market value of my 2018 Volkswagen Polo using the FIPE data? I've got the VIN number for it.",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

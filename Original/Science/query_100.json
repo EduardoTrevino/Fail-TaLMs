@@ -1,0 +1,85 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "numbers",
+                "api_name": "get_number_fact",
+                "api_description": "Get a fact about a number from the Numbers API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "number",
+                        "type": "STRING",
+                        "description": "An integer, 'random', or day of year 'month/day'.",
+                        "default": "random"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'trivia', 'math', 'date', or 'year'.",
+                        "default": "trivia"
+                    },
+                    {
+                        "name": "fragment",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact as a sentence fragment.",
+                        "default": "False"
+                    },
+                    {
+                        "name": "notfound",
+                        "type": "STRING",
+                        "description": "'default', 'floor', 'ceil'.",
+                        "default": "default"
+                    },
+                    {
+                        "name": "min_val",
+                        "type": "INTEGER",
+                        "description": "The minimum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "max_val",
+                        "type": "INTEGER",
+                        "description": "The maximum value for random facts.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "json",
+                        "type": "BOOLEAN",
+                        "description": "Return the fact in JSON format.",
+                        "default": "True"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "text": "string",
+                    "found": "boolean",
+                    "number": "number",
+                    "type": "string",
+                    "date": "string"
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "opennotify",
+                "api_name": "get_iss_location",
+                "api_description": "Returns the current location of the International Space Station (ISS).",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "string",
+                    "timestamp": "integer",
+                    "iss_position": {
+                        "latitude": "float",
+                        "longitude": "float"
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide a random math fact and also tell me the current location of the International Space Station?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

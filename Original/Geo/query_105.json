@@ -1,0 +1,96 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Geo",
+                "tool_name": "hellosalut",
+                "api_name": "say_hello",
+                "api_description": "Get a greeting based on language code, IP address, or country code. Supports automatic detection.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "ip",
+                        "type": "STRING",
+                        "description": "IP address.",
+                        "default": ""
+                    },
+                    {
+                        "name": "cc",
+                        "type": "STRING",
+                        "description": "Country code.",
+                        "default": ""
+                    },
+                    {
+                        "name": "mode",
+                        "type": "STRING",
+                        "description": "Automatic detection mode.",
+                        "default": "auto"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "hello": "string",
+                    "cc": "string",
+                    "ip": "string"
+                }
+            },
+            {
+                "category_name": "Geo",
+                "tool_name": "zippopotamus",
+                "api_name": "get_zip_info_by_city",
+                "api_description": "Fetch postal codes associated with a given city and state in a specified country.",
+                "required_parameters": [
+                    {
+                        "name": "country",
+                        "type": "STRING",
+                        "description": "Country code such as 'US' for United States."
+                    },
+                    {
+                        "name": "state",
+                        "type": "STRING",
+                        "description": "State code such as 'CA' for California."
+                    },
+                    {
+                        "name": "city",
+                        "type": "STRING",
+                        "description": "The name of the city, such as 'Belmont'."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "post code": "string",
+                    "country": "string",
+                    "country abbreviation": "string",
+                    "places": [
+                        {
+                            "place name": "string",
+                            "longitude": "string",
+                            "state": "string",
+                            "state abbreviation": "string",
+                            "latitude": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find me all postal codes for the city of Belmont in California, United States, and greet me using my IP address.",
+        "relevant APIs": [
+            {
+                "api_name": "get_zip_info_by_city",
+                "tool_name": "zippopotamus"
+            },
+            {
+                "api_name": "say_hello",
+                "tool_name": "hellosalut"
+            }
+        ],
+        "query_id": 2
+    }
+]

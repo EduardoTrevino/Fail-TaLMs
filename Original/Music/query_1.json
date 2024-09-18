@@ -1,0 +1,69 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "binaryjazz",
+                "api_name": "get_genres",
+                "api_description": "Fetch a number of random music genres.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "The number of genres to fetch.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        "string"
+                    ]
+                }
+            },
+            {
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "artist_search",
+                "api_description": "Allows searching for artists by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query to find the artist.",
+                        "default": "The Beatles"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "artists": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "type": "str",
+                            "country": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you suggest some random music genres and search for Taylor Swift?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

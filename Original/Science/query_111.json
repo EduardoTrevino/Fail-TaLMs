@@ -1,0 +1,80 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Science",
+                "tool_name": "opennotify",
+                "api_name": "get_iss_location",
+                "api_description": "Returns the current location of the International Space Station (ISS).",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "message": "str",
+                    "timestamp": "int",
+                    "iss_position": {
+                        "latitude": "float",
+                        "longitude": "float"
+                    }
+                }
+            },
+            {
+                "category_name": "Science",
+                "tool_name": "sunsetsunrise",
+                "api_name": "get_sunrise_sunset_times",
+                "api_description": "Retrieve sunrise and sunset times for a specific location based on latitude and longitude.",
+                "required_parameters": [
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location in decimal degrees."
+                    },
+                    {
+                        "name": "lng",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location in decimal degrees."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Date in YYYY-MM-DD format or relative formats such as 'today'. Defaults to today."
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone of the returned times. Defaults to the location's timezone."
+                    },
+                    {
+                        "name": "date_start",
+                        "type": "STRING",
+                        "description": "Start date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "date_end",
+                        "type": "STRING",
+                        "description": "End date in YYYY-MM-DD format for retrieving a range."
+                    },
+                    {
+                        "name": "time_format",
+                        "type": "STRING",
+                        "description": "Time format such as '24', 'military', or 'unix'."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "results": {
+                        "sunrise": "str",
+                        "sunset": "str",
+                        "timezone": "str"
+                    },
+                    "status": "str"
+                }
+            }
+        ],
+        "query": "What is the current location of the International Space Station and what are the sunrise and sunset times for this location today?",
+        "relevant APIs": [],
+        "query_id": 1
+    }
+]

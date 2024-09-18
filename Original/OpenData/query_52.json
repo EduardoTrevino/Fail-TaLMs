@@ -1,0 +1,80 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "OpenData",
+                "tool_name": "fipe",
+                "api_name": "get_models",
+                "api_description": "Fetch the models for a specified brand.",
+                "required_parameters": [
+                    {
+                        "name": "brand_code",
+                        "type": "STRING",
+                        "description": "Code of the brand."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "STRING",
+                        "description": "Type of vehicle ('carros', 'motos', 'caminhoes')",
+                        "default": "carros"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "modelos": [
+                        {
+                            "code": "int",
+                            "name": "str"
+                        }
+                    ],
+                    "anos": [
+                        {
+                            "code": "str",
+                            "name": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "OpenData",
+                "tool_name": "vehicles",
+                "api_name": "get_wmis_for_manufacturer",
+                "api_description": "Get the World Manufacturer Identifier for a specified manufacturer.",
+                "required_parameters": [
+                    {
+                        "name": "manufacturer",
+                        "type": "STRING",
+                        "description": "Manufacturer name or ID"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "STRING",
+                        "description": "Type of vehicle"
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "Results": [
+                        {
+                            "ManufacturerName": "str",
+                            "WMI": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What are the different models available for the Honda brand in the FIPE database? Also, can you provide the World Manufacturer Identifier for Honda?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]

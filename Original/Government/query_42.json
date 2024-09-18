@@ -1,0 +1,78 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Government",
+                "tool_name": "federalregister",
+                "api_name": "search_documents",
+                "api_description": "Search Federal Register documents using query parameters.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for paginated results.",
+                        "default": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "type": "INTEGER",
+                        "description": "Number of results per page.",
+                        "default": "20"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "results": [
+                        {
+                            "document_number": "str",
+                            "title": "str",
+                            "abstract": "str"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Government",
+                "tool_name": "worldbank",
+                "api_name": "list_indicators",
+                "api_description": "List all indicators available in the World Bank API.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format_type",
+                        "type": "STRING",
+                        "description": "The format in which to receive the data.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "page": "int",
+                        "pages": "int",
+                        "per_page": "int",
+                        "total": "int"
+                    },
+                    "indicators": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "source": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you help me find federal register documents related to health policy? Also, I would like to explore the various development indicators available from the World Bank.",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
