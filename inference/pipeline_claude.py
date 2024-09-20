@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-import litellm
+import openai
 
 def main():
     parser = argparse.ArgumentParser()
@@ -47,50 +47,49 @@ def process_query(query_data, args):
 
     # Prepare messages
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. "},
+        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user."},
         {"role": "user", "content": query_text}
     ]
+        
 
     assistant_reply = None
-    for step in range(5):  # Limit the number of steps
+    for step in range(3):  # Limit the number of steps
+        # print("Messages at start of loop:", messages)
         print(f"\n--- Step {step + 1} ---")
+        print("Messages in STEP: ", step + 1)
+        print(messages)
 
-        # Call the model
-        print("Sending messages to the model:")
-        for message in messages:
-            print(f"{message['role']}: {message.get('content', '')}")
-
-        response = litellm.completion(
+        client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
+        )
+
+        response = client.chat.completions.create(
             model=args.model,
             messages=messages,
-            functions=functions
+            tools=functions
         )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
+
         print("Raw Response from model", response)
         print(f"\nAssistant message received: {assistant_message}")
 
-        # Convert assistant_message to dict format
-        assistant_message_dict = {
-            'role': assistant_message.role,
-            'content': assistant_message.content,
-        }
+         # Extract the thinking content and append it to the messages
+        if assistant_message.content:
+            # This is the explanation before tool use
+            print(f"Assistant reasoning content: {assistant_message.content}")
+            messages.append({
+                "role": "assistant",
+                "content": assistant_message.content
+            })
 
-        if assistant_message.function_call is not None:
-            assistant_message_dict['function_call'] = {
-                'name': assistant_message.function_call.name,
-                'arguments': assistant_message.function_call.arguments
-            }
-
-        messages.append(assistant_message_dict)
-
-        if assistant_message.function_call is not None:
+        if assistant_message.tool_calls is not None:
             # Assistant is calling a function
-            function_name = assistant_message.function_call.name
-            function_args_str = assistant_message.function_call.arguments
+            first_tool_call = assistant_message.tool_calls[0]
+            function_name = first_tool_call.function.name
+            function_args_str = first_tool_call.function.arguments
             print(f"Assistant is calling function '{function_name}' with arguments: {function_args_str}")
 
             try:
@@ -101,13 +100,12 @@ def process_query(query_data, args):
 
             # Execute the function
             function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
-            print(f"Function response: {function_response}")
+            print(f"----\nFunction response: {function_response}")
 
             # Add the function response to messages
             messages.append({
-                "role": "function",
-                "name": function_name,
-                "content": function_response
+                "role": "user",
+                "content": f"{function_name}'s response is: {function_response}"
             })
         else:
             # Assistant provided the final answer
@@ -158,7 +156,7 @@ def api_to_openai_function(api, tool_name):
     function = {
         "name": api['name'],
         "description": api.get('description', ''),
-        "parameters": {
+        "input_schema": {
             "type": "object",
             "properties": {},
             "required": []
@@ -178,8 +176,8 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['parameters']['properties'][param_name] = param_schema
-        function['parameters']['required'].append(param_name)
+        function['input_schema']['properties'][param_name] = param_schema
+        function['input_schema']['required'].append(param_name)
 
     # Handle optional parameters
     optional_params = api.get('optional_parameters', [])
@@ -194,7 +192,7 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['parameters']['properties'][param_name] = param_schema
+        function['input_schema']['properties'][param_name] = param_schema
         # Optional parameters are not added to 'required'
 
     return function

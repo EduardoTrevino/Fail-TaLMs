@@ -47,7 +47,7 @@ def process_query(query_data, args):
 
     # Prepare messages
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. "},
+        {"role": "system", "content": "You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls."},
         {"role": "user", "content": query_text}
     ]
 
