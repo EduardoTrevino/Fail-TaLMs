@@ -56,9 +56,6 @@ def process_query(query_data, args):
         print(f"\n--- Step {step + 1} ---")
 
         # Call the model
-        print("Sending messages to the model:")
-        for message in messages:
-            print(f"{message['role']}: {message.get('content', '')}")
 
         response = litellm.completion(
             api_key=args.openai_key,
@@ -70,8 +67,6 @@ def process_query(query_data, args):
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
-        print("Raw Response from model", response)
-        print(f"\nAssistant message received: {assistant_message}")
 
         # Convert assistant_message to dict format
         assistant_message_dict = {

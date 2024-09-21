@@ -53,11 +53,11 @@ def process_query(query_data, args):
         
 
     assistant_reply = None
-    for step in range(3):  # Limit the number of steps
+    for step in range(5):  # Limit the number of steps
         # print("Messages at start of loop:", messages)
         print(f"\n--- Step {step + 1} ---")
-        print("Messages in STEP: ", step + 1)
-        print(messages)
+        # print("Messages in STEP: ", step + 1)
+        # print(messages)
 
         client = openai.OpenAI(
             api_key=args.openai_key,
@@ -73,13 +73,10 @@ def process_query(query_data, args):
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
 
-        print("Raw Response from model", response)
-        print(f"\nAssistant message received: {assistant_message}")
-
          # Extract the thinking content and append it to the messages
         if assistant_message.content:
             # This is the explanation before tool use
-            print(f"Assistant reasoning content: {assistant_message.content}")
+            # print(f"Assistant reasoning content: {assistant_message.content}")
             messages.append({
                 "role": "assistant",
                 "content": assistant_message.content
