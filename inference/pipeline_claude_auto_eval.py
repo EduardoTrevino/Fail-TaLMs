@@ -60,9 +60,9 @@ def extract_yes_no_idk(response):
     return None
 
 def evaluate_tool_awareness(query, functions, args):
-    prompt = f"Given the available tools functionality, and your knowledge about the world, determine if you have the tools and or knowledge about the world you need to answer the query, respond first with either 'Yes.','No.' or 'IDK.'. then explain: Query: {query}, Available Tools: {functions}"
+    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools and/or knowledge to answer the query. Begin your response with either 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     messages = [
-        {"role": "system", "content": "You will be given the functionality of tool's and a user's query. Use that information to determine if you can answer the user's query with the given tool's functionality and or your knowledge about the world. You should always respond first with 'Yes.','No.' or 'IDK.' then followed by an explanation. "},
+        {"role": "system", "content": "Your task is to determine if you can confidently answer a query, based on the tools available to you and your existing knowledge about the world. You will be given information about the tools' functionality and a user's query. Use this information, along with your broader knowledge, to assess if you can answer the query using either the tools, your knowledge, or a combination of both. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' indicates you are confident in your ability to answer the query, 'No' means you prefer to skip the query, and 'IDK' means you are unsure but willing to try."},
         {"role": "user", "content": prompt}
     ]
     client = openai.OpenAI(
@@ -107,9 +107,9 @@ def evaluate_tool_awareness(query, functions, args):
     return tool_aware, tool_aware_reasoning
 
 def evaluate_information_awareness(query, functions, args):
-    prompt = f"Given the information provided by the user's query, did the user provide the necessary information needed to answer their request? Respond first with either 'Yes.','No.' or 'IDK.'. then explain: Query: {query}"
+    prompt = f"Based on the user's query, the tools' functionality, and your existing knowledge (regardless of the tools), determine if the user has provided enough information for you to answer their request. Start your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     messages = [
-        {"role": "system", "content": "Your task is to determine if a query contains enough specific instruction. Given a user's query analyze their query to determine if the user provided the necessary specificity to answer their request. You should always respond with 'Yes.','No.' or 'IDK.' then followed by an explanation."},
+        {"role": "system", "content": "Your task is to evaluate whether a query contains enough detailed instructions for you to provide an answer. Given a user's query, assess whether the user has included sufficient specificity to make their request clear and actionable. Consider the tools you have access to, their functionality, and any knowledge you possess beyond the tools. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' means the query provides enough detail for you to answer, 'No' means the query lacks sufficient information, and 'IDK' means you are uncertain but willing to attempt an answer."},
         {"role": "user", "content": prompt}
     ]
     client = openai.OpenAI(
