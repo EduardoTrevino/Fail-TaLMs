@@ -2,10 +2,11 @@ import argparse
 import json
 import os
 import litellm
+import openai
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default="openai/neulab/gpt-4o-2024-05-13", help='Model name')
+    parser.add_argument('--model', type=str, default="neulab/gpt-4o-2024-05-13", help='Model name')
     parser.add_argument('--openai_key', type=str, required=True, help='OpenAI API key')
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
@@ -41,13 +42,14 @@ def process_query(query_data, args):
 
     # Load functions
     functions = load_functions(args.tool_root_dir, query_data)
-    print(f"Loaded {len(functions)} functions.")
-    for function in functions:
-        print(f"Function loaded: {function['name']}")
+    # print(f"Loaded {len(functions)} functions.")
+    # for function in functions:
+    #     print(f"Function loaded: {function['name']}")
+    # print(function)
 
     # Prepare messages
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that can access external functions. The responses from these function calls will be appended to this dialogue. Please provide responses based on the information from these function calls."},
+        {"role": "system", "content": "You are a helpful assistant with access to functions. Use them if required."},
         {"role": "user", "content": query_text}
     ]
 
@@ -60,37 +62,36 @@ def process_query(query_data, args):
         for message in messages:
             print(f"{message['role']}: {message.get('content', '')}")
 
-        response = litellm.completion(
+        client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
+        )
+
+        response = client.chat.completions.create(
             model=args.model,
             messages=messages,
-            functions=functions
+            tools=functions
         )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
         print("Raw Response from model", response)
-        print(f"\nAssistant message received: {assistant_message}")
+        print(response.choices[0].message.model_dump_json(indent=4))
 
-        # Convert assistant_message to dict format
-        assistant_message_dict = {
-            'role': assistant_message.role,
-            'content': assistant_message.content,
-        }
+         # Extract the thinking content and append it to the messages
+        if assistant_message.content:
+            # This is the explanation before tool use
+            # print(f"Assistant reasoning content: {assistant_message.content}")
+            messages.append({
+                "role": "assistant",
+                "content": assistant_message.content
+            })
 
-        if assistant_message.function_call is not None:
-            assistant_message_dict['function_call'] = {
-                'name': assistant_message.function_call.name,
-                'arguments': assistant_message.function_call.arguments
-            }
-
-        messages.append(assistant_message_dict)
-
-        if assistant_message.function_call is not None:
+        if assistant_message.tool_calls is not None:
             # Assistant is calling a function
-            function_name = assistant_message.function_call.name
-            function_args_str = assistant_message.function_call.arguments
+            first_tool_call = assistant_message.tool_calls[0]
+            function_name = first_tool_call.function.name
+            function_args_str = first_tool_call.function.arguments
             print(f"Assistant is calling function '{function_name}' with arguments: {function_args_str}")
 
             try:
@@ -105,8 +106,7 @@ def process_query(query_data, args):
 
             # Add the function response to messages
             messages.append({
-                "role": "function",
-                "name": function_name,
+                "role": "tool",
                 "content": function_response
             })
         else:
@@ -148,7 +148,7 @@ def load_functions(tool_root_dir, query_data):
         if api_data:
             # Convert API to OpenAI function format
             function = api_to_openai_function(api_data, tool_name)
-            functions.append(function)
+            functions.append({"type": "function", "function": function})
         else:
             print(f"API '{api_name}' not found in tool '{tool_name}'")
 

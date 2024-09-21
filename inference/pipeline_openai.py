@@ -56,7 +56,6 @@ def process_query(query_data, args):
         print(f"\n--- Step {step + 1} ---")
 
         # Call the model
-
         response = litellm.completion(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
@@ -67,6 +66,7 @@ def process_query(query_data, args):
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
+        print("Assistant message", assistant_message)
 
         # Convert assistant_message to dict format
         assistant_message_dict = {

@@ -1,12 +1,12 @@
 import argparse
 import json
 import os
-import litellm
+import openai
 import re
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default="openai/neulab/gpt-4o-2024-05-13", help='Model name')
+    parser.add_argument('--model', type=str, default="neulab/gpt-4o-2024-05-13", help='Model name')
     parser.add_argument('--openai_key', type=str, required=True, help='OpenAI API key')
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
@@ -45,7 +45,6 @@ def main():
     # Write results to output file
     with open(args.output_answer_file, 'w') as f:
         json.dump(results, f, indent=2)
-
 def extract_yes_no_idk(response):
     """
     Attempts to extract 'yes', 'no', or 'idk' from the model's response.
@@ -66,22 +65,30 @@ def evaluate_tool_awareness(query, functions, args):
         {"role": "system", "content": "You will be given the functionality of tool's and a user's query. Use that information to determine if you can answer the user's query with the given tool's functionality and or your knowledge about the world. You should always respond first with 'Yes.','No.' or 'IDK.' then followed by an explanation. "},
         {"role": "user", "content": prompt}
     ]
-    response = litellm.completion(
-        api_key=args.openai_key,
-        base_url="https://cmu.litellm.ai",
+    client = openai.OpenAI(
+            api_key=args.openai_key,
+            base_url="https://cmu.litellm.ai",
+        )
+
+    response = client.chat.completions.create(
         model=args.model,
-        messages=messages
+        messages=messages,
+        tools=functions
     )
     tool_aware = None
     retries = 0
     max_retries = 3
 
     while retries < max_retries:
-        response = litellm.completion(
+        client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
+        )
+
+        response = client.chat.completions.create(
             model=args.model,
-            messages=messages
+            messages=messages,
+            tools=functions
         )
         tool_aware = extract_yes_no_idk(response.choices[0].message.content)
         tool_aware_reasoning = response.choices[0].message.content
@@ -105,22 +112,30 @@ def evaluate_information_awareness(query, functions, args):
         {"role": "system", "content": "Your task is to determine if a query contains enough specific instruction. Given a user's query analyze their query to determine if the user provided the necessary specificity to answer their request. You should always respond with 'Yes.','No.' or 'IDK.' then followed by an explanation."},
         {"role": "user", "content": prompt}
     ]
-    response = litellm.completion(
+    client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
-            model=args.model,
-            messages=messages
+        )
+
+    response = client.chat.completions.create(
+        model=args.model,
+        messages=messages,
+        tools=functions
     )
     info_aware = None
     retries = 0
     max_retries = 3
 
     while retries < max_retries:
-        response = litellm.completion(
+        client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
+        )
+
+        response = client.chat.completions.create(
             model=args.model,
-            messages=messages
+            messages=messages,
+            tools=functions
         )
         info_aware = extract_yes_no_idk(response.choices[0].message.content)
         info_aware_reasoning = response.choices[0].message.content
@@ -198,21 +213,16 @@ def process_query(query_data, args):
     print(f"Loaded {len(functions)} functions.")
     for function in functions:
         print(f"Function loaded: {function['name']}")
-    
-    function_call_log = []
 
+    function_call_log = []
+    
     # Tool Awareness Evaluation
     tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args)
     print(f"Tool Awareness Response: {tool_awareness_annotation}")
-    # Prompt the human to annotate the model's response
-    # tool_annotation = int(input("Does the model think it has the tools to answer the query? (yes (1), idk (0), no (-1)): "))
-    # tool_validity = int(input("Is the tool awareness response valid? (yes (1), no (0)): "))
 
     # Information Awareness Evaluation
     info_awareness_annotation, info_awareness_reasoning = evaluate_information_awareness(query_text, functions, args)
     print(f"Information Awareness Response: {info_awareness_annotation}")
-    # info_annotation = int(input("Does the model think it has the information from the query to answer? (yes (1), idk (0), no (-1)): "))
-    # info_validity = int(input("Is the info awareness response valid? (yes (1), no (0)): "))
 
     if info_awareness_annotation == "no" or info_awareness_annotation == "no":
         print(f"Skipping query {query_id} based on tool or information awareness.")
@@ -224,55 +234,57 @@ def process_query(query_data, args):
             'tool_awareness': tool_awareness_reasoning,
             'tool_annotation': tool_awareness_annotation,
             'tool_aware_score': tool_validity,
-            'info_awareness': info_awareness_reasoning,
+            'info_awareness': info_awareness_annotation,
             'info_annotation': info_awareness_annotation,
             'info_aware_score': info_validity,
             'pass_rate' : pass_rate,
             'skipped': True
         }
-    # Proceed if the model thinks it has sufficient tools and information
+    
     print(f"Proceeding with query {query_id}.")
+
     # Prepare messages
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. "},
+        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user."},
         {"role": "user", "content": query_text}
     ]
+        
 
     assistant_reply = None
     for step in range(5):  # Limit the number of steps
+        # print("Messages at start of loop:", messages)
         print(f"\n--- Step {step + 1} ---")
+        # print("Messages in STEP: ", step + 1)
+        # print(messages)
 
-        # Call the model
-
-        response = litellm.completion(
+        client = openai.OpenAI(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
+        )
+
+        response = client.chat.completions.create(
             model=args.model,
             messages=messages,
-            functions=functions
+            tools=functions
         )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
 
-        # Convert assistant_message to dict format
-        assistant_message_dict = {
-            'role': assistant_message.role,
-            'content': assistant_message.content,
-        }
+         # Extract the thinking content and append it to the messages
+        if assistant_message.content:
+            # This is the explanation before tool use
+            # print(f"Assistant reasoning content: {assistant_message.content}")
+            messages.append({
+                "role": "assistant",
+                "content": assistant_message.content
+            })
 
-        if assistant_message.function_call is not None:
-            assistant_message_dict['function_call'] = {
-                'name': assistant_message.function_call.name,
-                'arguments': assistant_message.function_call.arguments
-            }
-
-        messages.append(assistant_message_dict)
-
-        if assistant_message.function_call is not None:
+        if assistant_message.tool_calls is not None:
             # Assistant is calling a function
-            function_name = assistant_message.function_call.name
-            function_args_str = assistant_message.function_call.arguments
+            first_tool_call = assistant_message.tool_calls[0]
+            function_name = first_tool_call.function.name
+            function_args_str = first_tool_call.function.arguments
             print(f"Assistant is calling function '{function_name}' with arguments: {function_args_str}")
 
             try:
@@ -283,14 +295,13 @@ def process_query(query_data, args):
 
             # Execute the function
             function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
-            print(f"Function response: {function_response}")
+            print(f"----\nFunction response: {function_response}")
             function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
             # Add the function response to messages
             messages.append({
-                "role": "function",
-                "name": function_name,
-                "content": function_response
+                "role": "user",
+                "content": f"{function_name}'s response is: {function_response}"
             })
         else:
             # Assistant provided the final answer
@@ -300,12 +311,11 @@ def process_query(query_data, args):
 
     if assistant_reply is None:
         print("Assistant did not provide a final reply within the allowed steps.")
-
-    # Concatenate the logged function calls and responses for evaluation context
+    
     function_context = "\n".join(function_call_log)
-    # Evaluate the pass rate using the assistant's reply and the user's query
     pass_rate = evaluate_pass_rate(assistant_reply, query_text, function_context, args)
-    print("Pass score: ", pass_rate)
+    print("Pass rate score: ", pass_rate)
+    
     tool_validity, info_validity = calculate_validity(dataset_type, tool_awareness_annotation, info_awareness_annotation, pass_rate)
     return {
         'query_id': query_id,
@@ -320,7 +330,6 @@ def process_query(query_data, args):
         'pass_rate': pass_rate,
         'skipped': False
     }
-
 def extract_correct_incorrect(response):
     """
     Attempts to extract 'pass' or 'fail' from the model's response.
@@ -358,10 +367,13 @@ def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
         pass_rate = None
         
         while retries < max_retries:
-            response = litellm.completion(
+            client = openai.OpenAI(
                 api_key=args.openai_key,
                 base_url="https://cmu.litellm.ai",
-                model=args.model,
+            )
+
+            response = client.chat.completions.create(
+                model="neulab/gpt-4o-2024-05-13",
                 messages=messages
             )
             
@@ -439,7 +451,7 @@ def api_to_openai_function(api, tool_name):
     function = {
         "name": api['name'],
         "description": api.get('description', ''),
-        "parameters": {
+        "input_schema": {
             "type": "object",
             "properties": {},
             "required": []
@@ -459,8 +471,8 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['parameters']['properties'][param_name] = param_schema
-        function['parameters']['required'].append(param_name)
+        function['input_schema']['properties'][param_name] = param_schema
+        function['input_schema']['required'].append(param_name)
 
     # Handle optional parameters
     optional_params = api.get('optional_parameters', [])
@@ -475,7 +487,7 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['parameters']['properties'][param_name] = param_schema
+        function['input_schema']['properties'][param_name] = param_schema
         # Optional parameters are not added to 'required'
 
     return function
