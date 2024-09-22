@@ -445,8 +445,7 @@ def map_param_type(param_type):
         "STRING": "string",
         "BOOLEAN": "boolean",
         "LIST": "array",
-        "OBJECT": "object",
-        "FLOAT": "float"
+        "OBJECT": "object"
     }
     return type_map.get(param_type.upper(), "string")
 

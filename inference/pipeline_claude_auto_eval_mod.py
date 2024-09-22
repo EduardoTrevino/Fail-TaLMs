@@ -38,7 +38,7 @@ def main():
         print(f"\nProcessing query_id: {query_id}")
 
         # Process the query with tool and information awareness
-        result = process_query(query_data, args)
+        result = process_query(query_data, args, results)
 
         if result is not None:
             results.append(result)
@@ -109,9 +109,9 @@ def evaluate_tool_awareness(query, functions, args):
     return tool_aware, tool_aware_reasoning
 
 def evaluate_information_awareness(query, functions, args):
-    prompt = f"Based on the user's query, the tools' functionality, and your existing knowledge (regardless of the tools), determine if the user has provided enough information for you to answer their request. Start your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
+    prompt = f"Based on the user's query, the tools' functionality, and your existing knowledge (regardless of the tools), determine if the user has provided enough information for you to answer their request given the tools available and your knowledge. Start your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     messages = [
-        {"role": "system", "content": "Your task is to evaluate whether a query contains enough detailed instructions for you to provide an answer. Given a user's query, assess whether the user has included sufficient specificity to make their request clear and actionable. Consider the tools you have access to, their functionality, and any knowledge you possess beyond the tools. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' means the query provides enough detail for you to answer, 'No' means the query lacks sufficient information, and 'IDK' means you are uncertain but willing to attempt an answer."},
+        {"role": "system", "content": "Your task is to evaluate whether a query contains enough detailed instructions for you to provide an answer given your tools and/or knowledge of the world. Given a user's query, assess whether the user has included sufficient specificity to make their request clear and actionable. Consider the tools you have access to, their functionality, and any knowledge you possess beyond the tools. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' means the query provides enough detail for you to answer, 'No' means the query lacks sufficient information and will be skipping the query, and 'IDK' means you are uncertain but willing to attempt an answer."},
         {"role": "user", "content": prompt}
     ]
     client = openai.OpenAI(
@@ -237,6 +237,7 @@ def process_query(query_data, args, results):
     print(f"Loaded {len(functions)} functions.")
     for function in functions:
         print(f"Function loaded: {function['name']}")
+    print(functions)
 
     function_call_log = []
     
@@ -651,8 +652,7 @@ def map_param_type(param_type):
         "STRING": "string",
         "BOOLEAN": "boolean",
         "LIST": "array",
-        "OBJECT": "object",
-        "FLOAT": "float"
+        "OBJECT": "object"
     }
     return type_map.get(param_type.upper(), "string")
 
