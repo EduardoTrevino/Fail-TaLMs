@@ -1,6 +1,6 @@
 @echo off
 REM Set the output directory
-set OUTPUT_DIR=outputs\Original\llama_70b
+set OUTPUT_DIR=outputs\Original\llama_8b
 
 REM Read the OpenAI key from the file and set it as a variable
 for /f %%i in (proxy_key.txt) do set OPENAI_KEY=%%i

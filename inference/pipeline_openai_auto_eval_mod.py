@@ -61,9 +61,9 @@ def extract_yes_no_idk(response):
     return None
 
 def evaluate_tool_awareness(query, functions, args):
-    prompt = f"Given the available tools functionality, and your knowledge about the world, determine if you have the tools and or knowledge about the world you need to answer the query, respond first with either 'Yes.','No.' or 'IDK.'. then explain: Query: {query}, Available Tools: {functions}"
+    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools and/or knowledge to answer the query. Begin your response with either 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     messages = [
-        {"role": "system", "content": "You will be given the functionality of tool's and a user's query. Use that information to determine if you can answer the user's query with the given tool's functionality and or your knowledge about the world. You should always respond first with 'Yes.','No.' or 'IDK.' then followed by an explanation. "},
+        {"role": "system", "content": "Your task is to determine if you can confidently answer a query, based on the tools available to you and your existing knowledge about the world. You will be given information about the tools' functionality and a user's query. Use this information, along with your broader knowledge, to assess if you can answer the query using either the tools, your knowledge, or a combination of both. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' indicates you are confident in your ability to answer the query, 'No' means you prefer to skip the query, and 'IDK' means you are unsure but willing to try."},
         {"role": "user", "content": prompt}
     ]
     response = litellm.completion(
@@ -100,9 +100,9 @@ def evaluate_tool_awareness(query, functions, args):
     return tool_aware, tool_aware_reasoning
 
 def evaluate_information_awareness(query, functions, args):
-    prompt = f"Given the information provided by the user's query, and the functionality of our tools, did the user provide the necessary information needed to answer their request? Respond first with either 'Yes.','No.' or 'IDK.'. then explain: Query: {query}, Available Tools: {functions}"
+    prompt = f"Based on the user's query, the tools' functionality, and your existing knowledge (regardless of the tools), determine if the user has provided enough information for you to answer their request. Start your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     messages = [
-        {"role": "system", "content": "You will be given a user's query, as well as information about tools. Use that information to determine if the user provided the necessary information to answer their query with the given tools. You should always respond with 'Yes.','No.' or 'IDK.' then followed by an explanation."},
+        {"role": "system", "content": "Your task is to evaluate whether a query contains enough detailed instructions for you to provide an answer. Given a user's query, assess whether the user has included sufficient specificity to make their request clear and actionable. Consider the tools you have access to, their functionality, and any knowledge you possess beyond the tools. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' means the query provides enough detail for you to answer, 'No' means the query lacks sufficient information, and 'IDK' means you are uncertain but willing to attempt an answer."},
         {"role": "user", "content": prompt}
     ]
     response = litellm.completion(
@@ -155,20 +155,31 @@ def calculate_validity(dataset_type, tool_response, info_response, pass_rate):
     # Get the ground truth for the given dataset type
     expected_responses = ground_truth.get(dataset_type)
 
-    # Calculate tool validity
-    if tool_response == 'idk':
-        tool_validity = 1 if pass_rate == 1 else 0
-    else:
-        if isinstance(expected_responses['tool_awareness'], list):
-            tool_validity = 1 if tool_response in expected_responses['tool_awareness'] else 0
-        else:
-            tool_validity = 1 if tool_response == expected_responses['tool_awareness'] else 0
+    # Initialize validity scores as None
+    tool_validity = None
+    info_validity = None
 
-    # Calculate info validity
-    if info_response == 'idk':
-        info_validity = 1 if pass_rate == 1 else 0
-    else:
-        info_validity = 1 if info_response == expected_responses['info_awareness'] else 0
+    # Calculate tool validity if tool_response is not None
+    if tool_response is not None:
+        if tool_response == 'idk':
+            tool_validity = 1 if pass_rate == 1 else 0
+        else:
+            expected_tool_awareness = expected_responses['tool_awareness']
+            if isinstance(expected_tool_awareness, list):
+                tool_validity = 1 if tool_response in expected_tool_awareness else 0
+            else:
+                tool_validity = 1 if tool_response == expected_tool_awareness else 0
+
+    # Calculate info validity if info_response is not None
+    if info_response is not None:
+        if info_response == 'idk':
+            info_validity = 1 if pass_rate == 1 else 0
+        else:
+            expected_info_awareness = expected_responses['info_awareness']
+            if info_response == expected_info_awareness:
+                info_validity = 1
+            else:
+                info_validity = 0
 
     return tool_validity, info_validity
 
@@ -186,6 +197,16 @@ def get_dataset_type(filename):
         return 'No-tools'
     else:
         raise ValueError(f"Unknown dataset type for filename: {filename}")
+    
+def get_evaluation_plan(dataset_type):
+    plan = {
+        'Original': {'tool_awareness': True, 'info_awareness': True, 'pass_rate': True},
+        'Replaceable': {'tool_awareness': True, 'info_awareness': False, 'pass_rate': True},
+        'Non-replaceable': {'tool_awareness': True, 'info_awareness': False, 'pass_rate': True},
+        'Underspecified': {'tool_awareness': False, 'info_awareness': True, 'pass_rate': True},
+        'No-tools': {'tool_awareness': False, 'info_awareness': False, 'pass_rate': True}
+    }
+    return plan.get(dataset_type, {'tool_awareness': True, 'info_awareness': True, 'pass_rate': True})
 
 def process_query(query_data, args):
     query_text = query_data['query']
@@ -199,35 +220,54 @@ def process_query(query_data, args):
     for function in functions:
         print(f"Function loaded: {function['name']}")
     
+    function_call_log = []
+
+    # Get evaluation plan
+    evaluation_plan = get_evaluation_plan(dataset_type)
+
+    # Initialize variables
+    tool_awareness_annotation = None
+    tool_awareness_reasoning = None
+    info_awareness_annotation = None
+    info_awareness_reasoning = None
+
     # Tool Awareness Evaluation
-    tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args)
-    print(f"Tool Awareness Response: {tool_awareness_annotation}")
-    # Prompt the human to annotate the model's response
-    # tool_annotation = int(input("Does the model think it has the tools to answer the query? (yes (1), idk (0), no (-1)): "))
-    # tool_validity = int(input("Is the tool awareness response valid? (yes (1), no (0)): "))
+    if evaluation_plan['tool_awareness']:
+        tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args)
+        print(f"Tool Awareness Response: {tool_awareness_annotation}")
 
     # Information Awareness Evaluation
-    info_awareness_annotation, info_awareness_reasoning = evaluate_information_awareness(query_text, functions, args)
-    print(f"Information Awareness Response: {info_awareness_annotation}")
-    # info_annotation = int(input("Does the model think it has the information from the query to answer? (yes (1), idk (0), no (-1)): "))
-    # info_validity = int(input("Is the info awareness response valid? (yes (1), no (0)): "))
+    if evaluation_plan['info_awareness']:
+        info_awareness_annotation, info_awareness_reasoning = evaluate_information_awareness(query_text, functions, args)
+        print(f"Information Awareness Response: {info_awareness_annotation}")
 
-    if info_awareness_annotation == "no" or info_awareness_annotation == "no":
+    # Decide whether to skip the query
+    skip_query = False
+    if evaluation_plan['tool_awareness'] and tool_awareness_annotation == "no":
+        skip_query = True
+    if evaluation_plan['info_awareness'] and info_awareness_annotation == "no":
+        skip_query = True
+
+    if skip_query:
         print(f"Skipping query {query_id} based on tool or information awareness.")
-        tool_validity, info_validity = calculate_validity (dataset_type, info_awareness_annotation, info_awareness_annotation, pass_rate=None)
+        pass_rate = None
+        tool_validity, info_validity = calculate_validity (dataset_type, info_awareness_annotation, info_awareness_annotation, pass_rate)
         pass_rate = 1 if tool_validity == 1 and info_validity == 1 else 0
-        return {
+        result = {
             'query_id': query_id,
             'query': query_text,
-            'tool_awareness': tool_awareness_reasoning,
-            'tool_annotation': tool_awareness_annotation,
-            'tool_aware_score': tool_validity,
-            'info_awareness': info_awareness_annotation,
-            'info_annotation': info_awareness_annotation,
-            'info_aware_score': info_validity,
-            'pass_rate' : pass_rate,
-            'skipped': True
+            'skipped': True,
+            'pass_rate': pass_rate
         }
+        if evaluation_plan['tool_awareness']:
+            result['tool_awareness'] = tool_awareness_reasoning
+            result['tool_annotation'] = tool_awareness_annotation
+            result['tool_aware_score'] = tool_validity
+        if evaluation_plan['info_awareness']:
+            result['info_awareness'] = info_awareness_reasoning
+            result['info_annotation'] = info_awareness_annotation
+            result['info_aware_score'] = info_validity
+        return result
     # Proceed if the model thinks it has sufficient tools and information
     print(f"Proceeding with query {query_id}.")
     # Prepare messages
@@ -282,6 +322,7 @@ def process_query(query_data, args):
             # Execute the function
             function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
             print(f"Function response: {function_response}")
+            function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
             # Add the function response to messages
             messages.append({
@@ -298,22 +339,107 @@ def process_query(query_data, args):
     if assistant_reply is None:
         print("Assistant did not provide a final reply within the allowed steps.")
 
-    print("Initial user query: ", query_text)
-    pass_rate = int(input("Did the model complete the instructions? (pass (1), fail (0)): "))
+    # Concatenate the logged function calls and responses for evaluation context
+    function_context = "\n".join(function_call_log)
+    # Evaluate the pass rate using the assistant's reply and the user's query
+    pass_rate = evaluate_pass_rate(assistant_reply, query_text, function_context, args)
+    print("Pass score: ", pass_rate)
     tool_validity, info_validity = calculate_validity(dataset_type, tool_awareness_annotation, info_awareness_annotation, pass_rate)
-    return {
+    result = {
         'query_id': query_id,
         'query': query_text,
-        'tool_awareness': tool_awareness_reasoning,
-        'tool_annotation': tool_awareness_annotation,
-        'tool_aware_score': tool_validity,
-        'info_awareness': info_awareness_reasoning,
-        'info_annotation': info_awareness_annotation,
-        'info_aware_score': info_validity,
-        'model_answer': assistant_reply,
+        'skipped': False,
         'pass_rate': pass_rate,
-        'skipped': False
+        'model_answer': assistant_reply
     }
+    if evaluation_plan['tool_awareness']:
+        result['tool_awareness'] = tool_awareness_reasoning
+        result['tool_annotation'] = tool_awareness_annotation
+        result['tool_aware_score'] = tool_validity
+    if evaluation_plan['info_awareness']:
+        result['info_awareness'] = info_awareness_reasoning
+        result['info_annotation'] = info_awareness_annotation
+        result['info_aware_score'] = info_validity
+    return result
+
+def extract_correct_incorrect(response):
+    """
+    Attempts to extract 'pass' or 'fail' from the model's response.
+    Returns 1 for pass, 0 for fail, or None if neither is found.
+    """
+    response = response.strip().lower()
+    print("Response: ", response)
+    match = re.match(r'^(pass|fail)', response)
+    
+    if match:
+        if match.group(1) == 'pass':
+            return 1
+        elif match.group(1) == 'fail':
+            return 0
+    return None  # Return None if neither 'pass' nor 'fail' is found
+
+def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
+    """
+    Evaluates if the model's response to the user's query as a pass or fail attempt.
+    Retries up to 3 times if the model's output is unclear, then falls back to manual input.
+    """
+    prompt = f"Below I have attached a user's instruction, an assistant's answer, and API's accessed with their responses. Did the assistant's answer complete the instruction given? Respond with either 'Pass' or 'Fail'.\n\nQuery: {query_text}\n Answer: {assistant_reply}\n\nAPI's accessed and responses:\n{function_context}"
+    
+    messages = [
+        {"role": "system", "content": "You are a grader. You will be given a user's instruction, an assistant's answer, API's accessed, and the API's responses. Based on the answer given, determine if the instruction was completed or not by responding with either 'Pass' or 'Fail'."},
+        {"role": "user", "content": prompt}
+    ]
+
+    max_attempts = 3
+    max_retries = 3
+    results = []  # Store results from 5 attempts
+
+    for attempt in range(max_attempts):
+        retries = 0
+        pass_rate = None
+        
+        while retries < max_retries:
+            response = litellm.completion(
+                api_key=args.openai_key,
+                base_url="https://cmu.litellm.ai",
+                model=args.model,
+                messages=messages
+            )
+            
+            pass_rate = extract_correct_incorrect(response.choices[0].message.content)
+
+            if pass_rate is not None:
+                results.append(pass_rate)
+                break
+            else:
+                print(f"Retrying pass rate evaluation. Attempt {retries + 1}/{max_retries}...")
+                retries += 1
+
+        # If retries exhausted without valid response, log None
+        if pass_rate is None:
+            print(f"Failed to evaluate pass rate for attempt {attempt + 1}/{max_attempts}.")
+            results.append(None)
+
+    # Filter out None values and perform majority vote
+    valid_results = [r for r in results if r is not None]
+
+    if valid_results:
+        # Perform majority vote if there are valid results
+        count_passes = valid_results.count(1)
+        count_fails = valid_results.count(0)
+
+        # Return the majority if there's a clear winner, otherwise return None
+        if count_passes > count_fails:
+            return 1
+        elif count_fails > count_passes:
+            return 0
+    else:
+        # If all attempts failed, fall back to manual input
+        print("Unable to extract pass rate response after 5 attempts.")
+        print("Assistant's reply: \n", assistant_reply)
+        print("Initial query: \n", query_text)
+        pass_rate = int(input("Please manually evaluate the assistant's answer. Did it follow the instructions pass (1) or fail (0)?: ").strip())
+        return pass_rate
 
 def load_functions(tool_root_dir, query_data):
     import os
