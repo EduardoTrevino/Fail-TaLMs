@@ -18,12 +18,36 @@
             "url": "https://api.crossref.org/works",
             "description": "Search for works by a free text query.",
             "method": "GET",
-            "required_parameters": ["query"],
+            "required_parameters": [
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "The search query string."
+                }
+            ],
             "optional_parameters": [
-                {"name": "rows", "type": "INTEGER", "description": "Number of results per page.", "default": 20},
-                {"name": "sort", "type": "STRING", "description": "Field by which results are sorted."},
-                {"name": "order", "type": "STRING", "description": "Order of results, ascending or descending.", "default": "desc"},
-                {"name": "mailto", "type": "STRING", "description": "Identifier for polite pool requests."}
+                {
+                    "name": "rows",
+                    "type": "INTEGER",
+                    "description": "Number of results per page.",
+                    "default": 20
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field by which results are sorted."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Order of results, ascending or descending.",
+                    "default": "desc"
+                },
+                {
+                    "name": "mailto",
+                    "type": "STRING",
+                    "description": "Identifier for polite pool requests."
+                }
             ],
             "statuscode": 200
         },
@@ -33,11 +57,33 @@
             "description": "Retrieve a list of funders.",
             "method": "GET",
             "optional_parameters": [
-                {"name": "query", "type": "STRING", "description": "Search query for funders."},
-                {"name": "filter", "type": "STRING", "description": "Filters for funders."},
-                {"name": "rows", "type": "INTEGER", "description": "Number of funders per page.", "default": 20},
-                {"name": "mailto", "type": "STRING", "description": "Identifier for polite pool requests."},
-                {"name": "offset", "type": "INTEGER", "description": "Offset for paging.", "default": 0}
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query for funders."
+                },
+                {
+                    "name": "filter",
+                    "type": "STRING",
+                    "description": "Filters for funders."
+                },
+                {
+                    "name": "rows",
+                    "type": "INTEGER",
+                    "description": "Number of funders per page.",
+                    "default": 20
+                },
+                {
+                    "name": "mailto",
+                    "type": "STRING",
+                    "description": "Identifier for polite pool requests."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for paging.",
+                    "default": 0
+                }
             ],
             "statuscode": 200
         },
@@ -46,7 +92,13 @@
             "url": "https://api.crossref.org/funders/{id}",
             "description": "Retrieve metadata for a specific funder by funder ID.",
             "method": "GET",
-            "required_parameters": ["funder_id"],
+            "required_parameters": [
+                {
+                    "name": "funder_id",
+                    "type": "STRING",
+                    "description": "The ID of the funder."
+                }
+            ],
             "statuscode": 200
         },
         {
@@ -55,12 +107,39 @@
             "description": "List journals based on a query.",
             "method": "GET",
             "optional_parameters": [
-                {"name": "query", "type": "STRING", "description": "Free text query for journals."},
-                {"name": "rows", "type": "INTEGER", "description": "Number of journals per page.", "default": 20},
-                {"name": "mailto", "type": "STRING", "description": "Identifier for polite pool requests."},
-                {"name": "offset", "type": "INTEGER", "description": "Offset for paging.", "default": 0},
-                {"name": "sort", "type": "STRING", "description": "Field by which results are sorted."},
-                {"name": "order", "type": "STRING", "description": "Order of results, ascending or descending.", "default": "desc"}
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Free text query for journals."
+                },
+                {
+                    "name": "rows",
+                    "type": "INTEGER",
+                    "description": "Number of journals per page.",
+                    "default": 20
+                },
+                {
+                    "name": "mailto",
+                    "type": "STRING",
+                    "description": "Identifier for polite pool requests."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for paging.",
+                    "default": 0
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field by which results are sorted."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Order of results, ascending or descending.",
+                    "default": "desc"
+                }
             ],
             "statuscode": 200
         },
@@ -69,7 +148,13 @@
             "url": "https://api.crossref.org/journals/{issn}",
             "description": "Retrieve information about a journal by its ISSN.",
             "method": "GET",
-            "required_parameters": ["issn"],
+            "required_parameters": [
+                {
+                    "name": "issn",
+                    "type": "STRING",
+                    "description": "The ISSN identifier associated with the journal."
+                }
+            ],
             "statuscode": 200
         },
         {
@@ -77,14 +162,47 @@
             "url": "https://api.crossref.org/journals/{issn}/works",
             "description": "Retrieve a list of works in a journal identified by ISSN.",
             "method": "GET",
-            "required_parameters": ["issn"],
+            "required_parameters": [
+                {
+                    "name": "issn",
+                    "type": "STRING",
+                    "description": "The ISSN identifier of the journal."
+                }
+            ],
             "optional_parameters": [
-                {"name": "query", "type": "STRING", "description": "Search query for works."},
-                {"name": "rows", "type": "INTEGER", "description": "Number of works per page.", "default": 20},
-                {"name": "sort", "type": "STRING", "description": "Field by which results are sorted."},
-                {"name": "order", "type": "STRING", "description": "Order of results, ascending or descending.", "default": "desc"},
-                {"name": "mailto", "type": "STRING", "description": "Identifier for polite pool requests."},
-                {"name": "offset", "type": "INTEGER", "description": "Offset for paging.", "default": 0}
+                {
+                    "name": "query",
+                    "type": "STRING",
+                    "description": "Search query for works."
+                },
+                {
+                    "name": "rows",
+                    "type": "INTEGER",
+                    "description": "Number of works per page.",
+                    "default": 20
+                },
+                {
+                    "name": "sort",
+                    "type": "STRING",
+                    "description": "Field by which results are sorted."
+                },
+                {
+                    "name": "order",
+                    "type": "STRING",
+                    "description": "Order of results, ascending or descending.",
+                    "default": "desc"
+                },
+                {
+                    "name": "mailto",
+                    "type": "STRING",
+                    "description": "Identifier for polite pool requests."
+                },
+                {
+                    "name": "offset",
+                    "type": "INTEGER",
+                    "description": "Offset for paging.",
+                    "default": 0
+                }
             ],
             "statuscode": 200
         }

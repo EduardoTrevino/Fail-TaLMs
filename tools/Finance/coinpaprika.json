@@ -7,8 +7,7 @@
         "avgServiceLevel": 98,
         "avgLatency": 200,
         "avgSuccessRate": 97,
-        "popularityScore": 8.9,
-        "__typename": "Score"
+        "popularityScore": 8.9
     },
     "home_url": "https://api.coinpaprika.com",
     "host": "api.coinpaprika.com",
@@ -36,7 +35,13 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}",
             "description": "Returns detailed information about a single coin.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -45,7 +50,13 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/twitter",
             "description": "Returns the last 50 tweets from the official Twitter profile for a given coin.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve Twitter data for."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -54,7 +65,13 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/events",
             "description": "Returns events for a given coin.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve event data for."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -63,7 +80,13 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/exchanges",
             "description": "Returns exchanges where a given coin is traded.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve exchange data for."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -72,12 +95,18 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/markets",
             "description": "Returns all available markets for a given coin.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve market data for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quotes",
                     "type": "STRING",
-                    "description": "Comma separated list of quotes to return",
+                    "description": "Comma-separated list of quotes to return.",
                     "default": "USD"
                 }
             ],
@@ -88,12 +117,18 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/ohlcv/latest/",
             "description": "Returns OHLC for the last full day.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve OHLC data for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quote",
                     "type": "STRING",
-                    "description": "returned data quote",
+                    "description": "The quote for which to return OHLC data.",
                     "default": "usd"
                 }
             ],
@@ -104,12 +139,18 @@
             "url": "https://api.coinpaprika.com/v1/coins/{coin_id}/ohlcv/today/",
             "description": "Returns OHLC for the current day.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve OHLC data for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quote",
                     "type": "STRING",
-                    "description": "returned data quote",
+                    "description": "The quote for which to return OHLC data.",
                     "default": "usd"
                 }
             ],
@@ -127,7 +168,7 @@
         {
             "name": "list_tags",
             "url": "https://api.coinpaprika.com/v1/tags",
-            "description": "Returns basic information about cryptocurrencies tags.",
+            "description": "Returns basic information about cryptocurrency tags.",
             "method": "GET",
             "required_parameters": [],
             "optional_parameters": [],
@@ -138,12 +179,18 @@
             "url": "https://api.coinpaprika.com/v1/tags/{tag_id}",
             "description": "Returns information about a given cryptocurrency tag.",
             "method": "GET",
-            "required_parameters": ["tag_id"],
+            "required_parameters": [
+                {
+                    "name": "tag_id",
+                    "type": "STRING",
+                    "description": "The ID of the tag to retrieve information for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "additional_fields",
                     "type": "STRING",
-                    "description": "Comma separated list of additional fields to include in query result",
+                    "description": "Comma-separated list of additional fields to include in the query result.",
                     "default": ""
                 }
             ],
@@ -159,7 +206,7 @@
                 {
                     "name": "quotes",
                     "type": "STRING",
-                    "description": "Comma separated list of quotes to return",
+                    "description": "Comma-separated list of quotes to return.",
                     "default": "USD"
                 }
             ],
@@ -170,12 +217,18 @@
             "url": "https://api.coinpaprika.com/v1/tickers/{coin_id}",
             "description": "Returns price data of a single cryptocurrency.",
             "method": "GET",
-            "required_parameters": ["coin_id"],
+            "required_parameters": [
+                {
+                    "name": "coin_id",
+                    "type": "STRING",
+                    "description": "The ID of the cryptocurrency to retrieve price data for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quotes",
                     "type": "STRING",
-                    "description": "Comma separated list of quotes to return",
+                    "description": "Comma-separated list of quotes to return.",
                     "default": "USD"
                 }
             ],
@@ -195,12 +248,18 @@
             "url": "https://api.coinpaprika.com/v1/exchanges/{exchange_id}",
             "description": "Returns basic information about a given exchange.",
             "method": "GET",
-            "required_parameters": ["exchange_id"],
+            "required_parameters": [
+                {
+                    "name": "exchange_id",
+                    "type": "STRING",
+                    "description": "The ID of the exchange to retrieve information for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quotes",
                     "type": "STRING",
-                    "description": "Comma separated list of quotes to return",
+                    "description": "Comma-separated list of quotes to return.",
                     "default": "USD"
                 }
             ],
@@ -211,12 +270,18 @@
             "url": "https://api.coinpaprika.com/v1/exchanges/{exchange_id}/markets",
             "description": "Returns list of all available markets on a given exchange.",
             "method": "GET",
-            "required_parameters": ["exchange_id"],
+            "required_parameters": [
+                {
+                    "name": "exchange_id",
+                    "type": "STRING",
+                    "description": "The ID of the exchange to retrieve markets for."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "quotes",
                     "type": "STRING",
-                    "description": "Comma separated list of quotes to return",
+                    "description": "Comma-separated list of quotes to return.",
                     "default": "USD"
                 }
             ],
@@ -231,20 +296,20 @@
                 {
                     "name": "q",
                     "type": "STRING",
-                    "description": "phrase for search eg. btc"
+                    "description": "Phrase for search (e.g., 'btc')."
                 }
             ],
             "optional_parameters": [
                 {
                     "name": "c",
                     "type": "STRING",
-                    "description": "one or more categories (comma separated) to search.",
+                    "description": "One or more categories (comma-separated) to search.",
                     "default": "currencies,exchanges,icos,people,tags"
                 },
                 {
                     "name": "limit",
                     "type": "INTEGER",
-                    "description": "limit of results per category",
+                    "description": "Limit of results per category.",
                     "default": 6
                 }
             ],
@@ -259,19 +324,19 @@
                 {
                     "name": "base_currency_id",
                     "type": "STRING",
-                    "description": ""
+                    "description": "The ID of the base currency."
                 },
                 {
                     "name": "quote_currency_id",
                     "type": "STRING",
-                    "description": ""
+                    "description": "The ID of the quote currency."
                 }
             ],
             "optional_parameters": [
                 {
                     "name": "amount",
                     "type": "FLOAT",
-                    "description": "Amount to convert",
+                    "description": "Amount to convert.",
                     "default": 0
                 }
             ],
@@ -291,7 +356,13 @@
             "url": "https://api.coinpaprika.com/v1/contracts/{platform_id}",
             "description": "Returns all available contracts for a given platform.",
             "method": "GET",
-            "required_parameters": ["platform_id"],
+            "required_parameters": [
+                {
+                    "name": "platform_id",
+                    "type": "STRING",
+                    "description": "The ID of the platform to retrieve contracts for."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -300,7 +371,18 @@
             "url": "https://api.coinpaprika.com/v1/contracts/{platform_id}/{contract_address}",
             "description": "Redirects to ticker data for a contract with a given address.",
             "method": "GET",
-            "required_parameters": ["platform_id", "contract_address"],
+            "required_parameters": [
+                {
+                    "name": "platform_id",
+                    "type": "STRING",
+                    "description": "The ID of the platform."
+                },
+                {
+                    "name": "contract_address",
+                    "type": "STRING",
+                    "description": "The contract address."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 301
         },
@@ -309,35 +391,46 @@
             "url": "https://api.coinpaprika.com/v1/contracts/{platform_id}/{contract_address}/historical",
             "description": "Returns historical ticks for a contract with a given address.",
             "method": "GET",
-            "required_parameters": ["platform_id", "contract_address"],
+            "required_parameters": [
+                {
+                    "name": "platform_id",
+                    "type": "STRING",
+                    "description": "The ID of the platform."
+                },
+                {
+                    "name": "contract_address",
+                    "type": "STRING",
+                    "description": "The contract address."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "start",
                     "type": "STRING",
-                    "description": "Start point for historical data"
+                    "description": "Start point for historical data."
                 },
                 {
                     "name": "end",
                     "type": "STRING",
-                    "description": "End point for historical data",
+                    "description": "End point for historical data.",
                     "default": "NOW"
                 },
                 {
                     "name": "limit",
                     "type": "INTEGER",
-                    "description": "limit of result rows",
+                    "description": "Limit of result rows.",
                     "default": 1000
                 },
                 {
                     "name": "quote",
                     "type": "STRING",
-                    "description": "returned data quote",
+                    "description": "Returned data quote.",
                     "default": "usd"
                 },
                 {
                     "name": "interval",
                     "type": "STRING",
-                    "description": "returned points interval",
+                    "description": "Returned points interval.",
                     "default": "5m"
                 }
             ],

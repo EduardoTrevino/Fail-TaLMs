@@ -7,8 +7,7 @@
         "avgServiceLevel": 95,
         "avgLatency": 150,
         "avgSuccessRate": 98,
-        "popularityScore": 9.0,
-        "__typename": "Score"
+        "popularityScore": 9.0
     },
     "home_url": "https://api.geckoterminal.com/docs/",
     "host": "api.geckoterminal.com",
@@ -18,7 +17,18 @@
             "url": "https://api.geckoterminal.com/api/v2/simple/networks/{network}/token_price/{addresses}",
             "description": "Get current USD prices of multiple tokens on a network.",
             "method": "GET",
-            "required_parameters": ["network", "addresses"],
+            "required_parameters": [
+                {
+                    "name": "network",
+                    "type": "STRING",
+                    "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                },
+                {
+                    "name": "addresses",
+                    "type": "STRING",
+                    "description": "Comma-separated list of token addresses."
+                }
+            ],
             "optional_parameters": [],
             "statuscode": 200
         },
@@ -41,9 +51,15 @@
         {
             "name": "get_supported_dexes",
             "url": "https://api.geckoterminal.com/api/v2/networks/{network}/dexes",
-            "description": "Get list of supported dexes on a network.",
+            "description": "Get list of supported decentralized exchanges (DEXs) on a network.",
             "method": "GET",
-            "required_parameters": ["network"],
+            "required_parameters": [
+                {
+                    "name": "network",
+                    "type": "STRING",
+                    "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "page",
@@ -79,9 +95,15 @@
         {
             "name": "get_trending_pools",
             "url": "https://api.geckoterminal.com/api/v2/networks/{network}/trending_pools",
-            "description": "Get trending pools on a network.",
+            "description": "Get trending pools on a specific network.",
             "method": "GET",
-            "required_parameters": ["network"],
+            "required_parameters": [
+                {
+                    "name": "network",
+                    "type": "STRING",
+                    "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                }
+            ],
             "optional_parameters": [
                 {
                     "name": "include",

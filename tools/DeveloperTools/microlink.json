@@ -7,8 +7,7 @@
         "avgServiceLevel": 98,
         "avgLatency": 120,
         "avgSuccessRate": 97,
-        "popularityScore": 9.0,
-        "__typename": "Score"
+        "popularityScore": 9.0
     },
     "home_url": "https://microlink.io",
     "host": "api.microlink.io",
@@ -18,12 +17,38 @@
             "url": "https://api.microlink.io",
             "description": "Retrieve metadata from any link.",
             "method": "GET",
-            "required_parameters": ["url"],
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL to retrieve metadata for."
+                }
+            ],
             "optional_parameters": [
-                {"name": "adblock", "type": "BOOLEAN", "default": "true"},
-                {"name": "animations", "type": "BOOLEAN", "default": "false"},
-                {"name": "audio", "type": "BOOLEAN", "default": "false"},
-                {"name": "colors", "type": "BOOLEAN", "default": "true"}
+                {
+                    "name": "adblock",
+                    "type": "BOOLEAN",
+                    "description": "Allows/disallows third-party ad requests.",
+                    "default": "true"
+                },
+                {
+                    "name": "animations",
+                    "type": "BOOLEAN",
+                    "description": "Enables/disables CSS animations.",
+                    "default": "false"
+                },
+                {
+                    "name": "audio",
+                    "type": "BOOLEAN",
+                    "description": "Enables audio source detection.",
+                    "default": "false"
+                },
+                {
+                    "name": "colors",
+                    "type": "BOOLEAN",
+                    "description": "Colorize output.",
+                    "default": "true"
+                }
             ],
             "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://github.com'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
             "statuscode": 200
@@ -33,9 +58,20 @@
             "url": "https://api.microlink.io",
             "description": "Take a screenshot of the target website.",
             "method": "GET",
-            "required_parameters": ["url"],
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL of the website to screenshot."
+                }
+            ],
             "optional_parameters": [
-                {"name": "screenshot", "type": "BOOLEAN", "default": "true"}
+                {
+                    "name": "screenshot",
+                    "type": "BOOLEAN",
+                    "description": "Boolean to take a screenshot.",
+                    "default": "true"
+                }
             ],
             "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://github.com', 'screenshot': True}\nresponse = requests.get(url, params=params)\nprint(response.json())",
             "statuscode": 200
@@ -43,9 +79,20 @@
         {
             "name": "filter_data",
             "url": "https://api.microlink.io",
-            "description": "Filter specific data fields from response payload.",
+            "description": "Filter specific data fields from the response payload.",
             "method": "GET",
-            "required_parameters": ["url", "filter"],
+            "required_parameters": [
+                {
+                    "name": "url",
+                    "type": "STRING",
+                    "description": "The URL to process."
+                },
+                {
+                    "name": "filter",
+                    "type": "STRING",
+                    "description": "Comma-separated list of data fields to include."
+                }
+            ],
             "optional_parameters": [],
             "sample_code": "import requests\n\nurl = 'https://api.microlink.io'\nparams = {'url': 'https://news.ycombinator.com', 'filter': 'url,title'}\nresponse = requests.get(url, params=params)\nprint(response.json())",
             "statuscode": 200
