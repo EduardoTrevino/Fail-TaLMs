@@ -46,7 +46,7 @@ def main():
         # Write results to output file
         with open(args.output_answer_file, 'w') as f:
             json.dump(results, f, indent=2)
-            
+
 def extract_yes_no_idk(response):
     """
     Attempts to extract 'yes', 'no', or 'idk' from the model's response.
@@ -651,7 +651,8 @@ def map_param_type(param_type):
         "STRING": "string",
         "BOOLEAN": "boolean",
         "LIST": "array",
-        "OBJECT": "object"
+        "OBJECT": "object",
+        "FLOAT": "float"
     }
     return type_map.get(param_type.upper(), "string")
 

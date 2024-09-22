@@ -7,8 +7,7 @@
     "avgServiceLevel": 98,
     "avgLatency": 100,
     "avgSuccessRate": 99,
-    "popularityScore": 8.5,
-    "__typename": "Score"
+    "popularityScore": 8.5
   },
   "home_url": "https://openwhyd.org",
   "host": "openwhyd.org",
@@ -18,7 +17,13 @@
       "url": "https://openwhyd.org/:uHandle/[playlist/:playlistId]",
       "description": "Fetch the list of tracks posted by a user.",
       "method": "GET",
-      "required_parameters": ["uHandle"],
+      "required_parameters": [
+        {
+          "name": "uHandle",
+          "type": "STRING",
+          "description": "The handle of the user."
+        }
+      ],
       "optional_parameters": [
         {
           "name": "playlistId",
@@ -34,6 +39,16 @@
           "name": "limit",
           "type": "INTEGER",
           "description": "Number of tracks to return."
+        },
+        {
+          "name": "after",
+          "type": "STRING",
+          "description": "Return results after the specified timestamp."
+        },
+        {
+          "name": "before",
+          "type": "STRING",
+          "description": "Return results before the specified timestamp."
         }
       ],
       "code": "response = get_user_tracks(uHandle='adrien', format='json')",
@@ -56,6 +71,11 @@
           "name": "limit",
           "type": "INTEGER",
           "description": "Number of tracks to return."
+        },
+        {
+          "name": "skip",
+          "type": "INTEGER",
+          "description": "Number of records to skip."
         }
       ],
       "code": "response = get_hot_tracks(format='json')",
@@ -69,7 +89,11 @@
       "method": "GET",
       "required_parameters": [],
       "optional_parameters": [
-        { "name": "id", "type": "STRING", "description": "User ID." },
+        {
+          "name": "id",
+          "type": "STRING",
+          "description": "User ID."
+        },
         {
           "name": "isSubscr",
           "type": "BOOLEAN",
@@ -79,6 +103,16 @@
           "name": "countPosts",
           "type": "BOOLEAN",
           "description": "Include post count."
+        },
+        {
+          "name": "countLikes",
+          "type": "BOOLEAN",
+          "description": "Include like count."
+        },
+        {
+          "name": "includeSubscr",
+          "type": "BOOLEAN",
+          "description": "Include subscription details."
         }
       ],
       "code": "response = get_user_data(id='4d94501d1f78ac091dbc9b4d')",
@@ -90,7 +124,13 @@
       "url": "https://openwhyd.org/api/playlist",
       "description": "Retrieve playlist data.",
       "method": "GET",
-      "required_parameters": ["id"],
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "description": "Playlist ID or list of IDs."
+        }
+      ],
       "optional_parameters": [],
       "code": "response = get_playlist_data(id='4d94501d1f78ac091dbc9b4d_0')",
       "statuscode": 200,
@@ -101,7 +141,13 @@
       "url": "https://openwhyd.org/api/follow/fetchFollowers/:id",
       "description": "Get the list of subscribers of a user.",
       "method": "GET",
-      "required_parameters": ["id"],
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "description": "The ID of the user."
+        }
+      ],
       "optional_parameters": [
         {
           "name": "skip",
@@ -112,6 +158,11 @@
           "name": "limit",
           "type": "INTEGER",
           "description": "Number of records to return."
+        },
+        {
+          "name": "isSubscr",
+          "type": "BOOLEAN",
+          "description": "Include subscription status."
         }
       ],
       "code": "response = list_followers(id='4d94501d1f78ac091dbc9b4d')",
@@ -123,7 +174,13 @@
       "url": "https://openwhyd.org/api/follow/fetchFollowing/:id",
       "description": "Get the list of users a user subscribes to.",
       "method": "GET",
-      "required_parameters": ["id"],
+      "required_parameters": [
+        {
+          "name": "id",
+          "type": "STRING",
+          "description": "The ID of the user."
+        }
+      ],
       "optional_parameters": [
         {
           "name": "skip",
@@ -134,6 +191,11 @@
           "name": "limit",
           "type": "INTEGER",
           "description": "Number of records to return."
+        },
+        {
+          "name": "isSubscr",
+          "type": "BOOLEAN",
+          "description": "Include subscription status."
         }
       ],
       "code": "response = list_following(id='4d94501d1f78ac091dbc9b4d')",
