@@ -281,14 +281,21 @@ def process_query(query_data, args):
         print(f"\n--- Step {step + 1} ---")
 
         # Call the model
-
-        response = litellm.completion(
+        if dataset_type == "No-tools":
+            response = litellm.completion(
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
             model=args.model,
-            messages=messages,
-            functions=functions
+            messages=messages
         )
+        else:
+            response = litellm.completion(
+                api_key=args.openai_key,
+                base_url="https://cmu.litellm.ai",
+                model=args.model,
+                messages=messages,
+                functions=functions
+            )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
@@ -383,11 +390,33 @@ def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
     Evaluates if the model's response to the user's query as a pass or fail attempt.
     Retries up to 3 times if the model's output is unclear, then falls back to manual input.
     """
-    prompt = f"Below I have attached a user's instruction, an assistant's answer, and API's accessed with their responses. Did the assistant's answer complete the instruction given? Respond with either 'Pass' or 'Fail'.\n\nQuery: {query_text}\n Answer: {assistant_reply}\n\nAPI's accessed and responses:\n{function_context}"
-    
+    if function_context:
+        api_responses_text = f"API's accessed and responses:\n{function_context}"
+        answer_part = "assistant's answer, and attached API's accessed with their responses."
+        system_part = "You will be given a user's instruction, assistant's answer, and the API's accessed along with their responses."
+    else:
+        api_responses_text = ""
+        answer_part = "assistant's answer."
+        system_part = "You will be given a user's instruction and assistant's answer."
+
+    # Construct the prompt for the user
+    prompt = (
+        f"Below I have attached a user's instruction, {answer_part} "
+        f"Did the assistant's answer complete the instruction given? Begin your response with either 'Pass' or 'Fail'.\n\n"
+        f"Query: {query_text}\n Answer: {assistant_reply}\n\n"
+        f"{api_responses_text}"
+    )
+
+    # Construct the system message
+    system_message = (
+        f"You are a grader. {system_part} Based on the answer given, "
+        "determine if the instruction was completed or not. Always begin your response with either 'Pass' or 'Fail'."
+    )
+
+    # Messages to be sent to the grader system
     messages = [
-        {"role": "system", "content": "You are a grader. You will be given a user's instruction, an assistant's answer, API's accessed, and the API's responses. Based on the answer given, determine if the instruction was completed or not by responding with either 'Pass' or 'Fail'."},
-        {"role": "user", "content": prompt}
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": prompt},
     ]
 
     max_attempts = 3
@@ -402,7 +431,7 @@ def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
             response = litellm.completion(
                 api_key=args.openai_key,
                 base_url="https://cmu.litellm.ai",
-                model=args.model,
+                model="openai/neulab/gpt-4o-2024-05-13",
                 messages=messages
             )
             
