@@ -11,7 +11,8 @@ def main():
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
     parser.add_argument('--tool_root_dir', type=str, required=True, help='Directory with tool definitions')
-    parser.add_argument('--use_human_interact', type=bool, default=False, required=True, help='Enable the use of human interact tool if set.')
+    parser.add_argument('--use_human_interact', type=lambda x: (str(x).lower() == 'true'), default=False,
+                        help='Whether to use human interaction')
     args = parser.parse_args()
 
     # Read input queries
@@ -43,9 +44,9 @@ def main():
         if result is not None:
             results.append(result)
 
-    # Write results to output file
-    with open(args.output_answer_file, 'w') as f:
-        json.dump(results, f, indent=2)
+        # Write results to output file
+        with open(args.output_answer_file, 'w') as f:
+            json.dump(results, f, indent=2)
 
 def extract_yes_no_idk(response):
     """
@@ -260,6 +261,8 @@ def process_query(query_data, args):
         print(f"Function loaded: {function['name']}")
     
     function_call_log = []
+    # Initialize a list to collect interaction data
+    interaction_scores = []
 
     # Get evaluation plan
     evaluation_plan = get_evaluation_plan(dataset_type)
@@ -310,7 +313,7 @@ def process_query(query_data, args):
     # Proceed if the model thinks it has sufficient tools and information
     print(f"Proceeding with query {query_id}.")
     system_message = """
-You are a helpful assistant that can use tools to help the user. 
+You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user. 
 Remember:
 1.ALWAYS call \"Finish\" function at the end of the task. And the final answer should contain enough information to show to the user
 """
@@ -325,7 +328,7 @@ Remember:
     max_steps = 5  # Increase the max steps if needed
     for step in range(max_steps):  # Limit the number of steps
         print(f"\n--- Step {step + 1} ---")
-
+        print(messages)
         # Call the model
         if dataset_type == "No-tools":
             response = litellm.completion(
@@ -377,22 +380,27 @@ Remember:
                 assistant_reply = function_args.get('final_answer', '')
                 print(f"Assistant final reply: {assistant_reply}")
                 break
-            if function_name == "interact_with_human":
-                # Add dynamic args (query_id and output_file) for interact_with_human
-                function_args['query_id'] = query_id
-                function_args['output_file'] = args.output_answer_file
+
 
             # Execute the function
-            function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
-            print(f"Function response: {function_response}")
+            function_response, interaction_data = execute_function(function_name, function_args, args.tool_root_dir, query_data)
+            print(f"----\nFunction response: {function_response}")
             function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
             # Add the function response to messages
+            # messages.append({
+            #     "role": "function",
+            #     "name": function_name,
+            #     "content": function_response
+            # })
             messages.append({
                 "role": "function",
-                "name": function_name,
-                "content": function_response
+                "name": "assistant",
+                "content": f"{function_name}'s response is: {function_response}"
             })
+            # If there is interaction data, collect it
+            if interaction_data:
+                interaction_scores.append(interaction_data)
         else:
             # Assistant provided a message without calling a function
             # Remind the assistant to call the "Finish" function
@@ -427,6 +435,10 @@ Remember:
         'pass_rate': pass_rate,
         'model_answer': assistant_reply
     }
+    # Add interaction scores if any
+    if interaction_scores:
+        result['interaction_scores'] = interaction_scores
+
     if evaluation_plan['tool_awareness']:
         result['tool_awareness'] = tool_awareness_reasoning
         result['tool_annotation'] = tool_awareness_annotation
@@ -573,19 +585,36 @@ def load_functions(tool_root_dir, query_data, use_human_interact=False):
 
     # Conditionally add the human interact function
     if use_human_interact:
-        human_interact_function = {
-            "name": "interact_with_human",
-            "description": "Conditionally requests user for an input, and returns their input or a predefined message stating no user input is required for answering the query.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "requires_input": {"type": "integer", "description": "A flag to determine if user input is needed (1) or not (0)"},
-                    "input_text": {"type": "string", "description": "The text given to the human to respond to."}
-                },
-                "required": ["requires_input"]
-            }
-        }
-        functions.append(human_interact_function)
+        # Append to query_data['api_list']
+        query_data.setdefault('api_list', [])
+        query_data['api_list'].append({
+            'category_name': 'HumanInteract',
+            'tool_name': 'humaninteract',
+            'api_name': 'interact_with_human'
+        })
+        # Now load the 'interact_with_human' API as usual
+        # Load the tool JSON
+        human_interact_tool_path = os.path.join(tool_root_dir, 'HumanInteract', 'humaninteract.json')
+
+        if os.path.exists(human_interact_tool_path):
+            with open(human_interact_tool_path, 'r') as f:
+                human_tool_data = json.load(f)
+
+            # Find the 'interact_with_human' API
+            api_data = None
+            for api_item in human_tool_data.get('api_list', []):
+                if api_item['name'] == 'interact_with_human':
+                    api_data = api_item
+                    break
+
+            if api_data:
+                function = api_to_openai_function(api_data, 'humaninteract')
+                functions.append(function)
+            else:
+                print("API 'interact_with_human' not found in 'humaninteract.json'")
+        else:
+            print(f"Tool JSON file not found at {human_interact_tool_path}")
+
     # Add the finish function
     finish_func = {
         "name": "Finish",
@@ -663,9 +692,6 @@ def map_param_type(param_type):
 
 def execute_function(function_name, function_args, tool_root_dir, query_data):
     # Find the corresponding API entry in query_data
-    if function_name == "Finish":
-        # No need to execute any code; the assistant's final answer is in function_args
-        return json.dumps({"message": "Finish function called."})
     api_entry = None
     for api in query_data.get('api_list', []):
         if api['api_name'] == function_name:
@@ -704,15 +730,23 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     # Execute the function with provided arguments
     try:
         print(f"Executing function '{function_name}' with arguments: {function_args}")
-        result = func(**function_args)
-        print(f"Function '{function_name}' returned: {result}")
-        # If the result is not serializable, convert it to string
-        if not isinstance(result, (str, int, float, dict, list)):
-            result = str(result)
-        return json.dumps(result)
+        if function_name == 'interact_with_human':
+            # 'interact_with_human' returns a tuple
+            function_response, interaction_data = func(**function_args)
+        else:
+            # Other functions return a single value
+            function_response = func(**function_args)
+            interaction_data = None
+
+        print(f"Function '{function_name}' returned: {function_response}")
+        # Ensure the function response is serializable
+        if not isinstance(function_response, (str, int, float, dict, list)):
+            function_response = str(function_response)
+        return function_response, interaction_data
+    
     except Exception as e:
         print(f"Error executing function '{function_name}': {e}")
-        return f"Error executing function '{function_name}': {e}"
+        return f"Error executing function '{function_name}': {e}", None
 
 if __name__ == '__main__':
     main()

@@ -11,7 +11,8 @@ def main():
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
     parser.add_argument('--tool_root_dir', type=str, required=True, help='Directory with tool definitions')
-    parser.add_argument('--use_human_interact', type=bool, default=False, required=True, help='Enable the use of human interact tool if set.')
+    parser.add_argument('--use_human_interact', type=lambda x: (str(x).lower() == 'true'), default=False,
+                        help='Whether to use human interaction')
     args = parser.parse_args()
 
     # Read input queries
@@ -38,7 +39,7 @@ def main():
         print(f"\nProcessing query_id: {query_id}")
 
         # Process the query with tool and information awareness
-        result = process_query(query_data, args, results)
+        result = process_query(query_data, args)
 
         if result is not None:
             results.append(result)
@@ -264,7 +265,7 @@ def get_evaluation_plan(dataset_type):
     return plan.get(dataset_type, {'tool_awareness': True, 'info_awareness': True, 'pass_rate': True})
 
 
-def process_query(query_data, args, results):
+def process_query(query_data, args):
     query_text = query_data['query']
     query_id = query_data['query_id']
     dataset_type = get_dataset_type(args.input_query_file)
@@ -278,6 +279,8 @@ def process_query(query_data, args, results):
     print(functions)
 
     function_call_log = []
+     # Initialize a list to collect interaction data
+    interaction_scores = []
     
     # Get evaluation plan
     evaluation_plan = get_evaluation_plan(dataset_type)
@@ -403,13 +406,8 @@ Remember:
                 print(f"Assistant final reply: {assistant_reply}")
                 break
 
-            if function_name == "interact_with_human":
-                # Add dynamic args (query_id and output_file) for interact_with_human
-                function_args['query_id'] = query_id
-                function_args['output_file'] = args.output_answer_file
-
             # Execute the function
-            function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
+            function_response, interaction_data = execute_function(function_name, function_args, args.tool_root_dir, query_data)
             print(f"----\nFunction response: {function_response}")
             function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
@@ -418,6 +416,9 @@ Remember:
                 "role": "user",
                 "content": f"{function_name}'s response is: {function_response}"
             })
+            # If there is interaction data, collect it
+            if interaction_data:
+                interaction_scores.append(interaction_data)
         else:
             # Assistant provided a message without calling a function
             # Remind the assistant to call the "Finish" function
@@ -451,12 +452,9 @@ Remember:
         'pass_rate': pass_rate,
         'model_answer': assistant_reply
     }
-    # Merge interact_with_human data if it exists
-    existing_result = next((res for res in results if res['query_id'] == query_id), None)
-    if existing_result:
-        # If we found existing data for this query, update it
-        existing_result.update(result)
-        result = existing_result  # Ensure result reflects the merged data
+    # Add interaction scores if any
+    if interaction_scores:
+        result['interaction_scores'] = interaction_scores
 
     if evaluation_plan['tool_awareness']:
         result['tool_awareness'] = tool_awareness_reasoning
@@ -604,21 +602,39 @@ def load_functions(tool_root_dir, query_data, use_human_interact=False):
             functions.append(function)
         else:
             print(f"API '{api_name}' not found in tool '{tool_name}'")
+    
     # Conditionally add the human interact function
     if use_human_interact:
-        human_interact_function = {
-            "name": "interact_with_human",
-            "description": "Conditionally requests user for an input, and returns their input or a predefined message stating no user input is required for answering the query.",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "requires_input": {"type": "integer", "description": "A flag to determine if user input is needed (1) or not (0)"},
-                    "input_text": {"type": "string", "description": "The text given to the human to respond to."}
-                },
-                "required": ["requires_input"]
-            }
-        }
-        functions.append(human_interact_function)
+        # Append to query_data['api_list']
+        query_data.setdefault('api_list', [])
+        query_data['api_list'].append({
+            'category_name': 'HumanInteract',
+            'tool_name': 'humaninteract',
+            'api_name': 'interact_with_human'
+        })
+        # Now load the 'interact_with_human' API as usual
+        # Load the tool JSON
+        human_interact_tool_path = os.path.join(tool_root_dir, 'HumanInteract', 'humaninteract.json')
+
+        if os.path.exists(human_interact_tool_path):
+            with open(human_interact_tool_path, 'r') as f:
+                human_tool_data = json.load(f)
+
+            # Find the 'interact_with_human' API
+            api_data = None
+            for api_item in human_tool_data.get('api_list', []):
+                if api_item['name'] == 'interact_with_human':
+                    api_data = api_item
+                    break
+
+            if api_data:
+                function = api_to_openai_function(api_data, 'humaninteract')
+                functions.append(function)
+            else:
+                print("API 'interact_with_human' not found in 'humaninteract.json'")
+        else:
+            print(f"Tool JSON file not found at {human_interact_tool_path}")
+
     # Add the finish function
     finish_func = {
         "name": "Finish",
@@ -734,15 +750,23 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     # Execute the function with provided arguments
     try:
         print(f"Executing function '{function_name}' with arguments: {function_args}")
-        result = func(**function_args)
-        print(f"Function '{function_name}' returned: {result}")
-        # If the result is not serializable, convert it to string
-        if not isinstance(result, (str, int, float, dict, list)):
-            result = str(result)
-        return json.dumps(result)
+        if function_name == 'interact_with_human':
+            # 'interact_with_human' returns a tuple
+            function_response, interaction_data = func(**function_args)
+        else:
+            # Other functions return a single value
+            function_response = func(**function_args)
+            interaction_data = None
+
+        print(f"Function '{function_name}' returned: {function_response}")
+        # Ensure the function response is serializable
+        if not isinstance(function_response, (str, int, float, dict, list)):
+            function_response = str(function_response)
+        return function_response, interaction_data
+    
     except Exception as e:
         print(f"Error executing function '{function_name}': {e}")
-        return f"Error executing function '{function_name}': {e}"
+        return f"Error executing function '{function_name}': {e}", None
 
 if __name__ == '__main__':
     main()
