@@ -61,12 +61,7 @@ def extract_yes_no_idk(response):
     return None
 
 def evaluate_tool_awareness(query, functions, args):
-    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools, knowledge, or a combination of both to answer the query. 
-    Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation.
-    'Yes' means you have the knowledge, tools, or a combination of both, and you will attempt to answer.
-    'IDK' means you are uncertain but willing to try to answer.
-    'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both, and you will skip it.
-    Query: {query}, Your knowledge of the world, Available Tools: {functions}"
+    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools, knowledge, or a combination of both to answer the query. Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation. 'Yes' means you have the knowledge, tools, or a combination of both, and you will attempt to answer. 'IDK' means you are uncertain but willing to try to answer. 'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both, and you will skip it. Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     system_prompt = """
 Your task is to determine whether you can answer the user's query using:
 
