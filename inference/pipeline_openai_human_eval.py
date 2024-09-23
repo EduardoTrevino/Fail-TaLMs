@@ -61,9 +61,34 @@ def extract_yes_no_idk(response):
     return None
 
 def evaluate_tool_awareness(query, functions, args):
-    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools and/or knowledge to answer the query. Begin your response with either 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
+    prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools, knowledge, or a combination of both to answer the query. 
+    Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation.
+    'Yes' means you have the knowledge, tools, or a combination of both, and you will attempt to answer.
+    'IDK' means you are uncertain but willing to try to answer.
+    'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both, and you will skip it.
+    Query: {query}, Your knowledge of the world, Available Tools: {functions}"
+    system_prompt = """
+Your task is to determine whether you can answer the user's query using:
+
+1. Your existing knowledge (regardless of the tools).
+2. The functionality of the available tools you have access to.
+3. A combination of both.
+
+When evaluating the query, consider whether:
+The functionality of the tools can help you obtain the answer.
+Your existing knowledge allows you to answer directly.
+Or if a combination of a tool's functionality and your existing knowledge helps you obtain the answer.
+
+Based on this evaluation:
+Respond with 'Yes' if you can answer the query using your knowledge, the tools, or a combination of both.
+Respond with 'IDK' if you are unsure but are willing to attempt an answer.
+Respond with 'No' if you cannot answer the query at all, even with your knowledge and the tools available, or a combination of both. This means the query is completely unanswerable given the current resources, and you will skip attempting to answer the query.
+
+Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a brief explanation of your reasoning. If you respond with 'No,' you will skip attempting to answer the query. If you respond with 'Yes' or 'IDK,' you are willing to try to answer.
+"""
+    
     messages = [
-        {"role": "system", "content": "Your task is to determine if you can confidently answer a query, based on the tools available to you and your existing knowledge about the world. You will be given information about the tools' functionality and a user's query. Use this information, along with your broader knowledge, to assess if you can answer the query using either the tools, your knowledge, or a combination of both. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' indicates you are confident in your ability to answer the query, 'No' means you prefer to skip the query, and 'IDK' means you are unsure but willing to try."},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": prompt}
     ]
     response = litellm.completion(
@@ -100,9 +125,27 @@ def evaluate_tool_awareness(query, functions, args):
     return tool_aware, tool_aware_reasoning
 
 def evaluate_information_awareness(query, functions, args):
-    prompt = f"Based on the user's query, the tools' functionality, and your existing knowledge (regardless of the tools), determine if the user has provided enough information for you to answer their request. Start your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation: Query: {query}, Your knowledge of the world, Available Tools: {functions}"
+    prompt = f"Based on the user's query, your knowledge of the world, and the functionality of the available tools, determine if you can gather, infer, or have all the information needed to answer the request. Remember: Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation. 'Yes' means you have enough information, you can infer it, or can obtain it using the tools, and you will attempt to answer. 'IDK' means you are uncertain but willing to try using your knowledge, tools, or a combination of both. 'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both and you will skip it. Query: {query}, Your knowledge of the world, Available Tools and Their Functionalities: {functions}"
+    system_prompt = """
+Your task is to determine if you can gather, infer, or have all the information needed to answer the user's query using:
+1. Your existing knowledge (regardless of the tools).
+2. The functionality of the available tools you have access to.
+3. A combination of both.
+
+When evaluating the query, consider whether:
+The query provides enough information for you to answer directly.
+The available tools can help you obtain the necessary information or clarify the query.
+Or if a combination of a tool's functionality and your existing knowledge helps you infer, gather, or have the necessary information you need to answer.
+
+Based on this evaluation:
+Respond with 'Yes' if you can gather, infer, or have all the information needed to answer the query using your knowledge, the tools, or both.
+Respond with 'IDK' if you are unsure but are willing to attempt an answer.
+Respond with 'No' if you cannot answer the query at all, even with your knowledge and the tools available. This means the query is completely unanswerable given the current resources.
+Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a brief explanation of your reasoning. If you respond with 'No,' you will skip attempting to answer the query. If you respond with 'Yes' or 'IDK,' you are willing to try to answer.
+"""
+    
     messages = [
-        {"role": "system", "content": "Your task is to evaluate whether a query contains enough detailed instructions for you to provide an answer. Given a user's query, assess whether the user has included sufficient specificity to make their request clear and actionable. Consider the tools you have access to, their functionality, and any knowledge you possess beyond the tools. You should always begin your response with 'Yes,' 'No,' or 'IDK,' followed by an explanation. Responding with 'Yes' means the query provides enough detail for you to answer, 'No' means the query lacks sufficient information, and 'IDK' means you are uncertain but willing to attempt an answer."},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": prompt}
     ]
     response = litellm.completion(

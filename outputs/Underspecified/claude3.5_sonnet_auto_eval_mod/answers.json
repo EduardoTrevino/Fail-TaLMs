@@ -16,5 +16,33 @@
     "info_awareness": "No, the user has not provided enough specific information to answer their request completely using the available tools. The query asks for two distinct pieces of information, but it lacks crucial details needed to use the tools effectively:\n\n1. For finding top markets and exchanges for a specific cryptocurrency:\n   - The user hasn't specified which cryptocurrency they're interested in. The 'get_markets_for_coin' tool requires a 'coin_id' parameter, which is missing from the query.\n\n2. For listing decentralized exchanges supported on a blockchain network:\n   - The user hasn't specified which blockchain network they want to query. The 'get_supported_dexes' tool requires a 'network' parameter, which is also missing from the query.\n\nTo proceed, we would need to ask the user for these missing details:\n1. The specific cryptocurrency (coin_id) they want to find top markets and exchanges for.\n2. The specific blockchain network they want to list supported decentralized exchanges for.\n\nOnce we have this information, we can use the tools to provide a comprehensive answer to the user's query.",
     "info_annotation": "no",
     "info_aware_score": 1
+  },
+  {
+    "query_id": 2,
+    "query": "Can you retrieve the trading data for BTC/USD on Gemini and also provide the price history for Bitcoin to Litecoin exchange on N.exchange over the last hour?",
+    "skipped": false,
+    "pass_rate": 0,
+    "model_answer": "Based on the available data, here's a summary of the trading information:\n\n1. BTC/USD on Gemini:\n   - Latest 1-hour candle: \n     Open: $62,980.00\n     High: $63,224.98\n     Low: $62,839.48\n     Close: $63,188.60\n     Volume: 0.70778418 BTC\n\n   - Recent price range: $60,000 to $64,000\n   - 10-day price range: Lowest $49,540.68 to Highest $70,000\n\n   The BTC/USD pair is currently showing some stability, trading around $63,188.60 within a range of $60,000 to $64,000 over the past few days. However, there has been significant volatility in the past 10 days, with prices reaching as low as $49,540.68 and as high as $70,000.\n\n2. BTC/LTC on N.exchange:\n   Unfortunately, we couldn't retrieve the price history for the BTC/LTC pair on N.exchange due to an API error. The system returned an HTML error page instead of the expected price data.\n\nFor more accurate information about the BTC/LTC pair, it would be best to try the request again later or contact N.exchange support if the issue persists.",
+    "info_awareness": "Yes, the user has provided enough information for me to answer their request given the tools available and my knowledge. The query contains two distinct parts, and I can address both using the available tools:\n\n1. Retrieving trading data for BTC/USD on Gemini:\n   I can use the 'get_candles' function to retrieve this data. The symbol \"BTC/USD\" is provided, which is a required parameter for the function.\n\n2. Providing price history for Bitcoin to Litecoin exchange on N.exchange over the last hour:\n   I can use the 'get_price_history' function for this part. The pair name (Bitcoin to Litecoin) and the time frame (last hour) are provided, which are sufficient for using this function.\n\nNow, I'll proceed to use these tools to answer the user's query.",
+    "info_annotation": "yes",
+    "info_aware_score": 0
+  },
+  {
+    "query_id": 4,
+    "query": "Can you provide a list of all available trading symbols and also give me the details of a bank?",
+    "skipped": true,
+    "pass_rate": 0,
+    "info_awareness": "No. The user's query does not provide enough information for a complete answer using the available tools. Here's why:\n\n1. For the first part of the query, \"Can you provide a list of all available trading symbols,\" we have enough information. We can use the 'get_symbols' tool to retrieve this information.\n\n2. However, for the second part, \"and also give me the details of a bank,\" we lack crucial information. The 'get_bank_details_by_ifsc' tool requires an IFSC code as input, which the user has not provided.\n\nTo answer this query completely, we would need to ask the user for the IFSC code of the bank they want details about. Without this information, we can only partially answer the query by providing the list of trading symbols.",
+    "info_annotation": "no",
+    "info_aware_score": 1
+  },
+  {
+    "query_id": 5,
+    "query": "What are the historical price details in OHLC format on Kraken and on N.exchange for the past 24 hours?",
+    "skipped": true,
+    "pass_rate": 0,
+    "info_awareness": "No. The user's query lacks sufficient information to provide a complete answer using the available tools. Here's why:\n\n1. The query asks for historical price details in OHLC format for two different exchanges: Kraken and N.exchange. However, the available tools don't explicitly mention support for multiple exchanges or specify which exchanges they work with.\n\n2. The query doesn't specify which asset pair(s) the user is interested in. Both the 'get_ohlc_data' and 'get_price_history' functions require a specific asset pair as input.\n\n3. While the query mentions \"past 24 hours,\" we need to know if this should be translated into a specific interval for the 'get_ohlc_data' function or if we should use the 'hours' parameter in the 'get_price_history' function.\n\nTo proceed, we would need to ask the user for the following information:\n\n1. The specific asset pair(s) they're interested in (e.g., BTC/USD, ETH/EUR, etc.).\n2. Confirmation on whether the available tools can provide data for both Kraken and N.exchange, or if we should focus on one exchange.\n3. The preferred time interval for the OHLC data (if using 'get_ohlc_data') or if they want to use 'get_price_history' with the 24-hour timeframe.\n\nWithout this additional information, we cannot make accurate tool calls or provide a comprehensive answer to the user's query.",
+    "info_annotation": "no",
+    "info_aware_score": 1
   }
 ]
