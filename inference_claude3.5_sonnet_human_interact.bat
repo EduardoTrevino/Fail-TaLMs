@@ -1,6 +1,6 @@
 @echo off
 REM Set the output directory
-set OUTPUT_DIR=outputs\Original\claude3.5_sonnet_auto_eval_mod_test
+set OUTPUT_DIR=outputs\No-tool\claude3.5_sonnet_auto_eval
 
 REM Read the OpenAI key from the file and set it as a variable
 for /f %%i in (proxy_key.txt) do set OPENAI_KEY=%%i
@@ -16,6 +16,7 @@ python inference\pipeline_claude_auto_eval_mod.py ^
     --tool_root_dir tools\ ^
     --model neulab/claude-3-5-sonnet-20240620 ^
     --openai_key %OPENAI_KEY% ^
-    --input_query_file benchmark\one_Original_queries.json ^
+    --input_query_file benchmark\subset_No-tools_queries_1-25.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json ^
-    --use_human_interact true
+    --use_human_interact false
+
