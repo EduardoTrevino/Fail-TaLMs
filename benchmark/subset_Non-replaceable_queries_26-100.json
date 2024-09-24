@@ -452,28 +452,6 @@
     {
         "api_list": [
             {
-                "tool_name": "chinesetext",
-                "api_name": "gettext",
-                "api_description": "Returns the textual content of a chapter of text.",
-                "required_parameters": [
-                    {
-                        "name": "urn",
-                        "type": "STRING",
-                        "description": "URN specifying the text to return."
-                    }
-                ],
-                "method": "GET",
-                "category_name": "Language",
-                "optional_parameters": []
-            }
-        ],
-        "query": "Can you retrieve the text content for the chapter with URN 'ctp:analects/xue-er' and check if it contains any profanities? If it does, return the clean text as JSON.",
-        "relevant APIs": [],
-        "query_id": 37
-    },
-    {
-        "api_list": [
-            {
                 "category_name": "Language",
                 "tool_name": "purgomalum",
                 "api_name": "contains_profanity",
@@ -515,35 +493,6 @@
         ],
         "query": "Please retrieve the text from the URN 'ctp:analects/xue-er'. Also, I would like to know the definition of the English word 'philosophy'.",
         "query_id": 39
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Content",
-                "tool_name": "mediawiki",
-                "api_name": "parse_page",
-                "api_description": "Parses a wiki page and returns its HTML content.",
-                "method": "GET",
-                "required_parameters": [
-                    {
-                        "name": "page",
-                        "type": "STRING",
-                        "description": "Title of the page to parse."
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "wiki",
-                        "type": "STRING",
-                        "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
-                        "default": "https://en.wikipedia.org/w/api.php"
-                    }
-                ]
-            }
-        ],
-        "query": "I'd like to know about the user 'pg' on Hacker News and also get the parsed content of the Wikipedia page for 'Python (programming language)'.",
-        "relevant APIs": [],
-        "query_id": 40
     },
     {
         "api_list": [
@@ -939,44 +888,6 @@
         "query": "Can you tell me about Luke Skywalker from Star Wars and also provide today's rosary prayer?",
         "relevant APIs": [],
         "query_id": 51
-    },
-    {
-        "api_list": [
-            {
-                "category_name": "Content",
-                "tool_name": "mediawiki",
-                "api_name": "parse_page",
-                "api_description": "Parses a wiki page and returns its HTML content.",
-                "required_parameters": [
-                    {
-                        "name": "page",
-                        "type": "STRING",
-                        "description": "Title of the page to parse."
-                    }
-                ],
-                "optional_parameters": [
-                    {
-                        "name": "wiki",
-                        "type": "STRING",
-                        "description": "The wiki endpoint to use. Defaults to English Wikipedia.",
-                        "default": "https://en.wikipedia.org/w/api.php"
-                    }
-                ],
-                "method": "GET",
-                "template_response": {
-                    "parse": {
-                        "title": "str",
-                        "pageid": "int",
-                        "text": {
-                            "*": "str"
-                        }
-                    }
-                }
-            }
-        ],
-        "query": "Can you provide detailed information from Wikipedia about the 'Star Wars' franchise, particularly focusing on its films, along with specific data on all films available in the Star Wars API?",
-        "relevant APIs": [],
-        "query_id": 52
     },
     {
         "api_list": [
@@ -2117,51 +2028,6 @@
         "query": "Check for any significant aviation weather hazards yesterday. Also, please provide descriptive statistics on temperature for the box ID '57000b8745fd40c8196ad04c', phenomenon 'Temperatur', from date '2023-01-01T00:00:00Z', to date '2023-01-31T23:59:59Z', with operation 'arithmeticMean' over a window of '1d'?",
         "relevant APIs": [],
         "query_id": 81
-    },
-    {
-        "api_list": [
-            {
-                "tool_name": "awc",
-                "api_name": "get_isigmet",
-                "api_description": "Fetch international SIGMETs.",
-                "required_parameters": [],
-                "optional_parameters": [
-                    {
-                        "name": "format",
-                        "type": "STRING",
-                        "description": "Output format.",
-                        "default": "json"
-                    },
-                    {
-                        "name": "hazard",
-                        "type": "STRING",
-                        "description": "Hazard type",
-                        "default": null
-                    },
-                    {
-                        "name": "level",
-                        "type": "NUMBER",
-                        "description": "The level +-3000' to search",
-                        "default": 0
-                    },
-                    {
-                        "name": "date",
-                        "type": "STRING",
-                        "description": "Specify the date",
-                        "default": null
-                    }
-                ],
-                "method": "GET",
-                "response_format": {
-                    "error": "string",
-                    "response": "string"
-                },
-                "category_name": "Weather"
-            }
-        ],
-        "query": "I need to check for any international SIGMETs related to turbulence. Could you also provide a machine-readable forecast for Paris=48.8575\u00b0 N, 2.3514\u00b0 E, France=46.2276\u00b0 N, 2.2137\u00b0 E?",
-        "relevant APIs": [],
-        "query_id": 82
     },
     {
         "api_list": [
