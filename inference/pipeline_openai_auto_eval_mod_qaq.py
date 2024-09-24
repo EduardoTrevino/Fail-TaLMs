@@ -332,11 +332,11 @@ Remember:
         # Call the model
         if dataset_type == "No-tools":
             response = litellm.completion(
-            api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
-            model=args.model,
-            messages=messages
-        )
+                api_key=args.openai_key,
+                base_url="https://cmu.litellm.ai",
+                model=args.model,
+                messages=messages
+            )
         else:
             response = litellm.completion(
                 api_key=args.openai_key,

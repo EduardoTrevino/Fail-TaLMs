@@ -62,7 +62,7 @@ def extract_yes_no_idk(response):
         return match.group(1)
     return None
 
-def evaluate_tool_awareness(query, functions, args):
+def evaluate_tool_awareness(query, functions, args, client):
     prompt = f"Based on the available tools' functionality and your knowledge of the world, determine whether you have the necessary tools, knowledge, or a combination of both to answer the query. Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation. 'Yes' means you have the knowledge, tools, or a combination of both, and you will attempt to answer. 'IDK' means you are uncertain but willing to try to answer. 'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both, and you will skip it. Query: {query}, Your knowledge of the world, Available Tools: {functions}"
     system_prompt = """
 Your task is to determine whether you can answer the user's query using:
@@ -88,31 +88,19 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": prompt}
     ]
-    client = openai.OpenAI(
-            api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
-        )
 
-    response = client.chat.completions.create(
-        model=args.model,
-        messages=messages,
-        tools=functions
-    )
     tool_aware = None
     retries = 0
     max_retries = 3
 
     while retries < max_retries:
-        client = openai.OpenAI(
-            api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
-        )
-
+        print("In while try tools")
         response = client.chat.completions.create(
             model=args.model,
             messages=messages,
             tools=functions
         )
+        print("After response in tools")
         tool_aware = extract_yes_no_idk(response.choices[0].message.content)
         tool_aware_reasoning = response.choices[0].message.content
 
@@ -129,7 +117,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     
     return tool_aware, tool_aware_reasoning
 
-def evaluate_information_awareness(query, functions, args):
+def evaluate_information_awareness(query, functions, args, client):
     prompt = f"Based on the user's query, your knowledge of the world, and the functionality of the available tools, determine if you can gather, infer, or have all the information needed to answer the request. Remember: Start with 'Yes,' 'No,' or 'IDK,' followed by an explanation. 'Yes' means you have enough information, you can infer it, or can obtain it using the tools, and you will attempt to answer. 'IDK' means you are uncertain but willing to try using your knowledge, tools, or a combination of both. 'No' means you cannot answer the query with your knowledge, the available tools, or a combination of both and you will skip it. Query: {query}, Your knowledge of the world, Available Tools and Their Functionalities: {functions}"
     system_prompt = """
 Your task is to determine if you can gather, infer, or have all the information needed to answer the user's query using:
@@ -153,26 +141,13 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": prompt}
     ]
-    client = openai.OpenAI(
-            api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
-        )
 
-    response = client.chat.completions.create(
-        model=args.model,
-        messages=messages,
-        tools=functions
-    )
     info_aware = None
     retries = 0
     max_retries = 3
 
     while retries < max_retries:
-        client = openai.OpenAI(
-            api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
-        )
-
+        
         response = client.chat.completions.create(
             model=args.model,
             messages=messages,
@@ -274,8 +249,8 @@ def process_query(query_data, args):
     # Load functions
     functions = load_functions(args.tool_root_dir, query_data, args.use_human_interact)
     print(f"Loaded {len(functions)} functions.")
-    for function in functions:
-        print(f"Function loaded: {function['name']}")
+    # for function in functions:
+    #     print(f"Function loaded: {function['name']}")
     print(functions)
 
     function_call_log = []
@@ -291,16 +266,20 @@ def process_query(query_data, args):
     info_awareness_annotation = None
     info_awareness_reasoning = None
 
+    client = openai.OpenAI(
+            api_key=args.openai_key,
+            base_url="https://cmu.litellm.ai",
+        )
+    print("DEBUG: HERE AFTER CLIENT")
     # Tool Awareness Evaluation
     if evaluation_plan['tool_awareness']:
-        tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args)
+        tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args, client)
         print(f"Tool Awareness Response: {tool_awareness_annotation}")
 
     # Information Awareness Evaluation
     if evaluation_plan['info_awareness']:
-        info_awareness_annotation, info_awareness_reasoning = evaluate_information_awareness(query_text, functions, args)
+        info_awareness_annotation, info_awareness_reasoning = evaluate_information_awareness(query_text, functions, args, client)
         print(f"Information Awareness Response: {info_awareness_annotation}")
-
     # Decide whether to skip the query
     skip_query = False
     if evaluation_plan['tool_awareness'] and tool_awareness_annotation == "no":
@@ -354,21 +333,11 @@ Remember:
 
         # Call the model
         if dataset_type == "No-tools":
-            client = openai.OpenAI(
-                api_key=args.openai_key,
-                base_url="https://cmu.litellm.ai",
-            )
-
             response = client.chat.completions.create(
                 model=args.model,
                 messages=messages
             )
         else:
-            client = openai.OpenAI(
-                api_key=args.openai_key,
-                base_url="https://cmu.litellm.ai",
-            )
-
             response = client.chat.completions.create(
                 model=args.model,
                 messages=messages,
@@ -383,7 +352,7 @@ Remember:
             # This is the explanation before tool use
             # print(f"Assistant reasoning content: {assistant_message.content}")
             messages.append({
-                "role": "user",
+                "role": "assistant",
                 "content": assistant_message.content
             })
 
@@ -413,7 +382,7 @@ Remember:
 
             # Add the function response to messages
             messages.append({
-                "role": "user",
+                "role": "tool",
                 "content": f"{function_name}'s response is: {function_response}"
             })
             # If there is interaction data, collect it
@@ -424,7 +393,7 @@ Remember:
             # Remind the assistant to call the "Finish" function
             # Assistant provided the final answer
             reminder_message = {
-            "role": "user",
+            "role": "system",
             "content": "Remember, you must ALWAYS call the \"Finish\" function at the end of your attempt. Please call the \"Finish\" function with your final answer."
         }
             messages.append(reminder_message)
@@ -637,17 +606,20 @@ def load_functions(tool_root_dir, query_data, use_human_interact=False):
 
     # Add the finish function
     finish_func = {
-        "name": "Finish",
-        "description": "If you believe that you have obtained a result that can answer the task, please call this function to provide the final answer. Remember: you must ALWAYS call this function at the end of your attempt, and the only part that will be shown to the user is the final answer, so it should contain sufficient information.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "final_answer": {
-                    "type": "string",
-                    "description": "The final answer you want to give the user."
-                }
-            },
-            "required": ["final_answer"],
+        "type": "function",
+        "function": {
+            "name": "Finish",
+            "description": "If you believe that you have obtained a result that can answer the task, please call this function to provide the final answer. Remember: you must ALWAYS call this function at the end of your attempt, and the only part that will be shown to the user is the final answer, so it should contain sufficient information.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "final_answer": {
+                        "type": "string",
+                        "description": "The final answer you want to give the user."
+                    }
+                },
+                "required": ["final_answer"],
+            }
         }
     }
     functions.append(finish_func)
@@ -656,12 +628,15 @@ def load_functions(tool_root_dir, query_data, use_human_interact=False):
 
 def api_to_openai_function(api, tool_name):
     function = {
-        "name": api['name'],
-        "description": api.get('description', ''),
-        "input_schema": {
-            "type": "object",
-            "properties": {},
-            "required": []
+        "type": "function",
+        "function": {
+            "name": api['name'],
+            "description": api.get('description', ''),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
         }
     }
 
@@ -678,8 +653,8 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['input_schema']['properties'][param_name] = param_schema
-        function['input_schema']['required'].append(param_name)
+        function['function']['parameters']['properties'][param_name] = param_schema
+        function['function']['parameters']['required'].append(param_name)
 
     # Handle optional parameters
     optional_params = api.get('optional_parameters', [])
@@ -694,7 +669,7 @@ def api_to_openai_function(api, tool_name):
         if param_type == "array":
             # Include 'items' in the schema
             param_schema["items"] = {"type": "string"}  # Assuming array of strings
-        function['input_schema']['properties'][param_name] = param_schema
+        function['function']['parameters']['properties'][param_name] = param_schema
         # Optional parameters are not added to 'required'
 
     return function
