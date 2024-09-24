@@ -252,6 +252,7 @@ def process_query(query_data, args):
     query_text = query_data['query']
     query_id = query_data['query_id']
     dataset_type = get_dataset_type(args.input_query_file)
+    # Initialize the tokenizer it has to be the same for each model
     print(f"\nProcessing query: {query_text}")
 
     # Load functions
@@ -385,6 +386,9 @@ Remember:
             # Execute the function
             function_response, interaction_data = execute_function(function_name, function_args, args.tool_root_dir, query_data)
             print(f"----\nFunction response: {function_response}")
+            # Check the function response length and truncate if necessary
+            max_tokens = 127000 # 31,750 tokens * 4 characters per token (approx)
+            function_response = truncate_response_if_needed(function_response, max_tokens)
             function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
             # Add the function response to messages
@@ -426,7 +430,7 @@ Remember:
     function_context = "\n".join(function_call_log)
     # Evaluate the pass rate using the assistant's reply and the user's query
     pass_rate = evaluate_pass_rate(assistant_reply, query_text, function_context, args)
-    print("Pass score: ", pass_rate)
+    print("Pass rate score: ", pass_rate)
     tool_validity, info_validity = calculate_validity(dataset_type, tool_awareness_annotation, info_awareness_annotation, pass_rate)
     result = {
         'query_id': query_id,
@@ -448,6 +452,12 @@ Remember:
         result['info_annotation'] = info_awareness_annotation
         result['info_aware_score'] = info_validity
     return result
+
+def truncate_response_if_needed(response, max_chars):
+    if len(response) > max_chars:
+        print("Response trunked to 31k tokens")
+        return response[:max_chars]  # Truncate to max allowed characters
+    return response
 
 def extract_correct_incorrect(response):
     """

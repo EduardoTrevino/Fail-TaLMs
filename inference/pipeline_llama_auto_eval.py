@@ -313,7 +313,7 @@ def process_query(query_data, args):
     system_message = """
 You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user. 
 Remember:
-1.ALWAYS call \"Finish\" function at the end of the task. And the final answer should contain enough information to show to the user
+1.ALWAYS call \"Finish\" function at the end of the task. And append your final answer, the final answer should contain enough information to show to the user to answer their question
 """
 
     # Prepare messages

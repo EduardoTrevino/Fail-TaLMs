@@ -1,6 +1,6 @@
 @echo off
 REM Set the output directory
-set OUTPUT_DIR=outputs\No-tool\gpt_4o_auto_eval
+set OUTPUT_DIR=outputs\Original\gpt_4o_auto_eval
 
 REM Read the OpenAI key from the file and set it as a variable
 for /f %%i in (proxy_key.txt) do set OPENAI_KEY=%%i
@@ -16,6 +16,6 @@ python inference\pipeline_openai_auto_eval_mod_qaq.py ^
     --tool_root_dir tools\ ^
     --model openai/neulab/gpt-4o-2024-05-13 ^
     --openai_key %OPENAI_KEY% ^
-    --input_query_file benchmark\subset_No-tools_queries_1-25.json ^
+    --input_query_file benchmark\subset_Original_queries_26-100.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json ^
     --use_human_interact false
