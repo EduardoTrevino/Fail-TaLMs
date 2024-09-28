@@ -1,0 +1,1624 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_order_book",
+                "api_description": "Retrieve the order book for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which the order book is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "method": "GET",
+                "optional_parameters": []
+            }
+        ],
+        "query": "I want to see the current exchange rate from the NBP service and also check the order book on OKX.",
+        "relevant APIs": [],
+        "query_id": 26
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_all_tickers",
+                "api_description": "Retrieve tick data for multiple crypto coins, sorted by market cap.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "The starting position for results.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to retrieve.",
+                        "default": "100"
+                    }
+                ]
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all cryptocurrencies ranked by their market cap and also give me the current exchange rates for the US dollar?",
+        "relevant APIs": [],
+        "query_id": 27
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_token_price",
+                "api_description": "Get current USD prices of multiple tokens on a network.",
+                "required_parameters": [
+                    {
+                        "name": "network",
+                        "type": "STRING",
+                        "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                    },
+                    {
+                        "name": "addresses",
+                        "type": "STRING",
+                        "description": "Comma-separated list of token addresses."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "id": "string",
+                        "attributes": {
+                            "price": "string",
+                            "price24h_change": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "wazirx",
+                "api_name": "ticker_24hr",
+                "api_description": "24-hour rolling window price change statistics for a single symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "The trading pair symbol",
+                        "default": "btcinr"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "symbol": "string",
+                    "baseAsset": "string",
+                    "quoteAsset": "string",
+                    "openPrice": "string",
+                    "lowPrice": "string",
+                    "highPrice": "string",
+                    "lastPrice": "string",
+                    "volume": "string"
+                }
+            }
+        ],
+        "query": "Can you tell me the current price of the Ethereum token on its network? Also, how has the price changed in the last 24 hours for a certain trading pair?",
+        "relevant APIs": [],
+        "query_id": 28
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinmap",
+                "api_name": "get_venues",
+                "api_description": "List of Venues with filtering options.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "lat1",
+                        "type": "FLOAT",
+                        "description": "Minimum latitude."
+                    },
+                    {
+                        "name": "lat2",
+                        "type": "FLOAT",
+                        "description": "Maximum latitude."
+                    },
+                    {
+                        "name": "lon1",
+                        "type": "FLOAT",
+                        "description": "Minimum longitude."
+                    },
+                    {
+                        "name": "lon2",
+                        "type": "FLOAT",
+                        "description": "Maximum longitude."
+                    },
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Substring search in venue names."
+                    },
+                    {
+                        "name": "category",
+                        "type": "STRING",
+                        "description": "Filter category."
+                    },
+                    {
+                        "name": "owner",
+                        "type": "STRING",
+                        "description": "Venue owner (userhash)."
+                    },
+                    {
+                        "name": "upvoter",
+                        "type": "STRING",
+                        "description": "User who upvoted the venue."
+                    },
+                    {
+                        "name": "before",
+                        "type": "STRING",
+                        "description": "Show venues created before the date."
+                    },
+                    {
+                        "name": "after",
+                        "type": "STRING",
+                        "description": "Show venues created after the date."
+                    },
+                    {
+                        "name": "promoted",
+                        "type": "BOOLEAN",
+                        "description": "Show promoted venues."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit number of results.",
+                        "default": "10"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "Skip first N results.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "mode",
+                        "type": "STRING",
+                        "description": "Result mode.",
+                        "default": "list"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "venues": [
+                        "object"
+                    ],
+                    "count": "int"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "result": "string",
+                    "base_code": "string",
+                    "rates": {
+                        "type": "object",
+                        "additionalProperties": "number"
+                    }
+                }
+            }
+        ],
+        "query": "Can you find some venues that accept cryptocurrency globally, and also provide me the latest exchange rates?",
+        "relevant APIs": [],
+        "query_id": 29
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_token_price",
+                "api_description": "Get current USD prices of multiple tokens on a network.",
+                "required_parameters": [
+                    {
+                        "name": "network",
+                        "type": "STRING",
+                        "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                    },
+                    {
+                        "name": "addresses",
+                        "type": "STRING",
+                        "description": "Comma-separated list of token addresses."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "id": "string",
+                        "attributes": {
+                            "price": "string",
+                            "price24h_change": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "wazirx",
+                "api_name": "ticker_24hr",
+                "api_description": "24-hour rolling window price change statistics for a single symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "The trading pair symbol",
+                        "default": "btcinr"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "symbol": "string",
+                    "baseAsset": "string",
+                    "quoteAsset": "string",
+                    "openPrice": "string",
+                    "lowPrice": "string",
+                    "highPrice": "string",
+                    "lastPrice": "string",
+                    "volume": "string"
+                }
+            }
+        ],
+        "query": "What is the current price of the Ethereum token on its network, and how has the price changed in the last 24 hours for the BTC to INR trading pair?",
+        "relevant APIs": [],
+        "query_id": 31
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_ticker",
+                "api_description": "Retrieve tick data for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "symbol": "str",
+                    "name": "str",
+                    "rank": "int",
+                    "price_usd": "float",
+                    "market_cap_usd": "float",
+                    "percent_change_1h": "float",
+                    "percent_change_24h": "float",
+                    "percent_change_7d": "float",
+                    "volume24": "float",
+                    "volume24a": "float"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What is the current price of Bitcoin and can you provide the details of a bank branch by IFSC code?",
+        "relevant APIs": [],
+        "query_id": 32
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_candles",
+                "api_description": "Retrieves time-intervaled data for the provided symbol.",
+                "required_parameters": [
+                    {
+                        "name": "symbol",
+                        "type": "STRING",
+                        "description": "Trading pair symbol."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "time_frame",
+                        "type": "STRING",
+                        "description": "Time range for each candle",
+                        "default": "15m"
+                    }
+                ],
+                "method": "GET"
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "nexchange",
+                "api_name": "get_price_history",
+                "api_description": "Returns price history for selected pair.",
+                "required_parameters": [
+                    {
+                        "name": "pair_name",
+                        "type": "STRING",
+                        "description": "Name of exchanged pair."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hours",
+                        "type": "FLOAT",
+                        "description": "Number of hours back to get prices for."
+                    },
+                    {
+                        "name": "data_points",
+                        "type": "INTEGER",
+                        "description": "Number of data points to retrieve."
+                    },
+                    {
+                        "name": "market_code",
+                        "type": "STRING",
+                        "description": "Price market code."
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide the current market ticker information for BTC-USDT on OKX?",
+        "relevant APIs": [],
+        "query_id": 33
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_ticker_by_id",
+                "api_description": "Returns price data of a single cryptocurrency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency to retrieve price data for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quotes",
+                        "type": "STRING",
+                        "description": "Comma-separated list of quotes to return.",
+                        "default": "USD"
+                    }
+                ],
+                "url": "https://api.coinpaprika.com/v1/tickers/{coin_id}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            },
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "Can you provide the current price of Bitcoin in USD and also give the exchange rate of USD?",
+        "relevant APIs": [],
+        "query_id": 34
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "gemini",
+                "api_name": "get_symbols",
+                "api_description": "Retrieve all available symbols for trading.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        "str"
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "okx",
+                "api_name": "get_market_ticker",
+                "api_description": "Retrieve the market ticker information for a specified instrument.",
+                "required_parameters": [
+                    {
+                        "name": "inst_id",
+                        "type": "STRING",
+                        "description": "The instrument ID for which ticker information is required.",
+                        "default": "BTC-USDT"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "instId": "str",
+                            "last": "float",
+                            "lastSz": "float",
+                            "askPx": "float",
+                            "askSz": "float",
+                            "bidPx": "float",
+                            "bidSz": "float",
+                            "open24h": "float",
+                            "high24h": "float",
+                            "low24h": "float",
+                            "vol24h": "float"
+                        }
+                    ],
+                    "code": "int",
+                    "msg": "str"
+                }
+            }
+        ],
+        "query": "What are all the available trading symbols on Gemini, and what is the current market ticker information for certain cryptocurrencies on OKX?",
+        "relevant APIs": [],
+        "query_id": 35
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_ticker",
+                "api_description": "Retrieve tick data for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "symbol": "str",
+                    "name": "str",
+                    "rank": "int",
+                    "price_usd": "float",
+                    "market_cap_usd": "float",
+                    "percent_change_1h": "float",
+                    "percent_change_24h": "float",
+                    "percent_change_7d": "float",
+                    "volume24": "float",
+                    "volume24a": "float"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What is the current price of a cryptocurrency and can you provide the details of Delhi Nagrik Sehkari Bank using IFSC code YESB0DNB002?",
+        "relevant APIs": [],
+        "query_id": 36
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_all_tickers",
+                "api_description": "Retrieve tick data for multiple crypto coins, sorted by market cap.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "The starting position for results.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to retrieve.",
+                        "default": "100"
+                    }
+                ]
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all cryptocurrencies ranked by their market cap and also give me the current exchange rates?",
+        "relevant APIs": [],
+        "query_id": 37
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "nbpweb",
+                "api_name": "get_exchange_rate_table",
+                "api_description": "Fetch a complete table of exchange rates of specified type.",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "table": "str",
+                    "no": "str",
+                    "tradingDate": "str",
+                    "effectiveDate": "str",
+                    "rates": [
+                        {
+                            "currency": "str",
+                            "code": "str",
+                            "mid": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What are the current exchange rates available in table type 'A' from the National Bank of Poland? Additionally, can you provide the details of the bank branch associated with the IFSC code 'HDFC0000123'?",
+        "relevant APIs": [],
+        "query_id": 38
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_global_market_overview",
+                "api_description": "Returns global market overview metrics.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "url": "https://api.coinpaprika.com/v1/global",
+                "statuscode": 200,
+                "category_name": "Finance"
+            },
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_exchange_rate_table",
+                "api_description": "Fetch a complete table of exchange rates of specified type.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/tables/{table}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "What is the current overview of the global cryptocurrency market? Also, provide the latest exchange.",
+        "relevant APIs": [],
+        "query_id": 39
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_markets_for_coin",
+                "api_description": "Retrieve top 50 exchanges and markets for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "markets": [
+                        {
+                            "name": "string",
+                            "pair": "string",
+                            "price_usd": "float",
+                            "volume_usd": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_supported_dexes",
+                "api_description": "Get list of supported dexes on a network.",
+                "required_parameters": [
+                    {
+                        "name": "network",
+                        "type": "STRING",
+                        "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page of results to retrieve.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "string",
+                            "attributes": {
+                                "name": "string"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find the top markets and exchanges for a specific cryptocurrency and also list all decentralized exchanges supported on the Binance Smart Chain network.",
+        "relevant APIs": [],
+        "query_id": 40
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinbase",
+                "api_name": "get_exchange_rates",
+                "api_description": "Get current exchange rates. Default base currency is USD.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "currency",
+                        "type": "STRING",
+                        "description": "Base currency (default: USD)."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "currency": "string",
+                        "rates": {
+                            "string": "string"
+                        }
+                    }
+                },
+                "category_name": "Finance"
+            },
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_fiat_price",
+                "api_description": "Get the fiat price of the currencies for the available trading pairs.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "base",
+                        "type": "STRING",
+                        "description": "Base currency ticker symbol (default is 'USD')."
+                    },
+                    {
+                        "name": "currencies",
+                        "type": "STRING",
+                        "description": "Comma-separated list of cryptocurrencies to be converted into fiat (e.g., 'BTC,ETH')."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "BTC": "string",
+                        "ETH": "string"
+                    }
+                },
+                "category_name": "Finance"
+            }
+        ],
+        "query": "What are the current cryptocurrency exchange rates against USD on Coinbase, and can you also get the fiat prices of the cryptocurrencies I like from Kucoin?",
+        "relevant APIs": [],
+        "query_id": 41
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "geckoterminal",
+                "api_name": "get_token_price",
+                "api_description": "Get current USD prices of multiple tokens on a network.",
+                "required_parameters": [
+                    {
+                        "name": "network",
+                        "type": "STRING",
+                        "description": "The blockchain network to query (e.g., 'ethereum', 'bsc')."
+                    },
+                    {
+                        "name": "addresses",
+                        "type": "STRING",
+                        "description": "Comma-separated list of token addresses."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "symbol": "str",
+                            "name": "str",
+                            "price_usd": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CITY": "str",
+                    "IFSC": "str",
+                    "CONTACT": "str or null",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "Can you check the current USD price of a token on the Ethereum network? Additionally, I'd like to find the details of a bank branch using its IFSC code.",
+        "relevant APIs": [],
+        "query_id": 42
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_all_tickers",
+                "api_description": "Retrieve tick data for multiple crypto coins, sorted by market cap.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "The starting position for results.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to retrieve.",
+                        "default": "100"
+                    }
+                ]
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all cryptocurrencies and also give me the current exchange rates for the US dollar?",
+        "relevant APIs": [],
+        "query_id": 43
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinbase",
+                "api_name": "get_fiat_currencies",
+                "api_description": "Lists known fiat currencies.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "id": "string",
+                    "name": "string",
+                    "min_size": "string"
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "coincap",
+                "api_name": "get_assets",
+                "api_description": "A list of all assets.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of assets to retrieve.",
+                        "default": "100"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": [
+                        {
+                            "id": "str",
+                            "rank": "str",
+                            "symbol": "str",
+                            "name": "str",
+                            "supply": "str",
+                            "maxSupply": "str",
+                            "marketCapUsd": "str",
+                            "volumeUsd24Hr": "str",
+                            "priceUsd": "str",
+                            "changePercent24Hr": "str",
+                            "vwap24Hr": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide a list of known currencies and information on there assets?",
+        "relevant APIs": [],
+        "query_id": 44
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_ticker_by_id",
+                "api_description": "Returns price data of a single cryptocurrency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency to retrieve price data for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quotes",
+                        "type": "STRING",
+                        "description": "Comma-separated list of quotes to return.",
+                        "default": "USD"
+                    }
+                ],
+                "url": "https://api.coinpaprika.com/v1/tickers/{coin_id}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            },
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "Can you provide the current price of Bitcoin in USD and also give the exchange rate from table 'A'?",
+        "relevant APIs": [],
+        "query_id": 45
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_ticker_by_id",
+                "api_description": "Returns price data of a single cryptocurrency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency to retrieve price data for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quotes",
+                        "type": "STRING",
+                        "description": "Comma-separated list of quotes to return.",
+                        "default": "USD"
+                    }
+                ],
+                "url": "https://api.coinpaprika.com/v1/tickers/{coin_id}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            },
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "Can you provide the current price of a cryptocurrency in USD and also give the exchange rate of USD from table 'A'?",
+        "relevant APIs": [],
+        "query_id": 46
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "nbpweb",
+                "api_name": "get_exchange_rate_table",
+                "api_description": "Fetch a complete table of exchange rates of specified type.",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "table": "str",
+                    "no": "str",
+                    "tradingDate": "str",
+                    "effectiveDate": "str",
+                    "rates": [
+                        {
+                            "currency": "str",
+                            "code": "str",
+                            "mid": "float"
+                        }
+                    ]
+                }
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What are the current exchange rates available from the National Bank of Poland? Additionally, can you provide the details of a bank branch associated with a specific IFSC code?",
+        "relevant APIs": [],
+        "query_id": 47
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "chinesetext",
+                "api_name": "getcharacter",
+                "api_description": "Returns basic data about a character.",
+                "required_parameters": [
+                    {
+                        "name": "char",
+                        "type": "STRING",
+                        "description": "Character to describe."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "char": "str",
+                    "translations": [
+                        "str"
+                    ],
+                    "radical": "str",
+                    "stroke_count": "int"
+                },
+                "optional_parameters": []
+            },
+            {
+                "category_name": "Language",
+                "tool_name": "datamuse",
+                "api_name": "words",
+                "api_description": "Returns a list of words matching given constraints.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ml",
+                        "type": "STRING",
+                        "description": "Means like constraint."
+                    },
+                    {
+                        "name": "sl",
+                        "type": "STRING",
+                        "description": "Sounds like constraint."
+                    },
+                    {
+                        "name": "sp",
+                        "type": "STRING",
+                        "description": "Spelled like constraint."
+                    },
+                    {
+                        "name": "rel_code",
+                        "type": "STRING",
+                        "description": "Related word constraint codes like 'syn', 'trg'."
+                    },
+                    {
+                        "name": "v",
+                        "type": "STRING",
+                        "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+                    },
+                    {
+                        "name": "topics",
+                        "type": "STRING",
+                        "description": "Hints about the context or topic."
+                    },
+                    {
+                        "name": "lc",
+                        "type": "STRING",
+                        "description": "Left context hint."
+                    },
+                    {
+                        "name": "rc",
+                        "type": "STRING",
+                        "description": "Right context hint."
+                    },
+                    {
+                        "name": "max",
+                        "type": "INTEGER",
+                        "description": "Max number of results (default is 100).",
+                        "default": "100"
+                    },
+                    {
+                        "name": "md",
+                        "type": "STRING",
+                        "description": "Metadata flags like 'd' for definitions."
+                    },
+                    {
+                        "name": "qe",
+                        "type": "STRING",
+                        "description": "Query echo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "word": "string",
+                        "score": "integer"
+                    }
+                ]
+            }
+        ],
+        "query": "What is the meaning and basic details of the Chinese character I saw in an artile earlier? Also, give me words that mean the same as 'love' using an English vocabulary.",
+        "relevant APIs": [],
+        "query_id": 48
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "chinesetext",
+                "api_name": "getcharacter",
+                "api_description": "Returns basic data about a character.",
+                "required_parameters": [
+                    {
+                        "name": "char",
+                        "type": "STRING",
+                        "description": "Character to describe."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Language",
+                "optional_parameters": []
+            },
+            {
+                "tool_name": "purgomalum",
+                "api_name": "contains_profanity",
+                "api_description": "Checks if input text contains profanity.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Input text to be checked for profanity."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Language",
+                "optional_parameters": []
+            }
+        ],
+        "query": "What is the basic data of the Chinese character '\u4ec1'? Also, does the sentence my friend just said contain any profanity?",
+        "relevant APIs": [],
+        "query_id": 49
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "chinesetext",
+                "api_name": "getcharacter",
+                "api_description": "Returns basic data about a character.",
+                "required_parameters": [
+                    {
+                        "name": "char",
+                        "type": "STRING",
+                        "description": "Character to describe."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "char": "str",
+                    "translations": [
+                        "str"
+                    ],
+                    "radical": "str",
+                    "stroke_count": "int"
+                },
+                "optional_parameters": []
+            },
+            {
+                "category_name": "Language",
+                "tool_name": "datamuse",
+                "api_name": "words",
+                "api_description": "Returns a list of words matching given constraints.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ml",
+                        "type": "STRING",
+                        "description": "Means like constraint."
+                    },
+                    {
+                        "name": "sl",
+                        "type": "STRING",
+                        "description": "Sounds like constraint."
+                    },
+                    {
+                        "name": "sp",
+                        "type": "STRING",
+                        "description": "Spelled like constraint."
+                    },
+                    {
+                        "name": "rel_code",
+                        "type": "STRING",
+                        "description": "Related word constraint codes like 'syn', 'trg'."
+                    },
+                    {
+                        "name": "v",
+                        "type": "STRING",
+                        "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+                    },
+                    {
+                        "name": "topics",
+                        "type": "STRING",
+                        "description": "Hints about the context or topic."
+                    },
+                    {
+                        "name": "lc",
+                        "type": "STRING",
+                        "description": "Left context hint."
+                    },
+                    {
+                        "name": "rc",
+                        "type": "STRING",
+                        "description": "Right context hint."
+                    },
+                    {
+                        "name": "max",
+                        "type": "INTEGER",
+                        "description": "Max number of results (default is 100).",
+                        "default": "100"
+                    },
+                    {
+                        "name": "md",
+                        "type": "STRING",
+                        "description": "Metadata flags like 'd' for definitions."
+                    },
+                    {
+                        "name": "qe",
+                        "type": "STRING",
+                        "description": "Query echo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "word": "string",
+                        "score": "integer"
+                    }
+                ]
+            }
+        ],
+        "query": "What is the meaning and basic details of the Chinese character I saw in an artile earlier? Also, give me words that mean the same as the one my mom always talks about using an English vocabulary.",
+        "relevant APIs": [],
+        "query_id": 50
+    }
+]

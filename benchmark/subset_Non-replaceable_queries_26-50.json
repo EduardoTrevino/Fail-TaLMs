@@ -1,0 +1,830 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "IFSC": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CONTACT": "str or null",
+                    "CITY": "str",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "What is the current price of Bitcoin and can you provide the details of Delhi Nagrik Sehkari Bank using IFSC code YESB0DNB002?",
+        "relevant APIs": [],
+        "query_id": 25
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all cryptocurrencies ranked by their market cap and also give me the current exchange rates for the US dollar?",
+        "relevant APIs": [],
+        "query_id": 26
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_global_market_overview",
+                "api_description": "Returns global market overview metrics.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "url": "https://api.coinpaprika.com/v1/global",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "What is the current overview of the global cryptocurrency market? Also, provide the latest exchange rates from table 'A'.",
+        "relevant APIs": [],
+        "query_id": 27
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_markets_for_coin",
+                "api_description": "Retrieve top 50 exchanges and markets for a specific coin.",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "markets": [
+                        {
+                            "name": "string",
+                            "pair": "string",
+                            "price_usd": "float",
+                            "volume_usd": "float"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find the top markets and exchanges for Ethereum and also list all decentralized exchanges supported on the Binance Smart Chain network.",
+        "relevant APIs": [],
+        "query_id": 28
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "kucoin",
+                "api_name": "get_fiat_price",
+                "api_description": "Get the fiat price of the currencies for the available trading pairs.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "base",
+                        "type": "STRING",
+                        "description": "Base currency ticker symbol (default is 'USD')."
+                    },
+                    {
+                        "name": "currencies",
+                        "type": "STRING",
+                        "description": "Comma-separated list of cryptocurrencies to be converted into fiat (e.g., 'BTC,ETH')."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "data": {
+                        "BTC": "string",
+                        "ETH": "string"
+                    }
+                },
+                "category_name": "Finance"
+            }
+        ],
+        "query": "What are the current cryptocurrency exchange rates against USD on Coinbase, and can you also get the fiat prices of BTC and ETH from Kucoin?",
+        "relevant APIs": [],
+        "query_id": 29
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "razorpay",
+                "api_name": "get_bank_details_by_ifsc",
+                "api_description": "Retrieve bank details by providing an IFSC code.",
+                "required_parameters": [
+                    {
+                        "name": "ifsc_code",
+                        "type": "STRING",
+                        "description": "The IFSC code of the bank branch."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "BANK": "str",
+                    "BRANCH": "str",
+                    "ADDRESS": "str",
+                    "CITY": "str",
+                    "IFSC": "str",
+                    "CONTACT": "str or null",
+                    "RTGS": "bool",
+                    "MICR": "str or null",
+                    "UPI": "bool",
+                    "NEFT": "bool",
+                    "IMPS": "bool"
+                }
+            }
+        ],
+        "query": "Can you check the current USD price of the Ethereum token on its network? Additionally, I'd like to find the details of a bank branch using its IFSC code, say YESB0DNB002.",
+        "relevant APIs": [],
+        "query_id": 30
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_currency_exchange_rate",
+                "api_description": "Fetch the exchange rate of a specific currency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    },
+                    {
+                        "name": "code",
+                        "type": "STRING",
+                        "description": "Currency code based on ISO 4217.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/rates/{table}/{code}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "Can you provide the current price of Bitcoin in USD and also give the exchange rate of USD from table 'A'?",
+        "relevant APIs": [],
+        "query_id": 31
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "nbpweb",
+                "api_name": "get_exchange_rate_table",
+                "api_description": "Fetch a complete table of exchange rates of specified type.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "table",
+                        "type": "STRING",
+                        "description": "Type of table 'A', 'B', or 'C'.",
+                        "default": "A"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "top_count",
+                        "type": "INTEGER",
+                        "description": "Return last top_count entries."
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "start_date",
+                        "type": "STRING",
+                        "description": "Start date for range in 'YYYY-MM-DD' format."
+                    },
+                    {
+                        "name": "end_date",
+                        "type": "STRING",
+                        "description": "End date for range in 'YYYY-MM-DD' format."
+                    }
+                ],
+                "url": "http://api.nbp.pl/api/exchangerates/tables/{table}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "What is the current overview of the global cryptocurrency market? Also, provide the latest exchange rates from table 'A'.",
+        "relevant APIs": [],
+        "query_id": 32
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "coinpaprika",
+                "api_name": "get_ticker_by_id",
+                "api_description": "Returns price data of a single cryptocurrency.",
+                "method": "GET",
+                "required_parameters": [
+                    {
+                        "name": "coin_id",
+                        "type": "STRING",
+                        "description": "The ID of the cryptocurrency to retrieve price data for."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "quotes",
+                        "type": "STRING",
+                        "description": "Comma-separated list of quotes to return.",
+                        "default": "USD"
+                    }
+                ],
+                "url": "https://api.coinpaprika.com/v1/tickers/{coin_id}",
+                "statuscode": 200,
+                "category_name": "Finance"
+            }
+        ],
+        "query": "Can you provide the current price of Bitcoin in USD and also give the exchange rate of USD from table 'A'?",
+        "relevant APIs": [],
+        "query_id": 33
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "chinesetext",
+                "api_name": "getcharacter",
+                "api_description": "Returns basic data about a character.",
+                "required_parameters": [
+                    {
+                        "name": "char",
+                        "type": "STRING",
+                        "description": "Character to describe."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "char": "str",
+                    "basic_data": {
+                        "key": "value"
+                    }
+                },
+                "category_name": "Language"
+            }
+        ],
+        "query": "I am interested in learning more about the Chinese character '\u4ec1'. Can you provide the basic data for this character? Also, list all Chinese characters available in the database.",
+        "relevant APIs": [],
+        "query_id": 34
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "datamuse",
+                "api_name": "words",
+                "api_description": "Returns a list of words matching given constraints.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ml",
+                        "type": "STRING",
+                        "description": "Means like constraint."
+                    },
+                    {
+                        "name": "sl",
+                        "type": "STRING",
+                        "description": "Sounds like constraint."
+                    },
+                    {
+                        "name": "sp",
+                        "type": "STRING",
+                        "description": "Spelled like constraint."
+                    },
+                    {
+                        "name": "rel_code",
+                        "type": "STRING",
+                        "description": "Related word constraint codes like 'syn', 'trg'."
+                    },
+                    {
+                        "name": "v",
+                        "type": "STRING",
+                        "description": "Vocab identifier, e.g., 'enwiki' for English Wikipedia."
+                    },
+                    {
+                        "name": "topics",
+                        "type": "STRING",
+                        "description": "Hints about the context or topic."
+                    },
+                    {
+                        "name": "lc",
+                        "type": "STRING",
+                        "description": "Left context hint."
+                    },
+                    {
+                        "name": "rc",
+                        "type": "STRING",
+                        "description": "Right context hint."
+                    },
+                    {
+                        "name": "max",
+                        "type": "INTEGER",
+                        "description": "Max number of results (default is 100).",
+                        "default": "100"
+                    },
+                    {
+                        "name": "md",
+                        "type": "STRING",
+                        "description": "Metadata flags like 'd' for definitions."
+                    },
+                    {
+                        "name": "qe",
+                        "type": "STRING",
+                        "description": "Query echo."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "word": "string",
+                        "score": "integer"
+                    }
+                ]
+            }
+        ],
+        "query": "Can you provide a list of Chinese characters that are filtered by the 'gb' filter and also find words that mean the same as 'ringing in the ears'?",
+        "relevant APIs": [],
+        "query_id": 35
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "purgomalum",
+                "api_name": "filter_text_json",
+                "api_description": "Filter profanity from text and return result as JSON.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Input text to be processed."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "add",
+                        "type": "STRING",
+                        "description": "Comma separated words to add to the profanity list."
+                    },
+                    {
+                        "name": "fill_text",
+                        "type": "STRING",
+                        "description": "Text for replacing profane words."
+                    },
+                    {
+                        "name": "fill_char",
+                        "type": "STRING",
+                        "description": "Character to replace profane words."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Language"
+            }
+        ],
+        "query": "Can you retrieve the text content for the chapter with URN 'ctp:analects/xue-er' and check if it contains any profanities? If it does, return the clean text as JSON.",
+        "relevant APIs": [],
+        "query_id": 36
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "purgomalum",
+                "api_name": "contains_profanity",
+                "api_description": "Check if input text contains profanity.",
+                "required_parameters": [
+                    {
+                        "name": "text",
+                        "type": "STRING",
+                        "description": "Input text to be checked for profanity."
+                    }
+                ],
+                "method": "GET",
+                "template_response": "true or false",
+                "optional_parameters": []
+            }
+        ],
+        "query": "What is the current version information of the Chinese Character Web API, and can you check if the phrase 'This is a test!' contains any profanity?",
+        "relevant APIs": [],
+        "query_id": 38
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Language",
+                "tool_name": "freedictionary",
+                "api_name": "get_word_definition",
+                "api_description": "Retrieve the definition of the specified English word.",
+                "required_parameters": [
+                    {
+                        "name": "word",
+                        "type": "STRING",
+                        "description": "The word to get the definition for.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "optional_parameters": []
+            }
+        ],
+        "query": "Please retrieve the text from the URN 'ctp:analects/xue-er'. Also, I would like to know the definition of the English word 'philosophy'.",
+        "query_id": 39
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "tvmaze",
+                "api_name": "show_main_information",
+                "api_description": "Retrieve all primary information for a specific show by its TVmaze ID.",
+                "required_parameters": [
+                    {
+                        "name": "show_id",
+                        "type": "INTEGER",
+                        "description": "The TVmaze ID of the show."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Tell me about the staff involved in anime ID 10 and get the main information about the show with the TVmaze ID 5.",
+        "relevant APIs": [],
+        "query_id": 41
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "Jikan",
+                "api_name": "get_anime_staff",
+                "api_description": "Get staff information for a specific anime.",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "INTEGER",
+                        "description": "The ID of the anime."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Tell me about the staff involved in anime ID 10 and get the main information about the show with the TVmaze ID 5.",
+        "relevant APIs": [],
+        "query_id": 42
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": null
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "I would like to check the TV schedule for channel ct1 in JSON format on the 4th of August, 2024 using \u010cesk\u00e1 Televize's API. Additionally, I'm interested in finding newspaper titles related to 'historical news' using Chronicling America's API.",
+        "relevant APIs": [],
+        "query_id": 43
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "hackernews",
+                "api_name": "get_top_stories",
+                "api_description": "Fetch up to 500 top stories from Hacker News.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "template_response": {
+                    "type": "list of integers",
+                    "description": "List of top story IDs."
+                },
+                "category_name": "Content"
+            }
+        ],
+        "query": "What are the current trending top stories on Hacker News related to 'data science', and can you find some books on 'data science' available in the Open Library?",
+        "relevant APIs": [],
+        "query_id": 44
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_reports",
+                "api_description": "Fetch reports with optional filtering by type and name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "nskip",
+                        "type": "INTEGER",
+                        "description": "Number to skip."
+                    },
+                    {
+                        "name": "nlist",
+                        "type": "STRING",
+                        "description": "Number or 'all' to list."
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "'anime' or 'manga'."
+                    },
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "Starts with the value."
+                    }
+                ],
+                "method": "GET",
+                "template_response": "XML"
+            }
+        ],
+        "query": "Can you provide a list of anime reports available on Anime News Network? Also, can you retrieve details about a specific Star Trek character using its unique ID (CHMA0000215045) from STAPI?",
+        "relevant APIs": [],
+        "query_id": 45
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "mediawiki",
+                "api_name": "search_open_search",
+                "api_description": "Search the wiki using the OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of search results to return.",
+                        "default": "10"
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Search Wikipedia for articles related to 'Game of Thrones' and find all shows named 'Game of Thrones' or similar from TVmaze API.",
+        "relevant APIs": [],
+        "query_id": 46
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "mediawiki",
+                "api_name": "search_open_search",
+                "api_description": "Search the wiki using the OpenSearch protocol.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The number of search results to return.",
+                        "default": "10"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    "str",
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ],
+                    [
+                        "str"
+                    ]
+                ],
+                "category_name": "Content"
+            }
+        ],
+        "query": "I want to know more about Albert Einstein. Could you find some articles about him on Wikipedia and provide information about a specific work with ID 'OL45804W' from the Open Library?",
+        "relevant APIs": [],
+        "query_id": 47
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_anime_details",
+                "api_description": "Fetch detailed info for anime/manga by ID or name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "Fetch details by ID."
+                    },
+                    {
+                        "name": "anime",
+                        "type": "STRING",
+                        "description": "Fetch by anime ID."
+                    },
+                    {
+                        "name": "manga",
+                        "type": "STRING",
+                        "description": "Fetch by manga ID."
+                    },
+                    {
+                        "name": "title",
+                        "type": "STRING",
+                        "description": "Fetch by name."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "string (XML)"
+                }
+            }
+        ],
+        "query": "I am looking for detailed information about the anime titled 'Naruto'. Also, can you get the TV schedule for channel ct1 on August 5, 2024, including regional broadcasts if available?",
+        "relevant APIs": [],
+        "query_id": 48
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "finalspace",
+                "api_name": "get_all_characters",
+                "api_description": "Retrieves all characters with options to sort and limit results.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort in 'asc' or 'desc' order.",
+                        "default": ""
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of results returned.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "int",
+                    "name": "str",
+                    "species": "str",
+                    "status": "str",
+                    "gender": "str",
+                    "origin": {
+                        "name": "str"
+                    }
+                }
+            }
+        ],
+        "query": "Can you list all the characters from Final Space and provide details about a specific Star Trek character by UID CHMA0000215045?",
+        "relevant APIs": [],
+        "query_id": 49
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "chroniclingamerica",
+                "api_name": "search_titles",
+                "api_description": "Search the newspaper directory using OpenSearch",
+                "required_parameters": [
+                    {
+                        "name": "terms",
+                        "type": "STRING",
+                        "description": "Search query"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format",
+                        "default": "html"
+                    },
+                    {
+                        "name": "page",
+                        "type": "INTEGER",
+                        "description": "Page number for results"
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "I would like to check the TV schedule for channel ct1 in JSON format on the 4th of August, 2024 using \u010cesk\u00e1 Televize's API. Additionally, I'm interested in finding newspaper titles related to 'historical news' using Chronicling America's API.",
+        "relevant APIs": [],
+        "query_id": 50
+    }
+]

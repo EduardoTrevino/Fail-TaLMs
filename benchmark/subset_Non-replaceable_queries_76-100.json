@@ -1,0 +1,1324 @@
+[
+    {
+        "api_list": [
+            {
+                "tool_name": "tvmaze",
+                "api_name": "show_single_search",
+                "api_description": "Perform a single search for a specific show by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The name of the show."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you provide full details about the anime with ID 1, and also find the TV show named 'Breaking Bad'?",
+        "relevant APIs": [],
+        "query_id": 76
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "hourly": {
+                        "temperature_2m": "list"
+                    }
+                }
+            }
+        ],
+        "query": "What is the current temperature and wind speed forecast at a specific location (latitude=52.52, longitude=13.41) in Celsius and km/h? Additionally, provide a graphical weather forecast image for the same location.",
+        "relevant APIs": [],
+        "query_id": 77
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_latest_measurements_for_sensor",
+                "api_description": "Get the 10000 latest measurements for a sensor.",
+                "required_parameters": [
+                    {
+                        "name": "sense_box_id",
+                        "type": "STRING",
+                        "description": "The ID of the senseBox you are referring to."
+                    },
+                    {
+                        "name": "sensor_id",
+                        "type": "STRING",
+                        "description": "The ID of the sensor you are referring to."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "from_date",
+                        "type": "STRING",
+                        "description": "Beginning date of measurement data."
+                    },
+                    {
+                        "name": "to_date",
+                        "type": "STRING",
+                        "description": "End date of measurement data."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "measurements": "list of measurements"
+                }
+            }
+        ],
+        "query": "Can you provide the weather forecast for Berlin, Germany with latitude=52.5200, longitude=13.4050 and also give me the latest 10000 measurements from a temperature sensor in a local senseBox with senseBox ID 57000b8745fd40c8196ad04c and sensor ID 57000b8745fd40c8196ad050?",
+        "relevant APIs": [],
+        "query_id": 78
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_all_boxes",
+                "api_description": "Get all senseBoxes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "NUMBER",
+                        "description": "Limit the search results.",
+                        "default": "5"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "boxes": "list of senseBoxes"
+                }
+            }
+        ],
+        "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of senseBoxes located around the area.",
+        "relevant APIs": [],
+        "query_id": 79
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_boxes",
+                "api_description": "Get information about a single senseBox.",
+                "required_parameters": [
+                    {
+                        "name": "sense_box_id",
+                        "type": "STRING",
+                        "description": "The ID of the senseBox you are referring to."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format the sensor data is returned in.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "_id": "57000b8745fd40c8196ad04c"
+                }
+            }
+        ],
+        "query": "Can you provide the latest weather measurements from a specific senseBox 57000b8745fd40c8196ad04c, and also give me a weather forecast for a location with coordinates 113.17 longitude and 23.09 latitude?",
+        "relevant APIs": [],
+        "query_id": 80
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_statistics_descriptive",
+                "api_description": "Compute basic descriptive statistics over specified time windows.",
+                "required_parameters": [
+                    {
+                        "name": "box_id",
+                        "type": "STRING",
+                        "description": "Comma-separated list of senseBox IDs."
+                    },
+                    {
+                        "name": "phenomenon",
+                        "type": "STRING",
+                        "description": "The name of the phenomenon you want to download the data for."
+                    },
+                    {
+                        "name": "from_date",
+                        "type": "STRING",
+                        "description": "Beginning date of measurement data."
+                    },
+                    {
+                        "name": "to_date",
+                        "type": "STRING",
+                        "description": "End date of measurement data."
+                    },
+                    {
+                        "name": "operation",
+                        "type": "STRING",
+                        "description": "Statistical operation to perform (e.g., 'mean', 'min', 'max')."
+                    },
+                    {
+                        "name": "window",
+                        "type": "STRING",
+                        "description": "Time window for statistical aggregation."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format in which data should be returned.",
+                        "default": "csv"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "str",
+                    "response": "str"
+                }
+            }
+        ],
+        "query": "Check for any significant aviation weather hazards yesterday. Also, please provide descriptive statistics on temperature for the box ID '57000b8745fd40c8196ad04c', phenomenon 'Temperatur', from date '2023-01-01T00:00:00Z', to date '2023-01-31T23:59:59Z', with operation 'arithmeticMean' over a window of '1d'?",
+        "relevant APIs": [],
+        "query_id": 81
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "response_format": {
+                    "format": "json or xml",
+                    "content": "Weather forecast data"
+                },
+                "category_name": "Weather"
+            }
+        ],
+        "query": "I need to check for any international SIGMETs related to turbulence. Could you also provide a machine-readable forecast for Paris=48.8575\u00b0 N, 2.3514\u00b0 E, France=46.2276\u00b0 N, 2.2137\u00b0 E?",
+        "relevant APIs": [],
+        "query_id": 83
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "daily": {
+                        "temperature_2m_max": "list",
+                        "temperature_2m_min": "list"
+                    }
+                }
+            }
+        ],
+        "query": "What is the 7-day weather forecast for the location (latitude=52.52, longitude=13.41), including the maximum and minimum temperatures? Additionally, please provide machine-readable weather data for wind speed and temperature at this location.",
+        "relevant APIs": [],
+        "query_id": 84
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_latest_measurements_of_sense_box",
+                "api_description": "Get the latest measurements of all sensors of the specified senseBox.",
+                "required_parameters": [
+                    {
+                        "name": "sense_box_id",
+                        "type": "STRING",
+                        "description": "The ID of the senseBox you are referring to."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "NUMBER",
+                        "description": "Number of measurements to be retrieved for every sensor.",
+                        "default": 1
+                    }
+                ],
+                "method": "GET",
+                "template_response": {}
+            }
+        ],
+        "query": "I want to know the most recent environmental measurements for a senseBox 57000b8745fd40c8196ad04c. Also, can you provide me with a graphical weather forecast for a location at 113.17 longitude and 23.09 latitude?",
+        "relevant APIs": [],
+        "query_id": 85
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dataseries": []
+                }
+            }
+        ],
+        "query": "Can you provide the latest weather measurements from a specific senseBox 57000b8745fd40c8196ad04c, and also give me a weather forecast for a location with coordinates 113.17 longitude and 23.09 latitude?",
+        "relevant APIs": [],
+        "query_id": 86
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "awc",
+                "api_name": "get_metar",
+                "api_description": "Fetches decoded aviation weather observations (METAR).",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ids",
+                        "type": "STRING",
+                        "description": "Station ID(s).",
+                        "default": null
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "taf",
+                        "type": "BOOLEAN",
+                        "description": "Include TAF information with the METAR.",
+                        "default": false
+                    },
+                    {
+                        "name": "hours",
+                        "type": "NUMBER",
+                        "description": "Hours back to search.",
+                        "default": 1
+                    },
+                    {
+                        "name": "bbox",
+                        "type": "STRING",
+                        "description": "Geographic bounding box.",
+                        "default": null
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date to fetch records for.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "string",
+                    "response": "string"
+                }
+            }
+        ],
+        "query": "What is the current METAR weather observation at JFK airport? Additionally, can I get a detailed weather forecast for the next week for New York City where latitude=40.730610 and longitude=-73.935242?",
+        "relevant APIs": [],
+        "query_id": 87
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "seventimer",
+                "api_name": "get_graphical_forecast",
+                "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "ac",
+                        "type": "INTEGER",
+                        "description": "Altitude Correction, applicable in ASTRO",
+                        "default": "0"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language",
+                        "default": "en"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "STRING",
+                        "description": "Unit system, either 'metric' or 'british'",
+                        "default": "metric"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format, 'internal' for graphical",
+                        "default": "internal"
+                    },
+                    {
+                        "name": "tzshift",
+                        "type": "INTEGER",
+                        "description": "Timezone adjustment",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "response_format": "Binary content of a PNG image",
+                "category_name": "Weather"
+            }
+        ],
+        "query": "Can you provide the latest METAR report for the Kansas City airport? Additionally, I'd like a graphical weather forecast for the coordinates 38.97\u00b0N, 94.72\u00b0W.",
+        "relevant APIs": [],
+        "query_id": 88
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "string",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the 7-day weather forecast for the location (latitude=52.52, longitude=13.41), including the maximum and minimum temperatures? Additionally, please provide machine-readable weather data for wind speed and temperature at this location.",
+        "relevant APIs": [],
+        "query_id": 89
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_graphical_forecast",
+                "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "ac",
+                        "type": "INTEGER",
+                        "description": "Altitude Correction, applicable in ASTRO",
+                        "default": "0"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language",
+                        "default": "en"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "STRING",
+                        "description": "Unit system, either 'metric' or 'british'",
+                        "default": "metric"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format, 'internal' for graphical",
+                        "default": "internal"
+                    },
+                    {
+                        "name": "tzshift",
+                        "type": "INTEGER",
+                        "description": "Timezone adjustment",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {}
+            }
+        ],
+        "query": "I want to know the most recent environmental measurements for a senseBox 57000b8745fd40c8196ad04c. Also, can you provide me with a graphical weather forecast for a location at 113.17 longitude and 23.09 latitude?",
+        "relevant APIs": [],
+        "query_id": 90
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    }
+                }
+            }
+        ],
+        "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of senseBoxes located around the area.",
+        "relevant APIs": [],
+        "query_id": 91
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "awc",
+                "api_name": "get_airsigmet",
+                "api_description": "Fetches AIRMETs and SIGMETs in decoded format.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Product type",
+                        "default": null
+                    },
+                    {
+                        "name": "hazard",
+                        "type": "STRING",
+                        "description": "Hazard type",
+                        "default": null
+                    },
+                    {
+                        "name": "level",
+                        "type": "NUMBER",
+                        "description": "The level +-3000' to search",
+                        "default": 0
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specify the date",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "error": "str",
+                    "response": "str"
+                }
+            }
+        ],
+        "query": "Check for any significant aviation weather hazards yesterday. Also, please provide descriptive statistics on temperature for the box ID '57000b8745fd40c8196ad04c', phenomenon 'Temperatur', from date '2023-01-01T00:00:00Z', to date '2023-01-31T23:59:59Z', with operation 'arithmeticMean' over a window of '1d'?",
+        "relevant APIs": [],
+        "query_id": 92
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "awc",
+                "api_name": "get_metar",
+                "api_description": "Fetches decoded aviation weather observations (METAR).",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "ids",
+                        "type": "STRING",
+                        "description": "Station ID(s).",
+                        "default": null
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "taf",
+                        "type": "BOOLEAN",
+                        "description": "Include TAF information with the METAR.",
+                        "default": false
+                    },
+                    {
+                        "name": "hours",
+                        "type": "NUMBER",
+                        "description": "Hours back to search.",
+                        "default": 1
+                    },
+                    {
+                        "name": "bbox",
+                        "type": "STRING",
+                        "description": "Geographic bounding box.",
+                        "default": null
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specific date to fetch records for.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "response_format": {
+                    "error": "string",
+                    "response": "string"
+                },
+                "category_name": "Weather"
+            }
+        ],
+        "query": "Can you provide the latest METAR report for the Kansas City airport? Additionally, I'd like a graphical weather forecast for the coordinates 38.97\u00b0N, 94.72\u00b0W.",
+        "relevant APIs": [],
+        "query_id": 93
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    }
+                }
+            }
+        ],
+        "query": "Can you provide the weather forecast for Berlin, Germany with latitude=52.5200, longitude=13.4050 and also give me the latest 10000 measurements from a temperature sensor in a local senseBox with senseBox ID 57000b8745fd40c8196ad04c and sensor ID 57000b8745fd40c8196ad050?",
+        "relevant APIs": [],
+        "query_id": 94
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_graphical_forecast",
+                "api_description": "Retrieves an image-based weather forecast for a specified location using the graphical API.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "ac",
+                        "type": "INTEGER",
+                        "description": "Altitude Correction, applicable in ASTRO",
+                        "default": "0"
+                    },
+                    {
+                        "name": "lang",
+                        "type": "STRING",
+                        "description": "Language",
+                        "default": "en"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "STRING",
+                        "description": "Unit system, either 'metric' or 'british'",
+                        "default": "metric"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format, 'internal' for graphical",
+                        "default": "internal"
+                    },
+                    {
+                        "name": "tzshift",
+                        "type": "INTEGER",
+                        "description": "Timezone adjustment",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": "Binary content of a PNG image"
+            }
+        ],
+        "query": "What is the current temperature and wind speed forecast at a specific location (latitude=52.52, longitude=13.41) in Celsius and km/h? Additionally, provide a graphical weather forecast image for the same location.",
+        "relevant APIs": [],
+        "query_id": 95
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "utc_offset_seconds": "int",
+                    "timezone": "str",
+                    "timezone_abbreviation": "str",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    },
+                    "hourly_units": {
+                        "temperature_2m": "str"
+                    }
+                }
+            }
+        ],
+        "query": "What is the current METAR weather observation at JFK airport? Additionally, can I get a detailed weather forecast for the next week for New York City where latitude=40.730610 and longitude=-73.935242?",
+        "relevant APIs": [],
+        "query_id": 96
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "cocktail",
+                "api_name": "search_by_ingredient",
+                "api_description": "Search by ingredient.",
+                "required_parameters": [
+                    {
+                        "name": "ingredient",
+                        "type": "STRING",
+                        "description": "The ingredient to filter cocktails by.",
+                        "default": "Gin"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "drinks": [
+                        {
+                            "strDrink": "string",
+                            "strDrinkThumb": "string",
+                            "idDrink": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find me cocktails that can be made using Gin and also list all the distilleries worldwide.",
+        "relevant APIs": [],
+        "query_id": 97
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openbrewery",
+                "api_name": "get_random_brewery",
+                "api_description": "Get a random brewery.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of random breweries to return.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "string",
+                    "name": "string",
+                    "brewery_type": "string",
+                    "city": "string",
+                    "state": "string"
+                }
+            }
+        ],
+        "query": "Can you suggest a random brewery in the United States that I can visit? Also, find some healthy food products with a good nutrition grade that I can enjoy along with the visit, and some bad ones that I should avoid using Open Food Facts.",
+        "relevant APIs": [],
+        "query_id": 98
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "get_product_by_barcode",
+                "api_description": "Get product details by barcode.",
+                "required_parameters": [
+                    {
+                        "name": "barcode",
+                        "type": "STRING",
+                        "description": "The barcode of the product.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "code": "string",
+                    "product": {
+                        "product_name": "string",
+                        "nutrition_grades": "string"
+                    },
+                    "status": "int",
+                    "status_verbose": "string"
+                }
+            }
+        ],
+        "query": "I need to find the nutritional details of this item using its barcode 3017624010701 and at the same time, could you provide me with data on whisky auctions from Catawiki?",
+        "relevant APIs": [],
+        "query_id": 99
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "cocktail",
+                "api_name": "search_cocktail_by_name",
+                "api_description": "Search cocktail by name.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The name of the cocktail to search for.",
+                        "default": "margarita"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "drinks": [
+                        "list of cocktails"
+                    ]
+                }
+            }
+        ],
+        "query": "Can you tell me about a cocktail called 'Margarita' and also fetch the nutritional information for a product with barcode '3017624010701'?",
+        "relevant APIs": [],
+        "query_id": 100
+    }
+]

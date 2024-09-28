@@ -1,0 +1,962 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "stapi",
+                "api_name": "search_characters",
+                "api_description": "Pagination over characters in the Star Trek universe.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "pageNumber",
+                        "type": "INTEGER",
+                        "description": "Zero-based page number",
+                        "default": "0"
+                    },
+                    {
+                        "name": "pageSize",
+                        "type": "INTEGER",
+                        "description": "Page size",
+                        "default": "10"
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sorting format like 'fieldName,ASC;anotherFieldName,DESC'",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "object"
+                }
+            }
+        ],
+        "query": "I'm interested in learning more about Star Trek. Can you search Wikipedia for 'Star Trek' and also provide a list of characters from the Star Trek universe?",
+        "relevant APIs": [],
+        "query_id": 51
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "therosary",
+                "api_name": "get_today_prayer",
+                "api_description": "Returns today's rosary prayer.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": [
+                    "str"
+                ],
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you provide me the detailed content of the Wikipedia page for 'Holy Rosary' and also tell me what the rosary prayer for today is?",
+        "relevant APIs": [],
+        "query_id": 52
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "What is the TV schedule for channel CT2 on August 4, 2024, and can you list journals related to health?",
+        "relevant APIs": [
+            "get_tv_schedule",
+            "list_journals"
+        ],
+        "query_id": 53
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "tvmaze",
+                "api_name": "show_single_search",
+                "api_description": "Perform a single search for a specific show by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The name of the show."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you provide the Wikipedia page content for 'Breaking Bad'? Also, I'd like detailed information about the show 'Breaking Bad' from TVmaze.",
+        "relevant APIs": [],
+        "query_id": 54
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "therosary",
+                "api_name": "get_random_prayer",
+                "api_description": "Returns a random rosary prayer.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "type": "str",
+                    "mysteries": [
+                        {
+                            "title": "str",
+                            "description": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Which Star Wars film introduced the first Death Star and can you give me a random rosary prayer?",
+        "relevant APIs": [],
+        "query_id": 55
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "chroniclingamerica",
+                "api_name": "suggest_titles",
+                "api_description": "Auto Suggest API for looking up newspaper titles.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "Title query"
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Content",
+                "optional_parameters": []
+            }
+        ],
+        "query": "Can you provide suggestions for newspaper titles starting with 'The New York'? Additionally, list journals that focus on 'climate change'.",
+        "relevant APIs": [],
+        "query_id": 56
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel from Czech Television.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": "XML | JSON based on format"
+            }
+        ],
+        "query": "I want to check the TV schedule for the channel CT1 on 04.08.2024, and also find information about pets on Wikipedia.",
+        "relevant APIs": [],
+        "query_id": 57
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "animenewsnetwork",
+                "api_name": "get_anime_details",
+                "api_description": "Fetch detailed information for anime/manga titles by ID or name.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "id",
+                        "type": "STRING",
+                        "description": "Fetch details by ID."
+                    },
+                    {
+                        "name": "anime",
+                        "type": "STRING",
+                        "description": "Fetch by anime ID."
+                    },
+                    {
+                        "name": "manga",
+                        "type": "STRING",
+                        "description": "Fetch by manga ID."
+                    },
+                    {
+                        "name": "title",
+                        "type": "STRING",
+                        "description": "Fetch by name."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "anime_details": "xml"
+                }
+            }
+        ],
+        "query": "I want detailed information on the anime 'Naruto', and I'm interested in finding Star Wars films with 'Empire' in the title.",
+        "relevant APIs": [],
+        "query_id": 58
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "therosary",
+                "api_name": "get_yearly_prayer_list",
+                "api_description": "Returns list of the year rosary prayers.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "prayers": [
+                        {
+                            "day": "str",
+                            "prayer": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Could you provide a list of characters in the Star Trek universe along with the day and rosary prayer for the year 2024 schedule?",
+        "relevant APIs": [],
+        "query_id": 60
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "ceskatelevise",
+                "api_name": "get_tv_schedule",
+                "api_description": "Get the TV schedule for a specific date and channel.",
+                "required_parameters": [
+                    {
+                        "name": "user",
+                        "type": "STRING",
+                        "description": "The username required to access the API.",
+                        "default": ""
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "The date for which you want the schedule in the format dd.mm.yyyy.",
+                        "default": "04.08.2024"
+                    },
+                    {
+                        "name": "channel",
+                        "type": "STRING",
+                        "description": "The channel identifier (ct1, ct2, ct24, ct4, ct5, ct6, ct7).",
+                        "default": "ct1"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "regiony",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to include regional broadcasts.",
+                        "default": null
+                    },
+                    {
+                        "name": "json_format",
+                        "type": "INTEGER",
+                        "description": "Set to 1 to retrieve data in JSON format.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "type": "application/json"
+                }
+            }
+        ],
+        "query": "Can you fetch the latest reports about new anime releases and provide me with the TV schedule for channel ct24 on August 4, 2024, in JSON format?",
+        "relevant APIs": [],
+        "query_id": 62
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "finalspace",
+                "api_name": "get_all_locations",
+                "api_description": "Retrieves all locations, with options to sort and limit results.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "description": "Sort in 'asc' or 'desc' order.",
+                        "default": ""
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Limit the number of results returned.",
+                        "default": null
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all notable locations from both the Final Space and Rick and Morty shows?",
+        "relevant APIs": [],
+        "query_id": 63
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Content",
+                "tool_name": "swapi",
+                "api_name": "get_films",
+                "api_description": "Fetch film resources or a specific film.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "resource_id",
+                        "type": "INTEGER",
+                        "description": "The specific ID of the film resource.",
+                        "default": null
+                    },
+                    {
+                        "name": "search",
+                        "type": "STRING",
+                        "description": "Search query to filter film resources.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "count": "int",
+                    "next": "str or null",
+                    "previous": "str or null",
+                    "results": [
+                        {
+                            "title": "str",
+                            "episode_id": "int",
+                            "opening_crawl": "str",
+                            "director": "str",
+                            "producer": "str",
+                            "release_date": "str",
+                            "characters": [
+                                "str"
+                            ],
+                            "planets": [
+                                "str"
+                            ],
+                            "starships": [
+                                "str"
+                            ],
+                            "vehicles": [
+                                "str"
+                            ],
+                            "species": [
+                                "str"
+                            ],
+                            "created": "str",
+                            "edited": "str",
+                            "url": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Which Star Wars film introduced the first Death Star and can you give me a random rosary prayer?",
+        "relevant APIs": [],
+        "query_id": 64
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "Jikan",
+                "api_name": "get_anime_full_by_id",
+                "api_description": "Get complete anime resource data by ID.",
+                "required_parameters": [
+                    {
+                        "name": "id",
+                        "type": "INTEGER",
+                        "description": "The ID of the anime."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "category_name": "Content"
+            }
+        ],
+        "query": "Can you provide full details about the anime with ID 1, and also find the TV show named 'Breaking Bad'?",
+        "relevant APIs": [],
+        "query_id": 65
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "hourly": {
+                        "time": "list",
+                        "temperature_2m": "list"
+                    }
+                }
+            }
+        ],
+        "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of weather stations located around the area.",
+        "relevant APIs": [],
+        "query_id": 66
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "awc",
+                "api_name": "get_isigmet",
+                "api_description": "Fetch international SIGMETs.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Output format.",
+                        "default": "json"
+                    },
+                    {
+                        "name": "hazard",
+                        "type": "STRING",
+                        "description": "Hazard type",
+                        "default": null
+                    },
+                    {
+                        "name": "level",
+                        "type": "NUMBER",
+                        "description": "The level +-3000' to search",
+                        "default": 0
+                    },
+                    {
+                        "name": "date",
+                        "type": "STRING",
+                        "description": "Specify the date",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "response_format": {
+                    "error": "string",
+                    "response": "string"
+                },
+                "category_name": "Weather"
+            }
+        ],
+        "query": "I need to check for any international SIGMETs related to turbulence. Could you also provide a machine-readable forecast for Paris, France?",
+        "relevant APIs": [],
+        "query_id": 67
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "response_format": {
+                    "format": "json or xml",
+                    "content": "Weather forecast data"
+                },
+                "category_name": "Weather"
+            }
+        ],
+        "query": "I need to check for any international SIGMETs related to turbulence. Could you also provide a machine-readable forecast for Paris, France?",
+        "relevant APIs": [],
+        "query_id": 68
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "openmeteo",
+                "api_name": "get_weather_forecast",
+                "api_description": "Provides weather forecast for a given location. You can request hourly, daily, and/or current weather data.",
+                "required_parameters": [
+                    {
+                        "name": "latitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "FLOAT",
+                        "description": "Geographical WGS84 coordinates of the location.",
+                        "default": "None"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "hourly",
+                        "type": "LIST",
+                        "description": "A list of weather variables which should be returned hourly.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "daily",
+                        "type": "LIST",
+                        "description": "A list of daily weather variable aggregations which should be returned.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "current",
+                        "type": "LIST",
+                        "description": "A list of weather variables to get current conditions.",
+                        "default": "None"
+                    },
+                    {
+                        "name": "temperature_unit",
+                        "type": "STRING",
+                        "description": "Temperature units like celsius or fahrenheit.",
+                        "default": "celsius"
+                    },
+                    {
+                        "name": "wind_speed_unit",
+                        "type": "STRING",
+                        "description": "Wind speed units like km/h, m/s, mph, or knots.",
+                        "default": "kmh"
+                    },
+                    {
+                        "name": "precipitation_unit",
+                        "type": "STRING",
+                        "description": "Precipitation units like mm or inch.",
+                        "default": "mm"
+                    },
+                    {
+                        "name": "timeformat",
+                        "type": "STRING",
+                        "description": "Time format like iso8601 or unixtime.",
+                        "default": "iso8601"
+                    },
+                    {
+                        "name": "timezone",
+                        "type": "STRING",
+                        "description": "Timezone like GMT or location-based timezone.",
+                        "default": "GMT"
+                    },
+                    {
+                        "name": "past_days",
+                        "type": "INTEGER",
+                        "description": "Number of past days to include in the weather data.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "forecast_days",
+                        "type": "INTEGER",
+                        "description": "Number of forecast days to include in the weather data.",
+                        "default": "7"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "latitude": "float",
+                    "longitude": "float",
+                    "generationtime_ms": "float",
+                    "daily": {
+                        "temperature_2m_max": "list",
+                        "temperature_2m_min": "list"
+                    }
+                }
+            }
+        ],
+        "query": "What is the weather forecast for the next 7 days for a Berlin Germany with maximum and minimum temperatures? Also, retrieve machine-readable weather data including wind and temperature for the same location.",
+        "relevant APIs": [],
+        "query_id": 69
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_boxes",
+                "api_description": "Get information about a single senseBox.",
+                "required_parameters": [
+                    {
+                        "name": "sense_box_id",
+                        "type": "STRING",
+                        "description": "The ID of the senseBox you are referring to."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format the sensor data is returned in.",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "_id": "57000b8745fd40c8196ad04c"
+                }
+            }
+        ],
+        "query": "Can you provide the latest weather measurements from a specific weather station senseBox 57000b8745fd40c8196ad04c, and also give me a weather forecast for Pittsburgh Pennsylvania?",
+        "relevant APIs": [],
+        "query_id": 70
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "seventimer",
+                "api_name": "get_machine_readable_forecast",
+                "api_description": "Retrieves machine-readable weather forecast data for a specified location.",
+                "required_parameters": [
+                    {
+                        "name": "lon",
+                        "type": "FLOAT",
+                        "description": "Longitude of the location"
+                    },
+                    {
+                        "name": "lat",
+                        "type": "FLOAT",
+                        "description": "Latitude of the location"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "product",
+                        "type": "STRING",
+                        "description": "Forecast product type ('astro', 'civil', 'civillight', 'meteo', or 'two')",
+                        "default": "astro"
+                    },
+                    {
+                        "name": "output",
+                        "type": "STRING",
+                        "description": "Output format ('xml' or 'json')",
+                        "default": "json"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dataseries": [
+                        {
+                            "timepoint": "int",
+                            "cloudcover": "int",
+                            "seeing": "int",
+                            "transparency": "int",
+                            "rh2m": "int",
+                            "wind10m": {
+                                "direction": "string",
+                                "speed": "int"
+                            },
+                            "temp2m": "int",
+                            "prec_type": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "What is the weather forecast for the next 7 days for a Berlin Germany with maximum and minimum temperatures? Also, retrieve machine-readable weather data including wind and temperature for the same location.",
+        "relevant APIs": [],
+        "query_id": 71
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Weather",
+                "tool_name": "opensensemap",
+                "api_name": "get_all_boxes",
+                "api_description": "Get all senseBoxes.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "NUMBER",
+                        "description": "Limit the search results.",
+                        "default": "5"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "boxes": "list of senseBoxes"
+                }
+            }
+        ],
+        "query": "What's the weather forecast for New York City today with latitude=40.7128, longitude=74.0060? Additionally, provide a list of weather stations located around the area.",
+        "relevant APIs": [],
+        "query_id": 72
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "whiskyhunter",
+                "api_name": "distilleries_info",
+                "api_description": "List all distilleries main information.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "distilleries_info": [
+                        {
+                            "name": "str",
+                            "country": "str",
+                            "region": "str",
+                            "slug": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "I am planning a trip and want to visit new places in Mexico. Can you suggest a random brewery to visit? Additionally, I would like to know about some whisky distilleries.",
+        "relevant APIs": [],
+        "query_id": 73
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "whiskyhunter",
+                "api_name": "distilleries_info",
+                "api_description": "List all distilleries main information.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "distilleries_info": [
+                        {
+                            "name": "string",
+                            "country": "string",
+                            "region": "string",
+                            "slug": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Find me cocktails that can be made using Gin and also list all the distilleries worldwide.",
+        "relevant APIs": [],
+        "query_id": 74
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "search_products",
+                "api_description": "Search for products with specific criteria.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "categories",
+                        "type": "STRING",
+                        "description": "Categories to filter by.",
+                        "default": null
+                    },
+                    {
+                        "name": "nutrition_grades",
+                        "type": "STRING",
+                        "description": "Nutrition grade to filter by.",
+                        "default": null
+                    },
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": null
+                    },
+                    {
+                        "name": "sort_by",
+                        "type": "STRING",
+                        "description": "Field name to sort by.",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "products": [
+                        {
+                            "code": "string",
+                            "product_name": "string",
+                            "categories_tags_en": [
+                                "string"
+                            ],
+                            "nutrition_grades": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you suggest a random brewery in the United States that I can visit? Also, find some healthy food products with a good nutrition grade that I can enjoy along with the visit, and some bad ones that I should avoid using Open Food Facts.",
+        "relevant APIs": [],
+        "query_id": 75
+    }
+]

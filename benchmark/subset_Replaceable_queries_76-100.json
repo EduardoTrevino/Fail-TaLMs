@@ -1,0 +1,982 @@
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openfoodfacts",
+                "api_name": "get_product_by_barcode",
+                "api_description": "Get product details by barcode.",
+                "required_parameters": [
+                    {
+                        "name": "barcode",
+                        "type": "STRING",
+                        "description": "The barcode of the product.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "fields",
+                        "type": "STRING",
+                        "description": "Specific fields to retrieve (comma-separated).",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "code": "string",
+                    "product": {
+                        "product_name": "string",
+                        "nutrition_grades": "string"
+                    },
+                    "status": "int",
+                    "status_verbose": "string"
+                }
+            }
+        ],
+        "query": "Can you tell me about a cocktail called 'Margarita' and also fetch the nutritional information for a product with barcode '3017624010701'?",
+        "relevant APIs": [],
+        "query_id": 76
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "cocktail",
+                "api_name": "list_cocktails_by_first_letter",
+                "api_description": "List all cocktails by first letter.",
+                "required_parameters": [
+                    {
+                        "name": "letter",
+                        "type": "STRING",
+                        "description": "The letter to filter cocktails by.",
+                        "default": "a"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "drinks": [
+                        "list of cocktails"
+                    ]
+                }
+            }
+        ],
+        "query": "List cocktails starting with the letter 'M' and suggest a random brewery I could visit.",
+        "relevant APIs": [],
+        "query_id": 77
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "whiskyhunter",
+                "api_name": "distillery_data",
+                "api_description": "List data for distillery {slug}.",
+                "required_parameters": [
+                    {
+                        "name": "slug",
+                        "type": "STRING",
+                        "description": "The unique identifier for a distillery (e.g., 'ardbeg').",
+                        "default": "ardbeg"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "distillery_data": [
+                        {
+                            "slug": "string",
+                            "name": "string",
+                            "country": "string",
+                            "region": "string",
+                            "whiskies_count": "integer"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide details about the Margarita cocktail recipe and get information about the Ardbeg distillery?",
+        "relevant APIs": [],
+        "query_id": 78
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openbrewery",
+                "api_name": "get_random_brewery",
+                "api_description": "Get a random brewery.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of random breweries to return.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "str",
+                        "name": "str",
+                        "brewery_type": "str",
+                        "city": "str",
+                        "state": "str",
+                        "country": "str"
+                    }
+                ]
+            }
+        ],
+        "query": "List cocktails starting with the letter 'M' and suggest a random brewery I could visit.",
+        "relevant APIs": [],
+        "query_id": 79
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "whiskyhunter",
+                "api_name": "distillery_data",
+                "api_description": "List data for distillery {slug}.",
+                "required_parameters": [
+                    {
+                        "name": "slug",
+                        "type": "STRING",
+                        "description": "The unique identifier for a distillery (e.g., 'ardbeg').",
+                        "default": "ardbeg"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "distillery_data": [
+                        {
+                            "slug": "str",
+                            "name": "str",
+                            "country": "str",
+                            "region": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find breweries that specialize in ales? I'm also interested in detailed data for a whisky distillery, particularly Ardbeg.",
+        "relevant APIs": [],
+        "query_id": 81
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openbrewery",
+                "api_name": "get_random_brewery",
+                "api_description": "Get a random brewery.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "description": "Number of random breweries to return.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "id": "str",
+                    "name": "str",
+                    "brewery_type": "str",
+                    "street": "str",
+                    "city": "str",
+                    "state": "str",
+                    "postal_code": "str"
+                }
+            }
+        ],
+        "query": "I am planning a trip and want to visit new places in Mexico. Can you suggest a random brewery to visit? Additionally, I would like to know about some whisky distilleries.",
+        "relevant APIs": [],
+        "query_id": 82
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Food",
+                "tool_name": "openbrewery",
+                "api_name": "search_breweries",
+                "api_description": "Search for breweries based on a search term.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "Search term to look for breweries."
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "id": "str",
+                        "name": "str",
+                        "brewery_type": "str",
+                        "city": "str",
+                        "state": "str",
+                        "country": "str"
+                    }
+                ]
+            }
+        ],
+        "query": "Can you find margarita cocktail recipes that are popular along with breweries that serve ale?",
+        "relevant APIs": [],
+        "query_id": 83
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dicebear",
+                "api_name": "generate_avatar",
+                "api_description": "Spawn an avatar in a custom style.",
+                "required_parameters": [
+                    {
+                        "name": "style_name",
+                        "type": "STRING",
+                        "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "seed",
+                        "type": "STRING",
+                        "description": "Seed value for generating a repeatable avatar.",
+                        "default": ""
+                    },
+                    {
+                        "name": "hair",
+                        "type": "LIST",
+                        "description": "List of hair styles.",
+                        "default": []
+                    },
+                    {
+                        "name": "flip",
+                        "type": "BOOLEAN",
+                        "description": "Boolean to flip the avatar.",
+                        "default": false
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                        "default": "svg"
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "Find details about artists or agents related to Picasso in the Art Institute of Chicago, and generate a 'lorelei' styled avatar without flipping it.",
+        "relevant APIs": [],
+        "query_id": 84
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "get_departments",
+                "api_description": "Returns a list of all departments.",
+                "required_parameters": [],
+                "optional_parameters": [],
+                "method": "GET",
+                "template_response": {
+                    "departments": [
+                        {
+                            "departmentId": "int",
+                            "displayName": "string"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you provide me with a list of all dog breeds and also a list of all departments in the Met Museum collection?",
+        "relevant APIs": [],
+        "query_id": 85
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "resmush",
+                "api_name": "compress_image_get_method",
+                "api_description": "Compress an image specified by its URL using the GET method.",
+                "required_parameters": [
+                    {
+                        "name": "img_url",
+                        "type": "STRING",
+                        "description": "The URL of the image to be compressed."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "qlty",
+                        "type": "INTEGER",
+                        "description": "The quality level for JPG compression (0-100).",
+                        "default": "92"
+                    },
+                    {
+                        "name": "exif",
+                        "type": "BOOLEAN",
+                        "description": "Retain the EXIF data.",
+                        "default": "false"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "dest": "string",
+                    "src": "string",
+                    "src_size": "int",
+                    "dest_size": "int",
+                    "percent": "float",
+                    "expires": "string"
+                }
+            }
+        ],
+        "query": "I wish to know all the departments available in the Met's collection. Additionally, I have a URL (https://resmush.it/wp-content/uploads/2024/02/testimage.jpg) to an image of a painting from this collection that I need to compress to reduce its size.",
+        "relevant APIs": [],
+        "query_id": 87
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "metmuseum",
+                "api_name": "search_objects",
+                "api_description": "Search for objects in the Met's collection",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "description": "The search term."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "isHighlight",
+                        "type": "BOOLEAN",
+                        "description": "Returns highlighted objects."
+                    },
+                    {
+                        "name": "title",
+                        "type": "BOOLEAN",
+                        "description": "Search against title field."
+                    },
+                    {
+                        "name": "tags",
+                        "type": "BOOLEAN",
+                        "description": "Search against tags field."
+                    },
+                    {
+                        "name": "departmentId",
+                        "type": "INTEGER",
+                        "description": "Filter by department."
+                    },
+                    {
+                        "name": "isOnView",
+                        "type": "BOOLEAN",
+                        "description": "Returns objects on view."
+                    },
+                    {
+                        "name": "artistOrCulture",
+                        "type": "BOOLEAN",
+                        "description": "Search against artist name or culture."
+                    },
+                    {
+                        "name": "medium",
+                        "type": "STRING",
+                        "description": "Filter by medium."
+                    },
+                    {
+                        "name": "hasImages",
+                        "type": "BOOLEAN",
+                        "description": "Filter objects that have images."
+                    },
+                    {
+                        "name": "geoLocation",
+                        "type": "STRING",
+                        "description": "Filter by geographic location."
+                    },
+                    {
+                        "name": "dateBegin",
+                        "type": "INTEGER",
+                        "description": "Objects created after date."
+                    },
+                    {
+                        "name": "dateEnd",
+                        "type": "INTEGER",
+                        "description": "Objects created before date."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "total": "int",
+                    "objectIDs": [
+                        "int"
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find Renaissance sculptures made of marble in the Met collection? Also, I'd like to see artworks related to Van Gogh in the Art Institute of Chicago.",
+        "relevant APIs": [],
+        "query_id": 88
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "artchicago",
+                "api_name": "artworks_search",
+                "api_description": "Search artworks in the Art Institute of Chicago data.",
+                "required_parameters": [
+                    {
+                        "name": "q",
+                        "type": "STRING",
+                        "default": "monet"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "default": null
+                    },
+                    {
+                        "name": "sort",
+                        "type": "STRING",
+                        "default": null
+                    },
+                    {
+                        "name": "from",
+                        "type": "INTEGER",
+                        "default": 0
+                    },
+                    {
+                        "name": "size",
+                        "type": "INTEGER",
+                        "default": 10
+                    },
+                    {
+                        "name": "facets",
+                        "type": "STRING",
+                        "default": null
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "pagination": {
+                        "total": "int",
+                        "limit": "int",
+                        "offset": "int",
+                        "total_pages": "int",
+                        "current_page": "int"
+                    },
+                    "data": [
+                        {
+                            "id": "int",
+                            "title": "str",
+                            "artist_display": "str",
+                            "place_of_origin": "str",
+                            "date_display": "str",
+                            "medium_display": "str",
+                            "dimensions": "str",
+                            "thumbnail": {
+                                "alt_text": "str",
+                                "width": "int",
+                                "height": "int",
+                                "iiif_url": "str"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you find Renaissance sculptures made of marble in the Met collection? Also, I'd like to see artworks related to Van Gogh in the Art Institute of Chicago.",
+        "relevant APIs": [],
+        "query_id": 89
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Art",
+                "tool_name": "dicebear",
+                "api_name": "generate_avatar",
+                "api_description": "Generates an avatar of a specified style.",
+                "required_parameters": [
+                    {
+                        "name": "style_name",
+                        "type": "STRING",
+                        "description": "The style of the avatar, e.g., 'pixel-art', 'lorelei'.",
+                        "default": ""
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "seed",
+                        "type": "STRING",
+                        "description": "Seed value for generating a repeatable avatar.",
+                        "default": ""
+                    },
+                    {
+                        "name": "hair",
+                        "type": "LIST",
+                        "description": "List of hair styles.",
+                        "default": []
+                    },
+                    {
+                        "name": "flip",
+                        "type": "BOOLEAN",
+                        "description": "Boolean to flip the avatar.",
+                        "default": false
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "The format of the avatar ('svg', 'png', 'jpg', 'webp', 'avif', 'json').",
+                        "default": "svg"
+                    }
+                ],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you find artworks related to Van Gogh in the Art Institute of Chicago's collection, and generate an avatar with a 'pixel-art' style using the name 'ArtLover' as the seed?",
+        "relevant APIs": [],
+        "query_id": 90
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "get_hot_tracks",
+                "api_description": "Fetch the list of hot tracks.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of tracks to return."
+                    },
+                    {
+                        "name": "skip",
+                        "type": "INTEGER",
+                        "description": "Number of records to skip."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "tracks": [
+                        {
+                            "title": "str",
+                            "artist": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "List the latest album releases from the artist 'Beyonc\u00e9' and provide me with the current hot tracks.",
+        "relevant APIs": [],
+        "query_id": 91
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "release_group_browse",
+                "api_description": "Browse release groups by artist MBID.",
+                "required_parameters": [
+                    {
+                        "name": "artist_mbid",
+                        "type": "STRING",
+                        "description": "The MBID for the artist.",
+                        "default": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Filter release groups by type (album, single, etc.).",
+                        "default": ""
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter releases by status (official, etc.).",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "release-groups": [
+                        {
+                            "id": "str",
+                            "title": "str",
+                            "primary-type": "str",
+                            "secondary-types": [
+                                "str"
+                            ],
+                            "first-release-date": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you tell me some unique music genre stories and find albums or singles with this artist mbid b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d?",
+        "relevant APIs": [],
+        "query_id": 92
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "get_user_tracks",
+                "api_description": "Fetch the list of tracks posted by a user.",
+                "required_parameters": [
+                    {
+                        "name": "uHandle",
+                        "type": "STRING",
+                        "description": "The handle of the user."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "playlistId",
+                        "type": "INTEGER",
+                        "description": "The ID of the playlist."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of tracks to return."
+                    },
+                    {
+                        "name": "after",
+                        "type": "STRING",
+                        "description": "Return results after the specified timestamp."
+                    },
+                    {
+                        "name": "before",
+                        "type": "STRING",
+                        "description": "Return results before the specified timestamp."
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "tracks": [
+                        {
+                            "title": "str",
+                            "artist": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you search for artists similar to 'Adele' and also fetch the tracks from the Openwhyd user 'john_doe's playlist?",
+        "relevant APIs": [],
+        "query_id": 93
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "artist_search",
+                "api_description": "Allows searching for artists by name.",
+                "required_parameters": [
+                    {
+                        "name": "query",
+                        "type": "STRING",
+                        "description": "The search query to find the artist.",
+                        "default": "The Beatles"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "artists": [
+                        {
+                            "id": "str",
+                            "name": "str",
+                            "type": "str",
+                            "country": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "Can you suggest some random music genres and search for Taylor Swift?",
+        "relevant APIs": [],
+        "query_id": 94
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "openwhyd",
+                "api_name": "get_user_tracks",
+                "api_description": "Fetch the list of tracks posted by a user",
+                "required_parameters": [
+                    {
+                        "name": "uHandle",
+                        "type": "STRING",
+                        "description": "The handle of the user."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "playlistId",
+                        "type": "INTEGER",
+                        "description": "The ID of the playlist."
+                    },
+                    {
+                        "name": "format",
+                        "type": "STRING",
+                        "description": "Response format."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "Number of tracks to return."
+                    },
+                    {
+                        "name": "after",
+                        "type": "STRING",
+                        "description": "Return results after the specified timestamp."
+                    },
+                    {
+                        "name": "before",
+                        "type": "STRING",
+                        "description": "Return results before the specified timestamp."
+                    }
+                ],
+                "method": "GET",
+                "template_response": [
+                    {
+                        "track": "str",
+                        "artist": "str",
+                        "playlistId": "int"
+                    }
+                ]
+            }
+        ],
+        "query": "I am curious to read some random stories about music genres and also see what tracks Adrien has recently posted.",
+        "relevant APIs": [],
+        "query_id": 95
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "musicbrainz",
+                "api_name": "release_group_browse",
+                "api_description": "Browse release groups by artist MBID.",
+                "required_parameters": [
+                    {
+                        "name": "artist_mbid",
+                        "type": "STRING",
+                        "description": "The MBID for the artist.",
+                        "default": "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d"
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to return.",
+                        "default": "25"
+                    },
+                    {
+                        "name": "offset",
+                        "type": "INTEGER",
+                        "description": "The number of results to skip.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "type",
+                        "type": "STRING",
+                        "description": "Filter release groups by type (album, single, etc.).",
+                        "default": ""
+                    },
+                    {
+                        "name": "status",
+                        "type": "STRING",
+                        "description": "Filter releases by status (official, etc.).",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "release-groups": [
+                        {
+                            "title": "str",
+                            "primary-type": "str"
+                        }
+                    ]
+                }
+            }
+        ],
+        "query": "List the latest album releases from the artist 'Beyonc\u00e9' and provide me with the current hot tracks.",
+        "relevant APIs": [],
+        "query_id": 96
+    },
+    {
+        "api_list": [
+            {
+                "category_name": "Music",
+                "tool_name": "binaryjazz",
+                "api_name": "get_genres",
+                "api_description": "Fetch a number of random music genres.",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "count",
+                        "type": "INTEGER",
+                        "description": "The number of genres to fetch.",
+                        "default": "1"
+                    }
+                ],
+                "method": "GET",
+                "template_response": {
+                    "items": [
+                        "string"
+                    ]
+                }
+            }
+        ],
+        "query": "Can you suggest some random music genres and search for Taylor Swift?",
+        "relevant APIs": [],
+        "query_id": 97
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "cheapshark",
+                "api_name": "get_alerts",
+                "api_description": "Retrieve all existing alerts.",
+                "required_parameters": [
+                    {
+                        "name": "key",
+                        "type": "STRING",
+                        "description": "The key parameter from the manage link received via email.",
+                        "default": ""
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Games",
+                "optional_parameters": []
+            }
+        ],
+        "query": "I'd like to get a list of all my game price alerts from CheapShark. In addition, can you show me a random Magic card?",
+        "relevant APIs": [],
+        "query_id": 98
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "boardgamesgeek",
+                "api_name": "get_user_info",
+                "api_description": "Retrieve information about a user by username from BGG.",
+                "required_parameters": [
+                    {
+                        "name": "name",
+                        "type": "STRING",
+                        "description": "The username."
+                    }
+                ],
+                "optional_parameters": [
+                    {
+                        "name": "buddies",
+                        "type": "INTEGER",
+                        "description": "Include buddies information."
+                    },
+                    {
+                        "name": "guilds",
+                        "type": "INTEGER",
+                        "description": "Include guilds information."
+                    },
+                    {
+                        "name": "hot",
+                        "type": "INTEGER",
+                        "description": "Include the user's hot 10 list."
+                    },
+                    {
+                        "name": "top",
+                        "type": "INTEGER",
+                        "description": "Include the user's top 10 list."
+                    },
+                    {
+                        "name": "domain",
+                        "type": "STRING",
+                        "description": "Domain for hot and top lists."
+                    }
+                ],
+                "method": "GET",
+                "category_name": "Games"
+            }
+        ],
+        "query": "Can you provide some details about the user 'eekspider' on BoardGameGeek and also generate a hilarious insult?",
+        "query_id": 99
+    },
+    {
+        "api_list": [
+            {
+                "tool_name": "chucknorrisjokes",
+                "api_name": "get_joke_categories",
+                "api_description": "Retrieve a list of available categories for Chuck Norris jokes.",
+                "method": "GET",
+                "category_name": "Games",
+                "required_parameters": [],
+                "optional_parameters": []
+            }
+        ],
+        "query": "What categories are available for Chuck Norris jokes? Also, can you provide me with information on the Pok\u00e9mon ability 'Overgrow'?",
+        "relevant APIs": [],
+        "query_id": 100
+    }
+]

@@ -16,6 +16,6 @@ python inference\pipeline_openai_auto_eval_mod_qaq.py ^
     --tool_root_dir tools\ ^
     --model openai/neulab/gpt-4o-2024-05-13 ^
     --openai_key %OPENAI_KEY% ^
-    --input_query_file benchmark\subset_Underspecified_queries_1-25.json ^
+    --input_query_file benchmark\subset_Underspecified_queries_26-50.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json ^
     --use_human_interact true
