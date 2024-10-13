@@ -14,7 +14,7 @@ if not exist %OUTPUT_DIR% mkdir %OUTPUT_DIR%
 REM Run the Python script with the necessary arguments
 python inference\pipeline_openai_auto_eval_mod.py ^
     --tool_root_dir tools\ ^
-    --model openai/neulab/gpt-4o-2024-05-13 ^
+    --model gpt-4o_path ^
     --openai_key %OPENAI_KEY% ^
     --input_query_file benchmark\all_No-tools_queries.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json
