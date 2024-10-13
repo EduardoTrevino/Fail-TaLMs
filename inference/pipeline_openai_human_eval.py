@@ -4,9 +4,12 @@ import os
 import litellm
 import re
 
+base_url = "LITLELLMURL"
+model = "MODEL"
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default="openai/neulab/gpt-4o-2024-05-13", help='Model name')
+    parser.add_argument('--model', type=str, default=model, help='Model name')
     parser.add_argument('--openai_key', type=str, required=True, help='OpenAI API key')
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
@@ -88,7 +91,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     ]
     response = litellm.completion(
         api_key=args.openai_key,
-        base_url="https://cmu.litellm.ai",
+        base_url=base_url,
         model=args.model,
         messages=messages
     )
@@ -99,7 +102,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     while retries < max_retries:
         response = litellm.completion(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
             model=args.model,
             messages=messages
         )
@@ -145,7 +148,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     ]
     response = litellm.completion(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
             model=args.model,
             messages=messages
     )
@@ -156,7 +159,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     while retries < max_retries:
         response = litellm.completion(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
             model=args.model,
             messages=messages
         )
@@ -322,7 +325,7 @@ def process_query(query_data, args):
 
         response = litellm.completion(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
             model=args.model,
             messages=messages,
             functions=functions
