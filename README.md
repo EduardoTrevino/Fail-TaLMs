@@ -1,3 +1,7 @@
+# Acknowledgment
+
+GPT-4o was used in the creation of all data in the repo. This includes generating the queries, and the tools. GPT-4o was additionally used by researchers to develop inference scripts.
+
 # Tool Environment
 
 ## A overview of all the API's tool's and their availability
