@@ -64,22 +64,29 @@ We also introduce **Ask-and-Help (AAH)**, a method allowing the TaLM to interact
 Below is a high-level overview of our repository structure:
 ```
 .
-├── tools/
-│   ├── {category_name}/
-│   │   └── {tool_name}/
-│   │       ├── api.py          # Endpoints for this tool
-│   │       ├── api_test.py     # Unit tests & example parameters
-│   │       └── raw_output.txt  # Raw LLM generation logs for the tool
-│   ├── {tool_name}.json        # Function calling schema (JSON) representation
-│   └── ...
 ├── api_docs/
 │   ├── {category_name}/
 │   │   └── {tool_name}.txt     # Raw scraped docs for the API usage
 │   └── ...
-├── runners/
-│   ├── run_gpt.bat
-│   ├── run_claude.bat
-│   └── run_llama.bat
+├── benchmark/
+│   ├── no-tools/
+│   │   ├── {category_name}/
+│   │   │   └── queries...json   # Individual queries
+│   │   └── all_no-tools_queries.json  # Collated queries
+│   ├── non-replaceable/
+│   ├── original/
+│   ├── replaceable/
+│   └── underspecified/
+│       └── all_underspecified_queries.json
+├── evaluation/
+│   └── evaluation.py   # Evaluation of model outputs. Requires output json files.
+├── generation/
+│   ├── query_generation.py   # Generation of Queries. Requires Tool environment
+│   └── tool_env_generation.py   # Generation of Tool environment. Requires API documentation
+├── inference/   # TaLM's have their unique tool calling schema
+│   ├── pipeline_gpt.py   # Inferencing pipelines, produces model output jsons. Requires tool environment, and queries
+│   ├── pipeline_claude.py
+│   └── pipeline_llama.py
 ├── outputs/
 │   ├── no-tools/
 │   │   ├── {model_name}/
@@ -94,22 +101,19 @@ Below is a high-level overview of our repository structure:
 │   │   └── ...
 │   └── underspecified/
 │       └── ...
-├── inference/
-│   ├── pipeline_gpt.py
-│   ├── pipeline_claude.py
-│   └── pipeline_llama.py
-├── benchmark/
-│   ├── no-tools/
-│   │   ├── {category_name}/
-│   │   │   └── queries...json   # Individual queries
-│   │   └── all_no-tools_queries.json  # Collated queries
-│   ├── non-replaceable/
-│   ├── original/
-│   ├── replaceable/
-│   └── underspecified/
-│       └── all_underspecified_queries.json
-├── evaluation/
-│   └── evaluation.py
+├── runners/
+│   ├── inference.bat   # Inferencing runners, runs pipelines. Set AAH flag, and other params
+│   └── inference.sh
+├── tools/
+│   ├── {category_name}/
+│   │   └── {tool_name}/
+│   │       ├── api.py          # Endpoints for this tool
+│   │       ├── api_test.py     # Unit tests & example parameters
+│   │       └── raw_output.txt  # Raw LLM generation logs for the tool
+│   ├── {tool_name}.json        # Function calling schema (JSON) representation
+│   └── ...
+
+
 ```
 ### Key Directories
 - #### tools/
