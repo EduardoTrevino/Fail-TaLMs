@@ -253,9 +253,6 @@ def process_query(query_data, args):
     #     print(f"Function loaded: {function['name']}")
     print(functions)
 
-    # Create the tool prompt
-    tool_prompt = create_tool_prompt(functions)
-
     function_call_log = []
      # Initialize a list to collect interaction data
     interaction_scores = []
@@ -273,6 +270,7 @@ def process_query(query_data, args):
             api_key=args.openai_key,
             base_url="https://cmu.litellm.ai",
         )
+    print("DEBUG: HERE AFTER CLIENT")
     # Tool Awareness Evaluation
     if evaluation_plan['tool_awareness']:
         tool_awareness_annotation, tool_awareness_reasoning = evaluate_tool_awareness(query_text, functions, args, client)
@@ -312,14 +310,8 @@ def process_query(query_data, args):
     
     print(f"Proceeding with query {query_id}.")
 
-    # Combine the system message and tool prompt
-    system_message = f"""
-You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user.
-
-{tool_prompt}
-
-Remember:
-- ALWAYS call the "Finish" function at the end of the task. The user does not see the information you see during your function calling, Therefore be The final answer you pass to the finish function should contain all the information you gathered as a descriptive final answer given the user's query.
+    system_message = """
+You are a helpful assistant with access to functions. Use them if required.
 """
 
     # Prepare messages
@@ -330,7 +322,7 @@ Remember:
         
 
     assistant_reply = None
-    max_steps = 6  # Increase the max steps if needed
+    max_steps = 15  # Increase the max steps if needed
     for step in range(max_steps):  # Limit the number of steps
         # print("Messages at start of loop:", messages)
         print(f"\n--- Step {step + 1} ---")
@@ -347,13 +339,14 @@ Remember:
             response = client.chat.completions.create(
                 model=args.model,
                 messages=messages,
+                tools=functions,
                 temperature=0.1
             )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
-        print("Model response:")
-        print(assistant_message.content)
+        print("Model dump")
+        print(response.choices[0].message.model_dump_json(indent=4))
 
          # Extract the thinking content and append it to the messages
         if assistant_message.content:
@@ -364,14 +357,25 @@ Remember:
                 "content": assistant_message.content
             })
 
-        # Parse the function call from the assistant's response
-        parsed_response = parse_tool_response(assistant_message.content)
+        if assistant_message.tool_calls is not None:
+            print("TOOL CALL!")
+            print("TOOL CALL!")
+            print("TOOL CALL!")
+            print("TOOL CALL!")
+            print("TOOL CALL!")
+            # Assistant is calling a function
+            first_tool_call = assistant_message.tool_calls[0]
+            function_name = first_tool_call.function.name
+            function_args_str = first_tool_call.function.arguments
+            print(f"Assistant is calling function '{function_name}' with arguments: {function_args_str}")
 
-        if parsed_response:
-            function_name = parsed_response['function']
-            function_args = parsed_response['arguments']
-            print(f"Assistant is calling function '{function_name}' with arguments: {function_args}")
+            try:
+                function_args = json.loads(function_args_str)
+            except json.JSONDecodeError as e:
+                print(f"Error decoding function arguments: {e}")
+                function_args = {}
 
+             # If the assistant called the "Finish" function, extract the final answer and break
             if function_name == "Finish":
                 assistant_reply = function_args.get('final_answer', '')
                 print(f"Assistant final reply: {assistant_reply}")
@@ -380,7 +384,7 @@ Remember:
             # Execute the function
             function_response, interaction_data = execute_function(function_name, function_args, args.tool_root_dir, query_data)
             print(f"----\nFunction response: {function_response}")
-            max_tokens = 152000 # 31,750 tokens * 4 characters per token (approx)
+            max_tokens = 127000 # 31,750 tokens * 4 characters per token (approx)
             function_response = truncate_response_if_needed(function_response, max_tokens)
             function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
 
@@ -438,50 +442,6 @@ Remember:
         result['info_annotation'] = info_awareness_annotation
         result['info_aware_score'] = info_validity
     return result
-
-def create_tool_prompt(functions):
-    tool_descriptions = []
-    for func in functions:
-        func_def = func['function']
-        func_name = func_def['name']
-        func_desc = func_def.get('description', '')
-        func_json = json.dumps(func_def, indent=2)
-        tool_descriptions.append(f"Use the function '{func_name}' to '{func_desc}':\n{func_json}\n")
-
-    tool_prompt = f"""
-You have access to the following functions:
-
-{''.join(tool_descriptions)}
-
-If you choose to call a function ONLY reply in the following format with no prefix or suffix:
-
-<function=example_function_name>{{"example_name": "example_value"}}</function>
-
-Reminder:
-- Function calls MUST follow the specified format, start with <function= and end with </function>
-- Required parameters MUST be specified
-- Only call one function at a time
-- Put the entire function call reply on one line
-- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls
-"""
-    return tool_prompt
-
-def parse_tool_response(response: str):
-    function_regex = r"<function=(\w+)>(.*?)</function>"
-    match = re.search(function_regex, response, re.DOTALL)
-
-    if match:
-        function_name, args_string = match.groups()
-        try:
-            args = json.loads(args_string)
-            return {
-                "function": function_name,
-                "arguments": args,
-            }
-        except json.JSONDecodeError as error:
-            print(f"Error parsing function arguments: {error}")
-            return None
-    return None
 
 def truncate_response_if_needed(response, max_chars):
     if len(response) > max_chars:
@@ -749,7 +709,7 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
 
     if not api_entry:
         print(f"API '{function_name}' not found in query data.")
-        return f"API '{function_name}' not found in query data.", None
+        return f"API '{function_name}' not found in query data."
 
     category_name = api_entry['category_name']
     tool_name = api_entry['tool_name']
@@ -758,7 +718,7 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     api_py_path = os.path.join(tool_root_dir, category_name, tool_name, 'api.py')
     if not os.path.exists(api_py_path):
         print(f"API file not found at {api_py_path}")
-        return f"API file not found at {api_py_path}", None
+        return f"API file not found at {api_py_path}"
 
     # Import the module from api.py
     try:
