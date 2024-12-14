@@ -11,7 +11,7 @@ def get_sunrise_sunset_times(lat: float, lng: float, date: Optional[str] = 'toda
     Parameters:
     lat [Required]: float - Latitude of the location in decimal degrees.
     lng [Required]: float - Longitude of the location in decimal degrees.
-    date [Optional]: str - Date in YYYY-MM-DD format or relative formats such as “today” and “tomorrow”. Defaults to today.
+    date [Optional]: str - Date in YYYY-MM-DD format or relative formats such as "today" and "tomorrow". Defaults to today.
     timezone [Optional]: str - Timezone of the returned times. Defaults to the location's timezone.
     date_start [Optional]: str - Start date in YYYY-MM-DD format for a range.
     date_end [Optional]: str - End date in YYYY-MM-DD format for a range.

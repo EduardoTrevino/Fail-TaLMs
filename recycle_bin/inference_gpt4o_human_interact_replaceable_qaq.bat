@@ -1,6 +1,6 @@
 @echo off
 REM Set the output directory
-set OUTPUT_DIR=outputs\Original\llama_70B_auto_eval
+set OUTPUT_DIR=outputs\Replaceable\gpt_4o_auto_eval_qaq
 
 REM Read the OpenAI key from the file and set it as a variable
 for /f %%i in (proxy_key.txt) do set OPENAI_KEY=%%i
@@ -12,11 +12,10 @@ REM Create the output directory if it doesn't exist
 if not exist %OUTPUT_DIR% mkdir %OUTPUT_DIR%
 
 REM Run the Python script with the necessary arguments
-python inference\pipeline_llama_auto_eval.py ^
+python inference\pipeline_openai_auto_eval_mod_qaq.py ^
     --tool_root_dir tools\ ^
-    --model Meta-Llama-3.1-70B-Instruct_path ^
+    --model openai/neulab/gpt-4o-2024-05-13 ^
     --openai_key %OPENAI_KEY% ^
-    --input_query_file benchmark\subset_Original_queries_26-100.json ^
+    --input_query_file benchmark\subset_Replaceable_queries_26-50.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json ^
-    --use_human_interact false
-
+    --use_human_interact true

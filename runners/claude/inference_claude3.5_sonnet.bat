@@ -14,7 +14,7 @@ if not exist %OUTPUT_DIR% mkdir %OUTPUT_DIR%
 REM Run the Python script with the necessary arguments
 python inference\pipeline_claude_auto_eval.py ^
     --tool_root_dir tools\ ^
-    --model neulab/claude-3-5-sonnet-20240620 ^
+    --model CLAUDE_PATH ^
     --openai_key %OPENAI_KEY% ^
     --input_query_file benchmark\all_Non-replaceable_queries.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json

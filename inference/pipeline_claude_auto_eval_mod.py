@@ -4,9 +4,12 @@ import os
 import openai
 import re
 
+base_url = "LITLELLMURL"
+model = "MODEL"
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default="neulab/gpt-4o-2024-05-13", help='Model name')
+    parser.add_argument('--model', type=str, default=model, help='Model name')
     parser.add_argument('--openai_key', type=str, required=True, help='OpenAI API key')
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
@@ -90,7 +93,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     ]
     client = openai.OpenAI(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
         )
 
     response = client.chat.completions.create(
@@ -105,7 +108,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     while retries < max_retries:
         client = openai.OpenAI(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
         )
 
         response = client.chat.completions.create(
@@ -155,7 +158,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     ]
     client = openai.OpenAI(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
         )
 
     response = client.chat.completions.create(
@@ -170,7 +173,7 @@ Important: Always start your response with 'Yes,' 'No,' or 'IDK,' followed by a 
     while retries < max_retries:
         client = openai.OpenAI(
             api_key=args.openai_key,
-            base_url="https://cmu.litellm.ai",
+            base_url=base_url,
         )
 
         response = client.chat.completions.create(
@@ -357,7 +360,7 @@ Remember:
         if dataset_type == "No-tools":
             client = openai.OpenAI(
                 api_key=args.openai_key,
-                base_url="https://cmu.litellm.ai",
+                base_url=base_url,
             )
 
             response = client.chat.completions.create(
@@ -367,7 +370,7 @@ Remember:
         else:
             client = openai.OpenAI(
                 api_key=args.openai_key,
-                base_url="https://cmu.litellm.ai",
+                base_url=base_url,
             )
 
             response = client.chat.completions.create(
@@ -537,11 +540,11 @@ def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
         while retries < max_retries:
             client = openai.OpenAI(
                 api_key=args.openai_key,
-                base_url="https://cmu.litellm.ai",
+                base_url=base_url,
             )
 
             response = client.chat.completions.create(
-                model="neulab/gpt-4o-2024-05-13",
+                model=model,
                 messages=messages
             )
             

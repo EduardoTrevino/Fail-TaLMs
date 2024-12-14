@@ -9,13 +9,11 @@ model = "MODEL"
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default=base_url, help='Model name')
+    parser.add_argument('--model', type=str, default=model, help='Model name')
     parser.add_argument('--openai_key', type=str, required=True, help='OpenAI API key')
     parser.add_argument('--input_query_file', type=str, required=True, help='Input query file')
     parser.add_argument('--output_answer_file', type=str, required=True, help='Output answer file')
     parser.add_argument('--tool_root_dir', type=str, required=True, help='Directory with tool definitions')
-    parser.add_argument('--use_human_interact', type=lambda x: (str(x).lower() == 'true'), default=False,
-                        help='Whether to use human interaction')
     args = parser.parse_args()
 
     # Read input queries
@@ -240,7 +238,7 @@ def get_dataset_type(filename):
         return 'No-tools'
     else:
         raise ValueError(f"Unknown dataset type for filename: {filename}")
-    
+
 def get_evaluation_plan(dataset_type):
     plan = {
         'Original': {'tool_awareness': True, 'info_awareness': True, 'pass_rate': True},
@@ -255,18 +253,15 @@ def process_query(query_data, args):
     query_text = query_data['query']
     query_id = query_data['query_id']
     dataset_type = get_dataset_type(args.input_query_file)
-    # Initialize the tokenizer it has to be the same for each model
     print(f"\nProcessing query: {query_text}")
 
     # Load functions
-    functions = load_functions(args.tool_root_dir, query_data, args.use_human_interact)
+    functions = load_functions(args.tool_root_dir, query_data)
     print(f"Loaded {len(functions)} functions.")
     for function in functions:
         print(f"Function loaded: {function['name']}")
     
     function_call_log = []
-    # Initialize a list to collect interaction data
-    interaction_scores = []
 
     # Get evaluation plan
     evaluation_plan = get_evaluation_plan(dataset_type)
@@ -316,39 +311,25 @@ def process_query(query_data, args):
         return result
     # Proceed if the model thinks it has sufficient tools and information
     print(f"Proceeding with query {query_id}.")
-    system_message = """
-You are a helpful assistant that can use tools to help the user. The final answer should contain enough information to show to the user. 
-Remember:
-1.ALWAYS call \"Finish\" function at the end of the task. And the final answer should contain enough information to show to the user
-"""
-
     # Prepare messages
     messages = [
-        {"role": "system", "content": system_message},
+        {"role": "system", "content": "You are a helpful assistant that can use tools to help the user. "},
         {"role": "user", "content": query_text}
     ]
 
     assistant_reply = None
-    max_steps = 5  # Increase the max steps if needed
-    for step in range(max_steps):  # Limit the number of steps
+    for step in range(5):  # Limit the number of steps
         print(f"\n--- Step {step + 1} ---")
-        print(messages)
+
         # Call the model
-        if dataset_type == "No-tools":
-            response = litellm.completion(
-                api_key=args.openai_key,
-                base_url=base_url,
-                model=args.model,
-                messages=messages
-            )
-        else:
-            response = litellm.completion(
-                api_key=args.openai_key,
-                base_url=base_url,
-                model=args.model,
-                messages=messages,
-                functions=functions
-            )
+
+        response = litellm.completion(
+            api_key=args.openai_key,
+            base_url=base_url,
+            model=args.model,
+            messages=messages,
+            functions=functions
+        )
 
         # Extract the assistant's reply
         assistant_message = response.choices[0].message
@@ -379,49 +360,18 @@ Remember:
                 print(f"Error decoding function arguments: {e}")
                 function_args = {}
 
-            # If the assistant called the "Finish" function, extract the final answer and break
-            if function_name == "Finish":
-                assistant_reply = function_args.get('final_answer', '')
-                print(f"Assistant final reply: {assistant_reply}")
-                break
-
-
             # Execute the function
-            function_response, interaction_data = execute_function(function_name, function_args, args.tool_root_dir, query_data)
-            print(f"----\nFunction response: {function_response}")
-            # Check the function response length and truncate if necessary
-            max_tokens = 127000 # 31,750 tokens * 4 characters per token (approx)
-            function_response = truncate_response_if_needed(function_response, max_tokens)
-            function_call_log.append(f"Called function '{function_name}' with response: {function_response}")
+            function_response = execute_function(function_name, function_args, args.tool_root_dir, query_data)
+            print(f"Function response: {function_response}")
 
             # Add the function response to messages
-            # messages.append({
-            #     "role": "function",
-            #     "name": function_name,
-            #     "content": function_response
-            # })
             messages.append({
                 "role": "function",
-                "name": "assistant",
-                "content": f"{function_name}'s response is: {function_response}"
+                "name": function_name,
+                "content": function_response
             })
-            # If there is interaction data, collect it
-            if interaction_data:
-                interaction_scores.append(interaction_data)
         else:
-            # Assistant provided a message without calling a function
-            # Remind the assistant to call the "Finish" function
             # Assistant provided the final answer
-            reminder_message = {
-            "role": "system",
-            "content": "Remember, you must ALWAYS call the \"Finish\" function at the end of your attempt. Please call the \"Finish\" function with your final answer."
-        }
-            messages.append(reminder_message)
-
-        # Check if we have reached the max steps
-        if step == max_steps - 1:
-            # Assistant did not call the "Finish" function within the allowed steps
-            print("Assistant did not call the 'Finish' function within the allowed steps.")
             assistant_reply = assistant_message.content or ''
             print(f"Assistant final reply: {assistant_reply}")
             break
@@ -429,11 +379,8 @@ Remember:
     if assistant_reply is None:
         print("Assistant did not provide a final reply within the allowed steps.")
 
-    # Concatenate the logged function calls and responses for evaluation context
-    function_context = "\n".join(function_call_log)
-    # Evaluate the pass rate using the assistant's reply and the user's query
-    pass_rate = evaluate_pass_rate(assistant_reply, query_text, function_context, args)
-    print("Pass rate score: ", pass_rate)
+    print("Initial user query: ", query_text)
+    pass_rate = int(input("Did the model complete the instructions? (pass (1), fail (0)): "))
     tool_validity, info_validity = calculate_validity(dataset_type, tool_awareness_annotation, info_awareness_annotation, pass_rate)
     result = {
         'query_id': query_id,
@@ -442,10 +389,6 @@ Remember:
         'pass_rate': pass_rate,
         'model_answer': assistant_reply
     }
-    # Add interaction scores if any
-    if interaction_scores:
-        result['interaction_scores'] = interaction_scores
-
     if evaluation_plan['tool_awareness']:
         result['tool_awareness'] = tool_awareness_reasoning
         result['tool_annotation'] = tool_awareness_annotation
@@ -456,114 +399,7 @@ Remember:
         result['info_aware_score'] = info_validity
     return result
 
-def truncate_response_if_needed(response, max_chars):
-    if len(response) > max_chars:
-        print("Response trunked to 31k tokens")
-        return response[:max_chars]  # Truncate to max allowed characters
-    return response
-
-def extract_correct_incorrect(response):
-    """
-    Attempts to extract 'pass' or 'fail' from the model's response.
-    Returns 1 for pass, 0 for fail, or None if neither is found.
-    """
-    response = response.strip().lower()
-    print("Response: ", response)
-    match = re.match(r'^(pass|fail)', response)
-    
-    if match:
-        if match.group(1) == 'pass':
-            return 1
-        elif match.group(1) == 'fail':
-            return 0
-    return None  # Return None if neither 'pass' nor 'fail' is found
-
-def evaluate_pass_rate(assistant_reply, query_text, function_context, args):
-    """
-    Evaluates if the model's response to the user's query as a pass or fail attempt.
-    Retries up to 3 times if the model's output is unclear, then falls back to manual input.
-    """
-    if function_context:
-        api_responses_text = f"API's accessed and responses:\n{function_context}"
-        answer_part = "assistant's answer, and attached API's accessed with their responses."
-        system_part = "You will be given a user's instruction, assistant's answer, and the API's accessed along with their responses."
-    else:
-        api_responses_text = ""
-        answer_part = "assistant's answer."
-        system_part = "You will be given a user's instruction and assistant's answer."
-
-    # Construct the prompt for the user
-    prompt = (
-        f"Below I have attached a user's instruction, {answer_part} "
-        f"Did the assistant's answer complete the instruction given? Begin your response with either 'Pass' or 'Fail'.\n\n"
-        f"Query: {query_text}\n Answer: {assistant_reply}\n\n"
-        f"{api_responses_text}"
-    )
-
-    # Construct the system message
-    system_message = (
-        f"You are a grader. {system_part} Based on the answer given, "
-        "determine if the instruction was completed or not. Always begin your response with either 'Pass' or 'Fail'."
-    )
-
-    # Messages to be sent to the grader system
-    messages = [
-        {"role": "system", "content": system_message},
-        {"role": "user", "content": prompt},
-    ]
-
-    max_attempts = 3
-    max_retries = 3
-    results = []  # Store results from 5 attempts
-
-    for attempt in range(max_attempts):
-        retries = 0
-        pass_rate = None
-        
-        while retries < max_retries:
-            response = litellm.completion(
-                api_key=args.openai_key,
-                base_url=base_url,
-                model=base_url,
-                messages=messages
-            )
-            
-            pass_rate = extract_correct_incorrect(response.choices[0].message.content)
-
-            if pass_rate is not None:
-                results.append(pass_rate)
-                break
-            else:
-                print(f"Retrying pass rate evaluation. Attempt {retries + 1}/{max_retries}...")
-                retries += 1
-
-        # If retries exhausted without valid response, log None
-        if pass_rate is None:
-            print(f"Failed to evaluate pass rate for attempt {attempt + 1}/{max_attempts}.")
-            results.append(None)
-
-    # Filter out None values and perform majority vote
-    valid_results = [r for r in results if r is not None]
-
-    if valid_results:
-        # Perform majority vote if there are valid results
-        count_passes = valid_results.count(1)
-        count_fails = valid_results.count(0)
-
-        # Return the majority if there's a clear winner, otherwise return None
-        if count_passes > count_fails:
-            return 1
-        elif count_fails > count_passes:
-            return 0
-    else:
-        # If all attempts failed, fall back to manual input
-        print("Unable to extract pass rate response after 5 attempts.")
-        print("Assistant's reply: \n", assistant_reply)
-        print("Initial query: \n", query_text)
-        pass_rate = int(input("Please manually evaluate the assistant's answer. Did it follow the instructions pass (1) or fail (0)?: ").strip())
-        return pass_rate
-
-def load_functions(tool_root_dir, query_data, use_human_interact=False):
+def load_functions(tool_root_dir, query_data):
     import os
     import json
     functions = []
@@ -595,55 +431,6 @@ def load_functions(tool_root_dir, query_data, use_human_interact=False):
             functions.append(function)
         else:
             print(f"API '{api_name}' not found in tool '{tool_name}'")
-
-    # Conditionally add the human interact function
-    if use_human_interact:
-        # Append to query_data['api_list']
-        query_data.setdefault('api_list', [])
-        query_data['api_list'].append({
-            'category_name': 'HumanInteract',
-            'tool_name': 'humaninteract',
-            'api_name': 'interact_with_human'
-        })
-        # Now load the 'interact_with_human' API as usual
-        # Load the tool JSON
-        human_interact_tool_path = os.path.join(tool_root_dir, 'HumanInteract', 'humaninteract.json')
-
-        if os.path.exists(human_interact_tool_path):
-            with open(human_interact_tool_path, 'r') as f:
-                human_tool_data = json.load(f)
-
-            # Find the 'interact_with_human' API
-            api_data = None
-            for api_item in human_tool_data.get('api_list', []):
-                if api_item['name'] == 'interact_with_human':
-                    api_data = api_item
-                    break
-
-            if api_data:
-                function = api_to_openai_function(api_data, 'humaninteract')
-                functions.append(function)
-            else:
-                print("API 'interact_with_human' not found in 'humaninteract.json'")
-        else:
-            print(f"Tool JSON file not found at {human_interact_tool_path}")
-
-    # Add the finish function
-    finish_func = {
-        "name": "Finish",
-        "description": "If you believe that you have obtained a result that can answer the task, please call this function to provide the final answer. Remember: you must ALWAYS call this function at the end of your attempt, and the only part that will be shown to the user is the final answer, so it should contain sufficient information.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "final_answer": {
-                    "type": "string",
-                    "description": "The final answer you want to give the user."
-                }
-            },
-            "required": ["final_answer"],
-        }
-    }
-    functions.append(finish_func)
 
     return functions
 
@@ -743,23 +530,15 @@ def execute_function(function_name, function_args, tool_root_dir, query_data):
     # Execute the function with provided arguments
     try:
         print(f"Executing function '{function_name}' with arguments: {function_args}")
-        if function_name == 'interact_with_human':
-            # 'interact_with_human' returns a tuple
-            function_response, interaction_data = func(**function_args)
-        else:
-            # Other functions return a single value
-            function_response = func(**function_args)
-            interaction_data = None
-
-        print(f"Function '{function_name}' returned: {function_response}")
-        # Ensure the function response is serializable
-        if not isinstance(function_response, (str, int, float, dict, list)):
-            function_response = str(function_response)
-        return function_response, interaction_data
-    
+        result = func(**function_args)
+        print(f"Function '{function_name}' returned: {result}")
+        # If the result is not serializable, convert it to string
+        if not isinstance(result, (str, int, float, dict, list)):
+            result = str(result)
+        return json.dumps(result)
     except Exception as e:
         print(f"Error executing function '{function_name}': {e}")
-        return f"Error executing function '{function_name}': {e}", None
+        return f"Error executing function '{function_name}': {e}"
 
 if __name__ == '__main__':
     main()

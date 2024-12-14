@@ -14,7 +14,7 @@ if not exist %OUTPUT_DIR% mkdir %OUTPUT_DIR%
 REM Run the Python script with the necessary arguments
 python inference\pipeline_llama_auto_eval.py ^
     --tool_root_dir tools\ ^
-    --model neulab/meta-llama/Meta-Llama-3.1-70B-Instruct ^
+    --model Meta-Llama-3.1-70B-Instruct_path ^
     --openai_key %OPENAI_KEY% ^
     --input_query_file benchmark\subset_No-tools_queries_26-100.json ^
     --output_answer_file %OUTPUT_DIR%\answers.json ^

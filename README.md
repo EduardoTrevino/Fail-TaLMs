@@ -1,230 +1,257 @@
-# Tool Environment
+<p align="center">
+  <!-- Placeholder for an image showcasing the benchmark or logo -->
+  <img src="assets/fail_talms_benchmark.png" alt="Fail-TaLMs-Logo" style="width: 50%; display: block; margin: auto;">
+</p>
 
-## A overview of all the API's tool's and their availability
+<h1 align="center">⚙️ Fail-TaLMs Benchmark ⚙️</h1>
 
-Here is a list of all the API's we have aggregated as well as the latest unittest pass/fail for all of it's available endpoints. To add a new tool please submit a PR, include a unit test and the number of available endpoints for it.
+<p align="center">
+  <!-- Example badge links; replace with your own if needed -->
+  <a href="https://arxiv.org"><img src="https://img.shields.io/badge/arXiv-XXXX.XXXX-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://github.com/EduardoTrevino/fail-talms"><img src="https://img.shields.io/badge/GitHub-repo-blue" alt="GitHub Repo"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/neulab/data-agora.svg" alt="License"></a>
+</p>
 
-| Category         | API Name                         | Endpoint Tools | Unittest | Date     |
-| ---------------- | -------------------------------- | -------------- | -------- | -------- |
-| Art              | Art Institute of Chicago         | 2              | ✅       | 08/01/24 |
-| Art              | COLOURlovers                     | 2              | 🟢       | TBD      |
-| Art              | DiceBear                         | 0              | :x:      | TBD      |
-| Art              | Dogs                             | 2              | 🟢       | TBD      |
-| Art              | HTTP Cats                        | 0              | :x:      | TBD      |
-| Art              | Lorem Picsum                     | 0              | :x:      | TBD      |
-| Art              | Metropolitan Museum of Art       | 2              | 🟢       | TBD      |
-| Art              | PHP-Noise                        | 0              | :x:      | TBD      |
-| Art              | Placebear                        | 0              | :x:      | TBD      |
-| Art              | Random Dog                       | 0              | :x:      | TBD      |
-| Art              | RandomFox                        | 0              | :x:      | TBD      |
-| Art              | ReSmush                          | 2              | :x:      | TBD      |
-| Art              | RoboHash                         | 0              | :x:      | TBD      |
-| Art              | Vadivelu Status Codes            | 0              | :x:      | TBD      |
-| Calendar         | Nager.Date                       | 2              | 🟢       | TBD      |
-| Calendar         | UK Bank Holidays                 | 2              | 🟢       | TBD      |
-| Content          | 4chan                            | 2              | 🟢       | TBD      |
-| Content          | Anime News Network               | 2              | 🟢       | TBD      |
-| Content          | Ceska Televize                   | 2              | 🟢       | TBD      |
-| Content          | Chronicling America              | 2              | 🟢       | TBD      |
-| Content          | Crossref                         | 2              | 🟢       | TBD      |
-| Content          | Final Space                      | 2              | 🟢       | TBD      |
-| Content          | HackerNews                       | 2              | 🟢       | TBD      |
-| Content          | Ice and Fire                     | 2              | 🟢       | TBD      |
-| Content          | Jikan                            | 2              | 🟢       | TBD      |
-| Content          | Listly                           | 0              | :x:      | TBD      |
-| Content          | MCU-Countdown                    | 2              | 🟢       | TBD      |
-| Content          | Mediawiki                        | 2              | 🟢       | TBD      |
-| Content          | Open Library                     | 2              | 🟢       | TBD      |
-| Content          | Reddit                           | 0              | :x:      | TBD      |
-| Content          | Reddit Stocks                    | 2              | 🟢       | TBD      |
-| Content          | Rick and Morty                   | 2              | 🟢       | TBD      |
-| Content          | STAPI                            | 0              | :x:      | TBD      |
-| Content          | SWAPI                            | 2              | 🟢       | TBD      |
-| Content          | The Rosary                       | 2              | 🟢       | TBD      |
-| Content          | TVMaze                           | 2              | 🟢       | TBD      |
-| Content          | Wolne Lektury                    | 0              | :x:      | TBD      |
-| Content          | WordPress                        | 2              | 🟢       | TBD      |
-| Crypto & Finance | Binance                          | 2              | 🟢       | TBD      |
-| Crypto & Finance | CoinBase                         | 2              | 🟢       | TBD      |
-| Crypto & Finance | CoinCap                          | 2              | 🟢       | TBD      |
-| Crypto & Finance | CoinDesk                         | 0              | :x:      | TBD      |
-| Crypto & Finance | CoinGecko                        | 2              | 🟢       | TBD      |
-| Crypto & Finance | CoinLore                         | 2              | 🟢       | TBD      |
-| Crypto & Finance | CoinMap                          | 2              | 🟢       | TBD      |
-| Crypto & Finance | Coinpaprika                      | 2              | 🟢       | TBD      |
-| Crypto & Finance | Currency Rates                   | 0              | :x:      | TBD      |
-| Crypto & Finance | DEX Screener                     | 2              | 🟢       | TBD      |
-| Crypto & Finance | ExchangeRate-API                 | 0              | :x:      | TBD      |
-| Crypto & Finance | GeckoTerminal                    | 2              | 🟢       | TBD      |
-| Crypto & Finance | Gemini                           | 2              | :x:      | TBD      |
-| Crypto & Finance | Kraken                           | 2              | :x:      | TBD      |
-| Crypto & Finance | KuCoin                           | 0              | :x:      | TBD      |
-| Crypto & Finance | NBP Web                          | 2              | :x:      | TBD      |
-| Crypto & Finance | Nexchange                        | 2              | :x:      | TBD      |
-| Crypto & Finance | OKX                              | 0              | :x:      | TBD      |
-| Crypto & Finance | Razorpay IFSC                    | 2              | :x:      | TBD      |
-| Crypto & Finance | WazirX                           | 2              | :x:      | TBD      |
-| Developer Tools  | Agify                            | 2              | :x:      | TBD      |
-| Developer Tools  | APIC Agent                       | 2              | :x:      | TBD      |
-| Developer Tools  | Arul's Public APIs               | 2              | :x:      | TBD      |
-| Developer Tools  | Cloudflare Trace                 | 2              | :x:      | TBD      |
-| Developer Tools  | Digital Ocean Status             | 2              | :x:      | TBD      |
-| Developer Tools  | FilterLists                      | 2              | :x:      | TBD      |
-| Developer Tools  | Genderize.io                     | 2              | :x:      | TBD      |
-| Developer Tools  | Google Favicons                  | 2              | :x:      | TBD      |
-| Developer Tools  | goQR                             | 0              | :x:      | TBD      |
-| Developer Tools  | HTTPBin                          | 0              | :x:      | TBD      |
-| Developer Tools  | Image-Charts                     | 0              | :x:      | TBD      |
-| Developer Tools  | IP2Location                      | 2              | :x:      | TBD      |
-| Developer Tools  | IPify                            | 2              | :x:      | TBD      |
-| Developer Tools  | is.gd                            | 2              | :x:      | TBD      |
-| Developer Tools  | Microlink                        | 2              | :x:      | TBD      |
-| Developer Tools  | Nationalize.io                   | 2              | :x:      | TBD      |
-| Developer Tools  | QuickChart                       | 0              | :x:      | TBD      |
-| Developer Tools  | Serialif Color                   | 2              | :x:      | TBD      |
-| Developer Tools  | Sixdots                          | 0              | :x:      | TBD      |
-| Developer Tools  | Un-Shorten                       | 2              | :x:      | TBD      |
-| Developer Tools  | URLhaus                          | 2              | :x:      | TBD      |
-| Food & Drink     | Cocktail Database                | 2              | :x:      | TBD      |
-| Food & Drink     | Open Brewery DB                  | 2              | :x:      | TBD      |
-| Food & Drink     | Open Food Facts                  | 0              | :x:      | TBD      |
-| Food & Drink     | Whisky Hunter                    | 2              | :x:      | TBD      |
-| Fun & Games      | AmiiboAPI                        | 2              | :x:      | TBD      |
-| Fun & Games      | Barter                           | 2              | :x:      | TBD      |
-| Fun & Games      | Board Game Geek                  | 2              | :x:      | TBD      |
-| Fun & Games      | CheapShark                       | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Chuck Norris Jokes               | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | D&D 5th Edition                  | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Data Dragon                      | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Deck of Cards                    | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Evil Insult Generator            | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | FreeToGame                       | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Gamerpower                       | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Hyrule Compendium                | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | icanhazdadjoke                   | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Imgflip                          | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | isEven                           | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | JokeAPI                          | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Magic: The Gathering             | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Official Joke                    | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Open Trivia DB                   | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | PokéAPI                          | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Pokémon TCG                      | 0              | :x:      | TBD      |
-| Fun & Games      | RuneScape                        | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Scryfall                         | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | TCGdex                           | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | XIVAPI                           | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | xkcd                             | 0(scraped)     | :x:      | TBD      |
-| Fun & Games      | Yes or No?                       | 0              | :x:      | TBD      |
-| Geo              | Adresse                          | 0(scraped)     | :x:      | TBD      |
-| Geo              | Country.is                       | 0(scraped)     | :x:      | TBD      |
-| Geo              | Geocode                          | 0(scraped)     | :x:      | TBD      |
-| Geo              | GeoJS                            | 0(scraped)     | :x:      | TBD      |
-| Geo              | geoPlugin                        | 0(scraped)     | :x:      | TBD      |
-| Geo              | GetTheData                       | 0(scraped)     | :x:      | TBD      |
-| Geo              | HelloSalut                       | 0(scraped)     | :x:      | TBD      |
-| Geo              | Hong Kong GeoData Store          | 0              | :x:      | TBD      |
-| Geo              | ipapi                            | 0(scraped)     | :x:      | TBD      |
-| Geo              | IPGeo                            | 0              | :x:      | TBD      |
-| Geo              | Nominatum                        | 0(scraped)     | :x:      | TBD      |
-| Geo              | Open Topo Data                   | 0(scraped)     | :x:      | TBD      |
-| Geo              | Postcodes                        | 0(scraped)     | :x:      | TBD      |
-| Geo              | ViaCEP                           | 0(scraped)     | :x:      | TBD      |
-| Geo              | Zippopotamus                     | 0(scraped)     | :x:      | TBD      |
-| Geo              | Ziptastic                        | 0(scraped)     | :x:      | TBD      |
-| Government       | Banco Central Do Brasil          | 0              | :x:      | TBD      |
-| Government       | Belgian Open Data Initiative     | 0              | :x:      | TBD      |
-| Government       | Brasil                           | 0(scraped)     | :x:      | TBD      |
-| Government       | CiviX                            | 0(scraped)     | ✅       | TBD      |
-| Government       | Colorado Information Marketplace | 0              | :x:      | TBD      |
-| Government       | Data USA                         | 0(scraped)     | ✅       | TBD      |
-| Government       | Data.gov                         | 0              | :x:      | TBD      |
-| Government       | Data.gov.au                      | 0              | :x:      | TBD      |
-| Government       | Dawum                            | 0(scraped)     | ✅       | TBD      |
-| Government       | European Commission Taxation     | 0              | :x:      | TBD      |
-| Government       | FBI Wanted                       | 0(scraped)     | ✅       | TBD      |
-| Government       | Federal Register                 | 0(scraped)     | :x:      | TBD      |
-| Government       | Food Standards Agency            | 0              | :x:      | TBD      |
-| Government       | NYC Open Data                    | 0              | :x:      | TBD      |
-| Government       | Open Data DC                     | 0              | :x:      | TBD      |
-| Government       | Open Government, Canada          | 0              | :x:      | TBD      |
-| Government       | Represent Civic Information      | 0(scraped)     | ✅       | TBD      |
-| Government       | USAspending                      | 0(scraped)     | ✅       | TBD      |
-| Government       | USPTO                            | 0              | :x:      | TBD      |
-| Government       | World Bank                       | 0(scraped)     | ✅       | TBD      |
-| Health           | HealthCare.gov                   | 0(scraped)     | ✅       | TBD      |
-| Health           | Makeup                           | 0(scraped)     | ✅       | TBD      |
-| Health           | NPPES                            | 0(scraped)     | ✅       | TBD      |
-| Health           | openFDA                          | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Advice Slip                      | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Affirmations                     | 1              | ✅       | TBD      |
-| Inspiration      | Breaking Bad Quotes              | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Dictum                           | 0(scraped)     | :x:      | TBD      |
-| Inspiration      | Game of Thrones Quotes           | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Kanye                            | 1              | ✅       | TBD      |
-| Inspiration      | Quotable                         | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Quote Garden                     | 0(scraped)     | :x:      | TBD      |
-| Inspiration      | Quotes on Design                 | 0(scraped)     | ✅       | TBD      |
-| Inspiration      | Ron Swanson Quotes               | 0(scraped)     | ✅       | TBD      |
-| Jobs             | Jobicy                           | 1              | ✅       | TBD      |
-| Language         | Chinese Character Web            | 0(scraped)     | ✅       | TBD      |
-| Language         | Chinese Text Project             | 2              | ✅       | TBD      |
-| Language         | Datamuse                         | 0(scraped)     | ✅       | TBD      |
-| Language         | Free Dictionary                  | 0(scraped)     | ✅       | TBD      |
-| Language         | PurgoMalum                       | 0(scraped)     | ✅       | TBD      |
-| Music            | Binary Jazz                      | 0(scraped)     | ✅       | TBD      |
-| Music            | iTunes Search                    | 0              | :x:      | TBD      |
-| Music            | MusicBrainz                      | 0(scraped)     | ✅       | TBD      |
-| Music            | Openwhyd                         | 2              | ✅       | TBD      |
-| Open Data        | Archive.org                      | 0(scraped)     | ✅       | TBD      |
-| Open Data        | Carbon Intensity                 | 0(scraped)     | ✅       | TBD      |
-| Open Data        | Data.Police.UK                   | 0(scraped)     | ✅       | TBD      |
-| Open Data        | Fipe                             | 0(scraped)     | ✅       | TBD      |
-| Open Data        | House Stock Watcher              | 0(scraped)     | ✅       | TBD      |
-| Open Data        | Leadsbox                         | 0              | :x:      | TBD      |
-| Open Data        | Open Library                     | 0(scraped)     | ✅       | TBD      |
-| Open Data        | PM2.5                            | 0              | ✅       | TBD      |
-| Open Data        | Universities List                | 0              | ✅       | TBD      |
-| Open Data        | Vehicles                         | 0              | ✅       | TBD      |
-| Open Data        | Wayback Machine                  | 0              | ✅       | TBD      |
-| Open Data        | Wikipedia                        | 2              | 🟢       | TBD      |
-| Science          | Arcsecond                        | 0              | :x:      | TBD      |
-| Science          | arXiv                            | 0              | ✅       | TBD      |
-| Science          | Asterank                         | 0              | :x:      | TBD      |
-| Science          | Cat-Facts                        | 0              | :x:      | TBD      |
-| Science          | CelesTrak                        | 0              | ✅       | TBD      |
-| Science          | GBIF                             | 0              | ✅       | TBD      |
-| Science          | iDigBio                          | 0              | ✅       | TBD      |
-| Science          | ITIS                             | 0              | ✅       | TBD      |
-| Science          | NASA                             | 0              | :x:      | TBD      |
-| Science          | Newton                           | 0              | ✅       | TBD      |
-| Science          | Numbers                          | 0              | ✅       | TBD      |
-| Science          | Open Notify                      | 0              | ✅       | TBD      |
-| Science          | Spaceflight News                 | 0              | :x:      | TBD      |
-| Science          | SpaceX                           | 2              | ✅       | TBD      |
-| Science          | SunriseSunset                    | 0              | ✅       | TBD      |
-| Science          | TheSpaceDevs                     | 0              | :x:      | TBD      |
-| Science          | USGS Earthquake Catalog          | 0              | ✅       | TBD      |
-| Sports           | CityBikes                        | 0              | ✅       | TBD      |
-| Sports           | Ergast F1                        | 0              | :x:      | TBD      |
-| Sports           | Football-Data                    | 0              | ✅       | TBD      |
-| Sports           | nhlapi                           | 2              | :x:      | TBD      |
-| Test Data        | Bacon Ipsum                      | 0              | :x:      | TBD      |
-| Test Data        | Faker                            | 0              | :x:      | TBD      |
-| Test Data        | JSONPlaceholder                  | 0              | :x:      | TBD      |
-| Test Data        | Loripsum                         | 0              | :x:      | TBD      |
-| Test Data        | RandomUser                       | 2              | ✅       | TBD      |
-| Test Data        | Reqres                           | 0              | :x:      | TBD      |
-| Test Data        | REST                             | 0              | :x:      | TBD      |
-| Test Data        | Softwium                         | 0              | :x:      | TBD      |
-| Test Data        | UUID Generator                   | 2              | ✅       | TBD      |
-| Transportation   | Derhuerst                        | 0              | ✅       | TBD      |
-| Transportation   | iRail                            | 2              | ✅       | TBD      |
-| Transportation   | MBTA                             | 0              | ✅       | TBD      |
-| Transportation   | Metro Lisboa                     | 0              | :x:      | TBD      |
-| Weather          | 7Timer!                          | 2              | ✅       | TBD      |
-| Weather          | Aviation Weather Center          | 0              | ✅       | TBD      |
-| Weather          | Open-Meteo                       | 0              | ✅       | TBD      |
-| Weather          | openSenseMap                     | 0              | :x:      | TBD      |
-| Weather          | SG Weather                       | 0              | :x:      | TBD      |
-| Weather          | wttr                             | 0              | :x:      | TBD      |
+<p align="center">
+  A benchmark and codebase for evaluating and experimenting with Tool-Augmented Language Models (TaLMs) <br>
+  under real-world challenges such as unavailable tools and under-specified queries.
+</p>
+
+---
+
+## **Latest News** 🔥
+
+- **2024/12**: Our **Fail-TaLMs** benchmark and accompanying paper are officially released!
+  - Introduces a large suite of **906 real-world tools** across **21 categories**.
+  - Evaluates **three major** data settings: under-specified queries, unavailable tools, and perfect scenarios. 
+  - Proposes the **Ask-and-Help (AAH)** method for real-time human interaction to handle missing details.
+  - Check out our [paper](https://arxiv.org/abs/2412.03679) and [GitHub repo](https://github.com/EduardoTrevino/fail-talms).
+
+---
+
+## **What is Fail-TaLMs?**
+
+<p align="center">
+  <!-- Placeholder for another conceptual image -->
+  <img src="assets/benchmark_concept.png" alt="Fail-TaLMs Concept" style="width: 80%; display: block; margin: auto;">
+</p>
+
+Tool-augmented language models (TaLMs) can solve complex tasks by calling external APIs. However, **real-world** usage often breaks the ideal assumptions:
+1. Queries might lack necessary details (i.e., **under-specified**).
+2. Critical **tools can become unavailable** or deprecated.
+
+**Fail-TaLMs** is a benchmark that systematically measures performance of TaLMs under these realistic failure scenarios. 
+We also introduce **Ask-and-Help (AAH)**, a method allowing the TaLM to interact with humans to request missing info or replace broken tools.
+
+---
+
+## 🔧 Installation
+
+1. **Clone** the repository:
+   ```bash
+   git clone https://github.com/EduardoTrevino/fail-talms.git
+   cd fail-talms
+   ```
+2. **Install** dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. (Optional) Set up environment variables (e.g., OPENAI_API_KEY, etc.) for your API usage.
+
+---
+
+## Project Structure 📁
+Below is a high-level overview of our repository structure:
+```
+.
+├── tools/
+│   ├── {category_name}/
+│   │   └── {tool_name}/
+│   │       ├── api.py          # Endpoints for this tool
+│   │       ├── api_test.py     # Unit tests & example parameters
+│   │       └── raw_output.txt  # Raw LLM generation logs for the tool
+│   ├── {tool_name}.json        # Function calling schema (JSON) representation
+│   └── ...
+├── api_docs/
+│   ├── {category_name}/
+│   │   └── {tool_name}.txt     # Raw scraped docs for the API usage
+│   └── ...
+├── runners/
+│   ├── run_gpt.bat
+│   ├── run_claude.bat
+│   └── run_llama.bat
+├── outputs/
+│   ├── no-tools/
+│   │   ├── {model_name}/
+│   │   │   └── answers.json
+│   │   └── {model_name}AAH/
+│   │       └── answers.json
+│   ├── non-replaceable/
+│   │   └── ...
+│   ├── original/
+│   │   └── ...
+│   ├── replaceable/
+│   │   └── ...
+│   └── underspecified/
+│       └── ...
+├── inference/
+│   ├── pipeline_gpt.py
+│   ├── pipeline_claude.py
+│   └── pipeline_llama.py
+├── benchmark/
+│   ├── no-tools/
+│   │   ├── {category_name}/
+│   │   │   └── queries...json   # Individual queries
+│   │   └── all_no-tools_queries.json  # Collated queries
+│   ├── non-replaceable/
+│   ├── original/
+│   ├── replaceable/
+│   └── underspecified/
+│       └── all_underspecified_queries.json
+├── evaluation/
+│   └── evaluation.py
+```
+### Key Directories
+- #### tools/
+  Contains generated Python endpoints (`api.py`) and test scripts (`api_test.py`) for each tool. Also hosts a `.json` descriptor (function calling schema) for each tool.
+- #### api_docs/
+  Raw API documentation collected for each tool. Organized into `{category_name}/{tool_name}.txt`.
+- #### benchmark/
+  Houses the benchmark data for 5 different data settings:
+
+  1. no-tools
+  2. non-replaceable
+  3. original (perfect info and all tools available)
+  4. replaceable
+  5. underspecified
+  
+  Each setting contains subfolders for different categories and a combined `.json` file listing all queries.
+- #### outputs/
+  Evaluation results are stored in separate subdirectories for each data setting. Each subdirectory contains folders named after the model, with or without `AAH` (Ask-and-Help). Inside each model folder, you’ll find `answers.json` showing the model’s raw outputs.
+- #### inference/
+  Pipelines for inference, one Python script per model (e.g., `pipeline_gpt.py`), which define how to load the model, parse queries, and optionally handle the tool function-calling mechanism.
+- #### evaluation/
+  Includes `evaluation.py`, which calculates pass rates, awareness metrics, and other evaluations by reading `answers.json` from `outputs/`.
+- #### runners/
+  `.bat` files for quickly running inference with different models or toggling the AAH (Ask-and-Help) method. You can set flags for AAH usage and API keys.
+
+---
+
+## Usage Guide 🚀
+### 1) Setup & Requirements
+- Make sure to install all the necessary Python packages with `pip install -r requirements.txt`.
+- You’ll need to specify your model access (e.g., API keys for GPT, Claude). Open-source LLaMa model usage also requires local model weights & environment setup.
+
+### 2) Preparing the Benchmark
+This repository includes 5 settings of data in the `benchmark/` folder:
+
+1. #### original: Perfect scenario (fully specified queries and all tools available)
+2. #### no-tools: Only the queries are provided, no tool information is given
+3. #### underspecified: Key details missing from queries
+4. #### replaceable: Tools needed are unavailable but trivially replaceable
+5. #### non-replaceable: Tools needed are unavailable and not trivially replaceable
+
+Each subdirectory has category folders (e.g., `Finance`, `Gaming`, etc.) and corresponding queries.
+
+### 3) Inference
+- You can run inference on the benchmark using the `.bat` scripts in `runners/`. For instance:
+```
+cd runners
+./run_gpt.bat
+```
+- Inside each `.bat` file, you’ll see flags for:
+  - AAH (Ask-and-Help) usage (true/false)
+  - API Keys (e.g., `OPENAI_API_KEY`, etc.)
+  - The data setting you wish to run (e.g., `underspecified`, `replaceable`)
+
+- Alternatively, run the model-specific Python scripts in inference/. For instance:
+```
+python pipeline_gpt.py --data_setting underspecified --aah true --api_key <YOUR_API_KEY_PATH.txt>
+```
+
+### 4) Outputs
+- After running inference, results will appear in `outputs/{data_setting}/{model_name}[/AAH]/answers.json`.
+- For example, `outputs/underspecified/gpt-AAH/answers.json` would hold GPT's responses for the underspecified setting with the Ask-and-Help method.
+
+### 4) Evaluation
+- You can evaluate the predictions by running:
+  ```
+  python evaluation/evaluation.py
+  ```
+- The script loads all results from `outputs/` and prints metrics like pass rate, awareness, unexpected success, etc.
+
+---
+
+## Ask-and-Help (AAH) Method
+Our **Ask-and-Help (AAH)** approach allows the model to explicitly ask a human for missing details or for a tool replacement.
+- **Usage:** In pipeline_{model_name}.py, you can toggle this method on or off via a command-line argument or .bat script.
+-  When **AAH** is true, the model is allowed to call a hypothetical “human tool” to fill in missing parameters or replicate a broken tool’s functionality.
+
+---
+
+## Example Query JSON
+This snippet shows how queries are formatted with a list of potential APIs/tools:
+```
+[
+    {
+        "api_list": [
+            {
+                "category_name": "Finance",
+                "tool_name": "coinlore",
+                "api_name": "get_all_tickers",
+                "api_description": "Retrieve tick data for multiple crypto coins, sorted by market cap.",
+                "method": "GET",
+                "required_parameters": [],
+                "optional_parameters": [
+                    {
+                        "name": "start",
+                        "type": "INTEGER",
+                        "description": "The starting position for results.",
+                        "default": "0"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "INTEGER",
+                        "description": "The maximum number of results to retrieve.",
+                        "default": "100"
+                    }
+                ]
+            },
+            {
+                "category_name": "Finance",
+                "tool_name": "exchangerate",
+                "api_name": "get_latest_exchange_rates",
+                "api_description": "Fetches the latest exchange rates for a given base currency.",
+                "required_parameters": [
+                    {
+                        "name": "base_currency",
+                        "type": "STRING",
+                        "description": "The base currency ISO 4217 code.",
+                        "default": "USD"
+                    }
+                ],
+                "optional_parameters": [],
+                "method": "GET"
+            }
+        ],
+        "query": "Can you provide a list of all cryptocurrencies ranked by their market cap and also give me the current exchange rates for the US dollar?",
+        "relevant APIs": [],
+        "query_id": 2
+    }
+]
+```
+The model or the pipeline script uses these tool definitions to call the correct endpoints.
+
+---
+
+## Citation
+If you find our benchmark or method useful, please cite our paper:
+```
+UPDATE SOON
+```
+
+---
+
+**Happy Benchmarking!** If you have any questions or issues, feel free to open an issue or pull request!
+
+  
