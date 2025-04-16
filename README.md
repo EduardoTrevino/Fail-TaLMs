@@ -253,7 +253,14 @@ The model or the pipeline script uses these tool definitions to call the correct
 ## Citation
 If you find our benchmark or method useful, please cite our paper:
 ```
-UPDATE SOON
+@inproceedings{
+anonymous2025benchmarking,
+title={Benchmarking Failures in Tool-Augmented Language Models},
+author={Anonymous},
+booktitle={The 2025 Annual Conference of the Nations of the Americas Chapter of the ACL},
+year={2025},
+url={https://openreview.net/forum?id=XgbcrhgR3C}
+}
 ```
 
 ---
