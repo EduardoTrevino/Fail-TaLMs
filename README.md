@@ -7,7 +7,7 @@
 
 <p align="center">
   <!-- Example badge links; replace with your own if needed -->
-  <!-- <a href="https://arxiv.org"><img src="https://img.shields.io/badge/arXiv-XXXX.XXXX-b31b1b.svg" alt="arXiv"></a> -->
+  <a href="https://arxiv.org/abs/2503.14227"><img src="https://img.shields.io/badge/arXiv-XXXX.XXXX-b31b1b.svg" alt="arXiv"></a>
   <a href="assets/Benchmarking_Failures_in_Tool-Augmented_Language_Models_Paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg" alt="Paper PDF"></a>
   <a href="assets/Benchmarking_Failures_in_Tool-Augmented_Language_Models_Poster.pdf"><img src="https://img.shields.io/badge/Paper-PDF-b31b1b.svg" alt="Poster PDF"></a>
   <a href="https://github.com/EduardoTrevino/fail-talms"><img src="https://img.shields.io/badge/GitHub-repo-blue" alt="GitHub Repo"></a>
