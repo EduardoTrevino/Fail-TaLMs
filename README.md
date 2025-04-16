@@ -256,7 +256,7 @@ If you find our benchmark or method useful, please cite our paper:
 @inproceedings{
 anonymous2025benchmarking,
 title={Benchmarking Failures in Tool-Augmented Language Models},
-author={Anonymous},
+author={Eduardo Treviño; Hugo Contant; James Ngai; Graham Neubig; Zora Zhiruo Wang},
 booktitle={The 2025 Annual Conference of the Nations of the Americas Chapter of the ACL},
 year={2025},
 url={https://openreview.net/forum?id=XgbcrhgR3C}
