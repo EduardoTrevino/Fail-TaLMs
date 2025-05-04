@@ -1,6 +1,6 @@
 <p align="center">
   <!-- Placeholder for an image showcasing the benchmark or logo -->
-  <img src="assets/llama_broken_tool.webp" alt="Fail-TaLMs-Logo" style="width: 50%; display: block; margin: auto;">
+  <img src="assets/broken_tool.png" alt="Fail-TaLMs-Logo" style="width: 50%; display: block; margin: auto;">
 </p>
 
 <h1 align="center">⚙️ Fail-TaLMs Benchmark ⚙️</h1>
