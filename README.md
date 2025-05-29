@@ -253,13 +253,25 @@ The model or the pipeline script uses these tool definitions to call the correct
 ## Citation
 If you find our benchmark or method useful, please cite our paper:
 ```
-@inproceedings{
-anonymous2025benchmarking,
-title={Benchmarking Failures in Tool-Augmented Language Models},
-author={Eduardo Treviño; Hugo Contant; James Ngai; Graham Neubig; Zora Zhiruo Wang},
-booktitle={The 2025 Annual Conference of the Nations of the Americas Chapter of the ACL},
-year={2025},
-url={https://openreview.net/forum?id=XgbcrhgR3C}
+@inproceedings{trevino-etal-2025-benchmarking,
+    title = "Benchmarking Failures in Tool-Augmented Language Models",
+    author = "Trevi{\~n}o, Eduardo  and
+      Contant, Hugo  and
+      Ngai, James  and
+      Neubig, Graham  and
+      Wang, Zora Zhiruo",
+    editor = "Chiruzzo, Luis  and
+      Ritter, Alan  and
+      Wang, Lu",
+    booktitle = "Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)",
+    month = apr,
+    year = "2025",
+    address = "Albuquerque, New Mexico",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.naacl-long.149/",
+    pages = "2916--2934",
+    ISBN = "979-8-89176-189-6",
+    abstract = "The integration of tools has extended the capabilities of language models (LMs) beyond vanilla text generation to versatile scenarios. However, tool-augmented language models (TaLMs) often assume {\textquoteleft}perfect' information access and tool availability, which may not hold in the real world. To systematically study TaLMs imperfections, we introduce the FAIL-TaLMs benchmark, featuring two major failures: under-specified user queries and non-available tools. FAIL-TaLMS contains 1,749 examples using 906 tools across 21 categories, including single- and multi-tool usage. We evaluate top-performing proprietary and open-source models, and find all current models except for Claude struggle to recognize missing tools or information. Further, to study possible mitigation of the failures, we enable real-time human interaction, named the Ask-and-Help method, to provide missing information or replace non-functional tools. While Ask-and-Help can help models solve tasks more correctly when queries are under-specified, it brings minimal benefit when complex tools are broken."
 }
 ```
 
