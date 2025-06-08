@@ -7,11 +7,11 @@
 
 <p align="center">
   <!-- Example badge links; replace with your own if needed -->
-  <a href="https://aclanthology.org/2025.naacl-long.149.pdf"><img src="https://img.shields.io/badge/ACL%20Anthology-007ec6.svg" alt="ACL"></a>
-  <a href="assets/Benchmarking_Failures_in_Tool-Augmented_Language_Models_Paper.pdf"><img src="https://img.shields.io/badge/temp-view-fcaf50.svg" alt="Paper PDF"></a>
+  <a href="https://aclanthology.org/2025.naacl-long.149.pdf"><img src="https://img.shields.io/badge/ACL%20Anthology-PDF-007ec6.svg" alt="ACL"></a>
+  <!-- <a href="assets/Benchmarking_Failures_in_Tool-Augmented_Language_Models_Paper.pdf"><img src="https://img.shields.io/badge/Paper%20PDF%20(Local)-fcaf50.svg" alt="Paper PDF"></a> -->
   <a href="assets/Benchmarking_Failures_in_Tool-Augmented_Language_Models_Poster.pdf"><img src="https://img.shields.io/badge/Poster-PDF-f39c12.svg" alt="Poster PDF"></a>
-  <a href="https://github.com/EduardoTrevino/fail-talms"><img src="https://img.shields.io/badge/GitHub-repo-blue" alt="GitHub Repo"></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/github/license/EduardoTrevino/ToolsForTheJobBenchmark.svg" alt="License"></a>
+  <a href="https://github.com/EduardoTrevino/fail-talms"><img src="https://img.shields.io/badge/GitHub-repo-green" alt="GitHub Repo"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-6c757d.svg" alt="License"></a>
 </p>
 
 <p align="center">
