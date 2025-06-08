@@ -84,7 +84,7 @@ def get_gold_price(top_count: Optional[int] = None, date: Optional[str] = None,
     if date:
         url = f"{base_url}/{date}"
     elif start_date and end_date:
-        url = f"{base_url}/{start_date}/{endDate}"
+        url = f"{base_url}/{start_date}/{end_date}"
     elif top_count:
         url = f"{base_url}/last/{top_count}"
     else:
