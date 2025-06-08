@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <bold Benchmarking Failures in Tool-Augmented Language Models:> A benchmark and codebase for evaluating and experimenting with Tool-Augmented Language Models (TaLMs) <br>
+  <b> Benchmarking Failures in Tool-Augmented Language Models:</b> A benchmark and codebase for evaluating and experimenting with Tool-Augmented Language Models (TaLMs) <br>
   under real-world challenges such as unavailable tools and under-specified queries.
 </p>
 
